@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Space_Game.Core.GameObject
 {
-    internal abstract class MovableObject : GameObject
+    public abstract class MovableObject : GameObject
     {
         [JsonProperty] public float Velocity;
         [JsonProperty] public Vector2 DirectionVector;

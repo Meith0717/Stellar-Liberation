@@ -5,6 +5,7 @@ using rache_der_reti.Core.InputManagement;
 using rache_der_reti.Core.LayerManagement;
 using rache_der_reti.Core.SoundManagement;
 using rache_der_reti.Core.TextureManagement;
+using Space_Game.Core;
 using Space_Game.Game.GameObjects;
 using Space_Game.Game.Layers;
 using System;
@@ -38,12 +39,16 @@ namespace Space_Game
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            Globals.mGraphicsDevice = GraphicsDevice;
+            Globals.mContentManager = Content;
+            Globals.mSoundManager = mSoundManager;
+            Globals.mRandom = new Random();
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            mSpriteBatch = new SpriteBatch(GraphicsDevice);
+            Globals.mSpriteBatch = mSpriteBatch = new SpriteBatch(GraphicsDevice);
             // TODO: use this.Content to load your game content here
 
             // setup texture manager
@@ -53,10 +58,11 @@ namespace Space_Game
             mSoundManager.LoadContent(Content, new List<string> { "quack" });
             mTextureManager.LoadTexture("star", "star");
             mTextureManager.LoadTexture("spaceship", "spaceship");
+            mTextureManager.LoadTexture("nebula", "nebula");
             // game fonts
             mTextureManager.LoadSpriteTexture("hud", "fonts/hud");
 
-            mLayerManager = new LayerManager(this, GraphicsDevice, mSpriteBatch, Content, mSoundManager);
+            Globals.mLayerManager = mLayerManager = new LayerManager(this, GraphicsDevice, mSpriteBatch, Content, mSoundManager);
         }
 
         protected override void Update(GameTime gameTime)

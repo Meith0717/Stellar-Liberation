@@ -9,15 +9,13 @@ using rache_der_reti.Core.TextureManagement;
 
 namespace Space_Game.Game.Layers
 {
-    internal class PlanetSystemLayer : Layer
+    public class PlanetSystemLayer : Layer
     {
         private UiElement mRoot;
         private UiElementList mRootList;
-        public PlanetSystemLayer(LayerManager layerManager, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, ContentManager contentManager, SoundManager soundManager)
-            : base(layerManager, graphicsDevice, spriteBatch, contentManager, soundManager)
+        public PlanetSystemLayer() : base()
         {
             UpdateBelow = true;
-
             // root item
             mRoot = new UiElement();
             mRoot.BackgroundColor = Color.Black;

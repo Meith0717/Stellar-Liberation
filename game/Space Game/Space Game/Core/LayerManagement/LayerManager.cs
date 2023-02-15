@@ -79,7 +79,7 @@ public class LayerManager
     // lifecycle methods
     private void Start()
     {
-         mLayerStack.AddLast(new GameLayer(this, mGraphicsDevice, mSpriteBatch, mContentManager, mSoundManager));
+         mLayerStack.AddLast(new GameLayer());
     }
     public void Exit()
     {

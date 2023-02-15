@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Space_Game.Core.GameObject
 {
-    internal abstract class GameObject
+    public abstract class GameObject
     {
         // Location
         [JsonProperty] public Vector2 Position;

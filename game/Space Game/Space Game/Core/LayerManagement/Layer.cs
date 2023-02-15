@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using rache_der_reti.Core.InputManagement;
 using rache_der_reti.Core.SoundManagement;
+using Space_Game.Core;
 
 namespace rache_der_reti.Core.LayerManagement;
 
@@ -23,15 +24,12 @@ public abstract class Layer
     public bool UpdateBelow { get; set; }
 
     protected Layer()
-    {}
-    protected Layer(LayerManager layerManager, GraphicsDevice graphicsDevice,
-        SpriteBatch spriteBatch, ContentManager contentManager, SoundManager soundManager)
     {
-        mLayerManager = layerManager;
-        mGraphicsDevice = graphicsDevice;
-        mSpriteBatch = spriteBatch;
-        mContentManager = contentManager;
-        mSoundManager = soundManager;
+        mLayerManager = Globals.mLayerManager;
+        mGraphicsDevice = Globals.mGraphicsDevice;
+        mSpriteBatch = Globals.mSpriteBatch;
+        mContentManager = Globals.mContentManager;
+        mSoundManager = Globals.mSoundManager;
     }
 
     public abstract void Update(GameTime gameTime, InputState inputState);

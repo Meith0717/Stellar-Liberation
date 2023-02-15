@@ -3,31 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Newtonsoft.Json;
 
 namespace rache_der_reti.Core.InputManagement
 {
-    [Serializable]
     public class InputManager
     {
         // Dictionary which contains actions for key inputs.
-        [JsonProperty] private Dictionary<Keys, ActionType> mKeyBindingsKeyboardPressed, mKeyBindingsKeyboardHold;
-        [JsonProperty] private readonly Dictionary<MouseActionType, ActionType> mKeyBindingsMouse;
+        private Dictionary<Keys, ActionType> mKeyBindingsKeyboardPressed, mKeyBindingsKeyboardHold;
+        private readonly Dictionary<MouseActionType, ActionType> mKeyBindingsMouse;
 
         // Attributes keyboard. new.
-        [JsonProperty] private Keys[] mCurrentKeysPressed, mPreviousKeysPressed;
+        private Keys[] mCurrentKeysPressed, mPreviousKeysPressed;
 
         // private KeyEvent mKeyEvent;
-        [JsonProperty] private readonly Dictionary<Keys, KeyEventType> mKeysKeyEventTypes;
+        private readonly Dictionary<Keys, KeyEventType> mKeysKeyEventTypes;
 
         // Attributes mouse.
-        [JsonProperty] private MouseState mCurrentMouseState, mPreviousMouseState;
-        [JsonProperty] private Point mCurrentMousePosition;
-        [JsonProperty] private int mCurrentMouseWheelValue, mPreviousMouseWheelValue;
-        [JsonProperty] private Point mMouseRectangleStart, mMouseRectangleEnd;
+        private MouseState mCurrentMouseState, mPreviousMouseState;
+        private Point mCurrentMousePosition;
+        private int mCurrentMouseWheelValue, mPreviousMouseWheelValue;
+        private Point mMouseRectangleStart, mMouseRectangleEnd;
 
         // InputState contains all the actions made by the player and mouse position.
-        [JsonProperty] private readonly InputState mInputState;
+        private readonly InputState mInputState;
 
         // Constructor.
         public InputManager()
