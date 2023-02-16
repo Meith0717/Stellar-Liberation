@@ -14,8 +14,8 @@ public class UiElementOption : UiElementList
     public UiElementOption(string optionsDescriptor, string[] options) : base(false)
     {
         mOptions = options;
-        mOptionsDescriptorText = new UiElementText(optionsDescriptor);
-        mOptionsText = new UiElementText(mOptions[mOptionsIndex]);
+        mOptionsDescriptorText = new UiElementText(optionsDescriptor, "text");
+        mOptionsText = new UiElementText(mOptions[mOptionsIndex], "text");
 
         ChildElements.Add(mOptionsDescriptorText);
         ChildElements.Add(mOptionsText);

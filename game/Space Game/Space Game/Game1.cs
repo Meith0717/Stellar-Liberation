@@ -56,11 +56,24 @@ namespace Space_Game
             mTextureManager.SetSpriteBatch(mSpriteBatch);
 
             mSoundManager.LoadContent(Content, new List<string> { "quack" });
-            mTextureManager.LoadTexture("star", "star");
+
+            // Load Star Textures
+            mTextureManager.LoadTexture("sunTypeB", "GameObjects/Stars/sunTypeB");
+            mTextureManager.LoadTexture("sunTypeBHover", "GameObjects/Stars/sunTypeBHover");
+            mTextureManager.LoadTexture("sunTypeF", "GameObjects/Stars/sunTypeF");
+            mTextureManager.LoadTexture("sunTypeFHover", "GameObjects/Stars/sunTypeFHover");
+            mTextureManager.LoadTexture("sunTypeG", "GameObjects/Stars/sunTypeG");
+            mTextureManager.LoadTexture("sunTypeGHover", "GameObjects/Stars/sunTypeGHover");
+            mTextureManager.LoadTexture("sunTypeK", "GameObjects/Stars/sunTypeK");
+            mTextureManager.LoadTexture("sunTypeKHover", "GameObjects/Stars/sunTypeKHover");
+            mTextureManager.LoadTexture("sunTypeM", "GameObjects/Stars/sunTypeM");
+            mTextureManager.LoadTexture("sunTypeMHover", "GameObjects/Stars/sunTypeMHover");
+
             mTextureManager.LoadTexture("spaceship", "spaceship");
-            mTextureManager.LoadTexture("nebula", "nebula");
             // game fonts
-            mTextureManager.LoadSpriteTexture("hud", "fonts/hud");
+            mTextureManager.LoadSpriteTexture("text", "fonts/text");
+            mTextureManager.LoadSpriteTexture("title", "fonts/title");
+
 
             Globals.mLayerManager = mLayerManager = new LayerManager(this, GraphicsDevice, mSpriteBatch, Content, mSoundManager);
         }
@@ -68,8 +81,9 @@ namespace Space_Game
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            {
                 Exit();
-
+            }
             // TODO: Add your update logic here
             // handle window resize
             if (mResulutionWasResized)
@@ -77,7 +91,8 @@ namespace Space_Game
                 mLayerManager.OnResolutionChanged();
             }
             InputState inputState = mInputManager.Update();
-            mLayerManager.Update(gameTime, inputState, Window, mGraphicsDeviceManager);
+
+        mLayerManager.Update(gameTime, inputState, Window, mGraphicsDeviceManager);
             base.Update(gameTime);
         }
 

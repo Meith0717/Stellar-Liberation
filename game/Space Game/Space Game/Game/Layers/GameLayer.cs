@@ -20,35 +20,40 @@ namespace Space_Game.Game.Layers
     [Serializable]
     public class GameLayer : Layer
     {
-        private UiElementSprite mBackground;
         [JsonProperty] private Camera2d mCamera2d;
         private List<PlanetSystem> mPlanetSystemList; 
 
         public GameLayer() : base()
         {
-            mBackground = new UiElementSprite("nebula");
-            mBackground.BackgroundColor = Color.Black;
-            mBackground.BackgroundAlpha = 0.65f;
-            mBackground.mSpriteFit = UiElementSprite.SpriteFit.Cover;
             mCamera2d = new(mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
+            mCamera2d.SetPosition(Vector2.Zero);
             mPlanetSystemList = new List<PlanetSystem>();
-            for (int x = -50; x <= 50; x++)
-            {
-                for (int y = -50; y <= 50; y++)
-                {
-                    if (Globals.mRandom.NextDouble() < 0.1d)
-                    {
-                        var newX = x * 50 + Globals.mRandom.Next(-40, 40);
-                        var newY = y * 50 + Globals.mRandom.Next(-40, 40);
 
-                        mPlanetSystemList.Add(new PlanetSystem(new Vector2(newX, newY)));
+            double probability = 1;
+            int startAmount = 10000;
+            double radius = 1000;
+            float psi = 0f;
+
+            while (startAmount > 0)
+            {
+                if (Globals.mRandom.NextDouble() <= probability)
+                {
+                    if (Globals.mRandom.NextDouble() <= 0.2) 
+                    {
+                        float newX = ((float)radius + Globals.mRandom.Next(-25, 25)) * MathF.Cos(psi);
+                        float newY = ((float)radius + Globals.mRandom.Next(-25, 25)) * MathF.Sin(psi);
+                        Vector2 newPosition = new Vector2(newX, newY);
+                        mPlanetSystemList.Add(new PlanetSystem(newPosition));
                     }
                 }
+                radius += 0.5;
+                psi += 0.05f;
+                startAmount--;
             }
         }
+
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mBackground.Update(new Rectangle(0, 0, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height));
             mCamera2d.Update(gameTime, inputState);
             foreach (PlanetSystem planetSystem in mPlanetSystemList)
             {
@@ -57,10 +62,6 @@ namespace Space_Game.Game.Layers
         }
         public override void Draw()
         {
-            mSpriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            mBackground.Render();
-            mSpriteBatch.End();
-
             mSpriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: mCamera2d.GetViewTransformationMatrix(), samplerState: SamplerState.PointClamp);
             foreach (PlanetSystem planetSystem in mPlanetSystemList)
             {

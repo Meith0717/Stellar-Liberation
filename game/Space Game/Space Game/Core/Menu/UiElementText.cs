@@ -5,12 +5,13 @@ namespace rache_der_reti.Core.Menu;
 
 public class UiElementText : UiElement
 {
-    private string Font { get; } = "hud";
+    public string Font;
     internal Color FontColor { get; set; } = Color.Black;
     internal string mText;
 
-    public UiElementText(string text)
+    public UiElementText(string text, string font)
     {
+        Font = font;
         UpdateText(text);
     }
 
