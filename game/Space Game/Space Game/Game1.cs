@@ -22,6 +22,10 @@ namespace Space_Game
         private LayerManager mLayerManager;
         private TextureManager mTextureManager;
 
+        private int mWidth;
+        private int mHeight;
+        private bool mIsFullScreen;
+
         private bool mResulutionWasResized;
 
         public Game1()
@@ -59,15 +63,13 @@ namespace Space_Game
 
             // Load Star Textures
             mTextureManager.LoadTexture("sunTypeB", "GameObjects/Stars/sunTypeB");
-            mTextureManager.LoadTexture("sunTypeBHover", "GameObjects/Stars/sunTypeBHover");
             mTextureManager.LoadTexture("sunTypeF", "GameObjects/Stars/sunTypeF");
-            mTextureManager.LoadTexture("sunTypeFHover", "GameObjects/Stars/sunTypeFHover");
             mTextureManager.LoadTexture("sunTypeG", "GameObjects/Stars/sunTypeG");
-            mTextureManager.LoadTexture("sunTypeGHover", "GameObjects/Stars/sunTypeGHover");
             mTextureManager.LoadTexture("sunTypeK", "GameObjects/Stars/sunTypeK");
-            mTextureManager.LoadTexture("sunTypeKHover", "GameObjects/Stars/sunTypeKHover");
             mTextureManager.LoadTexture("sunTypeM", "GameObjects/Stars/sunTypeM");
-            mTextureManager.LoadTexture("sunTypeMHover", "GameObjects/Stars/sunTypeMHover");
+
+            // Load Planet Textures
+            mTextureManager.LoadTexture("Planet", "GameObjects/Planets/Planet");
 
             mTextureManager.LoadTexture("spaceship", "spaceship");
             // game fonts
@@ -108,7 +110,34 @@ namespace Space_Game
         // Some Stuff
         public void ToggleFullscreen()
         {
-            throw new System.NotImplementedException();
+            if (mIsFullScreen)
+            {
+                UnSetFullscreen();
+            }
+            else
+            {
+                SetFullscreen();
+            }
+            mIsFullScreen = !mIsFullScreen;
+        }
+
+        private void SetFullscreen()
+        {
+            mWidth = Window.ClientBounds.Width;
+            mHeight = Window.ClientBounds.Height;
+
+            mGraphicsDeviceManager.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            mGraphicsDeviceManager.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            mGraphicsDeviceManager.IsFullScreen = true;
+            mGraphicsDeviceManager.ApplyChanges();
+        }
+
+        private void UnSetFullscreen()
+        {
+            mGraphicsDeviceManager.PreferredBackBufferWidth = mWidth;
+            mGraphicsDeviceManager.PreferredBackBufferHeight = mHeight;
+            mGraphicsDeviceManager.IsFullScreen = false;
+            mGraphicsDeviceManager.ApplyChanges();
         }
     }
 }

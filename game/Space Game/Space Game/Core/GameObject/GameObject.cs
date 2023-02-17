@@ -20,7 +20,6 @@ namespace Space_Game.Core.GameObject
         [JsonProperty] public string TextureId;
         [JsonProperty] public int TextureWidth;
         [JsonProperty] public int TextureHeight;
-        [JsonProperty] public int Scale;
         // Hover Stuff
         [JsonProperty] public bool Hover;
         [JsonProperty] public CircleF HoverBox;

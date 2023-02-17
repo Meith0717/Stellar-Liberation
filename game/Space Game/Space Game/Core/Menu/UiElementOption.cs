@@ -23,37 +23,6 @@ public class UiElementOption : UiElementList
         SetMargin(5);
     }
 
-/*
-    public void ChangeOptionsIndex(int index)
-    {
-        mOptionsIndex = index;
-        mOptionsText.UpdateText(mOptions[mOptionsIndex]);
-    }
-*/
-/*
-    public void ChangeOptionsIndex(string option)
-    {
-        int i = 0;
-        while (i < mOptions.Length)
-        {
-            if (mOptions[i] == option)
-            {
-                break;
-            }
-            i++;
-        }
-        i %= mOptions.Length;
-        mOptionsText.UpdateText(mOptions[i]);
-    }
-*/
-
-/*
-    public string GetSelectedOption()
-    {
-        return mOptions[mOptionsIndex];
-    }
-*/
-
     public override void HandleInput(InputState inputState)
     {
         base.HandleInput(inputState);

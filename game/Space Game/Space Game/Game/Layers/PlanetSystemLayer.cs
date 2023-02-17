@@ -19,6 +19,7 @@ namespace Space_Game.Game.Layers
         private UiElementList mRootList;
         private PlanetSystem mPlanetSystem;
 
+
         public PlanetSystemLayer(PlanetSystem planetSystem) : base()
         {
             UpdateBelow = true;
@@ -55,8 +56,15 @@ namespace Space_Game.Game.Layers
 
             mSpriteBatch.Begin(samplerState: SamplerState.PointClamp);
             mRoot.Render();
-            TextureManager.GetInstance().Draw(mPlanetSystem.NormalTextureId,
-                screenCenter - mPlanetSystem.Offset);
+
+            TextureManager.GetInstance().Draw(mPlanetSystem.TextureId, screenCenter - mPlanetSystem.Offset * 10,
+                mPlanetSystem.TextureWidth * 10, mPlanetSystem.TextureHeight * 10);
+
+            foreach (Planet planet in mPlanetSystem.mPlanetList)
+            {
+                planet.SetPosition(screenCenter);
+                planet.Draw();
+            }
             mSpriteBatch.End();
         }
         public override void Destroy() { }

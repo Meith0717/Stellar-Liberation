@@ -27,6 +27,7 @@ namespace Space_Game.Game.Layers
         {
             mCamera2d = new(mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
             mCamera2d.SetPosition(Vector2.Zero);
+            Globals.mCamera2d = mCamera2d;
             mPlanetSystemList = new List<PlanetSystem>();
 
             double probability = 1;
@@ -57,7 +58,7 @@ namespace Space_Game.Game.Layers
             mCamera2d.Update(gameTime, inputState);
             foreach (PlanetSystem planetSystem in mPlanetSystemList)
             {
-                planetSystem.Update(gameTime , inputState, mCamera2d);
+                planetSystem.Update(gameTime, inputState, mCamera2d);
             }
         }
         public override void Draw()

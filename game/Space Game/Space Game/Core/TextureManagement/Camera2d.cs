@@ -1,36 +1,65 @@
 using System;
-using System.Linq;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended.Timers;
-using Newtonsoft.Json;
 using rache_der_reti.Core.InputManagement;
 
 namespace rache_der_reti.Core.TextureManagement;
-[Serializable]
 public class Camera2d
 {
-    [JsonProperty] private float mZoom = 1.0f;
-    [JsonProperty] private float mMaxZoom = 0.1f;
-    [JsonProperty] private float mMimZoom = 3;
-    [JsonProperty] public Vector2 mPosition;
-    [JsonProperty] private int mWidth;
-    [JsonProperty] private int mHeight;
+    const float mMaxZoom = 0.1f;
+    const float mMimZoom = 5;
+
+    public float mZoom = 1.0f;
+    public float mTargetZoom;
+    public Vector2 mPosition;
+    public Vector2 mTargetPosition;
+
+    private int mWidth;
+    private int mHeight;
+
+    private bool mZoomAnimation;
 
     // matrix variables
-    [JsonProperty] private Matrix mTransform = Matrix.Identity;
-    [JsonProperty] private bool mViewTransformationMatrixChanged = true;
+    private Matrix mTransform = Matrix.Identity;
+    private bool mViewTransformationMatrixChanged = true;
 
     // animation stuff
-    [JsonProperty] private float[] mAnimationX;
-    [JsonProperty] private float[] mAnimationY;
-    [JsonProperty] private int mAnimationIndex;
-    [JsonProperty] private Vector2 mPositionBeforeAnimation;
+    private float[] mAnimationX;
+    private float[] mAnimationY;
+    private int mAnimationIndex;
+    private Vector2 mPositionBeforeAnimation;
 
     public Camera2d(int width, int height)
     {
+        mZoom = mTargetZoom = 1f;
+        mZoomAnimation = false;
         mWidth = width;
         mHeight = height;
         mPosition = new Vector2(mWidth / 2f, mHeight / 2f);
+    }
+
+    public void MoveAnimation(GameTime gameTime)
+    {
+        Vector2 adjustmentVector = Vector2.Subtract(mTargetPosition, mPosition);
+        mPosition += adjustmentVector / 5;
+        SetPosition(mPosition);
+    }
+
+    public void ZoomAnimation(GameTime gameTime)
+    {
+        if (!mZoomAnimation) return;
+        if (Math.Abs(mZoom - mTargetZoom) <= 0.2)
+        {
+            mZoom = mTargetZoom;
+            mZoomAnimation = false;
+        }
+        if (mZoom < mTargetZoom)
+        {
+            mZoom += 0.2f;
+        }
+        if (mZoom > mTargetZoom)
+        {
+            mZoom -= 0.2f;
+        }
     }
 
     public void SetPosition(Vector2 position)
@@ -42,22 +71,22 @@ public class Camera2d
     }
 
     private void MoveCamera(InputState inputState)
-    {
+    {   
         if (inputState.mActionList.Contains(ActionType.CameraUp))
         {
-            mPosition += new Vector2(0, -5);
+            mTargetPosition += new Vector2(0, -5);
         }
         if (inputState.mActionList.Contains(ActionType.CameraDown))
         {
-            mPosition += new Vector2(0, 5);
+            mTargetPosition += new Vector2(0, 5);
         }
         if (inputState.mActionList.Contains(ActionType.CameraLeft))
         {
-            mPosition += new Vector2(-5, 0);
+            mTargetPosition += new Vector2(-5, 0);
         }
         if (inputState.mActionList.Contains(ActionType.CameraRight))
         {
-            mPosition += new Vector2(5, 0);
+            mTargetPosition += new Vector2(5, 0);
         }
     }
 
@@ -65,19 +94,19 @@ public class Camera2d
     {
         // adjust zoom
         int zoom = 0;
-        if (inputState.mActionList.Contains(ActionType.CameraZoomIn) && mZoom < mMimZoom)
+        if (inputState.mActionList.Contains(ActionType.CameraZoomIn) && mZoom + 0.0011 < mMimZoom)
         {
             zoom += 1;
         }
-        if (inputState.mActionList.Contains(ActionType.CameraZoomOut) && mZoom > mMaxZoom)
+        if (inputState.mActionList.Contains(ActionType.CameraZoomOut) && mZoom - 0.0011 > mMaxZoom)
         {
             zoom -= 1;
         }
-        if (inputState.mActionList.Contains(ActionType.CameraZoomInFast) && mZoom < mMimZoom)
+        if (inputState.mActionList.Contains(ActionType.CameraZoomInFast) && mZoom + 0.0041 < mMimZoom)
         {
             zoom += 4;
         }
-        if (inputState.mActionList.Contains(ActionType.CameraZoomOutFast) && mZoom > mMaxZoom)
+        if (inputState.mActionList.Contains(ActionType.CameraZoomOutFast) && mZoom - 0.0041 > mMaxZoom)
         {
             zoom -= 4;
         }
@@ -89,7 +118,8 @@ public class Camera2d
 
     public void SetZoom(float zoom)
     {
-        mZoom = zoom;
+        mTargetZoom = zoom;
+        mZoomAnimation = true;
         mViewTransformationMatrixChanged = true;
     }
 
@@ -125,6 +155,8 @@ public class Camera2d
     {
         AdjustZoom(gameTime, inputState);
         MoveCamera(inputState);
+        MoveAnimation(gameTime);
+        ZoomAnimation(gameTime);
         // play animation if there is one
         if (mAnimationX != null)
         {
@@ -142,7 +174,6 @@ public class Camera2d
             }
         }
 
-        SetPosition(mPosition);
         mViewTransformationMatrixChanged = true;
     }
 

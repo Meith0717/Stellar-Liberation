@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using rache_der_reti.Core.InputManagement;
 using rache_der_reti.Core.LayerManagement;
 using rache_der_reti.Core.SoundManagement;
+using rache_der_reti.Core.TextureManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +20,6 @@ namespace Space_Game.Core
         public static ContentManager mContentManager;   // Will not be saved
         public static SoundManager mSoundManager;       // Will not be saved
         public static Random mRandom;
+        public static Camera2d mCamera2d;
     }
 }
