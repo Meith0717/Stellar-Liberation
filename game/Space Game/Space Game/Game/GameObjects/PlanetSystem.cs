@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using Newtonsoft.Json;
 using rache_der_reti.Core.InputManagement;
@@ -17,7 +16,9 @@ namespace Space_Game.Game.GameObjects
     {
         const int textureHeight = 512;
         const int textureWidth = 512;
-        const int scale = 16;
+        const int scale = 1;
+
+        private bool mSelectable;
 
         [JsonProperty] public List<Planet> mPlanetList = new();
         [JsonProperty] public StarType mStartype;
@@ -71,27 +72,42 @@ namespace Space_Game.Game.GameObjects
                     }
             }
   
-            mPlanetList.Add(new Planet(150, 50));
-            mPlanetList.Add(new Planet(200, 90));
-            mPlanetList.Add(new Planet(250, 180));
+            for (int i = 0; i < Globals.mRandom.Next(1, 5); i++)
+            {
+                mPlanetList.Add(new Planet(150 + 70 * i, Globals.mRandom.Next(0, 360)));
+            }
 
         }
 
         public override void Update(GameTime gameTime, InputState inputState, Camera2d camera2d)
         {
             this.ManageHover(inputState, camera2d.ViewToWorld(inputState.mMousePosition.ToVector2()), Clicked);
+            if (Globals.mCamera2d.mZoom >= Globals.mCamera2d.mMimZoom
+                && HoverBox.Contains(Globals.mCamera2d.mPosition))
+            {
+                mSelectable = true;
+                return;
+            }
+            if (mSelectable) { mSelectable = false; }
         }
 
         public override void Draw()
         {
             TextureManager.GetInstance().Draw(TextureId, Position - Offset, TextureWidth, TextureHeight);
+            if (Hover && mSelectable)
+            {
+                TextureManager.GetInstance().DrawString("text", Position + Offset, "Name", Color.White);
+            }
         }
 
         public void Clicked()
         {
             Globals.mCamera2d.mTargetPosition = Position;
-            Globals.mCamera2d.SetZoom(5);
-            Globals.mLayerManager.AddLayer(new PlanetSystemLayer(this));
+            Globals.mCamera2d.SetZoom(Globals.mCamera2d.mMimZoom);
+            if (mSelectable)
+            {
+                Globals.mLayerManager.AddLayer(new PlanetSystemLayer(this));
+            }
         }
     }
 }

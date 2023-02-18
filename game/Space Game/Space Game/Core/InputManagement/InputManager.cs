@@ -49,6 +49,8 @@ namespace rache_der_reti.Core.InputManagement
                 { Keys.A, ActionType.CameraLeft },
                 { Keys.W, ActionType.CameraUp },
                 { Keys.S, ActionType.CameraDown },
+                { Keys.Q, ActionType.CameraZoomInFast },
+                { Keys.E, ActionType.CameraZoomOutFast }
             };
 
 

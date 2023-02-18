@@ -82,7 +82,13 @@ public class TextureManager
     {
         mSpriteBatch.Draw(GetTexture(id), new Rectangle((int)position.X, (int)position.Y, width, height), Color.White);
     }
-    
+
+    public void Draw(string id, Vector2 position, Vector2 offset, float rotation, int width, int height)
+    {
+        mSpriteBatch.Draw(GetTexture(id), new Rectangle((int)position.X, (int)position.Y, width, height), null, Color.White, rotation,
+            offset, SpriteEffects.None, 0);
+    }
+
     // ReSharper disable once UnusedMember.Global
     public void Draw(string id, Vector2 position, int width, int height, float objectY, bool flip = false)
     {

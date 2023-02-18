@@ -13,6 +13,7 @@ using Space_Game.Core;
 using Space_Game.Game.GameObjects;
 using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata;
 using System.Runtime.ExceptionServices;
 
 namespace Space_Game.Game.Layers
@@ -30,26 +31,18 @@ namespace Space_Game.Game.Layers
             Globals.mCamera2d = mCamera2d;
             mPlanetSystemList = new List<PlanetSystem>();
 
-            double probability = 1;
-            int startAmount = 10000;
-            double radius = 1000;
-            float psi = 0f;
+            int range = 20;
+            int distace = 5000;
 
-            while (startAmount > 0)
+            for (int x = -range * 2; x <= range * 2; x++)
             {
-                if (Globals.mRandom.NextDouble() <= probability)
+                for (int y = -range; y <= range; y++)
                 {
-                    if (Globals.mRandom.NextDouble() <= 0.2) 
-                    {
-                        float newX = ((float)radius + Globals.mRandom.Next(-25, 25)) * MathF.Cos(psi);
-                        float newY = ((float)radius + Globals.mRandom.Next(-25, 25)) * MathF.Sin(psi);
-                        Vector2 newPosition = new Vector2(newX, newY);
-                        mPlanetSystemList.Add(new PlanetSystem(newPosition));
-                    }
+                    float newX = x * distace + Globals.mRandom.Next(-distace/2, distace/2);
+                    float newY = y * distace + Globals.mRandom.Next(-distace/2, distace/2);
+                    Vector2 newPosition = new Vector2(newX, newY);
+                    mPlanetSystemList.Add(new PlanetSystem(newPosition));
                 }
-                radius += 0.5;
-                psi += 0.05f;
-                startAmount--;
             }
         }
 

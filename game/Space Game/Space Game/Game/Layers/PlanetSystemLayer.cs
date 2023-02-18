@@ -24,11 +24,11 @@ namespace Space_Game.Game.Layers
         {
             UpdateBelow = true;
             mPlanetSystem = planetSystem;
-
+        
             // root item
             mRoot = new UiElement();
             mRoot.BackgroundColor = Color.Black;
-            mRoot.BackgroundAlpha = 0.9f;
+            mRoot.BackgroundAlpha = 1f;
             mRootList = new UiElementList(false);
             mRootList.Width = (int)(mGraphicsDevice.Viewport.Width);
             mRootList.Height = (int)(mGraphicsDevice.Viewport.Height);
@@ -57,11 +57,12 @@ namespace Space_Game.Game.Layers
             mSpriteBatch.Begin(samplerState: SamplerState.PointClamp);
             mRoot.Render();
 
-            TextureManager.GetInstance().Draw(mPlanetSystem.TextureId, screenCenter - mPlanetSystem.Offset * 10,
-                mPlanetSystem.TextureWidth * 10, mPlanetSystem.TextureHeight * 10);
+            TextureManager.GetInstance().Draw(mPlanetSystem.TextureId, screenCenter - mPlanetSystem.Offset / 5,
+                mPlanetSystem.TextureWidth / 5, mPlanetSystem.TextureHeight / 5);
 
             foreach (Planet planet in mPlanetSystem.mPlanetList)
             {
+                TextureManager.GetInstance().GetSpriteBatch().DrawCircle(screenCenter, planet.mRadius, 50, Color.DarkGray);
                 planet.SetPosition(screenCenter);
                 planet.Draw();
             }

@@ -13,6 +13,13 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin fonts/smal.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:fonts/smal.spritefont
+
 #begin fonts/text.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

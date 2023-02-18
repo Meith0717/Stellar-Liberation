@@ -75,7 +75,7 @@ namespace Space_Game
             // game fonts
             mTextureManager.LoadSpriteTexture("text", "fonts/text");
             mTextureManager.LoadSpriteTexture("title", "fonts/title");
-
+            mTextureManager.LoadSpriteTexture("smal", "fonts/smal");
 
             Globals.mLayerManager = mLayerManager = new LayerManager(this, GraphicsDevice, mSpriteBatch, Content, mSoundManager);
         }

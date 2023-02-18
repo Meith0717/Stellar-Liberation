@@ -39,7 +39,8 @@ namespace Space_Game.Game.GameObjects
 
         public override void Draw()
         {
-            TextureManager.GetInstance().Draw(TextureId, Position, TextureWidth, TextureHeight);
+            TextureManager.GetInstance().Draw(TextureId,Position, Offset, 180f, TextureWidth, TextureHeight);
+            TextureManager.GetInstance().GetSpriteBatch().DrawCircle(Position+Offset, 4, 4, Color.Red);
         }
 
         public override void Update(GameTime gameTime, InputState inputState, Camera2d camera2d)
