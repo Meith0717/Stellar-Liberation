@@ -5,7 +5,6 @@ using rache_der_reti.Core.InputManagement;
 using rache_der_reti.Core.TextureManagement;
 using Space_Game.Core;
 using Space_Game.Core.GameObject;
-using Space_Game.Game.Layers;
 using System;
 using System.Collections.Generic;
 
@@ -18,11 +17,10 @@ namespace Space_Game.Game.GameObjects
         const int textureWidth = 512;
         const int scale = 1;
 
-        private bool mSelectable;
-
         [JsonProperty] public List<Planet> mPlanetList = new();
         [JsonProperty] public StarType mStartype;
-        [JsonProperty] private CrossHair mCrossHair;
+        private CrossHair mCrossHair;
+        private bool mShowSystem;
 
         public enum StarType
         {
@@ -42,8 +40,8 @@ namespace Space_Game.Game.GameObjects
             Offset = new Vector2(textureHeight, textureWidth) / scale / 2;
             TextureWidth = textureWidth / scale;
             TextureHeight = textureHeight / scale;
-            HoverBox = new CircleF(Position, MathF.Max(TextureWidth/2f, TextureHeight/2f));
-            mCrossHair = new CrossHair(0.4f, position);
+            HoverBox = new CircleF(Position, MathF.Max(TextureWidth/2.5f, TextureHeight/2.5f));
+            mCrossHair = new CrossHair(0.3f, 0.4f, position);
 
             switch (mStartype)
             {
@@ -77,42 +75,48 @@ namespace Space_Game.Game.GameObjects
             int amount = Globals.mRandom.Next(1, 5);
             for (int i = 0; i < amount; i++)
             {
-                mPlanetList.Add(new Planet(350 + 300 * i));
+                mPlanetList.Add(new Planet(250 + 110 * i, position));
             }
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            this.ManageHover(inputState, Globals.mCamera2d.ViewToWorld(inputState.mMousePosition.ToVector2()), Clicked);
+            this.ManageHover(inputState, Clicked, DoubleClicked);
             mCrossHair.Update(gameTime, inputState);
+            mCrossHair.Hover = Hover;
+            foreach (Planet planet in mPlanetList)
+            {
+                planet.Update(gameTime, inputState);
+            }
             if (Globals.mCamera2d.mZoom >= Globals.mCamera2d.mMimZoom - 0.5
                 && HoverBox.Contains(Globals.mCamera2d.mPosition))
             {
-                mSelectable = true;
+                mShowSystem = true;
                 return;
             }
-            if (mSelectable) { mSelectable = false; }
+            if (mShowSystem) { mShowSystem = false; }
         }
 
         public override void Draw()
         {
-            mCrossHair.DrawCrossHair1();
+            mCrossHair.Draw();
             TextureManager.GetInstance().Draw(TextureId, Position - Offset, TextureWidth, TextureHeight);
-            if (Hover && mSelectable)
+            if (!mShowSystem) { return; }
+            foreach (Planet planet in mPlanetList)
             {
-                mCrossHair.DrawCrossHair2();
+                planet.Draw();
             }
+
         }
 
-        public void Clicked()
+        private void Clicked()
         {
             Globals.mCamera2d.mTargetPosition = Position;
+        }
+
+        private void DoubleClicked()
+        {
             Globals.mCamera2d.SetZoom(Globals.mCamera2d.mMimZoom);
-            if (mSelectable)
-            {
-                Globals.mLayerManager.AddLayer(new PlanetSystemLayer(this));
-                Globals.mCamera2d.mZoom = Globals.mCamera2d.mMimZoom;
-            }
         }
     }
 }

@@ -30,6 +30,8 @@ namespace rache_der_reti.Core.InputManagement
         None,
         LeftClick,
         RightClick,
+        LeftClickDouble,
+        RightClickDouble,
         LeftClickHold,
         RightClickHold,
         LeftClickReleased,

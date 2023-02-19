@@ -19,11 +19,14 @@ namespace Space_Game.Game.GameObjects
         const int textureWidth = 512;
 
         // Some Variables
-        [JsonProperty] private int mRadius;
         [JsonProperty] private double mAddAllois;
         [JsonProperty] private double mAddEnergy;
         [JsonProperty] private double mAddCrystals;
         [JsonProperty] private PlanetType mPlanetType;
+        
+        // Hover
+        private CrossHair mCrossHair;
+
 
         // Type Enumerartion
         public enum PlanetType
@@ -34,15 +37,21 @@ namespace Space_Game.Game.GameObjects
             Y
         }
 
-        public Planet(int radius) 
+        public Planet(int radius, Vector2 CenterPosition) 
         {
+            float newX = radius * MathF.Cos(0);
+            float newY = radius * MathF.Sin(0);
+
             // Set rabdom Type 
             Array starTypes = Enum.GetValues(typeof(PlanetType));
             mPlanetType = (PlanetType)starTypes.GetValue(Globals.mRandom.Next(starTypes.Length));
 
             // Inizialize some Stuff
-            mRadius = radius; TextureHeight = textureHeight; TextureWidth = textureWidth;
+            TextureHeight = textureHeight; TextureWidth = textureWidth;
             Offset = new Vector2(textureWidth, textureHeight) / 2;
+            Position = new Vector2(newX, newY) + CenterPosition;
+            HoverBox = new CircleF(Position, MathF.Max(textureWidth / 10f, textureHeight / 10f));
+            mCrossHair = new CrossHair(0.07f, 0.095f, Position);
 
             // Inizialize Type Stuff
             switch (mPlanetType)
@@ -84,10 +93,14 @@ namespace Space_Game.Game.GameObjects
 
         public override void Draw()
         {
+            mCrossHair.Draw();
+
             // Draw Planet
             var planet = TextureManager.GetInstance().GetTexture(TextureId);
-            TextureManager.GetInstance().GetSpriteBatch().Draw(planet, Position, null, Color.White,0, Offset, 0.1f, SpriteEffects.None, 0.0f);
+            TextureManager.GetInstance().GetSpriteBatch().Draw(planet, Position, null, Color.White,0,
+                Offset, 0.1f, SpriteEffects.None, 0.0f);
 
+            if (!Hover) { return; }
             // Show Recources
             string[] array = new string[] {$"Alloys: +{mAddAllois}", $"Energy: +{mAddEnergy}", $"Crystals: +{mAddCrystals}"};
             for ( int i = 0; i < array.Length; i++)
@@ -98,8 +111,9 @@ namespace Space_Game.Game.GameObjects
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            // Update Position after Window size has changed
-            Position = new Vector2(mRadius, Globals.mGraphicsDevice.Viewport.Height / 2);
+            this.ManageHover(inputState, null);
+            mCrossHair.Update(gameTime, inputState);
+            mCrossHair.Hover = Hover;
         }
     }
 }

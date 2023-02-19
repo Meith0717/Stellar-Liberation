@@ -5,10 +5,10 @@ using rache_der_reti.Core.InputManagement;
 namespace rache_der_reti.Core.TextureManagement;
 public class Camera2d
 {
-    public float mMaxZoom = 0.0001f;
-    public float mMimZoom = 1;
+    public float mMaxZoom = 0.005f;
+    public float mMimZoom = 1f;
 
-    public float mZoom = 0.5f;
+    public float mZoom = 1f;
     public float mTargetZoom;
     public Vector2 mPosition;
     public Vector2 mTargetPosition;
@@ -69,19 +69,19 @@ public class Camera2d
     {   
         if (inputState.mActionList.Contains(ActionType.CameraUp))
         {
-            mTargetPosition += new Vector2(0, -100);
+            mTargetPosition += new Vector2(0, -50 / mZoom * 0.5f);
         }
         if (inputState.mActionList.Contains(ActionType.CameraDown))
         {
-            mTargetPosition += new Vector2(0, 100);
+            mTargetPosition += new Vector2(0, 50 / mZoom * 0.5f);
         }
         if (inputState.mActionList.Contains(ActionType.CameraLeft))
         {
-            mTargetPosition += new Vector2(-100, 0);
+            mTargetPosition += new Vector2(-50 / mZoom * 0.5f, 0);
         }
         if (inputState.mActionList.Contains(ActionType.CameraRight))
         {
-            mTargetPosition += new Vector2(100, 0);
+            mTargetPosition += new Vector2(50 / mZoom * 0.5f, 0);
         }
     }
 

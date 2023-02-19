@@ -24,6 +24,9 @@ namespace rache_der_reti.Core.InputManagement
         private int mCurrentMouseWheelValue, mPreviousMouseWheelValue;
         private Point mMouseRectangleStart, mMouseRectangleEnd;
 
+        private double mDalay = 0;
+        private bool mLeftButtonKlicked = false;
+
         // InputState contains all the actions made by the player and mouse position.
         private readonly InputState mInputState;
 
@@ -80,7 +83,15 @@ namespace rache_der_reti.Core.InputManagement
                 if (!(IsLeftMouseButtonDown()))
                 {
                     mInputState.mMouseActionType = MouseActionType.LeftClick;
-
+                    if (mLeftButtonKlicked)
+                    {
+                        mLeftButtonKlicked = false;
+                        mInputState.mMouseActionType = MouseActionType.LeftClickDouble;
+                    } 
+                    else
+                    {
+                        mLeftButtonKlicked = true;
+                    }
                     // Start location for rectangle
                     mMouseRectangleStart = mCurrentMousePosition;
                 }
@@ -264,8 +275,10 @@ namespace rache_der_reti.Core.InputManagement
         }
 
         // Updates all the inputs and returns actions and mouse position in InputState.
-        public InputState Update()
+        public InputState Update(GameTime gameTime)
         {
+            mDalay += gameTime.ElapsedGameTime.Milliseconds;
+            if (mDalay > 750) { mDalay = 0; mLeftButtonKlicked = false; }
             SavePreviousMouseState();
             SavePreviousKeyState();
             ClearActionList();

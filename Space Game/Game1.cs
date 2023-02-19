@@ -10,6 +10,7 @@ using Space_Game.Game.GameObjects;
 using Space_Game.Game.Layers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Space_Game
 {
@@ -77,10 +78,16 @@ namespace Space_Game
             // Load CrossHair
             mTextureManager.LoadTexture("crossHair1", "GameObjects/crossHair/crossHair1");
             mTextureManager.LoadTexture("crossHair2", "GameObjects/crossHair/crossHair2");
+            mTextureManager.LoadTexture("crossHair1green", "GameObjects/crossHair/crossHair1green");
+            mTextureManager.LoadTexture("crossHair2green", "GameObjects/crossHair/crossHair2green");
+
 
             // Load other STuff
             mTextureManager.LoadTexture("gameBackground", "gameBackground");
             mTextureManager.LoadTexture("Galaxy", "Galaxy");
+            mTextureManager.LoadTexture("ship", "GameObjects/Ships/ship");
+            mTextureManager.LoadTexture("shipHover", "GameObjects/Ships/shipHover");
+
 
 
             // game fonts
@@ -103,10 +110,10 @@ namespace Space_Game
             {
                 mLayerManager.OnResolutionChanged();
             }
-            InputState inputState = mInputManager.Update();
+            InputState inputState = mInputManager.Update(gameTime);
             mLayerManager.Update(gameTime, inputState, Window, mGraphicsDeviceManager);
-            System.Diagnostics.Debug.WriteLine(inputState.mMousePosition);
             base.Update(gameTime);
+            Debug.WriteLine(inputState.mMousePosition);
         }
 
         protected override void Draw(GameTime gameTime)

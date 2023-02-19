@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using rache_der_reti.Core.InputManagement;
 using rache_der_reti.Core.LayerManagement;
 using rache_der_reti.Core.Menu;
+using rache_der_reti.Game.Layers;
 using Space_Game.Core;
 using Space_Game.Game.GameObjects;
 using System;
@@ -14,17 +15,30 @@ namespace Space_Game.Game.Layers
     [Serializable]
     public class GameLayer : Layer
     {
+        [JsonIgnore] public HudLayer mHudLayer;
+
         [JsonProperty] private PlanetSystem mHomeSystem;
-        private List<PlanetSystem> mPlanetSystemList;
+        [JsonProperty] public double mPassedSeconds;
+        [JsonProperty] private List<PlanetSystem> mPlanetSystemList = new();
+        [JsonProperty] private List<Ship> mShipList = new();
+
+        // Recources
+        [JsonProperty] public double mAlloys;
+        [JsonProperty] public double mEnergy;
+        [JsonProperty] public double mCrystals;
+        
         private UiElementSprite mBackground;
+        
 
         public GameLayer() : base()
         {
             mBackground = new UiElementSprite("gameBackground");
             mBackground.mSpriteFit = UiElementSprite.SpriteFit.Cover;
 
+            mHudLayer = new HudLayer();
             mPlanetSystemList = new List<PlanetSystem>();
             Globals.mCamera2d = new(mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
+            Globals.mGameLayer = this;
 
             var startRadius = 0;
             var radAmount = 55;
@@ -58,16 +72,23 @@ namespace Space_Game.Game.Layers
             int random = Globals.mRandom.Next(mPlanetSystemList.Count);
             mHomeSystem = mPlanetSystemList[random];
             Globals.mCamera2d.mTargetPosition = mHomeSystem.Position;
-
+            mShipList.Add(new Ship(mHomeSystem.Position + 
+                new Vector2(Globals.mRandom.Next(-500, 500), Globals.mRandom.Next(-500, 500))));
             OnResolutionChanged();
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            mPassedSeconds += gameTime.ElapsedGameTime.Milliseconds / 1000d;
             Globals.mCamera2d.Update(gameTime, inputState);
+            mHudLayer.Update(gameTime, inputState);
             foreach (PlanetSystem planetSystem in mPlanetSystemList)
             {
                 planetSystem.Update(gameTime, inputState);
+            }
+            foreach (Ship ship in mShipList)
+            {
+                ship.Update(gameTime, inputState);
             }
         }
         public override void Draw()
@@ -82,7 +103,12 @@ namespace Space_Game.Game.Layers
             {
                 planetSystem.Draw();
             }
+            foreach (Ship ship in mShipList)
+            {
+                ship.Draw();
+            }
             mSpriteBatch.End();
+            mHudLayer.Draw();
         }
 
         public override void Destroy() { }
