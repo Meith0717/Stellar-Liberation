@@ -13,8 +13,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    env: 
-      working-directory: .game/
+    env:
+      Solution_Name: .game/Space Game.sln
 
     steps:
     - uses: actions/checkout@v3
