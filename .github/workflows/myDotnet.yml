@@ -14,7 +14,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      Solution_Name: .game/Space Game.sln
+      Solution_Name: .game/Space Game/Space Game.csproj
 
     steps:
     - uses: actions/checkout@v3
