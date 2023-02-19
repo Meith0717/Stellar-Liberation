@@ -2,15 +2,15 @@ name: dotnet package
 
 on: [push]
 
-defaults:
-      run:
-        working-directory: ./game
 
 jobs:
 
   build:
 
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./game
+      
     strategy:
       matrix:
         dotnet-version: ['6.0.x' ]
