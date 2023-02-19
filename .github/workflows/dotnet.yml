@@ -11,6 +11,8 @@ on:
 
 jobs:
   build:
+    env:
+      Solution_Name: game\gameSpace Game.sln 
 
     runs-on: ubuntu-latest
 
