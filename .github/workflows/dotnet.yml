@@ -12,7 +12,7 @@ on:
 jobs:
   build:
     env:
-      Solution_Name: Space Game.sln 
+      Solution_Name: SpaceGame\gameSpace Game.sln 
 
     runs-on: ubuntu-latest
 
