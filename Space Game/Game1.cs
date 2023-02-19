@@ -74,6 +74,10 @@ namespace Space_Game
             mTextureManager.LoadTexture("planetTypeM", "GameObjects/Planets/planetTypeM");
             mTextureManager.LoadTexture("planetTypeY", "GameObjects/Planets/planetTypeY");
 
+            // Load CrossHair
+            mTextureManager.LoadTexture("crossHair1", "GameObjects/crossHair/crossHair1");
+            mTextureManager.LoadTexture("crossHair2", "GameObjects/crossHair/crossHair2");
+
             // Load other STuff
             mTextureManager.LoadTexture("gameBackground", "gameBackground");
             mTextureManager.LoadTexture("Galaxy", "Galaxy");

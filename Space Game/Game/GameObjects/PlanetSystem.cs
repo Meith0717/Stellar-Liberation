@@ -22,6 +22,7 @@ namespace Space_Game.Game.GameObjects
 
         [JsonProperty] public List<Planet> mPlanetList = new();
         [JsonProperty] public StarType mStartype;
+        [JsonProperty] private CrossHair mCrossHair;
 
         public enum StarType
         {
@@ -41,7 +42,8 @@ namespace Space_Game.Game.GameObjects
             Offset = new Vector2(textureHeight, textureWidth) / scale / 2;
             TextureWidth = textureWidth / scale;
             TextureHeight = textureHeight / scale;
-            HoverBox = new CircleF(Position, MathF.Max(TextureWidth/3.5f, TextureHeight/3.5f));
+            HoverBox = new CircleF(Position, MathF.Max(TextureWidth/2f, TextureHeight/2f));
+            mCrossHair = new CrossHair(0.4f, position);
 
             switch (mStartype)
             {
@@ -82,7 +84,8 @@ namespace Space_Game.Game.GameObjects
         public override void Update(GameTime gameTime, InputState inputState)
         {
             this.ManageHover(inputState, Globals.mCamera2d.ViewToWorld(inputState.mMousePosition.ToVector2()), Clicked);
-            if (Globals.mCamera2d.mZoom >= Globals.mCamera2d.mMimZoom
+            mCrossHair.Update(gameTime, inputState);
+            if (Globals.mCamera2d.mZoom >= Globals.mCamera2d.mMimZoom - 0.5
                 && HoverBox.Contains(Globals.mCamera2d.mPosition))
             {
                 mSelectable = true;
@@ -93,10 +96,11 @@ namespace Space_Game.Game.GameObjects
 
         public override void Draw()
         {
+            mCrossHair.DrawCrossHair1();
             TextureManager.GetInstance().Draw(TextureId, Position - Offset, TextureWidth, TextureHeight);
             if (Hover && mSelectable)
             {
-                TextureManager.GetInstance().GetSpriteBatch().DrawCircle(HoverBox, 100, Color.White, 10, 1);
+                mCrossHair.DrawCrossHair2();
             }
         }
 
@@ -107,6 +111,7 @@ namespace Space_Game.Game.GameObjects
             if (mSelectable)
             {
                 Globals.mLayerManager.AddLayer(new PlanetSystemLayer(this));
+                Globals.mCamera2d.mZoom = Globals.mCamera2d.mMimZoom;
             }
         }
     }

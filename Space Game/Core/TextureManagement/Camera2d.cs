@@ -8,7 +8,7 @@ public class Camera2d
     public float mMaxZoom = 0.0001f;
     public float mMimZoom = 1;
 
-    public float mZoom = 0.01f;
+    public float mZoom = 0.5f;
     public float mTargetZoom;
     public Vector2 mPosition;
     public Vector2 mTargetPosition;

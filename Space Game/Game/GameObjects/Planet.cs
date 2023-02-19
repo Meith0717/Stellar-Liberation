@@ -14,16 +14,18 @@ namespace Space_Game.Game.GameObjects
     [Serializable]
     public class Planet : GameObject
     {
+        // Constants
         const int textureHeight = 512;
         const int textureWidth = 512;
 
+        // Some Variables
         [JsonProperty] private int mRadius;
+        [JsonProperty] private double mAddAllois;
+        [JsonProperty] private double mAddEnergy;
+        [JsonProperty] private double mAddCrystals;
         [JsonProperty] private PlanetType mPlanetType;
-        [JsonProperty] private string mClass;
-        [JsonProperty] public double mAddAllois;
-        [JsonProperty] public double mAddEnergy;
-        [JsonProperty] public double mAddCrystals;
 
+        // Type Enumerartion
         public enum PlanetType
         {
             H,
@@ -32,23 +34,22 @@ namespace Space_Game.Game.GameObjects
             Y
         }
 
-
         public Planet(int radius) 
         {
+            // Set rabdom Type 
             Array starTypes = Enum.GetValues(typeof(PlanetType));
             mPlanetType = (PlanetType)starTypes.GetValue(Globals.mRandom.Next(starTypes.Length));
 
-            mRadius = radius;
+            // Inizialize some Stuff
+            mRadius = radius; TextureHeight = textureHeight; TextureWidth = textureWidth;
             Offset = new Vector2(textureWidth, textureHeight) / 2;
-            TextureHeight = textureHeight;
-            TextureWidth = textureWidth;
 
+            // Inizialize Type Stuff
             switch (mPlanetType)
             {
                 case PlanetType.H:
                     {
                         TextureId = "planetTypeH";
-                        mClass = "H";
                         mAddAllois = 0.1;
                         mAddEnergy = 0.1;
                         mAddCrystals = 0.1;
@@ -57,7 +58,6 @@ namespace Space_Game.Game.GameObjects
                 case PlanetType.J:
                     {
                         TextureId = "planetTypeJ";
-                        mClass = "J";
                         mAddAllois = 0.1;
                         mAddEnergy = 10;
                         mAddCrystals = 2;
@@ -66,7 +66,6 @@ namespace Space_Game.Game.GameObjects
                 case PlanetType.M:
                     {
                         TextureId = "planetTypeM";
-                        mClass = "M";
                         mAddAllois = 5;
                         mAddEnergy = 10;
                         mAddCrystals = 5;
@@ -75,36 +74,31 @@ namespace Space_Game.Game.GameObjects
                 case PlanetType.Y:
                     {
                         TextureId = "planetTypeY";
-                        mClass = "Y";
                         mAddAllois = 15;
                         mAddEnergy = 20;
                         mAddCrystals = 15;
                         break;
                     }
             }
-
-        }
-
-        public void SetNewRadius(int radius)
-        {
-            mRadius = radius;
         }
 
         public override void Draw()
         {
+            // Draw Planet
             var planet = TextureManager.GetInstance().GetTexture(TextureId);
-            TextureManager.GetInstance().GetSpriteBatch().Draw(planet, Position, null, Color.White,
-                0, Offset, 0.2f, SpriteEffects.None, 0.0f);
-            var textPosition = Position + new Vector2(-70, 50);
-            TextureManager.GetInstance().DrawString("text", textPosition, $"Class: {mClass}", Color.White);
-            TextureManager.GetInstance().DrawString("text", textPosition + new Vector2(0, 20), $"Level: 0", Color.White);
-            TextureManager.GetInstance().DrawString("text", textPosition + new Vector2(0, 50), $"Alloys: {mAddAllois}", Color.White);
-            TextureManager.GetInstance().DrawString("text", textPosition + new Vector2(0, 70), $"Energy: {mAddEnergy}", Color.White);
-            TextureManager.GetInstance().DrawString("text", textPosition + new Vector2(0, 90), $"Crystals: {mAddEnergy}", Color.White);
+            TextureManager.GetInstance().GetSpriteBatch().Draw(planet, Position, null, Color.White,0, Offset, 0.1f, SpriteEffects.None, 0.0f);
+
+            // Show Recources
+            string[] array = new string[] {$"Alloys: +{mAddAllois}", $"Energy: +{mAddEnergy}", $"Crystals: +{mAddCrystals}"};
+            for ( int i = 0; i < array.Length; i++)
+            {
+                TextureManager.GetInstance().DrawString("text", Position + new Vector2(-70, 50 + 20 * i), array[i], Color.White);
+            }
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            // Update Position after Window size has changed
             Position = new Vector2(mRadius, Globals.mGraphicsDevice.Viewport.Height / 2);
         }
     }
