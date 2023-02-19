@@ -2,7 +2,12 @@ name: dotnet package
 
 on: [push]
 
+defaults:
+      run:
+        working-directory: ./game
+
 jobs:
+
   build:
 
     runs-on: ubuntu-latest
