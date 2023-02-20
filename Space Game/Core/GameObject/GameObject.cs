@@ -28,23 +28,22 @@ namespace Space_Game.Core.GameObject
 
         // Update Logic
         public abstract void Update(GameTime gameTime, InputState inputState);
-        public void ManageHover(InputState inputState, Action? Clicked, Action? DoubleClicked  = null)
+        public void ManageHover(InputState inputState, Action? OnClicked = null, Action? OnDoubleClicked = null)
         {
             Vector2 mousePosition = Globals.mCamera2d.ViewToWorld(inputState.mMousePosition.ToVector2());
             if (HoverBox.Contains(mousePosition))
             {
                 Hover = true;
-
                 if (inputState.mMouseActionType == MouseActionType.LeftClick)
                 {
-                    if (Clicked == null) { return; }
-                    Clicked();
+                    if (OnClicked == null) { return; }
+                    OnClicked();
                     return;
                 }
                 if (inputState.mMouseActionType == MouseActionType.LeftClickDouble)
                 {
-                    if (DoubleClicked == null) { return; }
-                    DoubleClicked();
+                    if (OnDoubleClicked == null) { return; }
+                    OnDoubleClicked();
                     return;
                 }
                 return;

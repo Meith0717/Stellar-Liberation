@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended;
+using MonoGame.Extended.Timers;
 using Newtonsoft.Json;
 using rache_der_reti.Core.InputManagement;
 using rache_der_reti.Core.TextureManagement;
@@ -7,6 +8,7 @@ using Space_Game.Core;
 using Space_Game.Core.GameObject;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Space_Game.Game.GameObjects
 {
@@ -41,7 +43,7 @@ namespace Space_Game.Game.GameObjects
             TextureWidth = textureWidth / scale;
             TextureHeight = textureHeight / scale;
             HoverBox = new CircleF(Position, MathF.Max(TextureWidth/2.5f, TextureHeight/2.5f));
-            mCrossHair = new CrossHair(0.3f, 0.4f, position);
+            mCrossHair = new CrossHair(0.3f, 0.4f, position, Color.SkyBlue);
 
             switch (mStartype)
             {
@@ -75,26 +77,25 @@ namespace Space_Game.Game.GameObjects
             int amount = Globals.mRandom.Next(1, 5);
             for (int i = 0; i < amount; i++)
             {
-                mPlanetList.Add(new Planet(250 + 110 * i, position));
+                mPlanetList.Add(new Planet(250 + 160 * i, position));
             }
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
             this.ManageHover(inputState, Clicked, DoubleClicked);
-            mCrossHair.Update(gameTime, inputState);
-            mCrossHair.Hover = Hover;
+            mCrossHair.Update(Position, Hover);
             foreach (Planet planet in mPlanetList)
             {
                 planet.Update(gameTime, inputState);
             }
             if (Globals.mCamera2d.mZoom >= Globals.mCamera2d.mMimZoom - 0.5
-                && HoverBox.Contains(Globals.mCamera2d.mPosition))
+                && Vector2.Distance(Position, Globals.mCamera2d.mPosition) < 800)
             {
-                mShowSystem = true;
+                ShowPlanets();
                 return;
             }
-            if (mShowSystem) { mShowSystem = false; }
+            HidePlanets();
         }
 
         public override void Draw()
@@ -117,6 +118,35 @@ namespace Space_Game.Game.GameObjects
         private void DoubleClicked()
         {
             Globals.mCamera2d.SetZoom(Globals.mCamera2d.mMimZoom);
+        }
+
+        private void ShowPlanets()
+        {
+            if (!mShowSystem) { mShowSystem = true; }
+            foreach(Planet planet in mPlanetList)
+            {
+                if (planet.mAlpha >= 255) 
+                { 
+                    return ; 
+                }
+                planet.mAlpha += 5;
+                Debug.WriteLine(planet.mAlpha);
+            }
+        }
+
+        private void HidePlanets()
+        {
+            if (!mShowSystem) { return; }
+            foreach (Planet planet in mPlanetList)
+            {
+                if (planet.mAlpha <= 0)
+                {
+                    mShowSystem = false;
+                    return;
+                }
+                planet.mAlpha -= 5;
+                Debug.WriteLine(planet.mAlpha);
+            }
         }
     }
 }

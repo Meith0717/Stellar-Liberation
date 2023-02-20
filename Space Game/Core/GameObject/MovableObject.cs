@@ -19,7 +19,7 @@ namespace Space_Game.Core.GameObject
 
         public override void Draw()
         {
-            TextureManager.GetInstance().GetSpriteBatch().DrawLine(Position, TargetPoint, new Color(152, 217, 255),  2 / Globals.mCamera2d.mZoom);
+            TextureManager.GetInstance().GetSpriteBatch().DrawLine(Position, TargetPoint, Color.Red,  2 / Globals.mCamera2d.mZoom);
         }
 
         public void SetTarget(Vector2 targetPoint)
@@ -34,17 +34,27 @@ namespace Space_Game.Core.GameObject
         public void Move(GameTime gameTime)
         {
             if (Position == TargetPoint) { return; }
-            if (Vector2.Distance(Position, TargetPoint) <= 10) 
+            if (Vector2.Distance(Position, TargetPoint) <= 5) 
             {
                 Position = TargetPoint;
                 IsMoving = false;
                 return;
             }
+
+            DirectionVector = TargetPoint - Position;
+            DirectionVector.Normalize();
+
             Rotation = (float)Math.Acos(Vector2.Dot(new Vector2(1, 0), DirectionVector) / DirectionVector.Length());
             if (DirectionVector.Y < 0) { Rotation = -Rotation; }
 
             Position += DirectionVector * Velocity * gameTime.ElapsedGameTime.Milliseconds;
             IsMoving = true;
+        }
+
+        public void StopMoving()
+        {
+            IsMoving = false;
+            TargetPoint = Position;
         }
     }
 }

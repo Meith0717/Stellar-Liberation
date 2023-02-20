@@ -33,8 +33,8 @@ namespace Space_Game.Game.GameObjects
             TextureWidth= textureWidth;
             Velocity = 0.01f;
             Offset = new Vector2(TextureWidth, TextureHeight) / 2;
-            mCrossHair = new CrossHair(0.062f, 0.08f, Position);
-            mTargetCrossHair = new CrossHair(0.062f, 0.08f, Position);
+            mCrossHair = new CrossHair(0.062f, 0.08f, Position, Color.Red);
+            mTargetCrossHair = new CrossHair(0.062f, 0.08f, TargetPoint, Color.Red);
             NormalTextureId = "ship";
             HoverTectureId = "shipHover";
         }
@@ -43,13 +43,10 @@ namespace Space_Game.Game.GameObjects
         {
             SetTarget(inputState);
             HoverBox = new CircleF(Position, MathF.Max(TextureHeight / 10f, TextureWidth / 10f));
-            this.ManageHover(inputState, Clicked);
+            this.ManageHover(inputState, Select, this.StopMoving);
             this.Move(gameTime);
-            mCrossHair.Update(gameTime, inputState);
-            mCrossHair.Position = Position;
-            mCrossHair.Hover = Hover;
-            mTargetCrossHair.Update(gameTime, inputState);
-            mTargetCrossHair.Position = TargetPoint;
+            mCrossHair.Update(Position, Hover);
+            mTargetCrossHair.Update(TargetPoint, Hover);
             TextureId = NormalTextureId;
             if (mSelect) {
                 TextureId = HoverTectureId;
@@ -70,16 +67,19 @@ namespace Space_Game.Game.GameObjects
 
         private void SetTarget(InputState inputState)
         {
-            if (!mSelect) { return; }
-            if (inputState.mMouseActionType != MouseActionType.LeftClickDouble) { return; }
-            this.SetTarget(Globals.mCamera2d.ViewToWorld(inputState.mMousePosition.ToVector2()));
-            mSelect = false;
+            if (!mSelect || Hover) { return; }
+            if (inputState.mMouseActionType == MouseActionType.LeftClickDouble) 
+            {
+                this.SetTarget(Globals.mCamera2d.ViewToWorld(inputState.mMousePosition.ToVector2()));            
+                mSelect = false;
+            }
         }
 
-        private void Clicked()
+        private void Select()
         {
             mSelect = !mSelect;
             Globals.mCamera2d.mTargetPosition = Position;
         }
+
     }
 }

@@ -78,17 +78,12 @@ namespace Space_Game
             // Load CrossHair
             mTextureManager.LoadTexture("crossHair1", "GameObjects/crossHair/crossHair1");
             mTextureManager.LoadTexture("crossHair2", "GameObjects/crossHair/crossHair2");
-            mTextureManager.LoadTexture("crossHair1green", "GameObjects/crossHair/crossHair1green");
-            mTextureManager.LoadTexture("crossHair2green", "GameObjects/crossHair/crossHair2green");
-
 
             // Load other STuff
             mTextureManager.LoadTexture("gameBackground", "gameBackground");
-            mTextureManager.LoadTexture("Galaxy", "Galaxy");
             mTextureManager.LoadTexture("ship", "GameObjects/Ships/ship");
             mTextureManager.LoadTexture("shipHover", "GameObjects/Ships/shipHover");
-
-
+            mTextureManager.LoadTexture("orbit", "GameObjects/orbit");
 
             // game fonts
             mTextureManager.LoadSpriteTexture("text", "fonts/text");

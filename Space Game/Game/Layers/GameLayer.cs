@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
 using Newtonsoft.Json;
 using rache_der_reti.Core.InputManagement;
 using rache_der_reti.Core.LayerManagement;
 using rache_der_reti.Core.Menu;
+using rache_der_reti.Core.TextureManagement;
 using rache_der_reti.Game.Layers;
 using Space_Game.Core;
 using Space_Game.Game.GameObjects;
@@ -98,7 +100,6 @@ namespace Space_Game.Game.Layers
             mSpriteBatch.End();
 
             mSpriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: Globals.mCamera2d.GetViewTransformationMatrix(), samplerState: SamplerState.PointClamp);
-            //TextureManager.GetInstance().Draw("Galaxy", Vector2.Zero - new Vector2(5000 * galaxyScale / 2, 5000 * galaxyScale / 2), 5000 * galaxyScale, 5000 * galaxyScale);
             foreach (PlanetSystem planetSystem in mPlanetSystemList)
             {
                 planetSystem.Draw();
@@ -107,6 +108,19 @@ namespace Space_Game.Game.Layers
             {
                 ship.Draw();
             }
+
+            var steps = 2000;
+            for (int x = -100; x <= 100; x++)
+            {
+                TextureManager.GetInstance().GetSpriteBatch().DrawLine(new Vector2(x * steps, -100 * steps), 
+                    new Vector2(x * steps, 100 * steps), new Color(50, 50, 50, 50), 1 / Globals.mCamera2d.mZoom); 
+            }
+            for (int y = -100; y <= 100; y++)
+            {
+                TextureManager.GetInstance().GetSpriteBatch().DrawLine(new Vector2(-100 * steps, y * steps), 
+                    new Vector2(100 * steps, y * steps), new Color(50, 50, 50, 50), 1 / Globals.mCamera2d.mZoom);
+            }
+
             mSpriteBatch.End();
             mHudLayer.Draw();
         }

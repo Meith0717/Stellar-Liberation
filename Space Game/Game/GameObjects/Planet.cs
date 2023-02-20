@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
 using MonoGame.Extended;
 using Newtonsoft.Json;
 using rache_der_reti.Core.InputManagement;
@@ -7,6 +8,7 @@ using rache_der_reti.Core.TextureManagement;
 using Space_Game.Core;
 using Space_Game.Core.GameObject;
 using System;
+using System.Runtime.InteropServices;
 using static Space_Game.Game.GameObjects.PlanetSystem;
 
 namespace Space_Game.Game.GameObjects
@@ -23,10 +25,11 @@ namespace Space_Game.Game.GameObjects
         [JsonProperty] private double mAddEnergy;
         [JsonProperty] private double mAddCrystals;
         [JsonProperty] private PlanetType mPlanetType;
-        
-        // Hover
-        private CrossHair mCrossHair;
+        [JsonProperty] private float mAngle;
+        [JsonProperty] private float mRadius;
+        [JsonProperty] private Vector2 mCenterPosition;
 
+        public int mAlpha;
 
         // Type Enumerartion
         public enum PlanetType
@@ -37,21 +40,23 @@ namespace Space_Game.Game.GameObjects
             Y
         }
 
-        public Planet(int radius, Vector2 CenterPosition) 
+        public Planet(int radius,  Vector2 CenterPosition) 
         {
-            float newX = radius * MathF.Cos(0);
-            float newY = radius * MathF.Sin(0);
 
             // Set rabdom Type 
             Array starTypes = Enum.GetValues(typeof(PlanetType));
             mPlanetType = (PlanetType)starTypes.GetValue(Globals.mRandom.Next(starTypes.Length));
+            mAlpha = 0; mAngle = (float)Globals.mRandom.NextDouble() * (MathF.PI * 2);
+            mRadius = radius; mCenterPosition = CenterPosition;
+
+            float newX = radius * MathF.Cos(mAngle);
+            float newY = radius * MathF.Sin(mAngle);
 
             // Inizialize some Stuff
             TextureHeight = textureHeight; TextureWidth = textureWidth;
             Offset = new Vector2(textureWidth, textureHeight) / 2;
             Position = new Vector2(newX, newY) + CenterPosition;
             HoverBox = new CircleF(Position, MathF.Max(textureWidth / 10f, textureHeight / 10f));
-            mCrossHair = new CrossHair(0.07f, 0.095f, Position);
 
             // Inizialize Type Stuff
             switch (mPlanetType)
@@ -91,29 +96,28 @@ namespace Space_Game.Game.GameObjects
             }
         }
 
+        public override void Update(GameTime gameTime, InputState inputState)
+        {
+        }
+
         public override void Draw()
         {
-            mCrossHair.Draw();
-
             // Draw Planet
             var planet = TextureManager.GetInstance().GetTexture(TextureId);
-            TextureManager.GetInstance().GetSpriteBatch().Draw(planet, Position, null, Color.White,0,
-                Offset, 0.1f, SpriteEffects.None, 0.0f);
+            TextureManager.GetInstance().GetSpriteBatch().Draw(planet, Position, null, 
+                new Color(mAlpha, mAlpha, mAlpha, mAlpha), 0, Offset, 0.1f, SpriteEffects.None, 1);
 
-            if (!Hover) { return; }
+            // Draw Orbit
+            TextureManager.GetInstance().GetSpriteBatch().DrawCircle(mCenterPosition, mRadius, 50,
+                new Color(mAlpha, mAlpha, mAlpha, mAlpha), 2f / Globals.mCamera2d.mZoom, 0);
+
             // Show Recources
             string[] array = new string[] {$"Alloys: +{mAddAllois}", $"Energy: +{mAddEnergy}", $"Crystals: +{mAddCrystals}"};
             for ( int i = 0; i < array.Length; i++)
             {
-                TextureManager.GetInstance().DrawString("text", Position + new Vector2(-70, 50 + 20 * i), array[i], Color.White);
+                TextureManager.GetInstance().DrawString("text", Position + new Vector2(-70, 50 + 20 * i), array[i],
+                    new Color(mAlpha, mAlpha, mAlpha, mAlpha));
             }
-        }
-
-        public override void Update(GameTime gameTime, InputState inputState)
-        {
-            this.ManageHover(inputState, null);
-            mCrossHair.Update(gameTime, inputState);
-            mCrossHair.Hover = Hover;
         }
     }
 }
