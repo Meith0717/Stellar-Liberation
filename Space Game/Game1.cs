@@ -81,9 +81,10 @@ namespace Space_Game
 
             // Load other STuff
             mTextureManager.LoadTexture("gameBackground", "gameBackground");
+            mTextureManager.LoadTexture("gameBackgroundParlax", "gameBackgroundParlax");
             mTextureManager.LoadTexture("ship", "GameObjects/Ships/ship");
             mTextureManager.LoadTexture("shipHover", "GameObjects/Ships/shipHover");
-            mTextureManager.LoadTexture("orbit", "GameObjects/orbit");
+            mTextureManager.LoadTexture("systemState", "GameObjects/systemState");
 
             // game fonts
             mTextureManager.LoadSpriteTexture("text", "fonts/text");
@@ -108,7 +109,6 @@ namespace Space_Game
             InputState inputState = mInputManager.Update(gameTime);
             mLayerManager.Update(gameTime, inputState, Window, mGraphicsDeviceManager);
             base.Update(gameTime);
-            Debug.WriteLine(inputState.mMousePosition);
         }
 
         protected override void Draw(GameTime gameTime)

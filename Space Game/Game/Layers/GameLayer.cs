@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
+using MonoGame.Extended.Timers;
 using Newtonsoft.Json;
 using rache_der_reti.Core.InputManagement;
 using rache_der_reti.Core.LayerManagement;
@@ -17,81 +18,44 @@ namespace Space_Game.Game.Layers
     [Serializable]
     public class GameLayer : Layer
     {
-        [JsonIgnore] public HudLayer mHudLayer;
 
+        [JsonIgnore] public RectangleF mMapSize = new RectangleF(new Vector2(200000, 200000), new Vector2(200000, 200000) * 2);
+        
+        [JsonProperty] public double mPassedSeconds = 0;
         [JsonProperty] private PlanetSystem mHomeSystem;
-        [JsonProperty] public double mPassedSeconds;
-        [JsonProperty] private List<PlanetSystem> mPlanetSystemList = new();
+        [JsonProperty] private List<PlanetSystem> mPlanetSystemList = new List<PlanetSystem>();
         [JsonProperty] private List<Ship> mShipList = new();
-
+        
         // Recources
         [JsonProperty] public double mAlloys;
         [JsonProperty] public double mEnergy;
         [JsonProperty] public double mCrystals;
         
+        private HudLayer mHudLayer = new();
         private UiElementSprite mBackground;
-        
 
+        // Layer Stuff _____________________________________
         public GameLayer() : base()
         {
             mBackground = new UiElementSprite("gameBackground");
             mBackground.mSpriteFit = UiElementSprite.SpriteFit.Cover;
+            SpawnSystemsAndGetHome();
+            InitializeGlobals();
+            OnResolutionChanged();
 
-            mHudLayer = new HudLayer();
-            mPlanetSystemList = new List<PlanetSystem>();
-            Globals.mCamera2d = new(mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
-            Globals.mGameLayer = this;
-
-            var startRadius = 0;
-            var radAmount = 55;
-            var radSteps = 3000;
-            var probability = 0.5;
-            bool lastPlaced = false;
-
-            for (int radius = startRadius + 0; radius <= startRadius + radAmount * radSteps; radius+= radSteps)
-            {
-                float scope = 2 * MathF.PI * radius;
-                float distribution = scope / 4200 * 2;
-                float steps = MathF.PI * 2 / distribution;
-                for (float angle = 0; angle < (MathF.PI * 2) - steps; angle+= steps)
-                {
-                    if (Globals.mRandom.NextDouble() <= probability && !lastPlaced) 
-                    {
-                        float newX = (radius + Globals.mRandom.Next(-radSteps/2, radSteps/2)) * MathF.Cos(angle);
-                        float newY = (radius + Globals.mRandom.Next(-radSteps / 2, radSteps / 2)) * MathF.Sin(angle);
-                        Vector2 newPosition = new Vector2(newX, newY);
-                        mPlanetSystemList.Add(new PlanetSystem(newPosition));
-                        lastPlaced = true;
-                    }
-                    else
-                    {
-                        lastPlaced = false;
-                    }
-                } 
-                if (radius > radSteps * 30) { probability -= 0.015; }
-            }
-
-            int random = Globals.mRandom.Next(mPlanetSystemList.Count);
-            mHomeSystem = mPlanetSystemList[random];
-            Globals.mCamera2d.mTargetPosition = mHomeSystem.Position;
+            // For Testing ____
             mShipList.Add(new Ship(mHomeSystem.Position + 
                 new Vector2(Globals.mRandom.Next(-500, 500), Globals.mRandom.Next(-500, 500))));
-            OnResolutionChanged();
         }
-
         public override void Update(GameTime gameTime, InputState inputState)
         {
             mPassedSeconds += gameTime.ElapsedGameTime.Milliseconds / 1000d;
-            Globals.mCamera2d.Update(gameTime, inputState);
+
             mHudLayer.Update(gameTime, inputState);
-            foreach (PlanetSystem planetSystem in mPlanetSystemList)
-            {
-                planetSystem.Update(gameTime, inputState);
-            }
-            foreach (Ship ship in mShipList)
-            {
-                ship.Update(gameTime, inputState);
-            }
+            Globals.mCamera2d.Update(gameTime, inputState);
+            UpdateSystems(gameTime, inputState);
+            UpdateShips(gameTime, inputState);
+            TabToGoHome(gameTime, inputState);
         }
         public override void Draw()
         {
@@ -100,38 +64,110 @@ namespace Space_Game.Game.Layers
             mSpriteBatch.End();
 
             mSpriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: Globals.mCamera2d.GetViewTransformationMatrix(), samplerState: SamplerState.PointClamp);
-            foreach (PlanetSystem planetSystem in mPlanetSystemList)
-            {
-                planetSystem.Draw();
-            }
-            foreach (Ship ship in mShipList)
-            {
-                ship.Draw();
-            }
-
-            var steps = 2000;
-            for (int x = -100; x <= 100; x++)
-            {
-                TextureManager.GetInstance().GetSpriteBatch().DrawLine(new Vector2(x * steps, -100 * steps), 
-                    new Vector2(x * steps, 100 * steps), new Color(50, 50, 50, 50), 1 / Globals.mCamera2d.mZoom); 
-            }
-            for (int y = -100; y <= 100; y++)
-            {
-                TextureManager.GetInstance().GetSpriteBatch().DrawLine(new Vector2(-100 * steps, y * steps), 
-                    new Vector2(100 * steps, y * steps), new Color(50, 50, 50, 50), 1 / Globals.mCamera2d.mZoom);
-            }
-
+            DrawSystems();
+            DrawShips();
+            DrawGrid();
             mSpriteBatch.End();
+
             mHudLayer.Draw();
         }
-
-        public override void Destroy() { }
-
         public override void OnResolutionChanged()
         {
             Globals.mCamera2d.SetResolution(mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
             mBackground.Update(new Rectangle(0, 0, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height));
         }
+        public override void Destroy() { }
 
+        // Constructor Stuff _____________________________________
+        private void SpawnSystemsAndGetHome()
+        {
+            var startRadius = 0;
+            var radAmount = 55;
+            var radSteps = 3000;
+            var probability = 0.5;
+            bool lastPlaced = false;
+
+            for (int radius = startRadius + 0; radius <= startRadius + radAmount * radSteps; radius += radSteps)
+            {
+                float scope = 2 * MathF.PI * radius;
+                float distribution = scope / 4200 * 2;
+                float steps = MathF.PI * 2 / distribution;
+                for (float angle = 0; angle < (MathF.PI * 2) - steps; angle += steps)
+                {
+                    if (Globals.mRandom.NextDouble() <= probability && !lastPlaced)
+                    {
+                        mPlanetSystemList.Add(
+                            new PlanetSystem(MyMathF.GetInstance().GetCirclePosition(radius, angle, radSteps / 2))
+                            );
+                        lastPlaced = true;
+                    }
+                    else
+                    {
+                        lastPlaced = false;
+                    }
+                }
+                if (radius > radSteps * 30) { probability -= 0.015; }
+            }
+            int random = Globals.mRandom.Next(mPlanetSystemList.Count);
+            mHomeSystem = mPlanetSystemList[random];
+        }
+        private void InitializeGlobals()
+        {
+            Globals.mCamera2d = new (mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
+            Globals.mGameLayer = this;
+            Globals.mCamera2d.mTargetPosition = mHomeSystem.Position;
+        }
+
+        // Update Stuff _____________________________________
+        private void UpdateSystems(GameTime gameTime, InputState inputState) 
+        {
+            foreach (PlanetSystem planetSystem in mPlanetSystemList)
+            {
+                planetSystem.Update(gameTime, inputState);
+            }
+        }
+        private void UpdateShips(GameTime gameTime, InputState inputState)
+        {
+            foreach (Ship ship in mShipList)
+            {
+                ship.Update(gameTime, inputState);
+            }
+        }
+        private void TabToGoHome(GameTime gameTime, InputState inputState)
+        {
+            if (inputState.mActionList.Contains(ActionType.GoHome))
+            {
+                Globals.mCamera2d.mTargetPosition = mHomeSystem.Position;
+            }
+        }
+
+        // Draw Stuff _____________________________________
+        private void DrawSystems()
+        {
+            foreach (PlanetSystem planetSystem in mPlanetSystemList)
+            {
+                planetSystem.Draw();
+            }
+        }
+        private void DrawShips()
+        {
+            foreach (Ship ship in mShipList)
+            {
+                ship.Draw();
+            }
+        }
+        private void DrawGrid()
+        {
+            for (float x = -mMapSize.X; x <= mMapSize.Width / 2; x += 2000)
+            {
+                TextureManager.GetInstance().GetSpriteBatch().DrawLine(new Vector2(x, -mMapSize.Width / 2),
+                    new Vector2(x, mMapSize.Width / 2), new Color(25, 25, 25, 25), 1f / Globals.mCamera2d.mZoom);
+            }
+            for (float y = -mMapSize.Y; y <= mMapSize.Height / 2; y += 2000)
+            {
+                TextureManager.GetInstance().GetSpriteBatch().DrawLine(new Vector2(-mMapSize.Width / 2, y),
+                    new Vector2(mMapSize.Width / 2, y), new Color(25, 25, 25, 25), 1f / Globals.mCamera2d.mZoom);
+            }
+        }
     }
 }

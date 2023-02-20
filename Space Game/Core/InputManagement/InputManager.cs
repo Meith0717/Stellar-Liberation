@@ -37,7 +37,7 @@ namespace rache_der_reti.Core.InputManagement
             mKeyBindingsKeyboardPressed = new Dictionary<Keys, ActionType>
             {
                 { Keys.Escape, ActionType.Exit },
-                { Keys.Space, ActionType.DoSomething },
+                { Keys.Tab, ActionType.GoHome },
                 { Keys.F11, ActionType.ToggleFullscreen },
             };
 

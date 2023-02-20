@@ -1,11 +1,12 @@
 using System;
 using Microsoft.Xna.Framework;
 using rache_der_reti.Core.InputManagement;
+using Space_Game.Core;
 
 namespace rache_der_reti.Core.TextureManagement;
 public class Camera2d
 {
-    public float mMaxZoom = 0.005f;
+    public float mMaxZoom = 0.05f;
     public float mMimZoom = 1f;
 
     public float mZoom = 1f;
@@ -66,23 +67,30 @@ public class Camera2d
     }
 
     private void MoveCamera(InputState inputState)
-    {   
-        if (inputState.mActionList.Contains(ActionType.CameraUp))
+    {
+
+        if (inputState.mActionList.Contains(ActionType.CameraUp) && 
+            mPosition.Y > (-Globals.mGameLayer.mMapSize.Height / 2))
         {
             mTargetPosition += new Vector2(0, -50 / mZoom * 0.5f);
         }
-        if (inputState.mActionList.Contains(ActionType.CameraDown))
+        if (inputState.mActionList.Contains(ActionType.CameraDown) && 
+            mPosition.Y < (Globals.mGameLayer.mMapSize.Height / 2))
         {
             mTargetPosition += new Vector2(0, 50 / mZoom * 0.5f);
         }
-        if (inputState.mActionList.Contains(ActionType.CameraLeft))
+        
+        if (inputState.mActionList.Contains(ActionType.CameraLeft) && 
+            mPosition.X > (-Globals.mGameLayer.mMapSize.Width / 2))
         {
             mTargetPosition += new Vector2(-50 / mZoom * 0.5f, 0);
         }
-        if (inputState.mActionList.Contains(ActionType.CameraRight))
+        if (inputState.mActionList.Contains(ActionType.CameraRight) && 
+            mPosition.X < (Globals.mGameLayer.mMapSize.Width / 2))
         {
             mTargetPosition += new Vector2(50 / mZoom * 0.5f, 0);
         }
+
     }
 
     private void AdjustZoom(GameTime gameTime, InputState inputState)

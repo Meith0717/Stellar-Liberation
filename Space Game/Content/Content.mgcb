@@ -46,6 +46,18 @@
 /processorParam:TextureFormat=Color
 /build:gameBackground.png
 
+#begin gameBackgroundParlax.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:gameBackgroundParlax.png
+
 #begin GameObjects/CrossHair/crossHair1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -69,18 +81,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:GameObjects/CrossHair/crossHair2.png
-
-#begin GameObjects/orbit.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:GameObjects/orbit.png
 
 #begin GameObjects/Planets/planetTypeH.png
 /importer:TextureImporter
@@ -213,6 +213,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:GameObjects/Stars/sunTypeM.png
+
+#begin GameObjects/systemState.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:GameObjects/systemState.png
 
 #begin SoundEffects/quack.wav
 /importer:WavImporter

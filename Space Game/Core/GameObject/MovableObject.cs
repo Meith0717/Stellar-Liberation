@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
+using NVorbis;
 using rache_der_reti.Core.TextureManagement;
-using Space_Game.Game.GameObjects;
 using System;
 
 namespace Space_Game.Core.GameObject
@@ -12,6 +12,7 @@ namespace Space_Game.Core.GameObject
         [JsonProperty] public float Velocity;
         [JsonProperty] public bool IsMoving;
         [JsonProperty] public Vector2 TargetPoint;
+        [JsonProperty] public Vector2 StartPoint;
         [JsonProperty] public float Rotation;
 
         [JsonProperty] private Vector2 DirectionVector;
@@ -21,10 +22,11 @@ namespace Space_Game.Core.GameObject
         {
             TextureManager.GetInstance().GetSpriteBatch().DrawLine(Position, TargetPoint, Color.Red,  2 / Globals.mCamera2d.mZoom);
         }
-
+                                                                      
         public void SetTarget(Vector2 targetPoint)
         {
             TargetPoint = targetPoint;
+            StartPoint = Position;
             DirectionVector = targetPoint - Position;
             DirectionVector.Normalize();
             TextureRotation = (float)Math.Acos(Vector2.Dot(new Vector2(1, 0), DirectionVector) / DirectionVector.Length());
@@ -34,20 +36,26 @@ namespace Space_Game.Core.GameObject
         public void Move(GameTime gameTime)
         {
             if (Position == TargetPoint) { return; }
-            if (Vector2.Distance(Position, TargetPoint) <= 5) 
+
+            float distanceToTarget = Vector2.Distance(Position, TargetPoint);
+
+            if (distanceToTarget <= 5) 
             {
                 Position = TargetPoint;
                 IsMoving = false;
                 return;
             }
 
+            float speed = Velocity;
+            if (distanceToTarget <= 800)
+            {
+                speed = Velocity * (distanceToTarget / 800);
+            }
+
             DirectionVector = TargetPoint - Position;
             DirectionVector.Normalize();
-
-            Rotation = (float)Math.Acos(Vector2.Dot(new Vector2(1, 0), DirectionVector) / DirectionVector.Length());
-            if (DirectionVector.Y < 0) { Rotation = -Rotation; }
-
-            Position += DirectionVector * Velocity * gameTime.ElapsedGameTime.Milliseconds;
+            Rotation = MyMathF.GetInstance().GetRotation(DirectionVector);
+            Position += DirectionVector * speed * gameTime.ElapsedGameTime.Milliseconds;
             IsMoving = true;
         }
 
