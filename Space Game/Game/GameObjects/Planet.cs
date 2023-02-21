@@ -91,7 +91,7 @@ namespace Space_Game.Game.GameObjects
 
         public override void Update(GameTime gameTime, InputState inputState)
         {  
-            mAngle += 0.05f / mRadius;
+            mAngle += (0.005f * Globals.mTimeWarp) / mRadius;
             Position = MyMathF.GetInstance().GetCirclePosition(mRadius, mAngle, 0) + mCenterPosition;
             mRotation = MyMathF.GetInstance().GetRotation(Position - mCenterPosition);
         }

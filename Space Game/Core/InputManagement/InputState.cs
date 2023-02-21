@@ -22,7 +22,9 @@ namespace rache_der_reti.Core.InputManagement
         SaveGame,
         LoadGame,
         ToggleFullscreen,
-        GoHome
+        GoHome,
+        AccelerateTime,
+        DeaccelerateTime
     }
 
     public enum MouseActionType

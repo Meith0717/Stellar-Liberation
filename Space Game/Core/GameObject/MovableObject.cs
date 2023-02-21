@@ -14,6 +14,7 @@ namespace Space_Game.Core.GameObject
         [JsonProperty] public Vector2 TargetPoint;
         [JsonProperty] public Vector2 StartPoint;
         [JsonProperty] public float Rotation;
+        [JsonProperty] public float TravelTime;
 
         [JsonProperty] private Vector2 DirectionVector;
         [JsonProperty] private float TextureRotation;
@@ -35,6 +36,8 @@ namespace Space_Game.Core.GameObject
 
         public void Move(GameTime gameTime)
         {
+            var speed = Globals.mTimeWarp * Velocity;
+
             if (Position == TargetPoint) { return; }
 
             float distanceToTarget = Vector2.Distance(Position, TargetPoint);
@@ -46,12 +49,7 @@ namespace Space_Game.Core.GameObject
                 return;
             }
 
-            float speed = Velocity;
-            if (distanceToTarget <= 800)
-            {
-                speed = Velocity * (distanceToTarget / 800);
-            }
-
+            TravelTime = (distanceToTarget / Velocity)/1000;
             DirectionVector = TargetPoint - Position;
             DirectionVector.Normalize();
             Rotation = MyMathF.GetInstance().GetRotation(DirectionVector);

@@ -35,7 +35,7 @@ namespace Space_Game.Game.GameObjects
 
             // Position Stuff
             Position = TargetPoint = position;
-            Velocity = 0.001f;
+            Velocity = 0.01f;
             Offset = new Vector2(TextureWidth, TextureHeight) / 2;
 
             // Cross Hair Stuff
@@ -46,8 +46,8 @@ namespace Space_Game.Game.GameObjects
         public override void Update(GameTime gameTime, InputState inputState)
         {
             // Update Other Stuff
-            mCrossHair.Update(Position, Hover);
-            mTargetCrossHair.Update(TargetPoint, Hover);
+            mCrossHair.Update(Position, Hover, Color.Red);
+            mTargetCrossHair.Update(TargetPoint, Hover, Color.Red);
             HoverBox = new CircleF(Position, MathF.Max(TextureHeight / 10f, TextureWidth / 10f));
 
             // Check Left Klick Outside Hover
@@ -84,6 +84,9 @@ namespace Space_Game.Game.GameObjects
             if (!IsMoving) { return; }
             mTargetCrossHair.mDrawInnerRing = true;
             mTargetCrossHair.Draw();
+
+            TextureManager.GetInstance().DrawString("text", Position + new Vector2(15, 25),
+                MyMathF.GetInstance().GetTimeFromSekonds(TravelTime), Color.Red);
         }
 
         private void SetTargetOnRightClick(InputState inputState)

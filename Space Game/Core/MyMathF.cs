@@ -37,5 +37,11 @@ namespace Space_Game.Core
             if (vector.Y < 0) { rotation = -rotation; }
             return rotation;
         }
+
+        public string GetTimeFromSekonds(float sekonds)
+        {
+            TimeSpan time = TimeSpan.FromSeconds(sekonds);
+            return time.ToString(@"hh\:mm\:ss"); ;
+        }
     }
 }
