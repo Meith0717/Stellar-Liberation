@@ -12,6 +12,7 @@ using Space_Game.Core;
 using Space_Game.Game.GameObjects;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Space_Game.Game.Layers
 {
@@ -42,6 +43,7 @@ namespace Space_Game.Game.Layers
             SpawnSystemsAndGetHome();
             InitializeGlobals();
             OnResolutionChanged();
+            Globals.mTimeWarp = 1;
 
             // For Testing ____
             mShipList.Add(new Ship(mHomeSystem.Position + 
@@ -51,11 +53,13 @@ namespace Space_Game.Game.Layers
         {
             mPassedSeconds += gameTime.ElapsedGameTime.Milliseconds / 1000d;
 
-            mHudLayer.Update(gameTime, inputState);
+            //mHudLayer.Update(gameTime, inputState);
             Globals.mCamera2d.Update(gameTime, inputState);
             UpdateSystems(gameTime, inputState);
             UpdateShips(gameTime, inputState);
+            ManageTimeWarp(gameTime, inputState);
             TabToGoHome(gameTime, inputState);
+            Debug.WriteLine(Globals.mTimeWarp);
         }
         public override void Draw()
         {
@@ -138,6 +142,21 @@ namespace Space_Game.Game.Layers
             if (inputState.mActionList.Contains(ActionType.GoHome))
             {
                 Globals.mCamera2d.mTargetPosition = mHomeSystem.Position;
+            }
+        }
+        private void ManageTimeWarp(GameTime gameTime, InputState inputState)
+        {
+            if (inputState.mActionList.Contains(ActionType.AccelerateTime))
+            {
+                if (Globals.mTimeWarp >= 64) { return; }
+                Globals.mTimeWarp *= 2;
+                return;
+            }
+            if (inputState.mActionList.Contains(ActionType.DeaccelerateTime))
+            {
+                if (Globals.mTimeWarp <=1) { return; }
+                Globals.mTimeWarp /= 2;
+                return;
             }
         }
 

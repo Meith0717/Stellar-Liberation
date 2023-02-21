@@ -75,9 +75,10 @@ namespace Space_Game.Game.GameObjects
             }
         }
 
-        public void Update(Vector2 position, bool hover)
+        public void Update(Vector2 position, bool hover, Color color)
         {
             Animation();
+            mColor = color;
             mHover = hover;
             mPosition = position;
             mRotation += 0.05f;

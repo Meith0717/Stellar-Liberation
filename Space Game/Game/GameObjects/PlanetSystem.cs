@@ -67,7 +67,7 @@ namespace Space_Game.Game.GameObjects
         public override void Update(GameTime gameTime, InputState inputState)
         {
             this.ManageHover(inputState, Clicked, DoubleClicked);
-            mCrossHair.Update(Position, Hover);
+            mCrossHair.Update(Position, Hover, mStarColor);
             UpdatePlanets(gameTime, inputState);
             GetSystemState();
 
@@ -81,11 +81,12 @@ namespace Space_Game.Game.GameObjects
 
         public override void Draw()
         {
+            mCrossHair.Draw();
             var stateTexture = TextureManager.GetInstance().GetTexture("systemState");
-            TextureManager.GetInstance().GetSpriteBatch().Draw(stateTexture, Position, null,
-                mStateColor, 0, new Vector2(512, 512), 3f, SpriteEffects.None, 0);
+            //TextureManager.GetInstance().GetSpriteBatch().Draw(stateTexture, Position, null,
+            //    mStateColor, 0, new Vector2(512, 512), 3f, SpriteEffects.None, 0);
 
-            TextureManager.GetInstance().Draw(TextureId, Position - Offset, TextureWidth, TextureHeight);
+            TextureManager.GetInstance().Draw(TextureId, Position - Offset);
             if (!mShowSystem) { return; }
             foreach (Planet planet in mPlanetList)
             {

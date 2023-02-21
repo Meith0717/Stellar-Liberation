@@ -38,7 +38,9 @@ namespace rache_der_reti.Core.InputManagement
             {
                 { Keys.Escape, ActionType.Exit },
                 { Keys.Tab, ActionType.GoHome },
-                { Keys.F11, ActionType.ToggleFullscreen },
+                { Keys.F11, ActionType.ToggleFullscreen},
+                { Keys.D2, ActionType.AccelerateTime },
+                { Keys.D1, ActionType.DeaccelerateTime },
             };
 
             // Dictionary for keyboard keys that have been hold and corresponding actions.
