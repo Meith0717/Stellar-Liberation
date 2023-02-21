@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using rache_der_reti.Core.InputManagement;
 using rache_der_reti.Core.SoundManagement;
 using Space_Game;
+using Space_Game.Core.LayerManagement;
 using Space_Game.Game.Layers;
 
 namespace rache_der_reti.Core.LayerManagement;

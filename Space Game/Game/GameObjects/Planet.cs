@@ -6,6 +6,7 @@ using rache_der_reti.Core.InputManagement;
 using rache_der_reti.Core.TextureManagement;
 using Space_Game.Core;
 using Space_Game.Core.GameObject;
+using Space_Game.Core.Maths;
 using System;
 
 namespace Space_Game.Game.GameObjects

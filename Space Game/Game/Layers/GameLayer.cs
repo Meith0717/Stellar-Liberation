@@ -4,11 +4,13 @@ using MonoGame.Extended;
 using MonoGame.Extended.Timers;
 using Newtonsoft.Json;
 using rache_der_reti.Core.InputManagement;
-using rache_der_reti.Core.LayerManagement;
 using rache_der_reti.Core.Menu;
 using rache_der_reti.Core.TextureManagement;
 using rache_der_reti.Game.Layers;
 using Space_Game.Core;
+using Space_Game.Core.Effects;
+using Space_Game.Core.LayerManagement;
+using Space_Game.Core.Maths;
 using Space_Game.Game.GameObjects;
 using System;
 using System.Collections.Generic;
@@ -34,6 +36,7 @@ namespace Space_Game.Game.Layers
         
         private HudLayer mHudLayer = new();
         private UiElementSprite mBackground;
+        private ParllaxManager mParllaxManager;
 
         // Layer Stuff _____________________________________
         public GameLayer() : base()
@@ -42,9 +45,10 @@ namespace Space_Game.Game.Layers
             mBackground.mSpriteFit = UiElementSprite.SpriteFit.Cover;
             SpawnSystemsAndGetHome();
             InitializeGlobals();
+            mParllaxManager = new ParllaxManager();
             OnResolutionChanged();
             Globals.mTimeWarp = 1;
-
+            InitializeParllax();
             // For Testing ____
             mShipList.Add(new Ship(mHomeSystem.Position + 
                 new Vector2(Globals.mRandom.Next(-500, 500), Globals.mRandom.Next(-500, 500))));
@@ -52,7 +56,7 @@ namespace Space_Game.Game.Layers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             mPassedSeconds += gameTime.ElapsedGameTime.Milliseconds / 1000d;
-
+            mParllaxManager.Update();
             //mHudLayer.Update(gameTime, inputState);
             Globals.mCamera2d.Update(gameTime, inputState);
             UpdateSystems(gameTime, inputState);
@@ -66,19 +70,20 @@ namespace Space_Game.Game.Layers
             mSpriteBatch.Begin(samplerState: SamplerState.PointClamp);
             mBackground.Render();
             mSpriteBatch.End();
-
+            mParllaxManager.Draw();
             mSpriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: Globals.mCamera2d.GetViewTransformationMatrix(), samplerState: SamplerState.PointClamp);
             DrawSystems();
             DrawShips();
             DrawGrid();
             mSpriteBatch.End();
 
-            mHudLayer.Draw();
+            //mHudLayer.Draw();
         }
         public override void OnResolutionChanged()
         {
             Globals.mCamera2d.SetResolution(mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
             mBackground.Update(new Rectangle(0, 0, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height));
+            mParllaxManager.OnResolutionChanged();
         }
         public override void Destroy() { }
 
@@ -120,6 +125,11 @@ namespace Space_Game.Game.Layers
             Globals.mCamera2d = new (mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
             Globals.mGameLayer = this;
             Globals.mCamera2d.mTargetPosition = mHomeSystem.Position;
+        }
+        private void InitializeParllax()
+        {
+            mParllaxManager.Add(new ParllaxBackground("gameBackgroundParlax", 0, 0.1f));
+            mParllaxManager.Add(new ParllaxBackground("gameBackgroundParlax", 0, 0.2f));
         }
 
         // Update Stuff _____________________________________
