@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 using rache_der_reti.Core.InputManagement;
 using Space_Game.Core;
@@ -40,7 +41,9 @@ public class Camera2d
     public void MoveAnimation(GameTime gameTime)
     {
         Vector2 adjustmentVector = Vector2.Subtract(mTargetPosition, mPosition);
-        mPosition += adjustmentVector / 5;
+        float distance = adjustmentVector.Length();
+        adjustmentVector.Normalize();
+        mPosition += adjustmentVector * distance/10;
         SetPosition(mPosition);
     }
 

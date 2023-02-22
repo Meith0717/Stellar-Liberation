@@ -50,7 +50,9 @@ namespace Space_Game.Game.GameObjects
             // Inizialize some Stuff
             TextureHeight = textureHeight; TextureWidth = textureWidth;
             Offset = new Vector2(textureWidth, textureHeight) / 2;
+            Position = MyMathF.GetInstance().GetCirclePosition(mRadius, mAngle, 0) + mCenterPosition;
             HoverBox = new CircleF(Position, MathF.Max(textureWidth / 10f, textureHeight / 10f));
+            Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
 
             // Inizialize Type Stuff
             switch (mPlanetType)
@@ -91,10 +93,12 @@ namespace Space_Game.Game.GameObjects
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
-        {  
+        {
+            Globals.mGameLayer.mSpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
             mAngle += (0.005f * Globals.mTimeWarp) / mRadius;
             Position = MyMathF.GetInstance().GetCirclePosition(mRadius, mAngle, 0) + mCenterPosition;
             mRotation = MyMathF.GetInstance().GetRotation(Position - mCenterPosition);
+            Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
 
         public override void Draw()

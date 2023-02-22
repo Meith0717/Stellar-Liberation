@@ -22,6 +22,7 @@ namespace Space_Game
         private SoundManager mSoundManager;
         private LayerManager mLayerManager;
         private TextureManager mTextureManager;
+        private Cursor mCursor;
 
         private int mWidth;
         private int mHeight;
@@ -32,7 +33,7 @@ namespace Space_Game
         public Game1()
         {
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            IsMouseVisible = false;
             Window.AllowUserResizing = true;
             mGraphicsDeviceManager = new GraphicsDeviceManager(this);
             mInputManager = new InputManager();
@@ -83,8 +84,10 @@ namespace Space_Game
             mTextureManager.LoadTexture("gameBackground", "gameBackground");
             mTextureManager.LoadTexture("gameBackgroundParlax", "gameBackgroundParlax");
             mTextureManager.LoadTexture("ship", "GameObjects/Ships/ship");
+            mTextureManager.LoadTexture("warpAnimation", "GameObjects/Ships/warpAnimation");
             mTextureManager.LoadTexture("shipHover", "GameObjects/Ships/shipHover");
             mTextureManager.LoadTexture("systemState", "GameObjects/systemState");
+            mTextureManager.LoadTexture("cursor", "cursor");
 
             // game fonts
             mTextureManager.LoadSpriteTexture("text", "fonts/text");
@@ -92,6 +95,7 @@ namespace Space_Game
             mTextureManager.LoadSpriteTexture("smal", "fonts/smal");
 
             Globals.mLayerManager = mLayerManager = new LayerManager(this, GraphicsDevice, mSpriteBatch, Content, mSoundManager);
+            mCursor = new();
         }
 
         protected override void Update(GameTime gameTime)
@@ -107,6 +111,7 @@ namespace Space_Game
                 mLayerManager.OnResolutionChanged();
             }
             InputState inputState = mInputManager.Update(gameTime);
+            mCursor.Update(gameTime, inputState);
             mLayerManager.Update(gameTime, inputState, Window, mGraphicsDeviceManager);
             base.Update(gameTime);
         }
@@ -114,10 +119,14 @@ namespace Space_Game
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-
             // TODO: Add your drawing code here
             mLayerManager.Draw();
             base.Draw(gameTime);
+
+            mSpriteBatch.Begin();
+            mCursor.Draw();
+            mSpriteBatch.End();
+
         }
 
         // Some Stuff

@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using rache_der_reti.Core.LayerManagement;
+using rache_der_reti.Core.PositionManagement;
 using rache_der_reti.Core.SoundManagement;
 using rache_der_reti.Core.TextureManagement;
+using Space_Game.Core.GameObject;
 using Space_Game.Game.Layers;
 using System;
 

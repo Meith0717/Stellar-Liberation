@@ -5,16 +5,19 @@ using MonoGame.Extended.Timers;
 using Newtonsoft.Json;
 using rache_der_reti.Core.InputManagement;
 using rache_der_reti.Core.Menu;
+using rache_der_reti.Core.PositionManagement;
 using rache_der_reti.Core.TextureManagement;
 using rache_der_reti.Game.Layers;
 using Space_Game.Core;
 using Space_Game.Core.Effects;
+using Space_Game.Core.GameObject;
 using Space_Game.Core.LayerManagement;
 using Space_Game.Core.Maths;
 using Space_Game.Game.GameObjects;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace Space_Game.Game.Layers
 {
@@ -34,6 +37,9 @@ namespace Space_Game.Game.Layers
         [JsonProperty] public double mEnergy;
         [JsonProperty] public double mCrystals;
         
+        [JsonIgnore] public SpatialHashing<GameObject> mSpatialHashing;
+
+        private int mSpatialHashingCellSize = 2000;
         private HudLayer mHudLayer = new();
         private UiElementSprite mBackground;
         private ParllaxManager mParllaxManager;
@@ -43,8 +49,9 @@ namespace Space_Game.Game.Layers
         {
             mBackground = new UiElementSprite("gameBackground");
             mBackground.mSpriteFit = UiElementSprite.SpriteFit.Cover;
-            SpawnSystemsAndGetHome();
+            mSpatialHashing = new SpatialHashing<GameObject>(mSpatialHashingCellSize);
             InitializeGlobals();
+            SpawnSystemsAndGetHome();
             mParllaxManager = new ParllaxManager();
             OnResolutionChanged();
             Globals.mTimeWarp = 1;
@@ -52,6 +59,9 @@ namespace Space_Game.Game.Layers
             // For Testing ____
             mShipList.Add(new Ship(mHomeSystem.Position + 
                 new Vector2(Globals.mRandom.Next(-500, 500), Globals.mRandom.Next(-500, 500))));
+            mShipList.Add(new Ship(mHomeSystem.Position +
+                new Vector2(Globals.mRandom.Next(-500, 500), Globals.mRandom.Next(-500, 500))));
+
         }
         public override void Update(GameTime gameTime, InputState inputState)
         {
@@ -63,7 +73,6 @@ namespace Space_Game.Game.Layers
             UpdateShips(gameTime, inputState);
             ManageTimeWarp(gameTime, inputState);
             TabToGoHome(gameTime, inputState);
-            Debug.WriteLine(Globals.mTimeWarp);
         }
         public override void Draw()
         {
@@ -94,7 +103,6 @@ namespace Space_Game.Game.Layers
             var radAmount = 55;
             var radSteps = 3000;
             var probability = 0.5;
-            bool lastPlaced = false;
 
             for (int radius = startRadius + 0; radius <= startRadius + radAmount * radSteps; radius += radSteps)
             {
@@ -103,33 +111,28 @@ namespace Space_Game.Game.Layers
                 float steps = MathF.PI * 2 / distribution;
                 for (float angle = 0; angle < (MathF.PI * 2) - steps; angle += steps)
                 {
-                    if (Globals.mRandom.NextDouble() <= probability && !lastPlaced)
+                    if (Globals.mRandom.NextDouble() <= probability)
                     {
-                        mPlanetSystemList.Add(
-                            new PlanetSystem(MyMathF.GetInstance().GetCirclePosition(radius, angle, radSteps / 2))
-                            );
-                        lastPlaced = true;
-                    }
-                    else
-                    {
-                        lastPlaced = false;
+                        Vector2 position = MyMathF.GetInstance().GetCirclePosition(radius, angle, radSteps / 2);
+                        PlanetSystem system = new PlanetSystem(position);
+                        mPlanetSystemList.Add(system);
                     }
                 }
                 if (radius > radSteps * 30) { probability -= 0.015; }
             }
             int random = Globals.mRandom.Next(mPlanetSystemList.Count);
             mHomeSystem = mPlanetSystemList[random];
+            Globals.mCamera2d.mTargetPosition = mHomeSystem.Position;
         }
         private void InitializeGlobals()
         {
             Globals.mCamera2d = new (mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
             Globals.mGameLayer = this;
-            Globals.mCamera2d.mTargetPosition = mHomeSystem.Position;
         }
         private void InitializeParllax()
         {
-            mParllaxManager.Add(new ParllaxBackground("gameBackgroundParlax", 0, 0.1f));
-            mParllaxManager.Add(new ParllaxBackground("gameBackgroundParlax", 0, 0.2f));
+            mParllaxManager.Add(new ParllaxBackground("gameBackgroundParlax", 0, 0.05f));
+            mParllaxManager.Add(new ParllaxBackground("gameBackgroundParlax", 0, 0.15f));
         }
 
         // Update Stuff _____________________________________
@@ -197,6 +200,31 @@ namespace Space_Game.Game.Layers
                 TextureManager.GetInstance().GetSpriteBatch().DrawLine(new Vector2(-mMapSize.Width / 2, y),
                     new Vector2(mMapSize.Width / 2, y), new Color(25, 25, 25, 25), 1f / Globals.mCamera2d.mZoom);
             }
+        }
+
+        // Layer Logik _____________________________________
+        public List<GameObject> GetObjectsInRadius(Vector2 positionVector2, int radius)
+        {
+            var objectsInRadius = new List<GameObject>();
+            var maxRadius = radius + mSpatialHashingCellSize;
+            for (var i = -radius; i <= maxRadius; i += mSpatialHashingCellSize)
+            {
+                for (var j = -radius; j <= maxRadius; j += mSpatialHashingCellSize)
+                {
+                    var objectsInBucket = mSpatialHashing.GetObjectsInBucket((int)(positionVector2.X + i), (int)(positionVector2.Y + j));
+                    foreach (var gameObject in objectsInBucket)
+                    {
+                        var position = gameObject.Position;
+                        var distance = Vector2.Distance(positionVector2, position);
+                        if (distance <= radius)
+                        {
+                            objectsInRadius.Add(gameObject);
+                        }
+                    }
+                }
+
+            }
+            return objectsInRadius;
         }
     }
 }

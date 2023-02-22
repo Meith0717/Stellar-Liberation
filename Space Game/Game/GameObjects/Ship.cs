@@ -1,13 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using Newtonsoft.Json;
+using rache_der_reti.Core.Animation;
 using rache_der_reti.Core.InputManagement;
+using rache_der_reti.Core.PositionManagement;
 using rache_der_reti.Core.TextureManagement;
 using Space_Game.Core;
 using Space_Game.Core.GameObject;
 using Space_Game.Core.Maths;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Space_Game.Game.GameObjects
 {
@@ -42,6 +45,9 @@ namespace Space_Game.Game.GameObjects
             // Cross Hair Stuff
             mCrossHair = new CrossHair(0.062f, 0.08f, Position, Color.Red);
             mTargetCrossHair = new CrossHair(0.062f, 0.08f, TargetPoint, Color.Red);
+
+            // Spatial Hashing
+            Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)position.X, (int)position.Y);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
@@ -88,6 +94,7 @@ namespace Space_Game.Game.GameObjects
 
             TextureManager.GetInstance().DrawString("text", Position + new Vector2(15, 25),
                 MyMathF.GetInstance().GetTimeFromSekonds(TravelTime), Color.Red);
+
         }
 
         private void SetTargetOnRightClick(InputState inputState)
@@ -108,6 +115,7 @@ namespace Space_Game.Game.GameObjects
         private void TrackOnDoubleClick()
         {
             mTrack = !mTrack;
+            if (!mTrack) { return; }
             Globals.mCamera2d.SetZoom(Globals.mCamera2d.mMimZoom);
         }
     }

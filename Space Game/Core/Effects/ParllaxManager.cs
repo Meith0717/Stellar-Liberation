@@ -1,12 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using rache_der_reti.Core.InputManagement;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Space_Game.Core.Effects
 {
@@ -20,7 +14,7 @@ namespace Space_Game.Core.Effects
             var movement = Globals.mCamera2d.mPosition - mLastPosition;
             foreach (ParllaxBackground backdround in mBackdrounds) 
             {
-                backdround.Update(movement/0.9f);
+                backdround.Update(movement*0.25f);
             }
             mLastPosition = Globals.mCamera2d.mPosition;
         }

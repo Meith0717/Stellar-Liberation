@@ -3,9 +3,11 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using Newtonsoft.Json;
 using rache_der_reti.Core.InputManagement;
+using rache_der_reti.Core.PositionManagement;
 using rache_der_reti.Core.TextureManagement;
 using Space_Game.Core;
 using Space_Game.Core.GameObject;
+using Space_Game.Game.Layers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -61,7 +63,7 @@ namespace Space_Game.Game.GameObjects
             HoverBox = new CircleF(Position, MathF.Max(TextureWidth/2.5f, TextureHeight/2.5f));
             mCrossHair = new CrossHair(0.3f, 0.4f, position, mStarColor);
             GetPlanets();
-            
+            Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)position.X, (int)position.Y);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
@@ -130,7 +132,6 @@ namespace Space_Game.Game.GameObjects
                     return;
                 }
                 planet.mAlpha -= 5;
-                Debug.WriteLine(planet.mAlpha);
             }
         }
 

@@ -50,12 +50,14 @@ namespace Space_Game.Core.GameObject
                 return;
             }
 
+            Globals.mGameLayer.mSpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
             TravelTime = (distanceToTarget / Velocity)/1000;
             DirectionVector = TargetPoint - Position;
             DirectionVector.Normalize();
             Rotation = MyMathF.GetInstance().GetRotation(DirectionVector);
             Position += DirectionVector * speed * gameTime.ElapsedGameTime.Milliseconds;
             IsMoving = true;
+            Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
 
         public void StopMoving()
