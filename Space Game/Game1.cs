@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using rache_der_reti.Core.InputManagement;
@@ -11,6 +12,7 @@ using Space_Game.Game.Layers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using static rache_der_reti.Core.Menu.UiElementSprite;
 
 namespace Space_Game
 {
@@ -22,7 +24,6 @@ namespace Space_Game
         private SoundManager mSoundManager;
         private LayerManager mLayerManager;
         private TextureManager mTextureManager;
-        private Cursor mCursor;
 
         private int mWidth;
         private int mHeight;
@@ -33,7 +34,7 @@ namespace Space_Game
         public Game1()
         {
             Content.RootDirectory = "Content";
-            IsMouseVisible = false;
+            IsMouseVisible = true;
             Window.AllowUserResizing = true;
             mGraphicsDeviceManager = new GraphicsDeviceManager(this);
             mInputManager = new InputManager();
@@ -50,6 +51,8 @@ namespace Space_Game
             Globals.mSoundManager = mSoundManager;
             Globals.mRandom = new Random();
             base.Initialize();
+            MouseCursor cursor = MouseCursor.FromTexture2D(Content.Load<Texture2D>("cursor"), 0, 0);
+            Mouse.SetCursor(cursor);
         }
 
         protected override void LoadContent()
@@ -88,6 +91,7 @@ namespace Space_Game
             mTextureManager.LoadTexture("shipHover", "GameObjects/Ships/shipHover");
             mTextureManager.LoadTexture("systemState", "GameObjects/systemState");
             mTextureManager.LoadTexture("cursor", "cursor");
+            mTextureManager.LoadTexture("transparent", "GameObjects/transparent");
 
             // game fonts
             mTextureManager.LoadSpriteTexture("text", "fonts/text");
@@ -95,7 +99,6 @@ namespace Space_Game
             mTextureManager.LoadSpriteTexture("smal", "fonts/smal");
 
             Globals.mLayerManager = mLayerManager = new LayerManager(this, GraphicsDevice, mSpriteBatch, Content, mSoundManager);
-            mCursor = new();
         }
 
         protected override void Update(GameTime gameTime)
@@ -111,7 +114,6 @@ namespace Space_Game
                 mLayerManager.OnResolutionChanged();
             }
             InputState inputState = mInputManager.Update(gameTime);
-            mCursor.Update(gameTime, inputState);
             mLayerManager.Update(gameTime, inputState, Window, mGraphicsDeviceManager);
             base.Update(gameTime);
         }
@@ -124,7 +126,6 @@ namespace Space_Game
             base.Draw(gameTime);
 
             mSpriteBatch.Begin();
-            mCursor.Draw();
             mSpriteBatch.End();
 
         }

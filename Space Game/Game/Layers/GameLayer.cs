@@ -7,6 +7,7 @@ using rache_der_reti.Core.InputManagement;
 using rache_der_reti.Core.Menu;
 using rache_der_reti.Core.PositionManagement;
 using rache_der_reti.Core.TextureManagement;
+using rache_der_reti.Game.GameObjects;
 using rache_der_reti.Game.Layers;
 using Space_Game.Core;
 using Space_Game.Core.Effects;
@@ -38,6 +39,7 @@ namespace Space_Game.Game.Layers
         [JsonProperty] public double mCrystals;
         
         [JsonIgnore] public SpatialHashing<GameObject> mSpatialHashing;
+        [JsonIgnore] public SelectionRectangle mSelectionRectangle;
 
         private int mSpatialHashingCellSize = 2000;
         private HudLayer mHudLayer = new();
@@ -47,10 +49,11 @@ namespace Space_Game.Game.Layers
         // Layer Stuff _____________________________________
         public GameLayer() : base()
         {
+            InitializeGlobals();
             mBackground = new UiElementSprite("gameBackground");
             mBackground.mSpriteFit = UiElementSprite.SpriteFit.Cover;
             mSpatialHashing = new SpatialHashing<GameObject>(mSpatialHashingCellSize);
-            InitializeGlobals();
+            mSelectionRectangle = new SelectionRectangle(Globals.mCamera2d);
             SpawnSystemsAndGetHome();
             mParllaxManager = new ParllaxManager();
             OnResolutionChanged();
@@ -67,6 +70,7 @@ namespace Space_Game.Game.Layers
         {
             mPassedSeconds += gameTime.ElapsedGameTime.Milliseconds / 1000d;
             mParllaxManager.Update();
+            mSelectionRectangle.Update(gameTime, inputState);
             //mHudLayer.Update(gameTime, inputState);
             Globals.mCamera2d.Update(gameTime, inputState);
             UpdateSystems(gameTime, inputState);
@@ -81,6 +85,7 @@ namespace Space_Game.Game.Layers
             mSpriteBatch.End();
             mParllaxManager.Draw();
             mSpriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: Globals.mCamera2d.GetViewTransformationMatrix(), samplerState: SamplerState.PointClamp);
+            mSelectionRectangle.Draw();
             DrawSystems();
             DrawShips();
             DrawGrid();

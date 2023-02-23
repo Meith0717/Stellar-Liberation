@@ -9,8 +9,6 @@ using Space_Game.Core;
 using Space_Game.Core.GameObject;
 using Space_Game.Core.Maths;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Space_Game.Game.GameObjects
 {
@@ -39,7 +37,7 @@ namespace Space_Game.Game.GameObjects
 
             // Position Stuff
             Position = TargetPoint = position;
-            Velocity = 0.01f;
+            Velocity = 0.001f;
             Offset = new Vector2(TextureWidth, TextureHeight) / 2;
 
             // Cross Hair Stuff
@@ -57,12 +55,13 @@ namespace Space_Game.Game.GameObjects
             mTargetCrossHair.Update(TargetPoint, Hover, Color.Red);
             HoverBox = new CircleF(Position, MathF.Max(TextureHeight / 10f, TextureWidth / 10f));
 
+            // Hover and Movement Updates
+            CheckForSelectionRectangle();
+            this.ManageHover(inputState, TrackOnCkick, OnDoubleClick);
+            this.Move(gameTime);
+
             // Check Left Klick Outside Hover
             SetTargetOnRightClick(inputState);
-
-            // Hover and Movement Updates            
-            this.ManageHover(inputState, SelectOnCkick, TrackOnDoubleClick);
-            this.Move(gameTime);
 
             // Textures Updates
             TextureId = NormalTextureId;
@@ -107,16 +106,23 @@ namespace Space_Game.Game.GameObjects
             }
         }
 
-        private void SelectOnCkick()
-        {
-            mSelect = !mSelect;
-        }
-
-        private void TrackOnDoubleClick()
+        private void TrackOnCkick()
         {
             mTrack = !mTrack;
             if (!mTrack) { return; }
             Globals.mCamera2d.SetZoom(Globals.mCamera2d.mMimZoom);
+        }
+
+        private void OnDoubleClick()
+        {
+        }
+    
+        private void CheckForSelectionRectangle()
+        {
+            if (Globals.mGameLayer.mSelectionRectangle.mSelectionRectangle.Contains(Position))
+            {
+                mSelect= true;
+            }
         }
     }
 }
