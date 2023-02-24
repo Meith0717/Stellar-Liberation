@@ -1,18 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
-using NVorbis;
-using rache_der_reti.Core.TextureManagement;
 using Space_Game.Core.Maths;
-using System;
-using System.Collections.Generic;
+using Space_Game.Core.TextureManagement;
 
 namespace Space_Game.Core.GameObject
 {
     public abstract class MovableObject : GameObject
     {
         // Texture Stuff
-        [JsonProperty] public float TextureRotation;
         [JsonProperty] public float TravelTime;
 
         // Moving Stuff
@@ -40,8 +36,8 @@ namespace Space_Game.Core.GameObject
 
             // Distance Stuff
             float distanceToTarget = Vector2.Distance(Position, TargetPoint);
-            TravelTime = (distanceToTarget / Velocity)/1000;
-            if (distanceToTarget <= 5) 
+            TravelTime = (distanceToTarget / Velocity) / 1000;
+            if (distanceToTarget <= 5)
             {
                 Position = TargetPoint;
                 return;
@@ -60,6 +56,11 @@ namespace Space_Game.Core.GameObject
         {
             IsMoving = false;
             TargetPoint = Position;
+        }
+
+        public void RemoveFromSpatialHashing()
+        {
+            Globals.mGameLayer.mSpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
         }
     }
 }

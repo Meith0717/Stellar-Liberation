@@ -1,11 +1,11 @@
 using Microsoft.Xna.Framework;
 
-namespace rache_der_reti.Core.Menu;
+namespace Space_Game.Core.Menu;
 
 public class UiElementList : UiElement
 {
     private bool OrientationIsVertical { get; }
-    
+
     public UiElementList(bool orientationIsVertical)
     {
         OrientationIsVertical = orientationIsVertical;
@@ -26,7 +26,7 @@ public class UiElementList : UiElement
         {
             totalDimensionParts += uiElement.DimensionParts;
         }
-        
+
         if (!OrientationIsVertical)
         {
             int xOffset = 0;

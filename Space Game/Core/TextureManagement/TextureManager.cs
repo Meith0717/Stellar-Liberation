@@ -1,9 +1,9 @@
-using System.Collections;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System.Collections;
 
-namespace rache_der_reti.Core.TextureManagement;
+namespace Space_Game.Core.TextureManagement;
 
 public class TextureManager
 {
@@ -42,7 +42,7 @@ public class TextureManager
         Texture2D texture = mContentManager.Load<Texture2D>(fileName);
         mTextures.Add(id, texture);
     }
-    
+
     public void LoadSpriteTexture(string id, string fileName)
     {
         SpriteFont spriteFont = mContentManager.Load<SpriteFont>(fileName);
@@ -51,7 +51,7 @@ public class TextureManager
 
     public Texture2D GetTexture(string id)
     {
-        Texture2D texture =  (Texture2D)mTextures[id];
+        Texture2D texture = (Texture2D)mTextures[id];
         if (texture == null)
         {
             throw new System.Exception("Error, Texture was not found!");
@@ -61,7 +61,7 @@ public class TextureManager
     }
     public SpriteFont GetSpriteFont(string id)
     {
-        SpriteFont spriteFont =  (SpriteFont)mSpriteFonts[id];
+        SpriteFont spriteFont = (SpriteFont)mSpriteFonts[id];
         if (spriteFont == null)
         {
             throw new System.Exception("Error, Texture was not found!");
@@ -71,13 +71,13 @@ public class TextureManager
     }
 
     // render textures
-    
+
     // ReSharper disable once UnusedMember.Global
     public void Draw(string id, Vector2 position)
     {
         mSpriteBatch.Draw(GetTexture(id), position, Color.White);
     }
-    
+
     public void Draw(string id, Vector2 position, int width, int height)
     {
         mSpriteBatch.Draw(GetTexture(id), new Rectangle((int)position.X, (int)position.Y, width, height), Color.White);
@@ -98,10 +98,10 @@ public class TextureManager
         {
             effects = SpriteEffects.FlipHorizontally;
         }
-        mSpriteBatch.Draw(GetTexture(id), new Rectangle((int)position.X, (int)position.Y, width, height), 
+        mSpriteBatch.Draw(GetTexture(id), new Rectangle((int)position.X, (int)position.Y, width, height),
             null, Color.White, 0, Vector2.Zero, effects, objectY / MaxLayerHeight);
     }
-    
+
     public void DrawFrame(string id, Vector2 position, int width, int height, int frameCount, int totalFrames, bool flip, float objectY = 0)
     {
         // check bounds of frame
@@ -116,15 +116,15 @@ public class TextureManager
         {
             effects = SpriteEffects.FlipHorizontally;
         }
-        
+
         // get texture and draw
         Texture2D texture = GetTexture(id);
         int frameWidth = texture.Width / totalFrames;
-        mSpriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, width, height), 
+        mSpriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, width, height),
             new Rectangle(frameWidth * frameCount, 0, frameWidth, texture.Height),
             Color.White, 0, Vector2.Zero, effects, objectY / MaxLayerHeight);
     }
-    
+
     // render text
     public void DrawString(string id, Vector2 position, string text, Color color)
     {

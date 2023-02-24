@@ -1,14 +1,14 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Space_Game.Core;
+using Space_Game.Core.InputManagement;
+using Space_Game.Core.LayerManagement;
+using Space_Game.Core.Menu;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using rache_der_reti.Core.InputManagement;
-using rache_der_reti.Core.Menu;
-using Space_Game.Core;
-using Space_Game.Core.LayerManagement;
 
-namespace rache_der_reti.Game.Layers;
+namespace Space_Game.Game.Layers;
 
 public class HudLayer : Layer
 {
@@ -106,7 +106,7 @@ public class HudLayer : Layer
         mSpriteBatch.End();
     }
 
-    private string AddLineBreaks(string message, int maxLength=60)
+    private string AddLineBreaks(string message, int maxLength = 60)
     {
         int stringLength = message.Length;
         if (stringLength > maxLength)
@@ -130,10 +130,10 @@ public class HudLayer : Layer
         {
             message = AddLineBreaks(message);
         }
-        
+
         // if a message is already shown and a new message shows up, show both:
         var messageOut = message;
-        
+
         if (mScreenMessageCurrentlyShown)
         {
             // Add previous message to text if both are different.
@@ -142,7 +142,7 @@ public class HudLayer : Layer
                 // ... and if new message is not too long (usually happens if message is log).
                 if (message.Length < 150)
                 {
-                    messageOut =  message + "\n \n" + mScreenMessagesLog.Last().Item1;
+                    messageOut = message + "\n \n" + mScreenMessagesLog.Last().Item1;
                 }
             }
         }
@@ -188,6 +188,6 @@ public class HudLayer : Layer
 
     public override void OnResolutionChanged()
     {
-        mRoot.Update(new Rectangle(0,0, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height));
+        mRoot.Update(new Rectangle(0, 0, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height));
     }
 }

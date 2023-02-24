@@ -1,11 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using rache_der_reti.Core.LayerManagement;
-using rache_der_reti.Core.PositionManagement;
-using rache_der_reti.Core.SoundManagement;
-using rache_der_reti.Core.TextureManagement;
 using Space_Game.Core.Effects;
-using Space_Game.Core.GameObject;
+using Space_Game.Core.LayerManagement;
+using Space_Game.Core.SoundManagement;
+using Space_Game.Core.TextureManagement;
 using Space_Game.Game.Layers;
 using System;
 
@@ -13,7 +11,7 @@ namespace Space_Game.Core
 {
     public class Globals
     {
-        public static LayerManager mLayerManager; 
+        public static LayerManager mLayerManager;
         public static GraphicsDevice mGraphicsDevice;   // Will not be saved
         public static SpriteBatch mSpriteBatch;         // Will not be saved
         public static ContentManager mContentManager;   // Will not be saved

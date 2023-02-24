@@ -1,16 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using Newtonsoft.Json;
-using rache_der_reti.Core.InputManagement;
-using rache_der_reti.Core.PositionManagement;
-using rache_der_reti.Core.TextureManagement;
 using Space_Game.Core;
+using Space_Game.Core.Animation;
 using Space_Game.Core.GameObject;
-using Space_Game.Game.Layers;
+using Space_Game.Core.InputManagement;
+using Space_Game.Core.TextureManagement;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
 
 namespace Space_Game.Game.GameObjects
 {
@@ -25,8 +23,6 @@ namespace Space_Game.Game.GameObjects
             Explored
         }
 
-        [JsonProperty] public StarState mStarState = StarState.Explored;
-
         // Type Enumeration 
         public enum StarType
         {
@@ -36,44 +32,46 @@ namespace Space_Game.Game.GameObjects
             K,
             M
         }
-        
+
         // Constant
-        const int textureHeight = 512;
-        const int textureWidth = 512;
+        const int textureHeight = 1000;
+        const int textureWidth = 1000;
 
         // Other Stuff 
         [JsonProperty] private List<Planet> mPlanetList = new();
-        [JsonProperty] private Color mStateColor;
         [JsonProperty] private Color mStarColor;
 
-        // Crosshair Stuff
         private CrossHair mCrossHair;
-
-        // Bool Stuff
         private bool mShowSystem = false;
 
         // GameObjecr Stuff _____________________________________
-        public PlanetSystem(Vector2 position) 
+        public PlanetSystem(Vector2 position)
         {
             GetSystemType();
+
+            Position = position;
+            TextureOffset = new Vector2(textureWidth, textureHeight) / 2;
+
+            TextureSclae = 1;
             TextureWidth = textureWidth;
             TextureHeight = textureHeight;
-            Offset = new Vector2(textureHeight, textureWidth) / 2;
-            Position = position;
-            HoverBox = new CircleF(Position, MathF.Max(TextureWidth/2.5f, TextureHeight/2.5f));
-            mCrossHair = new CrossHair(0.3f, 0.4f, position, mStarColor);
+            TextureDepth = 0;
+            TextureRotation = 0;
+            TextureColor = Color.White;
+
+            mCrossHair = new CrossHair(0.7f, 1f, position, mStarColor);
             GetPlanets();
             Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)position.X, (int)position.Y);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            this.ManageHover(inputState, Clicked, DoubleClicked);
+            this.ClickOnObject(inputState, 300, Clicked, null);
             mCrossHair.Update(Position, Hover, mStarColor);
-            UpdatePlanets(gameTime, inputState);
-            GetSystemState();
 
-            if (IsInZoom(0.1f) && IsInDistance(800))
+            UpdatePlanets(gameTime, inputState);
+
+            if (ViewIsSetTo(0.3f, 1500))
             {
                 ShowPlanets();
                 return;
@@ -83,13 +81,9 @@ namespace Space_Game.Game.GameObjects
 
         public override void Draw()
         {
-            mCrossHair.Draw();
-            var stateTexture = TextureManager.GetInstance().GetTexture("systemState");
-            //TextureManager.GetInstance().GetSpriteBatch().Draw(stateTexture, Position, null,
-            //    mStateColor, 0, new Vector2(512, 512), 3f, SpriteEffects.None, 0);
+            this.DrawGameObject();
 
-            TextureManager.GetInstance().Draw(TextureId, Position - Offset);
-            if (!mShowSystem) { return; }
+            if (!mShowSystem) { mCrossHair.Draw(); return; }
             foreach (Planet planet in mPlanetList)
             {
                 planet.Draw();
@@ -100,29 +94,34 @@ namespace Space_Game.Game.GameObjects
         private void Clicked()
         {
             Globals.mCamera2d.mTargetPosition = Position;
-        }
-
-        private void DoubleClicked()
-        {
-            Globals.mCamera2d.SetZoom(Globals.mCamera2d.mMimZoom);
+            Globals.mCamera2d.SetZoom(0.3f);
         }
 
         // Zoom Stuff _____________________________________
         private void ShowPlanets()
         {
-            if (!mShowSystem) { mShowSystem = true; }
-            foreach(Planet planet in mPlanetList)
+            if (TextureSclae > 0.2)
             {
-                if (planet.mAlpha >= 255) 
-                { 
-                    return ; 
+                TextureSclae -= 0.05f;
+            }
+
+            if (!mShowSystem) { mShowSystem = true; }
+            foreach (Planet planet in mPlanetList)
+            {
+                if (planet.mAlpha < 1)
+                {
+                    planet.mAlpha += 0.05f;
                 }
-                planet.mAlpha += 5;
             }
         }
 
         private void HidePlanets()
         {
+            if (TextureSclae < 1)
+            {
+                TextureSclae += 0.05f;
+            }
+
             if (!mShowSystem) { return; }
             foreach (Planet planet in mPlanetList)
             {
@@ -131,7 +130,7 @@ namespace Space_Game.Game.GameObjects
                     mShowSystem = false;
                     return;
                 }
-                planet.mAlpha -= 5;
+                planet.mAlpha -= 0.05f;
             }
         }
 
@@ -144,43 +143,42 @@ namespace Space_Game.Game.GameObjects
             {
                 case StarType.B:
                     {
-                        TextureId = "sunTypeB";
+                        NormalTextureId = HoverTectureId = "sunTypeB";
                         mStarColor = new Color(240, 240, 240);
                         break;
                     }
                 case StarType.F:
                     {
-                        TextureId = "sunTypeF";
+                        NormalTextureId = HoverTectureId = "sunTypeF";
                         mStarColor = new Color(176, 226, 255);
                         break;
                     }
                 case StarType.G:
                     {
-                        TextureId = "sunTypeG";
+                        NormalTextureId = HoverTectureId = "sunTypeG";
                         mStarColor = new Color(255, 226, 0);
                         break;
                     }
                 case StarType.K:
                     {
-                        TextureId = "sunTypeK";
+                        NormalTextureId = HoverTectureId = "sunTypeK";
                         mStarColor = new Color(255, 117, 0);
                         break;
                     }
                 case StarType.M:
                     {
-                        TextureId = "sunTypeM";
+                        NormalTextureId = HoverTectureId = "sunTypeM";
                         mStarColor = new Color(255, 0, 0);
                         break;
                     }
             }
         }
-    
         private void GetPlanets()
         {
             int amount = Globals.mRandom.Next(1, 5);
             for (int i = 0; i < amount; i++)
             {
-                mPlanetList.Add(new Planet(250 + 160 * i, Position));
+                mPlanetList.Add(new Planet(500 + 200 * i, Position));
             }
         }
 
@@ -192,14 +190,14 @@ namespace Space_Game.Game.GameObjects
                 planet.Update(gameTime, inputState);
             }
         }
-    
-        private void GetSystemState()
+
+        /*private void GetSystemState()
         {
             switch (mStarState)
             {
                 case StarState.Uncovered:
                     {
-                        mStateColor = Color.Transparent;
+                        mStateColor = Color.White;
                         break;
                     }
                 case StarState.Discovered:
@@ -209,21 +207,12 @@ namespace Space_Game.Game.GameObjects
                     }
                 case StarState.Explored:
                     {
-                        mStateColor = Color.LightGreen;
+                        mStateColor = Color.Green;
                         break;
                     }
             }
 
-        }
+        }*/
 
-        private bool IsInZoom(float zoom)
-        {
-            return Globals.mCamera2d.mZoom >= zoom;
-        }
-
-        private bool IsInDistance(int distance)
-        {
-            return Vector2.Distance(Position, Globals.mCamera2d.mPosition) < distance;
-        }
     }
 }

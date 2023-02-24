@@ -1,13 +1,11 @@
-using System;
-using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
-using rache_der_reti.Core.InputManagement;
-using Space_Game.Core;
+using Space_Game.Core.InputManagement;
+using System;
 
-namespace rache_der_reti.Core.TextureManagement;
+namespace Space_Game.Core.TextureManagement;
 public class Camera2d
 {
-    public float mMaxZoom = 0.05f;
+    public float mMaxZoom = 0.0001f;
     public float mMimZoom = 1f;
 
     public float mZoom = 1f;
@@ -43,7 +41,7 @@ public class Camera2d
         Vector2 adjustmentVector = Vector2.Subtract(mTargetPosition, mPosition);
         float distance = adjustmentVector.Length();
         adjustmentVector.Normalize();
-        mPosition += adjustmentVector * distance/10;
+        mPosition += adjustmentVector * distance / 10;
         SetPosition(mPosition);
     }
 
@@ -72,23 +70,23 @@ public class Camera2d
     private void MoveCamera(InputState inputState)
     {
 
-        if (inputState.mActionList.Contains(ActionType.CameraUp) && 
+        if (inputState.mActionList.Contains(ActionType.CameraUp) &&
             mPosition.Y > (-Globals.mGameLayer.mMapSize.Height / 2))
         {
             mTargetPosition += new Vector2(0, -50 / mZoom * 0.5f);
         }
-        if (inputState.mActionList.Contains(ActionType.CameraDown) && 
+        if (inputState.mActionList.Contains(ActionType.CameraDown) &&
             mPosition.Y < (Globals.mGameLayer.mMapSize.Height / 2))
         {
             mTargetPosition += new Vector2(0, 50 / mZoom * 0.5f);
         }
-        
-        if (inputState.mActionList.Contains(ActionType.CameraLeft) && 
+
+        if (inputState.mActionList.Contains(ActionType.CameraLeft) &&
             mPosition.X > (-Globals.mGameLayer.mMapSize.Width / 2))
         {
             mTargetPosition += new Vector2(-50 / mZoom * 0.5f, 0);
         }
-        if (inputState.mActionList.Contains(ActionType.CameraRight) && 
+        if (inputState.mActionList.Contains(ActionType.CameraRight) &&
             mPosition.X < (Globals.mGameLayer.mMapSize.Width / 2))
         {
             mTargetPosition += new Vector2(50 / mZoom * 0.5f, 0);
@@ -145,16 +143,17 @@ public class Camera2d
     {
         return Vector2.Transform(vector, mTransform);
     }
-    
+
     public Vector2 ViewToWorld(Vector2 vector)
     {
         return Vector2.Transform(vector, Matrix.Invert(mTransform));
     }
 
-    public Matrix GetViewTransformationMatrix() 
+    public Matrix GetViewTransformationMatrix()
     {
-        if(mViewTransformationMatrixChanged) {
-            mTransform = Matrix.CreateTranslation(new Vector3(-mPosition.X, -mPosition.Y, 0)) 
+        if (mViewTransformationMatrixChanged)
+        {
+            mTransform = Matrix.CreateTranslation(new Vector3(-mPosition.X, -mPosition.Y, 0))
                          * Matrix.CreateScale(mZoom, mZoom, 1)
                          * Matrix.CreateTranslation(new Vector3(mWidth / 2f, mHeight / 2f, 0));
             mViewTransformationMatrixChanged = false;
@@ -194,7 +193,7 @@ public class Camera2d
         mHeight = height;
         mViewTransformationMatrixChanged = true;
     }
-    
+
     public void Shake(int length = 20, int radiusStart = 100, int radiusEnd = 30)
     {
         if (mAnimationX == null)
@@ -209,8 +208,8 @@ public class Camera2d
         for (int i = 0; i < length; i++)
         {
             radius -= (radiusStart - radiusEnd) / length;
-            graphX[i] = (int)(random.NextDouble() * radius - radius/2f);
-            graphY[i] = (int)(random.NextDouble() * radius - radius/2f);
+            graphX[i] = (int)(random.NextDouble() * radius - radius / 2f);
+            graphY[i] = (int)(random.NextDouble() * radius - radius / 2f);
         }
 
         mAnimationX = graphX;

@@ -1,14 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using rache_der_reti.Core.InputManagement;
-using rache_der_reti.Core.TextureManagement;
 using Space_Game.Core;
-using Space_Game.Core.Effects;
 using Space_Game.Core.GameObject;
+using Space_Game.Core.InputManagement;
 using Space_Game.Core.Maths;
+using Space_Game.Core.TextureManagement;
 using System;
-using System.Diagnostics;
 using System.Linq;
 
 namespace Space_Game.Game.GameObjects
@@ -19,6 +16,7 @@ namespace Space_Game.Game.GameObjects
         // Constant
         const int textureWidth = 352;
         const int textureHeight = 256;
+        const float sclae = 0.15f;
 
         // Cross Hair
         private CrossHair mCrossHair;
@@ -28,6 +26,7 @@ namespace Space_Game.Game.GameObjects
         private bool mSelect = false;
         private bool mTrack = false;
         private bool mAttack = false;
+        private bool mDestroyed = false;
         private bool mEnemy;
 
         // Weapons
@@ -37,6 +36,7 @@ namespace Space_Game.Game.GameObjects
         private int mShield = 100;
         private int mHull = 100;
 
+        // Methodes _____________________________________________________________
         public Ship(Vector2 position, bool enemy = false)
         {
             // Textures Stuff
@@ -44,11 +44,15 @@ namespace Space_Game.Game.GameObjects
             TextureWidth = textureWidth;
             NormalTextureId = "ship";
             HoverTectureId = "shipHover";
+            TextureColor = Color.White;
+            TextureRotation = 0;
+            TextureDepth = 1;
+            TextureSclae = 0.15f;
 
             // Position Stuff
             Position = TargetPoint = position;
-            Velocity = 0.01f;
-            Offset = new Vector2(TextureWidth, TextureHeight) / 2;
+            Velocity = 0.05f;
+            TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
 
             // Cross Hair Stuff
             mCrossHair = new CrossHair(0.062f, 0.08f, Position, Color.Red);
@@ -58,98 +62,71 @@ namespace Space_Game.Game.GameObjects
             Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)position.X, (int)position.Y);
             mEnemy = enemy;
         }
-
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            if (mDestroyed) { return; }
             mShootTimer += gameTime.ElapsedGameTime.Milliseconds / 1000d * Globals.mTimeWarp;
-
-            // Update Other Stuff
             mCrossHair.Update(Position, Hover, mEnemy ? Color.Red : Color.LightGreen);
             mTargetCrossHair.Update(TargetPoint, Hover, mEnemy ? Color.Red : Color.LightGreen);
-            HoverBox = new CircleF(Position, MathF.Max(TextureHeight / 10f, TextureWidth / 10f));
             ShootOnOtherShip();
             ToggleAttak(inputState);
-
-            // Hover and Movement Updates
             CheckForSelectionRectangle();
-            this.ManageHover(inputState, TrackOnCkick, OnDoubleClick);
+            this.ClickOnObject(inputState, 50, TrackOnCkick, null);
             this.Move(gameTime);
-
-            // Check Left Klick Outside Hover
             SetTargetOnRightClick(inputState);
-
-            // Textures Updates
-            TextureId = NormalTextureId;
-            if (mSelect) {
-                TextureId = HoverTectureId;
-            }
-            if (mTrack) 
-            {
-                if (!IsMoving) { mTrack = !mTrack; }
-                Globals.mCamera2d.mTargetPosition = Position;
-            }
+            UpdateTrackAnimation();
+            CheckIfDestroied();
         }
-
         public override void Draw()
-        {    if (mHull <= 0) { return; }
-            // Draw Other Stuff
+        {
+            if (mDestroyed) { return; }
             this.DrawPath(mEnemy ? Color.Red : Color.Green);
-            mCrossHair.Draw();
-
-            // Draw Ship
-            var ship = TextureManager.GetInstance().GetTexture(TextureId);
-            TextureManager.GetInstance().GetSpriteBatch().Draw(ship, Position, null,
-                Color.White, TextureRotation, Offset, 0.15f, SpriteEffects.None, 0.0f);
-
-            // Draw Position and Target Cross Hair
-            if (!IsMoving) { return; }
-            mTargetCrossHair.mDrawInnerRing = true;
-            mTargetCrossHair.Draw();
-
-            TextureManager.GetInstance().DrawString("text", Position + new Vector2(15, 25),
-                MyMathF.GetInstance().GetTimeFromSekonds(TravelTime), mEnemy ? Color.Red : Color.LightGreen);
+            this.DrawGameObject();
+            DrawLife();
+            DrawMoving();
         }
-
-        private void SetTargetOnRightClick(InputState inputState)
+        public void TakeDamage()
         {
-            if (!mSelect || Hover) { return; }
-            if (inputState.mMouseActionType == MouseActionType.RightClick) 
+            if (mShield > 0)
             {
-                this.SetTarget(Globals.mCamera2d.ViewToWorld(inputState.mMousePosition.ToVector2()));            
-                mSelect = false;
+                mShield -= 5;
+                return;
             }
+            mHull -= 5;
         }
 
-        private void TrackOnCkick()
+        // Update Stuff _________________________________________________
+        private void UpdateTrackAnimation()
         {
-            if (mEnemy) { return; }
-            mTrack = !mTrack;
             if (!mTrack) { return; }
-            Globals.mCamera2d.SetZoom(Globals.mCamera2d.mMimZoom);
+            if (!IsMoving) { mTrack = !mTrack; }
+            Globals.mCamera2d.mTargetPosition = Position;
         }
-
-        private void OnDoubleClick()
-        {
-        }
-    
         private void CheckForSelectionRectangle()
         {
             if (mEnemy) { return; }
             if (Globals.mGameLayer.mSelectionRectangle.mSelectionRectangle.Contains(Position))
             {
-                mSelect= true;
+                mSelect = true;
             }
         }
-    
+        private void SetTargetOnRightClick(InputState inputState)
+        {
+            if (!mSelect || Hover) { return; }
+            if (inputState.mMouseActionType == MouseActionType.RightClick)
+            {
+                SetTarget(Globals.mCamera2d.ViewToWorld(inputState.mMousePosition.ToVector2()));
+                mSelect = false;
+            }
+        }
         private void ToggleAttak(InputState inputState)
         {
             if (mEnemy) { return; }
-            if (inputState.mActionList.Contains(ActionType.Shoot)) 
+            if (inputState.mActionList.Contains(ActionType.Shoot))
             {
                 mAttack = !mAttack;
             }
         }
-
         private void ShootOnOtherShip()
         {
             if (!mAttack) { return; }
@@ -160,19 +137,43 @@ namespace Space_Game.Game.GameObjects
             if (objects.Count == 0) { return; }
             Ship obj = objects[Globals.mRandom.Next(objects.Count)];
             if ((mEnemy && !obj.mEnemy) || (!mEnemy && obj.mEnemy))
-            { 
-                Globals.mWeaponManager.Shoot(this, obj, Color.OrangeRed , 1000);
+            {
+                Globals.mWeaponManager.Shoot(this, obj, Color.OrangeRed, 1000);
             }
         }
-    
-        public void TakeDamage()
+        private void CheckIfDestroied()
         {
-            if (mShield > 0)
+            if (mHull <= 0)
             {
-                mShield -= 5;
-                return;
+                RemoveFromSpatialHashing();
+                mDestroyed = true;
             }
-            mHull -= 5;
+        }
+        private void TrackOnCkick()
+        {
+            if (mEnemy) { return; }
+            mTrack = !mTrack;
+            if (!mTrack) { return; }
+        }
+        // Draw Stuff _________________________________________________
+        private void DrawLife()
+        {
+            var shieldPosition = Position - (TextureOffset * sclae);
+            shieldPosition.Y -= 20;
+            TextureManager.GetInstance().GetSpriteBatch().DrawLine(shieldPosition, TextureWidth * sclae, 0, Color.LightGray, 2, 0);
+            TextureManager.GetInstance().GetSpriteBatch().DrawLine(shieldPosition, TextureWidth * sclae * mHull / 100, 0, Color.Green, 2, 1);
+            shieldPosition.Y -= 10;
+            TextureManager.GetInstance().GetSpriteBatch().DrawLine(shieldPosition, TextureWidth * sclae, 0, Color.LightGray, 2, 0);
+            TextureManager.GetInstance().GetSpriteBatch().DrawLine(shieldPosition, TextureWidth * sclae * mShield / 100, 0, Color.Blue, 2, 1);
+        }
+        private void DrawMoving()
+        {
+            if (!IsMoving) { return; }
+            mTargetCrossHair.mDrawInnerRing = true;
+            mCrossHair.Draw();
+            mTargetCrossHair.Draw();
+            TextureManager.GetInstance().DrawString("text", Position + new Vector2(15, 25),
+                MyMathF.GetInstance().GetTimeFromSekonds(TravelTime), mEnemy ? Color.Red : Color.LightGreen);
         }
     }
 }

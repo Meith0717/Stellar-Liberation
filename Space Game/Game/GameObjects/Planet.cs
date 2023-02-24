@@ -2,11 +2,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using Newtonsoft.Json;
-using rache_der_reti.Core.InputManagement;
-using rache_der_reti.Core.TextureManagement;
 using Space_Game.Core;
 using Space_Game.Core.GameObject;
+using Space_Game.Core.InputManagement;
 using Space_Game.Core.Maths;
+using Space_Game.Core.TextureManagement;
 using System;
 
 namespace Space_Game.Game.GameObjects
@@ -25,10 +25,10 @@ namespace Space_Game.Game.GameObjects
         [JsonProperty] private PlanetType mPlanetType;
         [JsonProperty] private float mAngle;
         [JsonProperty] private float mRadius;
-        [JsonProperty] private float mRotation;
         [JsonProperty] private Vector2 mCenterPosition;
+        [JsonProperty] private SpaceStation mSpaceStation;
 
-        public int mAlpha;
+        public float mAlpha;
 
         // Type Enumerartion
         public enum PlanetType
@@ -39,20 +39,29 @@ namespace Space_Game.Game.GameObjects
             Y
         }
 
-        public Planet(int radius,  Vector2 CenterPosition) 
+        public Planet(int radius, Vector2 CenterPosition)
         {
             // Set rabdom Type 
             Array starTypes = Enum.GetValues(typeof(PlanetType));
             mPlanetType = (PlanetType)starTypes.GetValue(Globals.mRandom.Next(starTypes.Length));
-            mAlpha = 0; mAngle = (float)Globals.mRandom.NextDouble() * (MathF.PI * 2);
-            mRadius = radius; mCenterPosition = CenterPosition;
+
+            mAlpha = 0; 
+            mAngle = (float)Globals.mRandom.NextDouble() * (MathF.PI * 2);
+            mRadius = radius; 
+            mCenterPosition = CenterPosition;
 
             // Inizialize some Stuff
-            TextureHeight = textureHeight; TextureWidth = textureWidth;
-            Offset = new Vector2(textureWidth, textureHeight) / 2;
+            TextureSclae = 0.15f;
+            TextureWidth = textureWidth;
+            TextureHeight = textureHeight;
+            TextureDepth = 1;
+            TextureRotation = 0;
+            TextureColor = Color.White;
+
+            TextureOffset = new Vector2(textureWidth, textureHeight) / 2;
             Position = MyMathF.GetInstance().GetCirclePosition(mRadius, mAngle, 0) + mCenterPosition;
-            HoverBox = new CircleF(Position, MathF.Max(textureWidth / 10f, textureHeight / 10f));
             Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
+            mSpaceStation = new SpaceStation(Position + new Vector2(50, 0));
 
             // Inizialize Type Stuff
             switch (mPlanetType)
@@ -97,24 +106,28 @@ namespace Space_Game.Game.GameObjects
             Globals.mGameLayer.mSpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
             mAngle += (0.005f * Globals.mTimeWarp) / mRadius;
             Position = MyMathF.GetInstance().GetCirclePosition(mRadius, mAngle, 0) + mCenterPosition;
-            mRotation = MyMathF.GetInstance().GetRotation(Position - mCenterPosition);
+            TextureRotation = MyMathF.GetInstance().GetRotation(Position - mCenterPosition);
             Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
+            mSpaceStation.Update(Position + new Vector2(50, 0));
         }
 
         public override void Draw()
         {
-            // Draw Planet
-            var planet = TextureManager.GetInstance().GetTexture(TextureId);
-            TextureManager.GetInstance().GetSpriteBatch().Draw(planet, Position, null, 
-                new Color(mAlpha, mAlpha, mAlpha, mAlpha), mRotation, Offset, 0.1f, SpriteEffects.None, 1);
-
-            // Draw Orbit
-            TextureManager.GetInstance().GetSpriteBatch().DrawCircle(mCenterPosition, mRadius, 50,
-                new Color(mAlpha / 2, mAlpha / 2, mAlpha / 2, mAlpha / 2), 1f / Globals.mCamera2d.mZoom, 0);
-
-            // Show Recources
-            string[] array = new string[] {$"Alloys: +{mAddAllois}", $"Energy: +{mAddEnergy}", $"Crystals: +{mAddCrystals}"};
-            for ( int i = 0; i < array.Length; i++)
+            DrawPlanet();
+            DrawRecources();
+            mSpaceStation.Draw();
+        }
+        // Draw Stuff ___________________________________________________
+        private void DrawPlanet()
+        {
+            var texture = TextureManager.GetInstance().GetTexture(TextureId);
+            TextureManager.GetInstance().GetSpriteBatch().Draw(texture, Position, null,
+                new Color(mAlpha, mAlpha, mAlpha, mAlpha), TextureRotation, TextureOffset, TextureSclae, SpriteEffects.None, TextureDepth);
+        }
+        private void DrawRecources()
+        {
+            string[] array = new string[] { $"Alloys: +{mAddAllois}", $"Energy: +{mAddEnergy}", $"Crystals: +{mAddCrystals}" };
+            for (int i = 0; i < array.Length; i++)
             {
                 TextureManager.GetInstance().DrawString("text", Position + new Vector2(-70, 50 + 20 * i), array[i],
                     new Color(mAlpha, mAlpha, mAlpha, mAlpha));

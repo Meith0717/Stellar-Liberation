@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
-using rache_der_reti.Core.TextureManagement;
+using Space_Game.Core.TextureManagement;
 
-namespace rache_der_reti.Core.Menu;
+namespace Space_Game.Core.Menu;
 
 public class UiElementText : UiElement
 {
@@ -23,10 +23,10 @@ public class UiElementText : UiElement
         Height = (int)stringDimensions.Y;
     }
 
-    public override void Render( )
+    public override void Render()
     {
         base.Render();
-        TextureManager.GetInstance().DrawString(Font, new Vector2(CalculatedRectangle.X + (CalculatedRectangle.Width - Width) / 2, 
+        TextureManager.GetInstance().DrawString(Font, new Vector2(CalculatedRectangle.X + (CalculatedRectangle.Width - Width) / 2,
             CalculatedRectangle.Y + (CalculatedRectangle.Height - Height) / 2), mText, FontColor);
     }
 }

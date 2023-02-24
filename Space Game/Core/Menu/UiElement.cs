@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
-using rache_der_reti.Core.InputManagement;
-using rache_der_reti.Core.TextureManagement;
+using Space_Game.Core.InputManagement;
+using Space_Game.Core.TextureManagement;
+using System;
+using System.Collections.Generic;
 
-namespace rache_der_reti.Core.Menu;
+namespace Space_Game.Core.Menu;
 
 public class UiElement
 {
@@ -13,7 +13,7 @@ public class UiElement
     public Color HoverBackgroundColor { get; set; } = Color.Transparent;
 
     public float BackgroundAlpha { get; set; } = 1f;
-    
+
     // click handling
     protected bool mIsHovering;
     protected Action mOnClickAction;
@@ -85,7 +85,7 @@ public class UiElement
     {
         MarginLeft = MarginRight = MarginTop = MarginBottom = margin;
     }
-    
+
     // ReSharper disable once UnusedMember.Global
     public void SetMargin(int marginLeftRight, int marginTopBottom)
     {
@@ -96,7 +96,7 @@ public class UiElement
     // alignment
     public VerticalAlignment MyVerticalAlignment { get; set; } = VerticalAlignment.Center;
     public HorizontalAlignment MyHorizontalAlignt { get; set; } = HorizontalAlignment.Center;
-    
+
     public enum HorizontalAlignment
     {
         Left, Center, Right
@@ -108,7 +108,7 @@ public class UiElement
 
     // calculated position and dimensions
     protected Rectangle CalculatedRectangle { get; set; }
-    
+
     // child elements
     public List<UiElement> ChildElements { get; } = new List<UiElement>();
 
@@ -118,9 +118,9 @@ public class UiElement
         // apply margin
         CalculatedRectangle = new Rectangle(rectangle.X + MarginLeft, rectangle.Y + MarginTop,
             rectangle.Width - MarginLeft - MarginRight, rectangle.Height - MarginTop - MarginBottom);
-        
+
         // update childs
-        foreach(UiElement uiElement in ChildElements)
+        foreach (UiElement uiElement in ChildElements)
         {
             UpdateChild(uiElement);
         }
@@ -140,12 +140,12 @@ public class UiElement
         {
             height = CalculatedRectangle.Height;
         }
-        
+
         // calculate offsets
         var xOffset = CalculateXOffset(childElement, width);
-        
+
         var yOffset = CalculateYOffset(childElement, height);
-        
+
         // apply offset to child
         childElement.Update(new Rectangle(CalculatedRectangle.X + xOffset, CalculatedRectangle.Y + yOffset, width, height));
     }
@@ -183,12 +183,12 @@ public class UiElement
             Color color = (mIsHovering && HoverBackgroundColor != Color.Transparent) ? HoverBackgroundColor : BackgroundColor;
             TextureManager.GetInstance().GetSpriteBatch().FillRectangle(CalculatedRectangle, new Color(color, BackgroundAlpha), 1);
         }
-        foreach(UiElement uiElement in ChildElements)
+        foreach (UiElement uiElement in ChildElements)
         {
             uiElement.Render();
         }
     }
-    
+
     // input handling
     public virtual void HandleInput(InputState inputState)
     {
@@ -210,23 +210,23 @@ public class UiElement
         {
             mIsHovering = false;
         }
-        
-        foreach(UiElement uiElement in ChildElements)
+
+        foreach (UiElement uiElement in ChildElements)
         {
             uiElement.HandleInput(inputState);
-        } 
+        }
     }
 
 
     // protected methods
     private static bool IsPointInsideRectangle(Point point, Rectangle rectangle)
     {
-        return point.X >= rectangle.Left 
+        return point.X >= rectangle.Left
                && point.X <= rectangle.Right
-               && point.Y > rectangle.Top 
+               && point.Y > rectangle.Top
                && point.Y < rectangle.Bottom;
     }
-    
+
     protected virtual Rectangle GetClickBox()
     {
         return CalculatedRectangle;

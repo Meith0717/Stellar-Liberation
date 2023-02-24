@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using rache_der_reti.Core.InputManagement;
-using rache_der_reti.Core.TextureManagement;
+using Space_Game.Core.TextureManagement;
 
 namespace Space_Game.Core.Effects
 {
@@ -51,7 +49,7 @@ namespace Space_Game.Core.Effects
             mTextureWidth = Globals.mGraphicsDevice.Viewport.Width;
             mTextureHeight = Globals.mGraphicsDevice.Viewport.Height;
         }
-    
+
         private void ManagMovement(Vector2 movement)
         {
             mPosition1 -= movement * mMovingScale;

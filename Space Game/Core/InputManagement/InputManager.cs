@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
-namespace rache_der_reti.Core.InputManagement
+namespace Space_Game.Core.InputManagement
 {
     public class InputManager
     {
@@ -90,7 +90,7 @@ namespace rache_der_reti.Core.InputManagement
                     {
                         mLeftButtonKlicked = false;
                         mInputState.mMouseActionType = MouseActionType.LeftClickDouble;
-                    } 
+                    }
                     else
                     {
                         mLeftButtonKlicked = true;

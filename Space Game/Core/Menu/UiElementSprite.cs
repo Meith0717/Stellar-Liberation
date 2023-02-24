@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using rache_der_reti.Core.TextureManagement;
+using Space_Game.Core.TextureManagement;
 
-namespace rache_der_reti.Core.Menu;
+namespace Space_Game.Core.Menu;
 
 public class UiElementSprite : UiElement
 {
@@ -54,13 +54,13 @@ public class UiElementSprite : UiElement
         Vector2 offset = Vector2.Zero;
 
         Texture2D texture = TextureManager.GetInstance().GetTexture(SpriteId);
-        
+
         float textureAspectRatio = (float)texture.Width / texture.Height / mTotalFrames;
         float availableAspectRatio = (float)CalculatedRectangle.Width / CalculatedRectangle.Height;
 
         int width = CalculatedRectangle.Width;
         int height = CalculatedRectangle.Height;
-        switch(mSpriteFit)
+        switch (mSpriteFit)
         {
             case SpriteFit.Fit:
                 if (textureAspectRatio < availableAspectRatio)
@@ -102,23 +102,23 @@ public class UiElementSprite : UiElement
         int frameCount = mActiveFrame;
         if (mHoverEnabled && mIsHovering)
         {
-            frameCount = 1; 
+            frameCount = 1;
         }
         else if (mToggleEnabled && !mToggle)
         {
             frameCount = 1;
         }
-        TextureManager.GetInstance().DrawFrame(SpriteId, new Vector2(CalculatedRectangle.X, CalculatedRectangle.Y), 
+        TextureManager.GetInstance().DrawFrame(SpriteId, new Vector2(CalculatedRectangle.X, CalculatedRectangle.Y),
             CalculatedRectangle.Width, CalculatedRectangle.Height, frameCount, mTotalFrames, false);
 
         base.Render();
     }
-    
+
     protected override Rectangle GetClickBox()
     {
         return CalculatedRectangle;
     }
-    
+
     protected override void OnClick()
     {
         mToggle = !mToggle;

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
-namespace rache_der_reti.Core.PositionManagement
+namespace Space_Game.Core.PositionManagement
 {
     [Serializable]
     public class SpatialHashing<T>

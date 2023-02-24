@@ -1,6 +1,6 @@
-using rache_der_reti.Core.InputManagement;
+using Space_Game.Core.InputManagement;
 
-namespace rache_der_reti.Core.Menu;
+namespace Space_Game.Core.Menu;
 
 public class UiElementSlider : UiElementSprite
 {
@@ -23,7 +23,7 @@ public class UiElementSlider : UiElementSprite
 
     public override void HandleInput(InputState inputState)
     {
-        if (inputState.mMouseActionType == MouseActionType.LeftClickHold && 
+        if (inputState.mMouseActionType == MouseActionType.LeftClickHold &&
             CalculatedRectangle.Contains(inputState.mMousePosition))
         {
             int xOffset = inputState.mMousePosition.X - CalculatedRectangle.Left;
@@ -35,7 +35,8 @@ public class UiElementSlider : UiElementSprite
             if (xOffset < minX)
             {
                 xOffset = minX;
-            } else if (xOffset > maxX)
+            }
+            else if (xOffset > maxX)
             {
                 xOffset = maxX;
             }

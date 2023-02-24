@@ -1,14 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.Sprites;
-using Newtonsoft.Json;
-using rache_der_reti.Core.InputManagement;
-using rache_der_reti.Core.TextureManagement;
-using Space_Game.Core.GameObject;
-using System;
-using System.Buffers;
+using Space_Game.Core.TextureManagement;
 
-namespace Space_Game.Game.GameObjects
+namespace Space_Game.Core.GameObject
 {
     public class CrossHair
     {
@@ -23,7 +17,6 @@ namespace Space_Game.Game.GameObjects
         private Vector2 mPosition;
         private Vector2 mOffset;
         private bool mHover;
-        private float mAlphaF;
 
         public int mAlpha;
         public bool mDrawInnerRing;
@@ -43,7 +36,7 @@ namespace Space_Game.Game.GameObjects
         public void Draw()
         {
             var crossHair1 = TextureManager.GetInstance().GetTexture("crossHair1");
-            TextureManager.GetInstance().GetSpriteBatch().Draw(crossHair1, mPosition, null, 
+            TextureManager.GetInstance().GetSpriteBatch().Draw(crossHair1, mPosition, null,
                 new Color(mColor.R, mColor.G, mColor.B, mAlpha),
                 0, mOffset, mScale, SpriteEffects.None, 0.0f);
 
@@ -82,7 +75,6 @@ namespace Space_Game.Game.GameObjects
             mHover = hover;
             mPosition = position;
             mRotation += 0.05f;
-            mAlphaF = mAlpha / 255;
         }
     }
 }

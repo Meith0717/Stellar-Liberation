@@ -1,18 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using rache_der_reti.Core.InputManagement;
-using rache_der_reti.Core.LayerManagement;
-using rache_der_reti.Core.SoundManagement;
-using rache_der_reti.Core.TextureManagement;
 using Space_Game.Core;
-using Space_Game.Game.GameObjects;
-using Space_Game.Game.Layers;
+using Space_Game.Core.InputManagement;
+using Space_Game.Core.LayerManagement;
+using Space_Game.Core.SoundManagement;
+using Space_Game.Core.TextureManagement;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using static rache_der_reti.Core.Menu.UiElementSprite;
 
 namespace Space_Game
 {
@@ -64,7 +59,7 @@ namespace Space_Game
             mTextureManager.SetContentManager(Content);
             mTextureManager.SetSpriteBatch(mSpriteBatch);
 
-            mSoundManager.LoadContent(Content, new List<string> { "hit", "engineSound"});
+            mSoundManager.LoadContent(Content, new List<string> { "hit", "engineSound" });
 
             // Load Star Textures
             mTextureManager.LoadTexture("sunTypeB", "GameObjects/Stars/sunTypeB");
@@ -93,6 +88,7 @@ namespace Space_Game
             mTextureManager.LoadTexture("cursor", "cursor");
             mTextureManager.LoadTexture("transparent", "GameObjects/transparent");
             mTextureManager.LoadTexture("projectile", "GameObjects/projectile");
+            mTextureManager.LoadTexture("spaceStation", "GameObjects/spaceStation");
 
             // game fonts
             mTextureManager.LoadSpriteTexture("text", "fonts/text");
@@ -125,10 +121,6 @@ namespace Space_Game
             // TODO: Add your drawing code here
             mLayerManager.Draw();
             base.Draw(gameTime);
-
-            mSpriteBatch.Begin();
-            mSpriteBatch.End();
-
         }
 
         // Some Stuff

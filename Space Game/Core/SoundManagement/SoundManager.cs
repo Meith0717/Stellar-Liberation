@@ -1,11 +1,11 @@
-﻿using System.Collections;
+﻿using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
 
-namespace rache_der_reti.Core.SoundManagement
+namespace Space_Game.Core.SoundManagement
 {
     public class SoundManager
     {
@@ -18,7 +18,7 @@ namespace rache_der_reti.Core.SoundManagement
         public float SoundVolume { get; set; } = 1.0f;
         public bool BackgroundMusicEnabled { get; set; } = true;
         public bool SoundEffectsEnabled { get; set; } = true;
-        
+
         // config to sound good
         private readonly float mBackgroundMusicVolume = 0.7f;
 
@@ -36,7 +36,7 @@ namespace rache_der_reti.Core.SoundManagement
         }
 
         private void CreateSoundEffects(ContentManager contentManager, List<string> soundNamesList)
-        { 
+        {
             foreach (var soundFile in soundNamesList)
             {
                 if (SoundEffects[soundFile] != null)
@@ -112,7 +112,7 @@ namespace rache_der_reti.Core.SoundManagement
             volume *= SoundVolume;
 
             // Make sure volume is between 0 and 1
-            volume = volume <= 1 ? volume  : 1;
+            volume = volume <= 1 ? volume : 1;
             volume = volume >= 0 ? volume : 0;
 
             var instancesStopped = instances.Where(s => s.State == SoundState.Stopped);
@@ -123,13 +123,13 @@ namespace rache_der_reti.Core.SoundManagement
             switch (soundEffectInstances.Count)
             {
                 case 0 when allowInterrupt:
-                {
-                    instance = instances.First();
-                    instance.Volume = volume;
-                    instance.Stop();
-                    instance.Play();
-                    break;
-                }
+                    {
+                        instance = instances.First();
+                        instance.Volume = volume;
+                        instance.Stop();
+                        instance.Play();
+                        break;
+                    }
                 case > 0:
                     instance = soundEffectInstances.First();
                     instance.Volume = volume;
@@ -188,7 +188,7 @@ namespace rache_der_reti.Core.SoundManagement
                         continue;
                     }
 
-                    if (sliderValue >= 0 && sliderValue <=1)
+                    if (sliderValue >= 0 && sliderValue <= 1)
                     {
                         instance.Volume = sliderValue;
                     }

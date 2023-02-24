@@ -1,15 +1,13 @@
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using rache_der_reti.Core.InputManagement;
-using rache_der_reti.Core.SoundManagement;
-using Space_Game;
-using Space_Game.Core.LayerManagement;
+using Space_Game.Core.InputManagement;
+using Space_Game.Core.SoundManagement;
 using Space_Game.Game.Layers;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace rache_der_reti.Core.LayerManagement;
+namespace Space_Game.Core.LayerManagement;
 
 public class LayerManager
 {
@@ -71,7 +69,7 @@ public class LayerManager
     // draw layers
     public void Draw()
     {
-        foreach(Layer layer in mLayerStack)
+        foreach (Layer layer in mLayerStack)
         {
             layer.Draw();
         }
@@ -80,11 +78,11 @@ public class LayerManager
     // lifecycle methods
     private void Start()
     {
-         mLayerStack.AddLast(new GameLayer());
+        mLayerStack.AddLast(new GameLayer());
     }
     public void Exit()
     {
-        foreach(Layer layer in mLayerStack)
+        foreach (Layer layer in mLayerStack)
         {
             layer.Destroy();
         }
@@ -94,7 +92,7 @@ public class LayerManager
     // fullscreen stuff
     public void OnResolutionChanged()
     {
-        foreach(Layer layer in mLayerStack.ToArray())
+        foreach (Layer layer in mLayerStack.ToArray())
         {
             layer.OnResolutionChanged();
         }

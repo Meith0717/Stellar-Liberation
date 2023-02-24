@@ -1,11 +1,10 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
-using rache_der_reti.Core.InputManagement;
-using rache_der_reti.Core.LayerManagement;
-using rache_der_reti.Core.SoundManagement;
+using Space_Game.Core.InputManagement;
+using Space_Game.Core.SoundManagement;
+using System;
 
 namespace Space_Game.Core.LayerManagement;
 

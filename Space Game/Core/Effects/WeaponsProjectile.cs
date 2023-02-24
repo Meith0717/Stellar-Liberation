@@ -1,13 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using rache_der_reti.Core.TextureManagement;
-using Space_Game.Core.GameObject;
 using Space_Game.Core.Maths;
+using Space_Game.Core.TextureManagement;
 using Space_Game.Game.GameObjects;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace Space_Game.Core.Effects
 {
@@ -29,15 +26,15 @@ namespace Space_Game.Core.Effects
             Position = originShip.Position;
             OriginShip = originShip;
             MaxTravelDistance = maxTravelDistance;
-            ProjectileColor = color; 
-            Velocity = 0.1f;
+            ProjectileColor = color;
+            Velocity = 0.8f;
             Direction = (target.Position - Position).NormalizedCopy();
             Rotation = MyMathF.GetInstance().GetRotation(Direction);
         }
 
         public void Update(GameTime gameTime)
         {
-            var direction = Direction * Velocity * gameTime.ElapsedGameTime.Milliseconds * Globals.mTimeWarp; 
+            var direction = Direction * Velocity * gameTime.ElapsedGameTime.Milliseconds * Globals.mTimeWarp;
             GiveDamage();
             TravelDistance += direction.Length();
             if (TravelDistance >= MaxTravelDistance) { Remove = true; }

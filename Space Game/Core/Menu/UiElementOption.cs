@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
-using rache_der_reti.Core.InputManagement;
+using Space_Game.Core.InputManagement;
 
-namespace rache_der_reti.Core.Menu;
+namespace Space_Game.Core.Menu;
 
 public class UiElementOption : UiElementList
 {

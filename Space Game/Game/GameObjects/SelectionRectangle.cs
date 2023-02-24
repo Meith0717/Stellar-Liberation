@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
-using rache_der_reti.Core.InputManagement;
-using rache_der_reti.Core.TextureManagement;
 using Space_Game.Core.GameObject;
+using Space_Game.Core.InputManagement;
+using Space_Game.Core.TextureManagement;
 
-namespace rache_der_reti.Game.GameObjects
+namespace Space_Game.Game.GameObjects
 {
     public class SelectionRectangle : GameObject
     {
@@ -11,7 +11,6 @@ namespace rache_der_reti.Game.GameObjects
         internal Rectangle mSelectionRectangle;
         internal Rectangle mMouseRectangle;
 
-        internal MouseActionType mMouseAction;
         internal Point mMousePosition;
 
         public SelectionRectangle(Camera2d camera)

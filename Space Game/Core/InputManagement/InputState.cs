@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 
-namespace rache_der_reti.Core.InputManagement
+namespace Space_Game.Core.InputManagement
 {
     public enum ActionType
     {

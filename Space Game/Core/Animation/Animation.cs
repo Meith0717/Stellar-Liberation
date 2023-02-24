@@ -1,7 +1,7 @@
-using System;
 using Newtonsoft.Json;
+using System;
 
-namespace rache_der_reti.Core.Animation;
+namespace Space_Game.Core.Animation;
 [Serializable]
 public class Animation
 {
