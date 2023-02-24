@@ -4,6 +4,7 @@ using rache_der_reti.Core.LayerManagement;
 using rache_der_reti.Core.PositionManagement;
 using rache_der_reti.Core.SoundManagement;
 using rache_der_reti.Core.TextureManagement;
+using Space_Game.Core.Effects;
 using Space_Game.Core.GameObject;
 using Space_Game.Game.Layers;
 using System;
@@ -20,6 +21,7 @@ namespace Space_Game.Core
         public static Random mRandom;
         public static Camera2d mCamera2d;
         public static GameLayer mGameLayer;
+        public static WeaponManager mWeaponManager;
         public static float mTimeWarp;
     }
 }

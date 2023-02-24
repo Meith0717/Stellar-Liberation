@@ -63,7 +63,7 @@ namespace Space_Game.Game.Layers
             mShipList.Add(new Ship(mHomeSystem.Position + 
                 new Vector2(Globals.mRandom.Next(-500, 500), Globals.mRandom.Next(-500, 500))));
             mShipList.Add(new Ship(mHomeSystem.Position +
-                new Vector2(Globals.mRandom.Next(-500, 500), Globals.mRandom.Next(-500, 500))));
+                new Vector2(Globals.mRandom.Next(-500, 500), Globals.mRandom.Next(-500, 500)), true));
 
         }
         public override void Update(GameTime gameTime, InputState inputState)
@@ -77,14 +77,18 @@ namespace Space_Game.Game.Layers
             UpdateShips(gameTime, inputState);
             ManageTimeWarp(gameTime, inputState);
             TabToGoHome(gameTime, inputState);
+            Globals.mWeaponManager.Update(gameTime);
         }
         public override void Draw()
         {
             mSpriteBatch.Begin(samplerState: SamplerState.PointClamp);
             mBackground.Render();
             mSpriteBatch.End();
+
             mParllaxManager.Draw();
+
             mSpriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: Globals.mCamera2d.GetViewTransformationMatrix(), samplerState: SamplerState.PointClamp);
+            Globals.mWeaponManager.Draw();
             mSelectionRectangle.Draw();
             DrawSystems();
             DrawShips();
@@ -133,6 +137,7 @@ namespace Space_Game.Game.Layers
         {
             Globals.mCamera2d = new (mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
             Globals.mGameLayer = this;
+            Globals.mWeaponManager = new WeaponManager();
         }
         private void InitializeParllax()
         {

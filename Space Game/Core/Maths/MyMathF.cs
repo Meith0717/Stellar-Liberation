@@ -18,10 +18,18 @@ namespace Space_Game.Core.Maths
             return sInstance ??= new MyMathF();
         }
 
-        private int GetRandomInt(int randomVariance)
+        public int GetRandomInt(int randomVariance)
         {
             var i = Globals.mRandom.Next(-randomVariance, randomVariance);
             return i;
+        }
+
+        public Vector2 GetRandomVector(int randomVariance)
+        {
+            var i = Globals.mRandom.Next(-randomVariance, randomVariance);
+            var j = Globals.mRandom.Next(-randomVariance, randomVariance);
+
+            return new Vector2(i, j);
         }
 
         public Vector2 GetCirclePosition(float radius, float angleRad, int randomVariance)

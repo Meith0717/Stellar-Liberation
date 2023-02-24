@@ -5,59 +5,55 @@ using NVorbis;
 using rache_der_reti.Core.TextureManagement;
 using Space_Game.Core.Maths;
 using System;
+using System.Collections.Generic;
 
 namespace Space_Game.Core.GameObject
 {
     public abstract class MovableObject : GameObject
     {
-        [JsonProperty] public float Velocity;
-        [JsonProperty] public bool IsMoving;
-        [JsonProperty] public Vector2 TargetPoint;
-        [JsonProperty] public Vector2 StartPoint;
-        [JsonProperty] public float Rotation;
+        // Texture Stuff
+        [JsonProperty] public float TextureRotation;
         [JsonProperty] public float TravelTime;
 
-        [JsonProperty] private Vector2 DirectionVector;
-        [JsonProperty] private float TextureRotation;
+        // Moving Stuff
+        [JsonProperty] public Vector2 TargetPoint;
+        [JsonProperty] public float Velocity;
 
-        public override void Draw()
+        // bool
+        [JsonProperty] public bool IsMoving;
+
+        public void DrawPath(Color color)
         {
-            TextureManager.GetInstance().GetSpriteBatch().DrawLine(Position, TargetPoint, Color.Red,  2 / Globals.mCamera2d.mZoom);
+            TextureManager.GetInstance().GetSpriteBatch().DrawLine(Position, TargetPoint, color, 2 / Globals.mCamera2d.mZoom);
         }
-                                                                      
+
         public void SetTarget(Vector2 targetPoint)
         {
             TargetPoint = targetPoint;
-            StartPoint = Position;
-            DirectionVector = targetPoint - Position;
-            DirectionVector.Normalize();
-            TextureRotation = (float)Math.Acos(Vector2.Dot(new Vector2(1, 0), DirectionVector) / DirectionVector.Length());
-            if (DirectionVector.Y < 0) { TextureRotation = -TextureRotation; }
         }
 
         public void Move(GameTime gameTime)
         {
-            var speed = Globals.mTimeWarp * Velocity;
+            IsMoving = false;
 
             if (Position == TargetPoint) { return; }
 
+            // Distance Stuff
             float distanceToTarget = Vector2.Distance(Position, TargetPoint);
-
+            TravelTime = (distanceToTarget / Velocity)/1000;
             if (distanceToTarget <= 5) 
             {
                 Position = TargetPoint;
-                IsMoving = false;
                 return;
             }
 
+            // Position Stuff
             Globals.mGameLayer.mSpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
-            TravelTime = (distanceToTarget / Velocity)/1000;
-            DirectionVector = TargetPoint - Position;
-            DirectionVector.Normalize();
-            Rotation = MyMathF.GetInstance().GetRotation(DirectionVector);
-            Position += DirectionVector * speed * gameTime.ElapsedGameTime.Milliseconds;
-            IsMoving = true;
+            Vector2 direction = (TargetPoint - Position).NormalizedCopy();
+            TextureRotation = MyMathF.GetInstance().GetRotation(direction);
+            Position += direction * Globals.mTimeWarp * Velocity * gameTime.ElapsedGameTime.Milliseconds;
             Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
+            IsMoving = true;
         }
 
         public void StopMoving()

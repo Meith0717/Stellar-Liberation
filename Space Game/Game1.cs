@@ -64,7 +64,7 @@ namespace Space_Game
             mTextureManager.SetContentManager(Content);
             mTextureManager.SetSpriteBatch(mSpriteBatch);
 
-            mSoundManager.LoadContent(Content, new List<string> { "quack" });
+            mSoundManager.LoadContent(Content, new List<string> { "hit", "engineSound"});
 
             // Load Star Textures
             mTextureManager.LoadTexture("sunTypeB", "GameObjects/Stars/sunTypeB");
@@ -92,6 +92,7 @@ namespace Space_Game
             mTextureManager.LoadTexture("systemState", "GameObjects/systemState");
             mTextureManager.LoadTexture("cursor", "cursor");
             mTextureManager.LoadTexture("transparent", "GameObjects/transparent");
+            mTextureManager.LoadTexture("projectile", "GameObjects/projectile");
 
             // game fonts
             mTextureManager.LoadSpriteTexture("text", "fonts/text");

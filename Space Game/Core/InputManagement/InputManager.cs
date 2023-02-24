@@ -41,6 +41,7 @@ namespace rache_der_reti.Core.InputManagement
                 { Keys.F11, ActionType.ToggleFullscreen},
                 { Keys.D2, ActionType.AccelerateTime },
                 { Keys.D1, ActionType.DeaccelerateTime },
+                { Keys.Space, ActionType.Shoot }
             };
 
             // Dictionary for keyboard keys that have been hold and corresponding actions.
