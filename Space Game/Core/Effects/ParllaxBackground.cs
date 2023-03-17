@@ -37,11 +37,11 @@ namespace Space_Game.Core.Effects
 
         public void Draw()
         {
-            TextureManager.GetInstance().Draw(mTextureId, mPosition1, mTextureWidth, mTextureHeight);
-            TextureManager.GetInstance().Draw(mTextureId, mPosition2, mTextureWidth, mTextureHeight);
-            TextureManager.GetInstance().Draw(mTextureId, mPosition3, mTextureWidth, mTextureHeight);
-            TextureManager.GetInstance().Draw(mTextureId, mPosition4, mTextureWidth, mTextureHeight);
-            TextureManager.GetInstance().Draw(mTextureId, mPosition5, mTextureWidth, mTextureHeight);
+            // TextureManager.GetInstance().Draw(mTextureId, mPosition1, mTextureWidth, mTextureHeight);
+            // TextureManager.GetInstance().Draw(mTextureId, mPosition2, mTextureWidth, mTextureHeight);
+            // TextureManager.GetInstance().Draw(mTextureId, mPosition3, mTextureWidth, mTextureHeight);
+            // TextureManager.GetInstance().Draw(mTextureId, mPosition4, mTextureWidth, mTextureHeight);
+            // TextureManager.GetInstance().Draw(mTextureId, mPosition5, mTextureWidth, mTextureHeight);
         }
 
         public void OnResolutionChanged()

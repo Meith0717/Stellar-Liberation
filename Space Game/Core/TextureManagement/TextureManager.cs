@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
 using System.Collections;
 
 namespace Space_Game.Core.TextureManagement;
@@ -71,74 +72,27 @@ public class TextureManager
     }
 
     // render textures
-
-    // ReSharper disable once UnusedMember.Global
-    public void Draw(string id, Vector2 position)
+    public void Draw(string id, Vector2 position, Vector2 offset, int width, int height, float sclae, float rotation, float depth)
     {
-        mSpriteBatch.Draw(GetTexture(id), position, Color.White);
+        mSpriteBatch.Draw(GetTexture(id), position, null, Color.White, rotation, offset, sclae, SpriteEffects.None, depth);
+    }
+    public void Draw(string id, Vector2 position, Vector2 offset, int width, int height, float sclae, float rotation, float depth, Color color)
+    {
+        mSpriteBatch.Draw(GetTexture(id), position, null, color, rotation, offset, sclae, SpriteEffects.None, depth);
     }
 
-    public void Draw(string id, Vector2 position, int width, int height)
-    {
-        mSpriteBatch.Draw(GetTexture(id), new Rectangle((int)position.X, (int)position.Y, width, height), Color.White);
-    }
-
-    public void Draw(string id, Vector2 position, Vector2 offset, float rotation, int width, int height)
-    {
-        mSpriteBatch.Draw(GetTexture(id), new Rectangle((int)position.X, (int)position.Y, width, height), null, Color.White, rotation,
-            offset, SpriteEffects.None, 0);
-    }
-
-    // ReSharper disable once UnusedMember.Global
-    public void Draw(string id, Vector2 position, int width, int height, float objectY, bool flip = false)
-    {
-        // add flip effect
-        SpriteEffects effects = SpriteEffects.None;
-        if (flip)
-        {
-            effects = SpriteEffects.FlipHorizontally;
-        }
-        mSpriteBatch.Draw(GetTexture(id), new Rectangle((int)position.X, (int)position.Y, width, height),
-            null, Color.White, 0, Vector2.Zero, effects, objectY / MaxLayerHeight);
-    }
-
-    public void DrawFrame(string id, Vector2 position, int width, int height, int frameCount, int totalFrames, bool flip, float objectY = 0)
-    {
-        // check bounds of frame
-        if (frameCount >= totalFrames || frameCount < 0)
-        {
-            throw new System.Exception("Error, frame count not in range");
-        }
-
-        // add flip effect
-        SpriteEffects effects = SpriteEffects.None;
-        if (flip)
-        {
-            effects = SpriteEffects.FlipHorizontally;
-        }
-
-        // get texture and draw
-        Texture2D texture = GetTexture(id);
-        int frameWidth = texture.Width / totalFrames;
-        mSpriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, width, height),
-            new Rectangle(frameWidth * frameCount, 0, frameWidth, texture.Height),
-            Color.White, 0, Vector2.Zero, effects, objectY / MaxLayerHeight);
-    }
-
-    // render text
     public void DrawString(string id, Vector2 position, string text, Color color)
     {
         mSpriteBatch.DrawString(GetSpriteFont(id), text, position, color);
     }
 
-    public void DrawRectangle(string id, Rectangle rectangle)
+    public void DrawCircle(Vector2 center, float radius, Color color, float thickness, int depth)
     {
-        Texture2D texture = GetTexture(id);
-        mSpriteBatch.Draw(texture, rectangle, Color.White);
+        mSpriteBatch.DrawCircle(center, radius, 90, color, thickness / Globals.mCamera2d.mZoom, depth);
+    }
 
-        /*// create a slightly smaller inner rectangle.
-        Rectangle innerRectangle = rectangle;
-        innerRectangle.Inflate(-1, -1);
-        mSpriteBatch.Draw(texture, innerRectangle, Color.Transparent);*/
+    public void DrawLine(Vector2 start, Vector2 end, Color color, float thickness, int depth)
+    {
+        mSpriteBatch.DrawLine(start, end, color, thickness / Globals.mCamera2d.mZoom, depth);
     }
 }

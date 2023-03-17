@@ -19,7 +19,6 @@ namespace Space_Game.Core
         public static Random mRandom;
         public static Camera2d mCamera2d;
         public static GameLayer mGameLayer;
-        public static WeaponManager mWeaponManager;
         public static float mTimeWarp;
     }
 }

@@ -67,7 +67,7 @@ public class Camera2d
         mViewTransformationMatrixChanged = true;
     }
 
-    private void MoveCamera(InputState inputState)
+    private void MoveCameraByKey(InputState inputState)
     {
 
         if (inputState.mActionList.Contains(ActionType.CameraUp) &&
@@ -80,7 +80,6 @@ public class Camera2d
         {
             mTargetPosition += new Vector2(0, 50 / mZoom * 0.5f);
         }
-
         if (inputState.mActionList.Contains(ActionType.CameraLeft) &&
             mPosition.X > (-Globals.mGameLayer.mMapSize.Width / 2))
         {
@@ -91,7 +90,30 @@ public class Camera2d
         {
             mTargetPosition += new Vector2(50 / mZoom * 0.5f, 0);
         }
+    }
 
+    private void MoveCameraByMouse(InputState inputState)
+    {
+        var AppHeight = Globals.mGraphicsDevice.Viewport.Height;
+        var AppWidth = Globals.mGraphicsDevice.Viewport.Width;
+        var XAxisRange = (AppWidth * 0.05);
+        var YAxisRange = (AppHeight * 0.1);
+        if (inputState.mMousePosition.X > AppWidth - XAxisRange)
+        {
+            mTargetPosition += new Vector2(25 / mZoom * 0.5f, 0);
+        }
+        if (inputState.mMousePosition.X < XAxisRange)
+        {
+            mTargetPosition += new Vector2(-25 / mZoom * 0.5f, 0);
+        }
+        if (inputState.mMousePosition.Y > AppHeight - YAxisRange)
+        {
+            mTargetPosition += new Vector2(0, 25 / mZoom * 0.5f);
+        }
+        if (inputState.mMousePosition.Y < YAxisRange)
+        {
+            mTargetPosition += new Vector2(0, -25 / mZoom * 0.5f);
+        }
     }
 
     private void AdjustZoom(GameTime gameTime, InputState inputState)
@@ -164,7 +186,8 @@ public class Camera2d
     public void Update(GameTime gameTime, InputState inputState)
     {
         AdjustZoom(gameTime, inputState);
-        MoveCamera(inputState);
+        MoveCameraByKey(inputState);
+        MoveCameraByMouse(inputState);
         MoveAnimation(gameTime);
         ZoomAnimation(gameTime);
         // play animation if there is one

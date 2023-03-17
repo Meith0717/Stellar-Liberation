@@ -108,9 +108,6 @@ public class UiElementSprite : UiElement
         {
             frameCount = 1;
         }
-        TextureManager.GetInstance().DrawFrame(SpriteId, new Vector2(CalculatedRectangle.X, CalculatedRectangle.Y),
-            CalculatedRectangle.Width, CalculatedRectangle.Height, frameCount, mTotalFrames, false);
-
         base.Render();
     }
 
