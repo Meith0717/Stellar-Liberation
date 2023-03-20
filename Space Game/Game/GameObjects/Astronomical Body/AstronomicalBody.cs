@@ -12,7 +12,7 @@ namespace Space_Game.Game.GameObjects.Astronomical_Body
             if (inputState.mMouseActionType == MouseActionType.LeftClick)
             {
                 Globals.mCamera2d.mTargetPosition = Position;
-                Globals.mCamera2d.SetZoom(1);
+                Globals.mCamera2d.SetZoom(0.2f);
             }
         }
     }

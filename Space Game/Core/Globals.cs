@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Space_Game.Core.Effects;
+using Space_Game.Core.GameObject;
 using Space_Game.Core.LayerManagement;
 using Space_Game.Core.SoundManagement;
-using Space_Game.Core.TextureManagement;
 using Space_Game.Game.Layers;
 using System;
 

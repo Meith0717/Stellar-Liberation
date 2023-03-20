@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using Newtonsoft.Json;
 using Space_Game.Core.InputManagement;
 
@@ -18,6 +19,7 @@ namespace Space_Game.Core.GameObject
         public int TextureHeight { get; set; }
         public int TextureDepth { get; set; }
         public Color TextureColor { get; set; }
+        public CircleF BoundedBox { get; set; }
 
         public abstract void Update(GameTime gameTime, InputState inputState);
         public abstract void Draw();

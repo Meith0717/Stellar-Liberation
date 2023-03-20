@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Space_Game.Core.InputManagement;
 using System;
 
-namespace Space_Game.Core.TextureManagement;
+namespace Space_Game.Core.GameObject;
 public class Camera2d
 {
     public float mMaxZoom = 0.0001f;
@@ -62,8 +62,8 @@ public class Camera2d
     public void SetPosition(Vector2 position)
     {
         mPosition = position;
-        mPosition.X = (float)(Math.Round(mPosition.X));
-        mPosition.Y = (float)(Math.Round(mPosition.Y));
+        mPosition.X = (float)Math.Round(mPosition.X);
+        mPosition.Y = (float)Math.Round(mPosition.Y);
         mViewTransformationMatrixChanged = true;
     }
 
@@ -71,22 +71,22 @@ public class Camera2d
     {
 
         if (inputState.mActionList.Contains(ActionType.CameraUp) &&
-            mPosition.Y > (-Globals.mGameLayer.mMapSize.Height / 2))
+            mPosition.Y > -Globals.mGameLayer.mMapSize.Height / 2)
         {
             mTargetPosition += new Vector2(0, -50 / mZoom * 0.5f);
         }
         if (inputState.mActionList.Contains(ActionType.CameraDown) &&
-            mPosition.Y < (Globals.mGameLayer.mMapSize.Height / 2))
+            mPosition.Y < Globals.mGameLayer.mMapSize.Height / 2)
         {
             mTargetPosition += new Vector2(0, 50 / mZoom * 0.5f);
         }
         if (inputState.mActionList.Contains(ActionType.CameraLeft) &&
-            mPosition.X > (-Globals.mGameLayer.mMapSize.Width / 2))
+            mPosition.X > -Globals.mGameLayer.mMapSize.Width / 2)
         {
             mTargetPosition += new Vector2(-50 / mZoom * 0.5f, 0);
         }
         if (inputState.mActionList.Contains(ActionType.CameraRight) &&
-            mPosition.X < (Globals.mGameLayer.mMapSize.Width / 2))
+            mPosition.X < Globals.mGameLayer.mMapSize.Width / 2)
         {
             mTargetPosition += new Vector2(50 / mZoom * 0.5f, 0);
         }
@@ -96,22 +96,30 @@ public class Camera2d
     {
         var AppHeight = Globals.mGraphicsDevice.Viewport.Height;
         var AppWidth = Globals.mGraphicsDevice.Viewport.Width;
-        var XAxisRange = (AppWidth * 0.05);
-        var YAxisRange = (AppHeight * 0.1);
-        if (inputState.mMousePosition.X > AppWidth - XAxisRange)
+
+        var XAxisRange = AppWidth * 0.05;
+        var YAxisRange = AppHeight * 0.1;
+
+
+        if (inputState.mMousePosition.X > AppWidth - XAxisRange && inputState.mMousePosition.X < AppWidth)
         {
+            // Right
             mTargetPosition += new Vector2(25 / mZoom * 0.5f, 0);
         }
-        if (inputState.mMousePosition.X < XAxisRange)
+        if (inputState.mMousePosition.X < XAxisRange && inputState.mMousePosition.X > 0)
         {
+            // Left
             mTargetPosition += new Vector2(-25 / mZoom * 0.5f, 0);
         }
-        if (inputState.mMousePosition.Y > AppHeight - YAxisRange)
+        if (inputState.mMousePosition.Y > AppHeight - YAxisRange && inputState.mMousePosition.Y < AppHeight)
         {
+            //Bottom
             mTargetPosition += new Vector2(0, 25 / mZoom * 0.5f);
         }
-        if (inputState.mMousePosition.Y < YAxisRange)
+
+        if (inputState.mMousePosition.Y < YAxisRange && inputState.mMousePosition.Y > 0)
         {
+            // Top
             mTargetPosition += new Vector2(0, -25 / mZoom * 0.5f);
         }
     }
@@ -143,7 +151,7 @@ public class Camera2d
         if (zoom != 0)
         {
             mZoomAnimation = false;
-            Zoom(1 + (zoom * 0.001f * gameTime.ElapsedGameTime.Milliseconds));
+            Zoom(1 + zoom * 0.001f * gameTime.ElapsedGameTime.Milliseconds);
         }
     }
 

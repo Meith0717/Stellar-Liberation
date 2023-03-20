@@ -1,22 +1,26 @@
 ﻿using Microsoft.Xna.Framework;
+using MonoGame.Extended;
+using MonoGame.Extended.Timers;
 using Newtonsoft.Json;
 using Space_Game.Core;
+using Space_Game.Core.GameObject;
 using Space_Game.Core.InputManagement;
+using Space_Game.Core.TextureManagement;
 using Space_Game.Game.GameObjects.Astronomical_Body;
 using System;
+using System.Collections.Generic;
 
 namespace Space_Game.Game.GameObjects
 {
     [Serializable]
-    public class PlanetSystem
+    public class PlanetSystem : GameObject
     {
-        const int RadiusLimit = 2500;
         const int AlphaModifier = 25;
 
-        [JsonProperty] public Vector2 mPosition;
         [JsonProperty] public StarState mState;
         [JsonProperty] public Star mStar;
-        [JsonProperty] public Planet mPlanet;
+        [JsonProperty] public List<Planet> mPlanets;
+        [JsonProperty] private int mRadiusLimit;
 
         private bool mUpdatePlanets;
         private int mPlanetAlpha;
@@ -30,25 +34,37 @@ namespace Space_Game.Game.GameObjects
         public PlanetSystem(Vector2 position)
         {
             // Location
-            mPosition = position;
+            Position = position;
             mStar = new Star(position);
-            mPlanet = new Planet(2000, position);
+            mPlanets = new List<Planet>();
+            for (int i = 0; i < Globals.mRandom.Next(2, 5); i++)
+            {
+                mRadiusLimit = 1200 + 600 * i;
+                mPlanets.Add(new Planet(mRadiusLimit, position));
+            } 
+            BoundedBox = new CircleF(position, mRadiusLimit);
         }
-        public void Update(GameTime gameTime, InputState inputState)
+        public override void Update(GameTime gameTime, InputState inputState)
         {
             mStar.Update(gameTime, inputState);
             Hide(); Show();
             if (!mUpdatePlanets) { return; }
-            mPlanet.Update(gameTime, inputState);
+            foreach (Planet planet in mPlanets)
+            {
+                planet.Update(gameTime, inputState);
+            }
         }
-        public void Draw()
+        public override void Draw()
         {
             mStar.Draw();
-            mPlanet.Draw(mPlanetAlpha);
+            foreach (Planet planet in mPlanets)
+            {
+                planet.Draw(mPlanetAlpha);
+            }
         }
         private void Show()
         {
-            if (Vector2.Distance(Globals.mCamera2d.mPosition, mPosition) > RadiusLimit) { return; }
+            if (!BoundedBox.Contains(Globals.mCamera2d.mPosition)) { return; }
             mUpdatePlanets = true;
             if (mPlanetAlpha <= 255 - AlphaModifier)
             {
@@ -59,7 +75,7 @@ namespace Space_Game.Game.GameObjects
         }
         private void Hide()
         {
-            if (Vector2.Distance(Globals.mCamera2d.mPosition, mPosition) < RadiusLimit) { return; }
+            if (BoundedBox.Contains(Globals.mCamera2d.mPosition)) { return; }
             if (mPlanetAlpha >= AlphaModifier)
             {
                 mPlanetAlpha -= AlphaModifier;

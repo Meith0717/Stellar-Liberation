@@ -7,11 +7,12 @@ using Space_Game.Core.Effects;
 using Space_Game.Core.GameObject;
 using Space_Game.Core.InputManagement;
 using Space_Game.Core.LayerManagement;
-using Space_Game.Core.Maths;
 using Space_Game.Core.Menu;
 using Space_Game.Core.PositionManagement;
+using Space_Game.Core.Rendering;
 using Space_Game.Core.TextureManagement;
 using Space_Game.Game.GameObjects;
+using Space_Game.Game.GameObjects.Astronomical_Body;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,9 @@ namespace Space_Game.Game.Layers
     [Serializable]
     public class GameLayer : Layer
     {
-        const int mapWidth = 300000;
-        const int mapHeight = 300000;
-        const int systemAmount = 1;
+        const int mapWidth = 1000000;
+        const int mapHeight = 1000000;
+        const int systemAmount = 2500;
 
         [JsonIgnore] public RectangleF mMapSize = new RectangleF(new Vector2(mapWidth, mapHeight), new Vector2(mapWidth, mapHeight) * 2);
 
@@ -40,6 +41,7 @@ namespace Space_Game.Game.Layers
 
         private int mSpatialHashingCellSize = 2000;
         private UiElementSprite mBackground;
+        private FrustumCuller mFrustumCuller;
         private ParllaxManager mParllaxManager;
 
         // Layer Stuff _____________________________________
@@ -49,6 +51,7 @@ namespace Space_Game.Game.Layers
             mBackground = new UiElementSprite("gameBackground");
             mBackground.mSpriteFit = UiElementSprite.SpriteFit.Cover;
             mSpatialHashing = new SpatialHashing<GameObject>(mSpatialHashingCellSize);
+            mFrustumCuller = new FrustumCuller();
             SpawnSystemsAndGetHome();
             mParllaxManager = new ParllaxManager();
             OnResolutionChanged();
@@ -59,6 +62,7 @@ namespace Space_Game.Game.Layers
         {
             mPassedSeconds += gameTime.ElapsedGameTime.Milliseconds / 1000d;
             mParllaxManager.Update();
+            mFrustumCuller.Update();
             Globals.mCamera2d.Update(gameTime, inputState);
             UpdateSystems(gameTime, inputState);
             ManageTimeWarp(gameTime, inputState);
@@ -91,7 +95,7 @@ namespace Space_Game.Game.Layers
             while (i < systemAmount)
             {
                 Vector2 position = new Vector2(Globals.mRandom.Next(-mapWidth, mapWidth), Globals.mRandom.Next(-mapHeight, mapHeight));
-                List<PlanetSystem> neighbourSystem = GetObjectsInRadius(position, 10000).OfType<PlanetSystem>().ToList();
+                List<Star> neighbourSystem = GetObjectsInRadius(position, 20000).OfType<Star>().ToList();
                 if (neighbourSystem.Count > 0)
                 {
                     continue;
@@ -100,7 +104,7 @@ namespace Space_Game.Game.Layers
                 i++;
             }
             mHomeSystem = mPlanetSystemList[Globals.mRandom.Next(mPlanetSystemList.Count)];
-            Globals.mCamera2d.mTargetPosition = mHomeSystem.mPosition;
+            Globals.mCamera2d.mTargetPosition = mHomeSystem.Position;
         }
         private void InitializeGlobals()
         {
@@ -124,7 +128,7 @@ namespace Space_Game.Game.Layers
         {
             if (inputState.mActionList.Contains(ActionType.GoHome))
             {
-                Globals.mCamera2d.mTargetPosition = mHomeSystem.mPosition;
+                Globals.mCamera2d.mTargetPosition = mHomeSystem.Position;
             }
         }
         private void ManageTimeWarp(GameTime gameTime, InputState inputState)
@@ -148,10 +152,9 @@ namespace Space_Game.Game.Layers
         {
             foreach (PlanetSystem planetSystem in mPlanetSystemList)
             {
-                planetSystem.Draw();
+                mFrustumCuller.RenderGameObject(planetSystem);
             }
         }
-
         private void DrawGrid()
         {
             for (float x = -mMapSize.X; x <= mMapSize.Width / 2; x += 10000)
