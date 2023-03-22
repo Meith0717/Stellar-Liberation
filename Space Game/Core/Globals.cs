@@ -1,5 +1,7 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Space_Game.Core.Debug;
 using Space_Game.Core.Effects;
 using Space_Game.Core.GameObject;
 using Space_Game.Core.LayerManagement;
@@ -19,6 +21,7 @@ namespace Space_Game.Core
         public static Random mRandom;
         public static Camera2d mCamera2d;
         public static GameLayer mGameLayer;
+        public static DebugSystem mDebugSystem;
         public static float mTimeWarp;
     }
 }

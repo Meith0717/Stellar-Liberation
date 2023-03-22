@@ -17,10 +17,9 @@ namespace Space_Game.Core.Rendering
             mViewFrustum = new RectangleF(LetfTopEdge.X, LetfTopEdge.Y, RigbtBottomEdge.X, RigbtBottomEdge.Y);
         }
 
-        public void RenderGameObject(GameObject.GameObject gameObject)
+        public bool IsOnScreen(GameObject.GameObject gameObject)
         {
-            if (!mViewFrustum.Intersects(gameObject.BoundedBox)) { return; }
-            gameObject.Draw();
+            return mViewFrustum.Intersects(gameObject.BoundedBox);
         }
 
     }

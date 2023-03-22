@@ -25,7 +25,8 @@ namespace Space_Game.Core.InputManagement
         GoHome,
         AccelerateTime,
         DeaccelerateTime,
-        Shoot
+        Shoot,
+        Debug
     }
 
     public enum MouseActionType

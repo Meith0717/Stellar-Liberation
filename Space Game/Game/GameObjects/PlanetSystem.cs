@@ -9,6 +9,7 @@ using Space_Game.Core.TextureManagement;
 using Space_Game.Game.GameObjects.Astronomical_Body;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Space_Game.Game.GameObjects
 {
@@ -57,6 +58,7 @@ namespace Space_Game.Game.GameObjects
         public override void Draw()
         {
             mStar.Draw();
+            Globals.mDebugSystem.DrawBoundBox(BoundedBox);
             foreach (Planet planet in mPlanets)
             {
                 planet.Draw(mPlanetAlpha);

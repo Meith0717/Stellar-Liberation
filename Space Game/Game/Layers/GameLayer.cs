@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using Newtonsoft.Json;
 using Space_Game.Core;
+using Space_Game.Core.Debug;
 using Space_Game.Core.Effects;
 using Space_Game.Core.GameObject;
 using Space_Game.Core.InputManagement;
@@ -15,6 +16,7 @@ using Space_Game.Game.GameObjects;
 using Space_Game.Game.GameObjects.Astronomical_Body;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Space_Game.Game.Layers
@@ -63,6 +65,7 @@ namespace Space_Game.Game.Layers
             mPassedSeconds += gameTime.ElapsedGameTime.Milliseconds / 1000d;
             mParllaxManager.Update();
             mFrustumCuller.Update();
+            Globals.mDebugSystem.Update(gameTime, inputState);
             Globals.mCamera2d.Update(gameTime, inputState);
             UpdateSystems(gameTime, inputState);
             ManageTimeWarp(gameTime, inputState);
@@ -70,9 +73,10 @@ namespace Space_Game.Game.Layers
         }
         public override void Draw()
         {
+            Globals.mDebugSystem.UpdateFrameCounting();
+
             mSpriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            // mBackground.Render();
-            // mParllaxManager.Draw();
+            Globals.mDebugSystem.ShowRenderInfo(new Vector2(2, 2));
             mSpriteBatch.End();
 
             mSpriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: Globals.mCamera2d.GetViewTransformationMatrix(), samplerState: SamplerState.PointClamp);
@@ -110,6 +114,7 @@ namespace Space_Game.Game.Layers
         {
             Globals.mCamera2d = new(mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
             Globals.mGameLayer = this;
+            Globals.mDebugSystem = new DebugSystem();
         }
         private void InitializeParllax()
         {
@@ -150,9 +155,12 @@ namespace Space_Game.Game.Layers
         // Draw Stuff _____________________________________
         private void DrawSystems()
         {
+            var counter = 0;
             foreach (PlanetSystem planetSystem in mPlanetSystemList)
             {
-                mFrustumCuller.RenderGameObject(planetSystem);
+                if (!mFrustumCuller.IsOnScreen(planetSystem)) { continue; }
+                planetSystem.Draw();
+                counter++;
             }
         }
         private void DrawGrid()

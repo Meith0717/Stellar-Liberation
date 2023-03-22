@@ -5,7 +5,7 @@ using System;
 namespace Space_Game.Core.GameObject;
 public class Camera2d
 {
-    public float mMaxZoom = 0.0001f;
+    public float mMaxZoom = 0.006f;
     public float mMimZoom = 1f;
 
     public float mZoom = 1f;

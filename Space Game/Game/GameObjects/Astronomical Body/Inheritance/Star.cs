@@ -29,7 +29,7 @@ namespace Space_Game.Game.GameObjects.Astronomical_Body
             NormalTextureId = "IS SET IN GetSystemTypeAndTexture";
             TextureWidth = 1024;
             TextureHeight = 1024;
-            TextureOffset = new Vector2(TextureWidth, TextureHeight)/2;
+            TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
             TextureSclae = 1f;
             TextureDepth = 0;
             TextureColor = Color.White;
