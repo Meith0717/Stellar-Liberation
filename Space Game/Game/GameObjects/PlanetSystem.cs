@@ -43,7 +43,7 @@ namespace Space_Game.Game.GameObjects
                 mRadiusLimit = 1200 + 600 * i;
                 mPlanets.Add(new Planet(mRadiusLimit, position));
             } 
-            BoundedBox = new CircleF(position, mRadiusLimit);
+            BoundedBox = new CircleF(position, mRadiusLimit+400);
         }
         public override void Update(GameTime gameTime, InputState inputState)
         {

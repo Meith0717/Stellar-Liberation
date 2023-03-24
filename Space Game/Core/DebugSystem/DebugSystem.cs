@@ -53,11 +53,11 @@ namespace Space_Game.Core.Debug
             int i = 0;
             List<string> lst = new List<string>
             {
-                string.Format("Frames per second: {0}", Math.Round(mCurrentFramesPerSecond)),
-                string.Format("Frame: {0} ms", mFrameDuration),
-                string.Format("Debug Mode {0}", mDebugLevel),
-                string.Format("Camera Zoom {0}", Globals.mCamera2d.mZoom),
-                string.Format("Position {0}", Globals.mCamera2d.mPosition.ToString()),
+                $"Frames per second: {Math.Round(mCurrentFramesPerSecond)}",
+                $"Frame: {mFrameDuration} ms",
+                $"Debug Mode {mDebugLevel}",
+                $"Camera Zoom {Globals.mCamera2d.mZoom}",
+                $"Position {Globals.mCamera2d.mPosition}",
             };
             foreach (string s in lst)
             {
