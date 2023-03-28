@@ -1,6 +1,6 @@
 # Galaxy Explovive
 
-## Game Objekts
+## Game Objects
 - Astronomical Body
     - Star:
         - Type B (White)
@@ -23,3 +23,9 @@
     - Cargo:
     - Space Station:
 
+## Economy
+- Alloys
+- Energy
+- Minerals
+- Artefacts 
+    - ...
