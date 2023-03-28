@@ -41,7 +41,7 @@ namespace Galaxy_Explovive.Core.InputManagement
                 { Keys.F11, ActionType.ToggleFullscreen},
                 { Keys.D2, ActionType.AccelerateTime },
                 { Keys.D1, ActionType.DeaccelerateTime },
-                { Keys.Space, ActionType.Shoot},
+                { Keys.Space, ActionType.Test},
                 { Keys.F12, ActionType.Debug }
             };
 

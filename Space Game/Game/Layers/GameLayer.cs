@@ -70,6 +70,11 @@ namespace Galaxy_Explovive.Game.Layers
             UpdateSystems(gameTime, inputState);
             ManageTimeWarp(gameTime, inputState);
             TabToGoHome(gameTime, inputState);
+
+            if (inputState.mActionList.Contains(ActionType.Test))
+            {
+                mSoundManager.PlaySound("hit", 1);
+            }
         }
         public override void Draw()
         {

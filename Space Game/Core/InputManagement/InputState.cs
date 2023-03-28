@@ -25,7 +25,7 @@ namespace Galaxy_Explovive.Core.InputManagement
         GoHome,
         AccelerateTime,
         DeaccelerateTime,
-        Shoot,
+        Test,
         Debug
     }
 

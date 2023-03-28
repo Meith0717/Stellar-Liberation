@@ -21,7 +21,9 @@
         - Battleship:
     - Science Ship:
     - Cargo:
-    - Space Station:
+- Space Station
+    - Mining:
+    - Defensive (Millitary): 
 
 ## Economy
 - Alloys

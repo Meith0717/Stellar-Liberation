@@ -57,9 +57,11 @@ namespace Galaxy_Explovive
 
             // setup texture manager
             mTextureManager.SetContentManager(Content);
+            mSoundManager.SetContentManager(Content);
             mTextureManager.SetSpriteBatch(mSpriteBatch);
 
-            mSoundManager.LoadContent(Content, new List<string> { "hit", "engineSound" });
+            mSoundManager.LoadSoundEffects("hit", "SoundEffects/hit");
+            mSoundManager.CreateSoundEffectInstances();
 
             // Load Star Textures
             mTextureManager.LoadTexture("sunTypeB", "GameObjects/Stars/sunTypeB");

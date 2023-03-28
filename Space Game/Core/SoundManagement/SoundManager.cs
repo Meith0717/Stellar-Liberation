@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -11,16 +12,14 @@ namespace Galaxy_Explovive.Core.SoundManagement
     {
         private Hashtable SoundEffects { get; }
         private Hashtable SoundEffectInstances { get; }
-        private int MaxSoundEffectInstances { get; }  // Max number of concurrent playing sound instances of one specific sound
-
-
-        // variables to set via settings menu
+        private int MaxSoundEffectInstances { get; }
         public float SoundVolume { get; set; } = 1.0f;
         public bool BackgroundMusicEnabled { get; set; } = true;
         public bool SoundEffectsEnabled { get; set; } = true;
 
         // config to sound good
         private readonly float mBackgroundMusicVolume = 0.7f;
+        private ContentManager mContent;
 
         internal SoundManager(int maxSoundEffectInstances = 5)
         {
@@ -29,28 +28,23 @@ namespace Galaxy_Explovive.Core.SoundManagement
             MaxSoundEffectInstances = maxSoundEffectInstances;
         }
 
-        public void LoadContent(ContentManager contentManager, List<string> soundNamesList)
+        public void SetContentManager(ContentManager content)
         {
-            CreateSoundEffects(contentManager, soundNamesList);
-            CreateSoundEffectInstances();
+            mContent = content;
         }
 
-        private void CreateSoundEffects(ContentManager contentManager, List<string> soundNamesList)
+        public void LoadSoundEffects(string id, string fileName)
         {
-            foreach (var soundFile in soundNamesList)
+            if (SoundEffects[fileName] != null)
             {
-                if (SoundEffects[soundFile] != null)
-                {
-                    SoundEffects.Remove(soundFile);
-                }
-
-                var soundFilePath = Path.Combine("SoundEffects", soundFile);
-                var soundEffect = contentManager.Load<SoundEffect>(soundFilePath);
-                SoundEffects.Add(soundFile, soundEffect);
+                SoundEffects.Remove(fileName);
             }
+
+            var soundEffect = mContent.Load<SoundEffect>(fileName);
+            SoundEffects.Add(id, soundEffect);
         }
 
-        private void CreateSoundEffectInstances()
+        public void CreateSoundEffectInstances()
         {
             ClearSoundEffectInstances();
             foreach (DictionaryEntry soundEffect in SoundEffects)
