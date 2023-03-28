@@ -6,20 +6,25 @@ using System.Runtime.CompilerServices;
 namespace Galaxy_Explovive.Core.GameObject
 {
     [Serializable]
-    public abstract class SelectableObject : GameObject
+    public abstract class InteractiveObject : GameObject
     {
         // Selection Stuff
         public bool IsHover { get; set; }
-        public bool IsSelect { get; set; }
         public string HoverTextureId { get; set; }
         public float HoverRadius { get; set; }
+        public bool IsLeftClick { get; set; }
+        public bool IsRightClick { get; set; }
 
-        public override void Update(GameTime gameTime, InputState inputState)
+        public void UpdateInputs(InputState inputState)
         {
+            IsLeftClick = IsRightClick = false;
+
             var mousePosition = Globals.mCamera2d.ViewToWorld(inputState.mMousePosition.ToVector2());
             IsHover = Vector2.Distance(mousePosition, Position) < HoverRadius;
-        }
 
-        public abstract void UpdateInputs(InputState inputState);
+            if (!IsHover) { return; }
+            if (inputState.mMouseActionType == MouseActionType.LeftClick) { IsLeftClick = true; }
+            if (inputState.mMouseActionType == MouseActionType.RightClick) { IsRightClick = true; }
+        }
     }
 }

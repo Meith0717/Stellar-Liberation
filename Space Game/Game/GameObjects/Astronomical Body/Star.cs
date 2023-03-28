@@ -38,7 +38,6 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             HoverTextureId = "IS SET IN GetSystemTypeAndTexture";
             HoverRadius = 270;
             IsHover = false;
-            IsSelect = false;
 
             // Other Stuff
             GetSystemTypeAndTexture();
@@ -81,14 +80,10 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
         }
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            base.Update(gameTime, inputState);
+            base.UpdateInputs(inputState);
             mCrosshair.Update(Position, IsHover);
-            UpdateInputs(inputState);
         }
-        public override void UpdateInputs(InputState inputState)
-        {
-             base.UpdateInputs(inputState);
-        }
+
         public override void Draw()
         {
             TextureManager.GetInstance().Draw(IsHover ? HoverTextureId : NormalTextureId, Position, TextureOffset,

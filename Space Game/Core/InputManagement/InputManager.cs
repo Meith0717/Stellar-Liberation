@@ -87,15 +87,7 @@ namespace Galaxy_Explovive.Core.InputManagement
                 if (!(IsLeftMouseButtonDown()))
                 {
                     mInputState.mMouseActionType = MouseActionType.LeftClick;
-                    if (mLeftButtonKlicked)
-                    {
-                        mLeftButtonKlicked = false;
-                        mInputState.mMouseActionType = MouseActionType.LeftClickDouble;
-                    }
-                    else
-                    {
-                        mLeftButtonKlicked = true;
-                    }
+
                     // Start location for rectangle
                     mMouseRectangleStart = mCurrentMousePosition;
                 }

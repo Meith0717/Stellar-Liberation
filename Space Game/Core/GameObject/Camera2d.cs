@@ -17,6 +17,7 @@ public class Camera2d
     private int mHeight;
 
     private bool mZoomAnimation;
+    private Vector2 mLastMousePosition;
 
     // matrix variables
     private Matrix mTransform = Matrix.Identity;
@@ -94,33 +95,19 @@ public class Camera2d
 
     private void MoveCameraByMouse(InputState inputState)
     {
-        var AppHeight = Globals.mGraphicsDevice.Viewport.Height;
-        var AppWidth = Globals.mGraphicsDevice.Viewport.Width;
+        Vector2 currentMousePosition = inputState.mMousePosition.ToVector2();
 
-        var XAxisRange = AppWidth * 0.05;
-        var YAxisRange = AppHeight * 0.1;
-
-
-        if (inputState.mMousePosition.X > AppWidth - XAxisRange && inputState.mMousePosition.X < AppWidth)
+        if (inputState.mMouseActionType != MouseActionType.RightClickHold)
         {
-            // Right
-            mTargetPosition += new Vector2(25 / mZoom * 0.5f, 0);
-        }
-        if (inputState.mMousePosition.X < XAxisRange && inputState.mMousePosition.X > 0)
-        {
-            // Left
-            mTargetPosition += new Vector2(-25 / mZoom * 0.5f, 0);
-        }
-        if (inputState.mMousePosition.Y > AppHeight - YAxisRange && inputState.mMousePosition.Y < AppHeight)
-        {
-            //Bottom
-            mTargetPosition += new Vector2(0, 25 / mZoom * 0.5f);
+            mLastMousePosition = currentMousePosition;
+            return;
         }
 
-        if (inputState.mMousePosition.Y < YAxisRange && inputState.mMousePosition.Y > 0)
+        if (mLastMousePosition != currentMousePosition)
         {
-            // Top
-            mTargetPosition += new Vector2(0, -25 / mZoom * 0.5f);
+            Vector2 movement = ViewToWorld(mLastMousePosition) - ViewToWorld(currentMousePosition);
+            mTargetPosition += movement;
+            mLastMousePosition = currentMousePosition;
         }
     }
 
@@ -194,7 +181,7 @@ public class Camera2d
     public void Update(GameTime gameTime, InputState inputState)
     {
         AdjustZoom(gameTime, inputState);
-        MoveCameraByKey(inputState);
+        // MoveCameraByKey(inputState);
         MoveCameraByMouse(inputState);
         MoveAnimation(gameTime);
         ZoomAnimation(gameTime);

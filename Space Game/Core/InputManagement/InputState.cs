@@ -34,8 +34,6 @@ namespace Galaxy_Explovive.Core.InputManagement
         None,
         LeftClick,
         RightClick,
-        LeftClickDouble,
-        RightClickDouble,
         LeftClickHold,
         RightClickHold,
         LeftClickReleased,

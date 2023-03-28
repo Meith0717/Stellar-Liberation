@@ -53,7 +53,6 @@ namespace Galaxy_Explovive.Game.GameObjects
             HoverTextureId = "IS SET IN GetSystemTypeAndTexture";
             HoverRadius = 270;
             IsHover = false;
-            IsSelect = false;
 
             // Class Stuff
             mRadius = radius;
@@ -110,13 +109,8 @@ namespace Galaxy_Explovive.Game.GameObjects
         }
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mCrosshair.Update(Position, IsHover);
-            base.Update(gameTime, inputState);
-            UpdateInputs(inputState);
-        }
-        public override void UpdateInputs(InputState inputState)
-        {
             base.UpdateInputs(inputState);
+            mCrosshair.Update(Position, IsHover);
         }
         
         public void Draw(int alpha)
