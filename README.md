@@ -24,10 +24,13 @@
 - Space Station
     - Mining:
     - Defensive (Millitary): 
+    - Ship Yard:
+    - Spy Station: 
 
 ## Economy
-- Alloys
+- Level
 - Energy
+- Alloys
 - Minerals
-- Artefacts 
+- Artefacts
     - ...
