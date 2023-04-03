@@ -10,7 +10,6 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
     [Serializable]
     public class Star: AstronomicalBody
     {
-        private CrossHair mCrosshair;
         public enum StarType
         {
             B,
@@ -35,13 +34,11 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             TextureColor = Color.White;
 
             // Selection Stuff
-            HoverTextureId = "IS SET IN GetSystemTypeAndTexture";
-            HoverRadius = 270;
-            IsHover = false;
+            TextureRadius = 270;
 
             // Other Stuff
             GetSystemTypeAndTexture();
-            mCrosshair = new CrossHair(0.8f, 0.9f, position);
+            Crosshair = new CrossHair(0.8f, 0.9f, position);
             // Add To Spatial Hashing
             Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
@@ -53,27 +50,27 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             {
                 case StarType.B:
                     {
-                        NormalTextureId = HoverTextureId = "sunTypeB";
+                        NormalTextureId = "sunTypeB";
                         break;
                     }
                 case StarType.F:
                     {
-                        NormalTextureId = HoverTextureId = "sunTypeF";
+                        NormalTextureId = "sunTypeF";
                         break;
                     }
                 case StarType.G:
                     {
-                        NormalTextureId = HoverTextureId = "sunTypeG";
+                        NormalTextureId  = "sunTypeG";
                         break;
                     }
                 case StarType.K:
                     {
-                        NormalTextureId = HoverTextureId = "sunTypeK";
+                        NormalTextureId = "sunTypeK";
                         break;
                     }
                 case StarType.M:
                     {
-                        NormalTextureId = HoverTextureId = "sunTypeM";
+                        NormalTextureId = "sunTypeM";
                         break;
                     }
             }
@@ -81,14 +78,13 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
         public override void Update(GameTime gameTime, InputState inputState)
         {
             base.UpdateInputs(inputState);
-            mCrosshair.Update(Position, IsHover);
         }
 
         public override void Draw()
         {
-            TextureManager.GetInstance().Draw(IsHover ? HoverTextureId : NormalTextureId, Position, TextureOffset,
+            TextureManager.GetInstance().Draw(NormalTextureId, Position, TextureOffset,
                 TextureWidth, TextureHeight, TextureSclae, Rotation, TextureDepth);
-            mCrosshair.Draw(Color.White);
+            Crosshair.Draw(Color.White);
         }
     }
 }

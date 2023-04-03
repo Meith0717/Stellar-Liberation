@@ -8,10 +8,6 @@ namespace Galaxy_Explovive.Core.InputManagement
     public enum ActionType
     {
         Exit,
-        CameraRight,
-        CameraLeft,
-        CameraUp,
-        CameraDown,
         CameraZoomIn,
         CameraZoomOut,
         CameraZoomInFast,
@@ -19,6 +15,7 @@ namespace Galaxy_Explovive.Core.InputManagement
         MoveRight,
         MoveLeft,
         MoveUp,
+        MoveDown,
         SaveGame,
         LoadGame,
         ToggleFullscreen,

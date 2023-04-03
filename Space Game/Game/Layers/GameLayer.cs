@@ -18,6 +18,7 @@ using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Galaxy_Explovive.Game.GameObjects.Spacecraft;
 
 namespace Galaxy_Explovive.Game.Layers
 {
@@ -45,6 +46,7 @@ namespace Galaxy_Explovive.Game.Layers
         private UiElementSprite mBackground;
         private FrustumCuller mFrustumCuller;
         private ParllaxManager mParllaxManager;
+        private Cargo mShipTest;
 
         // Layer Stuff _____________________________________
         public GameLayer() : base()
@@ -59,6 +61,7 @@ namespace Galaxy_Explovive.Game.Layers
             OnResolutionChanged();
             Globals.mTimeWarp = 1;
             InitializeParllax();
+            mShipTest = new Cargo(mHomeSystem.Position);
         }
         public override void Update(GameTime gameTime, InputState inputState)
         {
@@ -70,6 +73,7 @@ namespace Galaxy_Explovive.Game.Layers
             UpdateSystems(gameTime, inputState);
             ManageTimeWarp(gameTime, inputState);
             TabToGoHome(gameTime, inputState);
+            mShipTest.Update(gameTime, inputState);
 
             if (inputState.mActionList.Contains(ActionType.Test))
             {
@@ -87,6 +91,7 @@ namespace Galaxy_Explovive.Game.Layers
             mSpriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: Globals.mCamera2d.GetViewTransformationMatrix(), samplerState: SamplerState.PointClamp);
             DrawSystems();
             DrawGrid();
+            mShipTest.Draw();
             mSpriteBatch.End();
         }
         public override void OnResolutionChanged()

@@ -68,31 +68,6 @@ public class Camera2d
         mViewTransformationMatrixChanged = true;
     }
 
-    private void MoveCameraByKey(InputState inputState)
-    {
-
-        if (inputState.mActionList.Contains(ActionType.CameraUp) &&
-            mPosition.Y > -Globals.mGameLayer.mMapSize.Height / 2)
-        {
-            mTargetPosition += new Vector2(0, -50 / mZoom * 0.5f);
-        }
-        if (inputState.mActionList.Contains(ActionType.CameraDown) &&
-            mPosition.Y < Globals.mGameLayer.mMapSize.Height / 2)
-        {
-            mTargetPosition += new Vector2(0, 50 / mZoom * 0.5f);
-        }
-        if (inputState.mActionList.Contains(ActionType.CameraLeft) &&
-            mPosition.X > -Globals.mGameLayer.mMapSize.Width / 2)
-        {
-            mTargetPosition += new Vector2(-50 / mZoom * 0.5f, 0);
-        }
-        if (inputState.mActionList.Contains(ActionType.CameraRight) &&
-            mPosition.X < Globals.mGameLayer.mMapSize.Width / 2)
-        {
-            mTargetPosition += new Vector2(50 / mZoom * 0.5f, 0);
-        }
-    }
-
     private void MoveCameraByMouse(InputState inputState)
     {
         Vector2 currentMousePosition = inputState.mMousePosition.ToVector2();

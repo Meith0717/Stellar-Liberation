@@ -48,14 +48,10 @@ namespace Galaxy_Explovive.Core.InputManagement
             // Dictionary for keyboard keys that have been hold and corresponding actions.
             mKeyBindingsKeyboardHold = new Dictionary<Keys, ActionType>
             {
-                { Keys.Right, ActionType.CameraRight },
-                { Keys.Left, ActionType.CameraLeft },
-                { Keys.Up, ActionType.CameraUp },
-                { Keys.Down, ActionType.CameraDown },
-                { Keys.D, ActionType.CameraRight },
-                { Keys.A, ActionType.CameraLeft },
-                { Keys.W, ActionType.CameraUp },
-                { Keys.S, ActionType.CameraDown },
+                { Keys.D, ActionType.MoveRight },
+                { Keys.A, ActionType.MoveLeft },
+                { Keys.W, ActionType.MoveUp },
+                { Keys.S, ActionType.MoveDown },
                 { Keys.Q, ActionType.CameraZoomInFast },
                 { Keys.E, ActionType.CameraZoomOutFast }
             };

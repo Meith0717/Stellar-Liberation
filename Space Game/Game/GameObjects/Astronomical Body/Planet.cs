@@ -23,7 +23,6 @@ namespace Galaxy_Explovive.Game.GameObjects
         [JsonProperty] private Vector2 mCenterPosition;
 
         private float mRadius;
-        private CrossHair mCrosshair;
 
         // Type Enumerartion
         public enum PlanetType
@@ -50,9 +49,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             TextureColor = Color.White;
 
             // Selection Stuff
-            HoverTextureId = "IS SET IN GetSystemTypeAndTexture";
-            HoverRadius = 270;
-            IsHover = false;
+            TextureRadius = 270;
 
             // Class Stuff
             mRadius = radius;
@@ -60,7 +57,7 @@ namespace Galaxy_Explovive.Game.GameObjects
 
             // Other Stuff
             GetPlanetTypeAndTexture();
-            mCrosshair = new CrossHair(0.3f, 0.35f, Position);
+            Crosshair = new CrossHair(0.3f, 0.35f, Position);
 
             // Add To Spatial Hashing
             Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
@@ -75,7 +72,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             {
                 case PlanetType.H:
                     {
-                        NormalTextureId = HoverTextureId = "planetTypeH";
+                        NormalTextureId = "planetTypeH";
                         mAddAllois = 0.1;
                         mAddEnergy = 0.1;
                         mAddCrystals = 0.1;
@@ -83,7 +80,7 @@ namespace Galaxy_Explovive.Game.GameObjects
                     }
                 case PlanetType.J:
                     {
-                        NormalTextureId = HoverTextureId = "planetTypeJ";
+                        NormalTextureId = "planetTypeJ";
                         mAddAllois = 0.1;
                         mAddEnergy = 10;
                         mAddCrystals = 2;
@@ -91,7 +88,7 @@ namespace Galaxy_Explovive.Game.GameObjects
                     }
                 case PlanetType.M:
                     {
-                        NormalTextureId = HoverTextureId = "planetTypeM";
+                        NormalTextureId = "planetTypeM";
                         mAddAllois = 5;
                         mAddEnergy = 10;
                         mAddCrystals = 5;
@@ -99,7 +96,7 @@ namespace Galaxy_Explovive.Game.GameObjects
                     }
                 case PlanetType.Y:
                     {
-                        NormalTextureId = HoverTextureId = "planetTypeY";
+                        NormalTextureId = "planetTypeY";
                         mAddAllois = 15;
                         mAddEnergy = 20;
                         mAddCrystals = 15;
@@ -110,18 +107,17 @@ namespace Galaxy_Explovive.Game.GameObjects
         public override void Update(GameTime gameTime, InputState inputState)
         {
             base.UpdateInputs(inputState);
-            mCrosshair.Update(Position, IsHover);
         }
         
         public void Draw(int alpha)
         {
             DrawPlanet(alpha);
             DrawRecources(alpha);
-            mCrosshair.Draw(new Color(alpha, alpha, alpha, alpha));
+            Crosshair.Draw(new Color(alpha, alpha, alpha, alpha));
         }
         private void DrawPlanet(int alpha)
         {
-            TextureManager.GetInstance().Draw(IsHover ? HoverTextureId : NormalTextureId, Position, TextureOffset,
+            TextureManager.GetInstance().Draw(NormalTextureId, Position, TextureOffset,
                 TextureWidth, TextureHeight, TextureSclae, Rotation, 1, new Color(alpha, alpha, alpha, alpha));
 
             TextureManager.GetInstance().DrawCircle(mCenterPosition, mRadius, new Color(alpha, alpha, alpha, alpha), 2, 0);

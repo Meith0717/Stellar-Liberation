@@ -1,26 +1,35 @@
 ﻿using Microsoft.Xna.Framework;
 using Galaxy_Explovive.Core.InputManagement;
 using System;
-using System.Runtime.CompilerServices;
+using System.Reflection;
+using MonoGame.Extended;
 
 namespace Galaxy_Explovive.Core.GameObject
 {
     [Serializable]
     public abstract class InteractiveObject : GameObject
     {
+        const string CrossHairNullError = "Please initialise the Crosshair in the InteractiveObject subclass.";
+        const string TextureRadiusZeroError = "Please initialise the HoverRadius in the InteractiveObject subclass.";
         // Selection Stuff
-        public bool IsHover { get; set; }
-        public string HoverTextureId { get; set; }
-        public float HoverRadius { get; set; }
-        public bool IsLeftClick { get; set; }
-        public bool IsRightClick { get; set; }
+        public bool IsHover { get; private set; }
+        public CrossHair Crosshair { get; set; }
+        public float TextureRadius { get; set; }
+        public bool IsLeftClick { get; private set; }
+        public bool IsRightClick { get; private set; }
 
         public void UpdateInputs(InputState inputState)
         {
+            if (Crosshair == null) { throw new Exception(CrossHairNullError); }
+            if (TextureRadius == 0) { throw new Exception(TextureRadiusZeroError); }
+
             IsLeftClick = IsRightClick = false;
 
             var mousePosition = Globals.mCamera2d.ViewToWorld(inputState.mMousePosition.ToVector2());
-            IsHover = Vector2.Distance(mousePosition, Position) < HoverRadius;
+            IsHover = Vector2.Distance(mousePosition, Position) < TextureRadius;
+
+            Crosshair.Update(Position, IsHover);
+            BoundedBox = new CircleF(Position, TextureRadius);
 
             if (!IsHover) { return; }
             if (inputState.mMouseActionType == MouseActionType.LeftClick) { IsLeftClick = true; }
