@@ -17,7 +17,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
     {
         public Cargo(Vector2 position)
         {
-            Position = position;
+            Position = TargetPosition = position;
             Rotation = 0;
 
             // Rendering
@@ -41,6 +41,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
 
         public override void Draw()
         {
+            this.DrawPath();
             TextureManager.GetInstance().Draw(NormalTextureId, Position, TextureOffset,
                 TextureWidth, TextureHeight, TextureSclae, Rotation, TextureDepth);
             Crosshair.Draw(Color.White);

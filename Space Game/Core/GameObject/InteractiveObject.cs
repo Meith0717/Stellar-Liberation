@@ -15,25 +15,17 @@ namespace Galaxy_Explovive.Core.GameObject
         public bool IsHover { get; private set; }
         public CrossHair Crosshair { get; set; }
         public float TextureRadius { get; set; }
-        public bool IsLeftClick { get; private set; }
-        public bool IsRightClick { get; private set; }
 
         public void UpdateInputs(InputState inputState)
         {
             if (Crosshair == null) { throw new Exception(CrossHairNullError); }
             if (TextureRadius == 0) { throw new Exception(TextureRadiusZeroError); }
 
-            IsLeftClick = IsRightClick = false;
-
             var mousePosition = Globals.mCamera2d.ViewToWorld(inputState.mMousePosition.ToVector2());
             IsHover = Vector2.Distance(mousePosition, Position) < TextureRadius;
 
             Crosshair.Update(Position, IsHover);
             BoundedBox = new CircleF(Position, TextureRadius);
-
-            if (!IsHover) { return; }
-            if (inputState.mMouseActionType == MouseActionType.LeftClick) { IsLeftClick = true; }
-            if (inputState.mMouseActionType == MouseActionType.RightClick) { IsRightClick = true; }
         }
     }
 }

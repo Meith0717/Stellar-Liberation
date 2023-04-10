@@ -10,7 +10,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
         public new void UpdateInputs(InputState inputState)
         {
             base.UpdateInputs(inputState);
-            if (IsLeftClick)
+            if (inputState.mMouseActionType == MouseActionType.LeftClick && IsHover)
             {
                 Globals.mCamera2d.mTargetPosition = Position;
                 Globals.mCamera2d.SetZoom(0.2f);

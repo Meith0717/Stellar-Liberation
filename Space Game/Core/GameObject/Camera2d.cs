@@ -19,6 +19,8 @@ public class Camera2d
     private bool mZoomAnimation;
     private Vector2 mLastMousePosition;
 
+    public bool mIsMoving;
+
     // matrix variables
     private Matrix mTransform = Matrix.Identity;
     private bool mViewTransformationMatrixChanged = true;
@@ -35,6 +37,7 @@ public class Camera2d
         mWidth = width;
         mHeight = height;
         mPosition = new Vector2(mWidth / 2f, mHeight / 2f);
+        mIsMoving = false;
     }
 
     public void MoveAnimation(GameTime gameTime)
@@ -82,6 +85,7 @@ public class Camera2d
         {
             Vector2 movement = ViewToWorld(mLastMousePosition) - ViewToWorld(currentMousePosition);
             mTargetPosition += movement;
+            mIsMoving = true;
             mLastMousePosition = currentMousePosition;
         }
     }
@@ -155,8 +159,8 @@ public class Camera2d
 
     public void Update(GameTime gameTime, InputState inputState)
     {
+        mIsMoving = false;
         AdjustZoom(gameTime, inputState);
-        // MoveCameraByKey(inputState);
         MoveCameraByMouse(inputState);
         MoveAnimation(gameTime);
         ZoomAnimation(gameTime);
