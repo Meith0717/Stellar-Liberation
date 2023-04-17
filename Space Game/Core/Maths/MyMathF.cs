@@ -25,11 +25,16 @@ namespace Galaxy_Explovive.Core.Maths
             return new Vector2(newX, newY);
         }
 
-        public float GetRotation(Vector2 vector)
+        public float GetRotation(Vector2 position, Vector2 target)
         {
-            float rotation = (float)Math.Acos(Vector2.Dot(new Vector2(1, 0), vector) / vector.Length());
-            if (vector.Y < 0) { rotation = -rotation; }
+            Vector2 directionVector = target - position;
+            float rotation = (float)Math.Acos(Vector2.Dot(new Vector2(1, 0), directionVector) / directionVector.Length());
+            if (directionVector.Y < 0) { rotation = -rotation; }
             return rotation;
+        }
+        public Vector2 GetDirection(float rotation)
+        {
+            return new Vector2(MathF.Cos(rotation), MathF.Sin(rotation));
         }
 
         public string GetTimeFromSekonds(int sekonds)

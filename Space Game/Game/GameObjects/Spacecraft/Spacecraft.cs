@@ -1,10 +1,13 @@
 ﻿using Galaxy_Explovive.Core;
 using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
+using Galaxy_Explovive.Core.Maths;
 using Galaxy_Explovive.Core.TextureManagement;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
@@ -19,13 +22,15 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
         public string NormalTexture { get; set; }
         public bool IsMoving { get; private set; }
         private bool mTrack = false;
-
+        private float mTargetRotation = 0;
+        private float mVelocity = 0;
 
         public new void UpdateInputs(InputState inputState)
         {
             base.UpdateInputs(inputState);
             IsMoving = false;
             GetTargetPosition(inputState);
+            Redirect();
             Move();
             CheckForSelection(inputState);
             TextureId = IsSelect ? SelectTexture : NormalTexture;
@@ -63,17 +68,34 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
                 if (inputState.mMouseActionType == MouseActionType.RightClick && gameObject.IsHover) 
                 { 
                     TargetPosition = gameObject.Position;
+                    Debug.WriteLine(new Vector2(Rotation, mTargetRotation));
                     IsSelect = false;
                 }
             } 
         }
-        private void Move()
+        private void Redirect()
         {
+            mTargetRotation = MyMathF.GetInstance().GetRotation(Position, TargetPosition);
+            if (mTargetRotation == Rotation) { return; }
+            float update = MathF.Abs(Rotation - mTargetRotation) * 0.01f;
+            if (Rotation < mTargetRotation) { Rotation += update; }
+            if (Rotation > mTargetRotation) { Rotation -= update; }
+            if (MathF.Abs(Rotation - mTargetRotation) < 0.01) 
+            {
+                Rotation = mTargetRotation;
+                if (Velocity < mVelocity) { return; }
+                mVelocity += Velocity * 0.05f;
+                return; 
+            }
+            mVelocity = 0.5f;
+        }
+        private void Move()
+        { 
             Vector2 DirectionToTarget = Vector2.Subtract(TargetPosition, Position);
-            if (DirectionToTarget.Length() < 10) { return; }
+            if (DirectionToTarget.Length() < 40) { return; }
             IsMoving = true;
-            Vector2 directionVector = DirectionToTarget.NormalizedCopy();
-            Position += directionVector * Velocity;
+            Vector2 directionVector = MyMathF.GetInstance().GetDirection(Rotation);
+            Position += directionVector * mVelocity;
         }
 
         public void DrawPath()

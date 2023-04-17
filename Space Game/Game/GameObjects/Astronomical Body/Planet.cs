@@ -111,7 +111,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             float velocity = MathF.Sqrt(1/(mRadius*10));   
             float angleUpdate = mAngle + (float)gameTime.TotalGameTime.TotalSeconds * velocity;
             Position = MyMathF.GetInstance().GetCirclePosition(mRadius, mAngle + angleUpdate, 0) + mCenterPosition;
-            Rotation = MyMathF.GetInstance().GetRotation(Position - mCenterPosition);
+            Rotation = MyMathF.GetInstance().GetRotation(mCenterPosition, Position);
 
             // Add To Spatial Hashing
             Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);

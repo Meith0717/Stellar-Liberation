@@ -30,7 +30,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
             TextureDepth = 1;
             TextureColor = Color.White;
             TextureRadius = 100;
-            Velocity = 5;
+            Velocity = 50;
             BoundedBox = new CircleF(position, TextureRadius);
             Crosshair = new CrossHair(0.2f, 0.22f, position);
         }
