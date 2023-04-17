@@ -13,7 +13,7 @@ namespace Galaxy_Explovive.Core.GameObject
 
         // Rendering
         public Vector2 TextureOffset { get; set; }
-        public string NormalTextureId { get; set; }
+        public string TextureId { get; set; }
         public float TextureSclae { get; set; }
         public int TextureWidth { get; set; }
         public int TextureHeight { get; set; }

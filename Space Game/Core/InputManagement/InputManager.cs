@@ -52,16 +52,14 @@ namespace Galaxy_Explovive.Core.InputManagement
                 { Keys.A, ActionType.MoveLeft },
                 { Keys.W, ActionType.MoveUp },
                 { Keys.S, ActionType.MoveDown },
-                { Keys.Q, ActionType.CameraZoomInFast },
-                { Keys.E, ActionType.CameraZoomOutFast }
             };
 
 
             // Dictionary for keyboard keys that have been hold and corresponding actions.
             mKeyBindingsMouse = new Dictionary<MouseActionType, ActionType>
             {
-                { MouseActionType.MouseWheelForward, ActionType.CameraZoomInFast },
-                { MouseActionType.MouseWheelBackward, ActionType.CameraZoomOutFast }
+                { MouseActionType.MouseWheelForward, ActionType.CameraZoomIn },
+                { MouseActionType.MouseWheelBackward, ActionType.CameraZoomOut }
             };
 
             mInputState = new InputState();

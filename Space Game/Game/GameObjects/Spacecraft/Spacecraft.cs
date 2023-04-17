@@ -15,7 +15,11 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
         public Vector2 TargetPosition { get; set; }
         private bool IsSelect { get; set; } = false;
         public float Velocity {private get; set; }
+        public string SelectTexture { get; set; }
+        public string NormalTexture { get; set; }
         public bool IsMoving { get; private set; }
+        private bool mTrack = false;
+
 
         public new void UpdateInputs(InputState inputState)
         {
@@ -24,13 +28,30 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
             GetTargetPosition(inputState);
             Move();
             CheckForSelection(inputState);
+            TextureId = IsSelect ? SelectTexture : NormalTexture;
         }
 
         private void CheckForSelection(InputState inputState)
         {
-            if (inputState.mMouseActionType == MouseActionType.LeftClick && IsHover) { IsSelect = !IsSelect; }
-            if (inputState.mMouseActionType == MouseActionType.LeftClick && !IsHover) { IsSelect = false; }
+            if (inputState.mMouseActionType == MouseActionType.LeftClick && IsHover)
+            {
+                IsSelect = mTrack = !IsSelect;
+                Globals.mCamera2d.SetZoom(0.2f);
+            }
+
+            if (Globals.mCamera2d.mIsMoving ||
+                (inputState.mMouseActionType == MouseActionType.LeftClick && !IsHover))
+            {
+                mTrack = false;
+                if (Globals.mCamera2d.mIsMoving) { return; }
+                IsSelect = false;
+            }
+
+            if (!mTrack) { return; }
+            Globals.mCamera2d.mTargetPosition = Position;
+
         }
+
         private void GetTargetPosition(InputState inputState)
         {
             if (!IsSelect) { return; }
@@ -39,12 +60,12 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
             List<InteractiveObject> GameObjects = Globals.mGameLayer.GetObjectsInRadius(MousePosition, 200).OfType<InteractiveObject>().ToList(); ;
             foreach (InteractiveObject gameObject in GameObjects)
             {
-                if (inputState.mMouseActionType == MouseActionType.LeftClick && gameObject.IsHover) 
+                if (inputState.mMouseActionType == MouseActionType.RightClick && gameObject.IsHover) 
                 { 
                     TargetPosition = gameObject.Position;
+                    IsSelect = false;
                 }
             } 
-            
         }
         private void Move()
         {
@@ -59,6 +80,14 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
         {
             if (!IsMoving) { return; }
             TextureManager.GetInstance().DrawLine(Position, TargetPosition, Color.Gray, 2, 0);
+        }
+
+        public void DrawSpaceCraft()
+        {
+            TextureManager.GetInstance().Draw(TextureId, Position, TextureOffset,
+                TextureWidth, TextureHeight, TextureSclae, Rotation, TextureDepth);
+            Crosshair.Draw(Color.White);
+            Globals.mDebugSystem.DrawBoundBox(BoundedBox);
         }
     }
 }

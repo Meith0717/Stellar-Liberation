@@ -25,7 +25,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             Rotation = 0;
 
             // Rendering
-            NormalTextureId = "IS SET IN GetSystemTypeAndTexture";
+            TextureId = "IS SET IN GetSystemTypeAndTexture";
             TextureWidth = 1024;
             TextureHeight = 1024;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
@@ -50,27 +50,27 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             {
                 case StarType.B:
                     {
-                        NormalTextureId = "sunTypeB";
+                        TextureId = "sunTypeB";
                         break;
                     }
                 case StarType.F:
                     {
-                        NormalTextureId = "sunTypeF";
+                        TextureId = "sunTypeF";
                         break;
                     }
                 case StarType.G:
                     {
-                        NormalTextureId  = "sunTypeG";
+                        TextureId  = "sunTypeG";
                         break;
                     }
                 case StarType.K:
                     {
-                        NormalTextureId = "sunTypeK";
+                        TextureId = "sunTypeK";
                         break;
                     }
                 case StarType.M:
                     {
-                        NormalTextureId = "sunTypeM";
+                        TextureId = "sunTypeM";
                         break;
                     }
             }
@@ -82,7 +82,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
 
         public override void Draw()
         {
-            TextureManager.GetInstance().Draw(NormalTextureId, Position, TextureOffset,
+            TextureManager.GetInstance().Draw(TextureId, Position, TextureOffset,
                 TextureWidth, TextureHeight, TextureSclae, Rotation, TextureDepth);
             Crosshair.Draw(Color.White);
         }

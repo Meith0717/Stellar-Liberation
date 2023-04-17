@@ -84,8 +84,8 @@ namespace Galaxy_Explovive
             mTextureManager.LoadTexture("gameBackground", "gameBackground");
             mTextureManager.LoadTexture("gameBackgroundParlax", "gameBackgroundParlax");
             mTextureManager.LoadTexture("ship", "GameObjects/Ships/ship");
+            mTextureManager.LoadTexture("shipSekect", "GameObjects/Ships/shipSekect");
             mTextureManager.LoadTexture("warpAnimation", "GameObjects/Ships/warpAnimation");
-            mTextureManager.LoadTexture("shipHover", "GameObjects/Ships/shipHover");
             mTextureManager.LoadTexture("systemState", "GameObjects/systemState");
             mTextureManager.LoadTexture("cursor", "cursor");
             mTextureManager.LoadTexture("transparent", "GameObjects/transparent");

@@ -66,8 +66,6 @@ public class Camera2d
     public void SetPosition(Vector2 position)
     {
         mPosition = position;
-        mPosition.X = (float)Math.Round(mPosition.X);
-        mPosition.Y = (float)Math.Round(mPosition.Y);
         mViewTransformationMatrixChanged = true;
     }
 
@@ -94,29 +92,16 @@ public class Camera2d
     {
         // adjust zoom
         int zoom = 0;
-        if (inputState.mActionList.Contains(ActionType.CameraZoomIn) && mZoom + 0.0011 < mMimZoom)
+        if (inputState.mActionList.Contains(ActionType.CameraZoomIn) && mZoom + 0.0041 < mMimZoom)
         {
-            zoom += 1;
-            mZoomAnimation = false;
+            zoom += 7;
         }
-        if (inputState.mActionList.Contains(ActionType.CameraZoomOut) && mZoom - 0.0011 > mMaxZoom)
+        if (inputState.mActionList.Contains(ActionType.CameraZoomOut) && mZoom - 0.0041 > mMaxZoom)
         {
-            mZoomAnimation = false;
-            zoom -= 1;
-        }
-        if (inputState.mActionList.Contains(ActionType.CameraZoomInFast) && mZoom + 0.0041 < mMimZoom)
-        {
-            mZoomAnimation = false;
-            zoom += 4;
-        }
-        if (inputState.mActionList.Contains(ActionType.CameraZoomOutFast) && mZoom - 0.0041 > mMaxZoom)
-        {
-            mZoomAnimation = false;
-            zoom -= 4;
+            zoom -= 7;
         }
         if (zoom != 0)
         {
-            mZoomAnimation = false;
             Zoom(1 + zoom * 0.001f * gameTime.ElapsedGameTime.Milliseconds);
         }
     }
@@ -125,7 +110,6 @@ public class Camera2d
     {
         mTargetZoom = zoom;
         mZoomAnimation = true;
-        mViewTransformationMatrixChanged = true;
     }
 
     private void Zoom(float zoom)

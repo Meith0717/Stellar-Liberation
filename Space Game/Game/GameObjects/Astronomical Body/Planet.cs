@@ -21,6 +21,7 @@ namespace Galaxy_Explovive.Game.GameObjects
         [JsonProperty] private double mAddCrystals;
         [JsonProperty] private PlanetType mPlanetType;
         [JsonProperty] private Vector2 mCenterPosition;
+        [JsonProperty] private float mAngle;
 
         private float mRadius;
 
@@ -36,12 +37,10 @@ namespace Galaxy_Explovive.Game.GameObjects
         public Planet(int radius, Vector2 CenterPosition)
         {
             // Location
-            var angle = Globals.mRandom.NextAngle();
-            Position = MyMathF.GetInstance().GetCirclePosition(radius, angle, 0) + CenterPosition;
-            Rotation = MyMathF.GetInstance().GetRotation(Position - CenterPosition);
-
+            mAngle = Globals.mRandom.NextAngle();
+                                                                                             
             // Rendering
-            NormalTextureId = "IS SET IN GetSystemTypeAndTexture";
+            TextureId = "IS SET IN GetSystemTypeAndTexture";
             TextureWidth = TextureHeight = 1024;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
             TextureSclae = 0.3f;
@@ -59,8 +58,6 @@ namespace Galaxy_Explovive.Game.GameObjects
             GetPlanetTypeAndTexture();
             Crosshair = new CrossHair(0.3f, 0.35f, Position);
 
-            // Add To Spatial Hashing
-            Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
         private void GetPlanetTypeAndTexture()
         {
@@ -72,7 +69,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             {
                 case PlanetType.H:
                     {
-                        NormalTextureId = "planetTypeH";
+                        TextureId = "planetTypeH";
                         mAddAllois = 0.1;
                         mAddEnergy = 0.1;
                         mAddCrystals = 0.1;
@@ -80,7 +77,7 @@ namespace Galaxy_Explovive.Game.GameObjects
                     }
                 case PlanetType.J:
                     {
-                        NormalTextureId = "planetTypeJ";
+                        TextureId = "planetTypeJ";
                         mAddAllois = 0.1;
                         mAddEnergy = 10;
                         mAddCrystals = 2;
@@ -88,7 +85,7 @@ namespace Galaxy_Explovive.Game.GameObjects
                     }
                 case PlanetType.M:
                     {
-                        NormalTextureId = "planetTypeM";
+                        TextureId = "planetTypeM";
                         mAddAllois = 5;
                         mAddEnergy = 10;
                         mAddCrystals = 5;
@@ -96,7 +93,7 @@ namespace Galaxy_Explovive.Game.GameObjects
                     }
                 case PlanetType.Y:
                     {
-                        NormalTextureId = "planetTypeY";
+                        TextureId = "planetTypeY";
                         mAddAllois = 15;
                         mAddEnergy = 20;
                         mAddCrystals = 15;
@@ -106,9 +103,20 @@ namespace Galaxy_Explovive.Game.GameObjects
         }
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            // Remove From Spatial Hashing
+            Globals.mGameLayer.mSpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
+
+            // Other Stuff
             base.UpdateInputs(inputState);
+            float velocity = MathF.Sqrt(1/(mRadius*10));   
+            float angleUpdate = mAngle + (float)gameTime.TotalGameTime.TotalSeconds * velocity;
+            Position = MyMathF.GetInstance().GetCirclePosition(mRadius, mAngle + angleUpdate, 0) + mCenterPosition;
+            Rotation = MyMathF.GetInstance().GetRotation(Position - mCenterPosition);
+
+            // Add To Spatial Hashing
+            Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
-        
+
         public void Draw(int alpha)
         {
             DrawPlanet(alpha);
@@ -117,10 +125,10 @@ namespace Galaxy_Explovive.Game.GameObjects
         }
         private void DrawPlanet(int alpha)
         {
-            TextureManager.GetInstance().Draw(NormalTextureId, Position, TextureOffset,
+            TextureManager.GetInstance().Draw(TextureId, Position, TextureOffset,
                 TextureWidth, TextureHeight, TextureSclae, Rotation, 1, new Color(alpha, alpha, alpha, alpha));
 
-            TextureManager.GetInstance().DrawCircle(mCenterPosition, mRadius, new Color(alpha, alpha, alpha, alpha), 2, 0);
+            TextureManager.GetInstance().DrawCircle(mCenterPosition, mRadius, new Color(alpha, alpha, alpha, alpha), 1, 0);
         }
         private void DrawRecources(int alpha)
         {

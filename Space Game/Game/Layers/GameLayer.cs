@@ -72,13 +72,7 @@ namespace Galaxy_Explovive.Game.Layers
             Globals.mCamera2d.Update(gameTime, inputState);
             UpdateSystems(gameTime, inputState);
             ManageTimeWarp(gameTime, inputState);
-            TabToGoHome(gameTime, inputState);
             mShipTest.Update(gameTime, inputState);
-
-            if (inputState.mActionList.Contains(ActionType.Test))
-            {
-                mSoundManager.PlaySound("hit", 1);
-            }
         }
         public override void Draw()
         {
@@ -137,13 +131,6 @@ namespace Galaxy_Explovive.Game.Layers
             foreach (PlanetSystem planetSystem in mPlanetSystemList)
             {
                 planetSystem.Update(gameTime, inputState);
-            }
-        }
-        private void TabToGoHome(GameTime gameTime, InputState inputState)
-        {
-            if (inputState.mActionList.Contains(ActionType.GoHome))
-            {
-                Globals.mCamera2d.mTargetPosition = mHomeSystem.Position;
             }
         }
         private void ManageTimeWarp(GameTime gameTime, InputState inputState)

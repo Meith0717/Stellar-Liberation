@@ -21,7 +21,8 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
             Rotation = 0;
 
             // Rendering
-            NormalTextureId = "ship";
+            NormalTexture = "ship";
+            SelectTexture = "shipSekect";
             TextureSclae = 1;
             TextureWidth = 209;
             TextureHeight = 128;
@@ -41,11 +42,8 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
 
         public override void Draw()
         {
-            this.DrawPath();
-            TextureManager.GetInstance().Draw(NormalTextureId, Position, TextureOffset,
-                TextureWidth, TextureHeight, TextureSclae, Rotation, TextureDepth);
-            Crosshair.Draw(Color.White);
-            Globals.mDebugSystem.DrawBoundBox(BoundedBox); 
+            base.DrawPath();
+            base.DrawSpaceCraft();
         }
     }
 }

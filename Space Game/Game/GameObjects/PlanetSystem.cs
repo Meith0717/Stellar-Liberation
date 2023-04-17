@@ -50,6 +50,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             mStar.Update(gameTime, inputState);
             Hide(); Show();
             if (!mUpdatePlanets) { return; }
+
             foreach (Planet planet in mPlanets)
             {
                 planet.Update(gameTime, inputState);
