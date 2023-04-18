@@ -28,10 +28,11 @@ namespace Galaxy_Explovive.Core.Maths
         public float GetRotation(Vector2 position, Vector2 target)
         {
             Vector2 directionVector = target - position;
-            float rotation = (float)Math.Acos(Vector2.Dot(new Vector2(1, 0), directionVector) / directionVector.Length());
-            if (directionVector.Y < 0) { rotation = -rotation; }
+            float rotation = (float)MathF.Acos(Vector2.Dot(new Vector2(1, 0), directionVector) / directionVector.Length());
+            if (directionVector.Y < 0) { rotation = 2*MathF.PI - MathF.Abs(rotation); }
             return rotation;
         }
+
         public Vector2 GetDirection(float rotation)
         {
             return new Vector2(MathF.Cos(rotation), MathF.Sin(rotation));

@@ -30,14 +30,14 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
             TextureDepth = 1;
             TextureColor = Color.White;
             TextureRadius = 100;
-            Velocity = 50;
+            MaxVelocity = 50;
             BoundedBox = new CircleF(position, TextureRadius);
             Crosshair = new CrossHair(0.2f, 0.22f, position);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            base.UpdateInputs(inputState);
+            base.Update(inputState);
         }
 
         public override void Draw()
