@@ -108,7 +108,7 @@ namespace Galaxy_Explovive.Game.GameObjects
 
             // Other Stuff
             base.UpdateInputs(inputState);
-            float velocity = MathF.Sqrt(1000/(mRadius*10));   
+            float velocity = MathF.Sqrt(1/(mRadius*100));   
             float angleUpdate = mAngle + (float)gameTime.TotalGameTime.TotalSeconds * velocity;
             Position = MyMathF.GetInstance().GetCirclePosition(mRadius, mAngle + angleUpdate, 0) + mCenterPosition;
             Rotation = MyMathF.GetInstance().GetRotation(mCenterPosition, Position);

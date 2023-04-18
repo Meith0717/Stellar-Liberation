@@ -4,12 +4,10 @@ using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.Maths;
 using Galaxy_Explovive.Core.TextureManagement;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
 {
@@ -26,11 +24,13 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
         private bool IsMoving = false;
         private bool mTrack = false;
         private float mVelocity = 0;
+        private bool travel = false;
 
         public void Update(InputState inputState)
         {
             UpdateInputs(inputState);
             UpdateNavigation();
+            Debug.WriteLine(mVelocity);
         }
 
         private new void UpdateInputs(InputState inputState)
@@ -73,6 +73,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
                     TargetPosition = gameObject.Position;
                     IsSelect = false;
                     mVelocity = SubLightVelocity;
+                    travel = true;
                 }
             }
         }
@@ -85,13 +86,13 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
             DirectionController(targetRotation, rotationRest);
             VelocityController(rotationRest, distanceToTarget);
             MovementController(distanceToTarget);
-            Debug.WriteLine(targetRotation);
         }
         private void DirectionController(float targetRotation, float rotationRest)
         {
-            if (rotationRest <= 0.1) { Rotation = targetRotation; return;}
-            if(targetRotation == Rotation) { return; }
-            if (Rotation >= MathF.PI) { Rotation = 0; }
+            if (rotationRest <= 0.5) { Rotation = targetRotation; return;}
+            if(targetRotation == Rotation || !travel) { return; }
+            if (Rotation >= 2*MathF.PI) { Rotation = 0; }
+            if (Rotation < 0) { Rotation = 2*MathF.PI;}
             if (Rotation < targetRotation && targetRotation - Rotation <= MathF.PI) { Rotation += 0.005f; }
             if (Rotation > targetRotation && Rotation - targetRotation > MathF.PI) { Rotation += 0.005f; }
             if (Rotation < targetRotation && targetRotation - Rotation > MathF.PI) { Rotation -= 0.005f; }
@@ -101,20 +102,22 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
         private void VelocityController(float rotationRest, float distanceToTarget)
         {
             float updateVelocity = MaxVelocity * .05f;
-
-            if ((rotationRest <= 0.01) && (MaxVelocity - mVelocity > updateVelocity))
+            if (distanceToTarget <= 40)
             {
-                mVelocity += updateVelocity;
+                mVelocity = 0;
+                travel = false;
+                return;
             }
             if (distanceToTarget <= 2700 && mVelocity >= SubLightVelocity + updateVelocity)
             {
-                if (distanceToTarget <= 40)
-                {
-                    mVelocity = 0;
-                    return;
-                }
                 mVelocity -= updateVelocity;
+                return;
             }
+            if ((rotationRest <= 0.01) && (mVelocity - updateVelocity <= MaxVelocity))
+            {
+                mVelocity += updateVelocity;
+            }
+            
         }
 
         private void MovementController(float distanceToTarget)
