@@ -88,7 +88,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
         }
         private void DirectionController(float targetRotation, float rotationRest)
         {
-            if (rotationRest <= 0.5) { Rotation = targetRotation; return;}
+            if (rotationRest <= 0.05) { Rotation = targetRotation; return;}
             if(targetRotation == Rotation || !travel) { return; }
             if (Rotation >= 2*MathF.PI) { Rotation = 0; }
             if (Rotation < 0) { Rotation = 2*MathF.PI;}

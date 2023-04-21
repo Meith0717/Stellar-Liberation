@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft;
+using System.Diagnostics;
 
 namespace Galaxy_Explovive.Game.Layers
 {
@@ -158,6 +159,7 @@ namespace Galaxy_Explovive.Game.Layers
                 planetSystem.Draw();
                 counter++;
             }
+            Debug.WriteLine($"Counted Objects: {counter}");
         }
         private void DrawGrid()
         {
