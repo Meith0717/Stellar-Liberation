@@ -8,7 +8,6 @@ using Galaxy_Explovive.Core.Effects;
 using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
-using Galaxy_Explovive.Core.Maths;
 using Galaxy_Explovive.Core.Menu;
 using Galaxy_Explovive.Core.PositionManagement;
 using Galaxy_Explovive.Core.Rendering;
@@ -27,7 +26,7 @@ namespace Galaxy_Explovive.Game.Layers
     {
         const int mapWidth = 1000000;
         const int mapHeight = 1000000;
-        const int systemAmount = 2500;
+        const int systemAmount = 5000;
 
         [JsonIgnore] public RectangleF mMapSize = new RectangleF(new Vector2(mapWidth, mapHeight), new Vector2(mapWidth, mapHeight) * 2);
 

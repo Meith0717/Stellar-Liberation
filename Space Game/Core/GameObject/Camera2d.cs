@@ -5,7 +5,7 @@ using System;
 namespace Galaxy_Explovive.Core.GameObject;
 public class Camera2d
 {
-    public float mMaxZoom = 0.006f;
+    public float mMaxZoom = 0.00001f;
     public float mMimZoom = 1f;
 
     public float mZoom = 1f;

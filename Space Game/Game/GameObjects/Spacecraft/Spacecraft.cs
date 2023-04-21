@@ -30,7 +30,6 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
         {
             UpdateInputs(inputState);
             UpdateNavigation();
-            Debug.WriteLine(mVelocity);
         }
 
         private new void UpdateInputs(InputState inputState)
