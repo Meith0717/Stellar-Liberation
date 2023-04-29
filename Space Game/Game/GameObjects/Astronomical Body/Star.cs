@@ -82,7 +82,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
 
         public override void Draw()
         {
-            TextureManager.GetInstance().Draw(TextureId, Position, TextureOffset,
+            TextureManager.Instance.Draw(TextureId, Position, TextureOffset,
                 TextureWidth, TextureHeight, TextureSclae, Rotation, TextureDepth);
             Crosshair.Draw(Color.White);
         }

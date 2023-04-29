@@ -110,8 +110,8 @@ namespace Galaxy_Explovive.Game.GameObjects
             base.UpdateInputs(inputState);
             float velocity = MathF.Sqrt(1/(mRadius*100));   
             float angleUpdate = mAngle + (float)gameTime.TotalGameTime.TotalSeconds * velocity;
-            Position = MyMathF.GetInstance().GetCirclePosition(mRadius, mAngle + angleUpdate, 0) + mCenterPosition;
-            Rotation = MyMathF.GetInstance().GetRotation(mCenterPosition, Position);
+            Position = MyMathF.Instance.GetCirclePosition(mRadius, mAngle + angleUpdate, 0) + mCenterPosition;
+            Rotation = MyMathF.Instance.GetRotation(mCenterPosition, Position);
 
             // Add To Spatial Hashing
             Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
@@ -125,17 +125,17 @@ namespace Galaxy_Explovive.Game.GameObjects
         }
         private void DrawPlanet(int alpha)
         {
-            TextureManager.GetInstance().Draw(TextureId, Position, TextureOffset,
+            TextureManager.Instance.Draw(TextureId, Position, TextureOffset,
                 TextureWidth, TextureHeight, TextureSclae, Rotation, 1, new Color(alpha, alpha, alpha, alpha));
 
-            TextureManager.GetInstance().DrawCircle(mCenterPosition, mRadius, new Color(alpha, alpha, alpha, alpha), 1, 0);
+            TextureManager.Instance.DrawCircle(mCenterPosition, mRadius, new Color(alpha, alpha, alpha, alpha), 1, 0);
         }
         private void DrawRecources(int alpha)
         {
             string[] array = new string[] { $"Alloys: +{mAddAllois}", $"Energy: +{mAddEnergy}", $"Crystals: +{mAddCrystals}" };
             for (int i = 0; i < array.Length; i++)
             {
-                TextureManager.GetInstance().DrawString("text", Position + new Vector2(0, 200 + 20 * i), array[i],
+                TextureManager.Instance.DrawString("text", Position + new Vector2(0, 200 + 20 * i), array[i],
                     new Color(alpha, alpha, alpha, alpha));
             }
         }

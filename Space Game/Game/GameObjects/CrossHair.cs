@@ -30,10 +30,10 @@ namespace Galaxy_Explovive.Core.GameObject
         }
         public void Draw(Color color)
         {
-            TextureManager.GetInstance().Draw("crossHair1", Position, TextureOffset, TextureWidth, TextureHeight,
+            TextureManager.Instance.Draw("crossHair1", Position, TextureOffset, TextureWidth, TextureHeight,
                 TextureSclae, 0, 1, color);
             if (!mDrawInnerRing) { return; }
-            TextureManager.GetInstance().Draw("crossHair1", Position, TextureOffset, TextureWidth, TextureHeight,
+            TextureManager.Instance.Draw("crossHair1", Position, TextureOffset, TextureWidth, TextureHeight,
                 TextureSclae, Rotation, 1, color);
             mDrawInnerRing = false;
         }

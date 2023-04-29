@@ -4,16 +4,10 @@ using System.Collections.Generic;
 
 namespace Galaxy_Explovive.Core.PositionManagement
 {
-    [Serializable]
     public class SpatialHashing<T>
     {
-        [JsonProperty]
-        private int mCellSize;
-
-        [JsonProperty]
+        public int mCellSize;
         private Dictionary<int, List<T>> mPositionBuckets;
-
-        [JsonProperty]
         private int mCount;
 
         public SpatialHashing(int cellSize)

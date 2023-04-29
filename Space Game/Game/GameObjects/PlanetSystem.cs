@@ -60,6 +60,7 @@ namespace Galaxy_Explovive.Game.GameObjects
         {
             mStar.Draw();
             Globals.mDebugSystem.DrawBoundBox(BoundedBox);
+            if (!mUpdatePlanets) { return; }
             foreach (Planet planet in mPlanets)
             {
                 planet.Draw(mPlanetAlpha);

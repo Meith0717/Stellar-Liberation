@@ -53,7 +53,7 @@ public class UiElementSprite : UiElement
         base.Update(rectangle);
         Vector2 offset = Vector2.Zero;
 
-        Texture2D texture = TextureManager.GetInstance().GetTexture(SpriteId);
+        Texture2D texture = TextureManager.Instance.GetTexture(SpriteId);
 
         float textureAspectRatio = (float)texture.Width / texture.Height / mTotalFrames;
         float availableAspectRatio = (float)CalculatedRectangle.Width / CalculatedRectangle.Height;

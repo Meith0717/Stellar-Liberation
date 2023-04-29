@@ -61,7 +61,7 @@ namespace Galaxy_Explovive.Core.Debug
             };
             foreach (string s in lst)
             {
-                TextureManager.GetInstance().DrawString("text", position + new Vector2(0, i * 20), s, Color.White);
+                TextureManager.Instance.DrawString("text", position + new Vector2(0, i * 20), s, Color.White);
                 i += 1;
             }
         }
@@ -69,12 +69,12 @@ namespace Galaxy_Explovive.Core.Debug
         public void DrawBoundBox(RectangleF box)
         {
             if (mDebugLevel < 2) { return; }
-            TextureManager.GetInstance().GetSpriteBatch().DrawRectangle(box, Color.Red, 2 / Globals.mCamera2d.mZoom, 1);
+            TextureManager.Instance.GetSpriteBatch().DrawRectangle(box, Color.Red, 2 / Globals.mCamera2d.mZoom, 1);
         }
         public void DrawBoundBox(CircleF box)
         {
             if (mDebugLevel < 2) { return; }
-            TextureManager.GetInstance().GetSpriteBatch().DrawCircle(box, 75, Color.Red, 2 / Globals.mCamera2d.mZoom, 1);
+            TextureManager.Instance.GetSpriteBatch().DrawCircle(box, 75, Color.Red, 2 / Globals.mCamera2d.mZoom, 1);
         }
     }
 }

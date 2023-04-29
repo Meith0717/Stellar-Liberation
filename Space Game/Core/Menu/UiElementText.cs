@@ -18,7 +18,7 @@ public class UiElementText : UiElement
     public void UpdateText(string text)
     {
         mText = text;
-        Vector2 stringDimensions = TextureManager.GetInstance().GetSpriteFont(Font).MeasureString(text);
+        Vector2 stringDimensions = TextureManager.Instance.GetSpriteFont(Font).MeasureString(text);
         Width = (int)stringDimensions.X;
         Height = (int)stringDimensions.Y;
     }
@@ -26,7 +26,7 @@ public class UiElementText : UiElement
     public override void Render()
     {
         base.Render();
-        TextureManager.GetInstance().DrawString(Font, new Vector2(CalculatedRectangle.X + (CalculatedRectangle.Width - Width) / 2,
+        TextureManager.Instance.DrawString(Font, new Vector2(CalculatedRectangle.X + (CalculatedRectangle.Width - Width) / 2,
             CalculatedRectangle.Y + (CalculatedRectangle.Height - Height) / 2), mText, FontColor);
     }
 }

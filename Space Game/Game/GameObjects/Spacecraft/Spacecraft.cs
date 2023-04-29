@@ -1,4 +1,5 @@
 ﻿using Galaxy_Explovive.Core;
+using Galaxy_Explovive.Core.GameLogik;
 using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.Maths;
@@ -64,7 +65,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
         {
             if (!IsSelect) { return; }
             Vector2 MousePosition = Globals.mCamera2d.ViewToWorld(inputState.mMousePosition.ToVector2());
-            List<InteractiveObject> GameObjects = Globals.mGameLayer.GetObjectsInRadius(MousePosition, 200).OfType<InteractiveObject>().ToList(); ;
+            List<InteractiveObject> GameObjects = ObjectLocator.Instance.GetObjectsInRadius(MousePosition, 200).OfType<InteractiveObject>().ToList(); ;
             foreach (InteractiveObject gameObject in GameObjects)
             {
                 if (inputState.mMouseActionType == MouseActionType.RightClick && gameObject.IsHover)
@@ -78,7 +79,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
         }
         private void UpdateNavigation()
         {
-            float targetRotation = MyMathF.GetInstance().GetRotation(Position, TargetPosition);
+            float targetRotation = MyMathF.Instance.GetRotation(Position, TargetPosition);
             float rotationRest = MathF.Abs(Rotation - targetRotation);
             float distanceToTarget = Vector2.Subtract(TargetPosition, Position).Length();
 
@@ -123,19 +124,19 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
         { 
             if (mVelocity == 0) { return; }
             IsMoving = true;
-            Vector2 directionVector = MyMathF.GetInstance().GetDirection(Rotation);
+            Vector2 directionVector = MyMathF.Instance.GetDirection(Rotation);
             Position += directionVector * mVelocity;
         }
 
         public void DrawPath()
         {
             if (!IsMoving) { return; }
-            TextureManager.GetInstance().DrawLine(Position, TargetPosition, Color.Gray, 2, 0);
+            TextureManager.Instance.DrawLine(Position, TargetPosition, Color.Gray, 2, 0);
         }
 
         public void DrawSpaceCraft()
         {
-            TextureManager.GetInstance().Draw(TextureId, Position, TextureOffset,
+            TextureManager.Instance.Draw(TextureId, Position, TextureOffset,
                 TextureWidth, TextureHeight, TextureSclae, Rotation, TextureDepth);
             Crosshair.Draw(Color.White);
             Globals.mDebugSystem.DrawBoundBox(BoundedBox);

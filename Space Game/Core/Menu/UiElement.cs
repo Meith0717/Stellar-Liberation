@@ -181,7 +181,7 @@ public class UiElement
         if (BackgroundColor != Color.Transparent)
         {
             Color color = (mIsHovering && HoverBackgroundColor != Color.Transparent) ? HoverBackgroundColor : BackgroundColor;
-            TextureManager.GetInstance().GetSpriteBatch().FillRectangle(CalculatedRectangle, new Color(color, BackgroundAlpha), 1);
+            TextureManager.Instance.GetSpriteBatch().FillRectangle(CalculatedRectangle, new Color(color, BackgroundAlpha), 1);
         }
         foreach (UiElement uiElement in ChildElements)
         {

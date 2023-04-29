@@ -13,21 +13,19 @@ using Galaxy_Explovive.Core.PositionManagement;
 using Galaxy_Explovive.Core.Rendering;
 using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Game.GameObjects;
-using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft;
 using System.Diagnostics;
+using Galaxy_Explovive.Core.Map;
 
 namespace Galaxy_Explovive.Game.Layers
 {
     [Serializable]
     public class GameLayer : Layer
     {
-        const int mapWidth = 1000000;
-        const int mapHeight = 1000000;
-        const int systemAmount = 5000;
+        const int mapWidth = 4000000;
+        const int mapHeight = 2000000;
 
         [JsonIgnore] public RectangleF mMapSize = new RectangleF(new Vector2(mapWidth, mapHeight), new Vector2(mapWidth, mapHeight) * 2);
 
@@ -42,7 +40,6 @@ namespace Galaxy_Explovive.Game.Layers
 
         [JsonIgnore] public SpatialHashing<GameObject> mSpatialHashing;
 
-        private int mSpatialHashingCellSize = 2000;
         private UiElementSprite mBackground;
         private FrustumCuller mFrustumCuller;
         private ParllaxManager mParllaxManager;
@@ -54,7 +51,7 @@ namespace Galaxy_Explovive.Game.Layers
             InitializeGlobals();
             mBackground = new UiElementSprite("gameBackground");
             mBackground.mSpriteFit = UiElementSprite.SpriteFit.Cover;
-            mSpatialHashing = new SpatialHashing<GameObject>(mSpatialHashingCellSize);
+            mSpatialHashing = new SpatialHashing<GameObject>(2000);
             mFrustumCuller = new FrustumCuller();
             SpawnSystemsAndGetHome();
             mParllaxManager = new ParllaxManager();
@@ -99,18 +96,7 @@ namespace Galaxy_Explovive.Game.Layers
         // Constructor Stuff _____________________________________
         private void SpawnSystemsAndGetHome()
         {
-            int i = 0;
-            while (i < systemAmount)
-            {
-                Vector2 position = new Vector2(Globals.mRandom.Next(-mapWidth, mapWidth), Globals.mRandom.Next(-mapHeight, mapHeight));
-                List<Star> neighbourSystem = GetObjectsInRadius(position, 20000).OfType<Star>().ToList();
-                if (neighbourSystem.Count > 0)
-                {
-                    continue;
-                }
-                mPlanetSystemList.Add(new PlanetSystem(position));
-                i++;
-            }
+            mPlanetSystemList = MapBuilder.Instance.Generate(25000, new Vector2(mapWidth, mapHeight));
             mHomeSystem = mPlanetSystemList[Globals.mRandom.Next(mPlanetSystemList.Count)];
             Globals.mCamera2d.mTargetPosition = mHomeSystem.Position;
         }
@@ -163,41 +149,17 @@ namespace Galaxy_Explovive.Game.Layers
         }
         private void DrawGrid()
         {
+            int ColorAplpha = 5;
             for (float x = -mMapSize.X; x <= mMapSize.Width / 2; x += 10000)
             {
-                TextureManager.GetInstance().DrawLine(new Vector2(x, -mMapSize.Width / 1.9f),
-                    new Vector2(x, mMapSize.Width / 1.9f), new Color(25, 25, 25, 25), 2, 0);
+                TextureManager.Instance.DrawLine(new Vector2(x, -mMapSize.Width / 1.9f),
+                    new Vector2(x, mMapSize.Width / 1.9f), new Color(ColorAplpha, ColorAplpha, ColorAplpha, ColorAplpha), 1, 0);
             }
             for (float y = -mMapSize.Y; y <= mMapSize.Height / 2; y += 10000)
             {
-                TextureManager.GetInstance().DrawLine(new Vector2(-mMapSize.Width / 1.9f, y),
-                    new Vector2(mMapSize.Width / 1.9f, y), new Color(25, 25, 25, 25), 2, 0);
+                TextureManager.Instance.DrawLine(new Vector2(-mMapSize.Width / 1.9f, y),
+                    new Vector2(mMapSize.Width / 1.9f, y), new Color(ColorAplpha, ColorAplpha, ColorAplpha, ColorAplpha), 1, 0);
             }
-        }
-
-        // Layer Logik _____________________________________
-        public List<GameObject> GetObjectsInRadius(Vector2 positionVector2, int radius)
-        {
-            var objectsInRadius = new List<GameObject>();
-            var maxRadius = radius + mSpatialHashingCellSize;
-            for (var i = -radius; i <= maxRadius; i += mSpatialHashingCellSize)
-            {
-                for (var j = -radius; j <= maxRadius; j += mSpatialHashingCellSize)
-                {
-                    var objectsInBucket = mSpatialHashing.GetObjectsInBucket((int)(positionVector2.X + i), (int)(positionVector2.Y + j));
-                    foreach (var gameObject in objectsInBucket)
-                    {
-                        var position = gameObject.Position;
-                        var distance = Vector2.Distance(positionVector2, position);
-                        if (distance <= radius)
-                        {
-                            objectsInRadius.Add(gameObject);
-                        }
-                    }
-                }
-
-            }
-            return objectsInRadius;
-        }
+        }        
     }
 }

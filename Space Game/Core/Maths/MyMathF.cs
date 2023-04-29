@@ -6,11 +6,7 @@ namespace Galaxy_Explovive.Core.Maths
     internal class MyMathF
     {
         private static MyMathF sInstance;
-
-        public static MyMathF GetInstance()
-        {
-            return sInstance ??= new MyMathF();
-        }
+        public static MyMathF Instance { get { return sInstance ??= new MyMathF(); } }
 
         public int GetRandomInt(int randomVariance)
         {

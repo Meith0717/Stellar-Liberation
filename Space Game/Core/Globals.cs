@@ -8,6 +8,7 @@ using Galaxy_Explovive.Core.LayerManagement;
 using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Game.Layers;
 using System;
+using Galaxy_Explovive.Core.PositionManagement;
 
 namespace Galaxy_Explovive.Core
 {
@@ -22,6 +23,7 @@ namespace Galaxy_Explovive.Core
         public static Camera2d mCamera2d;
         public static GameLayer mGameLayer;
         public static DebugSystem mDebugSystem;
+        public static SpatialHashing<GameObject.GameObject> mSpatialHashing;
         public static float mTimeWarp;
     }
 }

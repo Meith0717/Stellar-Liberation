@@ -34,7 +34,7 @@ namespace Galaxy_Explovive
             mGraphicsDeviceManager = new GraphicsDeviceManager(this);
             mInputManager = new InputManager();
             mSoundManager = new SoundManager();
-            mTextureManager = TextureManager.GetInstance();
+            mTextureManager = TextureManager.Instance;
             Window.ClientSizeChanged += delegate { mResulutionWasResized = true; };
         }
 

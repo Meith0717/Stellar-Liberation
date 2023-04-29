@@ -1,3 +1,4 @@
+using Galaxy_Explovive.Core.Maths;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,12 +18,7 @@ public class TextureManager
     readonly Hashtable mSpriteFonts = new();
 
     private const int MaxLayerHeight = 10000;
-
-
-    public static TextureManager GetInstance()
-    {
-        return sInstance ??= new TextureManager();
-    }
+    public static TextureManager Instance { get { return sInstance ??= new TextureManager(); } }
 
     public SpriteBatch GetSpriteBatch()
     {
