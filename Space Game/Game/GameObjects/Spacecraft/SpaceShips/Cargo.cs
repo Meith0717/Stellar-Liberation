@@ -33,6 +33,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             MaxVelocity = 1;
             BoundedBox = new CircleF(position, TextureRadius);
             Crosshair = new CrossHair(0.2f, 0.22f, position);
+            mWeaponManager = new();
         }
 
         public override void Update(GameTime gameTime, InputState inputState)

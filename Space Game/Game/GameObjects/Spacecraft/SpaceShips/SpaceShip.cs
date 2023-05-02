@@ -5,13 +5,12 @@ using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.MovementController;
 using Galaxy_Explovive.Core.MyMath;
 using Galaxy_Explovive.Core.TextureManagement;
+using Galaxy_Explovive.Core.Weapons;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
 {
@@ -19,6 +18,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
     {
 
         public float MaxVelocity { private get; set; }
+        public WeaponManager mWeaponManager { private get; set; }
 
         // Navigation
         private bool IsMoving = false;
@@ -31,12 +31,18 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             base.Update(inputState);
             UpdateInputs(inputState);
             UpdateNavigation(gameTime);
+            if (inputState.mActionList.Contains(ActionType.Test))
+            {
+                mWeaponManager.Shoot(this, this, Color.LightGreen, 5000);
+            }
+            mWeaponManager.Update(gameTime);
         }
 
         public override void Draw()
         {
             base.DrawSpaceCraft();
             DrawPath();
+            mWeaponManager.Draw();
         }
 
         // Input Stuff

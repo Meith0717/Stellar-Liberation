@@ -30,10 +30,6 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
         {
             base.UpdateInputs(inputState);
             RegenerateShield();
-            if  (inputState.mActionList.Contains(ActionType.Test))
-            {
-                Hit(5);
-            }
             TextureId = IsSelect ? SelectTexture : NormalTexture;
         }
 

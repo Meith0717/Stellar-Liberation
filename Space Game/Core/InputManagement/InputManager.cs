@@ -25,7 +25,6 @@ namespace Galaxy_Explovive.Core.InputManagement
         private Point mMouseRectangleStart, mMouseRectangleEnd;
 
         private double mDalay = 0;
-        private bool mLeftButtonKlicked = false;
 
         // InputState contains all the actions made by the player and mouse position.
         private readonly InputState mInputState;
@@ -268,7 +267,7 @@ namespace Galaxy_Explovive.Core.InputManagement
         public InputState Update(GameTime gameTime)
         {
             mDalay += gameTime.ElapsedGameTime.Milliseconds;
-            if (mDalay > 750) { mDalay = 0; mLeftButtonKlicked = false; }
+            if (mDalay > 750) { mDalay = 0; }
             SavePreviousMouseState();
             SavePreviousKeyState();
             ClearActionList();

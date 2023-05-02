@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Galaxy_Explovive.Core.Map;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
+using Galaxy_Explovive.Core.MyMath;
 
 namespace Galaxy_Explovive.Game.Layers
 {
@@ -42,7 +43,7 @@ namespace Galaxy_Explovive.Game.Layers
 
         private FrustumCuller mFrustumCuller;
         private ParllaxManager mParllaxManager;
-        private Cargo mShipTest;
+        private List<Cargo> mShips = new();
 
         // Layer Stuff _____________________________________
         public GameLayer() : base()
@@ -52,13 +53,16 @@ namespace Galaxy_Explovive.Game.Layers
             mSpatialHashing = new SpatialHashing<GameObject>(2000);
             mFrustumCuller = new FrustumCuller();
             mPlanetSystemList = MapBuilder.Instance.Generate(25000, new Vector2(mapWidth, mapHeight));
+            mHomeSystem = mPlanetSystemList[Globals.mRandom.Next(mPlanetSystemList.Count)];
+            Globals.mCamera2d.mTargetPosition = mHomeSystem.Position;
             mParllaxManager = new ParllaxManager();
             mParllaxManager.Add(new("gameBackground", 0, 0.1f));
             mParllaxManager.Add(new("gameBackgroundParlax2", 1, 0.25f));
             mParllaxManager.Add(new("gameBackgroundParlax1", 2, 0.5f));
             OnResolutionChanged();
             Globals.mTimeWarp = 1;
-            mShipTest = new Cargo(Vector2.Zero);
+            mShips.Add(new Cargo(MyMath.Instance.GetRandomVector2(mHomeSystem.Position)));
+            mShips.Add(new Cargo(MyMath.Instance.GetRandomVector2(mHomeSystem.Position)));
         }
         public override void Update(GameTime gameTime, InputState inputState)
         {
@@ -69,7 +73,10 @@ namespace Galaxy_Explovive.Game.Layers
             Globals.mCamera2d.Update(gameTime, inputState);
             UpdateSystems(gameTime, inputState);
             ManageTimeWarp(gameTime, inputState);
-            mShipTest.Update(gameTime, inputState);
+            foreach (Cargo c in mShips)
+            {
+                c.Update(gameTime, inputState);
+            }
         }
         public override void Draw()
         {
@@ -83,7 +90,10 @@ namespace Galaxy_Explovive.Game.Layers
             mSpriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: Globals.mCamera2d.GetViewTransformationMatrix(), samplerState: SamplerState.PointClamp);
             DrawSystems();
             DrawGrid();
-            mShipTest.Draw();
+            foreach(Cargo c in mShips)
+            {
+                c.Draw();
+            }
             mSpriteBatch.End();
         }
         public override void OnResolutionChanged()

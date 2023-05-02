@@ -1,5 +1,4 @@
-﻿using Galaxy_Explovive.Core.MyMath;
-using Galaxy_Explovive.Core.TextureManagement;
+﻿using Galaxy_Explovive.Core.TextureManagement;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Linq;
@@ -28,14 +27,14 @@ namespace Galaxy_Explovive.Core.Waepons
             OriginShip = originShip;
             MaxTravelDistance = maxTravelDistance;
             ProjectileColor = color;
-            Velocity = 0.1f;
-            Direction = (target.Position - Position).NormalizedCopy();
-            Rotation = MyMath.MyMath.Instance.GetRotation(Position, target.Position);
+            Velocity = 0.5f;
+            Direction = (Vector2.Zero - Position).NormalizedCopy();
+            Rotation = MyMath.MyMath.Instance.GetRotation(Position, Vector2.Zero);
         }
 
         public void Update(GameTime gameTime)
         {
-            var direction = Direction * Velocity * gameTime.ElapsedGameTime.Milliseconds * Globals.mTimeWarp;
+            var direction = Direction * Velocity * gameTime.ElapsedGameTime.Milliseconds;
             GiveDamage();
             TravelDistance += direction.Length();
             if (TravelDistance >= MaxTravelDistance) { Remove = true; }

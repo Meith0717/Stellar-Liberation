@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using System;
 
 namespace Galaxy_Explovive.Core.MyMath
@@ -12,6 +13,12 @@ namespace Galaxy_Explovive.Core.MyMath
         {
             var i = Globals.mRandom.Next(-randomVariance, randomVariance);
             return i;
+        }
+
+        public Vector2 GetRandomVector2(Vector2 Origin)
+        {
+
+            return Origin + new Vector2(Globals.mRandom.Next(5000), Globals.mRandom.Next(5000));
         }
 
         public Vector2 GetCirclePosition(float radius, float angleRad, int randomVariance)
