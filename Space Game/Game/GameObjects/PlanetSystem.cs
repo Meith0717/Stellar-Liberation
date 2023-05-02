@@ -68,7 +68,7 @@ namespace Galaxy_Explovive.Game.GameObjects
         }
         private void Show()
         {
-            if (!BoundedBox.Contains(Globals.mCamera2d.mPosition)) { return; }
+            if (!BoundedBox.Contains(Globals.mCamera2d.Position)) { return; }
             mUpdatePlanets = true;
             if (mPlanetAlpha <= 255 - AlphaModifier)
             {
@@ -79,7 +79,7 @@ namespace Galaxy_Explovive.Game.GameObjects
         }
         private void Hide()
         {
-            if (BoundedBox.Contains(Globals.mCamera2d.mPosition)) { return; }
+            if (BoundedBox.Contains(Globals.mCamera2d.Position)) { return; }
             if (mPlanetAlpha >= AlphaModifier)
             {
                 mPlanetAlpha -= AlphaModifier;

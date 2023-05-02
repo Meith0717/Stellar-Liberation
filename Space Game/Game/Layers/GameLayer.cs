@@ -66,15 +66,15 @@ namespace Galaxy_Explovive.Game.Layers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             mPassedSeconds += gameTime.ElapsedGameTime.Milliseconds / 1000d;
-            mParllaxManager.Update();
-            mFrustumCuller.Update();
-            Globals.mDebugSystem.Update(gameTime, inputState);
-            Globals.mCamera2d.Update(gameTime, inputState);
             UpdateSystems(gameTime, inputState);
             foreach (Cargo c in mShips)
             {
                 c.Update(gameTime, inputState);
             }
+            mFrustumCuller.Update();
+            mParllaxManager.Update();
+            Globals.mDebugSystem.Update(gameTime, inputState);
+            Globals.mCamera2d.Update(gameTime, inputState);
         }
         public override void Draw()
         {
@@ -104,7 +104,7 @@ namespace Galaxy_Explovive.Game.Layers
         // Constructor Stuff _____________________________________
         private void InitializeGlobals()
         {
-            Globals.mCamera2d = new(mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
+            Globals.mCamera2d = new();
             Globals.mGameLayer = this;
             Globals.mDebugSystem = new DebugSystem();
         }

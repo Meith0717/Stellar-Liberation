@@ -57,7 +57,7 @@ namespace Galaxy_Explovive.Core.Debug
                 $"Frame: {mFrameDuration} ms",
                 $"Debug Mode {mDebugLevel}",
                 $"Camera Zoom {Globals.mCamera2d.mZoom}",
-                $"Position {Globals.mCamera2d.mPosition}",
+                $"Position {Globals.mCamera2d.Position}",
             };
             foreach (string s in lst)
             {

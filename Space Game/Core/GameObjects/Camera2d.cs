@@ -4,21 +4,16 @@ using System;
 
 namespace Galaxy_Explovive.Core.GameObject;
 public class Camera2d
-{
-    public float mMaxZoom = 0.00000001f;
-    public float mMimZoom = 1f;
+{   
+    // Constants
+    const float mMaxZoom = 0.00000001f;
+    const float mMimZoom = 1f;
 
-    public float mZoom = 1f;
+    public float mZoom { get; private set; } = 1f;
+    public Vector2 Position { get; private set; }
+
     public float mTargetZoom;
-    public Vector2 mPosition;
     public Vector2 mTargetPosition;
-
-    private int mWidth;
-    private int mHeight;
-
-    private bool mZoomAnimation;
-    private Vector2 mLastMousePosition;
-
     public bool mIsMoving;
 
     // matrix variables
@@ -26,52 +21,41 @@ public class Camera2d
     private bool mViewTransformationMatrixChanged = true;
 
     // animation stuff
+    private bool mZoomAnimation;
+    private Vector2 mLastMousePosition;
     private float[] mAnimationX;
     private float[] mAnimationY;
     private int mAnimationIndex;
     private Vector2 mPositionBeforeAnimation;
 
-    public Camera2d(int width, int height)
+    public Camera2d()
     {
         mZoomAnimation = false;
-        mWidth = width;
-        mHeight = height;
-        mPosition = new Vector2(mWidth / 2f, mHeight / 2f);
+        int width = Globals.mGraphicsDevice.Viewport.X;
+        int height = Globals.mGraphicsDevice.Viewport.Y;
+        Position = new Vector2(width / 2f, height / 2f);
         mIsMoving = false;
     }
 
-    public void MoveAnimation(GameTime gameTime)
+    private void MoveCamera()
     {
-        Vector2 adjustmentVector = Vector2.Subtract(mTargetPosition, mPosition);
-        float distance = adjustmentVector.Length();
-        adjustmentVector.Normalize();
-        mPosition += adjustmentVector * distance / 10;
-        SetPosition(mPosition);
+        Vector2 adjustmentVector = Vector2.Subtract(mTargetPosition, Position);
+        Position += adjustmentVector / 10;
     }
 
-    public void ZoomAnimation(GameTime gameTime)
+    public void ZoomAnimation()
     {
-        if (!mZoomAnimation) return;
-        if (Math.Abs(mZoom - mTargetZoom) <= 0.01)
-        {
-            mZoom = mTargetZoom;
-            mZoomAnimation = false;
-        }
-        if (mZoom < mTargetZoom)
-        {
-            mZoom += 0.01f;
-        }
-    }
-
-    public void SetPosition(Vector2 position)
-    {
-        mPosition = position;
-        mViewTransformationMatrixChanged = true;
+        if (!mZoomAnimation) { return; }
+        float zoomUpdate = Math.Abs(mZoom - mTargetZoom);
+        if (zoomUpdate < 0.1) { mZoom += zoomUpdate / 50; return; }
+        mZoom = mTargetZoom;
+        mZoomAnimation = false;
     }
 
     private void MoveCameraByMouse(InputState inputState)
     {
         Vector2 currentMousePosition = inputState.mMousePosition.ToVector2();
+        mIsMoving = false;
 
         if (inputState.mMouseActionType != MouseActionType.RightClickHold)
         {
@@ -133,9 +117,11 @@ public class Camera2d
     {
         if (mViewTransformationMatrixChanged)
         {
-            mTransform = Matrix.CreateTranslation(new Vector3(-mPosition.X, -mPosition.Y, 0))
+            int width = Globals.mGraphicsDevice.Viewport.X;
+            int height = Globals.mGraphicsDevice.Viewport.Y;
+            mTransform = Matrix.CreateTranslation(new Vector3(-Position.X, -Position.Y, 0))
                          * Matrix.CreateScale(mZoom, mZoom, 1)
-                         * Matrix.CreateTranslation(new Vector3(mWidth / 2f, mHeight / 2f, 0));
+                         * Matrix.CreateTranslation(new Vector3(width / 2f, height / 2f, 0));
             mViewTransformationMatrixChanged = false;
         }
         return mTransform;
@@ -143,22 +129,21 @@ public class Camera2d
 
     public void Update(GameTime gameTime, InputState inputState)
     {
-        mIsMoving = false;
         AdjustZoom(gameTime, inputState);
         MoveCameraByMouse(inputState);
-        MoveAnimation(gameTime);
-        ZoomAnimation(gameTime);
+        MoveCamera();
+        ZoomAnimation();
         // play animation if there is one
         if (mAnimationX != null)
         {
             if (mAnimationIndex < mAnimationX.Length)
             {
-                mPosition = new Vector2(mAnimationX[mAnimationIndex], mAnimationY[mAnimationIndex]) + mPositionBeforeAnimation;
+                Position = new Vector2(mAnimationX[mAnimationIndex], mAnimationY[mAnimationIndex]) + mPositionBeforeAnimation;
                 mAnimationIndex++;
             }
             else
             {
-                mPosition = mPositionBeforeAnimation;
+                Position = mPositionBeforeAnimation;
                 mAnimationIndex = 0;
                 mAnimationX = null;
                 mAnimationY = null;
@@ -170,8 +155,6 @@ public class Camera2d
 
     public void SetResolution(int width, int height)
     {
-        mWidth = width;
-        mHeight = height;
         mViewTransformationMatrixChanged = true;
     }
 
@@ -179,7 +162,7 @@ public class Camera2d
     {
         if (mAnimationX == null)
         {
-            mPositionBeforeAnimation = mPosition;
+            mPositionBeforeAnimation = Position;
         }
         Random random = new Random();
         float[] graphX = new float[length];
