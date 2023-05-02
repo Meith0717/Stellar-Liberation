@@ -24,7 +24,6 @@ namespace Galaxy_Explovive.Core
         public static GameLayer mGameLayer;
         public static DebugSystem mDebugSystem;
         public static SpatialHashing<GameObject.GameObject> mSpatialHashing;
-        public static float mTimeWarp;
         public static float SubLightVelocity = 0.01f;
     }
 }

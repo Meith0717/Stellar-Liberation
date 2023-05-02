@@ -38,19 +38,17 @@ namespace Galaxy_Explovive.Core.InputManagement
                 { Keys.Escape, ActionType.Exit },
                 { Keys.Tab, ActionType.GoHome },
                 { Keys.F11, ActionType.ToggleFullscreen},
-                { Keys.D2, ActionType.AccelerateTime },
-                { Keys.D1, ActionType.DeaccelerateTime },
-                { Keys.Space, ActionType.Test},
+                { Keys.Y, ActionType.MaxSpeed },
+                { Keys.X, ActionType.MinSpeed },
                 { Keys.F12, ActionType.Debug }
             };
 
             // Dictionary for keyboard keys that have been hold and corresponding actions.
             mKeyBindingsKeyboardHold = new Dictionary<Keys, ActionType>
             {
-                { Keys.D, ActionType.MoveRight },
-                { Keys.A, ActionType.MoveLeft },
-                { Keys.W, ActionType.MoveUp },
-                { Keys.S, ActionType.MoveDown },
+                { Keys.LeftShift, ActionType.Accelerate },
+                { Keys.LeftControl, ActionType.Deaccelerate },
+                { Keys.Space, ActionType.Test},
             };
 
 

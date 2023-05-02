@@ -20,8 +20,10 @@ namespace Galaxy_Explovive.Core.InputManagement
         LoadGame,
         ToggleFullscreen,
         GoHome,
-        AccelerateTime,
-        DeaccelerateTime,
+        Accelerate,
+        Deaccelerate,
+        MaxSpeed,
+        MinSpeed,
         Test,
         Debug
     }

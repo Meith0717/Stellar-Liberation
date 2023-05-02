@@ -4,12 +4,6 @@ using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
 {
@@ -30,7 +24,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             TextureDepth = 0.5f;
             TextureColor = Color.White;
             TextureRadius = 100;
-            MaxVelocity = 1;
+            MaxVelocity = 10;
             BoundedBox = new CircleF(position, TextureRadius);
             Crosshair = new CrossHair(0.2f, 0.22f, position);
             mWeaponManager = new();

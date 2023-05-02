@@ -60,7 +60,6 @@ namespace Galaxy_Explovive.Game.Layers
             mParllaxManager.Add(new("gameBackgroundParlax2", 1, 0.25f));
             mParllaxManager.Add(new("gameBackgroundParlax1", 2, 0.5f));
             OnResolutionChanged();
-            Globals.mTimeWarp = 1;
             mShips.Add(new Cargo(MyMath.Instance.GetRandomVector2(mHomeSystem.Position)));
             mShips.Add(new Cargo(MyMath.Instance.GetRandomVector2(mHomeSystem.Position)));
         }
@@ -72,7 +71,6 @@ namespace Galaxy_Explovive.Game.Layers
             Globals.mDebugSystem.Update(gameTime, inputState);
             Globals.mCamera2d.Update(gameTime, inputState);
             UpdateSystems(gameTime, inputState);
-            ManageTimeWarp(gameTime, inputState);
             foreach (Cargo c in mShips)
             {
                 c.Update(gameTime, inputState);
@@ -117,21 +115,6 @@ namespace Galaxy_Explovive.Game.Layers
             foreach (PlanetSystem planetSystem in mPlanetSystemList)
             {
                 planetSystem.Update(gameTime, inputState);
-            }
-        }
-        private void ManageTimeWarp(GameTime gameTime, InputState inputState)
-        {
-            if (inputState.mActionList.Contains(ActionType.AccelerateTime))
-            {
-                if (Globals.mTimeWarp >= 64) { return; }
-                Globals.mTimeWarp *= 2;
-                return;
-            }
-            if (inputState.mActionList.Contains(ActionType.DeaccelerateTime))
-            {
-                if (Globals.mTimeWarp <= 1) { return; }
-                Globals.mTimeWarp /= 2;
-                return;
             }
         }
 

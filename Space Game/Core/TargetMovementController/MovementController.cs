@@ -1,14 +1,6 @@
-﻿using Galaxy_Explovive.Core.GameLogik;
-using Galaxy_Explovive.Core.GameObject;
-using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.Map;
-using Microsoft.Xna.Framework;
+﻿using Galaxy_Explovive.Core.InputManagement;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Galaxy_Explovive.Core.MovementController
 {
@@ -31,27 +23,47 @@ namespace Galaxy_Explovive.Core.MovementController
             return correction;
         }
 
-        public float GetVelocity(float maxVelocity, float currentVelovity, float rotationRest, float distanceToTarget)
+        public float StopByTarget(InputState inputState, bool isSelect, float maxVelocity, float currentVelovity, float distanceToTarget)
         {
-            float SubLightVelocity = Globals.SubLightVelocity;
-            float updateVelocity = maxVelocity * .05f;
             if (distanceToTarget <= 40)
             {
                 return -currentVelovity;
             }
 
+            if (!isSelect) { return 0; }
+
             float ret = 0;
-            if (distanceToTarget <= 2700 && currentVelovity >= SubLightVelocity + updateVelocity)
+            float updateVelocity = maxVelocity * .005f;
+
+            if (inputState.mActionList.Contains(ActionType.Deaccelerate))
             {
-                ret -= updateVelocity;
+                if (currentVelovity - updateVelocity > Globals.SubLightVelocity)
+                {
+                    ret -= updateVelocity;
+                } else
+                {
+                    ret -= currentVelovity - Globals.SubLightVelocity;
+                }
             }
-            if ((rotationRest <= 0.01) && (currentVelovity - updateVelocity <= maxVelocity))
+            if (inputState.mActionList.Contains(ActionType.Accelerate))
             {
-                ret += updateVelocity;
+                if (currentVelovity + updateVelocity < maxVelocity)
+                {
+                    ret += updateVelocity;
+                } else
+                {
+                    ret += maxVelocity - currentVelovity;
+                }
+            }
+            if (inputState.mActionList.Contains(ActionType.MaxSpeed))
+            {
+                ret += maxVelocity - currentVelovity;
+            }
+            if (inputState.mActionList.Contains(ActionType.MinSpeed))
+            {
+                ret -= currentVelovity - Globals.SubLightVelocity;
             }
             return ret;
         }
-
-
     }
 }
