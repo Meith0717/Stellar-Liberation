@@ -64,11 +64,11 @@ namespace Galaxy_Explovive
             mSoundManager.CreateSoundEffectInstances();
 
             // Load Star Textures
-            mTextureManager.LoadTexture("sunTypeB", "GameObjects/Stars/sunTypeB");
-            mTextureManager.LoadTexture("sunTypeF", "GameObjects/Stars/sunTypeF");
-            mTextureManager.LoadTexture("sunTypeG", "GameObjects/Stars/sunTypeG");
-            mTextureManager.LoadTexture("sunTypeK", "GameObjects/Stars/sunTypeK");
-            mTextureManager.LoadTexture("sunTypeM", "GameObjects/Stars/sunTypeM");
+            mTextureManager.LoadTexture("sunTypeB", "GameObjects/Stars/sunTypeB_big");
+            mTextureManager.LoadTexture("sunTypeF", "GameObjects/Stars/sunTypeF_big");
+            mTextureManager.LoadTexture("sunTypeG", "GameObjects/Stars/sunTypeG_big");
+            mTextureManager.LoadTexture("sunTypeK", "GameObjects/Stars/sunTypeK_big");
+            mTextureManager.LoadTexture("sunTypeM", "GameObjects/Stars/sunTypeM_big");
 
             // Load Planet Textures
             mTextureManager.LoadTexture("planetTypeH", "GameObjects/Planets/planetTypeH");
@@ -82,7 +82,8 @@ namespace Galaxy_Explovive
 
             // Load other STuff
             mTextureManager.LoadTexture("gameBackground", "gameBackground");
-            mTextureManager.LoadTexture("gameBackgroundParlax", "gameBackgroundParlax");
+            mTextureManager.LoadTexture("gameBackgroundParlax1", "gameBackgroundParlax");
+            mTextureManager.LoadTexture("gameBackgroundParlax2", "gameBackgroundParlax2");
             mTextureManager.LoadTexture("ship", "GameObjects/Ships/ship");
             mTextureManager.LoadTexture("shipSekect", "GameObjects/Ships/shipSekect");
             mTextureManager.LoadTexture("warpAnimation", "GameObjects/Ships/warpAnimation");

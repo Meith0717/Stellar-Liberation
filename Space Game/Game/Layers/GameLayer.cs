@@ -15,9 +15,9 @@ using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Game.GameObjects;
 using System;
 using System.Collections.Generic;
-using Galaxy_Explovive.Game.GameObjects.Spacecraft;
 using System.Diagnostics;
 using Galaxy_Explovive.Core.Map;
+using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
 
 namespace Galaxy_Explovive.Game.Layers
 {
@@ -40,7 +40,6 @@ namespace Galaxy_Explovive.Game.Layers
 
         [JsonIgnore] public SpatialHashing<GameObject> mSpatialHashing;
 
-        private UiElementSprite mBackground;
         private FrustumCuller mFrustumCuller;
         private ParllaxManager mParllaxManager;
         private Cargo mShipTest;
@@ -49,16 +48,17 @@ namespace Galaxy_Explovive.Game.Layers
         public GameLayer() : base()
         {
             InitializeGlobals();
-            mBackground = new UiElementSprite("gameBackground");
-            mBackground.mSpriteFit = UiElementSprite.SpriteFit.Cover;
+
             mSpatialHashing = new SpatialHashing<GameObject>(2000);
             mFrustumCuller = new FrustumCuller();
-            SpawnSystemsAndGetHome();
+            mPlanetSystemList = MapBuilder.Instance.Generate(25000, new Vector2(mapWidth, mapHeight));
             mParllaxManager = new ParllaxManager();
+            mParllaxManager.Add(new("gameBackground", 0, 0.1f));
+            mParllaxManager.Add(new("gameBackgroundParlax2", 1, 0.25f));
+            mParllaxManager.Add(new("gameBackgroundParlax1", 2, 0.5f));
             OnResolutionChanged();
             Globals.mTimeWarp = 1;
-            InitializeParllax();
-            mShipTest = new Cargo(mHomeSystem.Position);
+            mShipTest = new Cargo(Vector2.Zero);
         }
         public override void Update(GameTime gameTime, InputState inputState)
         {
@@ -76,6 +76,7 @@ namespace Galaxy_Explovive.Game.Layers
             Globals.mDebugSystem.UpdateFrameCounting();
 
             mSpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            mParllaxManager.Draw();
             Globals.mDebugSystem.ShowRenderInfo(new Vector2(2, 2));
             mSpriteBatch.End();
 
@@ -88,27 +89,16 @@ namespace Galaxy_Explovive.Game.Layers
         public override void OnResolutionChanged()
         {
             Globals.mCamera2d.SetResolution(mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
-            mBackground.Update(new Rectangle(0, 0, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height));
             mParllaxManager.OnResolutionChanged();
         }
         public override void Destroy() { }
 
         // Constructor Stuff _____________________________________
-        private void SpawnSystemsAndGetHome()
-        {
-            mPlanetSystemList = MapBuilder.Instance.Generate(25000, new Vector2(mapWidth, mapHeight));
-            mHomeSystem = mPlanetSystemList[Globals.mRandom.Next(mPlanetSystemList.Count)];
-            Globals.mCamera2d.mTargetPosition = mHomeSystem.Position;
-        }
         private void InitializeGlobals()
         {
             Globals.mCamera2d = new(mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
             Globals.mGameLayer = this;
             Globals.mDebugSystem = new DebugSystem();
-        }
-        private void InitializeParllax()
-        {
-            mParllaxManager.Add(new ParllaxBackground("gameBackgroundParlax", 0, 0.05f));
         }
 
         // Update Stuff _____________________________________
@@ -145,20 +135,21 @@ namespace Galaxy_Explovive.Game.Layers
                 planetSystem.Draw();
                 counter++;
             }
-            Debug.WriteLine($"Counted Objects: {counter}");
         }
         private void DrawGrid()
         {
-            int ColorAplpha = 5;
+            int ColorAplpha = 20;
+
             for (float x = -mMapSize.X; x <= mMapSize.Width / 2; x += 10000)
             {
-                TextureManager.Instance.DrawLine(new Vector2(x, -mMapSize.Width / 1.9f),
-                    new Vector2(x, mMapSize.Width / 1.9f), new Color(ColorAplpha, ColorAplpha, ColorAplpha, ColorAplpha), 1, 0);
+                TextureManager.Instance.DrawAdaptiveLine(new Vector2(x, -mMapSize.Height / 2f - 10000),
+                    new Vector2(x, mMapSize.Height / 2f + 10000), new Color(ColorAplpha, ColorAplpha, ColorAplpha, ColorAplpha), 1, 0);
             }
+
             for (float y = -mMapSize.Y; y <= mMapSize.Height / 2; y += 10000)
             {
-                TextureManager.Instance.DrawLine(new Vector2(-mMapSize.Width / 1.9f, y),
-                    new Vector2(mMapSize.Width / 1.9f, y), new Color(ColorAplpha, ColorAplpha, ColorAplpha, ColorAplpha), 1, 0);
+                TextureManager.Instance.DrawAdaptiveLine(new Vector2(-mMapSize.Width / 2f - 10000, y),
+                    new Vector2(mMapSize.Width / 2f + 10000, y), new Color(ColorAplpha, ColorAplpha, ColorAplpha, ColorAplpha), 1, 0);
             }
         }        
     }

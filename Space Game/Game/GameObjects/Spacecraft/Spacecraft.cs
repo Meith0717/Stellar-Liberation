@@ -2,7 +2,8 @@
 using Galaxy_Explovive.Core.GameLogik;
 using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.Maths;
+using Galaxy_Explovive.Core.MovementController;
+using Galaxy_Explovive.Core.MyMath;
 using Galaxy_Explovive.Core.TextureManagement;
 using Microsoft.Xna.Framework;
 using System;
@@ -14,128 +15,73 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
 {
     public abstract class Spacecraft : InteractiveObject
     {
-        const float SubLightVelocity = 0.5f;
+
         public Vector2 TargetPosition { get; set; }
-        private bool IsSelect { get; set; } = false;
-        public float MaxVelocity {private get; set; }
+        public bool IsSelect { get; set; } = false;
         public string SelectTexture { get; set; }
         public string NormalTexture { get; set; }
-        
-        // Navigation
-        private bool IsMoving = false;
-        private bool mTrack = false;
-        private float mVelocity = 0;
-        private bool travel = false;
+        public double ShieldForce { get; set; } = 0.1f;
+        public double HullForce { get; set; } = 0.1f;
+
+        private double mShield = 100;
+        private double mHull = 100;
 
         public void Update(InputState inputState)
         {
-            UpdateInputs(inputState);
-            UpdateNavigation();
-        }
-
-        private new void UpdateInputs(InputState inputState)
-        {
             base.UpdateInputs(inputState);
-            IsMoving = false;
-            GetTargetPosition(inputState);
-            CheckForSelection(inputState);
+            RegenerateShield();
+            if  (inputState.mActionList.Contains(ActionType.Test))
+            {
+                Hit(5);
+            }
             TextureId = IsSelect ? SelectTexture : NormalTexture;
         }
-        private void CheckForSelection(InputState inputState)
+
+        // Fight Stuff
+        private void RegenerateShield()
         {
-            if (inputState.mMouseActionType == MouseActionType.LeftClick && IsHover)
-            {
-                IsSelect = mTrack = !IsSelect;
-                Globals.mCamera2d.SetZoom(0.2f);
-            }
-
-            if (Globals.mCamera2d.mIsMoving ||
-                (inputState.mMouseActionType == MouseActionType.LeftClick && !IsHover))
-            {
-                mTrack = false;
-                if (Globals.mCamera2d.mIsMoving) { return; }
-                IsSelect = false;
-            }
-
-            if (!mTrack) { return; }
-            Globals.mCamera2d.mTargetPosition = Position;
-
+            if (mHull == 0) { return; }
+            double reg = 1 * ShieldForce;
+            if (mShield >= 100) { mShield = 100; return; }
+            mShield += reg;
         }
-        private void GetTargetPosition(InputState inputState)
+        public void RegenerateHull()
         {
-            if (!IsSelect) { return; }
-            Vector2 MousePosition = Globals.mCamera2d.ViewToWorld(inputState.mMousePosition.ToVector2());
-            List<InteractiveObject> GameObjects = ObjectLocator.Instance.GetObjectsInRadius(MousePosition, 200).OfType<InteractiveObject>().ToList(); ;
-            foreach (InteractiveObject gameObject in GameObjects)
-            {
-                if (inputState.mMouseActionType == MouseActionType.RightClick && gameObject.IsHover)
-                {
-                    TargetPosition = gameObject.Position;
-                    IsSelect = false;
-                    mVelocity = SubLightVelocity;
-                    travel = true;
-                }
-            }
+            if (mHull == 0) { return; }
+            double reg = 1 * HullForce;
+            if (mHull >= 100) { mHull = 100; return; }
+            mHull += reg;
         }
-        private void UpdateNavigation()
+        public void Hit(int damage)
         {
-            float targetRotation = MyMathF.Instance.GetRotation(Position, TargetPosition);
-            float rotationRest = MathF.Abs(Rotation - targetRotation);
-            float distanceToTarget = Vector2.Subtract(TargetPosition, Position).Length();
+            double ShieldDamage = damage * (1 - ShieldForce);
+            double HulldDamage = damage * (1 - HullForce);
 
-            DirectionController(targetRotation, rotationRest);
-            VelocityController(rotationRest, distanceToTarget);
-            MovementController(distanceToTarget);
-        }
-        private void DirectionController(float targetRotation, float rotationRest)
-        {
-            if (rotationRest <= 0.05) { Rotation = targetRotation; return;}
-            if(targetRotation == Rotation || !travel) { return; }
-            if (Rotation >= 2*MathF.PI) { Rotation = 0; }
-            if (Rotation < 0) { Rotation = 2*MathF.PI;}
-            if (Rotation < targetRotation && targetRotation - Rotation <= MathF.PI) { Rotation += 0.005f; }
-            if (Rotation > targetRotation && Rotation - targetRotation > MathF.PI) { Rotation += 0.005f; }
-            if (Rotation < targetRotation && targetRotation - Rotation > MathF.PI) { Rotation -= 0.005f; }
-            if (Rotation > targetRotation && Rotation - targetRotation <= MathF.PI) { Rotation -= 0.005f; }
-        }
-
-        private void VelocityController(float rotationRest, float distanceToTarget)
-        {
-            float updateVelocity = MaxVelocity * .05f;
-            if (distanceToTarget <= 40)
-            {
-                mVelocity = 0;
-                travel = false;
-                return;
+            if (mShield - ShieldDamage > 0.01f) 
+            { 
+                mShield -= ShieldDamage; 
+                return; 
             }
-            if (distanceToTarget <= 2700 && mVelocity >= SubLightVelocity + updateVelocity)
-            {
-                mVelocity -= updateVelocity;
-                return;
-            }
-            if ((rotationRest <= 0.01) && (mVelocity - updateVelocity <= MaxVelocity))
-            {
-                mVelocity += updateVelocity;
-            }
-            
+            mShield = 0;
+            if (mHull - HulldDamage < 0.01f) { mHull = 0; return; }
+            mHull -= HulldDamage;
         }
-
-        private void MovementController(float distanceToTarget)
-        { 
-            if (mVelocity == 0) { return; }
-            IsMoving = true;
-            Vector2 directionVector = MyMathF.Instance.GetDirection(Rotation);
-            Position += directionVector * mVelocity;
-        }
-
-        public void DrawPath()
-        {
-            if (!IsMoving) { return; }
-            TextureManager.Instance.DrawLine(Position, TargetPosition, Color.Gray, 2, 0);
-        }
-
+        
         public void DrawSpaceCraft()
         {
+            Vector2 startPos = Position - TextureOffset - new Vector2(0, 50);
+            Vector2 endPos = new Vector2(TextureOffset.X * 2, 0);
+            float hull = (float)mHull / 100;
+            float shield = (float)mShield / 100;
+
+            TextureManager.Instance.DrawLine(startPos, startPos + endPos * new Vector2(shield, 1), Color.CornflowerBlue, 8, 1);
+            TextureManager.Instance.DrawLine(startPos, startPos + endPos, Color.DarkRed, 8, 0.9f);
+
+            startPos.Y += 10;
+
+            TextureManager.Instance.DrawLine(startPos, startPos + endPos * new Vector2(hull, 1), Color.GreenYellow, 8, 1);
+            TextureManager.Instance.DrawLine(startPos, startPos + endPos, Color.DarkRed, 8, 0.9f);
+
             TextureManager.Instance.Draw(TextureId, Position, TextureOffset,
                 TextureWidth, TextureHeight, TextureSclae, Rotation, TextureDepth);
             Crosshair.Draw(Color.White);

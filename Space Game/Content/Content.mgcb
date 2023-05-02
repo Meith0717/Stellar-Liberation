@@ -70,6 +70,18 @@
 /processorParam:TextureFormat=Color
 /build:gameBackgroundParlax.png
 
+#begin gameBackgroundParlax2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:gameBackgroundParlax2.png
+
 #begin GameObjects/CrossHair/crossHair1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -202,7 +214,7 @@
 /processorParam:TextureFormat=Color
 /build:GameObjects/spaceStation.png
 
-#begin GameObjects/Stars/sunTypeB.png
+#begin GameObjects/Stars/sunTypeB_big.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -212,9 +224,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:GameObjects/Stars/sunTypeB.png
+/build:GameObjects/Stars/sunTypeB_big.png
 
-#begin GameObjects/Stars/sunTypeF.png
+#begin GameObjects/Stars/sunTypeB_smal.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -224,9 +236,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:GameObjects/Stars/sunTypeF.png
+/build:GameObjects/Stars/sunTypeB_smal.png
 
-#begin GameObjects/Stars/sunTypeG.png
+#begin GameObjects/Stars/sunTypeF_big.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -236,9 +248,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:GameObjects/Stars/sunTypeG.png
+/build:GameObjects/Stars/sunTypeF_big.png
 
-#begin GameObjects/Stars/sunTypeK.png
+#begin GameObjects/Stars/sunTypeF_smal.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -248,9 +260,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:GameObjects/Stars/sunTypeK.png
+/build:GameObjects/Stars/sunTypeF_smal.png
 
-#begin GameObjects/Stars/sunTypeM.png
+#begin GameObjects/Stars/sunTypeG_big.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -260,7 +272,67 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:GameObjects/Stars/sunTypeM.png
+/build:GameObjects/Stars/sunTypeG_big.png
+
+#begin GameObjects/Stars/sunTypeG_smal.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:GameObjects/Stars/sunTypeG_smal.png
+
+#begin GameObjects/Stars/sunTypeK_big.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:GameObjects/Stars/sunTypeK_big.png
+
+#begin GameObjects/Stars/sunTypeK_smal.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:GameObjects/Stars/sunTypeK_smal.png
+
+#begin GameObjects/Stars/sunTypeM_big.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:GameObjects/Stars/sunTypeM_big.png
+
+#begin GameObjects/Stars/sunTypeM_smal.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:GameObjects/Stars/sunTypeM_smal.png
 
 #begin GameObjects/systemState.png
 /importer:TextureImporter

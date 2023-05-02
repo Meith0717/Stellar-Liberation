@@ -26,10 +26,10 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
 
             // Rendering
             TextureId = "IS SET IN GetSystemTypeAndTexture";
-            TextureWidth = 1024/3;
-            TextureHeight = 1024/3;
+            TextureWidth = 1024;
+            TextureHeight = 1024;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
-            TextureSclae = 2f;
+            TextureSclae = 1f;
             TextureDepth = 0;
             TextureColor = Color.White;
 

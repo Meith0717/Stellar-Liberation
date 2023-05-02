@@ -1,4 +1,3 @@
-using Galaxy_Explovive.Core.Maths;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -68,6 +67,10 @@ public class TextureManager
     }
 
     // render textures
+    public void Draw(string id, Vector2 position, int width, int height)
+    {
+        mSpriteBatch.Draw(GetTexture(id), new Rectangle((int)position.X, (int)position.Y, width, height), Color.White);
+    }
     public void Draw(string id, Vector2 position, Vector2 offset, int width, int height, float sclae, float rotation, float depth)
     {
         mSpriteBatch.Draw(GetTexture(id), position, null, Color.White, rotation, offset, sclae, SpriteEffects.None, depth);
@@ -87,8 +90,13 @@ public class TextureManager
         mSpriteBatch.DrawCircle(center, radius, 90, color, thickness / Globals.mCamera2d.mZoom, depth);
     }
 
-    public void DrawLine(Vector2 start, Vector2 end, Color color, float thickness, int depth)
+    public void DrawAdaptiveLine(Vector2 start, Vector2 end, Color color, float thickness, float depth)
     {
         mSpriteBatch.DrawLine(start, end, color, thickness / Globals.mCamera2d.mZoom, depth);
+    }
+
+    public void DrawLine(Vector2 start, Vector2 end, Color color, float thickness, float depth)
+    {
+        mSpriteBatch.DrawLine(start, end, color, thickness, depth);
     }
 }

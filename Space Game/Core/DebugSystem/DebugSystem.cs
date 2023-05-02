@@ -13,7 +13,7 @@ namespace Galaxy_Explovive.Core.Debug
         const float UpdateTimeInSeconds = 1;
         
         // Some Stuff
-        private int mDebugLevel = 0;
+        private int mDebugLevel = 5;
         private float mCurrentFramesPerSecond;
         private float mFrameDuration;
         private float mUpdateCounter = 0;

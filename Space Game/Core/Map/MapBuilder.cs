@@ -1,15 +1,9 @@
 ﻿using Galaxy_Explovive.Core.GameLogik;
-using Galaxy_Explovive.Core.Maths;
 using Galaxy_Explovive.Game.GameObjects;
 using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Galaxy_Explovive.Core.Map
 {

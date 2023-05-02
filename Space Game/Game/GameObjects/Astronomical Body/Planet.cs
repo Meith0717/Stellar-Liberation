@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Galaxy_Explovive.Core;
 using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.Maths;
+using Galaxy_Explovive.Core.MyMath;
 using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
 using System;
@@ -110,8 +110,8 @@ namespace Galaxy_Explovive.Game.GameObjects
             base.UpdateInputs(inputState);
             float velocity = MathF.Sqrt(1/(mRadius*100));   
             float angleUpdate = mAngle + (float)gameTime.TotalGameTime.TotalSeconds * velocity;
-            Position = MyMathF.Instance.GetCirclePosition(mRadius, mAngle + angleUpdate, 0) + mCenterPosition;
-            Rotation = MyMathF.Instance.GetRotation(mCenterPosition, Position);
+            Position = MyMath.Instance.GetCirclePosition(mRadius, mAngle + angleUpdate, 0) + mCenterPosition;
+            Rotation = MyMath.Instance.GetRotation(mCenterPosition, Position);
 
             // Add To Spatial Hashing
             Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
