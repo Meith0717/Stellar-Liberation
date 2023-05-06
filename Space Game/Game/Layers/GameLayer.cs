@@ -19,6 +19,7 @@ using System.Diagnostics;
 using Galaxy_Explovive.Core.Map;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
 using Galaxy_Explovive.Core.MyMath;
+using Galaxy_Explovive.Core.GameLogik;
 
 namespace Galaxy_Explovive.Game.Layers
 {
@@ -50,12 +51,12 @@ namespace Galaxy_Explovive.Game.Layers
         {
             InitializeGlobals();
 
-            mSpatialHashing = new SpatialHashing<GameObject>(2000);
-            mFrustumCuller = new FrustumCuller();
+            mSpatialHashing = new SpatialHashing<GameObject>(10000);
             mPlanetSystemList = MapBuilder.Instance.Generate(25000, new Vector2(mapWidth, mapHeight));
             mHomeSystem = mPlanetSystemList[Globals.mRandom.Next(mPlanetSystemList.Count)];
             Globals.mCamera2d.mTargetPosition = mHomeSystem.Position;
-            mParllaxManager = new ParllaxManager();
+            mParllaxManager = new();
+            mFrustumCuller = new();
             mParllaxManager.Add(new("gameBackground", 0, 0.1f));
             mParllaxManager.Add(new("gameBackgroundParlax2", 1, 0.25f));
             mParllaxManager.Add(new("gameBackgroundParlax1", 2, 0.5f));
@@ -63,6 +64,7 @@ namespace Galaxy_Explovive.Game.Layers
             mShips.Add(new Cargo(MyMath.Instance.GetRandomVector2(mHomeSystem.Position)));
             mShips.Add(new Cargo(MyMath.Instance.GetRandomVector2(mHomeSystem.Position)));
         }
+
         public override void Update(GameTime gameTime, InputState inputState)
         {
             mPassedSeconds += gameTime.ElapsedGameTime.Milliseconds / 1000d;
@@ -76,6 +78,7 @@ namespace Galaxy_Explovive.Game.Layers
             Globals.mDebugSystem.Update(gameTime, inputState);
             Globals.mCamera2d.Update(gameTime, inputState);
         }
+
         public override void Draw()
         {
             Globals.mDebugSystem.UpdateFrameCounting();
@@ -92,13 +95,15 @@ namespace Galaxy_Explovive.Game.Layers
             {
                 c.Draw();
             }
+            Globals.mDebugSystem.DrawNearMousObjects();
             mSpriteBatch.End();
         }
+
         public override void OnResolutionChanged()
         {
-            Globals.mCamera2d.SetResolution(mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
             mParllaxManager.OnResolutionChanged();
         }
+
         public override void Destroy() { }
 
         // Constructor Stuff _____________________________________
@@ -106,7 +111,7 @@ namespace Galaxy_Explovive.Game.Layers
         {
             Globals.mCamera2d = new();
             Globals.mGameLayer = this;
-            Globals.mDebugSystem = new DebugSystem();
+            Globals.mDebugSystem = new();
         }
 
         // Update Stuff _____________________________________
@@ -114,6 +119,7 @@ namespace Galaxy_Explovive.Game.Layers
         {
             foreach (PlanetSystem planetSystem in mPlanetSystemList)
             {
+                if (!mFrustumCuller.IsGameObjectOnWorldView(planetSystem)) { continue; }
                 planetSystem.Update(gameTime, inputState);
             }
         }
@@ -124,7 +130,7 @@ namespace Galaxy_Explovive.Game.Layers
             var counter = 0;
             foreach (PlanetSystem planetSystem in mPlanetSystemList)
             {
-                if (!mFrustumCuller.IsOnScreen(planetSystem)) { continue; }
+                if (!mFrustumCuller.IsGameObjectOnWorldView(planetSystem)) { continue; }
                 planetSystem.Draw();
                 counter++;
             }

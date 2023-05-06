@@ -1,15 +1,8 @@
 ﻿using Galaxy_Explovive.Core;
-using Galaxy_Explovive.Core.GameLogik;
 using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.MovementController;
-using Galaxy_Explovive.Core.MyMath;
 using Galaxy_Explovive.Core.TextureManagement;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 
 namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
 {
@@ -78,9 +71,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
             TextureManager.Instance.DrawLine(startPos, startPos + endPos * new Vector2(hull, 1), Color.GreenYellow, 8, 1);
             TextureManager.Instance.DrawLine(startPos, startPos + endPos, Color.DarkRed, 8, 0.9f);
 
-            TextureManager.Instance.Draw(TextureId, Position, TextureOffset,
-                TextureWidth, TextureHeight, TextureSclae, Rotation, TextureDepth);
-            Crosshair.Draw(Color.White);
+            TextureManager.Instance.DrawGameObject(this, IsHover);
             Globals.mDebugSystem.DrawBoundBox(BoundedBox);
         }
     }

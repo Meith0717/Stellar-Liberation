@@ -28,9 +28,8 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            base.Update(inputState);
-            UpdateInputs(inputState);
             UpdateNavigation(gameTime, inputState);
+            UpdateInputs(inputState);
             if (inputState.mActionList.Contains(ActionType.Test))
             {
                 mWeaponManager.Shoot(this, this, Color.LightGreen, 5000);
@@ -49,7 +48,6 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
         private new void UpdateInputs(InputState inputState)
         {
             base.Update(inputState);
-            IsMoving = false;
             CheckForSelection(inputState);
             GetTargetPosition(inputState);
             TextureId = IsSelect ? SelectTexture : NormalTexture;
@@ -72,13 +70,13 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
         
             if (!mTrack) { return; }
             Globals.mCamera2d.mTargetPosition = Position;
-        
         }
         private void GetTargetPosition(InputState inputState)
         {
             if (!IsSelect) { return; }
             Vector2 MousePosition = Globals.mCamera2d.ViewToWorld(inputState.mMousePosition.ToVector2());
-            List<InteractiveObject> GameObjects = ObjectLocator.Instance.GetObjectsInRadius(MousePosition, 200).OfType<InteractiveObject>().ToList(); ;
+            var radius = Globals.MouseSpatialHashingRadius;
+            List<InteractiveObject> GameObjects = ObjectLocator.Instance.GetObjectsInRadius(MousePosition, radius).OfType<InteractiveObject>().ToList(); ;
             foreach (InteractiveObject gameObject in GameObjects)
             {
                 if (inputState.mMouseActionType == MouseActionType.RightClick && gameObject.IsHover)
@@ -93,11 +91,12 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
         // Navigation Stuff
         private void UpdateNavigation(GameTime gameTime, InputState inputState)
         {
+            IsMoving = false;
             float targetRotation = MyMath.Instance.GetRotation(Position, TargetPosition);
             float rotationRest = MathF.Abs(Rotation - targetRotation);
             float distanceToTarget = Vector2.Subtract(TargetPosition, Position).Length();
             Rotation += MovementController.Instance.GetRotation(Rotation, targetRotation, rotationRest);
-            mVelocity += MovementController.Instance.StopByTarget(inputState, IsSelect, MaxVelocity, mVelocity, distanceToTarget);
+            mVelocity += MovementController.Instance.GetVelocity(inputState, IsSelect, MaxVelocity, mVelocity, distanceToTarget);
             if (mVelocity == 0) { return; }
             IsMoving = true;
             Vector2 directionVector = MyMath.Instance.GetDirection(Rotation);

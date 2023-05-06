@@ -12,8 +12,8 @@ public class Camera2d
     public float mZoom { get; private set; } = 1f;
     public Vector2 Position { get; private set; }
 
-    public float mTargetZoom;
     public Vector2 mTargetPosition;
+    public float mTargetZoom;
     public bool mIsMoving;
 
     // matrix variables
@@ -31,24 +31,24 @@ public class Camera2d
     public Camera2d()
     {
         mZoomAnimation = false;
-        int width = Globals.mGraphicsDevice.Viewport.X;
-        int height = Globals.mGraphicsDevice.Viewport.Y;
+        int width = Globals.mGraphicsDevice.Viewport.Width;
+        int height = Globals.mGraphicsDevice.Viewport.Height;
         Position = new Vector2(width / 2f, height / 2f);
         mIsMoving = false;
     }
 
-    private void MoveCamera()
+    private void MovingAnimation(int spongy)
     {
+        if (Position == mTargetPosition) { return; }
         Vector2 adjustmentVector = Vector2.Subtract(mTargetPosition, Position);
-        Position += adjustmentVector / 10;
+        Position += adjustmentVector / spongy;
     }
 
     public void ZoomAnimation()
     {
         if (!mZoomAnimation) { return; }
-        float zoomUpdate = Math.Abs(mZoom - mTargetZoom);
-        if (zoomUpdate < 0.1) { mZoom += zoomUpdate / 50; return; }
-        mZoom = mTargetZoom;
+        float zoomUpdate = - ((mZoom - mTargetZoom)/10);
+        if (Math.Abs(zoomUpdate) > 0.0001f) { mZoom += zoomUpdate; return; }
         mZoomAnimation = false;
     }
 
@@ -68,6 +68,7 @@ public class Camera2d
             Vector2 movement = ViewToWorld(mLastMousePosition) - ViewToWorld(currentMousePosition);
             mTargetPosition += movement;
             mIsMoving = true;
+            mZoomAnimation = false;
             mLastMousePosition = currentMousePosition;
         }
     }
@@ -76,17 +77,13 @@ public class Camera2d
     {
         // adjust zoom
         int zoom = 0;
-        if (inputState.mActionList.Contains(ActionType.CameraZoomIn) && mZoom + 0.0041 < mMimZoom)
-        {
-            zoom += 7;
-        }
-        if (inputState.mActionList.Contains(ActionType.CameraZoomOut) && mZoom - 0.0041 > mMaxZoom)
-        {
-            zoom -= 7;
-        }
+        if (inputState.mActionList.Contains(ActionType.CameraZoomIn) && mZoom + 0.0041 < mMimZoom) { zoom += 7; }
+        if (inputState.mActionList.Contains(ActionType.CameraZoomOut) && mZoom - 0.0041 > mMaxZoom) { zoom -= 7; }
         if (zoom != 0)
         {
-            Zoom(1 + zoom * 0.001f * gameTime.ElapsedGameTime.Milliseconds);
+            mZoomAnimation = false;
+            mZoom *= (1 + zoom * 0.001f * gameTime.ElapsedGameTime.Milliseconds);
+            mViewTransformationMatrixChanged = true;
         }
     }
 
@@ -94,12 +91,6 @@ public class Camera2d
     {
         mTargetZoom = zoom;
         mZoomAnimation = true;
-    }
-
-    private void Zoom(float zoom)
-    {
-        mZoom *= zoom;
-        mViewTransformationMatrixChanged = true;
     }
 
     // ReSharper disable once UnusedMember.Global
@@ -117,8 +108,8 @@ public class Camera2d
     {
         if (mViewTransformationMatrixChanged)
         {
-            int width = Globals.mGraphicsDevice.Viewport.X;
-            int height = Globals.mGraphicsDevice.Viewport.Y;
+            int width = Globals.mGraphicsDevice.Viewport.Width;
+            int height = Globals.mGraphicsDevice.Viewport.Height;
             mTransform = Matrix.CreateTranslation(new Vector3(-Position.X, -Position.Y, 0))
                          * Matrix.CreateScale(mZoom, mZoom, 1)
                          * Matrix.CreateTranslation(new Vector3(width / 2f, height / 2f, 0));
@@ -131,7 +122,7 @@ public class Camera2d
     {
         AdjustZoom(gameTime, inputState);
         MoveCameraByMouse(inputState);
-        MoveCamera();
+        MovingAnimation(2);
         ZoomAnimation();
         // play animation if there is one
         if (mAnimationX != null)
@@ -150,11 +141,6 @@ public class Camera2d
             }
         }
 
-        mViewTransformationMatrixChanged = true;
-    }
-
-    public void SetResolution(int width, int height)
-    {
         mViewTransformationMatrixChanged = true;
     }
 

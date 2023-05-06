@@ -1,15 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
 using Galaxy_Explovive.Core;
-using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using System;
+using Galaxy_Explovive.Core.GameObject;
 
 namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
 {
     [Serializable]
     public class Star: AstronomicalBody
     {
+        private CrossHair mCrosshair;
+        public Color mCrosshairColor;
+
         public enum StarType
         {
             B,
@@ -29,16 +32,13 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             TextureWidth = 1024;
             TextureHeight = 1024;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
-            TextureSclae = 1f;
+            TextureSclae = 5;
             TextureDepth = 0;
             TextureColor = Color.White;
-
-            // Selection Stuff
-            TextureRadius = 270;
+            mCrosshair = new(Position, TextureSclae);
 
             // Other Stuff
             GetSystemTypeAndTexture();
-            Crosshair = new CrossHair(0.8f, 0.9f, position);
             // Add To Spatial Hashing
             Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
@@ -78,13 +78,15 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
         public override void Update(GameTime gameTime, InputState inputState)
         {
             base.UpdateInputs(inputState);
+            TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
+            mCrosshair.Update(Position, TextureSclae, TextureColor, IsHover);
         }
 
         public override void Draw()
         {
-            TextureManager.Instance.Draw(TextureId, Position, TextureOffset,
-                TextureWidth, TextureHeight, TextureSclae, Rotation, TextureDepth);
-            Crosshair.Draw(Color.White);
+            TextureManager.Instance.DrawGameObject(this);
+            Globals.mDebugSystem.DrawBoundBox(BoundedBox);
+            mCrosshair.Draw();
         }
     }
 }

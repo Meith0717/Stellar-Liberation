@@ -4,6 +4,9 @@ using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using System;
 using System.Collections.Generic;
+using Galaxy_Explovive.Core.GameLogik;
+using Galaxy_Explovive.Core.GameObject;
+using System.Linq;
 
 namespace Galaxy_Explovive.Core.Debug
 {
@@ -18,6 +21,7 @@ namespace Galaxy_Explovive.Core.Debug
         private float mFrameDuration;
         private float mUpdateCounter = 0;
         private GameTime mGameTime;
+        private Vector2 mMousePosition;
 
         private void ChangeMode()
         {
@@ -31,6 +35,7 @@ namespace Galaxy_Explovive.Core.Debug
             {
                 this.ChangeMode();
             }
+            mMousePosition = Globals.mCamera2d.ViewToWorld(inputState.mMousePosition.ToVector2());
             mGameTime = gameTime;
         }
 
@@ -63,6 +68,18 @@ namespace Galaxy_Explovive.Core.Debug
             {
                 TextureManager.Instance.DrawString("text", position + new Vector2(0, i * 20), s, Color.White);
                 i += 1;
+            }
+        }
+
+        public void DrawNearMousObjects()
+        {
+            if (mDebugLevel < 3) { return; }
+            var radius = Globals.MouseSpatialHashingRadius;
+            List<InteractiveObject> GameObjects = ObjectLocator.Instance.GetObjectsInRadius(mMousePosition, radius).OfType<InteractiveObject>().ToList(); ;
+            System.Diagnostics.Debug.WriteLine(GameObjects.Count);
+            foreach (InteractiveObject gameObject in GameObjects)
+            {
+                TextureManager.Instance.DrawAdaptiveLine(mMousePosition, gameObject.Position, Color.LightBlue, 2, 0);
             }
         }
 

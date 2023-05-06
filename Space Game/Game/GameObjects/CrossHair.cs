@@ -2,72 +2,45 @@
 using Microsoft.Xna.Framework.Graphics;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
+using System.Data;
 
 namespace Galaxy_Explovive.Core.GameObject
 {
     public class CrossHair : GameObject
     {
-        private float mMaxScale;
-        private float mMinScale;
-
         private bool mHover;
-        public bool mDrawInnerRing;
 
-        public CrossHair(float minScale, float maxScale, Vector2 position)
+        public CrossHair(Vector2 position, float scale)
         {
             // Location
             Position = position;
             Rotation = 0;
 
             // Rendering
+            TextureId = "crossHair1";
             TextureWidth = 1024;
             TextureHeight = 1024;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
-            TextureSclae = mMinScale = minScale;
+            TextureSclae = scale;
             TextureDepth = 0;
-            mMaxScale = maxScale;
-            mDrawInnerRing = false;
+            TextureColor = Color.White;
         }
-        public void Draw(Color color)
+
+        public void Update(Vector2 position, float scale, Color color, bool isHover) 
         {
-            TextureManager.Instance.Draw("crossHair1", Position, TextureOffset, TextureWidth, TextureHeight,
-                TextureSclae, 0, 1, color);
-            if (!mDrawInnerRing) { return; }
-            TextureManager.Instance.Draw("crossHair1", Position, TextureOffset, TextureWidth, TextureHeight,
-                TextureSclae, Rotation, 1, color);
-            mDrawInnerRing = false;
-        }
-        public void Update(Vector2 position, bool isHover)
-        {
-            mHover = isHover;
             Position = position;
-            Rotation += 0.05f;
-            Animation();
+            TextureSclae = scale;
+            TextureColor = color;
+            mHover = isHover;
         }
-        private void Animation()
-        {
-            if (mHover)
-            {
-                if (TextureSclae < mMaxScale)
-                {
-                    TextureSclae += 0.075f;
-                }
-            }
-            else
-            {
-                if (TextureSclae > mMinScale)
-                {
-                    TextureSclae -= 0.075f;
-                }
-            }
-        }
+
         public override void Update(GameTime gameTime, InputState inputState)
         {
             throw new System.NotImplementedException();
         }
         public override void Draw()
         {
-            throw new System.NotImplementedException();
+            TextureManager.Instance.DrawGameObject(this, mHover);
         }
     }
 }

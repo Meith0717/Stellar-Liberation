@@ -21,12 +21,9 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             TextureWidth = 209;
             TextureHeight = 128;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
-            TextureDepth = 0.5f;
+            TextureDepth = 2f;
             TextureColor = Color.White;
-            TextureRadius = 100;
             MaxVelocity = 10;
-            BoundedBox = new CircleF(position, TextureRadius);
-            Crosshair = new CrossHair(0.2f, 0.22f, position);
             mWeaponManager = new();
         }
 

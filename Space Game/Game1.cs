@@ -7,7 +7,6 @@ using Galaxy_Explovive.Core.LayerManagement;
 using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using System;
-using System.Collections.Generic;
 
 namespace Galaxy_Explovive
 {

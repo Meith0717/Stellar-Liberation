@@ -9,6 +9,7 @@ using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Game.Layers;
 using System;
 using Galaxy_Explovive.Core.PositionManagement;
+using Galaxy_Explovive.Core.Rendering;
 
 namespace Galaxy_Explovive.Core
 {
@@ -25,5 +26,8 @@ namespace Galaxy_Explovive.Core
         public static DebugSystem mDebugSystem;
         public static SpatialHashing<GameObject.GameObject> mSpatialHashing;
         public static float SubLightVelocity = 0.01f;
+        public static int MouseSpatialHashingRadius = 10000;
+        public static Color HoverColor = Color.LightSteelBlue;
+
     }
 }

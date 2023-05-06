@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 
 namespace Galaxy_Explovive.Core.InputManagement
@@ -21,6 +22,7 @@ namespace Galaxy_Explovive.Core.InputManagement
         // Attributes mouse.
         private MouseState mCurrentMouseState, mPreviousMouseState;
         private Point mCurrentMousePosition;
+
         private int mCurrentMouseWheelValue, mPreviousMouseWheelValue;
         private Point mMouseRectangleStart, mMouseRectangleEnd;
 

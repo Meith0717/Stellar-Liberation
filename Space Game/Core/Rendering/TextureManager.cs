@@ -1,3 +1,4 @@
+using Galaxy_Explovive.Core.GameObject;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -67,29 +68,40 @@ public class TextureManager
     }
 
     // render textures
+    public void DrawGameObject(GameObject.GameObject obj)
+    {
+        mSpriteBatch.Draw(GetTexture(obj.TextureId), obj.Position, null, obj.TextureColor, obj.Rotation, obj.TextureOffset,
+            obj.TextureSclae, SpriteEffects.None, obj.TextureDepth/1000);
+    }
+    public void DrawGameObject(GameObject.GameObject obj, bool isHover)
+    {                                            
+        var color = isHover ? Globals.HoverColor : obj.TextureColor;
+        mSpriteBatch.Draw(GetTexture(obj.TextureId), obj.Position, null, color, obj.Rotation, obj.TextureOffset,
+            obj.TextureSclae, SpriteEffects.None, obj.TextureDepth / 1000);
+    }
+
     public void Draw(string id, Vector2 position, int width, int height)
     {
         mSpriteBatch.Draw(GetTexture(id), new Rectangle((int)position.X, (int)position.Y, width, height), Color.White);
     }
-    public void Draw(string id, Vector2 position, Vector2 offset, int width, int height, float sclae, float rotation, float depth)
-    {
-        mSpriteBatch.Draw(GetTexture(id), position, null, Color.White, rotation, offset, sclae, SpriteEffects.None, depth);
-    }
-    public void Draw(string id, Vector2 position, Vector2 offset, int width, int height, float sclae, float rotation, float depth, Color color)
+    public void Draw(string id, Vector2 position, Vector2 offset, float sclae, float rotation, float depth, Color color)
     {
         mSpriteBatch.Draw(GetTexture(id), position, null, color, rotation, offset, sclae, SpriteEffects.None, depth);
     }
 
+    // render String
     public void DrawString(string id, Vector2 position, string text, Color color)
     {
         mSpriteBatch.DrawString(GetSpriteFont(id), text, position, color);
     }
 
+    // render Circle
     public void DrawCircle(Vector2 center, float radius, Color color, float thickness, int depth)
     {
-        mSpriteBatch.DrawCircle(center, radius, 90, color, thickness / Globals.mCamera2d.mZoom, depth);
+        mSpriteBatch.DrawCircle(center, radius, 90, color, thickness / Globals.mCamera2d.mZoom, depth/1000);
     }
 
+    // render Line
     public void DrawAdaptiveLine(Vector2 start, Vector2 end, Color color, float thickness, float depth)
     {
         mSpriteBatch.DrawLine(start, end, color, thickness / Globals.mCamera2d.mZoom, depth);

@@ -8,6 +8,8 @@ using Galaxy_Explovive.Core.MyMath;
 using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
 using System;
+using System.Diagnostics;
+using Galaxy_Explovive.Core.Debug;
 
 namespace Galaxy_Explovive.Game.GameObjects
 {
@@ -24,6 +26,7 @@ namespace Galaxy_Explovive.Game.GameObjects
         [JsonProperty] private float mAngle;
 
         private float mRadius;
+        private CrossHair mCrosshair;
 
         // Type Enumerartion
         public enum PlanetType
@@ -44,20 +47,16 @@ namespace Galaxy_Explovive.Game.GameObjects
             TextureWidth = TextureHeight = 1024;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
             TextureSclae = 0.3f;
-            TextureDepth = 0;
+            TextureDepth = 1;
             TextureColor = Color.White;
-
-            // Selection Stuff
-            TextureRadius = 270;
 
             // Class Stuff
             mRadius = radius;
             mCenterPosition = CenterPosition;
+            mCrosshair = new(Position, TextureSclae + 0.1f);
 
             // Other Stuff
             GetPlanetTypeAndTexture();
-            Crosshair = new CrossHair(0.3f, 0.35f, Position);
-
         }
         private void GetPlanetTypeAndTexture()
         {
@@ -108,10 +107,11 @@ namespace Galaxy_Explovive.Game.GameObjects
 
             // Other Stuff
             base.UpdateInputs(inputState);
-            float velocity = MathF.Sqrt(1/(mRadius*100));   
+            float velocity = MathF.Sqrt(1/(mRadius*10000));   
             float angleUpdate = mAngle + (float)gameTime.TotalGameTime.TotalSeconds * velocity;
             Position = MyMath.Instance.GetCirclePosition(mRadius, mAngle + angleUpdate, 0) + mCenterPosition;
             Rotation = MyMath.Instance.GetRotation(mCenterPosition, Position);
+            mCrosshair.Update(Position, TextureSclae + 0.1f, TextureColor, IsHover);
 
             // Add To Spatial Hashing
             Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
@@ -121,13 +121,14 @@ namespace Galaxy_Explovive.Game.GameObjects
         {
             DrawPlanet(alpha);
             DrawRecources(alpha);
-            Crosshair.Draw(new Color(alpha, alpha, alpha, alpha));
+            mCrosshair.Draw();
         }
+
         private void DrawPlanet(int alpha)
         {
-            TextureManager.Instance.Draw(TextureId, Position, TextureOffset,
-                TextureWidth, TextureHeight, TextureSclae, Rotation, 1, new Color(alpha, alpha, alpha, alpha));
-
+            TextureColor = new Color(alpha, alpha, alpha, alpha);
+            TextureManager.Instance.DrawGameObject(this);
+            Globals.mDebugSystem.DrawBoundBox(BoundedBox);
             TextureManager.Instance.DrawCircle(mCenterPosition, mRadius, new Color(alpha, alpha, alpha, alpha), 1, 0);
         }
         private void DrawRecources(int alpha)

@@ -1,15 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended;
-using MonoGame.Extended.Timers;
 using Newtonsoft.Json;
 using Galaxy_Explovive.Core;
 using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Galaxy_Explovive.Game.GameObjects
 {
@@ -23,8 +20,8 @@ namespace Galaxy_Explovive.Game.GameObjects
         [JsonProperty] public List<Planet> mPlanets;
         [JsonProperty] private int mRadiusLimit;
 
-        private bool mUpdatePlanets;
-        private int mPlanetAlpha;
+        private bool mIsSystemShown;
+        private int mPlanetAlpha = 255;
 
         public enum StarState
         {
@@ -32,9 +29,9 @@ namespace Galaxy_Explovive.Game.GameObjects
             Discovered,
             Explored
         }
+
         public PlanetSystem(Vector2 position)
         {
-            // Location
             Position = position;
             mStar = new Star(position);
             mPlanets = new List<Planet>();
@@ -47,10 +44,9 @@ namespace Galaxy_Explovive.Game.GameObjects
         }
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            ShowSystem(); HideSystem();
             mStar.Update(gameTime, inputState);
-            Hide(); Show();
-            if (!mUpdatePlanets) { return; }
-
+            if (!mIsSystemShown) { return; }
             foreach (Planet planet in mPlanets)
             {
                 planet.Update(gameTime, inputState);
@@ -60,16 +56,29 @@ namespace Galaxy_Explovive.Game.GameObjects
         {
             mStar.Draw();
             Globals.mDebugSystem.DrawBoundBox(BoundedBox);
-            if (!mUpdatePlanets) { return; }
+            if (!mIsSystemShown) { return; }
             foreach (Planet planet in mPlanets)
             {
                 planet.Draw(mPlanetAlpha);
             }
         }
-        private void Show()
+
+        private void ShowSystem()
         {
+            mIsSystemShown = true;
             if (!BoundedBox.Contains(Globals.mCamera2d.Position)) { return; }
-            mUpdatePlanets = true;
+            ShowPlanets();
+            DecreaseStarSize();
+        }
+        private void HideSystem()
+        {
+            if (BoundedBox.Contains(Globals.mCamera2d.Position)) { return; }
+            HidePlanets();
+            IncreaseStarSize();
+            mIsSystemShown = false;
+        }
+        private void ShowPlanets()
+        {
             if (mPlanetAlpha <= 255 - AlphaModifier)
             {
                 mPlanetAlpha += AlphaModifier;
@@ -77,16 +86,32 @@ namespace Galaxy_Explovive.Game.GameObjects
             }
             mPlanetAlpha = 255;
         }
-        private void Hide()
+        private void HidePlanets()
         {
-            if (BoundedBox.Contains(Globals.mCamera2d.Position)) { return; }
             if (mPlanetAlpha >= AlphaModifier)
             {
                 mPlanetAlpha -= AlphaModifier;
                 return;
             }
             mPlanetAlpha = 0;
-            mUpdatePlanets = false;
+        }
+        private void DecreaseStarSize()
+        {
+            if (mStar.TextureSclae >  1)
+            {
+                mStar.TextureSclae -= 0.5f;
+                return;
+            }
+            mStar.TextureSclae = 1;
+        }
+        private void IncreaseStarSize()
+        {
+            if (mStar.TextureSclae < 5)
+            {
+                mStar.TextureSclae += 0.5f;
+                return;
+            }
+            mStar.TextureSclae = 5;
         }
     }
 }

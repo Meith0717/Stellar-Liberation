@@ -5,6 +5,7 @@ namespace Galaxy_Explovive.Core.Rendering
 {
     public class FrustumCuller
     {
+        private RectangleF mWorldFrustum;
         private RectangleF mViewFrustum;
 
         public void Update()
@@ -14,12 +15,18 @@ namespace Galaxy_Explovive.Core.Rendering
                 Globals.mGraphicsDevice.Viewport.Height));
             Vector2 RigbtBottomEdge = ScreenEdges - LetfTopEdge;
 
-            mViewFrustum = new RectangleF(LetfTopEdge.X, LetfTopEdge.Y, RigbtBottomEdge.X, RigbtBottomEdge.Y);
+            mWorldFrustum = new RectangleF(LetfTopEdge.X, LetfTopEdge.Y, RigbtBottomEdge.X, RigbtBottomEdge.Y);
+            mViewFrustum = new RectangleF(0, 0, Globals.mGraphicsDevice.Viewport.Width, Globals.mGraphicsDevice.Viewport.Height);
         }
 
-        public bool IsOnScreen(GameObject.GameObject gameObject)
+        public bool IsVectorOnScreenView(Vector2 position)
         {
-            return mViewFrustum.Intersects(gameObject.BoundedBox);
+            return mViewFrustum.Contains(position);
+        }
+
+        public bool IsGameObjectOnWorldView(GameObject.GameObject gameObject)
+        {
+            return mWorldFrustum.Intersects(gameObject.BoundedBox);
         }
 
     }
