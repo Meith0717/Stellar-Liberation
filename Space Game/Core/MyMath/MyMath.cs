@@ -11,21 +11,24 @@ namespace Galaxy_Explovive.Core.MyMath
 
         public int GetRandomInt(int randomVariance)
         {
+            if (randomVariance == 0) { return 0; }
             var i = Globals.mRandom.Next(-randomVariance, randomVariance);
             return i;
         }
 
-        public Vector2 GetRandomVector2(Vector2 Origin)
+        public Vector2 GetRandomVector2(Vector2 Origin, int randomVariance)
         {
 
-            return Origin + new Vector2(Globals.mRandom.Next(5000), Globals.mRandom.Next(5000));
+            return Origin + new Vector2(Globals.mRandom.Next(randomVariance), Globals.mRandom.Next(randomVariance));
         }
 
-        public Vector2 GetCirclePosition(float radius, float angleRad, int randomVariance)
+        public Vector2 GetCirclePosition(float radius, float angleRad, int randomVariance = 0)
         {
-            float newX = (radius + GetRandomInt(randomVariance)) * MathF.Cos(angleRad);
-            float newY = (radius + GetRandomInt(randomVariance)) * MathF.Sin(angleRad);
-            return new Vector2(newX, newY);
+            CircleF circle = new CircleF(Vector2.Zero, radius);
+            Vector2 pos = circle.BoundaryPointAt(angleRad);
+            pos.X += Globals.mRandom.Next(randomVariance);
+            pos.Y += Globals.mRandom.Next(randomVariance);
+            return pos;
         }
 
         public float GetRotation(Vector2 position, Vector2 target)

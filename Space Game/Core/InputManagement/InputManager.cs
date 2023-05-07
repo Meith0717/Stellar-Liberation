@@ -42,7 +42,8 @@ namespace Galaxy_Explovive.Core.InputManagement
                 { Keys.F11, ActionType.ToggleFullscreen},
                 { Keys.Y, ActionType.MaxSpeed },
                 { Keys.X, ActionType.MinSpeed },
-                { Keys.F12, ActionType.Debug }
+                { Keys.F12, ActionType.Debug },
+                { Keys.R, ActionType.ToggleRayTracing },
             };
 
             // Dictionary for keyboard keys that have been hold and corresponding actions.

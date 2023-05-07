@@ -74,6 +74,7 @@ namespace Galaxy_Explovive
             mTextureManager.LoadTexture("planetTypeJ", "GameObjects/Planets/planetTypeJ");
             mTextureManager.LoadTexture("planetTypeM", "GameObjects/Planets/planetTypeM");
             mTextureManager.LoadTexture("planetTypeY", "GameObjects/Planets/planetTypeY");
+            mTextureManager.LoadTexture("planetShadow", "GameObjects/Planets/planetShadow");
 
             // Load CrossHair
             mTextureManager.LoadTexture("crossHair1", "GameObjects/crossHair/crossHair1");
@@ -91,6 +92,7 @@ namespace Galaxy_Explovive
             mTextureManager.LoadTexture("transparent", "GameObjects/transparent");
             mTextureManager.LoadTexture("projectile", "GameObjects/projectile");
             mTextureManager.LoadTexture("spaceStation", "GameObjects/spaceStation");
+            mTextureManager.LoadTexture("pixel", "pixel");
 
             // game fonts
             mTextureManager.LoadSpriteTexture("text", "fonts/text");

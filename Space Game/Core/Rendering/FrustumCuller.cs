@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended;
+using System.Runtime.InteropServices;
 
 namespace Galaxy_Explovive.Core.Rendering
 {
@@ -29,5 +30,9 @@ namespace Galaxy_Explovive.Core.Rendering
             return mWorldFrustum.Intersects(gameObject.BoundedBox);
         }
 
+        public void test()
+        {
+
+        }
     }
 }

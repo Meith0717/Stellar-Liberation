@@ -1,0 +1,73 @@
+﻿using Galaxy_Explovive.Core.TextureManagement;
+using Galaxy_Explovive.Game.GameObjects;
+using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+
+namespace Galaxy_Explovive.Core.RayTracing
+{
+    internal class RayTracer
+    {
+        private List<Ray> mRays = new();
+        private Color mColor;
+        private float mBorderLength;
+        private List<GameObject.GameObject> mGameObjects;
+
+        public RayTracer(Color color)
+        {
+            mColor = color;
+        }
+
+        public void GetRays(PlanetSystem ps)
+        {
+            // Clear all Lists
+            mRays.Clear();
+
+            if (!Globals.mRayTracing) { return; }
+
+            mBorderLength = ps.BoundedBox.Radius * 10;
+            mGameObjects = GameLogik.ObjectLocator.Instance.GetObjectsInRadius(ps.Position, (int)mBorderLength);
+            mGameObjects.Remove(ps.mStar);
+
+            // Create Rays around Scource
+            for (float radiant = 0; radiant < (2 * MathF.PI); radiant += (MathF.PI * 2) / 5000)
+            {
+                // Create Ray
+                Vector2 EndPosition = MyMath.MyMath.Instance.GetCirclePosition(mBorderLength, radiant) + ps.Position;
+                Ray ray = new Ray(ps.Position, EndPosition, radiant);
+
+                // Add Ray with angle i to List
+                mRays.Add(RayCast(ray));
+            }
+        }
+
+        private Ray RayCast(Ray ray)
+        {
+            // Go throuth Planets
+            foreach (GameObject.GameObject obj in mGameObjects)
+            {
+                // Get both Vector
+                float objRadius = Vector2.Distance(obj.Position, ray.StartPosition);
+
+                Vector2 rayPositionAtRadius = ray.GetPositionFromRadius(objRadius);
+
+                // Get Distance and check if Ray pass throuth Planet
+                if (Vector2.Distance(obj.Position, rayPositionAtRadius) < obj.BoundedBox.Radius)
+                {
+                    // Set Ray End to Ray Position at Planet Radius
+                    ray.EndPosition = rayPositionAtRadius;
+                    return ray;
+                }
+            }
+            return ray;
+        }
+
+        public void Draw()
+        {
+            foreach (Ray ray in mRays)
+            {
+                TextureManager.Instance.DrawLine(ray.StartPosition, ray.EndPosition, mColor, 10, 0);
+            }
+        }
+    }
+}

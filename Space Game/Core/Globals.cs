@@ -28,6 +28,7 @@ namespace Galaxy_Explovive.Core
         public static float SubLightVelocity = 0.01f;
         public static int MouseSpatialHashingRadius = 10000;
         public static Color HoverColor = Color.LightSteelBlue;
+        public static bool mRayTracing = true;
 
     }
 }

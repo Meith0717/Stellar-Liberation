@@ -28,6 +28,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            Globals.mGameLayer.mSpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
             UpdateNavigation(gameTime, inputState);
             UpdateInputs(inputState);
             if (inputState.mActionList.Contains(ActionType.Test))
@@ -35,6 +36,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
                 mWeaponManager.Shoot(this, this, Color.LightGreen, 5000);
             }
             mWeaponManager.Update(gameTime);
+            Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
 
         public override void Draw()

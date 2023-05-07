@@ -7,6 +7,7 @@ using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
 using System;
 using System.Collections.Generic;
+using Galaxy_Explovive.Core.RayTracing;
 
 namespace Galaxy_Explovive.Game.GameObjects
 {
@@ -22,6 +23,8 @@ namespace Galaxy_Explovive.Game.GameObjects
 
         private bool mIsSystemShown;
         private int mPlanetAlpha = 255;
+        private RayTracer mRayTracing;
+
 
         public enum StarState
         {
@@ -38,15 +41,17 @@ namespace Galaxy_Explovive.Game.GameObjects
             for (int i = 0; i < Globals.mRandom.Next(2, 5); i++)
             {
                 mRadiusLimit = 1200 + 600 * i;
-                mPlanets.Add(new Planet(mRadiusLimit, position));
+                mPlanets.Add(new Planet(mRadiusLimit, position, mStar.mLightColor));
             } 
             BoundedBox = new CircleF(position, mRadiusLimit+400);
+            mRayTracing = new(mStar.mLightColor);
         }
         public override void Update(GameTime gameTime, InputState inputState)
         {
             ShowSystem(); HideSystem();
             mStar.Update(gameTime, inputState);
             if (!mIsSystemShown) { return; }
+            mRayTracing.GetRays(this);
             foreach (Planet planet in mPlanets)
             {
                 planet.Update(gameTime, inputState);
@@ -57,6 +62,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             mStar.Draw();
             Globals.mDebugSystem.DrawBoundBox(BoundedBox);
             if (!mIsSystemShown) { return; }
+            mRayTracing.Draw();
             foreach (Planet planet in mPlanets)
             {
                 planet.Draw(mPlanetAlpha);
@@ -68,13 +74,13 @@ namespace Galaxy_Explovive.Game.GameObjects
             mIsSystemShown = true;
             if (!BoundedBox.Contains(Globals.mCamera2d.Position)) { return; }
             ShowPlanets();
-            DecreaseStarSize();
+            //DecreaseStarSize();
         }
         private void HideSystem()
         {
             if (BoundedBox.Contains(Globals.mCamera2d.Position)) { return; }
             HidePlanets();
-            IncreaseStarSize();
+            //IncreaseStarSize();
             mIsSystemShown = false;
         }
         private void ShowPlanets()

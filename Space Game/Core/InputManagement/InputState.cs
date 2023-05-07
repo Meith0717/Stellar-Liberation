@@ -25,7 +25,8 @@ namespace Galaxy_Explovive.Core.InputManagement
         MaxSpeed,
         MinSpeed,
         Test,
-        Debug
+        Debug,
+        ToggleRayTracing
     }
 
     public enum MouseActionType

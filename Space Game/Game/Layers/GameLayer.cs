@@ -20,6 +20,8 @@ using Galaxy_Explovive.Core.Map;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
 using Galaxy_Explovive.Core.MyMath;
 using Galaxy_Explovive.Core.GameLogik;
+using System.Reflection.Metadata;
+using Galaxy_Explovive.Core.RayTracing;
 
 namespace Galaxy_Explovive.Game.Layers
 {
@@ -61,8 +63,8 @@ namespace Galaxy_Explovive.Game.Layers
             mParllaxManager.Add(new("gameBackgroundParlax2", 1, 0.25f));
             mParllaxManager.Add(new("gameBackgroundParlax1", 2, 0.5f));
             OnResolutionChanged();
-            mShips.Add(new Cargo(MyMath.Instance.GetRandomVector2(mHomeSystem.Position)));
-            mShips.Add(new Cargo(MyMath.Instance.GetRandomVector2(mHomeSystem.Position)));
+            mShips.Add(new Cargo(MyMath.Instance.GetRandomVector2(mHomeSystem.Position, 5000)));
+            mShips.Add(new Cargo(MyMath.Instance.GetRandomVector2(mHomeSystem.Position, 5000)));
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
@@ -72,6 +74,10 @@ namespace Galaxy_Explovive.Game.Layers
             foreach (Cargo c in mShips)
             {
                 c.Update(gameTime, inputState);
+            }
+            if (inputState.mActionList.Contains(ActionType.ToggleRayTracing))
+            {
+                Globals.mRayTracing = !Globals.mRayTracing;
             }
             mFrustumCuller.Update();
             mParllaxManager.Update();
@@ -96,6 +102,9 @@ namespace Galaxy_Explovive.Game.Layers
                 c.Draw();
             }
             Globals.mDebugSystem.DrawNearMousObjects();
+
+            //Globals.mGraphicsDevice.BlendState = BlendState.Additive;
+            //Globals.mGraphicsDevice.BlendState = BlendState.AlphaBlend;
             mSpriteBatch.End();
         }
 

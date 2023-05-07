@@ -23,9 +23,10 @@ namespace Galaxy_Explovive.Game.GameObjects
         [JsonProperty] private double mAddCrystals;
         [JsonProperty] private PlanetType mPlanetType;
         [JsonProperty] private Vector2 mCenterPosition;
-        [JsonProperty] private float mAngle;
+        [JsonProperty] public float mAngle { get; private set; }
 
-        private float mRadius;
+        public float mRadius;
+        private float mShadowRotation;
         private CrossHair mCrosshair;
 
         // Type Enumerartion
@@ -37,7 +38,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             Y
         }
 
-        public Planet(int radius, Vector2 CenterPosition)
+        public Planet(int radius, Vector2 CenterPosition, Color lightColor)
         {
             // Location
             mAngle = Globals.mRandom.NextAngle();
@@ -48,7 +49,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
             TextureSclae = 0.3f;
             TextureDepth = 1;
-            TextureColor = Color.White;
+            TextureColor = lightColor;
 
             // Class Stuff
             mRadius = radius;
@@ -107,10 +108,11 @@ namespace Galaxy_Explovive.Game.GameObjects
 
             // Other Stuff
             base.UpdateInputs(inputState);
-            float velocity = MathF.Sqrt(1/(mRadius*10000));   
+            float velocity = MathF.Sqrt(1/(mRadius*1000));   
             float angleUpdate = mAngle + (float)gameTime.TotalGameTime.TotalSeconds * velocity;
             Position = MyMath.Instance.GetCirclePosition(mRadius, mAngle + angleUpdate, 0) + mCenterPosition;
-            Rotation = MyMath.Instance.GetRotation(mCenterPosition, Position);
+            Rotation += 0.0005f; 
+            mShadowRotation = MyMath.Instance.GetRotation(mCenterPosition, Position);
             mCrosshair.Update(Position, TextureSclae + 0.1f, TextureColor, IsHover);
 
             // Add To Spatial Hashing
@@ -120,13 +122,14 @@ namespace Galaxy_Explovive.Game.GameObjects
         public void Draw(int alpha)
         {
             DrawPlanet(alpha);
-            DrawRecources(alpha);
+            //DrawRecources(alpha);
             mCrosshair.Draw();
         }
 
         private void DrawPlanet(int alpha)
         {
             TextureColor = new Color(alpha, alpha, alpha, alpha);
+            TextureManager.Instance.Draw("planetShadow", Position, TextureOffset, TextureSclae, mShadowRotation, TextureDepth, Color.White);
             TextureManager.Instance.DrawGameObject(this);
             Globals.mDebugSystem.DrawBoundBox(BoundedBox);
             TextureManager.Instance.DrawCircle(mCenterPosition, mRadius, new Color(alpha, alpha, alpha, alpha), 1, 0);
