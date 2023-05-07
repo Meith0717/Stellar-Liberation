@@ -19,7 +19,7 @@ namespace Galaxy_Explovive.Core.Map
             while (counter < SystemAmount)
             {
                 Vector2 position = new Vector2(Globals.mRandom.Next(-(int)MapSize.X, (int)MapSize.X), Globals.mRandom.Next(-(int)MapSize.Y, (int)MapSize.Y));
-                List<Star> neighbourSystem = ObjectLocator.Instance.GetObjectsInRadius(position, 20000).OfType<Star>().ToList();
+                List<Star> neighbourSystem = ObjectLocator.Instance.GetObjectsInRadius(position, Globals.mPlanetSystemDistanceRadius).OfType<Star>().ToList();
                 if (neighbourSystem.Count > 0)
                 {
                     continue;

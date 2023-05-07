@@ -88,7 +88,7 @@ public class TextureManager
     }
     public void Draw(string id, Vector2 position, Vector2 offset, float sclae, float rotation, float depth, Color color)
     {
-        mSpriteBatch.Draw(GetTexture(id), position, null, color, rotation, offset, sclae, SpriteEffects.None, depth);
+        mSpriteBatch.Draw(GetTexture(id), position, null, color, rotation, offset, sclae, SpriteEffects.None, depth/1000);
     }
 
     // render String
@@ -106,11 +106,11 @@ public class TextureManager
     // render Line
     public void DrawAdaptiveLine(Vector2 start, Vector2 end, Color color, float thickness, float depth)
     {
-        mSpriteBatch.DrawLine(start, end, color, thickness / Globals.mCamera2d.mZoom, depth);
+        mSpriteBatch.DrawLine(start, end, color, thickness / Globals.mCamera2d.mZoom, depth / 1000);
     }
 
     public void DrawLine(Vector2 start, Vector2 end, Color color, float thickness, float depth)
     {
-        mSpriteBatch.DrawLine(start, end, color, thickness, depth);
+        mSpriteBatch.DrawLine(start, end, color, thickness, depth/1000);
     }
 }

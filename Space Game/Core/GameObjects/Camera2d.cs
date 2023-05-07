@@ -57,7 +57,7 @@ public class Camera2d
         Vector2 currentMousePosition = inputState.mMousePosition.ToVector2();
         mIsMoving = false;
 
-        if (inputState.mMouseActionType != MouseActionType.RightClickHold)
+        if (inputState.mMouseActionType != MouseActionType.LeftClickHold)
         {
             mLastMousePosition = currentMousePosition;
             return;

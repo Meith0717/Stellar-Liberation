@@ -40,10 +40,10 @@ namespace Galaxy_Explovive.Core.InputManagement
                 { Keys.Escape, ActionType.Exit },
                 { Keys.Tab, ActionType.GoHome },
                 { Keys.F11, ActionType.ToggleFullscreen},
-                { Keys.Y, ActionType.MaxSpeed },
-                { Keys.X, ActionType.MinSpeed },
+                { Keys.X, ActionType.Stop },
                 { Keys.F12, ActionType.Debug },
                 { Keys.R, ActionType.ToggleRayTracing },
+                { Keys.Space, ActionType.Test},
             };
 
             // Dictionary for keyboard keys that have been hold and corresponding actions.
@@ -51,7 +51,6 @@ namespace Galaxy_Explovive.Core.InputManagement
             {
                 { Keys.LeftShift, ActionType.Accelerate },
                 { Keys.LeftControl, ActionType.Deaccelerate },
-                { Keys.Space, ActionType.Test},
             };
 
 

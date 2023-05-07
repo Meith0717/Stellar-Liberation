@@ -56,13 +56,10 @@ namespace Galaxy_Explovive.Core.MovementController
                     ret += maxVelocity - currentVelovity;
                 }
             }
-            if (inputState.mActionList.Contains(ActionType.MaxSpeed))
+            if (inputState.mActionList.Contains(ActionType.Stop))
             {
-                ret += maxVelocity - currentVelovity;
-            }
-            if (inputState.mActionList.Contains(ActionType.MinSpeed))
-            {
-                ret -= currentVelovity - Globals.SubLightVelocity;
+                ret = 0;
+                ret -= currentVelovity;
             }
             return ret;
         }

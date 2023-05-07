@@ -22,11 +22,10 @@ namespace Galaxy_Explovive.Core.InputManagement
         GoHome,
         Accelerate,
         Deaccelerate,
-        MaxSpeed,
-        MinSpeed,
         Test,
         Debug,
-        ToggleRayTracing
+        ToggleRayTracing,
+        Stop
     }
 
     public enum MouseActionType

@@ -17,14 +17,16 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             // Rendering
             NormalTexture = "ship";
             SelectTexture = "shipSekect";
-            TextureSclae = 1;
+            TextureSclae = 0.5f;
             TextureWidth = 209;
             TextureHeight = 128;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
             TextureDepth = 2f;
             TextureColor = Color.White;
             MaxVelocity = 10;
-            mWeaponManager = new();
+            WeaponManager = new();
+            CrossHair = new(Vector2.Zero, TextureSclae);
+            
         }
 
         public override void Update(GameTime gameTime, InputState inputState)

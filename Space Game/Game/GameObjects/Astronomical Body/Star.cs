@@ -10,7 +10,6 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
     [Serializable]
     public class Star: AstronomicalBody
     {
-        private CrossHair mCrosshair;
         public Color mLightColor;
 
         public enum StarType
@@ -32,10 +31,9 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             TextureWidth = 1024;
             TextureHeight = 1024;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
-            TextureSclae = 1;
-            TextureDepth = 0;
+            TextureSclae = 0.5f;
+            TextureDepth = 1;
             TextureColor = Color.White;
-            mCrosshair = new(Position, TextureSclae);
 
             // Other Stuff
             GetSystemTypeAndTexture();
@@ -51,31 +49,31 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
                 case StarType.B:
                     {
                         TextureId = "sunTypeB";
-                        mLightColor = new Color(2, 2, 2, 0);
+                        mLightColor = new Color(1, 1, 1, 0);
                         break;
                     }
                 case StarType.F:
                     {
                         TextureId = "sunTypeF";
-                        mLightColor = new Color(2, 2, 3, 0);
+                        mLightColor = new Color(1, 1, 1, 0);
                         break;
                     }
                 case StarType.G:
                     {
                         TextureId  = "sunTypeG";
-                        mLightColor = new Color(2, 2, 0, 0);
+                        mLightColor = new Color(1, 1, 0, 0);
                         break;
                     }
                 case StarType.K:
                     {
                         TextureId = "sunTypeK";
-                        mLightColor = new Color(3, 2, 0, 0);
+                        mLightColor = new Color(1, 1, 0, 0);
                         break;
                     }
                 case StarType.M:
                     {
                         TextureId = "sunTypeM";
-                        mLightColor = new Color(2, 0, 0, 0);
+                        mLightColor = new Color(1, 0, 0, 0);
                         break;
                     }
             }
@@ -84,14 +82,12 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
         {
             base.UpdateInputs(inputState);
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
-            mCrosshair.Update(Position, TextureSclae, TextureColor, IsHover);
         }
 
         public override void Draw()
         {
-            TextureManager.Instance.DrawGameObject(this);
+            TextureManager.Instance.DrawGameObject(this, IsHover);
             Globals.mDebugSystem.DrawBoundBox(BoundedBox);
-            mCrosshair.Draw();
         }
     }
 }

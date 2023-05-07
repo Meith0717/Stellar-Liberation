@@ -16,7 +16,7 @@ namespace Galaxy_Explovive.Core.Debug
         const float UpdateTimeInSeconds = 1;
         
         // Some Stuff
-        private int mDebugLevel = 5;
+        private int mDebugLevel = 0;
         private float mCurrentFramesPerSecond;
         private float mFrameDuration;
         private float mUpdateCounter = 0;
@@ -77,10 +77,8 @@ namespace Galaxy_Explovive.Core.Debug
             var radius = Globals.MouseSpatialHashingRadius;
             List<InteractiveObject> GameObjects = ObjectLocator.Instance.GetObjectsInRadius(mMousePosition, radius).OfType<InteractiveObject>().ToList(); ;
             System.Diagnostics.Debug.WriteLine(GameObjects.Count);
-            foreach (InteractiveObject gameObject in GameObjects)
-            {
-                TextureManager.Instance.DrawAdaptiveLine(mMousePosition, gameObject.Position, Color.LightBlue, 2, 0);
-            }
+            if (GameObjects.Count() == 0) { return; }
+            TextureManager.Instance.DrawAdaptiveLine(mMousePosition, GameObjects[0].Position, Color.LightBlue, 2, 0);
         }
 
         public void DrawBoundBox(RectangleF box)

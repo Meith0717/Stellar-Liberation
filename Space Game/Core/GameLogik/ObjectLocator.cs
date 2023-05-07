@@ -36,6 +36,8 @@ namespace Galaxy_Explovive.Core.GameLogik
                 }
 
             }
+            Comparison<GameObject.GameObject> comparison = (a, b) => Vector2.Distance(a.Position, positionVector2).CompareTo(Vector2.Distance(b.Position, positionVector2));
+            objectsInRadius.Sort(comparison);
             return objectsInRadius;
         }
     }

@@ -28,7 +28,7 @@ namespace Galaxy_Explovive.Core.Waepons
             MaxTravelDistance = maxTravelDistance;
             ProjectileColor = color;
             Velocity = 0.5f;
-            Direction = (Vector2.Zero - Position).NormalizedCopy();
+            Direction = (target.Position - Position).NormalizedCopy();
             Rotation = MyMath.MyMath.Instance.GetRotation(Position, Vector2.Zero);
         }
 

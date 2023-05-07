@@ -6,7 +6,9 @@ using Galaxy_Explovive.Core.MovementController;
 using Galaxy_Explovive.Core.MyMath;
 using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.Weapons;
+using Galaxy_Explovive.Game.Layers;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,7 +20,8 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
     {
 
         public float MaxVelocity { private get; set; }
-        public WeaponManager mWeaponManager { private get; set; }
+        public WeaponManager WeaponManager { private get; set; }
+        public CrossHair CrossHair { private get; set; }
 
         // Navigation
         private bool IsMoving = false;
@@ -31,27 +34,35 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             Globals.mGameLayer.mSpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
             UpdateNavigation(gameTime, inputState);
             UpdateInputs(inputState);
-            if (inputState.mActionList.Contains(ActionType.Test))
+            if (inputState.mActionList.Contains(ActionType.Test) && IsSelect)
             {
-                mWeaponManager.Shoot(this, this, Color.LightGreen, 5000);
+                var ships = ObjectLocator.Instance.GetObjectsInRadius(Position, 500).OfType<Spacecraft>().ToList();
+                if (ships.Count > 0) 
+                { 
+                    WeaponManager.Shoot(this, ships[0], Color.LightGreen, 5000);
+                }
             }
-            mWeaponManager.Update(gameTime);
+            WeaponManager.Update(gameTime);
+            Vector2 mousePos = Globals.mCamera2d.ViewToWorld(inputState.mMousePosition.ToVector2());
             Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
+
+            CrossHair.Update(IsMoving ? TargetPosition : mousePos, 0.05f / Globals.mCamera2d.mZoom, Color.LightGreen, IsHover);
         }
 
         public override void Draw()
         {
             base.DrawSpaceCraft();
             DrawPath();
-            mWeaponManager.Draw();
+            WeaponManager.Draw();
+            DrawTargetCrosshar();
         }
 
         // Input Stuff
         private new void UpdateInputs(InputState inputState)
         {
             base.Update(inputState);
-            CheckForSelection(inputState);
             GetTargetPosition(inputState);
+            CheckForSelection(inputState);
             TextureId = IsSelect ? SelectTexture : NormalTexture;
         }
         private void CheckForSelection(InputState inputState)
@@ -75,19 +86,14 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
         }
         private void GetTargetPosition(InputState inputState)
         {
-            if (!IsSelect) { return; }
+            if (!IsSelect || mVelocity > 0) { return; }
             Vector2 MousePosition = Globals.mCamera2d.ViewToWorld(inputState.mMousePosition.ToVector2());
-            var radius = Globals.MouseSpatialHashingRadius;
-            List<InteractiveObject> GameObjects = ObjectLocator.Instance.GetObjectsInRadius(MousePosition, radius).OfType<InteractiveObject>().ToList(); ;
-            foreach (InteractiveObject gameObject in GameObjects)
+            if (inputState.mMouseActionType == MouseActionType.RightClick)
             {
-                if (inputState.mMouseActionType == MouseActionType.RightClick && gameObject.IsHover)
-                {
-                    TargetPosition = gameObject.Position;
-                    mVelocity = Globals.SubLightVelocity;
-                    mTrack = true;
-                    Globals.mCamera2d.mTargetPosition = Position;
-                }
+                TargetPosition = MousePosition;
+                mVelocity = Globals.SubLightVelocity;
+                mTrack = true;
+                Globals.mCamera2d.mTargetPosition = Position;
             }
         }
         // Navigation Stuff
@@ -99,20 +105,27 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             float distanceToTarget = Vector2.Subtract(TargetPosition, Position).Length();
             Rotation += MovementController.Instance.GetRotation(Rotation, targetRotation, rotationRest);
             mVelocity += MovementController.Instance.GetVelocity(inputState, IsSelect, MaxVelocity, mVelocity, distanceToTarget);
-            if (mVelocity == 0) { return; }
+            if (mVelocity == 0) { TargetPosition = Position; return; }
             IsMoving = true;
             Vector2 directionVector = MyMath.Instance.GetDirection(Rotation);
             Position += directionVector * mVelocity * gameTime.ElapsedGameTime.Milliseconds;
             mTravelTime = (distanceToTarget /  mVelocity) / 1000;
-            Debug.WriteLine(new Vector2(distanceToTarget, mVelocity));
         }
         // Draw Stuff
         public void DrawPath()
         {
             if (!IsMoving) { return; }
-            TextureManager.Instance.DrawAdaptiveLine(Position, TargetPosition, Color.Gray, 2, 0);
+            TextureManager.Instance.DrawAdaptiveLine(Position, TargetPosition, Color.LightGreen, 2, 0);
             TextureManager.Instance.DrawString("text", Position + TextureOffset ,
                 MyMath.Instance.GetTimeFromSeconds((int)mTravelTime), Color.Red);
+        }
+
+        public void DrawTargetCrosshar()
+        {
+            if (IsSelect || IsMoving) 
+            {
+                CrossHair.Draw();
+            }
         }
     }
 }

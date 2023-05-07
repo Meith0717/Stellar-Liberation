@@ -1,4 +1,5 @@
-﻿using Galaxy_Explovive.Core.TextureManagement;
+﻿using Galaxy_Explovive.Core.InputManagement;
+using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Game.GameObjects;
 using Microsoft.Xna.Framework;
 using System;
@@ -6,12 +7,15 @@ using System.Collections.Generic;
 
 namespace Galaxy_Explovive.Core.RayTracing
 {
-    internal class RayTracer
+    public class RayTracer
     {
         private List<Ray> mRays = new();
         private Color mColor;
         private float mBorderLength;
         private List<GameObject.GameObject> mGameObjects;
+
+        private int RayAmount;
+        private int RayThickness;
 
         public RayTracer(Color color)
         {
@@ -25,24 +29,31 @@ namespace Galaxy_Explovive.Core.RayTracing
 
             if (!Globals.mRayTracing) { return; }
 
+            var AmountUpdate = (5000 * 0.035f);
+            RayAmount = (int)(5000 - (AmountUpdate / Globals.mCamera2d.mZoom));
+            if (RayAmount < 0 ) { RayAmount = 0; }
+            RayThickness = 10;
+
+            Vector2 scource = ps.Position;// Globals.mCamera2d.ViewToWorld(inS.mMousePosition.ToVector2());
             mBorderLength = ps.BoundedBox.Radius * 10;
-            mGameObjects = GameLogik.ObjectLocator.Instance.GetObjectsInRadius(ps.Position, (int)mBorderLength);
+            mGameObjects = GameLogik.ObjectLocator.Instance.GetObjectsInRadius(scource, (int)mBorderLength);
             mGameObjects.Remove(ps.mStar);
 
             // Create Rays around Scource
-            for (float radiant = 0; radiant < (2 * MathF.PI); radiant += (MathF.PI * 2) / 5000)
+            for (float radiant = 0; radiant < (2 * MathF.PI); radiant += (MathF.PI * 2) / RayAmount)
             {
                 // Create Ray
-                Vector2 EndPosition = MyMath.MyMath.Instance.GetCirclePosition(mBorderLength, radiant) + ps.Position;
-                Ray ray = new Ray(ps.Position, EndPosition, radiant);
+                Vector2 EndPosition = MyMath.MyMath.Instance.GetCirclePosition(mBorderLength, radiant) + scource;
+                Ray ray = new Ray(scource, EndPosition, radiant);
 
                 // Add Ray with angle i to List
-                mRays.Add(RayCast(ray));
+                mRays.Add(GetRayCollision(ray));
             }
         }
 
-        private Ray RayCast(Ray ray)
+        private Ray GetRayCollision(Ray ray)
         {
+
             // Go throuth Planets
             foreach (GameObject.GameObject obj in mGameObjects)
             {
@@ -59,6 +70,7 @@ namespace Galaxy_Explovive.Core.RayTracing
                     return ray;
                 }
             }
+
             return ray;
         }
 
@@ -66,7 +78,7 @@ namespace Galaxy_Explovive.Core.RayTracing
         {
             foreach (Ray ray in mRays)
             {
-                TextureManager.Instance.DrawLine(ray.StartPosition, ray.EndPosition, mColor, 10, 0);
+                TextureManager.Instance.DrawLine(ray.StartPosition, ray.EndPosition, mColor, RayThickness, 0);
             }
         }
     }
