@@ -53,7 +53,7 @@ public class TextureManager
         Texture2D texture = (Texture2D)mTextures[id];
         if (texture == null)
         {
-            throw new System.Exception("Error, Texture was not found!");
+            throw new System.Exception($"Error, Texture {id} was not found!");
         }
 
         return texture;
@@ -113,4 +113,5 @@ public class TextureManager
     {
         mSpriteBatch.DrawLine(start, end, color, thickness, depth/1000);
     }
+
 }

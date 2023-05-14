@@ -31,8 +31,8 @@ namespace Galaxy_Explovive.Core
         public static float SubLightVelocity = 0.01f;
         public static int MouseSpatialHashingRadius = 10000;
         public static Color HoverColor = new Color(50, 50, 50);
-        public static bool mRayTracing = true;
-        public static int mPlanetSystemDistanceRadius = 3000;
+        public static bool mRayTracing = false;
+        public static int mPlanetSystemDistanceRadius = 10000;
 
     }
 }

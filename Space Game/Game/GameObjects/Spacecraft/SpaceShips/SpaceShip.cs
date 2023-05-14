@@ -6,12 +6,8 @@ using Galaxy_Explovive.Core.MovementController;
 using Galaxy_Explovive.Core.MyMath;
 using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.Weapons;
-using Galaxy_Explovive.Game.Layers;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+using System;  
 using System.Linq;
 
 namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
@@ -34,14 +30,14 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             Globals.mGameLayer.mSpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
             UpdateNavigation(gameTime, inputState);
             UpdateInputs(inputState);
-            if (inputState.mActionList.Contains(ActionType.Test) && IsSelect)
-            {
-                var ships = ObjectLocator.Instance.GetObjectsInRadius(Position, 500).OfType<Spacecraft>().ToList();
-                if (ships.Count > 0) 
-                { 
-                    WeaponManager.Shoot(this, ships[0], Color.LightGreen, 5000);
-                }
-            }
+            // if (inputState.mActionList.Contains(ActionType.Test) && IsSelect)
+            // {
+            //     var ships = ObjectLocator.Instance.GetObjectsInRadius(Position, 500).OfType<Spacecraft>().ToList();
+            //     if (ships.Count > 0) 
+            //     { 
+            //         WeaponManager.Shoot(this, ships[0], Color.LightGreen, 5000);
+            //     }
+            // }
             WeaponManager.Update(gameTime);
             Vector2 mousePos = Globals.mCamera2d.ViewToWorld(inputState.mMousePosition.ToVector2());
             Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);

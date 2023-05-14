@@ -29,13 +29,13 @@ namespace Galaxy_Explovive.Core.RayTracing
 
             if (!Globals.mRayTracing) { return; }
 
-            var AmountUpdate = (5000 * 0.035f);
-            RayAmount = (int)(5000 - (AmountUpdate / Globals.mCamera2d.mZoom));
+            var AmountUpdate = (2300 * 0.035f);
+            RayAmount = (int)(2300 - (AmountUpdate / Globals.mCamera2d.mZoom));
             if (RayAmount < 0 ) { RayAmount = 0; }
-            RayThickness = 10;
+            RayThickness = 15 ;
 
             Vector2 scource = ps.Position;// Globals.mCamera2d.ViewToWorld(inS.mMousePosition.ToVector2());
-            mBorderLength = ps.BoundedBox.Radius * 10;
+            mBorderLength = ps.BoundedBox.Radius * 5;
             mGameObjects = GameLogik.ObjectLocator.Instance.GetObjectsInRadius(scource, (int)mBorderLength);
             mGameObjects.Remove(ps.mStar);
 

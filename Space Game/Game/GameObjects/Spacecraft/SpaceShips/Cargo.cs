@@ -21,7 +21,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             TextureWidth = 209;
             TextureHeight = 128;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
-            TextureDepth = 2f;
+            TextureDepth = 2;
             TextureColor = Color.White;
             MaxVelocity = 10;
             WeaponManager = new();

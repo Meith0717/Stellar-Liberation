@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
+using System.Collections.Generic;
 
 namespace Galaxy_Explovive.Core.MyMath
 {
@@ -14,6 +15,12 @@ namespace Galaxy_Explovive.Core.MyMath
             if (randomVariance == 0) { return 0; }
             var i = Globals.mRandom.Next(-randomVariance, randomVariance);
             return i;
+        }
+
+        public T RandomFromList<T>(List<T> lst)
+        {
+            int randIndex = Globals.mRandom.Next(lst.Count);
+            return lst[randIndex];
         }
 
         public Vector2 GetRandomVector2(Vector2 Origin, int randomVariance)

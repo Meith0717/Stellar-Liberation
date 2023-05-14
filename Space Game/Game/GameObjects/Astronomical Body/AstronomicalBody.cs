@@ -14,7 +14,14 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             if (inputState.mMouseActionType == MouseActionType.LeftClick && IsHover)
             {
                 mTrack = true;
-                Globals.mCamera2d.SetZoom(0.2f);
+                if (this.GetType() == typeof(Planet))
+                {
+                    Globals.mCamera2d.SetZoom(1.2f);
+                }
+                if (this.GetType() == typeof(Star))
+                {
+                    Globals.mCamera2d.SetZoom(0.25f);
+                }
             }
 
             if (!mTrack) { return; }

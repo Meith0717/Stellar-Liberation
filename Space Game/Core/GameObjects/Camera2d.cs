@@ -7,7 +7,7 @@ public class Camera2d
 {   
     // Constants
     const float mMaxZoom = 0.00000001f;
-    const float mMimZoom = 1;
+    const float mMimZoom = 1.2f;
 
     public float mZoom { get; private set; } = 1f;
     public Vector2 Position { get; private set; }

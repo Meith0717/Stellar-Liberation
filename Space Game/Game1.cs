@@ -7,6 +7,7 @@ using Galaxy_Explovive.Core.LayerManagement;
 using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using System;
+using Galaxy_Explovive.Core.GameObject;
 
 namespace Galaxy_Explovive
 {
@@ -63,17 +64,24 @@ namespace Galaxy_Explovive
             mSoundManager.CreateSoundEffectInstances();
 
             // Load Star Textures
-            mTextureManager.LoadTexture("sunTypeB", "GameObjects/Stars/sunTypeB_big");
-            mTextureManager.LoadTexture("sunTypeF", "GameObjects/Stars/sunTypeF_big");
-            mTextureManager.LoadTexture("sunTypeG", "GameObjects/Stars/sunTypeG_big");
-            mTextureManager.LoadTexture("sunTypeK", "GameObjects/Stars/sunTypeK_big");
-            mTextureManager.LoadTexture("sunTypeM", "GameObjects/Stars/sunTypeM_big");
+            mTextureManager.LoadTexture("StarLightAlpha", "GameObjects/Stars/StarLightAlpha");
+            mTextureManager.LoadTexture("M", "GameObjects/Stars/M");
+            mTextureManager.LoadTexture("K", "GameObjects/Stars/K");
+            mTextureManager.LoadTexture("G", "GameObjects/Stars/G");
+            mTextureManager.LoadTexture("F", "GameObjects/Stars/F");
+            mTextureManager.LoadTexture("A", "GameObjects/Stars/A");
+            mTextureManager.LoadTexture("B", "GameObjects/Stars/B");
+            mTextureManager.LoadTexture("O", "GameObjects/Stars/O");
+            mTextureManager.LoadTexture("BH", "GameObjects/Stars/BH");
 
             // Load Planet Textures
-            mTextureManager.LoadTexture("planetTypeH", "GameObjects/Planets/planetTypeH");
-            mTextureManager.LoadTexture("planetTypeJ", "GameObjects/Planets/planetTypeJ");
-            mTextureManager.LoadTexture("planetTypeM", "GameObjects/Planets/planetTypeM");
-            mTextureManager.LoadTexture("planetTypeY", "GameObjects/Planets/planetTypeY");
+            string planetPath = "GameObjects/Planets/";
+            for (int i = 1; i <= 4; i++) { mTextureManager.LoadTexture($"cold{i}", $"{planetPath}cold{i}"); }
+            for (int i = 1; i <= 6; i++) { mTextureManager.LoadTexture($"dry{i}", $"{planetPath}dry{i}"); }
+            for (int i = 1; i <= 4; i++) { mTextureManager.LoadTexture($"gas{i}", $"{planetPath}gas{i}"); }
+            for (int i = 1; i <= 6; i++) { mTextureManager.LoadTexture($"stone{i}", $"{planetPath}stone{i}"); }
+            for (int i = 1; i <= 8; i++) { mTextureManager.LoadTexture($"terrestrial{i}", $"{planetPath}terrestrial{i}"); }
+            for (int i = 1; i <= 4; i++) { mTextureManager.LoadTexture($"warm{i}", $"{planetPath}warm{i}"); }
             mTextureManager.LoadTexture("planetShadow", "GameObjects/Planets/planetShadow");
 
             // Load CrossHair
@@ -92,7 +100,12 @@ namespace Galaxy_Explovive
             mTextureManager.LoadTexture("transparent", "GameObjects/transparent");
             mTextureManager.LoadTexture("projectile", "GameObjects/projectile");
             mTextureManager.LoadTexture("spaceStation", "GameObjects/spaceStation");
-            mTextureManager.LoadTexture("pixel", "pixel");
+            
+            // Ui
+            mTextureManager.LoadTexture("UiLayer", "UserInterface/UiLayer");
+            mTextureManager.LoadTexture("Monogame", "UserInterface/Monogame");
+            mTextureManager.LoadTexture("BackGround", "UserInterface/bg");
+            mTextureManager.LoadTexture("back", "UserInterface/back");
 
             // game fonts
             mTextureManager.LoadSpriteTexture("text", "fonts/text");
@@ -121,7 +134,7 @@ namespace Galaxy_Explovive
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.Transparent);
             // TODO: Add your drawing code here
             mLayerManager.Draw();
             base.Draw(gameTime);

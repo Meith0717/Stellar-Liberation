@@ -8,6 +8,8 @@ using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
 using System;
 using System.Collections.Generic;
 using Galaxy_Explovive.Core.RayTracing;
+using Galaxy_Explovive.Core.GameObjects.Types;
+using Galaxy_Explovive.Core.MyMath;
 
 namespace Galaxy_Explovive.Game.GameObjects
 {
@@ -19,7 +21,7 @@ namespace Galaxy_Explovive.Game.GameObjects
         [JsonProperty] public StarState mState;
         [JsonProperty] public Star mStar;
         [JsonProperty] public List<Planet> mPlanets;
-        [JsonProperty] private int mRadiusLimit;
+        [JsonProperty] private float mRadiusLimit;
 
         private bool mIsSystemShown;
         private int mPlanetAlpha = 255;
@@ -38,13 +40,15 @@ namespace Galaxy_Explovive.Game.GameObjects
             Position = position;
             mStar = new Star(position);
             mPlanets = new List<Planet>();
-            for (int i = 0; i < Globals.mRandom.Next(2, 5); i++)
+            mRadiusLimit = mStar.TextureWidth / 2 * mStar.TextureSclae;
+            for (int i = 1; i <= Globals.mRandom.Next(2, 6); i++)
             {
-                mRadiusLimit = 600 + 300 * i;
-                mPlanets.Add(new Planet(mRadiusLimit, position, mStar.mLightColor));
+                PlanetType planetType = GetPlanetType(i);
+                if (i != 0) { mRadiusLimit += 300 + (1000 * planetType.Size); }
+                mPlanets.Add(new Planet((int)mRadiusLimit, position, mStar.mLightColor, planetType));    
             } 
             BoundedBox = new CircleF(position, mRadiusLimit+400);
-            mRayTracing = new(mStar.mLightColor);
+            mRayTracing = new(mStar.mType.LightColor);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
@@ -73,8 +77,8 @@ namespace Galaxy_Explovive.Game.GameObjects
             if (!Globals.mFrustumCuller.IsGameObjectOnWorldView(this)) { return; }
             
             // Draw Stuff
-            mRayTracing.Draw();
             mStar.Draw();
+            mRayTracing.Draw();
             Globals.mDebugSystem.DrawBoundBox(BoundedBox);
 
             // Draw based on Cam. Positions 
@@ -88,15 +92,6 @@ namespace Galaxy_Explovive.Game.GameObjects
         private void ShowSystem()
         {
             if (Globals.mCamera2d.mZoom < 0.1) { return; }
-            ShowPlanets();
-        }
-        private void HideSystem()
-        {
-            if (Globals.mCamera2d.mZoom > 0.1) { return; }
-            HidePlanets();
-        }
-        private void ShowPlanets()
-        {
             mIsSystemShown = true;
             if (mPlanetAlpha <= 255 - AlphaModifier)
             {
@@ -105,8 +100,9 @@ namespace Galaxy_Explovive.Game.GameObjects
             }
             mPlanetAlpha = 255;
         }
-        private void HidePlanets()
+        private void HideSystem()
         {
+            if (Globals.mCamera2d.mZoom > 0.1) { return; }
             if (!mIsSystemShown) { return; }
             if (mPlanetAlpha >= AlphaModifier)
             {
@@ -119,6 +115,32 @@ namespace Galaxy_Explovive.Game.GameObjects
                 p.RemoveFromSpatialHashing();
             }
             mIsSystemShown = false;
+        }
+        private PlanetType GetPlanetType(int orbit)
+        {
+            PlanetType planetType = null;
+            switch (orbit)
+            {
+                case 1:
+                    planetType = PlanetTypes.getOrbit1;
+                    break;
+                case 2:
+                    planetType = PlanetTypes.getOrbit2;
+                    break;
+                case 3:
+                    planetType = PlanetTypes.getOrbit3;
+                    break;
+                case 4:
+                    planetType = PlanetTypes.getOrbit4;
+                    break;
+                case 5:
+                    planetType = PlanetTypes.getOrbit5;
+                    break;
+                case 6:
+                    planetType = PlanetTypes.getOrbit6;
+                    break;
+            }
+            return planetType;
         }
     }
 }

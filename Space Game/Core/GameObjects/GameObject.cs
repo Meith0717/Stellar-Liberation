@@ -17,7 +17,7 @@ namespace Galaxy_Explovive.Core.GameObject
         public float TextureSclae { get; set; }
         public int TextureWidth { get; set; }
         public int TextureHeight { get; set; }
-        public float TextureDepth { get; set; }
+        public int TextureDepth { get; set; }
         public Color TextureColor { get; set; }
         public CircleF BoundedBox { get; set; }
 

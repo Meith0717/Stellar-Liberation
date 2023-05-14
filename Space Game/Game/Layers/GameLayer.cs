@@ -8,7 +8,6 @@ using Galaxy_Explovive.Core.Effects;
 using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
-using Galaxy_Explovive.Core.Menu;
 using Galaxy_Explovive.Core.PositionManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Game.GameObjects;
@@ -56,8 +55,6 @@ namespace Galaxy_Explovive.Game.Layers
             mParllaxManager.Add(new("gameBackgroundParlax2", 1, 0.25f));
             mParllaxManager.Add(new("gameBackgroundParlax1", 2, 0.5f));
             OnResolutionChanged();
-            mShips.Add(new Cargo(MyMath.Instance.GetRandomVector2(mHomeSystem.Position, 5000)));
-            mShips.Add(new Cargo(MyMath.Instance.GetRandomVector2(mHomeSystem.Position, 5000)));
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
@@ -71,6 +68,10 @@ namespace Galaxy_Explovive.Game.Layers
             if (inputState.mActionList.Contains(ActionType.ToggleRayTracing))
             {
                 Globals.mRayTracing = !Globals.mRayTracing;
+            }
+            if (inputState.mActionList.Contains(ActionType.Test))
+            {
+                Globals.mLayerManager.AddLayer(new BuildLayer());
             }
             Globals.mFrustumCuller.Update();
             mParllaxManager.Update();

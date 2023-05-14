@@ -2,14 +2,12 @@
 using MonoGame.Extended;
 using Newtonsoft.Json;
 using Galaxy_Explovive.Core;
-using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.MyMath;
 using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
 using System;
-using System.Diagnostics;
-using Galaxy_Explovive.Core.Debug;
+using Galaxy_Explovive.Core.GameObjects.Types;
 
 namespace Galaxy_Explovive.Game.GameObjects
 {
@@ -28,25 +26,16 @@ namespace Galaxy_Explovive.Game.GameObjects
         public float mRadius;
         private float mShadowRotation;
 
-        // Type Enumerartion
-        public enum PlanetType
-        {
-            H,
-            J,
-            M,
-            Y
-        }
-
-        public Planet(int radius, Vector2 CenterPosition, Color lightColor)
+        public Planet(int radius, Vector2 CenterPosition, Color lightColor, PlanetType planetType)
         {
             // Location
             mAngle = Globals.mRandom.NextAngle();
                                                                                              
             // Rendering
-            TextureId = "IS SET IN GetSystemTypeAndTexture";
+            TextureId = planetType.Texture;
             TextureWidth = TextureHeight = 1024;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
-            TextureSclae = 0.1f;
+            TextureSclae = planetType.Size;
             TextureDepth = 1;
             TextureColor = lightColor;
 
@@ -54,50 +43,6 @@ namespace Galaxy_Explovive.Game.GameObjects
             mRadius = radius;
             mCenterPosition = CenterPosition;
 
-            // Other Stuff
-            GetPlanetTypeAndTexture();
-        }
-        private void GetPlanetTypeAndTexture()
-        {
-            // Set rabdom Type 
-            Array starTypes = Enum.GetValues(typeof(PlanetType));
-            mPlanetType = (PlanetType)starTypes.GetValue(Globals.mRandom.Next(starTypes.Length));
-
-            switch (mPlanetType)
-            {
-                case PlanetType.H:
-                    {
-                        TextureId = "planetTypeH";
-                        mAddAllois = 0.1;
-                        mAddEnergy = 0.1;
-                        mAddCrystals = 0.1;
-                        break;
-                    }
-                case PlanetType.J:
-                    {
-                        TextureId = "planetTypeJ";
-                        mAddAllois = 0.1;
-                        mAddEnergy = 10;
-                        mAddCrystals = 2;
-                        break;
-                    }
-                case PlanetType.M:
-                    {
-                        TextureId = "planetTypeM";
-                        mAddAllois = 5;
-                        mAddEnergy = 10;
-                        mAddCrystals = 5;
-                        break;
-                    }
-                case PlanetType.Y:
-                    {
-                        TextureId = "planetTypeY";
-                        mAddAllois = 15;
-                        mAddEnergy = 20;
-                        mAddCrystals = 15;
-                        break;
-                    }
-            }
         }
         public override void Update(GameTime gameTime, InputState inputState)
         {
@@ -106,10 +51,10 @@ namespace Galaxy_Explovive.Game.GameObjects
 
             // Other Stuff
             base.UpdateInputs(inputState);
-            float velocity = MathF.Sqrt(1/(mRadius*1)*5);   
+            float velocity = MathF.Sqrt(1/(mRadius*10));   
             float angleUpdate = mAngle + (float)gameTime.TotalGameTime.TotalSeconds * velocity;
-            Position = MyMath.Instance.GetCirclePosition(mRadius, mAngle + angleUpdate, 0) + mCenterPosition;
-            Rotation += 0.0005f; 
+            Position = MyMath.Instance.GetCirclePosition(mRadius, mAngle + angleUpdate) + mCenterPosition;
+            Rotation += 0.004f; 
             mShadowRotation = MyMath.Instance.GetRotation(mCenterPosition, Position);
 
             // Add To Spatial Hashing
@@ -135,8 +80,9 @@ namespace Galaxy_Explovive.Game.GameObjects
         private void DrawPlanet(int alpha)
         {
             TextureColor = new Color(alpha, alpha, alpha, alpha);
-            TextureManager.Instance.Draw("planetShadow", Position, TextureOffset, TextureSclae, mShadowRotation, TextureDepth+1, Color.White);
+            TextureManager.Instance.Draw("planetShadow", Position, TextureOffset, TextureSclae, mShadowRotation, TextureDepth+1, TextureColor);
             TextureManager.Instance.DrawGameObject(this, IsHover);
+            //TextureManager.Instance.DrawCircle(mCenterPosition, mRadius, TextureColor, 1, 0);
             Globals.mDebugSystem.DrawBoundBox(BoundedBox);
         }
         private void DrawRecources(int alpha)
