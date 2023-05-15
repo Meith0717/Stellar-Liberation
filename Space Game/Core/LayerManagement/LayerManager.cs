@@ -29,7 +29,6 @@ public class LayerManager
         mSpriteBatch = spriteBatch;
         mContentManager = contentManager;
         mSoundManager = soundManager;
-        Start();
         //mGame.ToggleFullscreen();
     }
 
@@ -76,7 +75,7 @@ public class LayerManager
     }
 
     // lifecycle methods
-    private void Start()
+    public void Start()
     {
         mLayerStack.AddLast(new GameLayer());
     }

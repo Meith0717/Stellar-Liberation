@@ -8,6 +8,7 @@ using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using System;
 using Galaxy_Explovive.Core.GameObject;
+using Galaxy_Explovive.Game.Layers;
 
 namespace Galaxy_Explovive
 {
@@ -113,6 +114,8 @@ namespace Galaxy_Explovive
             mTextureManager.LoadSpriteTexture("smal", "fonts/smal");
 
             Globals.mLayerManager = mLayerManager = new LayerManager(this, GraphicsDevice, mSpriteBatch, Content, mSoundManager);
+            Globals.mLayerManager.Start();
+            Globals.mLayerManager.AddLayer(new HudLayer() { UpdateBelow = true});
         }
 
         protected override void Update(GameTime gameTime)

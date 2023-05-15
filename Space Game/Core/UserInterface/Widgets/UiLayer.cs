@@ -2,6 +2,7 @@
 using Galaxy_Explovive.Core.TextureManagement;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
+using System;
 using System.Collections.Generic;
 
 namespace Galaxy_Explovive.Core.UserInterface.Widgets
@@ -13,6 +14,9 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
         public Color BgColor { get; set; } = Color.White;
         public int MinWidth { get; set; } = 0;
         public int MinHeight { get; set; } = 0;
+        public int MaxWidth { get; set; } = Int32.MaxValue;
+        public int MaxHeight { get; set; } = Int32.MaxValue;
+
 
         // Private Atributes
         private Color mLayerColor;
@@ -36,8 +40,6 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
                 (int)(BgColor.B * BgColorAlpha), 
                 (int)(255 * BgColorAlpha)
             );
-            if (Rectangle.Width < MinWidth) { Rectangle.Width = MinWidth; }
-            if (Rectangle.Height < MinHeight) { Rectangle.Width = MinHeight; }
             foreach (var child in mChilds) { child.Update(inputState); }
         }
 
@@ -78,6 +80,10 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
             float screenX = (float)(width * RelX) - (screenWidth / 2) + startPos.X;
             float screenY = (float)(height * RelY) - (screenHeight / 2) + startPos.Y;
             Rectangle = new RectangleF(screenX, screenY, screenWidth, screenHeight).ToRectangle();
+            if (Rectangle.Width < MinWidth) { Rectangle.Width = MinWidth; }
+            if (Rectangle.Height < MinHeight) { Rectangle.Height = MinHeight; }
+            if (Rectangle.Width > MaxWidth) { Rectangle.Width = MaxWidth; }
+            if (Rectangle.Height > MaxHeight) { Rectangle.Height = MaxHeight; }
         }
     }
 }

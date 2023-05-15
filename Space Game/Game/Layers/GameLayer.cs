@@ -45,7 +45,6 @@ namespace Galaxy_Explovive.Game.Layers
         public GameLayer() : base()
         {
             InitializeGlobals();
-
             mSpatialHashing = new SpatialHashing<GameObject>(10000);
             mPlanetSystemList = MapBuilder.Instance.Generate(25000, new Vector2(mapWidth, mapHeight));
             mHomeSystem = mPlanetSystemList[Globals.mRandom.Next(mPlanetSystemList.Count)];
