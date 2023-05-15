@@ -1,89 +1,73 @@
 ﻿using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended;
-using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data;
+using static Galaxy_Explovive.Core.UserInterface.UiCanvas;
 
 namespace Galaxy_Explovive.Core.UserInterface.Widgets
 {
-    public class UiLayer : UiElement
+    internal class UiLayer : UiElement
     {
-        // Public Atributes
-        public double BgColorAlpha { get; set; } = 1;
-        public Color BgColor { get; set; } = Color.White;
-        public int MinWidth { get; set; } = 0;
-        public int MinHeight { get; set; } = 0;
-        public int MaxWidth { get; set; } = Int32.MaxValue;
-        public int MaxHeight { get; set; } = Int32.MaxValue;
+        public RootFill Fill = RootFill.Fix;
+        public RootSide Side = RootSide.None;
+        public Color Color = Color.White;
+        public float Alpha = 1f;
+        public int MinWidth;
+        public int MaxWidth;
+        public int MinHeight;
+        public int MaxHeight;
 
+        private List<UiElement> childs = new List<UiElement>();
 
-        // Private Atributes
-        private Color mLayerColor;
-        private readonly List<UiElement> mChilds = new();
-
-        public UiLayer(UiLayer root, double relX, double relY, double relWidth, double relHeight) 
-        { 
-            RelX = relX;
-            RelY = relY;
-            RelWidth = relWidth;
-            RelHeight = relHeight;
-            Root = root;
-            GetRectangle();
-        }
-
-        public override void Update(InputState inputState)
+        public UiLayer(UiLayer root, float relX, float relY, float relWidth, float relHeight) 
         {
-            mLayerColor = new Color(
-                (int)(BgColor.R * BgColorAlpha), 
-                (int)(BgColor.G * BgColorAlpha), 
-                (int)(BgColor.B * BgColorAlpha), 
-                (int)(255 * BgColorAlpha)
-            );
-            foreach (var child in mChilds) { child.Update(inputState); }
+            Canvas = new(root, relX, relY, relWidth, relHeight);
+            if (root != null )
+            {
+                root.Addchild(this);
+            }
         }
-
         public override void Draw()
         {
-            TextureManager textureManager = TextureManager.Instance;
-            textureManager.GetSpriteBatch().Draw(textureManager.GetTexture("UiLayer"), Rectangle, mLayerColor);
-            foreach (UiElement child in mChilds) { child.Draw(); }
+            var color = new Color((int)(Color.R * Alpha), (int)(Color.G * Alpha), (int)(Color.B * Alpha), (int)(Color.A * Alpha));
+            TextureManager tm = TextureManager.Instance;
+            tm.GetSpriteBatch().Draw(tm.GetTexture("UiLayer"), Canvas.ToRectangle(), color);
+            foreach (UiElement child in childs)
+            {
+                child.Draw();
+            }
         }
 
         public override void OnResolutionChanged()
         {
-            GetRectangle();
-            foreach (var child in mChilds) { child.OnResolutionChanged(); }
-        }
-
-        public void AddToChilds(UiElement child)
-        {
-            mChilds.Add(child);
-        }
-
-        private void GetRectangle()
-        {
-            Vector2 startPos = Vector2.Zero;
-            int width = Globals.mGraphicsDevice.Viewport.Width;
-            int height = Globals.mGraphicsDevice.Viewport.Height;
-
-            if (Root != null)
+            Canvas.Fill = Fill;
+            Canvas.Side = Side;
+            if (MaxWidth > 0) { Canvas.MaxWidth = MaxWidth; }
+            if (MinWidth > 0) { Canvas.MinWidth = MinWidth; }
+            if (MaxHeight > 0) { Canvas.MaxHeight = MaxHeight; }
+            if (MinHeight > 0) { Canvas.MinHeight = MinHeight; }
+            Canvas.Update();
+            foreach (UiElement child in childs)
             {
-                startPos = new(Root.Rectangle.X, Root.Rectangle.Y);
-                width = Root.Rectangle.Width;
-                height = Root.Rectangle.Height;
+                child.OnResolutionChanged();
             }
 
-            float screenWidth = (float)(width * RelWidth);
-            float screenHeight = (float)(height * RelHeight);
+        }
 
-            float screenX = (float)(width * RelX) - (screenWidth / 2) + startPos.X;
-            float screenY = (float)(height * RelY) - (screenHeight / 2) + startPos.Y;
-            Rectangle = new RectangleF(screenX, screenY, screenWidth, screenHeight).ToRectangle();
-            if (Rectangle.Width < MinWidth) { Rectangle.Width = MinWidth; }
-            if (Rectangle.Height < MinHeight) { Rectangle.Height = MinHeight; }
-            if (Rectangle.Width > MaxWidth) { Rectangle.Width = MaxWidth; }
-            if (Rectangle.Height > MaxHeight) { Rectangle.Height = MaxHeight; }
+        public override void Update(InputState inputState)
+        {
+            foreach (UiElement child in childs)
+            {
+                child.Update(inputState);
+            }
+
+        }
+
+        protected void Addchild(UiElement child)
+        {
+            childs.Add(child);
         }
     }
 }

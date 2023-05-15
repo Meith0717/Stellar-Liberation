@@ -68,10 +68,6 @@ namespace Galaxy_Explovive.Game.Layers
             {
                 Globals.mRayTracing = !Globals.mRayTracing;
             }
-            if (inputState.mActionList.Contains(ActionType.Test))
-            {
-                Globals.mLayerManager.AddLayer(new BuildLayer());
-            }
             Globals.mFrustumCuller.Update();
             mParllaxManager.Update();
             Globals.mDebugSystem.Update(gameTime, inputState);
