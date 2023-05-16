@@ -1,73 +1,73 @@
 ﻿using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System.Collections.Generic;
-using System.ComponentModel;
 using static Galaxy_Explovive.Core.UserInterface.UiCanvas;
 
 namespace Galaxy_Explovive.Core.UserInterface.Widgets
 {
     public class UiLayer : UiElement
     {
+        private List<UiElement> mChilds = new();
+
         public RootFill Fill = RootFill.Fix;
         public RootSide Side = RootSide.None;
+        public float RelativX = 0.5f;
+        public float RelativY = 0.5f;
+        public float RelativeH = 0.5f;
+        public float RelativeW = 0.5f;
+        public float? Height = null;
+        public float? Width = null;
         public Color Color = Color.White;
         public float Alpha = 1f;
-        public int MinWidth;
-        public int MaxWidth;
-        public int MinHeight;
-        public int MaxHeight;
-        public int Borgerwidth = 0;
+        public int EdgeWidth = 0;
 
-        private List<UiElement> childs = new List<UiElement>();
-
-        public UiLayer(UiLayer root, double relX, double relY, double relWidth, double relHeight) : base(root) 
-        {
-            Canvas = new(root, (float)relX, (float)relY, (float)relWidth, (float)relHeight);
-        }
+        public UiLayer(UiLayer root) : base(root) { }
 
         public override void Draw()
         {
-            DrawLayer(Borgerwidth);
-            foreach (UiElement child in childs)
+            DrawLayer(EdgeWidth);
+            foreach (UiElement child in mChilds)
             {
                 child.Draw();
             }
+
         }
 
         public override void OnResolutionChanged()
         {
+            Rectangle rootRectangle = Canvas.GetRootRectangle().ToRectangle();
+            Canvas.CenterX = rootRectangle.Width * RelativX;
+            Canvas.CenterY = rootRectangle.Height * RelativY;
+            Canvas.Width = (Width == null) ? rootRectangle.Width * RelativeW : (float)Width;
+            Canvas.Height = (Height == null) ? rootRectangle.Height * RelativeW : (float)Height;
             Canvas.Fill = Fill;
             Canvas.Side = Side;
-            if (MaxWidth > 0) { Canvas.MaxWidth = MaxWidth; }
-            if (MinWidth > 0) { Canvas.MinWidth = MinWidth; }
-            if (MaxHeight > 0) { Canvas.MaxHeight = MaxHeight; }
-            if (MinHeight > 0) { Canvas.MinHeight = MinHeight; }
             Canvas.OnResolutionChanged();
-            foreach (UiElement child in childs)
+            foreach(UiElement child in mChilds)
             {
                 child.OnResolutionChanged();
             }
-
         }
 
         public override void Update(InputState inputState)
         {
-            foreach (UiElement child in childs)
+            foreach (UiElement child in mChilds)
             {
                 child.Update(inputState);
             }
 
         }
 
-        public void Addchild(UiElement child)
+        public void AddToChilds(UiElement child)
         {
-            childs.Add(child);
+            mChilds.Add(child);
         }
 
-        private void DrawLayer(int borgerWidth)
+        private void DrawLayer(int EdgeWidth)
         {
             Color color = new Color(
                 (int)(Color.R * Alpha),
@@ -82,21 +82,21 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
             Rectangle canvas = Canvas.ToRectangle();
 
             // Draw 4 Edges
-            canvas.X += borgerWidth / 2; canvas.Y += borgerWidth / 2;
-            canvas.Width -= borgerWidth; canvas.Height -= borgerWidth;
+            canvas.X += EdgeWidth / 2; canvas.Y += EdgeWidth / 2;
+            canvas.Width -= EdgeWidth; canvas.Height -= EdgeWidth;
             foreach (Point point in canvas.GetCorners())
             {
-                Point edgePoint = point - new Point(borgerWidth/2, borgerWidth/2); 
-                tm.GetSpriteBatch().Draw(edge, new Rectangle(edgePoint, new Point(borgerWidth, borgerWidth)), color);
+                Point edgePoint = point - new Point(EdgeWidth / 2, EdgeWidth / 2);
+                tm.GetSpriteBatch().Draw(edge, new Rectangle(edgePoint, new Point(EdgeWidth, EdgeWidth)), color);
             }
 
             // Draw 4 Borgers
-            for (int i = 0; i < 3; i++) 
-            {            
-                tm.GetSpriteBatch().DrawLine(canvas.GetCorners()[i].ToVector2(), canvas.GetCorners()[i + 1].ToVector2(), color, borgerWidth, 1);
+            for (int i = 0; i < 3; i++)
+            {
+                tm.GetSpriteBatch().DrawLine(canvas.GetCorners()[i].ToVector2(), canvas.GetCorners()[i + 1].ToVector2(), color, EdgeWidth, 1);
             }
-            tm.GetSpriteBatch().DrawLine(canvas.GetCorners()[3].ToVector2(), canvas.GetCorners()[0].ToVector2(), color, borgerWidth, 1);
-            
+            tm.GetSpriteBatch().DrawLine(canvas.GetCorners()[3].ToVector2(), canvas.GetCorners()[0].ToVector2(), color, EdgeWidth, 1);
+
             // raw inner Rectangle
             tm.GetSpriteBatch().Draw(rectangle, canvas, color);
         }

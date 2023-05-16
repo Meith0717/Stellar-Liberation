@@ -1,7 +1,6 @@
 ﻿
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.UserInterface.Widgets;
-using Microsoft.Xna.Framework;
 
 namespace Galaxy_Explovive.Core.UserInterface
 {
@@ -9,7 +8,8 @@ namespace Galaxy_Explovive.Core.UserInterface
     {
         protected UiElement(UiLayer root)
         {
-            root?.Addchild(this);
+            root?.AddToChilds(this);
+            Canvas = new(root);
         }
 
         internal UiCanvas Canvas { get; set; }

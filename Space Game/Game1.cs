@@ -113,8 +113,7 @@ namespace Galaxy_Explovive
             mTextureManager.LoadSpriteTexture("smal", "fonts/smal");
 
             Globals.mLayerManager = mLayerManager = new LayerManager(this, GraphicsDevice, mSpriteBatch, Content, mSoundManager);
-            Globals.mLayerManager.AddLayer(new GameLayer());
-            Globals.mLayerManager.AddLayer(new HudLayer() { UpdateBelow = true });
+            Globals.mLayerManager.AddLayer(new HudLayer());
         }
 
         protected override void Update(GameTime gameTime)
