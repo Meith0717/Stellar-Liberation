@@ -105,6 +105,7 @@ namespace Galaxy_Explovive
             // Ui
             mTextureManager.LoadTexture("Layer", "UserInterface/Layer/layer");
             mTextureManager.LoadTexture("Circle", "UserInterface/Layer/circle");
+            mTextureManager.LoadTexture("Back", "UserInterface/back");
 
             // game fonts
             mTextureManager.LoadSpriteTexture("text", "fonts/text");
@@ -112,7 +113,8 @@ namespace Galaxy_Explovive
             mTextureManager.LoadSpriteTexture("smal", "fonts/smal");
 
             Globals.mLayerManager = mLayerManager = new LayerManager(this, GraphicsDevice, mSpriteBatch, Content, mSoundManager);
-            Globals.mLayerManager.AddLayer(new TestLayer());
+            Globals.mLayerManager.AddLayer(new GameLayer());
+            Globals.mLayerManager.AddLayer(new HudLayer() { UpdateBelow = true });
         }
 
         protected override void Update(GameTime gameTime)

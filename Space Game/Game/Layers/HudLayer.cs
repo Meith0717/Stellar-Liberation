@@ -1,28 +1,34 @@
 ﻿using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
-using Galaxy_Explovive.Core.UserInterface;
 using Galaxy_Explovive.Core.UserInterface.Widgets;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Galaxy_Explovive.Game.Layers
 {
-    internal class TestLayer : Layer
+    internal class HudLayer : Layer
     {
-        private UiLayer mRoot;
+        private UiLayer mTopBar;
 
-        public TestLayer()
+        public HudLayer ()
         {
-            mRoot = new(null, .5f, .5f, .5f, .5f)
+            mTopBar = new(null, .5, .5, .5, .5)
             {
-                Color = Color.LightBlue,
-                Borgerwidth = 100
+                Color = Color.DarkGray,
+                Alpha = .5f,
             };
 
-            new UiLayer(mRoot, .5f, .5f, .5f, .5f)
+            new UiLayer(mTopBar, .5, .5, .1, .5)
             {
-                Color = Color.LightGreen,
-                Borgerwidth = 50
+                MinHeight = 50, 
+                MaxHeight = 50,
+                MinWidth = 50,
+                MaxWidth = 50,
+                Fill = Core.UserInterface.UiCanvas.RootFill.Fit
             };
 
             OnResolutionChanged();
@@ -35,18 +41,18 @@ namespace Galaxy_Explovive.Game.Layers
         public override void Draw()
         {
             mSpriteBatch.Begin();
-            mRoot.Draw();
+            mTopBar.Draw();
             mSpriteBatch.End();
         }
 
         public override void OnResolutionChanged()
         {
-            mRoot.OnResolutionChanged();
+            mTopBar.OnResolutionChanged();
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mRoot.Update(inputState);
+            mTopBar.Update(inputState);
         }
     }
 }

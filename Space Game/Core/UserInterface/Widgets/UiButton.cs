@@ -1,40 +1,51 @@
 ﻿using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Galaxy_Explovive.Core.UserInterface.Widgets
 {
-    public class UiButton : UiElement
+    internal class UiButton : UiElement
     {
-
+        public Action OnKlick { get; set; }
         private Texture2D mTexture;
-        private float mScale;
+        private bool mHover;
 
-        public UiButton(UiLayer root, float relX, float relY, string buttonTexture) : base(root)
+
+        public UiButton(UiLayer root, double relX, double relY, string buttonTexturte, float scale = 1,
+            UiCanvas.RootFill fill = UiCanvas.RootFill.Fix) : base(root)
         {
-            mTexture = TextureManager.Instance.GetTexture("buttonTexture");
-            mTexture = TextureManager.Instance.GetTexture("buttonTexture");
-            Canvas = new(root, relX, relY, 10, 10);
+            mTexture = TextureManager.Instance.GetTexture(buttonTexturte);
+            Canvas = new(root, (float)relX, (float)relY, (int)(mTexture.Width * scale), (int)(mTexture.Height * scale))
+            {
+                Fill = fill
+            };
         }
 
         public override void Draw()
         {
-            throw new NotImplementedException();
+            SpriteBatch sb = TextureManager.Instance.GetSpriteBatch();
+            sb.Draw(mTexture, Canvas.ToRectangle(), mHover ? Color.Gray : Color.White);
         }
 
         public override void OnResolutionChanged()
         {
-            throw new NotImplementedException();
+            Canvas.OnResolutionChanged();
         }
 
         public override void Update(InputState inputState)
         {
-            throw new NotImplementedException();
+            mHover = false;
+            if (Canvas.ToRectangle().Contains(inputState.mMousePosition))
+            {
+                mHover = true;
+                if (inputState.mMouseActionType == MouseActionType.LeftClick)
+                {
+                    if (OnKlick == null) { return; } 
+                    OnKlick();
+                }
+            }
         }
     }
 }

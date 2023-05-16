@@ -23,10 +23,11 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
 
         private List<UiElement> childs = new List<UiElement>();
 
-        public UiLayer(UiLayer root, float relX, float relY, float relWidth, float relHeight) : base(root) 
+        public UiLayer(UiLayer root, double relX, double relY, double relWidth, double relHeight) : base(root) 
         {
-            Canvas = new(root, relX, relY, relWidth, relHeight);
+            Canvas = new(root, (float)relX, (float)relY, (float)relWidth, (float)relHeight);
         }
+
         public override void Draw()
         {
             DrawLayer(Borgerwidth);
@@ -44,7 +45,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
             if (MinWidth > 0) { Canvas.MinWidth = MinWidth; }
             if (MaxHeight > 0) { Canvas.MaxHeight = MaxHeight; }
             if (MinHeight > 0) { Canvas.MinHeight = MinHeight; }
-            Canvas.Update();
+            Canvas.OnResolutionChanged();
             foreach (UiElement child in childs)
             {
                 child.OnResolutionChanged();

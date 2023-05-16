@@ -7,7 +7,6 @@ namespace Galaxy_Explovive.Core.UserInterface
 {
     public abstract class UiElement
     {
-
         protected UiElement(UiLayer root)
         {
             root?.Addchild(this);
@@ -17,7 +16,6 @@ namespace Galaxy_Explovive.Core.UserInterface
         public abstract void Update(InputState inputState);
         public abstract void OnResolutionChanged();
         public abstract void Draw();
-
         
     }
 }

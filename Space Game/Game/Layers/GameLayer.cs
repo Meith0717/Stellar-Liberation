@@ -83,7 +83,9 @@ namespace Galaxy_Explovive.Game.Layers
             Globals.mDebugSystem.ShowRenderInfo(new Vector2(2, 2));
             mSpriteBatch.End();
 
-            mSpriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: Globals.mCamera2d.GetViewTransformationMatrix(), samplerState: SamplerState.PointClamp);
+            mSpriteBatch.Begin(SpriteSortMode.FrontToBack, 
+                transformMatrix: Globals.mCamera2d.GetViewTransformationMatrix(), 
+                samplerState: SamplerState.PointClamp);
             DrawSystems();
             DrawGrid();
             foreach(Cargo c in mShips)
