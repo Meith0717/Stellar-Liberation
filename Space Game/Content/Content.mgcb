@@ -730,18 +730,6 @@
 /processorParam:TextureFormat=Color
 /build:UserInterface/back.png
 
-#begin UserInterface/bg.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:UserInterface/bg.png
-
 #begin UserInterface/button.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -754,7 +742,7 @@
 /processorParam:TextureFormat=Color
 /build:UserInterface/button.png
 
-#begin UserInterface/Monogame.png
+#begin UserInterface/Layer/circle.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -764,9 +752,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:UserInterface/Monogame.png
+/build:UserInterface/Layer/circle.png
 
-#begin UserInterface/UiLayer.png
+#begin UserInterface/Layer/layer.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -776,5 +764,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:UserInterface/UiLayer.png
+/build:UserInterface/Layer/layer.png
 

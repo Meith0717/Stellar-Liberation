@@ -15,15 +15,15 @@ namespace Galaxy_Explovive.Game.Layers
         {
             mRoot = new(null, .5f, .5f, .5f, .5f)
             {
-                Color = Color.White,
+                Color = Color.LightBlue,
+                Borgerwidth = 100
             };
 
-            UiLayer layer = new(mRoot, .5f, .5f, .5f, .5f)
+            new UiLayer(mRoot, .5f, .5f, .5f, .5f)
             {
-                Color = Color.Red,
-                Side = UiCanvas.RootSide.Top
+                Color = Color.LightGreen,
+                Borgerwidth = 50
             };
-
 
             OnResolutionChanged();
         }

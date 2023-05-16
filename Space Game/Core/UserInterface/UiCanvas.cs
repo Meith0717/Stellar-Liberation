@@ -84,7 +84,7 @@ namespace Galaxy_Explovive.Core.UserInterface
             if (Height < MinHeight) { Height = MinHeight; }
             if (Height > MaxHeight) { Height = MinHeight; }
             GetSticky(rootWidth, rootHeight, rootX, rootY);
-            GetSide(rootWidth, rootHeight);
+            GetSide(rootWidth, rootHeight, rootX, rootY);
         }
         
 
@@ -137,24 +137,23 @@ namespace Galaxy_Explovive.Core.UserInterface
                     break;
             }
         }
-        private void GetSide(float rootWidth, float rootHeight)
+        private void GetSide(float rootWidth, float rootHeight, float rootX, float rootY)
         {
-            throw new NotImplementedException();
             switch (Side)
             {
                 case RootSide.None:
                     break;
                 case RootSide.Left:
-                    CenterX -= CenterX - (Width / 2) ; 
+                    CenterX -= CenterX - rootX - (Width / 2) ; 
                     break;
                 case RootSide.Right:
-                    CenterX += rootWidth - (CenterX + (Width / 2));
+                    CenterX += rootWidth + rootX - (CenterX + (Width / 2));
                     break;
                 case RootSide.Top:
-                    CenterY -= CenterY - (Height / 2);
+                    CenterY -= CenterY - rootY - (Height / 2);
                     break;
                 case RootSide.Bottom:
-                    CenterY += rootHeight - (CenterY + (Height / 2));  
+                    CenterY += rootHeight + rootY - (CenterY + (Height / 2));  
                     break;
             }
         }

@@ -101,12 +101,10 @@ namespace Galaxy_Explovive
             mTextureManager.LoadTexture("transparent", "GameObjects/transparent");
             mTextureManager.LoadTexture("projectile", "GameObjects/projectile");
             mTextureManager.LoadTexture("spaceStation", "GameObjects/spaceStation");
-            
+
             // Ui
-            mTextureManager.LoadTexture("UiLayer", "UserInterface/UiLayer");
-            mTextureManager.LoadTexture("Monogame", "UserInterface/Monogame");
-            mTextureManager.LoadTexture("BackGround", "UserInterface/bg");
-            mTextureManager.LoadTexture("back", "UserInterface/back");
+            mTextureManager.LoadTexture("Layer", "UserInterface/Layer/layer");
+            mTextureManager.LoadTexture("Circle", "UserInterface/Layer/circle");
 
             // game fonts
             mTextureManager.LoadSpriteTexture("text", "fonts/text");
