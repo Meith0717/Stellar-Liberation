@@ -1,4 +1,5 @@
-﻿using Galaxy_Explovive.Core.InputManagement;
+﻿using System;
+using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
 using Galaxy_Explovive.Core.UserInterface.Widgets;
 using Microsoft.Xna.Framework;
@@ -13,12 +14,10 @@ namespace Galaxy_Explovive.Game.Layers
         public HudLayer ()
         {
             mTopBar = new(null);
+            mTopBar.Alpha = 0.2f;
 
-            UiLayer item = new UiLayer(mTopBar);
-            item.Color = Color.Black;
-
-            UiButton sprite = new(item, "Back");
-            sprite.Fill = Core.UserInterface.UiCanvas.RootFill.Fit;
+            UiButton exitButton = new(mTopBar, "Back");
+            exitButton.Scale = 0.15f;
             OnResolutionChanged();
         }
 

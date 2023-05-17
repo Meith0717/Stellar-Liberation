@@ -31,8 +31,8 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
         public override void OnResolutionChanged()
         {
             Rectangle rootRectangle = Canvas.GetRootRectangle().ToRectangle();
-            Canvas.CenterX = rootRectangle.Width * RelativX;
-            Canvas.CenterY = rootRectangle.Height * RelativY;
+            Canvas.CenterX = rootRectangle.Width * RelativX + rootRectangle.X;
+            Canvas.CenterY = rootRectangle.Height * RelativY + rootRectangle.Y;
             Canvas.Width = mTexture.Width * Scale; 
             Canvas.Height = mTexture.Height * Scale;
             Canvas.Fill = Fill;

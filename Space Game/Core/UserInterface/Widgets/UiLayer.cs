@@ -34,14 +34,13 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
             {
                 child.Draw();
             }
-
         }
 
         public override void OnResolutionChanged()
         {
             Rectangle rootRectangle = Canvas.GetRootRectangle().ToRectangle();
-            Canvas.CenterX = rootRectangle.Width * RelativX;
-            Canvas.CenterY = rootRectangle.Height * RelativY;
+            Canvas.CenterX = rootRectangle.Width * RelativX + rootRectangle.X;
+            Canvas.CenterY = rootRectangle.Height * RelativY + rootRectangle.Y;
             Canvas.Width = (Width == null) ? rootRectangle.Width * RelativeW : (float)Width;
             Canvas.Height = (Height == null) ? rootRectangle.Height * RelativeW : (float)Height;
             Canvas.Fill = Fill;

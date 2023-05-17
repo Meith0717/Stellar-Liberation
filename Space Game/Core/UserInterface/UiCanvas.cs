@@ -33,9 +33,6 @@ namespace Galaxy_Explovive.Core.UserInterface
         {
             // Get new position depending on the Root
             mRootRectangle = GetRootRectangle();
-            CenterX = mRootRectangle.X + mRootRectangle.Width/2;
-            CenterY = mRootRectangle.Y + mRootRectangle.Height/2;
-
             GetSticky(mRootRectangle.Width, mRootRectangle.Height, mRootRectangle.X, mRootRectangle.Y);
             GetSide(mRootRectangle.Width, mRootRectangle.Height, mRootRectangle.X, mRootRectangle.Y);
         }

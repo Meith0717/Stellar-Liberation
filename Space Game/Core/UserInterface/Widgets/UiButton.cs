@@ -32,8 +32,8 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
         public override void OnResolutionChanged()
         {
             Rectangle rootRectangle = Canvas.GetRootRectangle().ToRectangle();
-            Canvas.CenterX = rootRectangle.Width * RelativX;
-            Canvas.CenterY = rootRectangle.Height * RelativY;
+            Canvas.CenterX = rootRectangle.Width * RelativX + rootRectangle.X;
+            Canvas.CenterY = rootRectangle.Height * RelativY + rootRectangle.Y;
             Canvas.Width = mTexture.Width * Scale;
             Canvas.Height = mTexture.Height * Scale;
             Canvas.Fill = Fill;
@@ -45,7 +45,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
             mHover = false;
             if (Canvas.ToRectangle().Contains(inputState.mMousePosition))
             {
-                mHover= true;
+                mHover = true;
                 if (inputState.mMouseActionType == MouseActionType.LeftClick)
                 {
                     if (OnKlick == null) { return; }
@@ -53,6 +53,5 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
                 }
             }
         }
-
     }
 }
