@@ -718,7 +718,7 @@
 /processorParam:Quality=Best
 /build:SoundEffects/hit.wav
 
-#begin UserInterface/back.png
+#begin UserInterface/buttonContinue.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -728,9 +728,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:UserInterface/back.png
+/build:UserInterface/buttonContinue.png
 
-#begin UserInterface/button.png
+#begin UserInterface/buttonExitgame.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -740,7 +740,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:UserInterface/button.png
+/build:UserInterface/buttonExitgame.png
 
 #begin UserInterface/Layer/circle.png
 /importer:TextureImporter
@@ -765,4 +765,28 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:UserInterface/Layer/layer.png
+
+#begin UserInterface/menueButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UserInterface/menueButton.png
+
+#begin UserInterface/menueButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UserInterface/menueButton.png
 

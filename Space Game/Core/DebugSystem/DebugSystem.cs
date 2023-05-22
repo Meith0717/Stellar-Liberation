@@ -41,6 +41,7 @@ namespace Galaxy_Explovive.Core.Debug
 
         public void UpdateFrameCounting()
         {
+            if (mGameTime == null) { return; }
             float deltaTime = (float)mGameTime.ElapsedGameTime.Milliseconds / 1000;
             mFrameDuration = mGameTime.ElapsedGameTime.Milliseconds;
             mUpdateCounter += deltaTime;

@@ -38,11 +38,12 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
 
         public override void OnResolutionChanged()
         {
-            Rectangle rootRectangle = Canvas.GetRootRectangle().ToRectangle();
-            Canvas.CenterX = rootRectangle.Width * RelativX + rootRectangle.X;
-            Canvas.CenterY = rootRectangle.Height * RelativY + rootRectangle.Y;
-            Canvas.Width = (Width == null) ? rootRectangle.Width * RelativeW : (float)Width;
-            Canvas.Height = (Height == null) ? rootRectangle.Height * RelativeW : (float)Height;
+            Canvas.RelativeX = RelativX;
+            Canvas.RelativeY = RelativY;
+            Canvas.RelativeW = RelativeW;
+            Canvas.RelativeH = RelativeH;
+            Canvas.Width = Width; 
+            Canvas.Height = Height;
             Canvas.Fill = Fill;
             Canvas.Side = Side;
             Canvas.OnResolutionChanged();
@@ -68,7 +69,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
 
         private void DrawLayer(int EdgeWidth)
         {
-            Color color = new Color(
+            Color color = new(
                 (int)(Color.R * Alpha),
                 (int)(Color.G * Alpha),
                 (int)(Color.B * Alpha),

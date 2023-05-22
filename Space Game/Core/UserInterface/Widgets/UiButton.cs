@@ -10,18 +10,25 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
 {
     public class UiButton : UiElement
     {
-        public RootFill Fill = RootFill.Fix;
-        public float Scale = 1f;
+        public RootSide Side = RootSide.None;
         public float RelativX = 0.5f;
         public float RelativY = 0.5f;
         public Action OnKlick = null;
 
-        private Texture2D mTexture;
+        private float mRelativeW;
+        private float mRelativeH;
+        private readonly Texture2D mTexture;
+        private float mTextureAspectRatio;
+        private float mTargetAspetRatio;
         private bool mHover;
 
-        public UiButton(UiLayer root, string texture) : base(root)
+        public UiButton(UiLayer root, string texture, float scale) : base(root)
         {
             mTexture = TextureManager.Instance.GetTexture(texture);
+            mTextureAspectRatio = mTexture.Width / mTexture.Height;
+            Rectangle rootRect = Canvas.GetRootRectangle().ToRectangle();
+            mRelativeH = mTexture.Height / (float)rootRect.Height * scale;
+            mRelativeW = mTexture.Width / (float)rootRect.Width * scale;
         }
 
         public override void Draw()
@@ -31,12 +38,21 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
 
         public override void OnResolutionChanged()
         {
-            Rectangle rootRectangle = Canvas.GetRootRectangle().ToRectangle();
-            Canvas.CenterX = rootRectangle.Width * RelativX + rootRectangle.X;
-            Canvas.CenterY = rootRectangle.Height * RelativY + rootRectangle.Y;
-            Canvas.Width = mTexture.Width * Scale;
-            Canvas.Height = mTexture.Height * Scale;
-            Canvas.Fill = Fill;
+            Canvas.RelativeX = RelativX;
+            Canvas.RelativeY = RelativY;
+            Canvas.Side = Side;
+            Rectangle root = Canvas.GetRootRectangle().ToRectangle();
+            mTargetAspetRatio = root.Width * mRelativeW / root.Height * mRelativeH;
+            if (mTargetAspetRatio > mTextureAspectRatio)
+            {
+                Canvas.Height = root.Height * mRelativeH;
+                Canvas.Width = Canvas.Height * mTextureAspectRatio;
+            }
+            else
+            {
+                Canvas.Width = root.Width * mRelativeW;
+                Canvas.Height = Canvas.Width / mTextureAspectRatio;
+            }
             Canvas.OnResolutionChanged();
         }
 
