@@ -2,15 +2,17 @@
 using Galaxy_Explovive.Core;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
+using Galaxy_Explovive.Core.MyMath;
 using Galaxy_Explovive.Core.UserInterface.Widgets;
 using Microsoft.Xna.Framework;
 
 namespace Galaxy_Explovive.Game.Layers
 {
-    internal class HudLayer : Layer
+    public class HudLayer : Layer
     {
         private UiLayer mTopBar;
         private UiLayer mBottomBar;
+        private UiText mGameTimeText;
 
         public HudLayer ()
         {
@@ -19,10 +21,13 @@ namespace Galaxy_Explovive.Game.Layers
             mTopBar = new(null)
             {
                 RelativeW = 1,
-                Color = Color.DimGray,
+                Color = Color.Black,
+                Alpha = 0.5f,
                 Height = 40,
                 Side = Core.UserInterface.UiCanvas.RootSide.Top
             };
+
+            mGameTimeText = new(mTopBar) { FontColor = Color.White};
 
             mBottomBar = new(null)
             {
@@ -70,6 +75,11 @@ namespace Galaxy_Explovive.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            if (inputState.mActionList.Contains(ActionType.ESC))
+            {
+                Pause();
+            }
+            mGameTimeText.Text = MyMath.Instance.GetTimeFromSeconds((int)Globals.mGameLayer.GameTime);
             mTopBar.Update(inputState);
             mBottomBar.Update(inputState);
         }

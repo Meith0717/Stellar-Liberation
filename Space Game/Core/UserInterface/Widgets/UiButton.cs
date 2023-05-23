@@ -14,6 +14,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
         public float RelativX = 0.5f;
         public float RelativY = 0.5f;
         public Action OnKlick = null;
+        public MouseActionType MouseActionType = MouseActionType.LeftClickReleased;
 
         private float mRelativeW;
         private float mRelativeH;
@@ -62,7 +63,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
             if (Canvas.ToRectangle().Contains(inputState.mMousePosition))
             {
                 mHover = true;
-                if (inputState.mMouseActionType == MouseActionType.LeftClick)
+                if (inputState.mMouseActionType == MouseActionType)
                 {
                     if (OnKlick == null) { return; }
                     OnKlick();

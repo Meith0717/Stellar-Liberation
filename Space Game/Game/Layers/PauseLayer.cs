@@ -15,9 +15,8 @@ namespace Galaxy_Explovive.Game.Layers
             UpdateBelow = false;
 
             mBackgroundLayer = new(null) { Color = Color.Black, Alpha = .5f, Fill = Core.UserInterface.UiCanvas.RootFill.Cover };
-            UiLayer frame = new(mBackgroundLayer) { Color = new Color(63, 63, 63), EdgeWidth = 30};
-            _ = new UiButton(frame, "buttonContinue", 0.2f) { RelativY = 0.25f, OnKlick = Globals.mLayerManager.PopLayer};
-            _ = new UiButton(frame, "buttonExitgame", 0.2f){ RelativY = 0.75f, OnKlick = Globals.mLayerManager.Exit};
+            _ = new UiButton(mBackgroundLayer, "buttonContinue", 0.05f) { RelativY = 0.4f, OnKlick = Globals.mLayerManager.PopLayer};
+            _ = new UiButton(mBackgroundLayer, "buttonExitgame", 0.05f){ RelativY = 0.6f, OnKlick = Globals.mLayerManager.Exit};
             OnResolutionChanged();
         }
 
@@ -39,6 +38,10 @@ namespace Galaxy_Explovive.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            if (inputState.mActionList.Contains(ActionType.ESC))
+            {
+                Globals.mLayerManager.PopLayer();
+            }
             mBackgroundLayer.Update(inputState);
         }
     }

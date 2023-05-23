@@ -52,7 +52,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             // Other Stuff
             base.UpdateInputs(inputState);
             float velocity = MathF.Sqrt(1/(mRadius*10));   
-            float angleUpdate = mAngle + (float)gameTime.TotalGameTime.TotalSeconds * velocity;
+            float angleUpdate = mAngle + Globals.mGameLayer.GameTime * velocity;
             Position = MyMath.Instance.GetCirclePosition(mRadius, mAngle + angleUpdate) + mCenterPosition;
             Rotation += 0.004f; 
             mShadowRotation = MyMath.Instance.GetRotation(mCenterPosition, Position);

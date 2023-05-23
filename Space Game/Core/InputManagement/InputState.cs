@@ -7,7 +7,7 @@ namespace Galaxy_Explovive.Core.InputManagement
 {
     public enum ActionType
     {
-        Exit,
+        ESC,
         CameraZoomIn,
         CameraZoomOut,
         CameraZoomInFast,

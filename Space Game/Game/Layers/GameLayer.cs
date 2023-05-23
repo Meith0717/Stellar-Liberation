@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using Galaxy_Explovive.Core.Map;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
 using Galaxy_Explovive.Core.MyMath;
+using System.Diagnostics;
 
 namespace Galaxy_Explovive.Game.Layers
 {
@@ -27,9 +28,9 @@ namespace Galaxy_Explovive.Game.Layers
 
         [JsonIgnore] public RectangleF mMapSize = new RectangleF(new Vector2(mapWidth, mapHeight), new Vector2(mapWidth, mapHeight) * 2);
 
-        [JsonProperty] public double mPassedSeconds = 0;
         [JsonProperty] private PlanetSystem mHomeSystem;
         [JsonProperty] private List<PlanetSystem> mPlanetSystemList = new List<PlanetSystem>();
+        [JsonProperty] public float GameTime { get; set; }
 
         // Recources
         [JsonProperty] public double mAlloys;
@@ -53,12 +54,14 @@ namespace Galaxy_Explovive.Game.Layers
             mParllaxManager.Add(new("gameBackground", 0, 0.1f));
             mParllaxManager.Add(new("gameBackgroundParlax2", 1, 0.25f));
             mParllaxManager.Add(new("gameBackgroundParlax1", 2, 0.5f));
+            mShips.Add(new(MyMath.Instance.GetRandomVector2(mHomeSystem.Position, 1000)));
             OnResolutionChanged();
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mPassedSeconds += gameTime.ElapsedGameTime.Milliseconds / 1000d;
+            GameTime += gameTime.ElapsedGameTime.Milliseconds / 1000f;
+            Debug.WriteLine(GameTime);
             UpdateSystems(gameTime, inputState);
             foreach (Cargo c in mShips)
             {

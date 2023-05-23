@@ -37,7 +37,7 @@ namespace Galaxy_Explovive.Core.InputManagement
             // Dictionary for keyboard keys that have been pressed and corresponding actions.
             mKeyBindingsKeyboardPressed = new Dictionary<Keys, ActionType>
             {
-                { Keys.Escape, ActionType.Exit },
+                { Keys.Escape, ActionType.ESC },
                 { Keys.Tab, ActionType.GoHome },
                 { Keys.F11, ActionType.ToggleFullscreen},
                 { Keys.X, ActionType.Stop },
