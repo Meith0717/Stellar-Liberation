@@ -66,11 +66,11 @@ public class LayerManager
     }
 
     // draw layers
-    public void Draw()
+    public void Draw(SpriteBatch spriteBatch)
     {
         foreach (Layer layer in mLayerStack)
         {
-            layer.Draw();
+            layer.Draw(mSpriteBatch);
         }
     }
 

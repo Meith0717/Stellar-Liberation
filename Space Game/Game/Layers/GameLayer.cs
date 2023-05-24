@@ -15,8 +15,8 @@ using System;
 using System.Collections.Generic;
 using Galaxy_Explovive.Core.Map;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
-using Galaxy_Explovive.Core.MyMath;
 using System.Diagnostics;
+using Galaxy_Explovive.Core.Utility;
 
 namespace Galaxy_Explovive.Game.Layers
 {
@@ -48,13 +48,13 @@ namespace Galaxy_Explovive.Game.Layers
             InitializeGlobals();
             mSpatialHashing = new SpatialHashing<GameObject>(10000);
             mPlanetSystemList = MapBuilder.Instance.Generate(25000, new Vector2(mapWidth, mapHeight));
-            mHomeSystem = mPlanetSystemList[Globals.mRandom.Next(mPlanetSystemList.Count)];
+            mHomeSystem = MyUtility.GetRandomElement(mPlanetSystemList);
             Globals.mCamera2d.mTargetPosition = mHomeSystem.Position;
             mParllaxManager = new();
             mParllaxManager.Add(new("gameBackground", 0, 0.1f));
             mParllaxManager.Add(new("gameBackgroundParlax2", 1, 0.25f));
             mParllaxManager.Add(new("gameBackgroundParlax1", 2, 0.5f));
-            mShips.Add(new(MyMath.Instance.GetRandomVector2(mHomeSystem.Position, 1000)));
+            mShips.Add(new(MyUtility.GetRandomVector2(mHomeSystem.Position, 1000)));
             OnResolutionChanged();
         }
 
@@ -77,16 +77,16 @@ namespace Galaxy_Explovive.Game.Layers
             Globals.mCamera2d.Update(gameTime, inputState);
         }
 
-        public override void Draw()
+        public override void Draw(SpriteBatch spriteBatch)
         {
             Globals.mDebugSystem.UpdateFrameCounting();
 
-            mSpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             mParllaxManager.Draw();
             Globals.mDebugSystem.ShowRenderInfo(new Vector2(2, 2));
-            mSpriteBatch.End();
+            spriteBatch.End();
 
-            mSpriteBatch.Begin(SpriteSortMode.FrontToBack, 
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, 
                 transformMatrix: Globals.mCamera2d.GetViewTransformationMatrix(), 
                 samplerState: SamplerState.PointClamp);
             DrawSystems();
@@ -96,7 +96,7 @@ namespace Galaxy_Explovive.Game.Layers
                 c.Draw();
             }
             Globals.mDebugSystem.DrawNearMousObjects();
-            mSpriteBatch.End();
+            spriteBatch.End();
         }
 
         public override void OnResolutionChanged()

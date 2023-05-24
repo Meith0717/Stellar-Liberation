@@ -12,7 +12,6 @@ namespace Galaxy_Explovive.Core.LayerManagement;
 public abstract class Layer
 {
     protected GraphicsDevice mGraphicsDevice;
-    protected SpriteBatch mSpriteBatch;
     protected LayerManager mLayerManager;
     protected ContentManager mContentManager;
 
@@ -26,14 +25,13 @@ public abstract class Layer
     {
         mLayerManager = Globals.mLayerManager;
         mGraphicsDevice = Globals.mGraphicsDevice;
-        mSpriteBatch = Globals.mSpriteBatch;
         mContentManager = Globals.mContentManager;
         mSoundManager = Globals.mSoundManager;
     }
 
     public abstract void Update(GameTime gameTime, InputState inputState);
 
-    public abstract void Draw();
+    public abstract void Draw(SpriteBatch spriteBatch);
 
     public abstract void Destroy();
 

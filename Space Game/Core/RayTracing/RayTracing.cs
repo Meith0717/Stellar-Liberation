@@ -1,8 +1,7 @@
-﻿using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.TextureManagement;
+﻿using Galaxy_Explovive.Core.TextureManagement;
+using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Game.GameObjects;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 
@@ -44,7 +43,7 @@ namespace Galaxy_Explovive.Core.RayTracing
             for (float radiant = 0; radiant < (2 * MathF.PI); radiant += (MathF.PI * 2) / RayAmount)
             {
                 // Create Ray
-                Vector2 EndPosition = MyMath.MyMath.Instance.GetCirclePosition(mBorderLength, radiant) + scource;
+                Vector2 EndPosition = MyUtility.GetVector2(mBorderLength, radiant) + scource;
                 Ray ray = new Ray(scource, EndPosition, radiant);
 
                 // Add Ray with angle i to List

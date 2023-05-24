@@ -20,7 +20,6 @@ namespace Galaxy_Explovive.Core
         public static SpriteBatch mSpriteBatch;         // Will not be saved
         public static ContentManager mContentManager;   // Will not be saved
         public static SoundManager mSoundManager;       // Will not be saved
-        public static Random mRandom;
         public static Camera2d mCamera2d;
         public static GameLayer mGameLayer;
         public static DebugSystem mDebugSystem;

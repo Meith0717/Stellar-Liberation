@@ -5,6 +5,7 @@ using System.Linq;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft;
 using MonoGame.Extended;
 using Galaxy_Explovive.Core.GameLogik;
+using Galaxy_Explovive.Core.Utility;
 
 namespace Galaxy_Explovive.Core.Waepons
 {
@@ -29,7 +30,7 @@ namespace Galaxy_Explovive.Core.Waepons
             ProjectileColor = color;
             Velocity = 0.5f;
             Direction = (target.Position - Position).NormalizedCopy();
-            Rotation = MyMath.MyMath.Instance.GetRotation(Position, Vector2.Zero);
+            Rotation = MyUtility.GetAngle(Position, Vector2.Zero);
         }
 
         public void Update(GameTime gameTime)
@@ -53,7 +54,7 @@ namespace Galaxy_Explovive.Core.Waepons
             var ships = ObjectLocator.Instance.GetObjectsInRadius(Position, 40).OfType<Spacecraft>().ToList();
             ships.Remove(OriginShip);
             if (ships.Count <= 0) { return; }
-            Globals.mSoundManager.PlaySound("hit", (float)Globals.mRandom.NextDouble());
+            Globals.mSoundManager.PlaySound("hit", (float)MyUtility.Random.NextDouble());
             ships[0].Hit(10);
             Remove = true;
         }

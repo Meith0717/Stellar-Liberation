@@ -3,11 +3,11 @@ using MonoGame.Extended;
 using Newtonsoft.Json;
 using Galaxy_Explovive.Core;
 using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.MyMath;
 using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
 using System;
 using Galaxy_Explovive.Core.GameObjects.Types;
+using Galaxy_Explovive.Core.Utility;
 
 namespace Galaxy_Explovive.Game.GameObjects
 {
@@ -19,7 +19,6 @@ namespace Galaxy_Explovive.Game.GameObjects
         [JsonProperty] private double mAddAllois;
         [JsonProperty] private double mAddEnergy;
         [JsonProperty] private double mAddCrystals;
-        [JsonProperty] private PlanetType mPlanetType;
         [JsonProperty] private Vector2 mCenterPosition;
         [JsonProperty] public float mAngle { get; private set; }
 
@@ -29,7 +28,7 @@ namespace Galaxy_Explovive.Game.GameObjects
         public Planet(int radius, Vector2 CenterPosition, Color lightColor, PlanetType planetType)
         {
             // Location
-            mAngle = Globals.mRandom.NextAngle();
+            mAngle = MyUtility.Random.NextAngle();
                                                                                              
             // Rendering
             TextureId = planetType.Texture;
@@ -53,9 +52,9 @@ namespace Galaxy_Explovive.Game.GameObjects
             base.UpdateInputs(inputState);
             float velocity = MathF.Sqrt(1/(mRadius*10));   
             float angleUpdate = mAngle + Globals.mGameLayer.GameTime * velocity;
-            Position = MyMath.Instance.GetCirclePosition(mRadius, mAngle + angleUpdate) + mCenterPosition;
+            Position = MyUtility.GetVector2(mRadius, mAngle + angleUpdate) + mCenterPosition;
             Rotation += 0.004f; 
-            mShadowRotation = MyMath.Instance.GetRotation(mCenterPosition, Position);
+            mShadowRotation = MyUtility.GetAngle(mCenterPosition, Position);
 
             // Add To Spatial Hashing
             AddToSpatialHashing();

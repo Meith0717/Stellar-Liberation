@@ -5,7 +5,8 @@ using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System.Collections.Generic;
-using static Galaxy_Explovive.Core.UserInterface.UiCanvas;
+using static Galaxy_Explovive.Core.UserInterface.UiWidgets.UiCanvas;
+using Galaxy_Explovive.Core.UserInterface.UiWidgets;
 
 namespace Galaxy_Explovive.Core.UserInterface.Widgets
 {

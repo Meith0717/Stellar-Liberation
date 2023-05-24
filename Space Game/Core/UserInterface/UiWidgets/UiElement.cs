@@ -1,8 +1,7 @@
-﻿
-using Galaxy_Explovive.Core.InputManagement;
+﻿using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.UserInterface.Widgets;
 
-namespace Galaxy_Explovive.Core.UserInterface
+namespace Galaxy_Explovive.Core.UserInterface.UiWidgets
 {
     public abstract class UiElement
     {
@@ -16,6 +15,6 @@ namespace Galaxy_Explovive.Core.UserInterface
         public abstract void Update(InputState inputState);
         public abstract void OnResolutionChanged();
         public abstract void Draw();
-        
+
     }
 }

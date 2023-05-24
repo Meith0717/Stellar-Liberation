@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Galaxy_Explovive.Core.RayTracing;
 using Galaxy_Explovive.Core.GameObjects.Types;
-using Galaxy_Explovive.Core.MyMath;
+using Galaxy_Explovive.Core.Utility;
 
 namespace Galaxy_Explovive.Game.GameObjects
 {
@@ -41,7 +41,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             mStar = new Star(position);
             mPlanets = new List<Planet>();
             mRadiusLimit = mStar.TextureWidth / 2 * mStar.TextureSclae;
-            for (int i = 1; i <= Globals.mRandom.Next(2, 6); i++)
+            for (int i = 1; i <= MyUtility.Random.Next(2, 6); i++)
             {
                 PlanetType planetType = GetPlanetType(i);
                 if (i != 0) { mRadiusLimit += 300 + (1000 * planetType.Size); }

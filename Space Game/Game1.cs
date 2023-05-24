@@ -7,7 +7,6 @@ using Galaxy_Explovive.Core.LayerManagement;
 using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using System;
-using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Game.Layers;
 
 namespace Galaxy_Explovive
@@ -42,11 +41,13 @@ namespace Galaxy_Explovive
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            base.Initialize();
             Globals.mGraphicsDevice = GraphicsDevice;
             Globals.mContentManager = Content;
             Globals.mSoundManager = mSoundManager;
-            Globals.mRandom = new Random();
-            base.Initialize();
+            Globals.mLayerManager = mLayerManager = new LayerManager(this, GraphicsDevice, mSpriteBatch, Content, mSoundManager);
+            Globals.mLayerManager.AddLayer(new GameLayer());
+            Globals.mLayerManager.AddLayer(new HudLayer()); ;
             MouseCursor cursor = MouseCursor.FromTexture2D(Content.Load<Texture2D>("cursor"), 0, 0);
             Mouse.SetCursor(cursor);
         }
@@ -114,9 +115,6 @@ namespace Galaxy_Explovive
             mTextureManager.LoadSpriteTexture("title", "fonts/title");
             mTextureManager.LoadSpriteTexture("smal", "fonts/smal");
 
-            Globals.mLayerManager = mLayerManager = new LayerManager(this, GraphicsDevice, mSpriteBatch, Content, mSoundManager);
-            Globals.mLayerManager.AddLayer(new GameLayer());
-            Globals.mLayerManager.AddLayer(new HudLayer()); ;
         }
 
         protected override void Update(GameTime gameTime)
@@ -125,7 +123,6 @@ namespace Galaxy_Explovive
             {
                 Exit();
             }
-            // TODO: Add your update logic here
             // handle window resize
             if (mResulutionWasResized)
             {
@@ -139,23 +136,16 @@ namespace Galaxy_Explovive
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Transparent);
-            // TODO: Add your drawing code here
-            mLayerManager.Draw();
+            mLayerManager.Draw(mSpriteBatch);
             base.Draw(gameTime);
         }
 
         // Some Stuff
         public void ToggleFullscreen()
         {
-            if (mIsFullScreen)
-            {
-                UnSetFullscreen();
-            }
-            else
-            {
-                SetFullscreen();
-            }
+            Action action = mIsFullScreen ? UnSetFullscreen : SetFullscreen;
             mIsFullScreen = !mIsFullScreen;
+            action();
         }
 
         private void SetFullscreen()

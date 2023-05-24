@@ -3,7 +3,7 @@ using MonoGame.Extended;
 using System;
 using System.ComponentModel;
 
-namespace Galaxy_Explovive.Core.UserInterface
+namespace Galaxy_Explovive.Core.UserInterface.UiWidgets
 {
     public class UiCanvas
     {
@@ -44,21 +44,21 @@ namespace Galaxy_Explovive.Core.UserInterface
             mRootRectangle = GetRootRectangle();
             mCenterX = mRootRectangle.Width * RelativeX + mRootRectangle.X;
             mCenterY = mRootRectangle.Height * RelativeY + mRootRectangle.Y;
-            mWidth = (Width == null) ? mRootRectangle.Width * RelativeW : (float)Width;
-            mHeight = (Height == null) ? mRootRectangle.Height * RelativeW : (float)Height;
+            mWidth = Width == null ? mRootRectangle.Width * RelativeW : (float)Width;
+            mHeight = Height == null ? mRootRectangle.Height * RelativeW : (float)Height;
             GetSticky(mRootRectangle.Width, mRootRectangle.Height, mRootRectangle.X, mRootRectangle.Y);
             GetSide(mRootRectangle.Width, mRootRectangle.Height, mRootRectangle.X, mRootRectangle.Y);
 
         }
-        
+
         public Rectangle ToRectangle()
         {
-            float X = mCenterX - (mWidth / 2);
-            float Y = mCenterY - (mHeight / 2);
-            return new RectangleF(X, Y , mWidth, mHeight).ToRectangle();
+            float X = mCenterX - mWidth / 2;
+            float Y = mCenterY - mHeight / 2;
+            return new RectangleF(X, Y, mWidth, mHeight).ToRectangle();
         }
 
-        public  RectangleF GetRootRectangle()
+        public RectangleF GetRootRectangle()
         {
             float rootX, rootY, rootWidth, rootHeight;
 
@@ -71,8 +71,8 @@ namespace Galaxy_Explovive.Core.UserInterface
             {
                 rootWidth = mRoot.Canvas.mWidth;
                 rootHeight = mRoot.Canvas.mHeight;
-                rootX = mRoot.Canvas.mCenterX - (rootWidth / 2);
-                rootY = mRoot.Canvas.mCenterY - (rootHeight / 2);
+                rootX = mRoot.Canvas.mCenterX - rootWidth / 2;
+                rootY = mRoot.Canvas.mCenterY - rootHeight / 2;
             }
             return new RectangleF(rootX, rootY, rootWidth, rootHeight);
         }
@@ -92,8 +92,8 @@ namespace Galaxy_Explovive.Core.UserInterface
                 case RootFill.Cover:
                     mWidth = rootWidth;
                     mHeight = rootHeight;
-                    mCenterX = rootX + (rootWidth / 2);
-                    mCenterY = rootY + (rootHeight / 2);
+                    mCenterX = rootX + rootWidth / 2;
+                    mCenterY = rootY + rootHeight / 2;
                     break;
 
                 case RootFill.Fill:
@@ -107,8 +107,8 @@ namespace Galaxy_Explovive.Core.UserInterface
                         mWidth = rootWidth;
                         mHeight = mWidth / aspectRatio;
                     }
-                    mCenterX = rootX + (rootWidth / 2);
-                    mCenterY = rootY + (rootHeight / 2);
+                    mCenterX = rootX + rootWidth / 2;
+                    mCenterY = rootY + rootHeight / 2;
                     break;
 
                 case RootFill.Fit:
@@ -122,8 +122,8 @@ namespace Galaxy_Explovive.Core.UserInterface
                         mWidth = rootWidth;
                         mHeight = mWidth / aspectRatio;
                     }
-                    mCenterX = rootX + (rootWidth / 2);
-                    mCenterY = rootY + (rootHeight / 2);
+                    mCenterX = rootX + rootWidth / 2;
+                    mCenterY = rootY + rootHeight / 2;
                     break;
             }
         }
@@ -134,16 +134,16 @@ namespace Galaxy_Explovive.Core.UserInterface
                 case RootSide.None:
                     break;
                 case RootSide.Left:
-                    mCenterX -= mCenterX - rootX - (mWidth / 2) ; 
+                    mCenterX -= mCenterX - rootX - mWidth / 2;
                     break;
                 case RootSide.Right:
-                    mCenterX += rootWidth + rootX - (mCenterX + (mWidth / 2));
+                    mCenterX += rootWidth + rootX - (mCenterX + mWidth / 2);
                     break;
                 case RootSide.Top:
-                    mCenterY -= mCenterY - rootY - (mHeight / 2);
+                    mCenterY -= mCenterY - rootY - mHeight / 2;
                     break;
                 case RootSide.Bottom:
-                    mCenterY += rootHeight + rootY - (mCenterY + (mHeight / 2));  
+                    mCenterY += rootHeight + rootY - (mCenterY + mHeight / 2);
                     break;
             }
         }

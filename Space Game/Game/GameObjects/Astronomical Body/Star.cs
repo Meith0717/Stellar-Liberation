@@ -4,6 +4,7 @@ using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using System;
 using Galaxy_Explovive.Core.GameObjects.Types;
+using Galaxy_Explovive.Core.Utility;
 
 namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
 {
@@ -15,7 +16,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
 
         public Star(Vector2 position)
         {
-            int randIndex = Globals.mRandom.Next(StarTypes.types.Count);
+            int randIndex = MyUtility.Random.Next(StarTypes.types.Count);
             mType = StarTypes.types[randIndex];
             // Location
             Position = position;

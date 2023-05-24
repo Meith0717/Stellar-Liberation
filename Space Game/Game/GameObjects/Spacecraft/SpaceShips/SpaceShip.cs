@@ -3,8 +3,8 @@ using Galaxy_Explovive.Core.GameLogik;
 using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.MovementController;
-using Galaxy_Explovive.Core.MyMath;
 using Galaxy_Explovive.Core.TextureManagement;
+using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Core.Weapons;
 using Microsoft.Xna.Framework;
 using System;  
@@ -96,14 +96,14 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
         private void UpdateNavigation(GameTime gameTime, InputState inputState)
         {
             IsMoving = false;
-            float targetRotation = MyMath.Instance.GetRotation(Position, TargetPosition);
+            float targetRotation = MyUtility.GetAngle(Position, TargetPosition);
             float rotationRest = MathF.Abs(Rotation - targetRotation);
             float distanceToTarget = Vector2.Subtract(TargetPosition, Position).Length();
             Rotation += MovementController.Instance.GetRotation(Rotation, targetRotation, rotationRest);
             mVelocity += MovementController.Instance.GetVelocity(inputState, IsSelect, MaxVelocity, mVelocity, distanceToTarget);
             if (mVelocity == 0) { TargetPosition = Position; return; }
             IsMoving = true;
-            Vector2 directionVector = MyMath.Instance.GetDirection(Rotation);
+            Vector2 directionVector = MyUtility.GetDirection(Rotation);
             Position += directionVector * mVelocity * gameTime.ElapsedGameTime.Milliseconds;
             mTravelTime = (distanceToTarget /  mVelocity) / 1000;
         }
@@ -113,7 +113,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             if (!IsMoving) { return; }
             TextureManager.Instance.DrawAdaptiveLine(Position, TargetPosition, Color.LightGreen, 2, 0);
             TextureManager.Instance.DrawString("text", Position + TextureOffset ,
-                MyMath.Instance.GetTimeFromSeconds((int)mTravelTime), Color.Red);
+                MyUtility.ConvertSecondsToTimeUnits((int)mTravelTime), Color.Red);
         }
 
         public void DrawTargetCrosshar()

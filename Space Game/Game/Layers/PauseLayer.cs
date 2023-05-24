@@ -1,8 +1,10 @@
 ﻿using Galaxy_Explovive.Core;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
+using Galaxy_Explovive.Core.UserInterface.UiWidgets;
 using Galaxy_Explovive.Core.UserInterface.Widgets;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Galaxy_Explovive.Game.Layers
 {
@@ -14,7 +16,7 @@ namespace Galaxy_Explovive.Game.Layers
         {
             UpdateBelow = false;
 
-            mBackgroundLayer = new(null) { Color = Color.Black, Alpha = .5f, Fill = Core.UserInterface.UiCanvas.RootFill.Cover };
+            mBackgroundLayer = new(null) { Color = Color.Black, Alpha = .5f, Fill = UiCanvas.RootFill.Cover };
             _ = new UiButton(mBackgroundLayer, "buttonContinue", 0.05f) { RelativY = 0.4f, OnKlick = Globals.mLayerManager.PopLayer};
             _ = new UiButton(mBackgroundLayer, "buttonExitgame", 0.05f){ RelativY = 0.6f, OnKlick = Globals.mLayerManager.Exit};
             OnResolutionChanged();
@@ -24,11 +26,11 @@ namespace Galaxy_Explovive.Game.Layers
         {
         }
 
-        public override void Draw()
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            Globals.mSpriteBatch.Begin();
+            spriteBatch.Begin();
             mBackgroundLayer.Draw();
-            Globals.mSpriteBatch.End();
+            spriteBatch.End();
         }
 
         public override void OnResolutionChanged()

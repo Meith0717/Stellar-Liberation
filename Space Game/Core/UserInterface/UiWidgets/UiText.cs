@@ -1,5 +1,6 @@
 ﻿using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
+using Galaxy_Explovive.Core.UserInterface.UiWidgets;
 using Microsoft.Xna.Framework;
 using System;
 
