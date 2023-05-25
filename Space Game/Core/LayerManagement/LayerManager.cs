@@ -1,9 +1,6 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.SoundManagement;
-using Galaxy_Explovive.Game.Layers;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,24 +9,13 @@ namespace Galaxy_Explovive.Core.LayerManagement;
 public class LayerManager
 {
     private readonly Game1 mGame;
-    private readonly GraphicsDevice mGraphicsDevice;
-    private readonly SpriteBatch mSpriteBatch;
-    private readonly ContentManager mContentManager;
-
-    private readonly SoundManager mSoundManager;
 
     // layer stack
     private readonly LinkedList<Layer> mLayerStack = new LinkedList<Layer>();
 
-    public LayerManager(Game1 game, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch,
-        ContentManager contentManager, SoundManager soundManager)
+    public LayerManager(Game1 game)
     {
         mGame = game;
-        mGraphicsDevice = graphicsDevice;
-        mSpriteBatch = spriteBatch;
-        mContentManager = contentManager;
-        mSoundManager = soundManager;
-        //mGame.ToggleFullscreen();
     }
 
     // add and remove layers from stack
@@ -48,13 +34,8 @@ public class LayerManager
     }
 
     // update layers
-    public void Update(GameTime gameTime, InputState inputState, GameWindow window, GraphicsDeviceManager graphic)
+    public void Update(GameTime gameTime, InputState inputState)
     {
-        if (inputState.mActionList.Contains(ActionType.ToggleFullscreen))
-        {
-            mGame.ToggleFullscreen();
-        }
-
         foreach (Layer layer in mLayerStack.Reverse())
         {
             layer.Update(gameTime, inputState);
@@ -70,15 +51,11 @@ public class LayerManager
     {
         foreach (Layer layer in mLayerStack)
         {
-            layer.Draw(mSpriteBatch);
+            layer.Draw(spriteBatch);
         }
     }
 
     // lifecycle methods
-    public void Start()
-    {
-        mLayerStack.AddLast(new GameLayer());
-    }
     public void Exit()
     {
         foreach (Layer layer in mLayerStack)

@@ -3,6 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using System.Data;
+using Galaxy_Explovive.Core.Rendering;
+using Galaxy_Explovive.Core.SoundManagement;
+using Galaxy_Explovive.Game.Layers;
 
 namespace Galaxy_Explovive.Core.GameObject
 {
@@ -10,7 +13,7 @@ namespace Galaxy_Explovive.Core.GameObject
     {
         private bool mHover;
 
-        public CrossHair(Vector2 position, float scale)
+        public CrossHair(GameLayer gameLayer, Vector2 position, float scale) : base(gameLayer)
         {
             // Location
             Position = position;

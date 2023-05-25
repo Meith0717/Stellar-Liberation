@@ -6,17 +6,17 @@ namespace Galaxy_Explovive.Core.Effects
 {
     internal class ParllaxManager
     {
-        private Vector2 mLastPosition = Globals.mCamera2d.Position;
+        private Vector2 mLastPosition = Globals.Camera2d.Position;
         private List<ParllaxBackground> mBackdrounds = new List<ParllaxBackground>();
 
         public void Update()
         {
-            var movement = Globals.mCamera2d.Position - mLastPosition;
+            var movement = Globals.Camera2d.Position - mLastPosition;
             foreach (ParllaxBackground backdround in mBackdrounds)
             {
-                backdround.Update(movement * Globals.mCamera2d.mZoom);
+                backdround.Update(movement * Globals.Camera2d.mZoom);
             }
-            mLastPosition = Globals.mCamera2d.Position;
+            mLastPosition = Globals.Camera2d.Position;
         }
 
         public void Draw()

@@ -30,7 +30,7 @@ namespace Galaxy_Explovive.Core.RayTracing
             if (!Globals.mRayTracing) { return; }
 
             var AmountUpdate = (2300 * 0.035f);
-            RayAmount = (int)(2300 - (AmountUpdate / Globals.mCamera2d.mZoom));
+            RayAmount = (int)(2300 - (AmountUpdate / Globals.Camera2d.mZoom));
             if (RayAmount < 0 ) { RayAmount = 0; }
             RayThickness = 15 ;
 

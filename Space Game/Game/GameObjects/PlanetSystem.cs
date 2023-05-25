@@ -10,6 +10,9 @@ using System.Collections.Generic;
 using Galaxy_Explovive.Core.RayTracing;
 using Galaxy_Explovive.Core.GameObjects.Types;
 using Galaxy_Explovive.Core.Utility;
+using Galaxy_Explovive.Core.Rendering;
+using Galaxy_Explovive.Core.SoundManagement;
+using Galaxy_Explovive.Game.Layers;
 
 namespace Galaxy_Explovive.Game.GameObjects
 {
@@ -21,7 +24,7 @@ namespace Galaxy_Explovive.Game.GameObjects
         [JsonProperty] public StarState mState;
         [JsonProperty] public Star mStar;
         [JsonProperty] public List<Planet> mPlanets;
-        [JsonProperty] private float mRadiusLimit;
+        [JsonProperty] private readonly float mRadiusLimit;
 
         private bool mIsSystemShown;
         private int mPlanetAlpha = 255;
@@ -35,17 +38,17 @@ namespace Galaxy_Explovive.Game.GameObjects
             Explored
         }
 
-        public PlanetSystem(Vector2 position)
+        public PlanetSystem(GameLayer gameLayer, Vector2 position) : base(gameLayer)
         {
             Position = position;
-            mStar = new Star(position);
+            mStar = new Star(gameLayer, position);
             mPlanets = new List<Planet>();
             mRadiusLimit = mStar.TextureWidth / 2 * mStar.TextureSclae;
             for (int i = 1; i <= MyUtility.Random.Next(2, 6); i++)
             {
                 PlanetType planetType = GetPlanetType(i);
                 if (i != 0) { mRadiusLimit += 300 + (1000 * planetType.Size); }
-                mPlanets.Add(new Planet((int)mRadiusLimit, position, mStar.mLightColor, planetType));    
+                mPlanets.Add(new Planet(gameLayer, (int)mRadiusLimit, position, mStar.mLightColor, planetType));    
             } 
             BoundedBox = new CircleF(position, mRadiusLimit+400);
             mRayTracing = new(mStar.mType.LightColor);
@@ -54,7 +57,7 @@ namespace Galaxy_Explovive.Game.GameObjects
         public override void Update(GameTime gameTime, InputState inputState)
         {
             // Checkst if System is on Screen
-            if (!Globals.mFrustumCuller.IsGameObjectOnWorldView(this)) { return; }
+            if (!mFrustumCuller.IsGameObjectOnWorldView(this)) { return; }
 
             // Get Rays
             mRayTracing.GetRays(this);
@@ -74,12 +77,12 @@ namespace Galaxy_Explovive.Game.GameObjects
         public override void Draw()
         {
             // Checkst if System is on Screen
-            if (!Globals.mFrustumCuller.IsGameObjectOnWorldView(this)) { return; }
+            if (!mFrustumCuller.IsGameObjectOnWorldView(this)) { return; }
             
             // Draw Stuff
             mStar.Draw();
             mRayTracing.Draw();
-            Globals.mDebugSystem.DrawBoundBox(BoundedBox);
+            Globals.DebugSystem.DrawBoundBox(BoundedBox);
 
             // Draw based on Cam. Positions 
             if (!mIsSystemShown) { return; }
@@ -91,7 +94,7 @@ namespace Galaxy_Explovive.Game.GameObjects
 
         private void ShowSystem()
         {
-            if (Globals.mCamera2d.mZoom < 0.1) { return; }
+            if (Globals.Camera2d.mZoom < 0.1) { return; }
             mIsSystemShown = true;
             if (mPlanetAlpha <= 255 - AlphaModifier)
             {
@@ -102,7 +105,7 @@ namespace Galaxy_Explovive.Game.GameObjects
         }
         private void HideSystem()
         {
-            if (Globals.mCamera2d.mZoom > 0.1) { return; }
+            if (Globals.Camera2d.mZoom > 0.1) { return; }
             if (!mIsSystemShown) { return; }
             if (mPlanetAlpha >= AlphaModifier)
             {
@@ -122,22 +125,22 @@ namespace Galaxy_Explovive.Game.GameObjects
             switch (orbit)
             {
                 case 1:
-                    planetType = PlanetTypes.getOrbit1;
+                    planetType = PlanetTypes.GetOrbit1;
                     break;
                 case 2:
-                    planetType = PlanetTypes.getOrbit2;
+                    planetType = PlanetTypes.GetOrbit2;
                     break;
                 case 3:
-                    planetType = PlanetTypes.getOrbit3;
+                    planetType = PlanetTypes.GetOrbit3;
                     break;
                 case 4:
-                    planetType = PlanetTypes.getOrbit4;
+                    planetType = PlanetTypes.GetOrbit4;
                     break;
                 case 5:
-                    planetType = PlanetTypes.getOrbit5;
+                    planetType = PlanetTypes.GetOrbit5;
                     break;
                 case 6:
-                    planetType = PlanetTypes.getOrbit6;
+                    planetType = PlanetTypes.GetOrbit6;
                     break;
             }
             return planetType;

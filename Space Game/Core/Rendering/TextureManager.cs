@@ -100,13 +100,13 @@ public class TextureManager
     // render Circle
     public void DrawCircle(Vector2 center, float radius, Color color, float thickness, int depth)
     {
-        mSpriteBatch.DrawCircle(center, radius, 90, color, thickness / Globals.mCamera2d.mZoom, depth/1000);
+        mSpriteBatch.DrawCircle(center, radius, 90, color, thickness / Globals.Camera2d.mZoom, depth/1000);
     }
 
     // render Line
     public void DrawAdaptiveLine(Vector2 start, Vector2 end, Color color, float thickness, float depth)
     {
-        mSpriteBatch.DrawLine(start, end, color, thickness / Globals.mCamera2d.mZoom, depth / 1000);
+        mSpriteBatch.DrawLine(start, end, color, thickness / Globals.Camera2d.mZoom, depth / 1000);
     }
 
     public void DrawLine(Vector2 start, Vector2 end, Color color, float thickness, float depth)

@@ -31,8 +31,8 @@ public class Camera2d
     public Camera2d()
     {
         mZoomAnimation = false;
-        int width = Globals.mGraphicsDevice.Viewport.Width;
-        int height = Globals.mGraphicsDevice.Viewport.Height;
+        int width = Globals.GraphicsDevice.Viewport.Width;
+        int height = Globals.GraphicsDevice.Viewport.Height;
         Position = new Vector2(width / 2f, height / 2f);
         mIsMoving = false;
     }
@@ -108,8 +108,8 @@ public class Camera2d
     {
         if (mViewTransformationMatrixChanged)
         {
-            int width = Globals.mGraphicsDevice.Viewport.Width;
-            int height = Globals.mGraphicsDevice.Viewport.Height;
+            int width = Globals.GraphicsDevice.Viewport.Width;
+            int height = Globals.GraphicsDevice.Viewport.Height;
             mTransform = Matrix.CreateTranslation(new Vector3(-Position.X, -Position.Y, 0))
                          * Matrix.CreateScale(mZoom, mZoom, 1)
                          * Matrix.CreateTranslation(new Vector3(width / 2f, height / 2f, 0));

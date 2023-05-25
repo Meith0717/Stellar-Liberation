@@ -13,17 +13,20 @@ namespace Galaxy_Explovive
 {
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        private GraphicsDeviceManager mGraphicsDeviceManager;
-        private SpriteBatch mSpriteBatch;
-        private InputManager mInputManager;
-        private SoundManager mSoundManager;
-        private LayerManager mLayerManager;
-        private TextureManager mTextureManager;
+        // Local Classes
+        private readonly GraphicsDeviceManager mGraphicsManager;
+        private readonly InputManager mInputManager;
+        private readonly TextureManager mTextureManager;
 
+        // Global Classes
+        private LayerManager mLayerManager;
+        private readonly SoundManager mSoundManager;
+        private SpriteBatch mSpriteBatch;
+
+        // Window attributes
         private int mWidth;
         private int mHeight;
         private bool mIsFullScreen;
-
         private bool mResulutionWasResized;
 
         public Game1()
@@ -31,30 +34,34 @@ namespace Galaxy_Explovive
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
-            mGraphicsDeviceManager = new GraphicsDeviceManager(this);
+            Window.ClientSizeChanged += delegate { mResulutionWasResized = true; };
+
+            mGraphicsManager = new GraphicsDeviceManager(this);
             mInputManager = new InputManager();
             mSoundManager = new SoundManager();
             mTextureManager = TextureManager.Instance;
-            Window.ClientSizeChanged += delegate { mResulutionWasResized = true; };
         }
 
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
             base.Initialize();
-            Globals.mGraphicsDevice = GraphicsDevice;
-            Globals.mContentManager = Content;
-            Globals.mSoundManager = mSoundManager;
-            Globals.mLayerManager = mLayerManager = new LayerManager(this, GraphicsDevice, mSpriteBatch, Content, mSoundManager);
-            Globals.mLayerManager.AddLayer(new GameLayer());
-            Globals.mLayerManager.AddLayer(new HudLayer()); ;
+
+            Globals.GraphicsDevice = GraphicsDevice;
+
+            // Layer Manager
+            mLayerManager = new LayerManager(this);
+            mLayerManager.AddLayer(new GameLayer(mLayerManager, mSoundManager));
+            mLayerManager.AddLayer(new HudLayer(mLayerManager, mSoundManager));
+
+            // Cursor Stuff
             MouseCursor cursor = MouseCursor.FromTexture2D(Content.Load<Texture2D>("cursor"), 0, 0);
             Mouse.SetCursor(cursor);
         }
 
         protected override void LoadContent()
         {
-            Globals.mSpriteBatch = mSpriteBatch = new SpriteBatch(GraphicsDevice);
+            mSpriteBatch = new SpriteBatch(GraphicsDevice);
             // TODO: use this.Content to load your game content here
 
             // setup texture manager
@@ -129,7 +136,8 @@ namespace Galaxy_Explovive
                 mLayerManager.OnResolutionChanged();
             }
             InputState inputState = mInputManager.Update(gameTime);
-            mLayerManager.Update(gameTime, inputState, Window, mGraphicsDeviceManager);
+            if (inputState.mActionList.Contains(ActionType.ToggleFullscreen)) { ToggleFullscreen(); }
+            mLayerManager.Update(gameTime, inputState);
             base.Update(gameTime);
         }
 
@@ -141,7 +149,7 @@ namespace Galaxy_Explovive
         }
 
         // Some Stuff
-        public void ToggleFullscreen()
+        private void ToggleFullscreen()
         {
             Action action = mIsFullScreen ? UnSetFullscreen : SetFullscreen;
             mIsFullScreen = !mIsFullScreen;
@@ -153,18 +161,18 @@ namespace Galaxy_Explovive
             mWidth = Window.ClientBounds.Width;
             mHeight = Window.ClientBounds.Height;
 
-            mGraphicsDeviceManager.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            mGraphicsDeviceManager.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            mGraphicsDeviceManager.IsFullScreen = true;
-            mGraphicsDeviceManager.ApplyChanges();
+            mGraphicsManager.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            mGraphicsManager.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            mGraphicsManager.IsFullScreen = true;
+            mGraphicsManager.ApplyChanges();
         }
 
         private void UnSetFullscreen()
         {
-            mGraphicsDeviceManager.PreferredBackBufferWidth = mWidth;
-            mGraphicsDeviceManager.PreferredBackBufferHeight = mHeight;
-            mGraphicsDeviceManager.IsFullScreen = false;
-            mGraphicsDeviceManager.ApplyChanges();
+            mGraphicsManager.PreferredBackBufferWidth = mWidth;
+            mGraphicsManager.PreferredBackBufferHeight = mHeight;
+            mGraphicsManager.IsFullScreen = false;
+            mGraphicsManager.ApplyChanges();
         }
     }
 }

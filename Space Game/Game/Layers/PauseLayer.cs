@@ -1,6 +1,7 @@
 ﻿using Galaxy_Explovive.Core;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
+using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.UserInterface.UiWidgets;
 using Galaxy_Explovive.Core.UserInterface.Widgets;
 using Microsoft.Xna.Framework;
@@ -12,13 +13,13 @@ namespace Galaxy_Explovive.Game.Layers
     {
         private UiLayer mBackgroundLayer;
 
-        public PauseLayer() 
+        public PauseLayer(LayerManager layerManager, SoundManager soundManager) : base(layerManager, soundManager)
         {
             UpdateBelow = false;
 
             mBackgroundLayer = new(null) { Color = Color.Black, Alpha = .5f, Fill = UiCanvas.RootFill.Cover };
-            _ = new UiButton(mBackgroundLayer, "buttonContinue", 0.05f) { RelativY = 0.4f, OnKlick = Globals.mLayerManager.PopLayer};
-            _ = new UiButton(mBackgroundLayer, "buttonExitgame", 0.05f){ RelativY = 0.6f, OnKlick = Globals.mLayerManager.Exit};
+            _ = new UiButton(mBackgroundLayer, "buttonContinue", 0.05f) { RelativY = 0.4f, OnKlick = mLayerManager.PopLayer};
+            _ = new UiButton(mBackgroundLayer, "buttonExitgame", 0.05f){ RelativY = 0.6f, OnKlick = mLayerManager.Exit};
             OnResolutionChanged();
         }
 
@@ -42,7 +43,7 @@ namespace Galaxy_Explovive.Game.Layers
         {
             if (inputState.mActionList.Contains(ActionType.ESC))
             {
-                Globals.mLayerManager.PopLayer();
+                mLayerManager.PopLayer();
             }
             mBackgroundLayer.Update(inputState);
         }

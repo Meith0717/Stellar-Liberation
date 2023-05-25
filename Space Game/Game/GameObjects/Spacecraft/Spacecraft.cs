@@ -1,7 +1,10 @@
 ﻿using Galaxy_Explovive.Core;
 using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
+using Galaxy_Explovive.Core.Rendering;
+using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.TextureManagement;
+using Galaxy_Explovive.Game.Layers;
 using Microsoft.Xna.Framework;
 
 namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
@@ -18,6 +21,8 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
 
         private double mShield = 100;
         private double mHull = 100;
+
+        protected Spacecraft(GameLayer gameLayer) : base(gameLayer) { }
 
         public void Update(InputState inputState)
         {
@@ -72,7 +77,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
             TextureManager.Instance.DrawLine(startPos, startPos + endPos, Color.DarkRed, 8, 0.9f);
 
             TextureManager.Instance.DrawGameObject(this, IsHover);
-            Globals.mDebugSystem.DrawBoundBox(BoundedBox);
+            Globals.DebugSystem.DrawBoundBox(BoundedBox);
         }
     }
 }

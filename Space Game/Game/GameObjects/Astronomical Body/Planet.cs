@@ -8,6 +8,10 @@ using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
 using System;
 using Galaxy_Explovive.Core.GameObjects.Types;
 using Galaxy_Explovive.Core.Utility;
+using Microsoft.Xna.Framework.Graphics;
+using Galaxy_Explovive.Core.SoundManagement;
+using Galaxy_Explovive.Core.Rendering;
+using Galaxy_Explovive.Game.Layers;
 
 namespace Galaxy_Explovive.Game.GameObjects
 {
@@ -16,19 +20,21 @@ namespace Galaxy_Explovive.Game.GameObjects
     {
 
         // Some Variables
+#pragma warning disable IDE0044 // Modifizierer "readonly" hinzufügen
         [JsonProperty] private double mAddAllois;
         [JsonProperty] private double mAddEnergy;
         [JsonProperty] private double mAddCrystals;
+#pragma warning restore IDE0044 // Modifizierer "readonly" hinzufügen
         [JsonProperty] private Vector2 mCenterPosition;
-        [JsonProperty] public float mAngle { get; private set; }
+        [JsonProperty] public float Angle { get; private set; }
 
         public float mRadius;
         private float mShadowRotation;
 
-        public Planet(int radius, Vector2 CenterPosition, Color lightColor, PlanetType planetType)
+        public Planet(GameLayer gameLayer, int radius, Vector2 CenterPosition, Color lightColor, PlanetType planetType) : base(gameLayer)
         {
             // Location
-            mAngle = MyUtility.Random.NextAngle();
+            Angle = MyUtility.Random.NextAngle();
                                                                                              
             // Rendering
             TextureId = planetType.Texture;
@@ -51,8 +57,8 @@ namespace Galaxy_Explovive.Game.GameObjects
             // Other Stuff
             base.UpdateInputs(inputState);
             float velocity = MathF.Sqrt(1/(mRadius*10));   
-            float angleUpdate = mAngle + Globals.mGameLayer.GameTime * velocity;
-            Position = MyUtility.GetVector2(mRadius, mAngle + angleUpdate) + mCenterPosition;
+            float angleUpdate = Angle + Globals.GameLayer.GameTime * velocity;
+            Position = MyUtility.GetVector2(mRadius, Angle + angleUpdate) + mCenterPosition;
             Rotation += 0.004f; 
             mShadowRotation = MyUtility.GetAngle(mCenterPosition, Position);
 
@@ -62,12 +68,12 @@ namespace Galaxy_Explovive.Game.GameObjects
 
         public void RemoveFromSpatialHashing()
         {
-            Globals.mGameLayer.mSpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
+            mSpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
         }
 
         private void AddToSpatialHashing()
         {
-            Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
+            mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
 
         public void Draw(int alpha)
@@ -82,9 +88,9 @@ namespace Galaxy_Explovive.Game.GameObjects
             TextureManager.Instance.Draw("planetShadow", Position, TextureOffset, TextureSclae, mShadowRotation, TextureDepth+1, TextureColor);
             TextureManager.Instance.DrawGameObject(this, IsHover);
             //TextureManager.Instance.DrawCircle(mCenterPosition, mRadius, TextureColor, 1, 0);
-            Globals.mDebugSystem.DrawBoundBox(BoundedBox);
+            Globals.DebugSystem.DrawBoundBox(BoundedBox);
         }
-        private void DrawRecources(int alpha)
+        private void DrawRecources(int alpha, SpriteBatch spriteBatch)
         {
             string[] array = new string[] { $"Alloys: +{mAddAllois}", $"Energy: +{mAddEnergy}", $"Crystals: +{mAddCrystals}" };
             for (int i = 0; i < array.Length; i++)

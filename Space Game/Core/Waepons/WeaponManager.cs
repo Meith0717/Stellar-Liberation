@@ -2,13 +2,20 @@
 using System.Collections.Generic;
 using Galaxy_Explovive.Core.Waepons;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft;
+using Galaxy_Explovive.Core.SoundManagement;
 
 namespace Galaxy_Explovive.Core.Weapons
 {
     public class WeaponManager
     {
 
-        private List<WeaponsProjectile> mProjectiles = new();
+        private readonly List<WeaponsProjectile> mProjectiles = new();
+        private readonly SoundManager mSoundManager;
+
+        public WeaponManager(SoundManager soundManager) 
+        { 
+            mSoundManager = soundManager;
+        }
 
         public void Update(GameTime gameTime)
         {
@@ -17,7 +24,7 @@ namespace Galaxy_Explovive.Core.Weapons
             {
                 if (!mProjectiles[i].Remove)
                 {
-                    mProjectiles[i].Update(gameTime);
+                    mProjectiles[i].Update(gameTime, mSoundManager);
                     i++;
                     continue;
                 }

@@ -20,8 +20,8 @@ namespace Galaxy_Explovive.Core.Effects
 
         public ParllaxBackground(string textureId, float depth, float movingScale)
         {
-            mTextureWidth = Globals.mGraphicsDevice.Viewport.Width;
-            mTextureHeight = Globals.mGraphicsDevice.Viewport.Height;
+            mTextureWidth = Globals.GraphicsDevice.Viewport.Width;
+            mTextureHeight = Globals.GraphicsDevice.Viewport.Height;
             mTextureId = textureId;
             mDepth = depth;
             mMovingScale = movingScale;
@@ -46,8 +46,8 @@ namespace Galaxy_Explovive.Core.Effects
 
         public void OnResolutionChanged()
         {
-            mTextureWidth = Globals.mGraphicsDevice.Viewport.Width;
-            mTextureHeight = Globals.mGraphicsDevice.Viewport.Height;
+            mTextureWidth = Globals.GraphicsDevice.Viewport.Width;
+            mTextureHeight = Globals.GraphicsDevice.Viewport.Height;
         }
 
         private void ManagMovement(Vector2 movement)

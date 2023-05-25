@@ -3,9 +3,12 @@ using Galaxy_Explovive.Core.GameLogik;
 using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.MovementController;
+using Galaxy_Explovive.Core.Rendering;
+using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Core.Weapons;
+using Galaxy_Explovive.Game.Layers;
 using Microsoft.Xna.Framework;
 using System;  
 using System.Linq;
@@ -25,9 +28,11 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
         private float mVelocity = 0;
         private float mTravelTime;
 
+        public SpaceShip(GameLayer gameLayer) : base(gameLayer) {}
+
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            Globals.mGameLayer.mSpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
+            Globals.GameLayer.mSpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
             UpdateNavigation(gameTime, inputState);
             UpdateInputs(inputState);
             // if (inputState.mActionList.Contains(ActionType.Test) && IsSelect)
@@ -39,10 +44,10 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             //     }
             // }
             WeaponManager.Update(gameTime);
-            Vector2 mousePos = Globals.mCamera2d.ViewToWorld(inputState.mMousePosition.ToVector2());
-            Globals.mGameLayer.mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
+            Vector2 mousePos = Globals.Camera2d.ViewToWorld(inputState.mMousePosition.ToVector2());
+            mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
 
-            CrossHair.Update(IsMoving ? TargetPosition : mousePos, 0.05f / Globals.mCamera2d.mZoom, Color.LightGreen, IsHover);
+            CrossHair.Update(IsMoving ? TargetPosition : mousePos, 0.05f / Globals.Camera2d.mZoom, Color.LightGreen, IsHover);
         }
 
         public override void Draw()
@@ -66,11 +71,11 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             if (inputState.mMouseActionType == MouseActionType.LeftClick && IsHover)
             {
                 IsSelect = mTrack = !IsSelect;
-                Globals.mCamera2d.SetZoom(0.2f);
+                Globals.Camera2d.SetZoom(0.2f);
                 return;
             }
         
-            if (Globals.mCamera2d.mIsMoving ||
+            if (Globals.Camera2d.mIsMoving ||
                 (inputState.mMouseActionType == MouseActionType.LeftClick && !IsHover))
             {
                 mTrack = false;
@@ -78,18 +83,18 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             }
         
             if (!mTrack) { return; }
-            Globals.mCamera2d.mTargetPosition = Position;
+            Globals.Camera2d.mTargetPosition = Position;
         }
         private void GetTargetPosition(InputState inputState)
         {
             if (!IsSelect || mVelocity > 0) { return; }
-            Vector2 MousePosition = Globals.mCamera2d.ViewToWorld(inputState.mMousePosition.ToVector2());
+            Vector2 MousePosition = Globals.Camera2d.ViewToWorld(inputState.mMousePosition.ToVector2());
             if (inputState.mMouseActionType == MouseActionType.RightClick)
             {
                 TargetPosition = MousePosition;
                 mVelocity = Globals.SubLightVelocity;
                 mTrack = true;
-                Globals.mCamera2d.mTargetPosition = Position;
+                Globals.Camera2d.mTargetPosition = Position;
             }
         }
         // Navigation Stuff

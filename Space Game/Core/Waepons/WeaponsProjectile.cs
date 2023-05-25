@@ -6,19 +6,20 @@ using Galaxy_Explovive.Game.GameObjects.Spacecraft;
 using MonoGame.Extended;
 using Galaxy_Explovive.Core.GameLogik;
 using Galaxy_Explovive.Core.Utility;
+using Galaxy_Explovive.Core.SoundManagement;
 
 namespace Galaxy_Explovive.Core.Waepons
 {
     public class WeaponsProjectile
     {
-        private Spacecraft OriginShip;
+        private readonly Spacecraft OriginShip;
         private Vector2 Position;
-        private Vector2 Direction;
-        private Color ProjectileColor;
-        private float Velocity;
-        private float Rotation;
+        private readonly Vector2 Direction;
+        private readonly Color ProjectileColor;
+        private readonly float Velocity;
+        private readonly float Rotation;
         private float TravelDistance;
-        private float MaxTravelDistance;
+        private readonly float MaxTravelDistance;
 
         public bool Remove;
 
@@ -33,10 +34,10 @@ namespace Galaxy_Explovive.Core.Waepons
             Rotation = MyUtility.GetAngle(Position, Vector2.Zero);
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, SoundManager soundManager)
         {
             var direction = Direction * Velocity * gameTime.ElapsedGameTime.Milliseconds;
-            GiveDamage();
+            GiveDamage(soundManager);
             TravelDistance += direction.Length();
             if (TravelDistance >= MaxTravelDistance) { Remove = true; }
             Position += direction;
@@ -49,12 +50,12 @@ namespace Galaxy_Explovive.Core.Waepons
                 ProjectileColor, Rotation, new Vector2(16, 16), 0.25f, SpriteEffects.None, 0);
         }
 
-        private void GiveDamage()
+        private void GiveDamage(SoundManager soundManager)
         {
             var ships = ObjectLocator.Instance.GetObjectsInRadius(Position, 40).OfType<Spacecraft>().ToList();
             ships.Remove(OriginShip);
             if (ships.Count <= 0) { return; }
-            Globals.mSoundManager.PlaySound("hit", (float)MyUtility.Random.NextDouble());
+            soundManager.PlaySound("hit", (float)MyUtility.Random.NextDouble());
             ships[0].Hit(10);
             Remove = true;
         }

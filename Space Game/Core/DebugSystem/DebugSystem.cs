@@ -35,7 +35,7 @@ namespace Galaxy_Explovive.Core.Debug
             {
                 this.ChangeMode();
             }
-            mMousePosition = Globals.mCamera2d.ViewToWorld(inputState.mMousePosition.ToVector2());
+            mMousePosition = Globals.Camera2d.ViewToWorld(inputState.mMousePosition.ToVector2());
             mGameTime = gameTime;
         }
 
@@ -62,8 +62,8 @@ namespace Galaxy_Explovive.Core.Debug
                 $"Frames per second: {Math.Round(mCurrentFramesPerSecond)}",
                 $"Frame: {mFrameDuration} ms",
                 $"Debug Mode {mDebugLevel}",
-                $"Camera Zoom {Globals.mCamera2d.mZoom}",
-                $"Position {Globals.mCamera2d.Position}",
+                $"Camera Zoom {Globals.Camera2d.mZoom}",
+                $"Position {Globals.Camera2d.Position}",
             };
             foreach (string s in lst)
             {
@@ -85,12 +85,12 @@ namespace Galaxy_Explovive.Core.Debug
         public void DrawBoundBox(RectangleF box)
         {
             if (mDebugLevel < 2) { return; }
-            TextureManager.Instance.GetSpriteBatch().DrawRectangle(box, Color.Red, 2 / Globals.mCamera2d.mZoom, 1);
+            TextureManager.Instance.GetSpriteBatch().DrawRectangle(box, Color.Red, 2 / Globals.Camera2d.mZoom, 1);
         }
         public void DrawBoundBox(CircleF box)
         {
             if (mDebugLevel < 2) { return; }
-            TextureManager.Instance.GetSpriteBatch().DrawCircle(box, 75, Color.Red, 2 / Globals.mCamera2d.mZoom, 1);
+            TextureManager.Instance.GetSpriteBatch().DrawCircle(box, 75, Color.Red, 2 / Globals.Camera2d.mZoom, 1);
         }
     }
 }

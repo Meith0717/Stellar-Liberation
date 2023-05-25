@@ -1,15 +1,23 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended;
-using Newtonsoft.Json;
 using Galaxy_Explovive.Core.InputManagement;
+using Galaxy_Explovive.Core.SoundManagement;
+using Galaxy_Explovive.Core.Rendering;
+using Galaxy_Explovive.Game.Layers;
+using Galaxy_Explovive.Core.PositionManagement;
 
 namespace Galaxy_Explovive.Core.GameObject
 {
     public abstract class GameObject
     {
+        // Managers
+        protected SoundManager mSoundManager;
+        protected FrustumCuller mFrustumCuller;
+        protected SpatialHashing<GameObject> mSpatialHashing;
+
         // Location
-        [JsonProperty] public Vector2 Position { get; set; }
-        [JsonProperty] public float Rotation { get; set; }
+        public Vector2 Position { get; set; }
+        public float Rotation { get; set; }
 
         // Rendering
         public Vector2 TextureOffset { get; set; }
@@ -21,7 +29,17 @@ namespace Galaxy_Explovive.Core.GameObject
         public Color TextureColor { get; set; }
         public CircleF BoundedBox { get; set; }
 
+        // Constructor
+        public GameObject(GameLayer gameLayer)
+        {
+            mSoundManager = gameLayer.mSoundManager;
+            mFrustumCuller = gameLayer.mFrustumCuller;
+            mSpatialHashing = gameLayer.mSpatialHashing;
+        }
+
+        // Methods
         public abstract void Update(GameTime gameTime, InputState inputState);
         public abstract void Draw();
+
     }
 }

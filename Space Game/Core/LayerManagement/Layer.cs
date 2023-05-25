@@ -11,22 +11,16 @@ namespace Galaxy_Explovive.Core.LayerManagement;
 [Serializable]
 public abstract class Layer
 {
-    protected GraphicsDevice mGraphicsDevice;
     protected LayerManager mLayerManager;
-    protected ContentManager mContentManager;
-
-    // managers
-    protected SoundManager mSoundManager;
+    public SoundManager mSoundManager;
 
     [JsonProperty]
     public bool UpdateBelow { get; set; }
 
-    protected Layer()
+    public Layer(LayerManager layerManager, SoundManager soundManager)
     {
-        mLayerManager = Globals.mLayerManager;
-        mGraphicsDevice = Globals.mGraphicsDevice;
-        mContentManager = Globals.mContentManager;
-        mSoundManager = Globals.mSoundManager;
+        mLayerManager = layerManager;
+        mSoundManager = soundManager;
     }
 
     public abstract void Update(GameTime gameTime, InputState inputState);

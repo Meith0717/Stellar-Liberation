@@ -2,10 +2,12 @@
 using Galaxy_Explovive.Core;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
+using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.UserInterface.UiWidgets;
 using Galaxy_Explovive.Core.UserInterface.Widgets;
 using Galaxy_Explovive.Core.Utility;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Galaxy_Explovive.Game.Layers
@@ -16,7 +18,7 @@ namespace Galaxy_Explovive.Game.Layers
         private UiLayer mBottomBar;
         private UiText mGameTimeText;
 
-        public HudLayer ()
+        public HudLayer(LayerManager layerManager, SoundManager soundManager) : base(layerManager, soundManager)
         {
             UpdateBelow = true;
 
@@ -81,14 +83,14 @@ namespace Galaxy_Explovive.Game.Layers
             {
                 Pause();
             }
-            mGameTimeText.Text = MyUtility.ConvertSecondsToTimeUnits((int)Globals.mGameLayer.GameTime);
+            mGameTimeText.Text = MyUtility.ConvertSecondsToTimeUnits((int)Globals.GameLayer.GameTime);
             mTopBar.Update(inputState);
             mBottomBar.Update(inputState);
         }
 
         private void Pause()
         {
-            Globals.mLayerManager.AddLayer(new PauseLayer());
+            mLayerManager.AddLayer(new PauseLayer(mLayerManager, mSoundManager));
         }
     }
 }

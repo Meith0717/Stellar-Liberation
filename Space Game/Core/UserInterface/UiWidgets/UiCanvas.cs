@@ -62,10 +62,10 @@ namespace Galaxy_Explovive.Core.UserInterface.UiWidgets
         {
             float rootX, rootY, rootWidth, rootHeight;
 
-            rootX = Globals.mGraphicsDevice.Viewport.X;
-            rootY = Globals.mGraphicsDevice.Viewport.Y;
-            rootWidth = Globals.mGraphicsDevice.Viewport.Width;
-            rootHeight = Globals.mGraphicsDevice.Viewport.Height;
+            rootX = Globals.GraphicsDevice.Viewport.X;
+            rootY = Globals.GraphicsDevice.Viewport.Y;
+            rootWidth = Globals.GraphicsDevice.Viewport.Width;
+            rootHeight = Globals.GraphicsDevice.Viewport.Height;
 
             if (mRoot != null)
             {

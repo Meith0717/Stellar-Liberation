@@ -1,7 +1,10 @@
 ﻿using Galaxy_Explovive.Core;
 using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
+using Galaxy_Explovive.Core.Rendering;
+using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.TextureManagement;
+using Galaxy_Explovive.Game.Layers;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 
@@ -9,7 +12,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
 {
     public class Cargo : SpaceShip
     {
-        public Cargo(Vector2 position)
+        public Cargo(GameLayer gameLayer, Vector2 position) : base(gameLayer)
         {
             Position = TargetPosition = position;
             Rotation = 0;
@@ -24,8 +27,8 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             TextureDepth = 2;
             TextureColor = Color.White;
             MaxVelocity = 10;
-            WeaponManager = new();
-            CrossHair = new(Vector2.Zero, TextureSclae);
+            WeaponManager = new(mSoundManager);
+            CrossHair = new(gameLayer, Vector2.Zero, TextureSclae);
             
         }
 

@@ -11,13 +11,13 @@ namespace Galaxy_Explovive.Core.Rendering
 
         public void Update()
         {
-            Vector2 LetfTopEdge = Globals.mCamera2d.ViewToWorld(Vector2.Zero);
-            Vector2 ScreenEdges = Globals.mCamera2d.ViewToWorld(new Vector2(Globals.mGraphicsDevice.Viewport.Width,
-                Globals.mGraphicsDevice.Viewport.Height));
+            Vector2 LetfTopEdge = Globals.Camera2d.ViewToWorld(Vector2.Zero);
+            Vector2 ScreenEdges = Globals.Camera2d.ViewToWorld(new Vector2(Globals.GraphicsDevice.Viewport.Width,
+                Globals.GraphicsDevice.Viewport.Height));
             Vector2 RigbtBottomEdge = ScreenEdges - LetfTopEdge;
 
             mWorldFrustum = new RectangleF(LetfTopEdge.X, LetfTopEdge.Y, RigbtBottomEdge.X, RigbtBottomEdge.Y);
-            mViewFrustum = new RectangleF(0, 0, Globals.mGraphicsDevice.Viewport.Width, Globals.mGraphicsDevice.Viewport.Height);
+            mViewFrustum = new RectangleF(0, 0, Globals.GraphicsDevice.Viewport.Width, Globals.GraphicsDevice.Viewport.Height);
         }
 
         public bool IsVectorOnScreenView(Vector2 position)
