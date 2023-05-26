@@ -14,6 +14,7 @@ namespace Galaxy_Explovive.Core.GameObject
         protected SoundManager mSoundManager;
         protected FrustumCuller mFrustumCuller;
         protected SpatialHashing<GameObject> mSpatialHashing;
+        protected GameLayer mGameLayer;
 
         // Location
         public Vector2 Position { get; set; }
@@ -22,7 +23,7 @@ namespace Galaxy_Explovive.Core.GameObject
         // Rendering
         public Vector2 TextureOffset { get; set; }
         public string TextureId { get; set; }
-        public float TextureSclae { get; set; }
+        public float TextureScale { get; set; }
         public int TextureWidth { get; set; }
         public int TextureHeight { get; set; }
         public int TextureDepth { get; set; }
@@ -32,6 +33,7 @@ namespace Galaxy_Explovive.Core.GameObject
         // Constructor
         public GameObject(GameLayer gameLayer)
         {
+            mGameLayer = gameLayer;
             mSoundManager = gameLayer.mSoundManager;
             mFrustumCuller = gameLayer.mFrustumCuller;
             mSpatialHashing = gameLayer.mSpatialHashing;

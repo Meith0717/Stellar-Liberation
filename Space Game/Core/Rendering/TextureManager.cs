@@ -73,13 +73,13 @@ public class TextureManager
     public void DrawGameObject(GameObject.GameObject obj)
     {
         mSpriteBatch.Draw(GetTexture(obj.TextureId), obj.Position, null, obj.TextureColor, obj.Rotation, obj.TextureOffset,
-            obj.TextureSclae, SpriteEffects.None, obj.TextureDepth/1000);
+            obj.TextureScale, SpriteEffects.None, obj.TextureDepth/1000);
     }
     public void DrawGameObject(GameObject.GameObject obj, bool isHover)
     {                                            
         var color = isHover ? Globals.HoverColor : obj.TextureColor;
         mSpriteBatch.Draw(GetTexture(obj.TextureId), obj.Position, null, color, obj.Rotation, obj.TextureOffset,
-            obj.TextureSclae, SpriteEffects.None, obj.TextureDepth / 1000);
+            obj.TextureScale, SpriteEffects.None, obj.TextureDepth / 1000);
     }
 
     public void Draw(string id, Vector2 position, int width, int height)

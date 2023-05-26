@@ -28,7 +28,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             TextureWidth = 1024;
             TextureHeight = 1024;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
-            TextureSclae = mType.Size;
+            TextureScale = mType.Size;
             TextureDepth = 1;
             TextureColor = Color.White;
             mLightColor = mType.StarColor;
@@ -46,7 +46,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
         public override void Draw()
         {
             TextureManager.Instance.DrawGameObject(this, IsHover);
-            TextureManager.Instance.Draw("StarLightAlpha", Position, TextureOffset, TextureSclae * 1.3f, 0, 2, mLightColor);
+            TextureManager.Instance.Draw("StarLightAlpha", Position, TextureOffset, TextureScale * 1.3f, 0, 2, mLightColor);
             Globals.DebugSystem.DrawBoundBox(BoundedBox);
         }
     }

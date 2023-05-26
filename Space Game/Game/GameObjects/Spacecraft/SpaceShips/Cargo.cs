@@ -20,7 +20,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             // Rendering
             NormalTexture = "ship";
             SelectTexture = "shipSekect";
-            TextureSclae = 0.5f;
+            TextureScale = 0.5f;
             TextureWidth = 209;
             TextureHeight = 128;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
@@ -28,7 +28,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             TextureColor = Color.White;
             MaxVelocity = 10;
             WeaponManager = new(mSoundManager);
-            CrossHair = new(gameLayer, Vector2.Zero, TextureSclae);
+            CrossHair = new(gameLayer, Vector2.Zero, TextureScale);
             
         }
 

@@ -15,7 +15,7 @@ namespace Galaxy_Explovive.Core.GameObject
 
         public void UpdateInputs(InputState inputState)
         {
-            BoundedBox = new CircleF(Position, (Math.Max(TextureHeight, TextureWidth) / 2) * TextureSclae);
+            BoundedBox = new CircleF(Position, (Math.Max(TextureHeight, TextureWidth) / 2) * TextureScale);
             var mousePosition = Globals.Camera2d.ViewToWorld(inputState.mMousePosition.ToVector2());
             IsHover = BoundedBox.Contains(mousePosition);
         }

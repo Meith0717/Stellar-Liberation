@@ -24,7 +24,7 @@ namespace Galaxy_Explovive.Core.GameObject
             TextureWidth = 1024;
             TextureHeight = 1024;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
-            TextureSclae = scale;
+            TextureScale = scale;
             TextureDepth = 0;
             TextureColor = Color.White;
         }
@@ -32,7 +32,7 @@ namespace Galaxy_Explovive.Core.GameObject
         public void Update(Vector2 position, float scale, Color color, bool isHover) 
         {
             Position = position;
-            TextureSclae = scale;
+            TextureScale = scale;
             TextureColor = color;
             mHover = isHover;
         }

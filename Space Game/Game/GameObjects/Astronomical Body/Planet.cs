@@ -40,7 +40,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             TextureId = planetType.Texture;
             TextureWidth = TextureHeight = 1024;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
-            TextureSclae = planetType.Size;
+            TextureScale = planetType.Size;
             TextureDepth = 1;
             TextureColor = lightColor;
 
@@ -85,7 +85,7 @@ namespace Galaxy_Explovive.Game.GameObjects
         private void DrawPlanet(int alpha)
         {
             TextureColor = new Color(alpha, alpha, alpha, alpha);
-            TextureManager.Instance.Draw("planetShadow", Position, TextureOffset, TextureSclae, mShadowRotation, TextureDepth+1, TextureColor);
+            TextureManager.Instance.Draw("planetShadow", Position, TextureOffset, TextureScale, mShadowRotation, TextureDepth+1, TextureColor);
             TextureManager.Instance.DrawGameObject(this, IsHover);
             //TextureManager.Instance.DrawCircle(mCenterPosition, mRadius, TextureColor, 1, 0);
             Globals.DebugSystem.DrawBoundBox(BoundedBox);
