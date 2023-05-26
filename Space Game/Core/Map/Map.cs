@@ -30,19 +30,19 @@ namespace Galaxy_Explovive.Core.Map
             return map;
         }
 
-        public static void DrawGrid(Rectangle MapSize)
+        public static void DrawGrid(Rectangle MapSize, TextureManager textureManager)
         {
             int ColorAplpha = 20;
 
             for (float x = -MapSize.X; x <= MapSize.Width / 2; x += 10000)
             {
-                TextureManager.Instance.DrawAdaptiveLine(new Vector2(x, -MapSize.Height / 2f - 10000),
+                textureManager.DrawAdaptiveLine(new Vector2(x, -MapSize.Height / 2f - 10000),
                     new Vector2(x, MapSize.Height / 2f + 10000), new Color(ColorAplpha, ColorAplpha, ColorAplpha, ColorAplpha), 1, 0);
             }
 
             for (float y = -MapSize.Y; y <= MapSize.Height / 2; y += 10000)
             {
-                TextureManager.Instance.DrawAdaptiveLine(new Vector2(-MapSize.Width / 2f - 10000, y),
+                textureManager.DrawAdaptiveLine(new Vector2(-MapSize.Width / 2f - 10000, y),
                     new Vector2(MapSize.Width / 2f + 10000, y), new Color(ColorAplpha, ColorAplpha, ColorAplpha, ColorAplpha), 1, 0);
             }
         }

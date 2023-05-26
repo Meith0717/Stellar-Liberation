@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Galaxy_Explovive.Core.Waepons;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft;
 using Galaxy_Explovive.Core.SoundManagement;
+using Galaxy_Explovive.Core.TextureManagement;
 
 namespace Galaxy_Explovive.Core.Weapons
 {
@@ -32,11 +33,11 @@ namespace Galaxy_Explovive.Core.Weapons
             }
         }
 
-        public void Draw()
+        public void Draw(TextureManager textureManager)
         {
             foreach (WeaponsProjectile projectile in mProjectiles)
             {
-                projectile.Draw();
+                projectile.Draw(textureManager);
             }
 
         }

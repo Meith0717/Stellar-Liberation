@@ -54,7 +54,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
         {
             base.DrawSpaceCraft();
             DrawPath();
-            WeaponManager.Draw();
+            WeaponManager.Draw(mTextureManager);
             DrawTargetCrosshar();
         }
 
@@ -116,8 +116,8 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
         public void DrawPath()
         {
             if (!IsMoving) { return; }
-            TextureManager.Instance.DrawAdaptiveLine(Position, TargetPosition, Color.LightGreen, 2, 0);
-            TextureManager.Instance.DrawString("text", Position + TextureOffset ,
+            mTextureManager.DrawAdaptiveLine(Position, TargetPosition, Color.LightGreen, 2, 0);
+            mTextureManager.DrawString("text", Position + TextureOffset ,
                 MyUtility.ConvertSecondsToTimeUnits((int)mTravelTime), Color.Red);
         }
 

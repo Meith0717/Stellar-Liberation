@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System;
+using System.ComponentModel;
 using static Galaxy_Explovive.Core.UserInterface.UiWidgets.UiCanvas;
 
 namespace Galaxy_Explovive.Core.UserInterface.Widgets
@@ -17,16 +18,16 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
         public Action OnKlick = null;
         public MouseActionType MouseActionType = MouseActionType.LeftClickReleased;
 
-        private float mRelativeW;
-        private float mRelativeH;
+        private readonly float mRelativeW;
+        private readonly float mRelativeH;
         private readonly Texture2D mTexture;
-        private float mTextureAspectRatio;
+        private readonly float mTextureAspectRatio;
         private float mTargetAspetRatio;
         private bool mHover;
 
-        public UiButton(UiLayer root, string texture, float scale) : base(root)
+        public UiButton(UiFrame root, TextureManager textureManager, string texture, float scale) : base(root, textureManager)
         {
-            mTexture = TextureManager.Instance.GetTexture(texture);
+            mTexture = mTextureManager.GetTexture(texture);
             mTextureAspectRatio = mTexture.Width / mTexture.Height;
             Rectangle rootRect = Canvas.GetRootRectangle().ToRectangle();
             mRelativeH = mTexture.Height / (float)rootRect.Height * scale;
@@ -35,7 +36,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
 
         public override void Draw()
         {
-            TextureManager.Instance.GetSpriteBatch().Draw(mTexture, Canvas.ToRectangle(), mHover ? Color.DarkGray : Color.White);
+            mTextureManager.SpriteBatch.Draw(mTexture, Canvas.ToRectangle(), mHover ? Color.DarkGray : Color.White);
         }
 
         public override void OnResolutionChanged()

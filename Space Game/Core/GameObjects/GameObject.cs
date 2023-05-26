@@ -5,12 +5,14 @@ using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.Rendering;
 using Galaxy_Explovive.Game.Layers;
 using Galaxy_Explovive.Core.PositionManagement;
+using Galaxy_Explovive.Core.TextureManagement;
 
 namespace Galaxy_Explovive.Core.GameObject
 {
     public abstract class GameObject
     {
         // Managers
+        protected TextureManager mTextureManager;
         protected SoundManager mSoundManager;
         protected FrustumCuller mFrustumCuller;
         protected SpatialHashing<GameObject> mSpatialHashing;
@@ -31,9 +33,10 @@ namespace Galaxy_Explovive.Core.GameObject
         public CircleF BoundedBox { get; set; }
 
         // Constructor
-        public GameObject(GameLayer gameLayer)
+        public GameObject(GameLayer gameLayer)                        
         {
             mGameLayer = gameLayer;
+            mTextureManager = gameLayer.mTextureManager;
             mSoundManager = gameLayer.mSoundManager;
             mFrustumCuller = gameLayer.mFrustumCuller;
             mSpatialHashing = gameLayer.mSpatialHashing;

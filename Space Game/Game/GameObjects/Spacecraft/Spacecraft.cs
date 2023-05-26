@@ -68,16 +68,16 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
             float hull = (float)mHull / 100;
             float shield = (float)mShield / 100;
 
-            TextureManager.Instance.DrawLine(startPos, startPos + endPos * new Vector2(shield, 1), Color.CornflowerBlue, 8, 1);
-            TextureManager.Instance.DrawLine(startPos, startPos + endPos, Color.DarkRed, 8, 0.9f);
+            mTextureManager.DrawLine(startPos, startPos + endPos * new Vector2(shield, 1), Color.CornflowerBlue, 8, 1);
+            mTextureManager.DrawLine(startPos, startPos + endPos, Color.DarkRed, 8, 0.9f);
 
             startPos.Y += 10;
 
-            TextureManager.Instance.DrawLine(startPos, startPos + endPos * new Vector2(hull, 1), Color.GreenYellow, 8, 1);
-            TextureManager.Instance.DrawLine(startPos, startPos + endPos, Color.DarkRed, 8, 0.9f);
+            mTextureManager.DrawLine(startPos, startPos + endPos * new Vector2(hull, 1), Color.GreenYellow, 8, 1);
+            mTextureManager.DrawLine(startPos, startPos + endPos, Color.DarkRed, 8, 0.9f);
 
-            TextureManager.Instance.DrawGameObject(this, IsHover);
-            Globals.DebugSystem.DrawBoundBox(BoundedBox);
+            mTextureManager.DrawGameObject(this, IsHover);
+            Globals.DebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
         }
     }
 }

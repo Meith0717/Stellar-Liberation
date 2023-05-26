@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Galaxy_Explovive.Core.TextureManagement;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
@@ -19,11 +20,11 @@ namespace Galaxy_Explovive.Core.Effects
             mLastPosition = Globals.Camera2d.Position;
         }
 
-        public void Draw()
+        public void Draw(TextureManager textureManager)
         {
             foreach (ParllaxBackground backdround in mBackdrounds)
             {
-                backdround.Draw();
+                backdround.Draw(textureManager);
             }
         }
 

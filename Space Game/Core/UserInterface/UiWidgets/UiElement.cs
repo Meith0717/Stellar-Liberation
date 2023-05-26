@@ -1,14 +1,18 @@
 ﻿using Galaxy_Explovive.Core.InputManagement;
+using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.UserInterface.Widgets;
 
 namespace Galaxy_Explovive.Core.UserInterface.UiWidgets
 {
     public abstract class UiElement
     {
-        protected UiElement(UiLayer root)
+        protected TextureManager mTextureManager;
+
+        protected UiElement(UiFrame root, TextureManager textureManager)
         {
             root?.AddToChilds(this);
             Canvas = new(root);
+            mTextureManager = textureManager;
         }
 
         internal UiCanvas Canvas { get; set; }

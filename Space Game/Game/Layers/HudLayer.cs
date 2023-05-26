@@ -1,28 +1,28 @@
-﻿using System;
-using Galaxy_Explovive.Core;
+﻿using Galaxy_Explovive.Core;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
 using Galaxy_Explovive.Core.SoundManagement;
+using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.UserInterface.UiWidgets;
 using Galaxy_Explovive.Core.UserInterface.Widgets;
 using Galaxy_Explovive.Core.Utility;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Galaxy_Explovive.Game.Layers
 {
     public class HudLayer : Layer
     {
-        private UiLayer mTopBar;
-        private UiLayer mBottomBar;
+        private UiFrame mTopBar;
+        private UiFrame mBottomBar;
         private UiText mGameTimeText;
 
-        public HudLayer(LayerManager layerManager, SoundManager soundManager) : base(layerManager, soundManager)
+        public HudLayer(LayerManager layerManager, SoundManager soundManager, TextureManager textureManager) 
+            : base(layerManager, soundManager, textureManager)
         {
             UpdateBelow = true;
 
-            mTopBar = new(null)
+            mTopBar = new(null, mTextureManager)
             {
                 RelativeW = 1,
                 Color = Color.Black,
@@ -31,9 +31,9 @@ namespace Galaxy_Explovive.Game.Layers
                 Side = UiCanvas.RootSide.Top
             };
 
-            mGameTimeText = new(mTopBar) { FontColor = Color.White};
+            mGameTimeText = new(mTopBar, textureManager) { FontColor = Color.White};
 
-            mBottomBar = new(null)
+            mBottomBar = new(null, mTextureManager)
             {
                 RelativeW = 1,
                 Height = 40,
@@ -41,14 +41,14 @@ namespace Galaxy_Explovive.Game.Layers
                 Side = UiCanvas.RootSide.Bottom
             };
 
-            UiLayer leftButtonLayer = new(mBottomBar)
+            UiFrame leftButtonLayer = new(mBottomBar, textureManager)
             {
                 Height = 40, Width = 200,
                 Alpha = 0,
                 Side = UiCanvas.RootSide.Right
             };
 
-            new UiButton(leftButtonLayer, "menueButton", 0.2f)
+            new UiButton(leftButtonLayer, mTextureManager, "menueButton", 0.2f)
             {
                 RelativX = .90f,
                 OnKlick = Pause
@@ -90,7 +90,7 @@ namespace Galaxy_Explovive.Game.Layers
 
         private void Pause()
         {
-            mLayerManager.AddLayer(new PauseLayer(mLayerManager, mSoundManager));
+            mLayerManager.AddLayer(new PauseLayer(mLayerManager, mSoundManager, mTextureManager));
         }
     }
 }

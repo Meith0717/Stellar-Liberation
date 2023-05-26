@@ -35,13 +35,13 @@ namespace Galaxy_Explovive.Core.Effects
             ManagerCorners();
         }
 
-        public void Draw()
+        public void Draw(TextureManager textureManager)
         {
-            TextureManager.Instance.Draw(mTextureId, mPosition1, mTextureWidth, mTextureHeight);
-            TextureManager.Instance.Draw(mTextureId, mPosition2, mTextureWidth, mTextureHeight);
-            TextureManager.Instance.Draw(mTextureId, mPosition3, mTextureWidth, mTextureHeight);
-            TextureManager.Instance.Draw(mTextureId, mPosition4, mTextureWidth, mTextureHeight);
-            TextureManager.Instance.Draw(mTextureId, mPosition5, mTextureWidth, mTextureHeight);
+            textureManager.Draw(mTextureId, mPosition1, mTextureWidth, mTextureHeight);
+            textureManager.Draw(mTextureId, mPosition2, mTextureWidth, mTextureHeight);
+            textureManager.Draw(mTextureId, mPosition3, mTextureWidth, mTextureHeight);
+            textureManager.Draw(mTextureId, mPosition4, mTextureWidth, mTextureHeight);
+            textureManager.Draw(mTextureId, mPosition5, mTextureWidth, mTextureHeight);
         }
 
         public void OnResolutionChanged()

@@ -4,8 +4,6 @@ using Galaxy_Explovive.Core.UserInterface.UiWidgets;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using System;
-using System.Collections.Generic;
 using static Galaxy_Explovive.Core.UserInterface.UiWidgets.UiCanvas;
 
 namespace Galaxy_Explovive.Core.UserInterface.Widgets
@@ -19,14 +17,15 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
 
         private Texture2D mTexture;
 
-        public UiSprite(UiLayer root, string texture) : base(root) 
+        public UiSprite(UiFrame root, TextureManager textureManager, string texture) 
+            : base(root, textureManager) 
         {
-            mTexture = TextureManager.Instance.GetTexture(texture);
+            mTexture = mTextureManager.GetTexture(texture);
         }
 
         public override void Draw()
         {
-            TextureManager.Instance.GetSpriteBatch().Draw(mTexture, Canvas.ToRectangle(), Color.White);
+            mTextureManager.SpriteBatch.Draw(mTexture, Canvas.ToRectangle(), Color.White);
         }
 
         public override void OnResolutionChanged()
@@ -45,3 +44,5 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
         }
     }
 }
+
+

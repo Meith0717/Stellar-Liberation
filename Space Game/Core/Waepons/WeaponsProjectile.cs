@@ -43,10 +43,10 @@ namespace Galaxy_Explovive.Core.Waepons
             Position += direction;
         }
 
-        public void Draw()
+        public void Draw(TextureManager textureManager)
         {
-            Texture2D projectile = TextureManager.Instance.GetTexture("projectile");
-            TextureManager.Instance.GetSpriteBatch().Draw(projectile, Position, null,
+            Texture2D projectile = textureManager.GetTexture("projectile");
+            textureManager.SpriteBatch.Draw(projectile, Position, null,
                 ProjectileColor, Rotation, new Vector2(16, 16), 0.25f, SpriteEffects.None, 0);
         }
 

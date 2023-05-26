@@ -74,11 +74,11 @@ namespace Galaxy_Explovive.Core.RayTracing
             return ray;
         }
 
-        public void Draw()
+        public void Draw(TextureManager textureManager)
         {
             foreach (Ray ray in mRays)
             {
-                TextureManager.Instance.DrawLine(ray.StartPosition, ray.EndPosition, mColor, RayThickness, 0);
+                textureManager.DrawLine(ray.StartPosition, ray.EndPosition, mColor, RayThickness, 0);
             }
         }
     }

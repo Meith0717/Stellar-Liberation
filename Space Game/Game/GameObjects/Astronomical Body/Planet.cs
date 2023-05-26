@@ -49,6 +49,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             mCenterPosition = CenterPosition;
 
         }
+
         public override void Update(GameTime gameTime, InputState inputState)
         {
             // Remove From Spatial Hashing
@@ -78,27 +79,12 @@ namespace Galaxy_Explovive.Game.GameObjects
 
         public void Draw(int alpha)
         {
-            DrawPlanet(alpha);
-            //DrawRecources(alpha);
+            TextureColor = new Color(alpha, alpha, alpha, alpha);
+            mTextureManager.Draw("planetShadow", Position, TextureOffset, TextureScale, mShadowRotation, TextureDepth + 1, TextureColor);
+            mTextureManager.DrawGameObject(this, IsHover);
+            Globals.DebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
         }
 
-        private void DrawPlanet(int alpha)
-        {
-            TextureColor = new Color(alpha, alpha, alpha, alpha);
-            TextureManager.Instance.Draw("planetShadow", Position, TextureOffset, TextureScale, mShadowRotation, TextureDepth+1, TextureColor);
-            TextureManager.Instance.DrawGameObject(this, IsHover);
-            //TextureManager.Instance.DrawCircle(mCenterPosition, mRadius, TextureColor, 1, 0);
-            Globals.DebugSystem.DrawBoundBox(BoundedBox);
-        }
-        private void DrawRecources(int alpha, SpriteBatch spriteBatch)
-        {
-            string[] array = new string[] { $"Alloys: +{mAddAllois}", $"Energy: +{mAddEnergy}", $"Crystals: +{mAddCrystals}" };
-            for (int i = 0; i < array.Length; i++)
-            {
-                TextureManager.Instance.DrawString("text", Position + new Vector2(0, 200 + 20 * i), array[i],
-                    new Color(alpha, alpha, alpha, alpha));
-            }
-        }
         public override void Draw()
         {
             throw new Exception("Use The Other Draw Method please :)");

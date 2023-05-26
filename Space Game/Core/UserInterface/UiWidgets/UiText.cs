@@ -15,7 +15,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
 
         private string mFont = "text";
 
-        public UiText(UiLayer root) : base(root)
+        public UiText(UiFrame root, TextureManager textureManager) : base(root, textureManager)
         {
             Canvas = new(root);
         }
@@ -23,7 +23,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
         public override void Draw()
         {
             Vector2 position = new(Canvas.ToRectangle().X, Canvas.ToRectangle().Y);
-            TextureManager.Instance.DrawString(mFont, position, Text, FontColor);
+            mTextureManager.DrawString(mFont, position, Text, FontColor);
         }
 
         public override void OnResolutionChanged()
@@ -32,7 +32,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
 
         public override void Update(InputState inputState)
         {
-            Vector2 stringDimensions = TextureManager.Instance.GetSpriteFont(mFont).MeasureString(Text);
+            Vector2 stringDimensions = mTextureManager.GetSpriteFont(mFont).MeasureString(Text);
             Canvas.Width = stringDimensions.X;
             Canvas.Height = stringDimensions.Y;
             Canvas.RelativeX = RelativX;

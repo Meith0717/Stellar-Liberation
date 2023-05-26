@@ -1,7 +1,6 @@
 ﻿using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ using Galaxy_Explovive.Core.UserInterface.UiWidgets;
 
 namespace Galaxy_Explovive.Core.UserInterface.Widgets
 {
-    public class UiLayer : UiElement
+    public class UiFrame : UiElement
     {
         private List<UiElement> mChilds = new();
 
@@ -26,7 +25,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
         public float Alpha = 1f;
         public int EdgeWidth = 0;
 
-        public UiLayer(UiLayer root) : base(root) { }
+        public UiFrame(UiFrame root, TextureManager textureManager) : base(root, textureManager) { }
 
         public override void Draw()
         {
@@ -77,7 +76,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
                 (int)(Color.A * Alpha)
                 );
 
-            TextureManager tm = TextureManager.Instance;
+            TextureManager tm = mTextureManager;
             Texture2D rectangle = tm.GetTexture("Layer");
             Texture2D edge = tm.GetTexture("Circle");
             Rectangle canvas = Canvas.ToRectangle();
@@ -88,18 +87,18 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
             foreach (Point point in canvas.GetCorners())
             {
                 Point edgePoint = point - new Point(EdgeWidth / 2, EdgeWidth / 2);
-                tm.GetSpriteBatch().Draw(edge, new Rectangle(edgePoint, new Point(EdgeWidth, EdgeWidth)), color);
+                tm.SpriteBatch.Draw(edge, new Rectangle(edgePoint, new Point(EdgeWidth, EdgeWidth)), color);
             }
 
             // Draw 4 Borgers
             for (int i = 0; i < 3; i++)
             {
-                tm.GetSpriteBatch().DrawLine(canvas.GetCorners()[i].ToVector2(), canvas.GetCorners()[i + 1].ToVector2(), color, EdgeWidth, 1);
+                tm.SpriteBatch.DrawLine(canvas.GetCorners()[i].ToVector2(), canvas.GetCorners()[i + 1].ToVector2(), color, EdgeWidth, 1);
             }
-            tm.GetSpriteBatch().DrawLine(canvas.GetCorners()[3].ToVector2(), canvas.GetCorners()[0].ToVector2(), color, EdgeWidth, 1);
+            tm.SpriteBatch.DrawLine(canvas.GetCorners()[3].ToVector2(), canvas.GetCorners()[0].ToVector2(), color, EdgeWidth, 1);
 
             // raw inner Rectangle
-            tm.GetSpriteBatch().Draw(rectangle, canvas, color);
+            tm.SpriteBatch.Draw(rectangle, canvas, color);
         }
     }
 }

@@ -45,7 +45,8 @@ namespace Galaxy_Explovive.Game.Layers
         private ParllaxManager mParllaxManager;
 
         // Layer Stuff _____________________________________
-        public GameLayer(LayerManager layerManager, SoundManager soundManager) : base(layerManager, soundManager)
+        public GameLayer(LayerManager layerManager, SoundManager soundManager, TextureManager textureManager) 
+            : base(layerManager, soundManager, textureManager)
         {
             InitializeGlobals();
             mSpatialHashing = new SpatialHashing<GameObject>(10000);
@@ -63,6 +64,13 @@ namespace Galaxy_Explovive.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            mFrustumCuller.Update();
+            if ((inputState.mMouseActionType != MouseActionType.None) && 
+                (!mFrustumCuller.IsVectorOnScreenView(inputState.mMousePosition.ToVector2())))
+            {
+                mLayerManager.AddLayer(new PauseLayer(mLayerManager, mSoundManager, mTextureManager));
+                return;
+            }
             GameTime += gameTime.ElapsedGameTime.Milliseconds / 1000f;
             Debug.WriteLine(GameTime);
             UpdateSystems(gameTime, inputState);
@@ -74,7 +82,6 @@ namespace Galaxy_Explovive.Game.Layers
             {
                 Globals.mRayTracing = !Globals.mRayTracing;
             }
-            mFrustumCuller.Update();
             mParllaxManager.Update();
             Globals.DebugSystem.Update(gameTime, inputState);
             Globals.Camera2d.Update(gameTime, inputState);
@@ -85,20 +92,20 @@ namespace Galaxy_Explovive.Game.Layers
             Globals.DebugSystem.UpdateFrameCounting();
 
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            mParllaxManager.Draw();
-            Globals.DebugSystem.ShowRenderInfo(new Vector2(2, 2));
+            mParllaxManager.Draw(mTextureManager);
+            Globals.DebugSystem.ShowRenderInfo(mTextureManager, new Vector2(2, 2));
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, 
                 transformMatrix: Globals.Camera2d.GetViewTransformationMatrix(), 
                 samplerState: SamplerState.PointClamp);
             DrawSystems();
-            Map.DrawGrid(mMapSize.ToRectangle());
+            Map.DrawGrid(mMapSize.ToRectangle(), mTextureManager);
             foreach(Cargo c in mShips)
             {
                 c.Draw();
             }
-            Globals.DebugSystem.DrawNearMousObjects();
+            Globals.DebugSystem.DrawNearMousObjects(mTextureManager);
             spriteBatch.End();
         }
 

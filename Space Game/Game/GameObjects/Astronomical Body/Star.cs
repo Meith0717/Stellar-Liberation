@@ -1,7 +1,6 @@
 ﻿using Galaxy_Explovive.Core;
 using Galaxy_Explovive.Core.GameObjects.Types;
 using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Game.Layers;
 using Microsoft.Xna.Framework;
@@ -45,9 +44,9 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
 
         public override void Draw()
         {
-            TextureManager.Instance.DrawGameObject(this, IsHover);
-            TextureManager.Instance.Draw("StarLightAlpha", Position, TextureOffset, TextureScale * 1.3f, 0, 2, mLightColor);
-            Globals.DebugSystem.DrawBoundBox(BoundedBox);
+            mTextureManager.DrawGameObject(this, IsHover);
+            mTextureManager.Draw("StarLightAlpha", Position, TextureOffset, TextureScale * 1.3f, 0, 2, mLightColor);
+            Globals.DebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
         }
     }
 }

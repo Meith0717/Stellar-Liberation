@@ -79,8 +79,8 @@ namespace Galaxy_Explovive.Game.GameObjects
             
             // Draw Stuff
             mStar.Draw();
-            mRayTracing.Draw();
-            Globals.DebugSystem.DrawBoundBox(BoundedBox);
+            mRayTracing.Draw(mTextureManager);
+            Globals.DebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
 
             // Draw based on Cam. Positions 
             if (!mIsSystemShown) { return; }

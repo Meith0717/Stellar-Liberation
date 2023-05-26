@@ -43,7 +43,7 @@ namespace Galaxy_Explovive.Core.GameObject
         }
         public override void Draw()
         {
-            TextureManager.Instance.DrawGameObject(this, mHover);
+            mTextureManager.DrawGameObject(this, mHover);
         }
     }
 }

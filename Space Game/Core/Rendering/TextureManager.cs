@@ -11,29 +11,20 @@ namespace Galaxy_Explovive.Core.TextureManagement;
 
 public class TextureManager
 {
-    private static TextureManager sInstance;
-
-    private SpriteBatch mSpriteBatch;
-    private ContentManager mContentManager;
-
     readonly Hashtable mTextures = new();
     readonly Hashtable mSpriteFonts = new();
-
     private const int MaxLayerHeight = 10000;
-    public static TextureManager Instance { get { return sInstance ??= new TextureManager(); } }
+    private ContentManager mContentManager;
+    public SpriteBatch SpriteBatch { get; private set; }
 
-    public SpriteBatch GetSpriteBatch()
+    public TextureManager(ContentManager contentManager) 
     {
-        return mSpriteBatch;
+        mContentManager = contentManager;
     }
 
     public void SetSpriteBatch(SpriteBatch spriteBatch)
     {
-        mSpriteBatch = spriteBatch;
-    }
-    public void SetContentManager(ContentManager contentManager)
-    {
-        mContentManager = contentManager;
+        SpriteBatch = spriteBatch;
     }
 
     public void LoadTexture(string id, string fileName)
@@ -72,46 +63,46 @@ public class TextureManager
     // render textures
     public void DrawGameObject(GameObject.GameObject obj)
     {
-        mSpriteBatch.Draw(GetTexture(obj.TextureId), obj.Position, null, obj.TextureColor, obj.Rotation, obj.TextureOffset,
+        SpriteBatch.Draw(GetTexture(obj.TextureId), obj.Position, null, obj.TextureColor, obj.Rotation, obj.TextureOffset,
             obj.TextureScale, SpriteEffects.None, obj.TextureDepth/1000);
     }
     public void DrawGameObject(GameObject.GameObject obj, bool isHover)
     {                                            
         var color = isHover ? Globals.HoverColor : obj.TextureColor;
-        mSpriteBatch.Draw(GetTexture(obj.TextureId), obj.Position, null, color, obj.Rotation, obj.TextureOffset,
+        SpriteBatch.Draw(GetTexture(obj.TextureId), obj.Position, null, color, obj.Rotation, obj.TextureOffset,
             obj.TextureScale, SpriteEffects.None, obj.TextureDepth / 1000);
     }
 
     public void Draw(string id, Vector2 position, int width, int height)
     {
-        mSpriteBatch.Draw(GetTexture(id), new Rectangle((int)position.X, (int)position.Y, width, height), Color.White);
+        SpriteBatch.Draw(GetTexture(id), new Rectangle((int)position.X, (int)position.Y, width, height), Color.White);
     }
     public void Draw(string id, Vector2 position, Vector2 offset, float sclae, float rotation, float depth, Color color)
     {
-        mSpriteBatch.Draw(GetTexture(id), position, null, color, rotation, offset, sclae, SpriteEffects.None, depth/1000);
+        SpriteBatch.Draw(GetTexture(id), position, null, color, rotation, offset, sclae, SpriteEffects.None, depth/1000);
     }
 
     // render String
     public void DrawString(string id, Vector2 position, string text, Color color)
     {
-        mSpriteBatch.DrawString(GetSpriteFont(id), text, position, color);
+        SpriteBatch.DrawString(GetSpriteFont(id), text, position, color);
     }
 
     // render Circle
     public void DrawCircle(Vector2 center, float radius, Color color, float thickness, int depth)
     {
-        mSpriteBatch.DrawCircle(center, radius, 90, color, thickness / Globals.Camera2d.mZoom, depth/1000);
+        SpriteBatch.DrawCircle(center, radius, 90, color, thickness / Globals.Camera2d.mZoom, depth/1000);
     }
 
     // render Line
     public void DrawAdaptiveLine(Vector2 start, Vector2 end, Color color, float thickness, float depth)
     {
-        mSpriteBatch.DrawLine(start, end, color, thickness / Globals.Camera2d.mZoom, depth / 1000);
+        SpriteBatch.DrawLine(start, end, color, thickness / Globals.Camera2d.mZoom, depth / 1000);
     }
 
     public void DrawLine(Vector2 start, Vector2 end, Color color, float thickness, float depth)
     {
-        mSpriteBatch.DrawLine(start, end, color, thickness, depth/1000);
+        SpriteBatch.DrawLine(start, end, color, thickness, depth/1000);
     }
 
 }

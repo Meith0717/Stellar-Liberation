@@ -16,12 +16,12 @@ namespace Galaxy_Explovive
         // Local Classes
         private readonly GraphicsDeviceManager mGraphicsManager;
         private readonly InputManager mInputManager;
-        private readonly TextureManager mTextureManager;
 
         // Global Classes
         private LayerManager mLayerManager;
-        private readonly SoundManager mSoundManager;
         private SpriteBatch mSpriteBatch;
+        private TextureManager mTextureManager;
+        private readonly SoundManager mSoundManager;
 
         // Window attributes
         private int mWidth;
@@ -36,10 +36,10 @@ namespace Galaxy_Explovive
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += delegate { mResulutionWasResized = true; };
 
+            mTextureManager = new TextureManager(Content);
             mGraphicsManager = new GraphicsDeviceManager(this);
             mInputManager = new InputManager();
             mSoundManager = new SoundManager();
-            mTextureManager = TextureManager.Instance;
         }
 
         protected override void Initialize()
@@ -51,8 +51,8 @@ namespace Galaxy_Explovive
 
             // Layer Manager
             mLayerManager = new LayerManager(this);
-            mLayerManager.AddLayer(new GameLayer(mLayerManager, mSoundManager));
-            mLayerManager.AddLayer(new HudLayer(mLayerManager, mSoundManager));
+            mLayerManager.AddLayer(new GameLayer(mLayerManager, mSoundManager, mTextureManager));
+            mLayerManager.AddLayer(new HudLayer(mLayerManager, mSoundManager, mTextureManager));
 
             // Cursor Stuff
             MouseCursor cursor = MouseCursor.FromTexture2D(Content.Load<Texture2D>("cursor"), 0, 0);
@@ -61,11 +61,10 @@ namespace Galaxy_Explovive
 
         protected override void LoadContent()
         {
-            mSpriteBatch = new SpriteBatch(GraphicsDevice);
             // TODO: use this.Content to load your game content here
+            mSpriteBatch = new SpriteBatch(GraphicsDevice);
 
             // setup texture manager
-            mTextureManager.SetContentManager(Content);
             mSoundManager.SetContentManager(Content);
             mTextureManager.SetSpriteBatch(mSpriteBatch);
 
