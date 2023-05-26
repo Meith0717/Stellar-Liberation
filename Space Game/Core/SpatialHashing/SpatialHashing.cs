@@ -71,5 +71,6 @@ namespace Galaxy_Explovive.Core.PositionManagement
             var hash = Hash(xCoordinate, yCoordinate);
             return mPositionBuckets.TryGetValue(hash, out var objectsInBucket) ? objectsInBucket : new List<T>();
         }
+
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Galaxy_Explovive.Core.Debug;
 using Galaxy_Explovive.Core.GameObject;
-using Galaxy_Explovive.Game.Layers;
+using Galaxy_Explovive.Game;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -20,6 +20,5 @@ namespace Galaxy_Explovive.Core
         public static Color HoverColor = new Color(50, 50, 50);
         public static bool mRayTracing = false;
         public static int mPlanetSystemDistanceRadius = 10000;
-
     }
 }

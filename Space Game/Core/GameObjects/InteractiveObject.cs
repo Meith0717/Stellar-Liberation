@@ -3,7 +3,7 @@ using System;
 using MonoGame.Extended;
 using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.Rendering;
-using Galaxy_Explovive.Game.Layers;
+using Galaxy_Explovive.Game;
 
 namespace Galaxy_Explovive.Core.GameObject
 {

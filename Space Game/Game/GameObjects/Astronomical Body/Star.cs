@@ -2,7 +2,6 @@
 using Galaxy_Explovive.Core.GameObjects.Types;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.Utility;
-using Galaxy_Explovive.Game.Layers;
 using Microsoft.Xna.Framework;
 using System;
 

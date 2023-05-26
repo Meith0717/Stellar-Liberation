@@ -4,9 +4,10 @@ using Microsoft.Xna.Framework;
 using System.Linq;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft;
 using MonoGame.Extended;
-using Galaxy_Explovive.Core.GameLogik;
 using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Core.SoundManagement;
+using Galaxy_Explovive.Core.PositionManagement;
+using Galaxy_Explovive.Game.GameLogik;
 
 namespace Galaxy_Explovive.Core.Waepons
 {
@@ -34,10 +35,10 @@ namespace Galaxy_Explovive.Core.Waepons
             Rotation = MyUtility.GetAngle(Position, Vector2.Zero);
         }
 
-        public void Update(GameTime gameTime, SoundManager soundManager)
+        public void Update(GameTime gameTime, SoundManager soundManager, SpatialHashing<GameObject.GameObject> spatial)
         {
             var direction = Direction * Velocity * gameTime.ElapsedGameTime.Milliseconds;
-            GiveDamage(soundManager);
+            CheckForDamage(soundManager, spatial);
             TravelDistance += direction.Length();
             if (TravelDistance >= MaxTravelDistance) { Remove = true; }
             Position += direction;
@@ -50,9 +51,9 @@ namespace Galaxy_Explovive.Core.Waepons
                 ProjectileColor, Rotation, new Vector2(16, 16), 0.25f, SpriteEffects.None, 0);
         }
 
-        private void GiveDamage(SoundManager soundManager)
+        private void CheckForDamage(SoundManager soundManager, SpatialHashing<GameObject.GameObject> spatial)
         {
-            var ships = ObjectLocator.Instance.GetObjectsInRadius(Position, 40).OfType<Spacecraft>().ToList();
+            var ships = ObjectLocator.GetObjectsInRadius(spatial, Position, 40).OfType<Spacecraft>().ToList();
             ships.Remove(OriginShip);
             if (ships.Count <= 0) { return; }
             soundManager.PlaySound("hit", (float)MyUtility.Random.NextDouble());

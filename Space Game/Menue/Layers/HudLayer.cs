@@ -9,7 +9,7 @@ using Galaxy_Explovive.Core.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Galaxy_Explovive.Game.Layers
+namespace Galaxy_Explovive.Menue.Layers
 {
     public class HudLayer : Layer
     {
@@ -17,7 +17,7 @@ namespace Galaxy_Explovive.Game.Layers
         private UiFrame mBottomBar;
         private UiText mGameTimeText;
 
-        public HudLayer(LayerManager layerManager, SoundManager soundManager, TextureManager textureManager) 
+        public HudLayer(LayerManager layerManager, SoundManager soundManager, TextureManager textureManager)
             : base(layerManager, soundManager, textureManager)
         {
             UpdateBelow = true;
@@ -31,7 +31,7 @@ namespace Galaxy_Explovive.Game.Layers
                 Side = UiCanvas.RootSide.Top
             };
 
-            mGameTimeText = new(mTopBar, textureManager) { FontColor = Color.White};
+            mGameTimeText = new(mTopBar, textureManager) { FontColor = Color.White };
 
             mBottomBar = new(null, mTextureManager)
             {
@@ -43,7 +43,8 @@ namespace Galaxy_Explovive.Game.Layers
 
             UiFrame leftButtonLayer = new(mBottomBar, textureManager)
             {
-                Height = 40, Width = 200,
+                Height = 40,
+                Width = 200,
                 Alpha = 0,
                 Side = UiCanvas.RootSide.Right
             };

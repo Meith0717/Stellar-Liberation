@@ -1,9 +1,9 @@
-﻿using Galaxy_Explovive.Core.GameLogik;
-using Galaxy_Explovive.Core.TextureManagement;
+﻿using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.Utility;
+using Galaxy_Explovive.Game;
+using Galaxy_Explovive.Game.GameLogik;
 using Galaxy_Explovive.Game.GameObjects;
 using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
-using Galaxy_Explovive.Game.Layers;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +19,8 @@ namespace Galaxy_Explovive.Core.Map
             while (counter < SystemAmount)
             {
                 Vector2 position = MyUtility.GetRandomVector2(-(int)MapSize.X, (int)MapSize.X, -(int)MapSize.Y, (int)MapSize.Y);
-                List<Star> neighbourSystem = ObjectLocator.Instance.GetObjectsInRadius(position, Globals.mPlanetSystemDistanceRadius).OfType<Star>().ToList();
+                List<Star> neighbourSystem = ObjectLocator.GetObjectsInRadius(gameLayer.mSpatialHashing, 
+                    position, Globals.mPlanetSystemDistanceRadius).OfType<Star>().ToList();
                 if (neighbourSystem.Count > 0)
                 {
                     continue;

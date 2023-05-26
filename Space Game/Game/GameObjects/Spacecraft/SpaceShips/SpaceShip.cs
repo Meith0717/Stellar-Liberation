@@ -1,5 +1,4 @@
 ﻿using Galaxy_Explovive.Core;
-using Galaxy_Explovive.Core.GameLogik;
 using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.MovementController;
@@ -8,9 +7,8 @@ using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Core.Weapons;
-using Galaxy_Explovive.Game.Layers;
 using Microsoft.Xna.Framework;
-using System;  
+using System;
 using System.Linq;
 
 namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
@@ -32,7 +30,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            Globals.GameLayer.mSpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
+            mSpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
             UpdateNavigation(gameTime, inputState);
             UpdateInputs(inputState);
             // if (inputState.mActionList.Contains(ActionType.Test) && IsSelect)

@@ -1,5 +1,7 @@
-﻿using Galaxy_Explovive.Core.TextureManagement;
+﻿using Galaxy_Explovive.Core.PositionManagement;
+using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.Utility;
+using Galaxy_Explovive.Game.GameLogik;
 using Galaxy_Explovive.Game.GameObjects;
 using Microsoft.Xna.Framework;
 using System;
@@ -13,13 +15,15 @@ namespace Galaxy_Explovive.Core.RayTracing
         private Color mColor;
         private float mBorderLength;
         private List<GameObject.GameObject> mGameObjects;
+        private SpatialHashing<GameObject.GameObject> mSpartialHashing;
 
         private int RayAmount;
         private int RayThickness;
 
-        public RayTracer(Color color)
+        public RayTracer(Color color, SpatialHashing<GameObject.GameObject> spatial)
         {
             mColor = color;
+            mSpartialHashing = spatial;
         }
 
         public void GetRays(PlanetSystem ps)
@@ -36,7 +40,7 @@ namespace Galaxy_Explovive.Core.RayTracing
 
             Vector2 scource = ps.Position;// Globals.mCamera2d.ViewToWorld(inS.mMousePosition.ToVector2());
             mBorderLength = ps.BoundedBox.Radius * 5;
-            mGameObjects = GameLogik.ObjectLocator.Instance.GetObjectsInRadius(scource, (int)mBorderLength);
+            mGameObjects = ObjectLocator.GetObjectsInRadius(null, scource, (int)mBorderLength);
             mGameObjects.Remove(ps.mStar);
 
             // Create Rays around Scource

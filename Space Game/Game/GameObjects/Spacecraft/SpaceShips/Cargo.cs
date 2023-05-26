@@ -4,7 +4,6 @@ using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.Rendering;
 using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.TextureManagement;
-using Galaxy_Explovive.Game.Layers;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 
@@ -27,7 +26,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             TextureDepth = 2;
             TextureColor = Color.White;
             MaxVelocity = 10;
-            WeaponManager = new(mSoundManager);
+            WeaponManager = new(mSoundManager, mGameLayer.mSpatialHashing);
             CrossHair = new(gameLayer, Vector2.Zero, TextureScale);
             
         }

@@ -3,7 +3,6 @@ using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.Rendering;
 using Galaxy_Explovive.Core.SoundManagement;
-using Galaxy_Explovive.Game.Layers;
 
 namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
 {

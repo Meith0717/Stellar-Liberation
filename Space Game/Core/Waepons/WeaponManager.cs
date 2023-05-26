@@ -4,6 +4,8 @@ using Galaxy_Explovive.Core.Waepons;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft;
 using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.TextureManagement;
+using Galaxy_Explovive.Core.PositionManagement;
+using Galaxy_Explovive.Core.GameObject;
 
 namespace Galaxy_Explovive.Core.Weapons
 {
@@ -12,10 +14,12 @@ namespace Galaxy_Explovive.Core.Weapons
 
         private readonly List<WeaponsProjectile> mProjectiles = new();
         private readonly SoundManager mSoundManager;
+        private readonly SpatialHashing<GameObject.GameObject> mSpatialHashing;
 
-        public WeaponManager(SoundManager soundManager) 
+        public WeaponManager(SoundManager soundManager, SpatialHashing<GameObject.GameObject> spatial) 
         { 
             mSoundManager = soundManager;
+            mSpatialHashing = spatial;
         }
 
         public void Update(GameTime gameTime)
@@ -25,7 +29,7 @@ namespace Galaxy_Explovive.Core.Weapons
             {
                 if (!mProjectiles[i].Remove)
                 {
-                    mProjectiles[i].Update(gameTime, mSoundManager);
+                    mProjectiles[i].Update(gameTime, mSoundManager, mSpatialHashing);
                     i++;
                     continue;
                 }

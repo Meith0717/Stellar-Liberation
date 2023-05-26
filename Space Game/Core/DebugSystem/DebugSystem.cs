@@ -4,10 +4,11 @@ using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using System;
 using System.Collections.Generic;
-using Galaxy_Explovive.Core.GameLogik;
 using Galaxy_Explovive.Core.GameObject;
 using System.Linq;
 using System.ComponentModel;
+using Galaxy_Explovive.Core.PositionManagement;
+using Galaxy_Explovive.Game.GameLogik;
 
 namespace Galaxy_Explovive.Core.Debug
 {
@@ -73,11 +74,11 @@ namespace Galaxy_Explovive.Core.Debug
             }
         }
 
-        public void DrawNearMousObjects(TextureManager textureManager)
+        public void DrawNearMousObjects(TextureManager textureManager, SpatialHashing<GameObject.GameObject> spatial)
         {
             if (mDebugLevel < 3) { return; }
             var radius = Globals.MouseSpatialHashingRadius;
-            List<InteractiveObject> GameObjects = ObjectLocator.Instance.GetObjectsInRadius(mMousePosition, radius).OfType<InteractiveObject>().ToList(); ;
+            List<InteractiveObject> GameObjects = ObjectLocator.GetObjectsInRadius(spatial, mMousePosition, radius).OfType<InteractiveObject>().ToList(); ;
             System.Diagnostics.Debug.WriteLine(GameObjects.Count);
             if (GameObjects.Count() == 0) { return; }
             textureManager.DrawAdaptiveLine(mMousePosition, GameObjects[0].Position, Color.LightBlue, 2, 0);
@@ -86,14 +87,12 @@ namespace Galaxy_Explovive.Core.Debug
         public void DrawBoundBox(TextureManager textureManager, RectangleF box)
         {
             if (mDebugLevel < 2) { return; }
-            throw new WarningException("Code is comment out and has to be corrected");
-            //textureManager.GetSpriteBatch().DrawRectangle(box, Color.Red, 2 / Globals.Camera2d.mZoom, 1);
+            textureManager.SpriteBatch.DrawRectangle(box, Color.Red, 2 / Globals.Camera2d.mZoom, 1);
         }
         public void DrawBoundBox(TextureManager textureManager, CircleF box)
         {
             if (mDebugLevel < 2) { return; }
-            throw new WarningException("Code is comment out and has to be corrected");
-            //textureManager.GetSpriteBatch().DrawCircle(box, 75, Color.Red, 2 / Globals.Camera2d.mZoom, 1);
+            textureManager.SpriteBatch.DrawCircle(box, 75, Color.Red, 2 / Globals.Camera2d.mZoom, 1);
         }
     }
 }

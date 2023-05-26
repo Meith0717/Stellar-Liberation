@@ -7,20 +7,20 @@ using Galaxy_Explovive.Core.UserInterface.Widgets;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Galaxy_Explovive.Game.Layers
+namespace Galaxy_Explovive.Menue.Layers
 {
     public class PauseLayer : Layer
     {
         private UiFrame mBackgroundLayer;
 
-        public PauseLayer(LayerManager layerManager, SoundManager soundManager, TextureManager textureManager) 
+        public PauseLayer(LayerManager layerManager, SoundManager soundManager, TextureManager textureManager)
             : base(layerManager, soundManager, textureManager)
         {
             UpdateBelow = false;
 
             mBackgroundLayer = new(null, mTextureManager) { Color = Color.Black, Alpha = .5f, Fill = UiCanvas.RootFill.Cover };
-            _ = new UiButton(mBackgroundLayer, mTextureManager, "buttonContinue", 0.05f) { RelativY = 0.4f, OnKlick = mLayerManager.PopLayer};
-            _ = new UiButton(mBackgroundLayer, mTextureManager, "buttonExitgame", 0.05f){ RelativY = 0.6f, OnKlick = mLayerManager.Exit};
+            _ = new UiButton(mBackgroundLayer, mTextureManager, "buttonContinue", 0.05f) { RelativY = 0.4f, OnKlick = mLayerManager.PopLayer };
+            _ = new UiButton(mBackgroundLayer, mTextureManager, "buttonExitgame", 0.05f) { RelativY = 0.6f, OnKlick = mLayerManager.Exit };
             OnResolutionChanged();
         }
 
