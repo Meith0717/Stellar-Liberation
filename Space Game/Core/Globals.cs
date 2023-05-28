@@ -11,7 +11,6 @@ namespace Galaxy_Explovive.Core
         // Instances
         public static GraphicsDevice GraphicsDevice { get; set; }
         public static Camera2d Camera2d { get; set; }
-        public static GameLayer GameLayer { get; set; }
         public static DebugSystem DebugSystem { get; set; }
 
         // Values

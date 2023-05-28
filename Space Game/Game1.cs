@@ -19,10 +19,10 @@ namespace Galaxy_Explovive
         private readonly InputManager mInputManager;
 
         // Global Classes
-        private LayerManager mLayerManager;
         private SpriteBatch mSpriteBatch;
-        private TextureManager mTextureManager;
-        private readonly SoundManager mSoundManager;
+        public readonly LayerManager mLayerManager;
+        public readonly TextureManager mTextureManager;
+        public readonly SoundManager mSoundManager;
 
         // Window attributes
         private int mWidth;
@@ -39,6 +39,7 @@ namespace Galaxy_Explovive
 
             mTextureManager = new TextureManager(Content);
             mGraphicsManager = new GraphicsDeviceManager(this);
+            mLayerManager = new LayerManager(this);
             mInputManager = new InputManager();
             mSoundManager = new SoundManager();
         }
@@ -51,9 +52,9 @@ namespace Galaxy_Explovive
             Globals.GraphicsDevice = GraphicsDevice;
 
             // Layer Manager
-            mLayerManager = new LayerManager(this);
-            mLayerManager.AddLayer(new GameLayer(mLayerManager, mSoundManager, mTextureManager));
-            mLayerManager.AddLayer(new HudLayer(mLayerManager, mSoundManager, mTextureManager));
+            GameLayer game = new GameLayer(this);
+            mLayerManager.AddLayer(game);
+            mLayerManager.AddLayer(new HudLayer(this, game));
 
             // Cursor Stuff
             MouseCursor cursor = MouseCursor.FromTexture2D(Content.Load<Texture2D>("cursor"), 0, 0);

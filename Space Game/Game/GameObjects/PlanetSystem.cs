@@ -57,7 +57,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             if (!mFrustumCuller.IsGameObjectOnWorldView(this)) { return; }
 
             // Get Rays
-            mRayTracing.GetRays(this);
+            mRayTracing.GetRays(this, mSpatialHashing);
 
             // Show or hide Systems
             ShowSystem(); HideSystem();

@@ -1,7 +1,5 @@
 ﻿using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
-using Galaxy_Explovive.Core.SoundManagement;
-using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.UserInterface.UiWidgets;
 using Galaxy_Explovive.Core.UserInterface.Widgets;
 using Microsoft.Xna.Framework;
@@ -13,8 +11,8 @@ namespace Galaxy_Explovive.Menue.Layers
     {
         private UiFrame mBackgroundLayer;
 
-        public PauseLayer(LayerManager layerManager, SoundManager soundManager, TextureManager textureManager)
-            : base(layerManager, soundManager, textureManager)
+        public PauseLayer(Game1 game)
+            : base(game)
         {
             UpdateBelow = false;
 

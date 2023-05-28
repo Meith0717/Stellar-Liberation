@@ -26,7 +26,7 @@ namespace Galaxy_Explovive.Core.RayTracing
             mSpartialHashing = spatial;
         }
 
-        public void GetRays(PlanetSystem ps)
+        public void GetRays(PlanetSystem ps, SpatialHashing<GameObject.GameObject> spatial)
         {
             // Clear all Lists
             mRays.Clear();
@@ -40,7 +40,7 @@ namespace Galaxy_Explovive.Core.RayTracing
 
             Vector2 scource = ps.Position;// Globals.mCamera2d.ViewToWorld(inS.mMousePosition.ToVector2());
             mBorderLength = ps.BoundedBox.Radius * 5;
-            mGameObjects = ObjectLocator.GetObjectsInRadius(null, scource, (int)mBorderLength);
+            mGameObjects = ObjectLocator.GetObjectsInRadius(spatial, scource, (int)mBorderLength);
             mGameObjects.Remove(ps.mStar);
 
             // Create Rays around Scource

@@ -1,25 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using Newtonsoft.Json;
 using Galaxy_Explovive.Core;
 using Galaxy_Explovive.Core.Effects;
 using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
 using Galaxy_Explovive.Core.PositionManagement;
-using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Game.GameObjects;
-using System;
 using System.Collections.Generic;
 using Galaxy_Explovive.Core.Map;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
 using System.Diagnostics;
 using Galaxy_Explovive.Core.Utility;
-using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.Rendering;
 using Galaxy_Explovive.Menue.Layers;
-using Galaxy_Explovive.Game.GameLogik;
 
 namespace Galaxy_Explovive.Game
 {
@@ -32,6 +27,7 @@ namespace Galaxy_Explovive.Game
         public float GameTime { get; set; }
         public SpatialHashing<GameObject> mSpatialHashing;
         public FrustumCuller mFrustumCuller;
+        public Camera2d mCamera;
 
         // Recources
         public double mAlloys;
@@ -46,10 +42,11 @@ namespace Galaxy_Explovive.Game
         private ParllaxManager mParllaxManager;
 
         // Layer Stuff _____________________________________
-        public GameLayer(LayerManager layerManager, SoundManager soundManager, TextureManager textureManager)
-            : base(layerManager, soundManager, textureManager)
+        public GameLayer(Game1 game)
+            : base(game)
         {
             InitializeGlobals();
+            mCamera = Globals.Camera2d;
             mSpatialHashing = new SpatialHashing<GameObject>(10000);
             mFrustumCuller = new();
             mPlanetSystemList = Map.Generate(this, 25000, new Vector2(mapWidth, mapHeight));
@@ -69,7 +66,7 @@ namespace Galaxy_Explovive.Game
             if (inputState.mMouseActionType != MouseActionType.None &&
                 !mFrustumCuller.IsVectorOnScreenView(inputState.mMousePosition.ToVector2()))
             {
-                mLayerManager.AddLayer(new PauseLayer(mLayerManager, mSoundManager, mTextureManager));
+                mLayerManager.AddLayer(new PauseLayer(mGame));
                 return;
             }
             GameTime += gameTime.ElapsedGameTime.Milliseconds / 1000f;
@@ -120,8 +117,7 @@ namespace Galaxy_Explovive.Game
         // Constructor Stuff _____________________________________
         private void InitializeGlobals()
         {
-            Globals.Camera2d = new();
-            Globals.GameLayer = this;
+            Globals.Camera2d = new(mGraphicsDevice);
             Globals.DebugSystem = new();
         }
 

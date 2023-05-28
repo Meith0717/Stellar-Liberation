@@ -1,11 +1,10 @@
-﻿using Galaxy_Explovive.Core;
-using Galaxy_Explovive.Core.InputManagement;
+﻿using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
-using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.UserInterface.UiWidgets;
 using Galaxy_Explovive.Core.UserInterface.Widgets;
 using Galaxy_Explovive.Core.Utility;
+using Galaxy_Explovive.Game;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -13,14 +12,16 @@ namespace Galaxy_Explovive.Menue.Layers
 {
     public class HudLayer : Layer
     {
-        private UiFrame mTopBar;
-        private UiFrame mBottomBar;
-        private UiText mGameTimeText;
+        private readonly UiFrame mTopBar;
+        private readonly UiFrame mBottomBar;
+        private readonly UiText mGameTimeText;
+        private readonly GameLayer mGameLayer;
 
-        public HudLayer(LayerManager layerManager, SoundManager soundManager, TextureManager textureManager)
-            : base(layerManager, soundManager, textureManager)
+        public HudLayer(Game1 game, GameLayer gameLayer)
+            : base(game)
         {
             UpdateBelow = true;
+            mGameLayer = gameLayer;
 
             mTopBar = new(null, mTextureManager)
             {
@@ -31,7 +32,7 @@ namespace Galaxy_Explovive.Menue.Layers
                 Side = UiCanvas.RootSide.Top
             };
 
-            mGameTimeText = new(mTopBar, textureManager) { FontColor = Color.White };
+            mGameTimeText = new(mTopBar, mTextureManager) { FontColor = Color.White };
 
             mBottomBar = new(null, mTextureManager)
             {
@@ -41,7 +42,7 @@ namespace Galaxy_Explovive.Menue.Layers
                 Side = UiCanvas.RootSide.Bottom
             };
 
-            UiFrame leftButtonLayer = new(mBottomBar, textureManager)
+            UiFrame leftButtonLayer = new(mBottomBar, mTextureManager)
             {
                 Height = 40,
                 Width = 200,
@@ -56,13 +57,9 @@ namespace Galaxy_Explovive.Menue.Layers
             };
 
             OnResolutionChanged();
-        }
+        }   
 
-
-
-        public override void Destroy()
-        {
-        }
+        public override void Destroy() { }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -84,14 +81,14 @@ namespace Galaxy_Explovive.Menue.Layers
             {
                 Pause();
             }
-            mGameTimeText.Text = MyUtility.ConvertSecondsToTimeUnits((int)Globals.GameLayer.GameTime);
+            mGameTimeText.Text = MyUtility.ConvertSecondsToTimeUnits((int)mGameLayer.GameTime);
             mTopBar.Update(inputState);
             mBottomBar.Update(inputState);
         }
 
         private void Pause()
         {
-            mLayerManager.AddLayer(new PauseLayer(mLayerManager, mSoundManager, mTextureManager));
+            mLayerManager.AddLayer(new PauseLayer(mGame));
         }
     }
 }
