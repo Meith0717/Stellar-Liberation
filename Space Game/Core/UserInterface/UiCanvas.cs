@@ -2,12 +2,12 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 
-namespace Galaxy_Explovive.Core.UserInterface.UiWidgets
+namespace Galaxy_Explovive.Core.UserInterface
 {
     public class UiCanvas
     {
         public enum RootFill { Fill, Fit, Cover, Fix }
-        public enum RootSide { Left, Right, Top, Bottom, None }
+        public enum RootSide { W, E, N, S, SE, NE, NW, SW, None }
 
         public RootFill Fill = RootFill.Fix;
         public RootSide Side = RootSide.None;
@@ -126,29 +126,44 @@ namespace Galaxy_Explovive.Core.UserInterface.UiWidgets
         }
         private void GetSide(float rootWidth, float rootHeight, float rootX, float rootY)
         {
+            void SideN() { mCenterY -= mCenterY - rootY - mHeight / 2 - MarginY; }
+            void SideE() { mCenterX += rootWidth + rootX - (mCenterX + mWidth / 2) + MarginX; }
+            void SideS() { mCenterY += rootHeight + rootY - (mCenterY + mHeight / 2) + MarginY; }
+            void SideW() { mCenterX -= mCenterX - rootX - mWidth / 2 - MarginX; }
+
             switch (Side)
             {
                 case RootSide.None:
                     break;
-                case RootSide.Left:
-                    mCenterX -= mCenterX - rootX - mWidth / 2;
-                    mCenterX += MarginX;
+                case RootSide.N:
+                    SideN();
                     break;
-                case RootSide.Right:
-                    mCenterX += rootWidth + rootX - (mCenterX + mWidth / 2);
-                    mCenterX -= MarginX;
+                case RootSide.NE:
+                    SideN();
+                    SideE();
                     break;
-                case RootSide.Top:
-                    mCenterY -= mCenterY - rootY - mHeight / 2;
-                    mCenterY += MarginY;
+                case RootSide.E:
+                    SideE();
                     break;
-                case RootSide.Bottom:
-                    mCenterY += rootHeight + rootY - (mCenterY + mHeight / 2);
-                    mCenterY -= MarginY;
+                case RootSide.SE: 
+                    SideS();
+                    SideE();
+                    break;
+                case RootSide.S:
+                    SideS();
+                    break;
+                case RootSide.SW:
+                    SideS();
+                    SideW();
+                    break;
+                case RootSide.W:
+                    SideW();
+                    break;
+                case RootSide.NW:
+                    SideN();
+                    SideW();
                     break;
             }
         }
-        // ####################################################################################
-
     }
 }

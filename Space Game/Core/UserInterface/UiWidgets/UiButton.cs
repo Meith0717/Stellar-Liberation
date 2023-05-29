@@ -1,11 +1,10 @@
 ﻿using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
-using Galaxy_Explovive.Core.UserInterface.UiWidgets;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System;
-using static Galaxy_Explovive.Core.UserInterface.UiWidgets.UiCanvas;
+using static Galaxy_Explovive.Core.UserInterface.UiCanvas;
 
 namespace Galaxy_Explovive.Core.UserInterface.Widgets
 {

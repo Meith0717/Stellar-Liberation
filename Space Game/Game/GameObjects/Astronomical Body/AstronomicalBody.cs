@@ -18,6 +18,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             if (inputState.mMouseActionType == MouseActionType.LeftClick && IsHover)
             {
                 mTrack = true;
+                mGameLayer.SelectObject = this;
                 if (this.GetType() == typeof(Planet))
                 {
                     mGameLayer.mCamera.SetZoom(1.2f);
@@ -33,6 +34,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             if (mGameLayer.mCamera.mIsMoving || 
                 (inputState.mMouseActionType == MouseActionType.LeftClick && !IsHover))
             {
+                mGameLayer.SelectObject = null;
                 mTrack = false;
             }
         }

@@ -4,8 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System.Collections.Generic;
-using static Galaxy_Explovive.Core.UserInterface.UiWidgets.UiCanvas;
-using Galaxy_Explovive.Core.UserInterface.UiWidgets;
+using static Galaxy_Explovive.Core.UserInterface.UiCanvas;
 
 namespace Galaxy_Explovive.Core.UserInterface.Widgets
 {

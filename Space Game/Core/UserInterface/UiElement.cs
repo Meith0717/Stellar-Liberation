@@ -4,7 +4,7 @@ using Galaxy_Explovive.Core.UserInterface.Widgets;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 
-namespace Galaxy_Explovive.Core.UserInterface.UiWidgets
+namespace Galaxy_Explovive.Core.UserInterface
 {
     public abstract class UiElement
     {

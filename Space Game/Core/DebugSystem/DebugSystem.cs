@@ -77,7 +77,6 @@ namespace Galaxy_Explovive.Core.Debug
             if (mDebugLevel < 3) { return; }
             var radius = Globals.MouseSpatialHashingRadius;
             List<InteractiveObject> GameObjects = ObjectLocator.GetObjectsInRadius(spatial, mouseWorldPosition, radius).OfType<InteractiveObject>().ToList(); ;
-            System.Diagnostics.Debug.WriteLine(GameObjects.Count);
             if (GameObjects.Count() == 0) { return; }
             textureManager.DrawAdaptiveLine(mouseWorldPosition, GameObjects[0].Position, Color.LightBlue, 2, textureManager.MaxLayerDepth);
         }

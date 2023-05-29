@@ -69,7 +69,11 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             if (inputState.mMouseActionType == MouseActionType.LeftClick && IsHover)
             {
                 IsSelect = mTrack = !IsSelect;
-                mGameLayer.mCamera.SetZoom(0.2f);
+                mGameLayer.mGameMessages.AddMessage(IsSelect ? "SpaceShip selected Click it to deselect" 
+                    : "SpaceShip deselected", mGameLayer.GameTime);
+                mGameLayer.SelectObject = IsSelect ? this : null;
+                if (!IsSelect) { return; }
+                mGameLayer.mCamera.SetZoom(1f);
                 return;
             }
         

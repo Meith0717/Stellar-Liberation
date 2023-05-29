@@ -1,5 +1,6 @@
 ﻿using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
+using Galaxy_Explovive.Core.UserInterface;
 using Galaxy_Explovive.Core.UserInterface.UiWidgets;
 using Galaxy_Explovive.Core.UserInterface.Widgets;
 using Galaxy_Explovive.Core.Utility;
@@ -29,17 +30,17 @@ namespace Galaxy_Explovive.Game
                 Height = 75,
                 EdgeWidth = 50,
                 MarginY = -20,
-                Side = UiCanvas.RootSide.Top
+                Side = UiCanvas.RootSide.N
             };
 
             mGameTimeText = new(mTopBar, mTextureManager, mGraphicsDevice) 
-            { FontColor = Color.White, Side = UiCanvas.RootSide.Left, RelativY = 0.65f, MarginX = 20 };
+            { FontColor = Color.White, Side = UiCanvas.RootSide.W, RelativY = 0.65f, MarginX = 20 };
 
             mBottomBar = new(null, mTextureManager, mGraphicsDevice)
-            { RelativeW = 1, Height = 40, Alpha = 0, Side = UiCanvas.RootSide.Bottom };
+            { RelativeW = 1, Height = 40, Alpha = 0, Side = UiCanvas.RootSide.S };
 
             UiFrame leftButtonLayer = new(mBottomBar, mTextureManager, mGraphicsDevice)
-            { Height = 40, Width = 200, Alpha = 0, Side = UiCanvas.RootSide.Right };
+            { Height = 40, Width = 200, Alpha = 0, Side = UiCanvas.RootSide.E };
 
             _ = new UiButton(leftButtonLayer, mTextureManager, mGraphicsDevice, "menueButton", 0.2f)
             { RelativX = .90f, OnKlick = Pause };
