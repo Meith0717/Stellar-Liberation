@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
-using Galaxy_Explovive.Core;
 using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
@@ -57,7 +56,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             if (!mFrustumCuller.IsGameObjectOnWorldView(this)) { return; }
 
             // Get Rays
-            mRayTracing.GetRays(this, mSpatialHashing);
+            mRayTracing.GetRays(this, mSpatialHashing, mGameLayer.mCamera.Zoom);
 
             // Show or hide Systems
             ShowSystem(); HideSystem();
@@ -79,7 +78,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             // Draw Stuff
             mStar.Draw();
             mRayTracing.Draw(mTextureManager);
-            Globals.DebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
+            mGameLayer.mDebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
 
             // Draw based on Cam. Positions 
             if (!mIsSystemShown) { return; }
@@ -91,7 +90,7 @@ namespace Galaxy_Explovive.Game.GameObjects
 
         private void ShowSystem()
         {
-            if (Globals.Camera2d.mZoom < 0.1) { return; }
+            if (mGameLayer.mCamera.Zoom < 0.1) { return; }
             mIsSystemShown = true;
             if (mPlanetAlpha <= 255 - AlphaModifier)
             {
@@ -102,7 +101,7 @@ namespace Galaxy_Explovive.Game.GameObjects
         }
         private void HideSystem()
         {
-            if (Globals.Camera2d.mZoom > 0.1) { return; }
+            if (mGameLayer.mCamera.Zoom > 0.1) { return; }
             if (!mIsSystemShown) { return; }
             if (mPlanetAlpha >= AlphaModifier)
             {

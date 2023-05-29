@@ -15,6 +15,7 @@ using System.Diagnostics;
 using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Core.Rendering;
 using Galaxy_Explovive.Menue.Layers;
+using Galaxy_Explovive.Core.Debug;
 
 namespace Galaxy_Explovive.Game
 {
@@ -28,6 +29,8 @@ namespace Galaxy_Explovive.Game
         public SpatialHashing<GameObject> mSpatialHashing;
         public FrustumCuller mFrustumCuller;
         public Camera2d mCamera;
+        public DebugSystem mDebugSystem;
+        public Vector2 mWorldMousePosition;
 
         // Recources
         public double mAlloys;
@@ -45,13 +48,13 @@ namespace Galaxy_Explovive.Game
         public GameLayer(Game1 game)
             : base(game)
         {
-            InitializeGlobals();
-            mCamera = Globals.Camera2d;
+            mCamera = new(mGraphicsDevice);
+            mDebugSystem = new();
             mSpatialHashing = new SpatialHashing<GameObject>(10000);
             mFrustumCuller = new();
             mPlanetSystemList = Map.Generate(this, 25000, new Vector2(mapWidth, mapHeight));
             mHomeSystem = MyUtility.GetRandomElement(mPlanetSystemList);
-            Globals.Camera2d.mTargetPosition = mHomeSystem.Position;
+            mCamera.TargetPosition = mHomeSystem.Position;
             mParllaxManager = new();
             mParllaxManager.Add(new("gameBackground", 0, 0.1f));
             mParllaxManager.Add(new("gameBackgroundParlax2", 1, 0.25f));
@@ -62,7 +65,9 @@ namespace Galaxy_Explovive.Game
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mFrustumCuller.Update();
+            mWorldMousePosition = mCamera.ViewToWorld(inputState.mMousePosition.ToVector2());
+            mFrustumCuller.Update(mGraphicsDevice, mCamera.ViewToWorld);
+            mTextureManager.SetCamZoom(mCamera.Zoom);
             if (inputState.mMouseActionType != MouseActionType.None &&
                 !mFrustumCuller.IsVectorOnScreenView(inputState.mMousePosition.ToVector2()))
             {
@@ -80,46 +85,39 @@ namespace Galaxy_Explovive.Game
             {
                 Globals.mRayTracing = !Globals.mRayTracing;
             }
-            mParllaxManager.Update();
-            Globals.DebugSystem.Update(gameTime, inputState);
-            Globals.Camera2d.Update(gameTime, inputState);
+            mParllaxManager.Update(mCamera.Movement, mCamera.Zoom);
+            mDebugSystem.Update(gameTime, inputState);
+            mCamera.Update(gameTime, inputState);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Globals.DebugSystem.UpdateFrameCounting();
+            mDebugSystem.UpdateFrameCounting();
 
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             mParllaxManager.Draw(mTextureManager);
-            Globals.DebugSystem.ShowRenderInfo(mTextureManager, new Vector2(2, 2));
+            mDebugSystem.ShowRenderInfo(mTextureManager, mCamera.Zoom, mCamera.Position);
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack,
-                transformMatrix: Globals.Camera2d.GetViewTransformationMatrix(),
-                samplerState: SamplerState.PointClamp);
+            transformMatrix: mCamera.GetViewTransformationMatrix(),
+            samplerState: SamplerState.PointClamp);
             DrawSystems();
             Map.DrawGrid(mMapSize.ToRectangle(), mTextureManager);
             foreach (Cargo c in mShips)
             {
                 c.Draw();
             }
-            Globals.DebugSystem.DrawNearMousObjects(mTextureManager, mSpatialHashing);
+            mDebugSystem.DrawNearMousObjects(mTextureManager, mSpatialHashing, mWorldMousePosition);
             spriteBatch.End();
         }
 
         public override void OnResolutionChanged()
         {
-            mParllaxManager.OnResolutionChanged();
+            mParllaxManager.OnResolutionChanged(mGraphicsDevice);
         }
 
         public override void Destroy() { }
-
-        // Constructor Stuff _____________________________________
-        private void InitializeGlobals()
-        {
-            Globals.Camera2d = new(mGraphicsDevice);
-            Globals.DebugSystem = new();
-        }
 
         // Update Stuff _____________________________________
         private void UpdateSystems(GameTime gameTime, InputState inputState)

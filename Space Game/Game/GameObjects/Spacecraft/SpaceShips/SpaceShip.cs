@@ -42,10 +42,10 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             //     }
             // }
             WeaponManager.Update(gameTime);
-            Vector2 mousePos = Globals.Camera2d.ViewToWorld(inputState.mMousePosition.ToVector2());
+            Vector2 mousePos = mGameLayer.mCamera.ViewToWorld(inputState.mMousePosition.ToVector2());
             mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
 
-            CrossHair.Update(IsMoving ? TargetPosition : mousePos, 0.05f / Globals.Camera2d.mZoom, Color.LightGreen, IsHover);
+            CrossHair.Update(IsMoving ? TargetPosition : mousePos, 0.05f / mGameLayer.mCamera.Zoom, Color.LightGreen, IsHover);
         }
 
         public override void Draw()
@@ -69,11 +69,11 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             if (inputState.mMouseActionType == MouseActionType.LeftClick && IsHover)
             {
                 IsSelect = mTrack = !IsSelect;
-                Globals.Camera2d.SetZoom(0.2f);
+                mGameLayer.mCamera.SetZoom(0.2f);
                 return;
             }
         
-            if (Globals.Camera2d.mIsMoving ||
+            if (mGameLayer.mCamera.mIsMoving ||
                 (inputState.mMouseActionType == MouseActionType.LeftClick && !IsHover))
             {
                 mTrack = false;
@@ -81,18 +81,18 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             }
         
             if (!mTrack) { return; }
-            Globals.Camera2d.mTargetPosition = Position;
+            mGameLayer.mCamera.TargetPosition = Position;
         }
         private void GetTargetPosition(InputState inputState)
         {
             if (!IsSelect || mVelocity > 0) { return; }
-            Vector2 MousePosition = Globals.Camera2d.ViewToWorld(inputState.mMousePosition.ToVector2());
+            Vector2 MousePosition = mGameLayer.mCamera.ViewToWorld(inputState.mMousePosition.ToVector2());
             if (inputState.mMouseActionType == MouseActionType.RightClick)
             {
                 TargetPosition = MousePosition;
                 mVelocity = Globals.SubLightVelocity;
                 mTrack = true;
-                Globals.Camera2d.mTargetPosition = Position;
+                mGameLayer.mCamera.TargetPosition = Position;
             }
         }
         // Navigation Stuff

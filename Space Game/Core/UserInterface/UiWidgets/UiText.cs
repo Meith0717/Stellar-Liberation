@@ -2,7 +2,7 @@
 using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.UserInterface.UiWidgets;
 using Microsoft.Xna.Framework;
-using System;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Galaxy_Explovive.Core.UserInterface.Widgets
 {
@@ -15,7 +15,8 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
 
         private string mFont = "text";
 
-        public UiText(UiFrame root, TextureManager textureManager) : base(root, textureManager)
+        public UiText(UiFrame root, TextureManager textureManager, GraphicsDevice graphicsDevice) 
+            : base(root, textureManager, graphicsDevice)
         {
             Canvas = new(root);
         }
@@ -37,7 +38,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
             Canvas.Height = stringDimensions.Y;
             Canvas.RelativeX = RelativX;
             Canvas.RelativeY = RelativY;
-            Canvas.OnResolutionChanged();
+            Canvas.OnResolutionChanged(mGraphicsDevice);
         }
     }
 }

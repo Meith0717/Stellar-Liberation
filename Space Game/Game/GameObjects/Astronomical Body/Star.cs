@@ -45,7 +45,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
         {
             mTextureManager.DrawGameObject(this, IsHover);
             mTextureManager.Draw("StarLightAlpha", Position, TextureOffset, TextureScale * 1.3f, 0, 2, mLightColor);
-            Globals.DebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
+            mGameLayer.mDebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
         }
     }
 }

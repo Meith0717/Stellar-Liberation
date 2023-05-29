@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
+using System;
 using System.Runtime.InteropServices;
 
 namespace Galaxy_Explovive.Core.Rendering
@@ -9,15 +11,14 @@ namespace Galaxy_Explovive.Core.Rendering
         private RectangleF mWorldFrustum;
         private RectangleF mViewFrustum;
 
-        public void Update()
+        public void Update(GraphicsDevice graphicsDevice, Func<Vector2, Vector2> ViewToWorld)
         {
-            Vector2 LetfTopEdge = Globals.Camera2d.ViewToWorld(Vector2.Zero);
-            Vector2 ScreenEdges = Globals.Camera2d.ViewToWorld(new Vector2(Globals.GraphicsDevice.Viewport.Width,
-                Globals.GraphicsDevice.Viewport.Height));
+            Vector2 LetfTopEdge = ViewToWorld(Vector2.Zero);
+            Vector2 ScreenEdges = ViewToWorld(new Vector2(graphicsDevice.Viewport.Width, graphicsDevice.Viewport.Height));
             Vector2 RigbtBottomEdge = ScreenEdges - LetfTopEdge;
 
             mWorldFrustum = new RectangleF(LetfTopEdge.X, LetfTopEdge.Y, RigbtBottomEdge.X, RigbtBottomEdge.Y);
-            mViewFrustum = new RectangleF(0, 0, Globals.GraphicsDevice.Viewport.Width, Globals.GraphicsDevice.Viewport.Height);
+            mViewFrustum = new RectangleF(0, 0, graphicsDevice.Viewport.Width, graphicsDevice.Viewport.Height);
         }
 
         public bool IsVectorOnScreenView(Vector2 position)
@@ -28,11 +29,6 @@ namespace Galaxy_Explovive.Core.Rendering
         public bool IsGameObjectOnWorldView(GameObject.GameObject gameObject)
         {
             return mWorldFrustum.Intersects(gameObject.BoundedBox);
-        }
-
-        public void test()
-        {
-
         }
     }
 }

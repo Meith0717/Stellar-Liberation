@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using Galaxy_Explovive.Core.GameObject;
 using System.Linq;
-using System.ComponentModel;
 using Galaxy_Explovive.Core.PositionManagement;
 using Galaxy_Explovive.Game.GameLogik;
 
@@ -16,14 +15,13 @@ namespace Galaxy_Explovive.Core.Debug
     {
         // Constants
         const float UpdateTimeInSeconds = 1;
-        
+
         // Some Stuff
         private int mDebugLevel = 0;
         private float mCurrentFramesPerSecond;
         private float mFrameDuration;
         private float mUpdateCounter = 0;
         private GameTime mGameTime;
-        private Vector2 mMousePosition;
 
         private void ChangeMode()
         {
@@ -37,7 +35,6 @@ namespace Galaxy_Explovive.Core.Debug
             {
                 this.ChangeMode();
             }
-            mMousePosition = Globals.Camera2d.ViewToWorld(inputState.mMousePosition.ToVector2());
             mGameTime = gameTime;
         }
 
@@ -55,8 +52,9 @@ namespace Galaxy_Explovive.Core.Debug
             mCurrentFramesPerSecond = 1.0f / deltaTime;
         }
 
-        public void ShowRenderInfo(TextureManager textureManager, Vector2 position)
+        public void ShowRenderInfo(TextureManager textureManager, float cameraZoom, Vector2 cameraPosition)
         {
+            Vector2 position = new(10 , 50);
             if (mDebugLevel < 1) { return; }
             int i = 0;
             List<string> lst = new List<string>
@@ -64,8 +62,8 @@ namespace Galaxy_Explovive.Core.Debug
                 $"Frames per second: {Math.Round(mCurrentFramesPerSecond)}",
                 $"Frame: {mFrameDuration} ms",
                 $"Debug Mode {mDebugLevel}",
-                $"Camera Zoom {Globals.Camera2d.mZoom}",
-                $"Position {Globals.Camera2d.Position}",
+                $"Camera Zoom {cameraZoom}",
+                $"Position {cameraPosition}",
             };
             foreach (string s in lst)
             {
@@ -74,25 +72,25 @@ namespace Galaxy_Explovive.Core.Debug
             }
         }
 
-        public void DrawNearMousObjects(TextureManager textureManager, SpatialHashing<GameObject.GameObject> spatial)
+        public void DrawNearMousObjects(TextureManager textureManager, SpatialHashing<GameObject.GameObject> spatial, Vector2 mouseWorldPosition)
         {
             if (mDebugLevel < 3) { return; }
             var radius = Globals.MouseSpatialHashingRadius;
-            List<InteractiveObject> GameObjects = ObjectLocator.GetObjectsInRadius(spatial, mMousePosition, radius).OfType<InteractiveObject>().ToList(); ;
+            List<InteractiveObject> GameObjects = ObjectLocator.GetObjectsInRadius(spatial, mouseWorldPosition, radius).OfType<InteractiveObject>().ToList(); ;
             System.Diagnostics.Debug.WriteLine(GameObjects.Count);
             if (GameObjects.Count() == 0) { return; }
-            textureManager.DrawAdaptiveLine(mMousePosition, GameObjects[0].Position, Color.LightBlue, 2, 0);
+            textureManager.DrawAdaptiveLine(mouseWorldPosition, GameObjects[0].Position, Color.LightBlue, 2, 0);
         }
 
         public void DrawBoundBox(TextureManager textureManager, RectangleF box)
         {
             if (mDebugLevel < 2) { return; }
-            textureManager.SpriteBatch.DrawRectangle(box, Color.Red, 2 / Globals.Camera2d.mZoom, 1);
+            //textureManager.SpriteBatch.DrawRectangle(box, Color.Red, 2 / mCamera.mZoom, 1);
         }
         public void DrawBoundBox(TextureManager textureManager, CircleF box)
         {
             if (mDebugLevel < 2) { return; }
-            textureManager.SpriteBatch.DrawCircle(box, 75, Color.Red, 2 / Globals.Camera2d.mZoom, 1);
+            //textureManager.SpriteBatch.DrawCircle(box, 75, Color.Red, 2 / mCamera.mZoom, 1);
         }
     }
 }

@@ -16,9 +16,12 @@ namespace Galaxy_Explovive.Menue.Layers
         {
             UpdateBelow = false;
 
-            mBackgroundLayer = new(null, mTextureManager) { Color = Color.Black, Alpha = .5f, Fill = UiCanvas.RootFill.Cover };
-            _ = new UiButton(mBackgroundLayer, mTextureManager, "buttonContinue", 0.05f) { RelativY = 0.4f, OnKlick = mLayerManager.PopLayer };
-            _ = new UiButton(mBackgroundLayer, mTextureManager, "buttonExitgame", 0.05f) { RelativY = 0.6f, OnKlick = mLayerManager.Exit };
+            mBackgroundLayer = new(null, mTextureManager, mGraphicsDevice) 
+                { Color = Color.Black, Alpha = .5f, Fill = UiCanvas.RootFill.Cover };
+            _ = new UiButton(mBackgroundLayer, mTextureManager, mGraphicsDevice, "buttonContinue", 0.05f) 
+                { RelativY = 0.4f, OnKlick = mLayerManager.PopLayer };
+            _ = new UiButton(mBackgroundLayer, mTextureManager, mGraphicsDevice, "buttonExitgame", 0.05f) 
+                { RelativY = 0.6f, OnKlick = mLayerManager.Exit };
             OnResolutionChanged();
         }
 

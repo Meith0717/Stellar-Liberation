@@ -76,7 +76,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
             mTextureManager.DrawLine(startPos, startPos + endPos, Color.DarkRed, 8, 0.9f);
 
             mTextureManager.DrawGameObject(this, IsHover);
-            Globals.DebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
+            mGameLayer.mDebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
         }
     }
 }

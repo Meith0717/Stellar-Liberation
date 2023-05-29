@@ -26,7 +26,7 @@ namespace Galaxy_Explovive.Core.RayTracing
             mSpartialHashing = spatial;
         }
 
-        public void GetRays(PlanetSystem ps, SpatialHashing<GameObject.GameObject> spatial)
+        public void GetRays(PlanetSystem ps, SpatialHashing<GameObject.GameObject> spatial, float cameraZoom)
         {
             // Clear all Lists
             mRays.Clear();
@@ -34,7 +34,7 @@ namespace Galaxy_Explovive.Core.RayTracing
             if (!Globals.mRayTracing) { return; }
 
             var AmountUpdate = (2300 * 0.035f);
-            RayAmount = (int)(2300 - (AmountUpdate / Globals.Camera2d.mZoom));
+            RayAmount = (int)(2300 - (AmountUpdate / cameraZoom));
             if (RayAmount < 0 ) { RayAmount = 0; }
             RayThickness = 15 ;
 

@@ -11,15 +11,22 @@ namespace Galaxy_Explovive.Core.TextureManagement;
 
 public class TextureManager
 {
-    readonly Hashtable mTextures = new();
-    readonly Hashtable mSpriteFonts = new();
-    private const int MaxLayerHeight = 10000;
-    private ContentManager mContentManager;
-    public SpriteBatch SpriteBatch { get; private set; }
+    const int MaxLayerHeight = 10000;
+
+    private readonly Hashtable mTextures = new();
+    private readonly Hashtable mSpriteFonts = new();
+    private readonly ContentManager mContentManager;
+    public  SpriteBatch SpriteBatch { get; private set; }
+    private float mCamZoom; 
 
     public TextureManager(ContentManager contentManager) 
     {
         mContentManager = contentManager;
+    }
+
+    public void SetCamZoom(float camZoom)
+    {
+        mCamZoom = camZoom;
     }
 
     public void SetSpriteBatch(SpriteBatch spriteBatch)
@@ -60,18 +67,7 @@ public class TextureManager
         return spriteFont;
     }
 
-    // render textures
-    public void DrawGameObject(GameObject.GameObject obj)
-    {
-        SpriteBatch.Draw(GetTexture(obj.TextureId), obj.Position, null, obj.TextureColor, obj.Rotation, obj.TextureOffset,
-            obj.TextureScale, SpriteEffects.None, obj.TextureDepth/1000);
-    }
-    public void DrawGameObject(GameObject.GameObject obj, bool isHover)
-    {                                            
-        var color = isHover ? Globals.HoverColor : obj.TextureColor;
-        SpriteBatch.Draw(GetTexture(obj.TextureId), obj.Position, null, color, obj.Rotation, obj.TextureOffset,
-            obj.TextureScale, SpriteEffects.None, obj.TextureDepth / 1000);
-    }
+    // render Textures ___________________________________________________________________________
 
     public void Draw(string id, Vector2 position, int width, int height)
     {
@@ -79,7 +75,20 @@ public class TextureManager
     }
     public void Draw(string id, Vector2 position, Vector2 offset, float sclae, float rotation, float depth, Color color)
     {
-        SpriteBatch.Draw(GetTexture(id), position, null, color, rotation, offset, sclae, SpriteEffects.None, depth/1000);
+        SpriteBatch.Draw(GetTexture(id), position, null, color, rotation, offset, sclae, SpriteEffects.None, depth / MaxLayerHeight);
+    }
+
+    // render Game Objects ___________________________________________________________________________
+    public void DrawGameObject(GameObject.GameObject obj)
+    {
+        SpriteBatch.Draw(GetTexture(obj.TextureId), obj.Position, null, obj.TextureColor, obj.Rotation, obj.TextureOffset,
+            obj.TextureScale, SpriteEffects.None, obj.TextureDepth / MaxLayerHeight);
+    }
+    public void DrawGameObject(GameObject.GameObject obj, bool isHover)
+    {                                            
+        var color = isHover ? Globals.HoverColor : obj.TextureColor;
+        SpriteBatch.Draw(GetTexture(obj.TextureId), obj.Position, null, color, obj.Rotation, obj.TextureOffset,
+            obj.TextureScale, SpriteEffects.None, obj.TextureDepth / MaxLayerHeight);
     }
 
     // render String
@@ -88,21 +97,28 @@ public class TextureManager
         SpriteBatch.DrawString(GetSpriteFont(id), text, position, color);
     }
 
-    // render Circle
+    // render Circle ___________________________________________________________________________
     public void DrawCircle(Vector2 center, float radius, Color color, float thickness, int depth)
     {
-        SpriteBatch.DrawCircle(center, radius, 90, color, thickness / Globals.Camera2d.mZoom, depth/1000);
+        SpriteBatch.DrawCircle(center, radius, 90, color, thickness, depth / MaxLayerHeight);
     }
 
-    // render Line
-    public void DrawAdaptiveLine(Vector2 start, Vector2 end, Color color, float thickness, float depth)
+    public void DrawAdaptiveCircle(Vector2 center, float radius, Color color, float thickness, int depth)
     {
-        SpriteBatch.DrawLine(start, end, color, thickness / Globals.Camera2d.mZoom, depth / 1000);
+        SpriteBatch.DrawCircle(center, radius, 90, color, thickness / mCamZoom, depth / MaxLayerHeight);
     }
 
+
+    // render Line ___________________________________________________________________________
     public void DrawLine(Vector2 start, Vector2 end, Color color, float thickness, float depth)
     {
-        SpriteBatch.DrawLine(start, end, color, thickness, depth/1000);
+        SpriteBatch.DrawLine(start, end, color, thickness, depth / MaxLayerHeight);
     }
+
+    public void DrawAdaptiveLine(Vector2 start, Vector2 end, Color color, float thickness, float depth)
+    {
+        SpriteBatch.DrawLine(start, end, color, thickness / mCamZoom, depth / MaxLayerHeight);
+    }
+
 
 }

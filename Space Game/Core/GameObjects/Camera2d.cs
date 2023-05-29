@@ -10,10 +10,10 @@ public class Camera2d
     const float mMaxZoom = 0.00000001f;
     const float mMimZoom = 1.2f;
 
-    public float mZoom { get; private set; } = 1f;
+    public float Zoom { get; private set; } = 1f;
     public Vector2 Position { get; private set; }
-
-    public Vector2 mTargetPosition;
+    public Vector2 TargetPosition { private get; set; }
+    public Vector2 Movement { get; private set; }
     public float mTargetZoom;
     public bool mIsMoving;
 
@@ -21,7 +21,6 @@ public class Camera2d
     private Matrix mTransform = Matrix.Identity;
     private bool mViewTransformationMatrixChanged = true;
     private GraphicsDevice mGraphicsDevice;
-
 
     // animation stuff
     private bool mZoomAnimation;
@@ -43,16 +42,16 @@ public class Camera2d
 
     private void MovingAnimation(int spongy)
     {
-        if (Position == mTargetPosition) { return; }
-        Vector2 adjustmentVector = Vector2.Subtract(mTargetPosition, Position);
+        if (Position == TargetPosition) { return; }
+        Vector2 adjustmentVector = Vector2.Subtract(TargetPosition, Position);
         Position += adjustmentVector / spongy;
     }
 
     public void ZoomAnimation()
     {
         if (!mZoomAnimation) { return; }
-        float zoomUpdate = - ((mZoom - mTargetZoom)/10);
-        if (Math.Abs(zoomUpdate) > 0.0001f) { mZoom += zoomUpdate; return; }
+        float zoomUpdate = - ((Zoom - mTargetZoom)/10);
+        if (Math.Abs(zoomUpdate) > 0.0001f) { Zoom += zoomUpdate; return; }
         mZoomAnimation = false;
     }
 
@@ -60,6 +59,7 @@ public class Camera2d
     {
         Vector2 currentMousePosition = inputState.mMousePosition.ToVector2();
         mIsMoving = false;
+        Movement = Vector2.Zero;
 
         if (inputState.mMouseActionType != MouseActionType.LeftClickHold)
         {
@@ -69,8 +69,8 @@ public class Camera2d
 
         if (mLastMousePosition != currentMousePosition)
         {
-            Vector2 movement = ViewToWorld(mLastMousePosition) - ViewToWorld(currentMousePosition);
-            mTargetPosition += movement;
+            Movement = ViewToWorld(mLastMousePosition) - ViewToWorld(currentMousePosition);
+            TargetPosition += Movement;
             mIsMoving = true;
             mZoomAnimation = false;
             mLastMousePosition = currentMousePosition;
@@ -81,12 +81,12 @@ public class Camera2d
     {
         // adjust zoom
         int zoom = 0;
-        if (inputState.mActionList.Contains(ActionType.CameraZoomIn) && mZoom + 0.0041 < mMimZoom) { zoom += 7; }
-        if (inputState.mActionList.Contains(ActionType.CameraZoomOut) && mZoom - 0.0041 > mMaxZoom) { zoom -= 7; }
+        if (inputState.mActionList.Contains(ActionType.CameraZoomIn) && Zoom + 0.0041 < mMimZoom) { zoom += 7; }
+        if (inputState.mActionList.Contains(ActionType.CameraZoomOut) && Zoom - 0.0041 > mMaxZoom) { zoom -= 7; }
         if (zoom != 0)
         {
             mZoomAnimation = false;
-            mZoom *= (1 + zoom * 0.001f * gameTime.ElapsedGameTime.Milliseconds);
+            Zoom *= (1 + zoom * 0.001f * gameTime.ElapsedGameTime.Milliseconds);
             mViewTransformationMatrixChanged = true;
         }
     }
@@ -115,7 +115,7 @@ public class Camera2d
             int width = mGraphicsDevice.Viewport.Width;
             int height = mGraphicsDevice.Viewport.Height;
             mTransform = Matrix.CreateTranslation(new Vector3(-Position.X, -Position.Y, 0))
-                         * Matrix.CreateScale(mZoom, mZoom, 1)
+                         * Matrix.CreateScale(Zoom, Zoom, 1)
                          * Matrix.CreateTranslation(new Vector3(width / 2f, height / 2f, 0));
             mViewTransformationMatrixChanged = false;
         }

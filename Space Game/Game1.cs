@@ -49,8 +49,6 @@ namespace Galaxy_Explovive
             // TODO: Add your initialization logic here
             base.Initialize();
 
-            Globals.GraphicsDevice = GraphicsDevice;
-
             // Layer Manager
             GameLayer game = new GameLayer(this);
             mLayerManager.AddLayer(game);

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using System;
-using System.ComponentModel;
 
 namespace Galaxy_Explovive.Core.UserInterface.UiWidgets
 {
@@ -29,19 +28,16 @@ namespace Galaxy_Explovive.Core.UserInterface.UiWidgets
         private RectangleF mRootRectangle;
 
         // Constructor ########################################################################## 
-        public UiCanvas(UiElement root)
-        {
-            mRoot = root;
-        }
+        public UiCanvas(UiElement root) { mRoot = root; }
 
         // #########################################################################################
 
 
         // Update Resolution
-        public void OnResolutionChanged()
+        public void OnResolutionChanged(GraphicsDevice graphicsDevice)
         {
             // Get new position depending on the Root
-            mRootRectangle = GetRootRectangle();
+            mRootRectangle = GetRootRectangle(graphicsDevice);
             mCenterX = mRootRectangle.Width * RelativeX + mRootRectangle.X;
             mCenterY = mRootRectangle.Height * RelativeY + mRootRectangle.Y;
             mWidth = Width == null ? mRootRectangle.Width * RelativeW : (float)Width;
@@ -58,14 +54,14 @@ namespace Galaxy_Explovive.Core.UserInterface.UiWidgets
             return new RectangleF(X, Y, mWidth, mHeight).ToRectangle();
         }
 
-        public RectangleF GetRootRectangle()
+        public RectangleF GetRootRectangle(GraphicsDevice graphicsDevice)
         {
             float rootX, rootY, rootWidth, rootHeight;
 
-            rootX = Globals.GraphicsDevice.Viewport.X;
-            rootY = Globals.GraphicsDevice.Viewport.Y;
-            rootWidth = Globals.GraphicsDevice.Viewport.Width;
-            rootHeight = Globals.GraphicsDevice.Viewport.Height;
+            rootX = graphicsDevice.Viewport.X;
+            rootY = graphicsDevice.Viewport.Y;
+            rootWidth = graphicsDevice.Viewport.Width;
+            rootHeight = graphicsDevice.Viewport.Height;
 
             if (mRoot != null)
             {

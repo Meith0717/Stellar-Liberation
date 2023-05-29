@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System;
-using System.ComponentModel;
 using static Galaxy_Explovive.Core.UserInterface.UiWidgets.UiCanvas;
 
 namespace Galaxy_Explovive.Core.UserInterface.Widgets
@@ -25,11 +24,12 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
         private float mTargetAspetRatio;
         private bool mHover;
 
-        public UiButton(UiFrame root, TextureManager textureManager, string texture, float scale) : base(root, textureManager)
+        public UiButton(UiFrame root, TextureManager textureManager, GraphicsDevice graphicsDevice, string texture, float scale) 
+            : base(root, textureManager, graphicsDevice)
         {
             mTexture = mTextureManager.GetTexture(texture);
             mTextureAspectRatio = mTexture.Width / mTexture.Height;
-            Rectangle rootRect = Canvas.GetRootRectangle().ToRectangle();
+            Rectangle rootRect = Canvas.GetRootRectangle(mGraphicsDevice).ToRectangle();
             mRelativeH = mTexture.Height / (float)rootRect.Height * scale;
             mRelativeW = mTexture.Width / (float)rootRect.Width * scale;
         }
@@ -44,7 +44,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
             Canvas.RelativeX = RelativX;
             Canvas.RelativeY = RelativY;
             Canvas.Side = Side;
-            Rectangle root = Canvas.GetRootRectangle().ToRectangle();
+            Rectangle root = Canvas.GetRootRectangle(mGraphicsDevice).ToRectangle();
             mTargetAspetRatio = root.Width * mRelativeW / root.Height * mRelativeH;
             if (mTargetAspetRatio > mTextureAspectRatio)
             {
@@ -56,7 +56,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
                 Canvas.Width = root.Width * mRelativeW;
                 Canvas.Height = Canvas.Width / mTextureAspectRatio;
             }
-            Canvas.OnResolutionChanged();
+            Canvas.OnResolutionChanged(mGraphicsDevice);
         }
 
         public override void Update(InputState inputState)

@@ -1,11 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Galaxy_Explovive.Core.TextureManagement;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Galaxy_Explovive.Core.Effects
 {
     internal class ParllaxBackground
     {
-        private string mTextureId;
+        private readonly string mTextureId;
         private int mTextureWidth;
         private int mTextureHeight;
 
@@ -15,15 +16,11 @@ namespace Galaxy_Explovive.Core.Effects
         private Vector2 mPosition4;
         private Vector2 mPosition5;
 
-        private float mDepth;
-        private float mMovingScale;
+        private readonly float mMovingScale;
 
         public ParllaxBackground(string textureId, float depth, float movingScale)
         {
-            mTextureWidth = Globals.GraphicsDevice.Viewport.Width;
-            mTextureHeight = Globals.GraphicsDevice.Viewport.Height;
             mTextureId = textureId;
-            mDepth = depth;
             mMovingScale = movingScale;
             mPosition1 = Vector2.Zero;
         }
@@ -44,10 +41,10 @@ namespace Galaxy_Explovive.Core.Effects
             textureManager.Draw(mTextureId, mPosition5, mTextureWidth, mTextureHeight);
         }
 
-        public void OnResolutionChanged()
+        public void OnResolutionChanged(GraphicsDevice graphicsDevice)
         {
-            mTextureWidth = Globals.GraphicsDevice.Viewport.Width;
-            mTextureHeight = Globals.GraphicsDevice.Viewport.Height;
+            mTextureWidth = graphicsDevice.Viewport.Width;
+            mTextureHeight = graphicsDevice.Viewport.Height;
         }
 
         private void ManagMovement(Vector2 movement)

@@ -20,17 +20,17 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
                 mTrack = true;
                 if (this.GetType() == typeof(Planet))
                 {
-                    Globals.Camera2d.SetZoom(1.2f);
+                    mGameLayer.mCamera.SetZoom(1.2f);
                 }
                 if (this.GetType() == typeof(Star))
                 {
-                    Globals.Camera2d.SetZoom(0.25f);
+                    mGameLayer.mCamera.SetZoom(0.25f);
                 }
             }
 
             if (!mTrack) { return; }
-            Globals.Camera2d.mTargetPosition = Position;
-            if (Globals.Camera2d.mIsMoving || 
+            mGameLayer.mCamera.TargetPosition = Position;
+            if (mGameLayer.mCamera.mIsMoving || 
                 (inputState.mMouseActionType == MouseActionType.LeftClick && !IsHover))
             {
                 mTrack = false;

@@ -17,8 +17,8 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
 
         private Texture2D mTexture;
 
-        public UiSprite(UiFrame root, TextureManager textureManager, string texture) 
-            : base(root, textureManager) 
+        public UiSprite(UiFrame root, TextureManager textureManager, GraphicsDevice graphicsDevice, string texture) 
+            : base(root, textureManager, graphicsDevice) 
         {
             mTexture = mTextureManager.GetTexture(texture);
         }
@@ -30,13 +30,13 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
 
         public override void OnResolutionChanged()
         {
-            Rectangle rootRectangle = Canvas.GetRootRectangle().ToRectangle();
+            Rectangle rootRectangle = Canvas.GetRootRectangle(mGraphicsDevice).ToRectangle();
             Canvas.RelativeX = RelativX;
             Canvas.RelativeY = RelativY;
             Canvas.Width = mTexture.Width;
             Canvas.Height = mTexture.Height;
             Canvas.Fill = Fill;
-            Canvas.OnResolutionChanged();
+            Canvas.OnResolutionChanged(mGraphicsDevice);
         }
 
         public override void Update(InputState inputState)

@@ -81,7 +81,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             TextureColor = new Color(alpha, alpha, alpha, alpha);
             mTextureManager.Draw("planetShadow", Position, TextureOffset, TextureScale, mShadowRotation, TextureDepth + 1, TextureColor);
             mTextureManager.DrawGameObject(this, IsHover);
-            Globals.DebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
+            mGameLayer.mDebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
         }
 
         public override void Draw()

@@ -23,7 +23,7 @@ namespace Galaxy_Explovive.Menue.Layers
             UpdateBelow = true;
             mGameLayer = gameLayer;
 
-            mTopBar = new(null, mTextureManager)
+            mTopBar = new(null, mTextureManager, mGraphicsDevice)
             {
                 RelativeW = 1,
                 Color = Color.Black,
@@ -32,9 +32,9 @@ namespace Galaxy_Explovive.Menue.Layers
                 Side = UiCanvas.RootSide.Top
             };
 
-            mGameTimeText = new(mTopBar, mTextureManager) { FontColor = Color.White };
+            mGameTimeText = new(mTopBar, mTextureManager, mGraphicsDevice) { FontColor = Color.White };
 
-            mBottomBar = new(null, mTextureManager)
+            mBottomBar = new(null, mTextureManager, mGraphicsDevice)
             {
                 RelativeW = 1,
                 Height = 40,
@@ -42,7 +42,7 @@ namespace Galaxy_Explovive.Menue.Layers
                 Side = UiCanvas.RootSide.Bottom
             };
 
-            UiFrame leftButtonLayer = new(mBottomBar, mTextureManager)
+            UiFrame leftButtonLayer = new(mBottomBar, mTextureManager, mGraphicsDevice)
             {
                 Height = 40,
                 Width = 200,
@@ -50,7 +50,7 @@ namespace Galaxy_Explovive.Menue.Layers
                 Side = UiCanvas.RootSide.Right
             };
 
-            new UiButton(leftButtonLayer, mTextureManager, "menueButton", 0.2f)
+            new UiButton(leftButtonLayer, mTextureManager, mGraphicsDevice, "menueButton", 0.2f)
             {
                 RelativX = .90f,
                 OnKlick = Pause

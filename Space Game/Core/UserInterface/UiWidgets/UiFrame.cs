@@ -25,7 +25,8 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
         public float Alpha = 1f;
         public int EdgeWidth = 0;
 
-        public UiFrame(UiFrame root, TextureManager textureManager) : base(root, textureManager) { }
+        public UiFrame(UiFrame root, TextureManager textureManager, GraphicsDevice graphicsDevice) 
+            : base(root, textureManager, graphicsDevice) { }
 
         public override void Draw()
         {
@@ -46,7 +47,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
             Canvas.Height = Height;
             Canvas.Fill = Fill;
             Canvas.Side = Side;
-            Canvas.OnResolutionChanged();
+            Canvas.OnResolutionChanged(mGraphicsDevice);
             foreach(UiElement child in mChilds)
             {
                 child.OnResolutionChanged();

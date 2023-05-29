@@ -7,17 +7,14 @@ namespace Galaxy_Explovive.Core.Effects
 {
     internal class ParllaxManager
     {
-        private Vector2 mLastPosition = Globals.Camera2d.Position;
-        private List<ParllaxBackground> mBackdrounds = new List<ParllaxBackground>();
+        private readonly List<ParllaxBackground> mBackdrounds = new();
 
-        public void Update()
+        public void Update(Vector2 cameraMovement, float cameraZoom)
         {
-            var movement = Globals.Camera2d.Position - mLastPosition;
             foreach (ParllaxBackground backdround in mBackdrounds)
             {
-                backdround.Update(movement * Globals.Camera2d.mZoom);
+                backdround.Update(cameraMovement * cameraZoom);
             }
-            mLastPosition = Globals.Camera2d.Position;
         }
 
         public void Draw(TextureManager textureManager)
@@ -33,11 +30,11 @@ namespace Galaxy_Explovive.Core.Effects
             mBackdrounds.Add(backdround);
         }
 
-        public void OnResolutionChanged()
+        public void OnResolutionChanged(GraphicsDevice graphicsDevice)
         {
             foreach (ParllaxBackground backdround in mBackdrounds)
             {
-                backdround.OnResolutionChanged();
+                backdround.OnResolutionChanged(graphicsDevice);
             }
         }
     }

@@ -14,9 +14,9 @@ public abstract class Layer
 {
     protected Game1 mGame;
     protected LayerManager mLayerManager;
+    protected GraphicsDevice mGraphicsDevice;
     public SoundManager mSoundManager;
     public TextureManager mTextureManager;
-    public GraphicsDevice mGraphicsDevice;
 
     [JsonProperty]
     public bool UpdateBelow { get; set; }
