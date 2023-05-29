@@ -56,9 +56,9 @@ namespace Galaxy_Explovive.Game
             mHomeSystem = MyUtility.GetRandomElement(mPlanetSystemList);
             mCamera.TargetPosition = mHomeSystem.Position;
             mParllaxManager = new();
-            mParllaxManager.Add(new("gameBackground", 0, 0.1f));
-            mParllaxManager.Add(new("gameBackgroundParlax2", 1, 0.25f));
-            mParllaxManager.Add(new("gameBackgroundParlax1", 2, 0.5f));
+            mParllaxManager.Add(new("gameBackground", 0.1f));
+            mParllaxManager.Add(new("gameBackgroundParlax2", 0.25f));
+            mParllaxManager.Add(new("gameBackgroundParlax1", 0.5f));
             mShips.Add(new(this, MyUtility.GetRandomVector2(mHomeSystem.Position, 1000)));
             OnResolutionChanged();
         }

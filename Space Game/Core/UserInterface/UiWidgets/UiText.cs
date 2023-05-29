@@ -3,6 +3,7 @@ using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.UserInterface.UiWidgets;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using static Galaxy_Explovive.Core.UserInterface.UiWidgets.UiCanvas;
 
 namespace Galaxy_Explovive.Core.UserInterface.Widgets
 {
@@ -12,18 +13,21 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
         public string Text { get; set; } = "UiText";
         public float RelativX = 0.5f;
         public float RelativY = 0.5f;
+        public RootSide Side = RootSide.None;
+        public int MarginX = 0;
+        public int MarginY = 0;
 
         private string mFont = "text";
 
         public UiText(UiFrame root, TextureManager textureManager, GraphicsDevice graphicsDevice) 
             : base(root, textureManager, graphicsDevice)
         {
-            Canvas = new(root);
+            mCanvas = new(root);
         }
 
         public override void Draw()
         {
-            Vector2 position = new(Canvas.ToRectangle().X, Canvas.ToRectangle().Y);
+            Vector2 position = new(mCanvas.ToRectangle().X, mCanvas.ToRectangle().Y);
             mTextureManager.DrawString(mFont, position, Text, FontColor);
         }
 
@@ -34,11 +38,14 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
         public override void Update(InputState inputState)
         {
             Vector2 stringDimensions = mTextureManager.GetSpriteFont(mFont).MeasureString(Text);
-            Canvas.Width = stringDimensions.X;
-            Canvas.Height = stringDimensions.Y;
-            Canvas.RelativeX = RelativX;
-            Canvas.RelativeY = RelativY;
-            Canvas.OnResolutionChanged(mGraphicsDevice);
+            mCanvas.Width = stringDimensions.X;
+            mCanvas.Height = stringDimensions.Y;
+            mCanvas.RelativeX = RelativX;
+            mCanvas.RelativeY = RelativY;
+            mCanvas.Side = Side;
+            mCanvas.MarginX = MarginX;
+            mCanvas.MarginY = MarginY;
+            mCanvas.OnResolutionChanged(mGraphicsDevice);
         }
     }
 }

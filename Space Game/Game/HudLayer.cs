@@ -1,14 +1,13 @@
 ﻿using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
-using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.UserInterface.UiWidgets;
 using Galaxy_Explovive.Core.UserInterface.Widgets;
 using Galaxy_Explovive.Core.Utility;
-using Galaxy_Explovive.Game;
+using Galaxy_Explovive.Menue.Layers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Galaxy_Explovive.Menue.Layers
+namespace Galaxy_Explovive.Game
 {
     public class HudLayer : Layer
     {
@@ -25,39 +24,28 @@ namespace Galaxy_Explovive.Menue.Layers
 
             mTopBar = new(null, mTextureManager, mGraphicsDevice)
             {
-                RelativeW = 1,
-                Color = Color.Black,
-                Alpha = 0.5f,
-                Height = 40,
+                RelativeW = 1f,
+                Color = new Color(66, 73, 73),
+                Height = 75,
+                EdgeWidth = 50,
+                MarginY = -20,
                 Side = UiCanvas.RootSide.Top
             };
 
-            mGameTimeText = new(mTopBar, mTextureManager, mGraphicsDevice) { FontColor = Color.White };
+            mGameTimeText = new(mTopBar, mTextureManager, mGraphicsDevice) 
+            { FontColor = Color.White, Side = UiCanvas.RootSide.Left, RelativY = 0.65f, MarginX = 20 };
 
             mBottomBar = new(null, mTextureManager, mGraphicsDevice)
-            {
-                RelativeW = 1,
-                Height = 40,
-                Alpha = 0,
-                Side = UiCanvas.RootSide.Bottom
-            };
+            { RelativeW = 1, Height = 40, Alpha = 0, Side = UiCanvas.RootSide.Bottom };
 
             UiFrame leftButtonLayer = new(mBottomBar, mTextureManager, mGraphicsDevice)
-            {
-                Height = 40,
-                Width = 200,
-                Alpha = 0,
-                Side = UiCanvas.RootSide.Right
-            };
+            { Height = 40, Width = 200, Alpha = 0, Side = UiCanvas.RootSide.Right };
 
-            new UiButton(leftButtonLayer, mTextureManager, mGraphicsDevice, "menueButton", 0.2f)
-            {
-                RelativX = .90f,
-                OnKlick = Pause
-            };
+            _ = new UiButton(leftButtonLayer, mTextureManager, mGraphicsDevice, "menueButton", 0.2f)
+            { RelativX = .90f, OnKlick = Pause };
 
             OnResolutionChanged();
-        }   
+        }
 
         public override void Destroy() { }
 

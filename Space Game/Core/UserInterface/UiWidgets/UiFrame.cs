@@ -24,6 +24,8 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
         public Color Color = Color.White;
         public float Alpha = 1f;
         public int EdgeWidth = 0;
+        public int MarginX = 0;
+        public int MarginY = 0;
 
         public UiFrame(UiFrame root, TextureManager textureManager, GraphicsDevice graphicsDevice) 
             : base(root, textureManager, graphicsDevice) { }
@@ -39,15 +41,17 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
 
         public override void OnResolutionChanged()
         {
-            Canvas.RelativeX = RelativX;
-            Canvas.RelativeY = RelativY;
-            Canvas.RelativeW = RelativeW;
-            Canvas.RelativeH = RelativeH;
-            Canvas.Width = Width; 
-            Canvas.Height = Height;
-            Canvas.Fill = Fill;
-            Canvas.Side = Side;
-            Canvas.OnResolutionChanged(mGraphicsDevice);
+            mCanvas.RelativeX = RelativX;
+            mCanvas.RelativeY = RelativY;
+            mCanvas.RelativeW = RelativeW;
+            mCanvas.RelativeH = RelativeH;
+            mCanvas.Width = Width; 
+            mCanvas.Height = Height;
+            mCanvas.Fill = Fill;
+            mCanvas.Side = Side;
+            mCanvas.MarginX = MarginX;
+            mCanvas.MarginY = MarginY;
+            mCanvas.OnResolutionChanged(mGraphicsDevice);
             foreach(UiElement child in mChilds)
             {
                 child.OnResolutionChanged();
@@ -80,7 +84,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
             TextureManager tm = mTextureManager;
             Texture2D rectangle = tm.GetTexture("Layer");
             Texture2D edge = tm.GetTexture("Circle");
-            Rectangle canvas = Canvas.ToRectangle();
+            Rectangle canvas = mCanvas.ToRectangle();
 
             // Draw 4 Edges
             canvas.X += EdgeWidth / 2; canvas.Y += EdgeWidth / 2;

@@ -25,18 +25,18 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
 
         public override void Draw()
         {
-            mTextureManager.SpriteBatch.Draw(mTexture, Canvas.ToRectangle(), Color.White);
+            mTextureManager.SpriteBatch.Draw(mTexture, mCanvas.ToRectangle(), Color.White);
         }
 
         public override void OnResolutionChanged()
         {
-            Rectangle rootRectangle = Canvas.GetRootRectangle(mGraphicsDevice).ToRectangle();
-            Canvas.RelativeX = RelativX;
-            Canvas.RelativeY = RelativY;
-            Canvas.Width = mTexture.Width;
-            Canvas.Height = mTexture.Height;
-            Canvas.Fill = Fill;
-            Canvas.OnResolutionChanged(mGraphicsDevice);
+            Rectangle rootRectangle = mCanvas.GetRootRectangle(mGraphicsDevice).ToRectangle();
+            mCanvas.RelativeX = RelativX;
+            mCanvas.RelativeY = RelativY;
+            mCanvas.Width = mTexture.Width;
+            mCanvas.Height = mTexture.Height;
+            mCanvas.Fill = Fill;
+            mCanvas.OnResolutionChanged(mGraphicsDevice);
         }
 
         public override void Update(InputState inputState)

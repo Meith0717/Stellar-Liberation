@@ -11,7 +11,7 @@ namespace Galaxy_Explovive.Core.TextureManagement;
 
 public class TextureManager
 {
-    const int MaxLayerHeight = 10000;
+    public int MaxLayerDepth = 10000;
 
     private readonly Hashtable mTextures = new();
     private readonly Hashtable mSpriteFonts = new();
@@ -75,20 +75,20 @@ public class TextureManager
     }
     public void Draw(string id, Vector2 position, Vector2 offset, float sclae, float rotation, float depth, Color color)
     {
-        SpriteBatch.Draw(GetTexture(id), position, null, color, rotation, offset, sclae, SpriteEffects.None, depth / MaxLayerHeight);
+        SpriteBatch.Draw(GetTexture(id), position, null, color, rotation, offset, sclae, SpriteEffects.None, depth / MaxLayerDepth);
     }
 
     // render Game Objects ___________________________________________________________________________
     public void DrawGameObject(GameObject.GameObject obj)
     {
         SpriteBatch.Draw(GetTexture(obj.TextureId), obj.Position, null, obj.TextureColor, obj.Rotation, obj.TextureOffset,
-            obj.TextureScale, SpriteEffects.None, obj.TextureDepth / MaxLayerHeight);
+            obj.TextureScale, SpriteEffects.None, obj.TextureDepth / MaxLayerDepth);
     }
     public void DrawGameObject(GameObject.GameObject obj, bool isHover)
     {                                            
         var color = isHover ? Globals.HoverColor : obj.TextureColor;
         SpriteBatch.Draw(GetTexture(obj.TextureId), obj.Position, null, color, obj.Rotation, obj.TextureOffset,
-            obj.TextureScale, SpriteEffects.None, obj.TextureDepth / MaxLayerHeight);
+            obj.TextureScale, SpriteEffects.None, obj.TextureDepth / MaxLayerDepth);
     }
 
     // render String
@@ -100,24 +100,24 @@ public class TextureManager
     // render Circle ___________________________________________________________________________
     public void DrawCircle(Vector2 center, float radius, Color color, float thickness, int depth)
     {
-        SpriteBatch.DrawCircle(center, radius, 90, color, thickness, depth / MaxLayerHeight);
+        SpriteBatch.DrawCircle(center, radius, 90, color, thickness, depth / MaxLayerDepth);
     }
 
     public void DrawAdaptiveCircle(Vector2 center, float radius, Color color, float thickness, int depth)
     {
-        SpriteBatch.DrawCircle(center, radius, 90, color, thickness / mCamZoom, depth / MaxLayerHeight);
+        SpriteBatch.DrawCircle(center, radius, 90, color, thickness / mCamZoom, depth / MaxLayerDepth);
     }
 
 
     // render Line ___________________________________________________________________________
     public void DrawLine(Vector2 start, Vector2 end, Color color, float thickness, float depth)
     {
-        SpriteBatch.DrawLine(start, end, color, thickness, depth / MaxLayerHeight);
+        SpriteBatch.DrawLine(start, end, color, thickness, depth / MaxLayerDepth);
     }
 
     public void DrawAdaptiveLine(Vector2 start, Vector2 end, Color color, float thickness, float depth)
     {
-        SpriteBatch.DrawLine(start, end, color, thickness / mCamZoom, depth / MaxLayerHeight);
+        SpriteBatch.DrawLine(start, end, color, thickness / mCamZoom, depth / MaxLayerDepth);
     }
 
 

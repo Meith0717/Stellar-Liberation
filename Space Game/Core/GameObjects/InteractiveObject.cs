@@ -9,9 +9,9 @@ namespace Galaxy_Explovive.Core.GameObject
     {
         public InteractiveObject(GameLayer gameLayer) : base(gameLayer) {}
 
-        public bool IsHover { get; private set; }
+        protected bool IsHover { get; private set; }
 
-        public void UpdateInputs(InputState inputState)
+        protected void UpdateInputs(InputState inputState)
         {
             BoundedBox = new CircleF(Position, (Math.Max(TextureHeight, TextureWidth) / 2) * TextureScale);
             var mousePosition = mGameLayer.mCamera.ViewToWorld(inputState.mMousePosition.ToVector2());

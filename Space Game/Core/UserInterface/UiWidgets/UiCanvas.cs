@@ -18,6 +18,8 @@ namespace Galaxy_Explovive.Core.UserInterface.UiWidgets
         public float RelativeW = .5f;
         public float? Height = null;
         public float? Width = null;
+        public int MarginX = 0;
+        public int MarginY = 0;
 
         private float mCenterX = 0;
         private float mCenterY = 0;
@@ -44,7 +46,6 @@ namespace Galaxy_Explovive.Core.UserInterface.UiWidgets
             mHeight = Height == null ? mRootRectangle.Height * RelativeW : (float)Height;
             GetSticky(mRootRectangle.Width, mRootRectangle.Height, mRootRectangle.X, mRootRectangle.Y);
             GetSide(mRootRectangle.Width, mRootRectangle.Height, mRootRectangle.X, mRootRectangle.Y);
-
         }
 
         public Rectangle ToRectangle()
@@ -65,10 +66,10 @@ namespace Galaxy_Explovive.Core.UserInterface.UiWidgets
 
             if (mRoot != null)
             {
-                rootWidth = mRoot.Canvas.mWidth;
-                rootHeight = mRoot.Canvas.mHeight;
-                rootX = mRoot.Canvas.mCenterX - rootWidth / 2;
-                rootY = mRoot.Canvas.mCenterY - rootHeight / 2;
+                rootWidth = mRoot.mCanvas.mWidth;
+                rootHeight = mRoot.mCanvas.mHeight;
+                rootX = mRoot.mCanvas.mCenterX - rootWidth / 2;
+                rootY = mRoot.mCanvas.mCenterY - rootHeight / 2;
             }
             return new RectangleF(rootX, rootY, rootWidth, rootHeight);
         }
@@ -131,15 +132,19 @@ namespace Galaxy_Explovive.Core.UserInterface.UiWidgets
                     break;
                 case RootSide.Left:
                     mCenterX -= mCenterX - rootX - mWidth / 2;
+                    mCenterX += MarginX;
                     break;
                 case RootSide.Right:
                     mCenterX += rootWidth + rootX - (mCenterX + mWidth / 2);
+                    mCenterX -= MarginX;
                     break;
                 case RootSide.Top:
                     mCenterY -= mCenterY - rootY - mHeight / 2;
+                    mCenterY += MarginY;
                     break;
                 case RootSide.Bottom:
                     mCenterY += rootHeight + rootY - (mCenterY + mHeight / 2);
+                    mCenterY -= MarginY;
                     break;
             }
         }

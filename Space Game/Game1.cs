@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Galaxy_Explovive.Core;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
 using Galaxy_Explovive.Core.SoundManagement;
@@ -37,31 +36,24 @@ namespace Galaxy_Explovive
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += delegate { mResulutionWasResized = true; };
 
+            mInputManager = new InputManager();
+            mSoundManager = new SoundManager();
             mTextureManager = new TextureManager(Content);
             mGraphicsManager = new GraphicsDeviceManager(this);
             mLayerManager = new LayerManager(this);
-            mInputManager = new InputManager();
-            mSoundManager = new SoundManager();
         }
 
-        protected override void Initialize()
+        protected override void Initialize() 
         {
-            // TODO: Add your initialization logic here
-            base.Initialize();
-
-            // Layer Manager
+            base.Initialize(); 
             GameLayer game = new GameLayer(this);
             mLayerManager.AddLayer(game);
             mLayerManager.AddLayer(new HudLayer(this, game));
-
-            // Cursor Stuff
-            MouseCursor cursor = MouseCursor.FromTexture2D(Content.Load<Texture2D>("cursor"), 0, 0);
-            Mouse.SetCursor(cursor);
+            Mouse.SetCursor(MouseCursor.FromTexture2D(Content.Load<Texture2D>("cursor"), 0, 0));
         }
 
         protected override void LoadContent()
         {
-            // TODO: use this.Content to load your game content here
             mSpriteBatch = new SpriteBatch(GraphicsDevice);
 
             // setup texture manager
@@ -120,7 +112,6 @@ namespace Galaxy_Explovive
             mTextureManager.LoadSpriteTexture("text", "fonts/text");
             mTextureManager.LoadSpriteTexture("title", "fonts/title");
             mTextureManager.LoadSpriteTexture("smal", "fonts/smal");
-
         }
 
         protected override void Update(GameTime gameTime)

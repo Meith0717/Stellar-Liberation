@@ -29,40 +29,40 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
         {
             mTexture = mTextureManager.GetTexture(texture);
             mTextureAspectRatio = mTexture.Width / mTexture.Height;
-            Rectangle rootRect = Canvas.GetRootRectangle(mGraphicsDevice).ToRectangle();
+            Rectangle rootRect = mCanvas.GetRootRectangle(mGraphicsDevice).ToRectangle();
             mRelativeH = mTexture.Height / (float)rootRect.Height * scale;
             mRelativeW = mTexture.Width / (float)rootRect.Width * scale;
         }
 
         public override void Draw()
         {
-            mTextureManager.SpriteBatch.Draw(mTexture, Canvas.ToRectangle(), mHover ? Color.DarkGray : Color.White);
+            mTextureManager.SpriteBatch.Draw(mTexture, mCanvas.ToRectangle(), mHover ? Color.DarkGray : Color.White);
         }
 
         public override void OnResolutionChanged()
         {
-            Canvas.RelativeX = RelativX;
-            Canvas.RelativeY = RelativY;
-            Canvas.Side = Side;
-            Rectangle root = Canvas.GetRootRectangle(mGraphicsDevice).ToRectangle();
+            mCanvas.RelativeX = RelativX;
+            mCanvas.RelativeY = RelativY;
+            mCanvas.Side = Side;
+            Rectangle root = mCanvas.GetRootRectangle(mGraphicsDevice).ToRectangle();
             mTargetAspetRatio = root.Width * mRelativeW / root.Height * mRelativeH;
             if (mTargetAspetRatio > mTextureAspectRatio)
             {
-                Canvas.Height = root.Height * mRelativeH;
-                Canvas.Width = Canvas.Height * mTextureAspectRatio;
+                mCanvas.Height = root.Height * mRelativeH;
+                mCanvas.Width = mCanvas.Height * mTextureAspectRatio;
             }
             else
             {
-                Canvas.Width = root.Width * mRelativeW;
-                Canvas.Height = Canvas.Width / mTextureAspectRatio;
+                mCanvas.Width = root.Width * mRelativeW;
+                mCanvas.Height = mCanvas.Width / mTextureAspectRatio;
             }
-            Canvas.OnResolutionChanged(mGraphicsDevice);
+            mCanvas.OnResolutionChanged(mGraphicsDevice);
         }
 
         public override void Update(InputState inputState)
         {
             mHover = false;
-            if (Canvas.ToRectangle().Contains(inputState.mMousePosition))
+            if (mCanvas.ToRectangle().Contains(inputState.mMousePosition))
             {
                 mHover = true;
                 if (inputState.mMouseActionType == MouseActionType)

@@ -18,7 +18,7 @@ namespace Galaxy_Explovive.Core.Effects
 
         private readonly float mMovingScale;
 
-        public ParllaxBackground(string textureId, float depth, float movingScale)
+        public ParllaxBackground(string textureId, float movingScale)
         {
             mTextureId = textureId;
             mMovingScale = movingScale;
