@@ -5,6 +5,7 @@ using Galaxy_Explovive.Core.MovementController;
 using Galaxy_Explovive.Core.Rendering;
 using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.TextureManagement;
+using Galaxy_Explovive.Core.UserInterface;
 using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Core.Weapons;
 using Microsoft.Xna.Framework;
@@ -69,8 +70,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             if (inputState.mMouseActionType == MouseActionType.LeftClick && IsHover)
             {
                 IsSelect = mTrack = !IsSelect;
-                mGameLayer.mGameMessages.AddMessage(IsSelect ? "SpaceShip selected Click it to deselect" 
-                    : "SpaceShip deselected", mGameLayer.GameTime);
+                mGameLayer.mGameMessages.AddMessage(IsSelect ? Messages.ShipSelected : Messages.ShipDeselected, mGameLayer.GameTime);
                 mGameLayer.SelectObject = IsSelect ? this : null;
                 if (!IsSelect) { return; }
                 mGameLayer.mCamera.SetZoom(1f);

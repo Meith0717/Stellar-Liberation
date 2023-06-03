@@ -1,4 +1,5 @@
-﻿using Galaxy_Explovive.Core.InputManagement;
+﻿using Galaxy_Explovive.Core.Debug;
+using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
 using Galaxy_Explovive.Core.UserInterface;
 using Galaxy_Explovive.Core.UserInterface.UiWidgets;
@@ -7,6 +8,7 @@ using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Menue.Layers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
 
 namespace Galaxy_Explovive.Game
 {
@@ -55,6 +57,8 @@ namespace Galaxy_Explovive.Game
             spriteBatch.Begin();
             mTopBar.Draw();
             mBottomBar.Draw();
+            mGameLayer.mDebugSystem.ShowRenderInfo(mTextureManager,mGameLayer.mCamera.Zoom, mGameLayer.mCamera.Position);
+            mGameLayer.mGameMessages.Draw();
             spriteBatch.End();
         }
 

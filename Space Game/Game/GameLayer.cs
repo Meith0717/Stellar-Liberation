@@ -17,6 +17,7 @@ using Galaxy_Explovive.Core.Rendering;
 using Galaxy_Explovive.Menue.Layers;
 using Galaxy_Explovive.Core.Debug;
 using Galaxy_Explovive.Core.UserInterface.UiWidgets;
+using Galaxy_Explovive.Core.UserInterface;
 
 namespace Galaxy_Explovive.Game
 {
@@ -26,7 +27,7 @@ namespace Galaxy_Explovive.Game
         const int mapHeight = 2000000;
 
         // Public GameObject Classes
-        public float GameTime { get; set; }
+        public float GameTime { get; set; } = 0;
         public GameObject SelectObject { get; set; }
         public SpatialHashing<GameObject> mSpatialHashing;
         public FrustumCuller mFrustumCuller;
@@ -54,6 +55,7 @@ namespace Galaxy_Explovive.Game
             mCamera = new(mGraphicsDevice);
             mDebugSystem = new();
             mGameMessages = new(mTextureManager, mGraphicsDevice, GameTime);
+            mGameMessages.AddMessage(Messages.RTImfo, GameTime);
             mSpatialHashing = new SpatialHashing<GameObject>(10000);
             mFrustumCuller = new();
             mPlanetSystemList = Map.Generate(this, 25000, new Vector2(mapWidth, mapHeight));
@@ -88,6 +90,7 @@ namespace Galaxy_Explovive.Game
             if (inputState.mActionList.Contains(ActionType.ToggleRayTracing))
             {
                 Globals.mRayTracing = !Globals.mRayTracing;
+                mGameMessages.AddMessage(Globals.mRayTracing ? Messages.RTOn : Messages.RTOff, GameTime);
             }
             mParllaxManager.Update(mCamera.Movement, mCamera.Zoom);
             mDebugSystem.Update(gameTime, inputState);
@@ -101,8 +104,6 @@ namespace Galaxy_Explovive.Game
 
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             mParllaxManager.Draw(mTextureManager);
-            mDebugSystem.ShowRenderInfo(mTextureManager, mCamera.Zoom, mCamera.Position);
-            mGameMessages.Draw();
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack,
