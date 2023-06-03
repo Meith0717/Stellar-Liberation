@@ -45,7 +45,8 @@ namespace Galaxy_Explovive.Game.GameObjects
         {
             if (Position == TargetPosition) { return; }
             Vector2 adjustmentVector = Vector2.Subtract(TargetPosition, Position);
-            Position += adjustmentVector / spongy;
+            Movement = adjustmentVector / spongy;
+            Position += Movement;
         }
 
         public void ZoomAnimation()

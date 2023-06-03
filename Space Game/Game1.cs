@@ -40,11 +40,12 @@ namespace Galaxy_Explovive
             mSoundManager = new SoundManager();
             mTextureManager = new TextureManager(Content);
             mGraphicsManager = new GraphicsDeviceManager(this);
-            mLayerManager = new LayerManager(this);
+            mLayerManager = new LayerManager(this); 
         }
 
         protected override void Initialize() 
         {
+            mGraphicsManager.ApplyChanges();
             base.Initialize(); 
             GameLayer game = new GameLayer(this);
             mLayerManager.AddLayer(game);
@@ -144,6 +145,7 @@ namespace Galaxy_Explovive
             Action action = mIsFullScreen ? UnSetFullscreen : SetFullscreen;
             mIsFullScreen = !mIsFullScreen;
             action();
+            mGraphicsManager.ApplyChanges();
         }
 
         private void SetFullscreen()
@@ -154,7 +156,6 @@ namespace Galaxy_Explovive
             mGraphicsManager.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             mGraphicsManager.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             mGraphicsManager.IsFullScreen = true;
-            mGraphicsManager.ApplyChanges();
         }
 
         private void UnSetFullscreen()
@@ -162,7 +163,6 @@ namespace Galaxy_Explovive
             mGraphicsManager.PreferredBackBufferWidth = mWidth;
             mGraphicsManager.PreferredBackBufferHeight = mHeight;
             mGraphicsManager.IsFullScreen = false;
-            mGraphicsManager.ApplyChanges();
         }
     }
 }
