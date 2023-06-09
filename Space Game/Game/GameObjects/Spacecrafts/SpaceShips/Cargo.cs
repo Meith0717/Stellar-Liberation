@@ -13,7 +13,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
     {
         public Cargo(GameLayer gameLayer, Vector2 position) : base(gameLayer)
         {
-            Position = TargetPosition = position;
+            Position = position;
             Rotation = 0;
 
             // Rendering

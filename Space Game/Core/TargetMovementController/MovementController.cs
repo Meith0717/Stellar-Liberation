@@ -1,15 +1,24 @@
-﻿using Galaxy_Explovive.Core.InputManagement;
+﻿using Galaxy_Explovive.Core.GameObject;
+using Galaxy_Explovive.Core.InputManagement;
+using Galaxy_Explovive.Core.PositionManagement;
+using Galaxy_Explovive.Game.GameLogik;
+using Microsoft.Xna.Framework;
 using System;
-
 
 namespace Galaxy_Explovive.Core.MovementController
 {
-    public class MovementController
+    public static class MovementController
     {
-        private static MovementController mInstance = null;
-        public static MovementController Instance { get { return mInstance ??= new MovementController(); } }
 
-        public float GetRotation(float objectRotation,float targetRotation, float rotationRest)
+        public static Vector2? GetTargetPosition(SpatialHashing<GameObject.GameObject> spatialHashing, InputState inputState, Vector2 worldMousePosition)
+        {
+            var gameObject = ObjectLocator.GetObjectsInRadius<InteractiveObject>(spatialHashing, worldMousePosition, 500);
+            if (gameObject.Count == 0) { return null; }
+            if (!gameObject[0].IsHover) { return null; }
+            return gameObject[0].Position;
+        }
+
+        public static float GetRotation(float objectRotation,float targetRotation, float rotationRest)
         {
             float correction = 0;
             if (rotationRest < 0.1) { return targetRotation-objectRotation; }
@@ -24,7 +33,7 @@ namespace Galaxy_Explovive.Core.MovementController
             return correction;
         }
 
-        public float GetVelocity(InputState inputState, bool isSelect, float maxVelocity, float currentVelovity, float distanceToTarget)
+        public static float GetVelocity(InputState inputState, bool isSelect, float maxVelocity, float currentVelovity, float distanceToTarget)
         {
             if (distanceToTarget <= 40)
             {

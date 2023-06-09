@@ -72,13 +72,15 @@ namespace Galaxy_Explovive.Core.Debug
             }
         }
 
-        public void DrawNearMousObjects(TextureManager textureManager, SpatialHashing<GameObject.GameObject> spatial, Vector2 mouseWorldPosition)
+        public void TestSpatialHashing(TextureManager textureManager, SpatialHashing<GameObject.GameObject> spatial, Vector2 mouseWorldPosition)
         {
             if (mDebugLevel < 3) { return; }
             var radius = Globals.MouseSpatialHashingRadius;
-            List<InteractiveObject> GameObjects = ObjectLocator.GetObjectsInRadius(spatial, mouseWorldPosition, radius).OfType<InteractiveObject>().ToList(); ;
-            if (GameObjects.Count() == 0) { return; }
-            textureManager.DrawAdaptiveLine(mouseWorldPosition, GameObjects[0].Position, Color.LightBlue, 2, textureManager.MaxLayerDepth);
+            List<InteractiveObject> GameObjects = ObjectLocator.GetObjectsInRadius<InteractiveObject>(spatial, mouseWorldPosition, radius);
+            foreach (InteractiveObject obj in GameObjects) 
+            {
+                textureManager.DrawAdaptiveLine(mouseWorldPosition, obj.Position, Color.LightBlue, 2, textureManager.MaxLayerDepth);
+            }
         }
 
         public void DrawBoundBox(TextureManager textureManager, CircleF box)

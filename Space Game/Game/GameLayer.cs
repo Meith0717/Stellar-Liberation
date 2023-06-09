@@ -115,7 +115,7 @@ namespace Galaxy_Explovive.Game
             {
                 c.Draw();
             }
-            mDebugSystem.DrawNearMousObjects(mTextureManager, mSpatialHashing, mWorldMousePosition);
+            mDebugSystem.TestSpatialHashing(mTextureManager, mSpatialHashing, mWorldMousePosition);
             spriteBatch.End();
         }
 

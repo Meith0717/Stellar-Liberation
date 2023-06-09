@@ -12,6 +12,7 @@ namespace Galaxy_Explovive.Core.GameObject
     public class CrossHair : GameObject
     {
         private bool mHover;
+        private bool mDraw;
 
         public CrossHair(GameLayer gameLayer, Vector2 position, float scale) : base(gameLayer)
         {
@@ -25,13 +26,15 @@ namespace Galaxy_Explovive.Core.GameObject
             TextureHeight = 1024;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
             TextureScale = scale;
-            TextureDepth = 0;
+            TextureDepth = mTextureManager.MaxLayerDepth;
             TextureColor = Color.White;
         }
 
-        public void Update(Vector2 position, float scale, Color color, bool isHover) 
+        public void Update(Vector2? position, float scale, Color color, bool isHover) 
         {
-            Position = position;
+            if (position  == null) { mDraw = false; return; }
+            mDraw = true;
+            Position = (Vector2)position;
             TextureScale = scale;
             TextureColor = color;
             mHover = isHover;
@@ -43,6 +46,7 @@ namespace Galaxy_Explovive.Core.GameObject
         }
         public override void Draw()
         {
+            if (!mDraw) { return; }
             mTextureManager.DrawGameObject(this, mHover);
         }
     }

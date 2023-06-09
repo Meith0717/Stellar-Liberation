@@ -40,7 +40,7 @@ namespace Galaxy_Explovive.Core.RayTracing
 
             Vector2 scource = ps.Position;// Globals.mCamera2d.ViewToWorld(inS.mMousePosition.ToVector2());
             mBorderLength = ps.BoundedBox.Radius * 5;
-            mGameObjects = ObjectLocator.GetObjectsInRadius(spatial, scource, (int)mBorderLength);
+            mGameObjects = ObjectLocator.GetObjectsInRadius<GameObject.GameObject>(spatial, scource, (int)mBorderLength);
             mGameObjects.Remove(ps.mStar);
 
             // Create Rays around Scource

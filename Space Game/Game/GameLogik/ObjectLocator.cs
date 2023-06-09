@@ -3,12 +3,13 @@ using Galaxy_Explovive.Core.PositionManagement;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Galaxy_Explovive.Game.GameLogik
 {
     internal static class ObjectLocator
     {
-        public static List<GameObject> GetObjectsInRadius(SpatialHashing<GameObject> sHashing, Vector2 positionVector2, int radius)
+        public static List<T> GetObjectsInRadius<T>(SpatialHashing<GameObject> sHashing, Vector2 positionVector2, int radius)
         {
             var objectsInRadius = new List<GameObject>();
             int CellSize = sHashing.mCellSize;
@@ -30,9 +31,7 @@ namespace Galaxy_Explovive.Game.GameLogik
                 }
 
             }
-            Comparison<GameObject> comparison = (a, b) => Vector2.Distance(a.Position, positionVector2).CompareTo(Vector2.Distance(b.Position, positionVector2));
-            objectsInRadius.Sort(comparison);
-            return objectsInRadius;
+            return objectsInRadius.OfType<T>().ToList();
         }
     }
 }

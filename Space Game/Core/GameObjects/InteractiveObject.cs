@@ -9,7 +9,7 @@ namespace Galaxy_Explovive.Core.GameObject
     {
         public InteractiveObject(GameLayer gameLayer) : base(gameLayer) {}
 
-        protected bool IsHover { get; private set; }
+        public bool IsHover { get; private set; }
 
         protected void UpdateInputs(InputState inputState)
         {

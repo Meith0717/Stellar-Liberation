@@ -53,7 +53,7 @@ namespace Galaxy_Explovive.Core.Waepons
 
         private void CheckForDamage(SoundManager soundManager, SpatialHashing<GameObject.GameObject> spatial)
         {
-            var ships = ObjectLocator.GetObjectsInRadius(spatial, Position, 40).OfType<Spacecraft>().ToList();
+            var ships = ObjectLocator.GetObjectsInRadius<Spacecraft>(spatial, Position, 40);
             ships.Remove(OriginShip);
             if (ships.Count <= 0) { return; }
             soundManager.PlaySound("hit", (float)MyUtility.Random.NextDouble());
