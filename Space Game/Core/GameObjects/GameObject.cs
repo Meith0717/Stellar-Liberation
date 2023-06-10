@@ -43,7 +43,7 @@ namespace Galaxy_Explovive.Core.GameObject
         }
 
         // Methods
-        public abstract void Update(GameTime gameTime, InputState inputState);
+        public abstract void UpdateLogik(GameTime gameTime, InputState inputState);
         public abstract void Draw();
 
     }

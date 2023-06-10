@@ -24,28 +24,9 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
 
         public SpaceShip(GameLayer gameLayer) : base(gameLayer) {}
 
-        public override void Update(GameTime gameTime, InputState inputState)
+        public override void UpdateInputs(InputState inputState)
         {
-            mSpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
-            UpdateInputs(inputState);
-            UpdateNavigation(gameTime, inputState);
-            WeaponManager.Update(gameTime);
-            mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
-            System.Diagnostics.Debug.WriteLine(mVelocity);
-        }
-
-        public override void Draw()
-        {
-            base.DrawSpaceCraft();
-            DrawPath();
-            WeaponManager.Draw(mTextureManager);
-            DrawTargetCrosshar();
-        }
-
-        // Input Stuff
-        private new void UpdateInputs(InputState inputState)
-        {
-            base.Update(inputState);
+            GetTarget(inputState);
             if (inputState.mMouseActionType == MouseActionType.LeftClick && IsHover)
             {
                 IsSelect = mTrack = !IsSelect;
@@ -65,11 +46,30 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             if (!mTrack) { return; }
             mGameLayer.mCamera.TargetPosition = Position;
             TextureId = IsSelect ? SelectTexture : NormalTexture;
-        }                                                  
+        }
+
+        public override void UpdateLogik(GameTime gameTime, InputState inputState)
+        {
+            base.UpdateLogik(gameTime, inputState);
+            mSpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
+            UpdateNavigation(gameTime, inputState);
+            WeaponManager.Update(gameTime);
+            mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
+            System.Diagnostics.Debug.WriteLine(mVelocity);
+        }
+
+        public override void Draw()
+        {
+            base.DrawSpaceCraft();
+            DrawPath();
+            WeaponManager.Draw(mTextureManager);
+            DrawTargetCrosshar();
+        }
+
+        // Input Stuff
         
         private void UpdateNavigation(GameTime gameTime, InputState inputState)
         {
-            GetTarget(inputState);
             if (TargetPosition == null) { return; }
 
             var targetPosition = (Vector2)TargetPosition;

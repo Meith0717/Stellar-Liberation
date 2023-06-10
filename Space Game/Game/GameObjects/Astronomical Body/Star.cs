@@ -34,9 +34,15 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             // Add To Spatial Hashing
             mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
-        public override void Update(GameTime gameTime, InputState inputState)
+
+        public override void UpdateInputs(InputState inputState)
         {
             base.UpdateInputs(inputState);
+        }
+
+        public override void UpdateLogik(GameTime gameTime, InputState inputState)
+        {
+            base.UpdateLogik(gameTime, inputState);
             Rotation += 0.0001f;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
         }

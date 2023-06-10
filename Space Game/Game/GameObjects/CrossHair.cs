@@ -40,7 +40,7 @@ namespace Galaxy_Explovive.Core.GameObject
             mHover = isHover;
         }
 
-        public override void Update(GameTime gameTime, InputState inputState)
+        public override void UpdateLogik(GameTime gameTime, InputState inputState)
         {
             throw new System.NotImplementedException();
         }

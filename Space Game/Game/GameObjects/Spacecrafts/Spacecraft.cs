@@ -1,9 +1,5 @@
-﻿using Galaxy_Explovive.Core;
-using Galaxy_Explovive.Core.GameObject;
+﻿using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.Rendering;
-using Galaxy_Explovive.Core.SoundManagement;
-using Galaxy_Explovive.Core.TextureManagement;
 using Microsoft.Xna.Framework;
 
 namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
@@ -22,9 +18,9 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
 
         protected Spacecraft(GameLayer gameLayer) : base(gameLayer) { }
 
-        public void Update(InputState inputState)
+        public override void UpdateLogik(GameTime gameTime, InputState inputState)
         {
-            base.UpdateInputs(inputState);
+            base.UpdateLogik(gameTime, inputState);
             RegenerateShield();
             TextureId = IsSelect ? SelectTexture : NormalTexture;
         }

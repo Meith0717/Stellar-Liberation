@@ -2,6 +2,8 @@
 using System;
 using MonoGame.Extended;
 using Galaxy_Explovive.Game;
+using System.Diagnostics.Contracts;
+using Microsoft.Xna.Framework;
 
 namespace Galaxy_Explovive.Core.GameObject
 {
@@ -11,11 +13,18 @@ namespace Galaxy_Explovive.Core.GameObject
 
         public bool IsHover { get; private set; }
 
-        protected void UpdateInputs(InputState inputState)
+        public override void UpdateLogik(GameTime gameTime, InputState inputState)
         {
-            BoundedBox = new CircleF(Position, (Math.Max(TextureHeight, TextureWidth) / 2) * TextureScale);
-            var mousePosition = mGameLayer.mCamera.ViewToWorld(inputState.mMousePosition.ToVector2());
-            IsHover = BoundedBox.Contains(mousePosition);
+            void CheckForHover(InputState inputState)
+            {
+                BoundedBox = new CircleF(Position, (Math.Max(TextureHeight, TextureWidth) / 2) * TextureScale);
+                var mousePosition = mGameLayer.mCamera.ViewToWorld(inputState.mMousePosition.ToVector2());
+                IsHover = BoundedBox.Contains(mousePosition);
+            }
+
+            CheckForHover(inputState);
         }
+
+        public abstract void UpdateInputs(InputState inputState);
     }
 }

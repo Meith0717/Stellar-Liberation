@@ -31,9 +31,9 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             
         }
 
-        public override void Update(GameTime gameTime, InputState inputState)
+        public override void UpdateLogik(GameTime gameTime, InputState inputState)
         {
-            base.Update(gameTime, inputState);
+            base.UpdateLogik(gameTime, inputState);
         }
 
         public override void Draw()

@@ -50,7 +50,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             mRayTracing = new(mStar.mType.LightColor, gameLayer.mSpatialHashing);
         }
 
-        public override void Update(GameTime gameTime, InputState inputState)
+        public override void UpdateLogik(GameTime gameTime, InputState inputState)
         {
             // Checkst if System is on Screen
             if (!mFrustumCuller.IsGameObjectOnWorldView(this)) { return; }
@@ -60,13 +60,13 @@ namespace Galaxy_Explovive.Game.GameObjects
 
             // Show or hide Systems
             ShowSystem(); HideSystem();
-            mStar.Update(gameTime, inputState);
+            mStar.UpdateLogik(gameTime, inputState);
 
             // Update based on Cam. Positions 
             if (!mIsSystemShown) { return; }
             foreach (Planet planet in mPlanets)
             {
-                planet.Update(gameTime, inputState);
+                planet.UpdateLogik(gameTime, inputState);
             }
         }
 

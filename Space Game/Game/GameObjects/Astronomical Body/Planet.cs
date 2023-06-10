@@ -1,16 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
-using Galaxy_Explovive.Core;
 using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
 using System;
 using Galaxy_Explovive.Core.GameObjects.Types;
 using Galaxy_Explovive.Core.Utility;
-using Microsoft.Xna.Framework.Graphics;
-using Galaxy_Explovive.Core.SoundManagement;
-using Galaxy_Explovive.Core.Rendering;
 
 namespace Galaxy_Explovive.Game.GameObjects
 {
@@ -49,13 +44,19 @@ namespace Galaxy_Explovive.Game.GameObjects
 
         }
 
-        public override void Update(GameTime gameTime, InputState inputState)
+        public override void UpdateInputs(InputState inputState)
         {
+            base.UpdateInputs(inputState);
+        }
+
+        public override void UpdateLogik(GameTime gameTime, InputState inputState)
+        {
+            // Other Stuff
+            base.UpdateLogik(gameTime, inputState);
+
             // Remove From Spatial Hashing
             RemoveFromSpatialHashing();
 
-            // Other Stuff
-            base.UpdateInputs(inputState);
             float velocity = MathF.Sqrt(1/(mRadius*10));   
             float angleUpdate = Angle + mGameLayer.GameTime * velocity;
             Position = MyUtility.GetVector2(mRadius, Angle + angleUpdate) + mCenterPosition;

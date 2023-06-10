@@ -85,7 +85,7 @@ namespace Galaxy_Explovive.Game
             UpdateSystems(gameTime, inputState);
             foreach (Cargo c in mShips)
             {
-                c.Update(gameTime, inputState);
+                c.UpdateLogik(gameTime, inputState);
             }
             if (inputState.mActionList.Contains(ActionType.ToggleRayTracing))
             {
@@ -132,7 +132,7 @@ namespace Galaxy_Explovive.Game
         {
             foreach (PlanetSystem planetSystem in mPlanetSystemList)
             {
-                planetSystem.Update(gameTime, inputState);
+                planetSystem.UpdateLogik(gameTime, inputState);
             }
         }
 
