@@ -25,6 +25,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
         public int EdgeWidth = 0;
         public int MarginX = 0;
         public int MarginY = 0;
+        public bool Hide = false;
 
         public UiFrame(UiFrame root, TextureManager textureManager, GraphicsDevice graphicsDevice) 
             : base(root, textureManager, graphicsDevice) { }
@@ -40,6 +41,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
 
         public override void OnResolutionChanged()
         {
+            if (Hide) return;
             mCanvas.RelativeX = RelativX;
             mCanvas.RelativeY = RelativY;
             mCanvas.RelativeW = RelativeW;
@@ -59,6 +61,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
 
         public override void Update(InputState inputState)
         {
+            if (Hide) return;
             foreach (UiElement child in mChilds)
             {
                 child.Update(inputState);
@@ -73,6 +76,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
 
         private void DrawLayer(int EdgeWidth)
         {
+            if (Hide) return;
             Color color = new(
                 (int)(Color.R * Alpha),
                 (int)(Color.G * Alpha),

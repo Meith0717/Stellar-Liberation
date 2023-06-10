@@ -5,6 +5,7 @@ using Galaxy_Explovive.Core.UserInterface;
 using Galaxy_Explovive.Core.UserInterface.UiWidgets;
 using Galaxy_Explovive.Core.UserInterface.Widgets;
 using Galaxy_Explovive.Core.Utility;
+using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
 using Galaxy_Explovive.Menue.Layers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,10 +15,10 @@ namespace Galaxy_Explovive.Game
 {
     public class HudLayer : Layer
     {
+        private readonly GameLayer mGameLayer;
         private readonly UiFrame mTopBar;
         private readonly UiFrame mBottomBar;
         private readonly UiText mGameTimeText;
-        private readonly GameLayer mGameLayer;
 
         public HudLayer(Game1 game, GameLayer gameLayer)
             : base(game)
@@ -42,10 +43,14 @@ namespace Galaxy_Explovive.Game
             { RelativeW = 1, Height = 40, Alpha = 0, Side = UiCanvas.RootSide.S };
 
             UiFrame leftButtonLayer = new(mBottomBar, mTextureManager, mGraphicsDevice)
-            { Height = 40, Width = 200, Alpha = 0, Side = UiCanvas.RootSide.E };
+            { Height = 40, Width = 200, Alpha = 0, Side = UiCanvas.RootSide.E};
 
             _ = new UiButton(leftButtonLayer, mTextureManager, mGraphicsDevice, "menueButton", 0.2f)
             { RelativX = .90f, OnKlick = Pause };
+            _ = new UiButton(leftButtonLayer, mTextureManager, mGraphicsDevice, "buttonDeselect", 0.2f)
+            { RelativX = .50f, OnKlick = Deselect };
+            _ = new UiButton(leftButtonLayer, mTextureManager, mGraphicsDevice, "buttonTrack", 0.2f)
+            { RelativX = .10f, OnKlick = Track };
 
             OnResolutionChanged();
         }
@@ -82,6 +87,20 @@ namespace Galaxy_Explovive.Game
         private void Pause()
         {
             mLayerManager.AddLayer(new PauseLayer(mGame));
+        }
+
+        private void Deselect()
+        {
+            mGameLayer.SelectObject = null;
+        }
+
+        private void Track()
+        {
+            if (mGameLayer.SelectObject is Cargo)
+            {
+                Cargo ship = (Cargo)mGameLayer.SelectObject;
+                ship.mTrack = true;
+            }
         }
     }
 }

@@ -12,17 +12,24 @@ namespace Galaxy_Explovive.Core.GameObject
         public InteractiveObject(GameLayer gameLayer) : base(gameLayer) {}
 
         public bool IsHover { get; private set; }
+        public bool IsPressed { get; private set; }
 
         public override void UpdateLogik(GameTime gameTime, InputState inputState)
         {
-            void CheckForHover(InputState inputState)
+            void CheckForSelect(InputState inputState)
             {
+                IsPressed = false;
                 BoundedBox = new CircleF(Position, (Math.Max(TextureHeight, TextureWidth) / 2) * TextureScale);
                 var mousePosition = mGameLayer.mCamera.ViewToWorld(inputState.mMousePosition.ToVector2());
                 IsHover = BoundedBox.Contains(mousePosition);
+                if (!IsHover) { return; }
+                if (inputState.mMouseActionType != MouseActionType.LeftClick) { return; }
+                IsPressed = true;
+                if (mGameLayer.SelectObject != null) { return; }
+                mGameLayer.SelectObject = this;
             }
 
-            CheckForHover(inputState);
+            CheckForSelect(inputState);
         }
 
         public abstract void UpdateInputs(InputState inputState);

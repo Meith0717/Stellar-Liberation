@@ -11,7 +11,6 @@ using Galaxy_Explovive.Game.GameObjects;
 using System.Collections.Generic;
 using Galaxy_Explovive.Core.Map;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
-using System.Diagnostics;
 using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Core.Rendering;
 using Galaxy_Explovive.Menue.Layers;
@@ -28,7 +27,7 @@ namespace Galaxy_Explovive.Game
 
         // Public GameObject Classes
         public float GameTime { get; set; } = 0;
-        public GameObject SelectObject { get; set; }
+        public InteractiveObject SelectObject { get; set; }
         public SpatialHashing<GameObject> mSpatialHashing;
         public FrustumCuller mFrustumCuller;
         public Camera2d mCamera;
@@ -92,10 +91,12 @@ namespace Galaxy_Explovive.Game
                 Globals.mRayTracing = !Globals.mRayTracing;
                 mGameMessages.AddMessage(Globals.mRayTracing ? Messages.RTOn : Messages.RTOff, GameTime);
             }
+            if (SelectObject != null) { SelectObject.UpdateInputs(inputState); }
             mParllaxManager.Update(mCamera.Movement, mCamera.Zoom);
             mDebugSystem.Update(gameTime, inputState);
             mCamera.Update(gameTime, inputState);
             mGameMessages.Update(inputState, GameTime);
+            System.Diagnostics.Debug.WriteLineIf(SelectObject != null, SelectObject);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

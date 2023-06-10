@@ -1,7 +1,6 @@
 ﻿using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.MovementController;
-using Galaxy_Explovive.Core.UserInterface;
 using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Core.Weapons;
 using Microsoft.Xna.Framework;
@@ -18,7 +17,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
         public CrossHair CrossHair { private get; set; }
 
         // Navigation
-        private bool mTrack = false;
+        public bool mTrack = false;
         private float mVelocity = 0;
         private float mTravelTime;
 
@@ -27,25 +26,12 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
         public override void UpdateInputs(InputState inputState)
         {
             GetTarget(inputState);
-            if (inputState.mMouseActionType == MouseActionType.LeftClick && IsHover)
+            if (IsPressed) { mTrack = true; }
+            if (mGameLayer.mCamera.mIsMoving) { mTrack = false; }
+            if (mTrack)
             {
-                IsSelect = mTrack = !IsSelect;
-                mGameLayer.mGameMessages.AddMessage(IsSelect ? Messages.ShipSelected : Messages.ShipDeselected, mGameLayer.GameTime);
-                mGameLayer.SelectObject = IsSelect ? this : null;
-                if (!IsSelect) { return; }
-                mGameLayer.mCamera.SetZoom(1f);
-                return;
+                mGameLayer.mCamera.TargetPosition = Position;
             }
-
-            if (mGameLayer.mCamera.mIsMoving || (inputState.mMouseActionType == MouseActionType.LeftClick && !IsHover))
-            {
-                mTrack = false;
-                return;
-            }
-
-            if (!mTrack) { return; }
-            mGameLayer.mCamera.TargetPosition = Position;
-            TextureId = IsSelect ? SelectTexture : NormalTexture;
         }
 
         public override void UpdateLogik(GameTime gameTime, InputState inputState)
@@ -55,7 +41,6 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             UpdateNavigation(gameTime, inputState);
             WeaponManager.Update(gameTime);
             mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
-            System.Diagnostics.Debug.WriteLine(mVelocity);
         }
 
         public override void Draw()
@@ -96,7 +81,6 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
 
         private void GetTarget(InputState inputState)
         {
-            if (!IsSelect) { return; }
             if (TargetPosition != null)
             {
                 CrossHair.Update(TargetPosition, 0.1f / mGameLayer.mCamera.Zoom, Color.Green, IsHover);; return; }
@@ -127,7 +111,6 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
 
         public void DrawTargetCrosshar()
         {
-            if (!IsSelect) { return; }
             CrossHair.Draw();
         }
     }

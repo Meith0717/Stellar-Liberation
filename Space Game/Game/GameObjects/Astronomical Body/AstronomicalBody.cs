@@ -29,6 +29,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
                 (inputState.mMouseActionType == MouseActionType.LeftClick && !IsHover))
             {
                 mTrack = false;
+                mGameLayer.SelectObject = null;
             }
         }
 
