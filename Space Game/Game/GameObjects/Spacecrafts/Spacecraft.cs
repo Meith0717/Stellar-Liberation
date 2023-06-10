@@ -11,7 +11,6 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
     public abstract class Spacecraft : InteractiveObject
     {
 
-        public Vector2? TargetPosition { get; set; } = null;
         public bool IsSelect { get; set; } = false;
         public string SelectTexture { get; set; }
         public string NormalTexture { get; set; }

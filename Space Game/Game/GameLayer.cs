@@ -66,12 +66,12 @@ namespace Galaxy_Explovive.Game
             mParllaxManager.Add(new("gameBackgroundParlax2", 0.25f));
             mParllaxManager.Add(new("gameBackgroundParlax1", 0.5f));
             mShips.Add(new(this, MyUtility.GetRandomVector2(mHomeSystem.Position, 1000)));
+            mShips.Add(new(this, MyUtility.GetRandomVector2(mHomeSystem.Position, 1000)));
             OnResolutionChanged();
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            Debug.WriteLine(SelectObject);
             mWorldMousePosition = mCamera.ViewToWorld(inputState.mMousePosition.ToVector2());
             mFrustumCuller.Update(mGraphicsDevice, mCamera.ViewToWorld);
             mTextureManager.SetCamZoom(mCamera.Zoom);
