@@ -101,7 +101,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             switch (target)
             {
                 case null:
-                    CrossHair.Update(mGameLayer.mWorldMousePosition, 1f / mGameLayer.mCamera.Zoom, Color.White, IsHover);
+                    CrossHair.Update(mGameLayer.mWorldMousePosition, 1f / mGameLayer.mCamera.Zoom, Color.IndianRed, IsHover);
                     return;
                 case not null:
                     CrossHair.Update(target.Position, 1f / mGameLayer.mCamera.Zoom, Color.LightGreen, IsHover);

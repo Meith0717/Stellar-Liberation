@@ -39,9 +39,10 @@ namespace Galaxy_Explovive.Game.Layers
             UpdateBelow = true;
             mGameLayer = gameLayer;
             mMessageManager = new(mTextureManager, mGraphicsDevice.Viewport.Width / 2, 50);
-            mMessageManager.AddMessage("Hi Welcome to my New Game GALAXY EXPLOVIVE", mGameLayer.GameTime);
-            mMessageManager.AddMessage("Here New Messages will apppear", mGameLayer.GameTime);
-            mMessageManager.AddMessage("Good Game!!!", mGameLayer.GameTime);
+            mMessageManager.AddMessage("Hello Welcome to my new game GALAXY EXPLOVIVE", mGameLayer.GameTime);
+            mMessageManager.AddMessage("Have fun with the game!!!", mGameLayer.GameTime);
+            mMessageManager.AddMessage("________Toggle Shadow Mapping with Key-R________", mGameLayer.GameTime);
+
 
             mGameLayer.mMessageManager = mMessageManager;
 
@@ -144,12 +145,13 @@ namespace Galaxy_Explovive.Game.Layers
             switch (ship.TargetPosition)
             {
                 case null:
-                    mGameLayer.mCamera.TargetPosition = ship.TargetPosition.Position;
+                    mGameLayer.mCamera.TargetPosition = ship.Position;
                     break;
                 case not null:
                     if (Vector2.Distance(ship.TargetPosition.Position, mGameLayer.mCamera.Position) < 100)
                     {
                         ship.Track = true;
+                        mMessageManager.AddMessage("Press again to untrack Ship", mGameLayer.GameTime);
                         return;
                     }
                     if (ship.Track) 
@@ -158,6 +160,7 @@ namespace Galaxy_Explovive.Game.Layers
                         return;
                     }
                     mGameLayer.mCamera.TargetPosition = ship.TargetPosition.Position;
+                    mMessageManager.AddMessage("Press again to center Ship", mGameLayer.GameTime);
                     break;
             }
 
