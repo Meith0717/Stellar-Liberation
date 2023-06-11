@@ -54,25 +54,19 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
             mShield = 0;
             if (mHull - HulldDamage < 0.01f) { mHull = 0; return; }
             mHull -= HulldDamage;
-        }
-        
-        public void DrawSpaceCraft()
+        }   
+        public void DrawLife()
         {
             Vector2 startPos = Position - TextureOffset - new Vector2(0, 50);
             Vector2 endPos = new Vector2(TextureOffset.X * 2, 0);
             float hull = (float)mHull / 100;
             float shield = (float)mShield / 100;
-
             mTextureManager.DrawLine(startPos, startPos + endPos * new Vector2(shield, 1), Color.CornflowerBlue, 8, 1);
             mTextureManager.DrawLine(startPos, startPos + endPos, Color.DarkRed, 8, 0.9f);
-
             startPos.Y += 10;
-
             mTextureManager.DrawLine(startPos, startPos + endPos * new Vector2(hull, 1), Color.GreenYellow, 8, 1);
             mTextureManager.DrawLine(startPos, startPos + endPos, Color.DarkRed, 8, 0.9f);
-
-            mTextureManager.DrawGameObject(this, IsHover);
-            mGameLayer.mDebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
         }
+
     }
 }

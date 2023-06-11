@@ -1,6 +1,7 @@
 ﻿using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.PositionManagement;
 using Galaxy_Explovive.Game.GameLogik;
+using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -9,12 +10,14 @@ namespace Galaxy_Explovive.Core.MovementController
     public static class MovementController
     {
 
-        public static Vector2? GetTargetPosition(SpatialHashing<GameObject.GameObject> spatialHashing, Vector2 worldMousePosition)
+        public static GameObject.GameObject? GetTargetPosition(SpaceShip spaceShip, 
+            SpatialHashing<GameObject.GameObject> spatialHashing, Vector2 worldMousePosition)
         {
             var gameObject = ObjectLocator.GetObjectsInRadius<InteractiveObject>(spatialHashing, worldMousePosition, 1500);
+            gameObject.Remove(spaceShip);
             if (gameObject.Count == 0) { return null; }
-            //if (!gameObject[0].IsHover) { return null; }
-            return gameObject[0].Position;
+            if (!gameObject[0].IsHover) { return null; }
+            return gameObject[0];
         }
 
         public static float GetRotation(float objectRotation,float targetRotation, float rotationRest)
@@ -60,7 +63,7 @@ namespace Galaxy_Explovive.Core.MovementController
                                 currentVelovity = (currentVelovity < 0.1f) ? 0.1f : currentVelovity;
                                 break;
                             }
-                            if (targetDistance < procentualDistance)
+                            if (targetDistance < procentualDistance*0.9)
                             {
                                 currentVelovity = maxVelocity * (targetDistance / procentualDistance);
                                 break;

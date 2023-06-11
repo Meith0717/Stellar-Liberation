@@ -6,7 +6,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Messages
 {
     public class MyUiMessageManager
     {
-        const float LiveTime = 5;
+        const float LiveTime = 10;
         private TextureManager mTextureManager;
         private List<MyUiMessage> mMessageList = new();
         private float mCenterX;

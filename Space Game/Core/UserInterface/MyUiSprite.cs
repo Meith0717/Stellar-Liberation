@@ -8,11 +8,14 @@ namespace Galaxy_Explovive.Core.UserInterface
 {
     internal class MyUiSprite
     {
-        private bool mHover; 
+        private bool mHover;
         private float mX;
         private float mY;
         private string mTexture;
-        public Color Color = Color.White;
+        public bool Disabled = false;
+        public bool Hide = false;
+        public Color Color = Globals.MormalColor;
+        public Color HoverColor = Globals.HoverColor;
         public Action OnClickAction = null;
         public float Scale = 1f;
         public MouseActionType MouseActionType = MouseActionType.LeftClick;
@@ -26,23 +29,28 @@ namespace Galaxy_Explovive.Core.UserInterface
 
         public void Update(TextureManager textureManager, InputState inputState)
         {
+            if (Hide || Disabled) return;
             var texture = textureManager.GetTexture(mTexture);
-            var rect = new RectangleF(mX, mY, texture.Width, texture.Height);
+            var rect = new RectangleF(mX, mY, texture.Width*Scale, texture.Height*Scale);
             mHover = rect.Contains(inputState.mMousePosition);
             if (mHover && 
                 inputState.mMouseActionType == MouseActionType && 
-                OnClickAction != null) { OnClickAction(); }
+                OnClickAction != null) 
+            { OnClickAction(); inputState.mMouseActionType = MouseActionType.None; }
         }
 
         public void OnResolutionChanged(float x, float y)
         {
+            if (Hide) return;
             mX = x;
             mY = y;
         }
 
         public void Draw(TextureManager textureManager)
         {
-            textureManager.Draw(mTexture, new(mX, mY), Vector2.Zero, Scale, 0, 1, mHover ? Color.Gray : Color);
+            if (Hide) return;
+            textureManager.Draw(mTexture, new(mX, mY), Vector2.Zero, Scale, 0, 1,
+               Disabled ? Color.DarkGray : (mHover ? HoverColor : Color)) ;
         }
 
 

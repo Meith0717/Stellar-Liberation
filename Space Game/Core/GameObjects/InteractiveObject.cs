@@ -9,10 +9,13 @@ namespace Galaxy_Explovive.Core.GameObject
 {
     public abstract class InteractiveObject : GameObject
     {
-        public InteractiveObject(GameLayer gameLayer) : base(gameLayer) {}
-
+        public InteractiveObject(GameLayer gameLayer) : base(gameLayer) 
+        {
+            mCrossHair = new(gameLayer, Position, TextureScale, CrossHair.CrossHairType.Select);
+        }
         public bool IsHover { get; private set; }
         public bool IsPressed { get; private set; }
+        private CrossHair mCrossHair;
 
         public override void UpdateLogik(GameTime gameTime, InputState inputState)
         {
@@ -27,11 +30,20 @@ namespace Galaxy_Explovive.Core.GameObject
                 IsPressed = true;
                 if (mGameLayer.SelectObject != null) { return; }
                 mGameLayer.SelectObject = this;
+                mGameLayer.mCamera.TargetPosition = Position;
             }
-
+            mCrossHair.Update(Position, TextureScale*20, Color.OrangeRed, false);
             CheckForSelect(inputState);
         }
 
-        public abstract void UpdateInputs(InputState inputState);
+        public override void Draw()
+        {
+            mTextureManager.DrawGameObject(this, IsHover);
+            mGameLayer.mDebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
+            if (mGameLayer.SelectObject != this) return;
+            mCrossHair.Draw();
+        }
+
+        public abstract void SelectActions(InputState inputState);
     }
 }

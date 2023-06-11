@@ -36,9 +36,9 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
 
-        public override void UpdateInputs(InputState inputState)
+        public override void SelectActions(InputState inputState)
         {
-            base.UpdateInputs(inputState);
+            base.SelectActions(inputState);
         }
 
         public override void UpdateLogik(GameTime gameTime, InputState inputState)
@@ -50,6 +50,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
 
         public override void Draw()
         {
+            base.Draw();
             mTextureManager.DrawGameObject(this, IsHover);
             mTextureManager.Draw("StarLightAlpha", Position, TextureOffset, TextureScale * 1.3f, 0, 2, mLightColor);
             mGameLayer.mDebugSystem.DrawBoundBox(mTextureManager, BoundedBox);

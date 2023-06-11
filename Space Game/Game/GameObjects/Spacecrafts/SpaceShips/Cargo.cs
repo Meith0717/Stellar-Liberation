@@ -28,7 +28,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             TextureColor = Color.White;
             MaxVelocity = 10;
             WeaponManager = new(mSoundManager, mGameLayer.mSpatialHashing);
-            CrossHair = new(gameLayer, Vector2.Zero, TextureScale);
+            CrossHair = new(gameLayer, Vector2.Zero, TextureScale, CrossHair.CrossHairType.Target);
             
         }
 
@@ -40,7 +40,6 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
         public override void Draw()
         {
             base.Draw();
-            DrawSpaceCraft();
         }
     }
 }

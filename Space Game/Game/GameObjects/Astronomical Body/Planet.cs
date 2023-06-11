@@ -45,9 +45,9 @@ namespace Galaxy_Explovive.Game.GameObjects
 
         }
 
-        public override void UpdateInputs(InputState inputState)
+        public override void SelectActions(InputState inputState)
         {
-            base.UpdateInputs(inputState);
+            base.SelectActions(inputState);
         }
 
         public override void UpdateLogik(GameTime gameTime, InputState inputState)
@@ -80,6 +80,7 @@ namespace Galaxy_Explovive.Game.GameObjects
 
         public void Draw(int alpha)
         {
+            base.Draw();
             TextureColor = new Color(alpha, alpha, alpha, alpha);
             mTextureManager.Draw("planetShadow", Position, TextureOffset, TextureScale, mShadowRotation, TextureDepth + 1, TextureColor);
             mTextureManager.DrawGameObject(this, IsHover);

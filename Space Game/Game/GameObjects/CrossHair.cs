@@ -6,24 +6,30 @@ using System.Data;
 using Galaxy_Explovive.Core.Rendering;
 using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Game.Layers;
+using System;
 
 namespace Galaxy_Explovive.Core.GameObject
 {
     public class CrossHair : GameObject
     {
+        public enum CrossHairType
+        {
+            Target, Select
+        };
+
         private bool mHover;
         private bool mDraw;
 
-        public CrossHair(GameLayer gameLayer, Vector2 position, float scale) : base(gameLayer)
+        public CrossHair(GameLayer gameLayer, Vector2 position, float scale, CrossHairType type) : base(gameLayer)
         {
             // Location
             Position = position;
             Rotation = 0;
 
             // Rendering
-            TextureId = "crossHair1";
-            TextureWidth = 1024;
-            TextureHeight = 1024;
+            TextureId = (type == CrossHairType.Target) ? "targetCrosshair" : "selectCrosshait";
+            TextureWidth = 64;
+            TextureHeight = 64;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
             TextureScale = scale;
             TextureDepth = mTextureManager.MaxLayerDepth;

@@ -11,7 +11,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
 
         protected AstronomicalBody(GameLayer gameLayer) : base(gameLayer) {}
 
-        public override void UpdateInputs(InputState inputState)
+        public override void SelectActions(InputState inputState)
         {
             if (inputState.mMouseActionType == MouseActionType.LeftClick && IsHover)
             {
@@ -25,6 +25,8 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
                     mGameLayer.mCamera.SetZoom(0.25f);
                 }
             }
+            if (!mTrack) { return; }
+            mGameLayer.mCamera.TargetPosition = Position;
 
             if (mGameLayer.mCamera.mIsMoving || 
                 (inputState.mMouseActionType == MouseActionType.LeftClick && !IsHover))
@@ -37,8 +39,6 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
         public override void UpdateLogik(GameTime gameTime, InputState inputState)
         {
             base.UpdateLogik(gameTime, inputState);
-            if (!mTrack) { return; }
-            mGameLayer.mCamera.TargetPosition = Position;
         }
     }
 }

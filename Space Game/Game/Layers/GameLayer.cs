@@ -32,6 +32,7 @@ namespace Galaxy_Explovive.Game.Layers
         public Camera2d mCamera;
         public DebugSystem mDebugSystem;
         public Vector2 mWorldMousePosition;
+        public Vector2 mViewMousePosition;
         public MyUiMessageManager mMessageManager;
 
         // Recources
@@ -69,7 +70,8 @@ namespace Galaxy_Explovive.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mWorldMousePosition = mCamera.ViewToWorld(inputState.mMousePosition.ToVector2());
+            mViewMousePosition = inputState.mMousePosition.ToVector2();
+            mWorldMousePosition = mCamera.ViewToWorld(mViewMousePosition);
             mFrustumCuller.Update(mGraphicsDevice, mCamera.ViewToWorld);
             mTextureManager.SetCamZoom(mCamera.Zoom);
             if (inputState.mMouseActionType != MouseActionType.None &&
@@ -79,16 +81,16 @@ namespace Galaxy_Explovive.Game.Layers
                 return;
             }
             GameTime += gameTime.ElapsedGameTime.Milliseconds / 1000f;
-            UpdateSystems(gameTime, inputState);
             foreach (Cargo c in mShips)
             {
                 c.UpdateLogik(gameTime, inputState);
             }
+            UpdateSystems(gameTime, inputState);
             if (inputState.mActionList.Contains(ActionType.ToggleRayTracing))
             {
                 Globals.mRayTracing = !Globals.mRayTracing;
             }
-            if (SelectObject != null) { SelectObject.UpdateInputs(inputState); }
+            if (SelectObject != null) { SelectObject.SelectActions(inputState); }
             mParllaxManager.Update(mCamera.Movement, mCamera.Zoom);
             mDebugSystem.Update(gameTime, inputState);
             mCamera.Update(gameTime, inputState);

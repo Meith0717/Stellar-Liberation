@@ -113,6 +113,8 @@ namespace Galaxy_Explovive.Game.GameObjects
             foreach (Planet p in mPlanets) 
             { 
                 p.RemoveFromSpatialHashing();
+                if (mGameLayer.SelectObject != p) continue;
+                mGameLayer.SelectObject = null;
             }
             mIsSystemShown = false;
         }
