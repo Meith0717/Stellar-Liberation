@@ -15,10 +15,9 @@ using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Core.Rendering;
 using Galaxy_Explovive.Menue.Layers;
 using Galaxy_Explovive.Core.Debug;
-using Galaxy_Explovive.Core.UserInterface.UiWidgets;
-using Galaxy_Explovive.Core.UserInterface;
+using Galaxy_Explovive.Core.UserInterface.Messages;
 
-namespace Galaxy_Explovive.Game
+namespace Galaxy_Explovive.Game.Layers
 {
     public class GameLayer : Layer
     {
@@ -33,7 +32,7 @@ namespace Galaxy_Explovive.Game
         public Camera2d mCamera;
         public DebugSystem mDebugSystem;
         public Vector2 mWorldMousePosition;
-        public UiMessages mGameMessages;
+        public MyUiMessageManager mMessageManager;
 
         // Recources
         public double mAlloys;
@@ -53,13 +52,12 @@ namespace Galaxy_Explovive.Game
         {
             mCamera = new(mGraphicsDevice);
             mDebugSystem = new();
-            mGameMessages = new(mTextureManager, mGraphicsDevice, GameTime);
-            mGameMessages.AddMessage(Messages.RTImfo, GameTime);
             mSpatialHashing = new SpatialHashing<GameObject>(10000);
             mFrustumCuller = new();
             mPlanetSystemList = Map.Generate(this, 25000, new Vector2(mapWidth, mapHeight));
             mHomeSystem = MyUtility.GetRandomElement(mPlanetSystemList);
             mCamera.TargetPosition = mHomeSystem.Position;
+            mCamera.SetZoom(0.25f);
             mParllaxManager = new();
             mParllaxManager.Add(new("gameBackground", 0.1f));
             mParllaxManager.Add(new("gameBackgroundParlax2", 0.25f));
@@ -89,13 +87,11 @@ namespace Galaxy_Explovive.Game
             if (inputState.mActionList.Contains(ActionType.ToggleRayTracing))
             {
                 Globals.mRayTracing = !Globals.mRayTracing;
-                mGameMessages.AddMessage(Globals.mRayTracing ? Messages.RTOn : Messages.RTOff, GameTime);
             }
             if (SelectObject != null) { SelectObject.UpdateInputs(inputState); }
             mParllaxManager.Update(mCamera.Movement, mCamera.Zoom);
             mDebugSystem.Update(gameTime, inputState);
             mCamera.Update(gameTime, inputState);
-            mGameMessages.Update(inputState, GameTime);
             System.Diagnostics.Debug.WriteLineIf(SelectObject != null, SelectObject);
         }
 
@@ -123,7 +119,6 @@ namespace Galaxy_Explovive.Game
         public override void OnResolutionChanged()
         {
             mParllaxManager.OnResolutionChanged(mGraphicsDevice);
-            mGameMessages.OnResolutionChanged();
         }
 
         public override void Destroy() { }

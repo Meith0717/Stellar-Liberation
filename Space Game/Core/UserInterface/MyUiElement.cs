@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Galaxy_Explovive.Core.NewUi
+namespace Galaxy_Explovive.Core.UserInterface
 {
     internal abstract class MyUiElement
     {

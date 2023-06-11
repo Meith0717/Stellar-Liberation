@@ -3,6 +3,7 @@ using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.MovementController;
 using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Core.Weapons;
+using Galaxy_Explovive.Game.Layers;
 using Microsoft.Xna.Framework;
 using System;
 

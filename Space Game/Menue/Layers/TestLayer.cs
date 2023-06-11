@@ -1,6 +1,6 @@
 ﻿using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
-using Galaxy_Explovive.Core.NewUi;
+using Galaxy_Explovive.Core.UserInterface;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Serialization;

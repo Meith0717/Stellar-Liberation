@@ -8,6 +8,7 @@ using Galaxy_Explovive.Core.TextureManagement;
 using System;
 using Galaxy_Explovive.Game;
 using Galaxy_Explovive.Menue.Layers;
+using Galaxy_Explovive.Game.Layers;
 
 namespace Galaxy_Explovive
 {
@@ -40,7 +41,8 @@ namespace Galaxy_Explovive
             mSoundManager = new SoundManager();
             mTextureManager = new TextureManager(Content);
             mGraphicsManager = new GraphicsDeviceManager(this);
-            mLayerManager = new LayerManager(this); 
+            mLayerManager = new LayerManager(this);
+            ToggleFullscreen();
         }
 
         protected override void Initialize() 

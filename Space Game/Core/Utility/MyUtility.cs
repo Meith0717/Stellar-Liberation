@@ -49,7 +49,7 @@ namespace Galaxy_Explovive.Core.Utility
             return new Vector2(MathF.Cos(angleRad), MathF.Sin(angleRad));
         }
 
-        public static string ConvertSecondsToTimeUnits(int seconds)
+        public static string ConvertSecondsToGameTimeUnits(int seconds)
         {
             int jears = seconds / 356;
             seconds %= 356;
@@ -58,6 +58,14 @@ namespace Galaxy_Explovive.Core.Utility
             return $"{2050+jears}.{Expand(1+months)}.{Expand(1+seconds)}";
         }
 
+        public static string ConvertSecondsToTimeUnits(int seconds)
+        {
+            int jears = seconds / 356;
+            seconds %= 356;
+            int months = seconds / 31;
+            seconds %= 31;
+            return $"{jears}J {Expand(months)}M {Expand(seconds)}D";
+        }
         private static string Expand(int str)
         {
             if (str.ToString().Length > 1)

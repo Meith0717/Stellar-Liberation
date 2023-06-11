@@ -1,9 +1,9 @@
 ﻿using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.Utility;
-using Galaxy_Explovive.Game;
 using Galaxy_Explovive.Game.GameLogik;
 using Galaxy_Explovive.Game.GameObjects;
 using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
+using Galaxy_Explovive.Game.Layers;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;

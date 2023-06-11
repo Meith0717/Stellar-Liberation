@@ -3,7 +3,7 @@ using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using Microsoft.Xna.Framework;
 
-namespace Galaxy_Explovive.Core.NewUi
+namespace Galaxy_Explovive.Core.UserInterface
 {
     internal class MyUiText
     {

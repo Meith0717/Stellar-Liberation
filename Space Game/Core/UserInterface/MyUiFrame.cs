@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 
-namespace Galaxy_Explovive.Core.NewUi
+namespace Galaxy_Explovive.Core.UserInterface
 {
     internal class MyUiFrame
     {

@@ -1,9 +1,9 @@
 ﻿using Galaxy_Explovive.Core.InputManagement;
 using System;
 using MonoGame.Extended;
-using Galaxy_Explovive.Game;
 using System.Diagnostics.Contracts;
 using Microsoft.Xna.Framework;
+using Galaxy_Explovive.Game.Layers;
 
 namespace Galaxy_Explovive.Core.GameObject
 {

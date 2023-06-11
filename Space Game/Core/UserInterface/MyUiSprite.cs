@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
 
-namespace Galaxy_Explovive.Core.NewUi
+namespace Galaxy_Explovive.Core.UserInterface
 {
     internal class MyUiSprite
     {
@@ -15,6 +15,7 @@ namespace Galaxy_Explovive.Core.NewUi
         public Color Color = Color.White;
         public Action OnClickAction = null;
         public float Scale = 1f;
+        public MouseActionType MouseActionType = MouseActionType.LeftClick;
 
         public MyUiSprite(float x, float y, string texture) 
         {
@@ -29,7 +30,7 @@ namespace Galaxy_Explovive.Core.NewUi
             var rect = new RectangleF(mX, mY, texture.Width, texture.Height);
             mHover = rect.Contains(inputState.mMousePosition);
             if (mHover && 
-                inputState.mMouseActionType == MouseActionType.LeftClick && 
+                inputState.mMouseActionType == MouseActionType && 
                 OnClickAction != null) { OnClickAction(); }
         }
 

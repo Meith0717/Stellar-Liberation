@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Galaxy_Explovive.Core.RayTracing;
 using Galaxy_Explovive.Core.GameObjects.Types;
 using Galaxy_Explovive.Core.Utility;
+using Galaxy_Explovive.Game.Layers;
 
 namespace Galaxy_Explovive.Game.GameObjects
 {

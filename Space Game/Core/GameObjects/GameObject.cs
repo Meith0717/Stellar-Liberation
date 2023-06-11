@@ -5,7 +5,7 @@ using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.Rendering;
 using Galaxy_Explovive.Core.PositionManagement;
 using Galaxy_Explovive.Core.TextureManagement;
-using Galaxy_Explovive.Game;
+using Galaxy_Explovive.Game.Layers;
 
 namespace Galaxy_Explovive.Core.GameObject
 {
