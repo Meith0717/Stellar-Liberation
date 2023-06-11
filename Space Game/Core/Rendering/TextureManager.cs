@@ -92,9 +92,9 @@ public class TextureManager
     }
 
     // render String
-    public void DrawString(string id, Vector2 position, string text, Color color)
+    public void DrawString(string id, Vector2 position, string text, float scale, Color color)
     {
-        SpriteBatch.DrawString(GetSpriteFont(id), text, position, color, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+        SpriteBatch.DrawString(GetSpriteFont(id), text, position, color, 0, Vector2.Zero, scale, SpriteEffects.None, 1);
     }
 
     // render Circle ___________________________________________________________________________

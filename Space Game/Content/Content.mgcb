@@ -718,7 +718,7 @@
 /processorParam:Quality=Best
 /build:SoundEffects/hit.wav
 
-#begin UserInterface/buttonContinue.png
+#begin UserInterface/HUDLayer/Alloys.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -728,9 +728,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:UserInterface/buttonContinue.png
+/build:UserInterface/HUDLayer/Alloys.png
 
-#begin UserInterface/buttonExitgame.png
+#begin UserInterface/HUDLayer/Energy.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -740,9 +740,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:UserInterface/buttonExitgame.png
+/build:UserInterface/HUDLayer/Energy.png
 
-#begin UserInterface/deselect.png
+#begin UserInterface/HUDLayer/exit.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -752,7 +752,43 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:UserInterface/deselect.png
+/build:UserInterface/HUDLayer/exit.png
+
+#begin UserInterface/HUDLayer/level.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UserInterface/HUDLayer/level.png
+
+#begin UserInterface/HUDLayer/menue.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UserInterface/HUDLayer/menue.png
+
+#begin UserInterface/HUDLayer/Minerals.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UserInterface/HUDLayer/Minerals.png
 
 #begin UserInterface/Layer/circle.png
 /importer:TextureImporter
@@ -778,7 +814,7 @@
 /processorParam:TextureFormat=Color
 /build:UserInterface/Layer/layer.png
 
-#begin UserInterface/menueButton.png
+#begin UserInterface/PauseLayer/buttonContinue.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -788,9 +824,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:UserInterface/menueButton.png
+/build:UserInterface/PauseLayer/buttonContinue.png
 
-#begin UserInterface/menueButton.png
+#begin UserInterface/PauseLayer/buttonExitgame.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -800,17 +836,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:UserInterface/menueButton.png
-
-#begin UserInterface/track.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:UserInterface/track.png
+/build:UserInterface/PauseLayer/buttonExitgame.png
 

@@ -1,87 +1,89 @@
-﻿using Galaxy_Explovive.Core.Debug;
-using Galaxy_Explovive.Core.InputManagement;
+﻿using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
-using Galaxy_Explovive.Core.UserInterface;
-using Galaxy_Explovive.Core.UserInterface.UiWidgets;
-using Galaxy_Explovive.Core.UserInterface.Widgets;
+using Galaxy_Explovive.Core.NewUi;
 using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
 using Galaxy_Explovive.Menue.Layers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended;
 
 namespace Galaxy_Explovive.Game
 {
     public class HudLayer : Layer
     {
-        private readonly GameLayer mGameLayer;
-        private readonly UiFrame mTopBar;
-        private readonly UiFrame mBottomBar;
-        private readonly UiText mGameTimeText;
+        private GameLayer mGameLayer;
+        private MyUiText mGameTimeText;
+        private MyUiSprite mLevelSprite;
+        private MyUiText mLevelText;
+        private MyUiSprite mAlloySprite;
+        private MyUiText mAlloyText;
+        private MyUiSprite mEnergySprite;
+        private MyUiText mEnergyText;
+        private MyUiSprite mMineralsSprite;
+        private MyUiText mMineralsText;
 
-        public HudLayer(Game1 game, GameLayer gameLayer)
-            : base(game)
+        private MyUiSprite mMenueButton;
+
+        public HudLayer(Game1 game, GameLayer gameLayer) : base(game)
         {
             UpdateBelow = true;
             mGameLayer = gameLayer;
-
-            mTopBar = new(null, mTextureManager, mGraphicsDevice)
+            mGameTimeText = new(5, 5, "");
+            mLevelSprite = new(150, 5, "level") { Scale=0.32f};
+            mLevelText = new(170, 5, "");
+            mMenueButton = new(mGraphicsDevice.Viewport.Width - 50, mGraphicsDevice.Viewport.Height - 35, "menue")
             {
-                RelativeW = 1f,
-                Color = new Color(66, 73, 73),
-                Height = 75,
-                EdgeWidth = 50,
-                MarginY = -20,
-                Side = UiCanvas.RootSide.N
+                Scale = 0.4f,
+                OnClickAction = Pause
             };
-
-            mGameTimeText = new(mTopBar, mTextureManager, mGraphicsDevice) 
-            { FontColor = Color.White, Side = UiCanvas.RootSide.W, RelativY = 0.65f, MarginX = 20 };
-
-            mBottomBar = new(null, mTextureManager, mGraphicsDevice)
-            { RelativeW = 1, Height = 40, Alpha = 0, Side = UiCanvas.RootSide.S };
-
-            UiFrame leftButtonLayer = new(mBottomBar, mTextureManager, mGraphicsDevice)
-            { Height = 40, Width = 200, Alpha = 0, Side = UiCanvas.RootSide.E};
-
-            _ = new UiButton(leftButtonLayer, mTextureManager, mGraphicsDevice, "menueButton", 0.2f)
-            { RelativX = .90f, OnKlick = Pause };
-            _ = new UiButton(leftButtonLayer, mTextureManager, mGraphicsDevice, "buttonDeselect", 0.2f)
-            { RelativX = .50f, OnKlick = Deselect };
-            _ = new UiButton(leftButtonLayer, mTextureManager, mGraphicsDevice, "buttonTrack", 0.2f)
-            { RelativX = .10f, OnKlick = Track };
-
-            OnResolutionChanged();
+            mAlloySprite = new(mGraphicsDevice.Viewport.Width - 500, 5, "alloys");
+            mAlloyText = new(mGraphicsDevice.Viewport.Width - 450, 5, "1/100");
+            mEnergySprite = new(mGraphicsDevice.Viewport.Width - 350, 5, "energy");
+            mEnergyText = new(mGraphicsDevice.Viewport.Width - 300, 5, "1/100");
+            mMineralsSprite = new(mGraphicsDevice.Viewport.Width - 200, 5, "minerals");
+            mMineralsText = new(mGraphicsDevice.Viewport.Width - 150, 5, "1/100");
         }
 
-        public override void Destroy() { }
+        public override void Destroy()
+        {
+        }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            mTopBar.Draw();
-            mBottomBar.Draw();
-            mGameLayer.mDebugSystem.ShowRenderInfo(mTextureManager,mGameLayer.mCamera.Zoom, mGameLayer.mCamera.Position);
-            mGameLayer.mGameMessages.Draw();
+            mGameTimeText.Draw(mTextureManager);
+            mLevelSprite.Draw(mTextureManager);
+            mLevelText.Draw(mTextureManager);
+            mAlloySprite.Draw(mTextureManager);
+            mAlloyText.Draw(mTextureManager);
+            mEnergySprite.Draw(mTextureManager);
+            mEnergyText.Draw(mTextureManager);
+            mMineralsSprite.Draw(mTextureManager);
+            mMineralsText.Draw(mTextureManager);
+            mMenueButton.Draw(mTextureManager);
             spriteBatch.End();
         }
 
         public override void OnResolutionChanged()
         {
-            mTopBar.OnResolutionChanged();
-            mBottomBar.OnResolutionChanged();
+            mMenueButton.OnResolutionChanged(mGraphicsDevice.Viewport.Width - 50, mGraphicsDevice.Viewport.Height - 35);
+            mAlloySprite.OnResolutionChanged(mGraphicsDevice.Viewport.Width - 500, 5);
+            mAlloyText.OnResolutionChanged(mGraphicsDevice.Viewport.Width - 450, 5);
+            mEnergySprite.OnResolutionChanged(mGraphicsDevice.Viewport.Width - 350, 5);
+            mEnergyText.OnResolutionChanged(mGraphicsDevice.Viewport.Width - 300, 5);
+            mMineralsSprite.OnResolutionChanged(mGraphicsDevice.Viewport.Width - 200, 5);
+            mMineralsText.OnResolutionChanged(mGraphicsDevice.Viewport.Width - 150, 5);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            if (inputState.mActionList.Contains(ActionType.ESC))
-            {
-                Pause();
-            }
             mGameTimeText.Text = MyUtility.ConvertSecondsToTimeUnits((int)mGameLayer.GameTime);
-            mTopBar.Update(inputState);
-            mBottomBar.Update(inputState);
+            mMenueButton.Update(mTextureManager, inputState);
+            mLevelText.Text = "1";
+            mAlloyText.Text = "1/100";
+            mEnergyText.Text = "1/100";
+            mMineralsText.Text = "1/100";
+            if (inputState.mActionList.Contains(ActionType.ESC)) { Pause(); }
         }
 
         private void Pause()

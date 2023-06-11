@@ -67,7 +67,7 @@ namespace Galaxy_Explovive.Core.Debug
             };
             foreach (string s in lst)
             {
-                textureManager.DrawString("text", position + new Vector2(0, i * 20), s, Color.White);
+                textureManager.DrawString("text", position + new Vector2(0, i * 20), s, 1, Color.White);
                 i += 1;
             }
         }

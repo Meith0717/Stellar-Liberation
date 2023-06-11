@@ -106,7 +106,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
         {
             if (TargetPosition == null) { return; }
             mTextureManager.DrawString("text", Position + TextureOffset ,
-                MyUtility.ConvertSecondsToTimeUnits((int)mTravelTime), Color.LightBlue);
+                MyUtility.ConvertSecondsToTimeUnits((int)mTravelTime), 1, Color.LightBlue);
         }
 
         public void DrawTargetCrosshar()

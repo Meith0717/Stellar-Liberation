@@ -51,13 +51,11 @@ namespace Galaxy_Explovive.Core.Utility
 
         public static string ConvertSecondsToTimeUnits(int seconds)
         {
-            int days = seconds / 86400;
-            seconds %= 86400;
-            int hours = seconds / 3600;
-            seconds %= 3600;
-            int minutes = seconds / 60;
-            seconds %= 60;
-            return $"{days} Days - {Expand(hours)}:{Expand(minutes)}:{Expand(seconds)}";
+            int jears = seconds / 356;
+            seconds %= 356;
+            int months = seconds / 31;
+            seconds %= 31;
+            return $"{2050+jears}.{Expand(1+months)}.{Expand(1+seconds)}";
         }
 
         private static string Expand(int str)

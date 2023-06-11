@@ -27,7 +27,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Widgets
         public override void Draw()
         {
             Vector2 position = new(mCanvas.ToRectangle().X, mCanvas.ToRectangle().Y);
-            mTextureManager.DrawString(mFont, position, Text, FontColor);
+            mTextureManager.DrawString(mFont, position, Text, 1, FontColor);
         }
 
         public override void OnResolutionChanged()

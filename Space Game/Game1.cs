@@ -108,8 +108,11 @@ namespace Galaxy_Explovive
             mTextureManager.LoadTexture("menueButton", "UserInterface/menueButton");
             mTextureManager.LoadTexture("buttonExitgame", "UserInterface/buttonExitgame");
             mTextureManager.LoadTexture("buttonContinue", "UserInterface/buttonContinue");
-            mTextureManager.LoadTexture("buttonTrack", "UserInterface/track");
-            mTextureManager.LoadTexture("buttonDeselect", "UserInterface/deselect");
+            mTextureManager.LoadTexture("level", "UserInterface/HUDLayer/level");
+            mTextureManager.LoadTexture("menue", "UserInterface/HUDLayer/menue");
+            mTextureManager.LoadTexture("alloys", "UserInterface/HUDLayer/Alloys");
+            mTextureManager.LoadTexture("energy", "UserInterface/HUDLayer/Energy");
+            mTextureManager.LoadTexture("minerals", "UserInterface/HUDLayer/Minerals");
 
             // game fonts
             mTextureManager.LoadSpriteTexture("text", "fonts/text");
