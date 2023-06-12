@@ -9,6 +9,7 @@ namespace Galaxy_Explovive.Game.Layers
     {
 
         public readonly Game mGame;
+        private Layer mLoadingLayer;
 
         // Layer Stuff _____________________________________
         public GameLayer(Game1 game)
@@ -20,6 +21,7 @@ namespace Galaxy_Explovive.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            if (mGame.GenerateMap() != 1) return;
             mGame.Update(inputState, gameTime);
         }
 

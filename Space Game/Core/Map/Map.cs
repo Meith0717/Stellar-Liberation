@@ -1,9 +1,7 @@
 ﻿using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.Utility;
-using Galaxy_Explovive.Game;
 using Galaxy_Explovive.Game.GameObjects;
-using Galaxy_Explovive.Game.Layers;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
@@ -28,21 +26,21 @@ namespace Galaxy_Explovive.Core.Map
             mMinDistanceBetweenSystems = minDistanceBetwenSystems;
         }
 
-        public void Generate()
+        public double Generate()
         {
-            while (PlanetSystems.Count < mPlanetSystemAmount)
-            {
-                Vector2 randomPos = MyUtility.GetRandomVector2(0, mWidth, 0, mHeight);
+            if (PlanetSystems.Count == mPlanetSystemAmount) return 1;
+            Vector2 randomPos = MyUtility.GetRandomVector2(0, mWidth, 0, mHeight);
+            double percentage = PlanetSystems.Count / (double)mPlanetSystemAmount;
 
-                bool foundIssue=false;
-                foreach(PlanetSystem planetSystem in PlanetSystems)
-                {
-                    foundIssue = (Vector2.Distance(randomPos, planetSystem.Position) < mMinDistanceBetweenSystems);
-                    if (foundIssue) { break; }
-                }
-                if (foundIssue) { continue; }
-                PlanetSystems.Add(new(mGameLayer, randomPos));
+            bool foundIssue=false;
+            foreach(PlanetSystem planetSystem in PlanetSystems)
+            {
+                foundIssue = (Vector2.Distance(randomPos, planetSystem.Position) < mMinDistanceBetweenSystems);
+                if (foundIssue) { break; }
             }
+            if (foundIssue) return percentage;
+            PlanetSystems.Add(new(mGameLayer, randomPos));
+            return percentage;
         }
 
         public void Update(GameTime gameTime, InputState inputState)

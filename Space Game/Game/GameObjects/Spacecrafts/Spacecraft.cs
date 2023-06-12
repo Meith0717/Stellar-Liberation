@@ -22,7 +22,6 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
         public override void UpdateLogik(GameTime gameTime, InputState inputState)
         {
             base.UpdateLogik(gameTime, inputState);
-            TextureId = NormalTexture;
             RegenerateShield();
         }
 

@@ -18,7 +18,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             Rotation = 0;
 
             // Rendering
-            NormalTexture = "ship";
+            NormalTexture = TextureId = "ship";
             SelectTexture = "shipSekect";
             TextureScale = 0.5f;
             TextureWidth = 209;
