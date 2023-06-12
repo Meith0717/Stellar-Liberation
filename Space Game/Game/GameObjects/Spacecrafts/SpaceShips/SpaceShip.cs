@@ -11,7 +11,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
 {
     public class SpaceShip : Spacecraft
     {
-        public GameObject TargetPosition { get; set; } = null;
+        public GameObject TargetObj { get; set; } = null;
         public Vector2? StartPosition { get; set; } = null;
         public float MaxVelocity { private get; set; }
         public WeaponManager WeaponManager { private get; set; }
@@ -28,6 +28,10 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
         public override void SelectActions(InputState inputState)
         {
             GetTarget(inputState);
+            if (mGameLayer.mCamera.MovedByUser || TargetObj == null)
+            {
+                Track = false;
+            }
             if (IsPressed && mSelect) 
             { 
                 mSelect = Track = false; 
@@ -63,9 +67,9 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
         
         private void UpdateNavigation(GameTime gameTime, InputState inputState)
         {
-            if (TargetPosition == null) { return; }
+            if (TargetObj == null) { return; }
 
-            var targetPosition = (Vector2)TargetPosition.Position;
+            var targetPosition = (Vector2)TargetObj.Position;
             var startPosition = (Vector2)StartPosition;
 
             float targetRotation = MyUtility.GetAngle(Position, targetPosition);
@@ -73,9 +77,9 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             float targetDistance = Vector2.Subtract(targetPosition, Position).Length();
             float totalDistance = Vector2.Subtract(targetPosition, startPosition).Length();
 
-            if (targetDistance <= TargetPosition.BoundedBox.Radius + 100) 
+            if (targetDistance <= TargetObj.BoundedBox.Radius + 100) 
             { 
-                TargetPosition = null; 
+                TargetObj = null; 
                 StartPosition = null;  
                 return; 
             }
@@ -89,9 +93,9 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
 
         private void GetTarget(InputState inputState)
         {
-            if (TargetPosition != null)
+            if (TargetObj != null)
             {
-                CrossHair.Update(TargetPosition.Position, 1f / mGameLayer.mCamera.Zoom, Color.Green, IsHover); 
+                CrossHair.Update(TargetObj.Position, 1f / mGameLayer.mCamera.Zoom, Color.Green, IsHover); 
                 return; 
             }
             var target = MovementController.GetTargetPosition(this, mSpatialHashing, mGameLayer.mWorldMousePosition);
@@ -108,7 +112,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
                     break;
             }
             bool b = inputState.mMouseActionType == MouseActionType.LeftClick;
-            TargetPosition = b ? target : null;
+            TargetObj = b ? target : null;
             StartPosition = b ? Position : null;
             if (!b) return;
             mGameLayer.mCamera.TargetPosition = Position;
@@ -117,7 +121,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
         // Draw Stuff
         public void DrawPath()
         {
-            if (TargetPosition == null) { return; }
+            if (TargetObj == null) { return; }
             mTextureManager.DrawString("text", Position + TextureOffset ,
                 MyUtility.ConvertSecondsToTimeUnits((int)mTravelTime), 1, Color.LightBlue);
         }

@@ -28,7 +28,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             if (!mTrack) { return; }
             mGameLayer.mCamera.TargetPosition = Position;
 
-            if (mGameLayer.mCamera.mIsMoving || 
+            if (mGameLayer.mCamera.MovedByUser || 
                 (inputState.mMouseActionType == MouseActionType.LeftClick && !IsHover))
             {
                 mTrack = false;

@@ -7,7 +7,6 @@ using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
 using Galaxy_Explovive.Menue.Layers;
-using Microsoft.VisualBasic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -15,24 +14,24 @@ namespace Galaxy_Explovive.Game.Layers
 {
     public class HudLayer : Layer
     {
-        private MyUiMessageManager mMessageManager;
+        private readonly MyUiMessageManager mMessageManager;
 
-        private GameLayer mGameLayer;
-        private MyUiText mGameTimeText;
-        private MyUiSprite mLevelSprite;
-        private MyUiText mLevelText;
-        private MyUiSprite mAlloySprite;
-        private MyUiText mAlloyText;
-        private MyUiSprite mEnergySprite;
-        private MyUiText mEnergyText;
-        private MyUiSprite mMineralsSprite;
-        private MyUiText mMineralsText;
-        private MyUiSprite mMenueButton;
-        private MyUiSprite mInfoButton;
-        private MyUiText mSelectObjectText;
+        private readonly GameLayer mGameLayer;
+        private readonly MyUiText mGameTimeText;
+        private readonly MyUiSprite mLevelSprite;
+        private readonly MyUiText mLevelText;
+        private readonly MyUiSprite mAlloySprite;
+        private readonly MyUiText mAlloyText;
+        private readonly MyUiSprite mEnergySprite;
+        private readonly MyUiText mEnergyText;
+        private readonly MyUiSprite mMineralsSprite;
+        private readonly MyUiText mMineralsText;
+        private readonly MyUiSprite mMenueButton;
+        private readonly MyUiSprite mInfoButton;
+        private readonly MyUiText mSelectObjectText;
 
-        private MyUiSprite mDeselectButton;
-        private MyUiSprite mTrackButton;
+        private readonly MyUiSprite mDeselectButton;
+        private readonly MyUiSprite mTrackButton;
 
         public HudLayer(Game1 game, GameLayer gameLayer) : base(game)
         {
@@ -64,7 +63,7 @@ namespace Galaxy_Explovive.Game.Layers
             mSelectObjectText = new(50, mGraphicsDevice.Viewport.Height - 72, "") { Color=Globals.MormalColor};
             mDeselectButton = new(5, mGraphicsDevice.Viewport.Height - 35, "deSelect") 
             { Scale = 0.5f, Disabled=true, OnClickAction=Deselect};
-            mTrackButton = new(60, mGraphicsDevice.Viewport.Height - 35, "track") 
+            mTrackButton = new(60, mGraphicsDevice.Viewport.Height - 35, "target") 
             { Scale = 0.5f, Disabled = true, OnClickAction = Track };
         }
 
@@ -125,7 +124,7 @@ namespace Galaxy_Explovive.Game.Layers
             mTrackButton.Update(mTextureManager, inputState);
             if (inputState.mActionList.Contains(ActionType.ESC)) { Pause(); }
             mDeselectButton.Disabled = mGameLayer.SelectObject == null;
-            if (mGameLayer.SelectObject == null) return;     
+            if (mGameLayer.SelectObject == null) { mTrackButton.Disabled = true; return; }     
             mTrackButton.Disabled = !typeof(Spacecraft).IsAssignableFrom(mGameLayer.SelectObject.GetType());
         }
 
@@ -142,13 +141,13 @@ namespace Galaxy_Explovive.Game.Layers
         private void Track()
         {
             SpaceShip ship = (SpaceShip)mGameLayer.SelectObject;
-            switch (ship.TargetPosition)
+            switch (ship.TargetObj)
             {
                 case null:
                     mGameLayer.mCamera.TargetPosition = ship.Position;
                     break;
                 case not null:
-                    if (Vector2.Distance(ship.TargetPosition.Position, mGameLayer.mCamera.Position) < 100)
+                    if (Vector2.Distance(ship.TargetObj.Position, mGameLayer.mCamera.Position) < 100)
                     {
                         ship.Track = true;
                         mMessageManager.AddMessage("Press again to untrack Ship", mGameLayer.GameTime);
@@ -159,7 +158,7 @@ namespace Galaxy_Explovive.Game.Layers
                         ship.Track = false;
                         return;
                     }
-                    mGameLayer.mCamera.TargetPosition = ship.TargetPosition.Position;
+                    mGameLayer.mCamera.TargetPosition = ship.TargetObj.Position;
                     mMessageManager.AddMessage("Press again to center Ship", mGameLayer.GameTime);
                     break;
             }

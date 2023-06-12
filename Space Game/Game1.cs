@@ -6,8 +6,6 @@ using Galaxy_Explovive.Core.LayerManagement;
 using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using System;
-using Galaxy_Explovive.Game;
-using Galaxy_Explovive.Menue.Layers;
 using Galaxy_Explovive.Game.Layers;
 
 namespace Galaxy_Explovive
@@ -107,9 +105,8 @@ namespace Galaxy_Explovive
             // Ui
             mTextureManager.LoadTexture("Layer", "UserInterface/Layer/layer");
             mTextureManager.LoadTexture("Circle", "UserInterface/Layer/circle");
-            mTextureManager.LoadTexture("menueButton", "UserInterface/menueButton");
-            mTextureManager.LoadTexture("buttonExitgame", "UserInterface/buttonExitgame");
-            mTextureManager.LoadTexture("buttonContinue", "UserInterface/buttonContinue");
+            mTextureManager.LoadTexture("buttonExitgame", "UserInterface/PauseLayer/buttonExitgame");
+            mTextureManager.LoadTexture("buttonContinue", "UserInterface/PauseLayer/buttonContinue");
             mTextureManager.LoadTexture("level", "UserInterface/HUDLayer/level");
             mTextureManager.LoadTexture("menue", "UserInterface/HUDLayer/menue");
             mTextureManager.LoadTexture("alloys", "UserInterface/HUDLayer/Alloys");
@@ -118,7 +115,7 @@ namespace Galaxy_Explovive
             mTextureManager.LoadTexture("exit", "UserInterface/HUDLayer/exit");
             mTextureManager.LoadTexture("info", "UserInterface/HUDLayer/info");
             mTextureManager.LoadTexture("deSelect", "UserInterface/HUDLayer/deSelect");
-            mTextureManager.LoadTexture("track", "UserInterface/HUDLayer/track");
+            mTextureManager.LoadTexture("target", "UserInterface/HUDLayer/target");
 
             // game fonts
             mTextureManager.LoadSpriteTexture("text", "fonts/text");

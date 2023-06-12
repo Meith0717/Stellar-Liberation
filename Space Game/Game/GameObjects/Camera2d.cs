@@ -16,7 +16,7 @@ namespace Galaxy_Explovive.Game.GameObjects
         public Vector2 TargetPosition { private get; set; }
         public Vector2 Movement { get; private set; }
         public float mTargetZoom;
-        public bool mIsMoving;
+        public bool MovedByUser = false;
 
         // matrix variables
         private Matrix mTransform = Matrix.Identity;
@@ -38,7 +38,6 @@ namespace Galaxy_Explovive.Game.GameObjects
             int width = mGraphicsDevice.Viewport.Width;
             int height = mGraphicsDevice.Viewport.Height;
             Position = new Vector2(width / 2f, height / 2f);
-            mIsMoving = false;
         }
 
         private void MovingAnimation(int spongy)
@@ -60,7 +59,7 @@ namespace Galaxy_Explovive.Game.GameObjects
         private void MoveCameraByMouse(InputState inputState)
         {
             Vector2 currentMousePosition = inputState.mMousePosition.ToVector2();
-            mIsMoving = false;
+            MovedByUser = false;
             Movement = Vector2.Zero;
 
             if (inputState.mMouseActionType != MouseActionType.LeftClickHold)
@@ -73,7 +72,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             {
                 Movement = ViewToWorld(mLastMousePosition) - ViewToWorld(currentMousePosition);
                 TargetPosition += Movement;
-                mIsMoving = true;
+                MovedByUser = true;
                 mZoomAnimation = false;
                 mLastMousePosition = currentMousePosition;
             }
