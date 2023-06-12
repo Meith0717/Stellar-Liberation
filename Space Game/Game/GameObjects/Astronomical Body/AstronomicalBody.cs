@@ -1,6 +1,5 @@
 ﻿using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Game.Layers;
 using Microsoft.Xna.Framework;
 
 namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
@@ -9,30 +8,26 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
     {
         private bool mTrack = false;
 
-        protected AstronomicalBody(GameLayer gameLayer) : base(gameLayer) {}
+        protected AstronomicalBody(Game game) : base(game) {}
 
         public override void SelectActions(InputState inputState)
         {
-            if (inputState.mMouseActionType == MouseActionType.LeftClick && IsHover)
+            if (IsPressed)
             {
-                mTrack = true;
                 if (GetType() == typeof(Planet))
                 {
-                    mGameLayer.mCamera.SetZoom(1.2f);
+                    mGame.mCamera.SetZoom(1.2f);
                 }
                 if (GetType() == typeof(Star))
                 {
-                    mGameLayer.mCamera.SetZoom(0.25f);
+                    mGame.mCamera.SetZoom(0.25f);
                 }
             }
-            if (!mTrack) { return; }
-            mGameLayer.mCamera.TargetPosition = Position;
+            mGame.mCamera.TargetPosition = Position;
 
-            if (mGameLayer.mCamera.MovedByUser || 
-                (inputState.mMouseActionType == MouseActionType.LeftClick && !IsHover))
+            if (mGame.mCamera.MovedByUser || (inputState.mMouseActionType == MouseActionType.LeftClick && !IsHover))
             {
-                mTrack = false;
-                mGameLayer.SelectObject = null;
+                mGame.SelectObject = null;
             }
         }
 

@@ -11,7 +11,7 @@ namespace Galaxy_Explovive.Core.LayerManagement;
 [Serializable]
 public abstract class Layer
 {
-    protected Game1 mGame;
+    protected Game1 mApp;
     protected LayerManager mLayerManager;
     protected GraphicsDevice mGraphicsDevice;
     public SoundManager mSoundManager;
@@ -22,7 +22,7 @@ public abstract class Layer
 
     public Layer(Game1 game)
     {
-        mGame = game;
+        mApp = game;
         mLayerManager = game.mLayerManager;
         mSoundManager = game.mSoundManager;
         mTextureManager = game.mTextureManager;

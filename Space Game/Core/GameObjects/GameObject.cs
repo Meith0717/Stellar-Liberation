@@ -6,6 +6,7 @@ using Galaxy_Explovive.Core.Rendering;
 using Galaxy_Explovive.Core.PositionManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Game.Layers;
+using Galaxy_Explovive.Game;
 
 namespace Galaxy_Explovive.Core.GameObject
 {
@@ -16,7 +17,7 @@ namespace Galaxy_Explovive.Core.GameObject
         protected SoundManager mSoundManager;
         protected FrustumCuller mFrustumCuller;
         protected SpatialHashing<GameObject> mSpatialHashing;
-        protected GameLayer mGameLayer;
+        protected Game.Game mGame;
 
         // Location
         public Vector2 Position { get; set; }
@@ -33,13 +34,13 @@ namespace Galaxy_Explovive.Core.GameObject
         public CircleF BoundedBox { get; set; }
 
         // Constructor
-        public GameObject(GameLayer gameLayer)                        
+        public GameObject(Game.Game game)                        
         {
-            mGameLayer = gameLayer;
-            mTextureManager = gameLayer.mTextureManager;
-            mSoundManager = gameLayer.mSoundManager;
-            mFrustumCuller = gameLayer.mFrustumCuller;
-            mSpatialHashing = gameLayer.mSpatialHashing;
+            mGame = game;
+            mTextureManager = game.mTextureManager;
+            mSoundManager = game.mSoundManager;
+            mFrustumCuller = game.mFrustumCuller;
+            mSpatialHashing = game.mSpatialHashing;
         }
 
         // Methods

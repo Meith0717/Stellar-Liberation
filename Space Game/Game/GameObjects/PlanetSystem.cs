@@ -35,20 +35,20 @@ namespace Galaxy_Explovive.Game.GameObjects
             Explored
         }
 
-        public PlanetSystem(GameLayer gameLayer, Vector2 position) : base(gameLayer)
+        public PlanetSystem(Game game, Vector2 position) : base(game)
         {
             Position = position;
-            mStar = new Star(gameLayer, position);
+            mStar = new Star(game, position);
             mPlanets = new List<Planet>();
             mRadiusLimit = mStar.TextureWidth / 2 * mStar.TextureScale;
             for (int i = 1; i <= MyUtility.Random.Next(2, 6); i++)
             {
                 PlanetType planetType = GetPlanetType(i);
                 if (i != 0) { mRadiusLimit += 300 + (1000 * planetType.Size); }
-                mPlanets.Add(new Planet(gameLayer, (int)mRadiusLimit, position, mStar.mLightColor, planetType));    
+                mPlanets.Add(new Planet(game, (int)mRadiusLimit, position, mStar.mLightColor, planetType));    
             } 
             BoundedBox = new CircleF(position, mRadiusLimit+400);
-            mRayTracing = new(mStar.mType.LightColor, gameLayer.mSpatialHashing);
+            mRayTracing = new(mStar.mType.LightColor, game.mSpatialHashing);
         }
 
         public override void UpdateLogik(GameTime gameTime, InputState inputState)
@@ -57,7 +57,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             if (!mFrustumCuller.IsGameObjectOnWorldView(this)) { return; }
 
             // Get Rays
-            mRayTracing.GetRays(this, mSpatialHashing, mGameLayer.mCamera.Zoom);
+            mRayTracing.GetRays(this, mSpatialHashing, mGame.mCamera.Zoom);
 
             // Show or hide Systems
             ShowSystem(); HideSystem();
@@ -79,7 +79,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             // Draw Stuff
             mStar.Draw();
             mRayTracing.Draw(mTextureManager);
-            mGameLayer.mDebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
+            mGame.mDebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
 
             // Draw based on Cam. Positions 
             if (!mIsSystemShown) { return; }
@@ -91,7 +91,7 @@ namespace Galaxy_Explovive.Game.GameObjects
 
         private void ShowSystem()
         {
-            if (mGameLayer.mCamera.Zoom < 0.1) { return; }
+            if (mGame.mCamera.Zoom < 0.1) { return; }
             mIsSystemShown = true;
             if (mPlanetAlpha <= 255 - AlphaModifier)
             {
@@ -102,7 +102,7 @@ namespace Galaxy_Explovive.Game.GameObjects
         }
         private void HideSystem()
         {
-            if (mGameLayer.mCamera.Zoom > 0.1) { return; }
+            if (mGame.mCamera.Zoom > 0.1) { return; }
             if (!mIsSystemShown) { return; }
             if (mPlanetAlpha >= AlphaModifier)
             {
@@ -113,8 +113,8 @@ namespace Galaxy_Explovive.Game.GameObjects
             foreach (Planet p in mPlanets) 
             { 
                 p.RemoveFromSpatialHashing();
-                if (mGameLayer.SelectObject != p) continue;
-                mGameLayer.SelectObject = null;
+                if (mGame.SelectObject != p) continue;
+                mGame.SelectObject = null;
             }
             mIsSystemShown = false;
         }

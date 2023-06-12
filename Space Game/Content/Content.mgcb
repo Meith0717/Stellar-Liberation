@@ -730,18 +730,6 @@
 /processorParam:TextureFormat=Color
 /build:UserInterface/HUDLayer/Alloys.png
 
-#begin UserInterface/HUDLayer/Alloys.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:UserInterface/HUDLayer/Alloys.png
-
 #begin UserInterface/HUDLayer/deSelect.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -766,18 +754,6 @@
 /processorParam:TextureFormat=Color
 /build:UserInterface/HUDLayer/Energy.png
 
-#begin UserInterface/HUDLayer/Energy.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:UserInterface/HUDLayer/Energy.png
-
 #begin UserInterface/HUDLayer/exit.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -789,30 +765,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:UserInterface/HUDLayer/exit.png
-
-#begin UserInterface/HUDLayer/exit.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:UserInterface/HUDLayer/exit.png
-
-#begin UserInterface/HUDLayer/info.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:UserInterface/HUDLayer/info.png
 
 #begin UserInterface/HUDLayer/info.png
 /importer:TextureImporter
@@ -838,30 +790,6 @@
 /processorParam:TextureFormat=Color
 /build:UserInterface/HUDLayer/level.png
 
-#begin UserInterface/HUDLayer/level.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:UserInterface/HUDLayer/level.png
-
-#begin UserInterface/HUDLayer/menue.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:UserInterface/HUDLayer/menue.png
-
 #begin UserInterface/HUDLayer/menue.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -886,7 +814,7 @@
 /processorParam:TextureFormat=Color
 /build:UserInterface/HUDLayer/Minerals.png
 
-#begin UserInterface/HUDLayer/Minerals.png
+#begin UserInterface/HUDLayer/stop.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -896,19 +824,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:UserInterface/HUDLayer/Minerals.png
-
-#begin UserInterface/HUDLayer/target.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:UserInterface/HUDLayer/target.png
+/build:UserInterface/HUDLayer/stop.png
 
 #begin UserInterface/HUDLayer/target.png
 /importer:TextureImporter

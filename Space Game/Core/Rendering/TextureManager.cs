@@ -24,7 +24,7 @@ public class TextureManager
         mContentManager = contentManager;
     }
 
-    public void SetCamZoom(float camZoom)
+    public void Update(float camZoom)
     {
         mCamZoom = camZoom;
     }

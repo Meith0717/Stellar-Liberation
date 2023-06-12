@@ -20,7 +20,7 @@ namespace Galaxy_Explovive.Core.GameObject
         private bool mHover;
         private bool mDraw;
 
-        public CrossHair(GameLayer gameLayer, Vector2 position, float scale, CrossHairType type) : base(gameLayer)
+        public CrossHair(Game.Game game, Vector2 position, float scale, CrossHairType type) : base(game)
         {
             // Location
             Position = position;

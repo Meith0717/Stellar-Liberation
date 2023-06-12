@@ -17,7 +17,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
         private double mShield = 100;
         private double mHull = 100;
 
-        protected Spacecraft(GameLayer gameLayer) : base(gameLayer) { }
+        protected Spacecraft(Game gameLayer) : base(gameLayer) { }
 
         public override void UpdateLogik(GameTime gameTime, InputState inputState)
         {

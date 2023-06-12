@@ -1,34 +1,66 @@
-﻿using Galaxy_Explovive.Core.TextureManagement;
+﻿using Galaxy_Explovive.Core.InputManagement;
+using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.Utility;
-using Galaxy_Explovive.Game.GameLogik;
+using Galaxy_Explovive.Game;
 using Galaxy_Explovive.Game.GameObjects;
-using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
 using Galaxy_Explovive.Game.Layers;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Galaxy_Explovive.Core.Map
 {
-    public static class Map
+    public class Map
     {
-        public static List<PlanetSystem> Generate(GameLayer gameLayer, int SystemAmount, Vector2 MapSize)
+        private Game.Game mGameLayer;
+        private int mWidth;
+        private int mHeight;
+        private int mPlanetSystemAmount;
+        private int mMinDistanceBetweenSystems;
+
+        public List<PlanetSystem> PlanetSystems = new();
+
+        public Map(Game.Game game, int planetSystemAmount, int minDistanceBetwenSystems, int height, int width) 
+        { 
+            mGameLayer = game;
+            mHeight = height;
+            mWidth = width;
+            mPlanetSystemAmount = planetSystemAmount;
+            mMinDistanceBetweenSystems = minDistanceBetwenSystems;
+        }
+
+        public void Generate()
         {
-            int counter = 0;
-            List<PlanetSystem> map = new List<PlanetSystem>();
-            while (counter < SystemAmount)
+            while (PlanetSystems.Count < mPlanetSystemAmount)
             {
-                Vector2 position = MyUtility.GetRandomVector2(-(int)MapSize.X, (int)MapSize.X, -(int)MapSize.Y, (int)MapSize.Y);
-                List<Star> neighbourSystem = ObjectLocator.GetObjectsInRadius<GameObject.GameObject>(gameLayer.mSpatialHashing, 
-                    position, Globals.mPlanetSystemDistanceRadius).OfType<Star>().ToList();
-                if (neighbourSystem.Count > 0)
+                Vector2 randomPos = MyUtility.GetRandomVector2(0, mWidth, 0, mHeight);
+
+                bool foundIssue=false;
+                foreach(PlanetSystem planetSystem in PlanetSystems)
                 {
-                    continue;
+                    foundIssue = (Vector2.Distance(randomPos, planetSystem.Position) < mMinDistanceBetweenSystems);
+                    if (foundIssue) { break; }
                 }
-                map.Add(new PlanetSystem(gameLayer, position));
-                counter++;
+                if (foundIssue) { continue; }
+                PlanetSystems.Add(new(mGameLayer, randomPos));
             }
-            return map;
+        }
+
+        public void Update(GameTime gameTime, InputState inputState)
+        {
+            if (PlanetSystems.Count == 0) { throw new System.Exception("No Map was Generated"); }
+            foreach (PlanetSystem planetSystem in PlanetSystems)
+            {
+                planetSystem.UpdateLogik(gameTime, inputState);
+            }
+        }
+
+        public void Draw()
+        {
+            foreach (PlanetSystem planetSystem in PlanetSystems)
+            {
+                planetSystem.Draw();
+            }
+
         }
 
         public static void DrawGrid(Rectangle MapSize, TextureManager textureManager)

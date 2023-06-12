@@ -12,7 +12,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
 {
     public class Cargo : SpaceShip
     {
-        public Cargo(GameLayer gameLayer, Vector2 position) : base(gameLayer)
+        public Cargo(Game game, Vector2 position) : base(game)
         {
             Position = position;
             Rotation = 0;
@@ -26,9 +26,9 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
             TextureDepth = 2;
             TextureColor = Color.White;
-            MaxVelocity = 10;
-            WeaponManager = new(mSoundManager, mGameLayer.mSpatialHashing);
-            CrossHair = new(gameLayer, Vector2.Zero, TextureScale, CrossHair.CrossHairType.Target);
+            MaxVelocity = 2f;
+            WeaponManager = new(mSoundManager, mGame.mSpatialHashing);
+            CrossHair = new(game, Vector2.Zero, TextureScale, CrossHair.CrossHairType.Target);
             
         }
 

@@ -7,6 +7,7 @@ using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using System;
 using Galaxy_Explovive.Game.Layers;
+using Galaxy_Explovive.Core.Map;
 
 namespace Galaxy_Explovive
 {
@@ -35,6 +36,7 @@ namespace Galaxy_Explovive
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += delegate { mResulutionWasResized = true; };
 
+            IsFixedTimeStep = false;
             mInputManager = new InputManager();
             mSoundManager = new SoundManager();
             mTextureManager = new TextureManager(Content);
@@ -46,10 +48,10 @@ namespace Galaxy_Explovive
         protected override void Initialize() 
         {
             mGraphicsManager.ApplyChanges();
-            base.Initialize(); 
-            GameLayer game = new GameLayer(this);
+            base.Initialize();
+            Game.Layers.GameLayer game = new Game.Layers.GameLayer(this);
             mLayerManager.AddLayer(game);
-            mLayerManager.AddLayer(new HudLayer(this, game));
+            mLayerManager.AddLayer(new HudLayer(this, game.mGame));
             Mouse.SetCursor(MouseCursor.FromTexture2D(Content.Load<Texture2D>("cursor"), 0, 0));
         }
 
@@ -116,6 +118,7 @@ namespace Galaxy_Explovive
             mTextureManager.LoadTexture("info", "UserInterface/HUDLayer/info");
             mTextureManager.LoadTexture("deSelect", "UserInterface/HUDLayer/deSelect");
             mTextureManager.LoadTexture("target", "UserInterface/HUDLayer/target");
+            mTextureManager.LoadTexture("stop", "UserInterface/HUDLayer/stop");
 
             // game fonts
             mTextureManager.LoadSpriteTexture("text", "fonts/text");

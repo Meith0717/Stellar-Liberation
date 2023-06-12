@@ -26,7 +26,7 @@ namespace Galaxy_Explovive.Game.GameObjects
         public float mRadius;
         private float mShadowRotation;
 
-        public Planet(GameLayer gameLayer, int radius, Vector2 CenterPosition, Color lightColor, PlanetType planetType) : base(gameLayer)
+        public Planet(Game game, int radius, Vector2 CenterPosition, Color lightColor, PlanetType planetType) : base(game)
         {
             // Location
             Angle = MyUtility.Random.NextAngle();
@@ -59,7 +59,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             RemoveFromSpatialHashing();
 
             float velocity = MathF.Sqrt(1/(mRadius*10));   
-            float angleUpdate = Angle + mGameLayer.GameTime * velocity;
+            float angleUpdate = Angle + mGame.GameTime * velocity;
             Position = MyUtility.GetVector2(mRadius, Angle + angleUpdate) + mCenterPosition;
             Rotation += 0.004f; 
             mShadowRotation = MyUtility.GetAngle(mCenterPosition, Position);
@@ -84,7 +84,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             TextureColor = new Color(alpha, alpha, alpha, alpha);
             mTextureManager.Draw("planetShadow", Position, TextureOffset, TextureScale, mShadowRotation, TextureDepth + 1, TextureColor);
             mTextureManager.DrawGameObject(this, IsHover);
-            mGameLayer.mDebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
+            mGame.mDebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
         }
 
         public override void Draw()

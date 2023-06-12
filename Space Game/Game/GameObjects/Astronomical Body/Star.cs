@@ -14,7 +14,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
         public Color mLightColor;
         public StarType mType;
 
-        public Star(GameLayer gameLayer, Vector2 position) : base(gameLayer)
+        public Star(Game game, Vector2 position) : base(game)
         {
             int randIndex = MyUtility.Random.Next(StarTypes.Types.Count);
             mType = StarTypes.Types[randIndex];
@@ -53,7 +53,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             base.Draw();
             mTextureManager.DrawGameObject(this, IsHover);
             mTextureManager.Draw("StarLightAlpha", Position, TextureOffset, TextureScale * 1.3f, 0, 2, mLightColor);
-            mGameLayer.mDebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
+            mGame.mDebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
         }
     }
 }
