@@ -1,6 +1,7 @@
 ﻿using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
 using Galaxy_Explovive.Core.UserInterface;
+using Galaxy_Explovive.Game;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -8,16 +9,18 @@ namespace Galaxy_Explovive.Menue.Layers
 {
     public class PauseLayer : Layer
     {
+        private Game.Game Game;
         private MyUiFrame mBackgroundLayer;
         private MyUiFrame mForegroundLayer;
         private MyUiSprite mContinueButton;
         private MyUiSprite mExitButton;
 
-        public PauseLayer(Game1 game)
-            : base(game)
+        public PauseLayer(Game1 app, Game.Game game)
+            : base(app)
         {
             UpdateBelow = false;
 
+            Game = game;
             mBackgroundLayer = new(0, 0, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height)
             { Alpha = 0.95f, Color = Color.Black};
             mContinueButton = new(mGraphicsDevice.Viewport.Width / 2 - 256, mGraphicsDevice.Viewport.Height / 2 - 64 - 100,
@@ -29,7 +32,7 @@ namespace Galaxy_Explovive.Menue.Layers
             mExitButton = new(mGraphicsDevice.Viewport.Width / 2 - 256, mGraphicsDevice.Viewport.Height / 2 - 64 + 100,
                 "buttonExitgame")
             {
-                OnClickAction = mLayerManager.Exit,
+                OnClickAction = ExitAndSave,
                 MouseActionType = MouseActionType.LeftClickReleased
             };
         }
@@ -63,6 +66,12 @@ namespace Galaxy_Explovive.Menue.Layers
             {
                 mLayerManager.PopLayer();
             }
+        }
+
+        private void ExitAndSave()
+        {
+            mSerialize.SerializeObject(Game, "save");
+            mLayerManager.Exit();
         }
     }
 }

@@ -139,7 +139,7 @@ namespace Galaxy_Explovive.Game.Layers
 
         private void Pause()
         {
-            mLayerManager.AddLayer(new PauseLayer(mApp));
+            mLayerManager.AddLayer(new PauseLayer(mApp, Game));
         }
 
         private void Deselect()

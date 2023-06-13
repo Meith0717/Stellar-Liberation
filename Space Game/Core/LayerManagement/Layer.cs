@@ -5,6 +5,7 @@ using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.SoundManagement;
 using System;
 using Galaxy_Explovive.Core.TextureManagement;
+using Galaxy_Explovive.Core.Persistance;
 
 namespace Galaxy_Explovive.Core.LayerManagement;
 
@@ -16,17 +17,19 @@ public abstract class Layer
     protected GraphicsDevice mGraphicsDevice;
     public SoundManager mSoundManager;
     public TextureManager mTextureManager;
+    public Serialize mSerialize;
 
     [JsonProperty]
     public bool UpdateBelow { get; set; }
 
-    public Layer(Game1 game)
+    public Layer(Game1 app)
     {
-        mApp = game;
-        mLayerManager = game.mLayerManager;
-        mSoundManager = game.mSoundManager;
-        mTextureManager = game.mTextureManager;
-        mGraphicsDevice = game.GraphicsDevice;
+        mApp = app;
+        mLayerManager = app.mLayerManager;
+        mSoundManager = app.mSoundManager;
+        mTextureManager = app.mTextureManager;
+        mGraphicsDevice = app.GraphicsDevice;
+        mSerialize = app.mSerialize;
     }
 
     public abstract void Update(GameTime gameTime, InputState inputState);

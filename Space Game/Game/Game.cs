@@ -9,9 +9,6 @@ using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
 using Galaxy_Explovive.Game.GameObjects;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Galaxy_Explovive.Core.TextureManagement;
@@ -19,48 +16,48 @@ using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core;
 using Galaxy_Explovive.Core.Utility;
+using Galaxy_Explovive.Core.Persistance;
+using Newtonsoft.Json;
 
 namespace Galaxy_Explovive.Game
 {
+    [Serializable]
     public class Game
-    {  
-        // Public GameObject Classes
-        public float GameTime = 0;
-        public Vector2 mWorldMousePosition = Vector2.Zero;
-        public Vector2 mViewMousePosition = Vector2.Zero;
-        public InteractiveObject SelectObject = null;
-        public MyUiMessageManager mMessageManager;
-        public readonly SpatialHashing<GameObject> mSpatialHashing;
-        public readonly FrustumCuller mFrustumCuller;
-        public readonly Camera2d mCamera;
-        public readonly DebugSystem mDebugSystem;
-        public readonly SoundManager mSoundManager;
-        public readonly TextureManager mTextureManager;
-        public readonly GraphicsDevice mGraphicsDevice;
-        public readonly Map mMap;
+    {
+        // Saved Classes
+        [JsonProperty] public float GameTime = 0;
+        [JsonProperty] public InteractiveObject SelectObject = null;
+        [JsonProperty] public double mAlloys;
+        [JsonProperty] public double mEnergy;
+        [JsonProperty] public double mCrystals;
+        [JsonIgnore] private List<Cargo> mShips = new(); // Has to be set to JsonProperty !!!!
+        [JsonIgnore] public readonly Map mMap;
+        [JsonProperty] public readonly Camera2d mCamera;
 
-        // Recources
-        public double mAlloys;
-        public double mEnergy;
-        public double mCrystals;
+        // Unsaved Classes
+        [JsonIgnore] public Vector2 mWorldMousePosition = Vector2.Zero;
+        [JsonIgnore] public Vector2 mViewMousePosition = Vector2.Zero;
+        [JsonIgnore] public MyUiMessageManager mMessageManager;
+        [JsonIgnore] public readonly SpatialHashing<GameObject> mSpatialHashing;
+        [JsonIgnore] public readonly FrustumCuller mFrustumCuller;
+        [JsonIgnore] public readonly DebugSystem mDebugSystem;
+        [JsonIgnore] public readonly SoundManager mSoundManager;
+        [JsonIgnore] public readonly TextureManager mTextureManager;
+        [JsonIgnore] public readonly GraphicsDevice mGraphicsDevice;
+        [JsonIgnore] private readonly ParllaxManager mParllaxManager;
 
-        // Local Private Classes
-        private List<Cargo> mShips = new();
-        private readonly ParllaxManager mParllaxManager;
-
-        public Game(GraphicsDevice graphicsDevice, TextureManager textureManager, 
-            MyUiMessageManager messageManager, SoundManager soundManager)
+        public Game(GraphicsDevice graphicsDevice, TextureManager textureManager,
+            SoundManager soundManager, Serialize mSerialize)
         {
             mSpatialHashing = new(1000);
             mFrustumCuller = new();
             mCamera = new(graphicsDevice);
             mDebugSystem = new();
-            mMessageManager = messageManager;
+            mParllaxManager = new();
+            mMap = new(this, 100, 5000, 100000, 100000);
             mSoundManager = soundManager;
             mTextureManager = textureManager;
             mGraphicsDevice = graphicsDevice;
-            mParllaxManager = new();
-            mMap = new(this, 100, 5000, 100000, 100000);
         }
 
         public void Initialize()

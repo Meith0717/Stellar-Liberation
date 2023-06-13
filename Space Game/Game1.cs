@@ -8,6 +8,7 @@ using Galaxy_Explovive.Core.TextureManagement;
 using System;
 using Galaxy_Explovive.Game.Layers;
 using Galaxy_Explovive.Core.Map;
+using Galaxy_Explovive.Core.Persistance;
 
 namespace Galaxy_Explovive
 {
@@ -22,6 +23,7 @@ namespace Galaxy_Explovive
         public readonly LayerManager mLayerManager;
         public readonly TextureManager mTextureManager;
         public readonly SoundManager mSoundManager;
+        public readonly Serialize mSerialize;
 
         // Window attributes
         private int mWidth;
@@ -41,6 +43,7 @@ namespace Galaxy_Explovive
             mTextureManager = new TextureManager(Content);
             mGraphicsManager = new GraphicsDeviceManager(this);
             mLayerManager = new LayerManager(this);
+            mSerialize = new Serialize();
             ToggleFullscreen();
         }
 

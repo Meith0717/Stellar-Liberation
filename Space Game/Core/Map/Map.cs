@@ -3,19 +3,22 @@ using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Game.GameObjects;
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace Galaxy_Explovive.Core.Map
 {
+    [Serializable]
     public class Map
     {
-        private Game.Game mGameLayer;
-        private int mWidth;
-        private int mHeight;
-        private int mPlanetSystemAmount;
-        private int mMinDistanceBetweenSystems;
+        [JsonIgnore] private readonly Game.Game mGameLayer;
+        [JsonIgnore] private readonly int mWidth;
+        [JsonIgnore] private readonly int mHeight;
+        [JsonIgnore] private readonly int mPlanetSystemAmount;
+        [JsonIgnore] private readonly int mMinDistanceBetweenSystems;
 
-        public List<PlanetSystem> PlanetSystems = new();
+        [JsonProperty] public List<PlanetSystem> PlanetSystems = new();
 
         public Map(Game.Game game, int planetSystemAmount, int minDistanceBetwenSystems, int height, int width) 
         { 
