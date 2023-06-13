@@ -66,6 +66,12 @@ namespace Galaxy_Explovive.Core.Utility
             seconds %= 31;
             return $"{jears}J {Expand(months)}M {Expand(seconds)}D";
         }
+
+        public static float LogisticFunction(float x, float k, float x0)
+        {
+            return 1 / (1 + MathF.Exp(-k * (x - x0)));
+        }
+
         private static string Expand(int str)
         {
             if (str.ToString().Length > 1)

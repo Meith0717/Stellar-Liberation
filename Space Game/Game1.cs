@@ -36,7 +36,6 @@ namespace Galaxy_Explovive
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += delegate { mResulutionWasResized = true; };
 
-            IsFixedTimeStep = false;
             mInputManager = new InputManager();
             mSoundManager = new SoundManager();
             mTextureManager = new TextureManager(Content);

@@ -3,9 +3,7 @@ using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TargetMovementController;
 using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Core.Weapons;
-using Galaxy_Explovive.Game.Layers;
 using Microsoft.Xna.Framework;
-using System;
 using System.Diagnostics;
 
 namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
@@ -48,9 +46,9 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
         public override void UpdateLogik(GameTime gameTime, InputState inputState)
         {
             base.UpdateLogik(gameTime, inputState);
+            Track = Track && (mGame.SelectObject == this);
             if (Track) { mGame.mCamera.TargetPosition = Position; }
-            mSelect = mSelect ? (mGame.SelectObject == this) : false;
-            Track = Track ? (mGame.SelectObject == this) : false;
+            mSelect = mSelect && (mGame.SelectObject == this);
             CrossHair.Update(null, 0, Color.Wheat, false);
             mSpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
             UpdateNavigation(gameTime, inputState);
@@ -85,7 +83,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             mVelocity = mMovementController.GetMovement().Velocity;
             Position += MyUtility.GetDirection(Rotation) * mVelocity * gameTime.ElapsedGameTime.Milliseconds;
 
-            mTravelTime = (0 /  mVelocity) / 1000;
+            mTravelTime = (Vector2.Distance(Position, TargetObj.Position) /  mVelocity) / 1000;
         }
 
         private void GetTarget(InputState inputState)
@@ -105,12 +103,19 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
                     CrossHair.Update(target.Position, 1f / mGame.mCamera.Zoom, Color.LightGreen, false);
                     break;
             }
+
             bool b = inputState.mMouseActionType == MouseActionType.LeftClick;
+            if (mGame.mCamera.Zoom < 0.2f && b)
+            {
+                mGame.mCamera.TargetPosition = target.Position;
+                mGame.mCamera.SetZoom(0.25f);
+                return;
+            }
             TargetObj = b ? target : null;
             StartPosition = b ? Position : null;
             if (!b) return;
             mVelocity = 0.1f;
-            mGame.mCamera.TargetPosition = Position;
+            Track = true;
         }
 
         // Draw Stuff

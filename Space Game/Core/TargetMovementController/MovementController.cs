@@ -36,7 +36,7 @@ namespace Galaxy_Explovive.Core.TargetMovementController
             mSourceObject = sourceObject;
         }
 
-        public Movement GetMovement() { System.Diagnostics.Debug.WriteLine(mMovement.ToString()); return mMovement;  }
+        public Movement GetMovement() { return mMovement;  }
 
         /// <summary> Returns False if Target is reached. Returns True if not. </summary>
         public bool MoveToTarget(GameObject.GameObject targetObject, Vector2 originPosition, 
@@ -65,7 +65,7 @@ namespace Galaxy_Explovive.Core.TargetMovementController
             const float slowDownDistance = 1000;
             if (stop)
             {
-                return (velocity <= 0.1f) ? 0 : velocity / 2;
+                return (velocity <= 0.1f) ? 0 : velocity / 1.1f;
             }
                 switch (mAngleToTarget)
             {
@@ -79,7 +79,7 @@ namespace Galaxy_Explovive.Core.TargetMovementController
                         case < 10000: // To close to Target
                             return 0.2f;
 
-                        case > 1000: // Far from Target (Need to Speed Up / Slow Down)
+                        case >= 10000: // Far from Target (Need to Speed Up / Slow Down)
 
                             if (mDistanceToTarget < slowDownDistance) // Slow Down if approaching to Target
                             {
@@ -89,7 +89,7 @@ namespace Galaxy_Explovive.Core.TargetMovementController
 
                             if (velocity < maxVelocity) // Speed up
                             {
-                                return velocity * 2;
+                                return velocity * 2f;
                             }
                             
                             return maxVelocity; // Traveling
@@ -117,7 +117,7 @@ namespace Galaxy_Explovive.Core.TargetMovementController
             return angle + correction;
         }
 
-        public static GameObject.GameObject? SelectTargetObject(SpaceShip spaceShip,
+        public static InteractiveObject? SelectTargetObject(SpaceShip spaceShip,
             SpatialHashing<GameObject.GameObject> spatialHashing, Vector2 worldMousePosition)
         {
             var gameObject = ObjectLocator.GetObjectsInRadius<InteractiveObject>(spatialHashing, worldMousePosition, 1500);

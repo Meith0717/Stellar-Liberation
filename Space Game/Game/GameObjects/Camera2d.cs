@@ -2,6 +2,8 @@ using Microsoft.Xna.Framework;
 using Galaxy_Explovive.Core.InputManagement;
 using System;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended.Timers;
+using MonoGame.Extended;
 
 namespace Galaxy_Explovive.Game.GameObjects
 {
@@ -40,12 +42,14 @@ namespace Galaxy_Explovive.Game.GameObjects
             Position = new Vector2(width / 2f, height / 2f);
         }
 
-        private void MovingAnimation(int spongy)
+        private void MovingAnimation(GameTime gameTime, int spongy)
         {
+            Position = (Vector2.Distance(Position, TargetPosition) < 0.1) ? TargetPosition : Position;
             if (Position == TargetPosition) { return; }
-            Vector2 adjustmentVector = Vector2.Subtract(TargetPosition, Position);
-            Movement = adjustmentVector / spongy;
-            Position += Movement;
+            Vector2 adjustmentVector = Vector2.Subtract(TargetPosition, Position).NormalizedCopy();
+            float movingSpeed = MathF.Exp(Vector2.Distance(TargetPosition, Position)-4);
+
+            Position += adjustmentVector * movingSpeed;
         }
 
         public void ZoomAnimation()
@@ -127,7 +131,7 @@ namespace Galaxy_Explovive.Game.GameObjects
         {
             AdjustZoom(gameTime, inputState);
             MoveCameraByMouse(inputState);
-            MovingAnimation(2);
+            MovingAnimation(gameTime ,2);
             ZoomAnimation();
             // play animation if there is one
             if (mAnimationX != null)
