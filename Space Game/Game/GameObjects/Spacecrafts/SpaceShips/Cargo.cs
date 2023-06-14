@@ -26,7 +26,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
             TextureDepth = 2;
             TextureColor = Color.White;
-            MaxVelocity = 2f;
+            MaxVelocity = 0.5f;
             WeaponManager = new(GameGlobals.SoundManager, GameGlobals.SpatialHashing);
             CrossHair = new(Vector2.Zero, TextureScale, CrossHair.CrossHairType.Target);
             

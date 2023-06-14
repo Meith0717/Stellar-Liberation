@@ -61,7 +61,7 @@ namespace Galaxy_Explovive.Game
             GameGlobals.TextureManager = textureManager;
             GameGlobals.GraphicsDevice = graphicsDevice;
             mParllaxManager = new();
-            mMap = new(2000000, 250);
+            mMap = new(3000000, 62500);
             mMap.Generate();
             mParllaxManager.Add(new("gameBackground", 0.1f));
             mParllaxManager.Add(new("gameBackgroundParlax2", 0.25f));

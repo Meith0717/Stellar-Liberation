@@ -26,7 +26,12 @@ namespace Galaxy_Explovive.Core.Rendering
             return mViewFrustum.Contains(position);
         }
 
-        public bool IsVectorOnWorldView(RectangleF rectangle)
+        public bool IsVectorOnWorldView(Vector2 position)
+        {
+            return mWorldFrustum.Contains(position);
+        }
+
+        public bool IsRectangleOnWorldView(RectangleF rectangle)
         {
             return mWorldFrustum.Intersects(rectangle);
         }
