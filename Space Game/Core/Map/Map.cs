@@ -12,38 +12,33 @@ namespace Galaxy_Explovive.Core.Map
     [Serializable]
     public class Map
     {
-        [JsonIgnore] private readonly Game.Game mGameLayer;
-        [JsonIgnore] private readonly int mWidth;
-        [JsonIgnore] private readonly int mHeight;
-        [JsonIgnore] private readonly int mPlanetSystemAmount;
-        [JsonIgnore] private readonly int mMinDistanceBetweenSystems;
+        [JsonProperty] private readonly int mWidth;
+        [JsonProperty] private readonly int mHeight;
 
+        [JsonProperty] public List<Vector2> SectorList = new();
+        [JsonProperty] public int SectorSize;
         [JsonProperty] public List<PlanetSystem> PlanetSystems = new();
 
-        public Map(Game.Game game, int planetSystemAmount, int minDistanceBetwenSystems, int height, int width) 
-        { 
-            mGameLayer = game;
-            mHeight = height;
-            mWidth = width;
-            mPlanetSystemAmount = planetSystemAmount;
-            mMinDistanceBetweenSystems = minDistanceBetwenSystems;
+        public Map(int edgeLength, int SectorAmount) 
+        {
+            if (SectorAmount % 2 != 0) { throw new Exception("Sector amount has to be odd"); }
+            mWidth = mHeight = edgeLength;
+            SectorSize = (edgeLength == 0)? 0 : edgeLength/(SectorAmount/2);
         }
 
-        public double Generate()
+        public void Generate()
         {
-            if (PlanetSystems.Count == mPlanetSystemAmount) return 1;
-            Vector2 randomPos = MyUtility.GetRandomVector2(0, mWidth, 0, mHeight);
-            double percentage = PlanetSystems.Count / (double)mPlanetSystemAmount;
-
-            bool foundIssue=false;
-            foreach(PlanetSystem planetSystem in PlanetSystems)
+            for (int x = -mWidth / 2; x <= mWidth / 2; x += SectorSize)
             {
-                foundIssue = (Vector2.Distance(randomPos, planetSystem.Position) < mMinDistanceBetweenSystems);
-                if (foundIssue) { break; }
+                for (int y = -mHeight / 2; y <= mHeight / 2; y += SectorSize)
+                {
+                    if (MyUtility.Random.NextDouble() < 0.3) { continue; }
+                    Vector2 randomPos = MyUtility.GetRandomVector2(x + 2000, x+SectorSize - 2000,
+                        y + 2000, y+SectorSize -2000);
+                    PlanetSystems.Add(new(randomPos));
+                }
             }
-            if (foundIssue) return percentage;
-            PlanetSystems.Add(new(mGameLayer, randomPos));
-            return percentage;
+            System.Diagnostics.Debug.WriteLine(PlanetSystems.Count);
         }
 
         public void Update(GameTime gameTime, InputState inputState)
@@ -55,30 +50,30 @@ namespace Galaxy_Explovive.Core.Map
             }
         }
 
-        public void Draw()
+        public void Draw(TextureManager textureManager)
         {
             foreach (PlanetSystem planetSystem in PlanetSystems)
             {
-                planetSystem.Draw();
+                planetSystem.Draw(textureManager);
             }
 
         }
 
-        public static void DrawGrid(Rectangle MapSize, TextureManager textureManager)
+        public void DrawGrid(TextureManager textureManager)
         {
             int ColorAplpha = 20;
+            Color color = new Color(ColorAplpha, ColorAplpha, ColorAplpha);
 
-            for (float x = -MapSize.X; x <= MapSize.Width / 2; x += 10000)
+            for (int x = -mWidth/2; x <= mWidth/2 + SectorSize; x+=SectorSize)
             {
-                textureManager.DrawAdaptiveLine(new Vector2(x, -MapSize.Height / 2f - 10000),
-                    new Vector2(x, MapSize.Height / 2f + 10000), new Color(ColorAplpha, ColorAplpha, ColorAplpha, ColorAplpha), 1, 0);
+                textureManager.DrawAdaptiveLine(new(x, -mHeight / 2 + SectorSize), new(x, mHeight / 2 + SectorSize), color, 1, 0);
             }
 
-            for (float y = -MapSize.Y; y <= MapSize.Height / 2; y += 10000)
+            for (int y = -mHeight / 2; y <= mHeight / 2 + SectorSize; y += SectorSize)
             {
-                textureManager.DrawAdaptiveLine(new Vector2(-MapSize.Width / 2f - 10000, y),
-                    new Vector2(MapSize.Width / 2f + 10000, y), new Color(ColorAplpha, ColorAplpha, ColorAplpha, ColorAplpha), 1, 0);
+                textureManager.DrawAdaptiveLine(new(-mWidth / 2 + SectorSize, y), new(mWidth / 2 + SectorSize, y), color, 1, 0);
             }
+
         }
     }
 }

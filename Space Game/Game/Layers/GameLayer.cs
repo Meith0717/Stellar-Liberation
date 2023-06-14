@@ -8,21 +8,19 @@ namespace Galaxy_Explovive.Game.Layers
     public class GameLayer : Layer
     {
 
-        public Game mGame;
+        public GameState mGame;
 
         // Layer Stuff _____________________________________
         public GameLayer(Game1 game)
             : base(game)
         {
-            mGame = new(mGraphicsDevice, mTextureManager, mSoundManager, mSerialize);
-            mGame.Initialize();
-            // Game loadedGame = (Game)mSerialize.PopulateObject(mGame, "save");
-            // if (loadedGame != null) { mGame = loadedGame; return; }
+            mGame = new(mGraphicsDevice, mTextureManager, mSoundManager);
+            GameState loadedGame = (GameState)mSerialize.PopulateObject(mGame, "save");
+            if (loadedGame != null) { mGame = loadedGame; return; }
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            if (mGame.GenerateMap() != 1) return;
             mGame.Update(inputState, gameTime);
         }
 

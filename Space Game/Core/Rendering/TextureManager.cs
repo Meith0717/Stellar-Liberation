@@ -108,6 +108,17 @@ public class TextureManager
         SpriteBatch.DrawCircle(center, radius, 90, color, thickness / mCamZoom, depth / MaxLayerDepth);
     }
 
+    // render Rectangle ___________________________________________________________________________
+    public void DrawRectangleF(RectangleF rectangle, Color color, float thickness, int depth)
+    {
+        SpriteBatch.DrawRectangle(rectangle, color, thickness, depth / MaxLayerDepth);
+    }
+
+    public void DrawAdaptiveRectangleF(RectangleF rectangle, Color color, float thickness, int depth)
+    {
+        SpriteBatch.DrawRectangle(rectangle, color, thickness / mCamZoom, depth / MaxLayerDepth);
+    }
+
 
     // render Line ___________________________________________________________________________
     public void DrawLine(Vector2 start, Vector2 end, Color color, float thickness, float depth)

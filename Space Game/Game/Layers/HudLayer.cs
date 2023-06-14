@@ -14,9 +14,9 @@ namespace Galaxy_Explovive.Game.Layers
 {
     public class HudLayer : Layer
     {
+        private readonly GameState mGameState;
         private readonly MyUiMessageManager mMessageManager;
 
-        private readonly Game Game;
         private readonly MyUiText mGameTimeText;
         private readonly MyUiSprite mLevelSprite;
         private readonly MyUiText mLevelText;
@@ -35,17 +35,17 @@ namespace Galaxy_Explovive.Game.Layers
         private readonly MyUiSprite mStopButton;
 
 
-        public HudLayer(Game1 app, Game game) : base(app)
+        public HudLayer(Game1 app, GameState gameState) : base(app)
         {
             UpdateBelow = true;
-            Game = game;
             mMessageManager = new(mTextureManager, mGraphicsDevice.Viewport.Width / 2, 50);
-            mMessageManager.AddMessage("Hello Welcome to my new game GALAXY EXPLOVIVE", Game.GameTime);
-            mMessageManager.AddMessage("Have fun with the game!!!", Game.GameTime);
-            mMessageManager.AddMessage("________Toggle Shadow Mapping with Key-R________", Game.GameTime);
+            mMessageManager.AddMessage("Hello Welcome to my new game GALAXY EXPLOVIVE", GameGlobals.GameTime);
+            mMessageManager.AddMessage("Have fun with the game!!!", GameGlobals.GameTime);
+            mMessageManager.AddMessage("________Toggle Shadow Mapping with Key-R________", GameGlobals.GameTime);
 
+            mGameState = gameState;
 
-            Game.mMessageManager = mMessageManager;
+            GameGlobals.MessageManager = mMessageManager;
 
             mGameTimeText = new(5, 5, "");
             mLevelSprite = new(150, 5, "level") { Scale = 0.32f };
@@ -116,50 +116,50 @@ namespace Galaxy_Explovive.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mMessageManager.Update(Game.GameTime);
-            mGameTimeText.Text = MyUtility.ConvertSecondsToGameTimeUnits((int)Game.GameTime);
+            mMessageManager.Update(GameGlobals.GameTime);
+            mGameTimeText.Text = MyUtility.ConvertSecondsToGameTimeUnits((int)GameGlobals.GameTime);
             mMenueButton.Update(mTextureManager, inputState);
             mLevelText.Text = "1";
             mAlloyText.Text = "1/100";
             mEnergyText.Text = "1/100";
             mMineralsText.Text = "1/100";
-            mSelectObjectText.Text = (Game.SelectObject == null)? "" : Game.SelectObject.GetType().Name;
-            mInfoButton.Hide = Game.SelectObject == null;
+            mSelectObjectText.Text = (GameGlobals.SelectObject == null)? "" : GameGlobals.SelectObject.GetType().Name;
+            mInfoButton.Hide = GameGlobals.SelectObject == null;
             mInfoButton.Update(mTextureManager, inputState);
             mDeselectButton.Update(mTextureManager, inputState);
             mTrackButton.Update(mTextureManager, inputState);
             mStopButton.Update(mTextureManager, inputState);
 
             if (inputState.mActionList.Contains(ActionType.ESC)) { Pause(); }
-            mDeselectButton.Disabled = Game.SelectObject == null;
-            if (Game.SelectObject == null) { mTrackButton.Disabled = mStopButton.Disabled = true; return; }     
-            mTrackButton.Disabled = !typeof(Spacecraft).IsAssignableFrom(Game.SelectObject.GetType());
-            mStopButton.Disabled = !typeof(SpaceShip).IsAssignableFrom(Game.SelectObject.GetType());
+            mDeselectButton.Disabled = GameGlobals.SelectObject == null;
+            if (GameGlobals.SelectObject == null) { mTrackButton.Disabled = mStopButton.Disabled = true; return; }     
+            mTrackButton.Disabled = !typeof(Spacecraft).IsAssignableFrom(GameGlobals.SelectObject.GetType());
+            mStopButton.Disabled = !typeof(SpaceShip).IsAssignableFrom(GameGlobals.SelectObject.GetType());
         }
 
         private void Pause()
         {
-            mLayerManager.AddLayer(new PauseLayer(mApp, Game));
+            mLayerManager.AddLayer(new PauseLayer(mApp, mGameState));
         }
 
         private void Deselect()
         {
-            Game.SelectObject = null;
+            GameGlobals.SelectObject = null;
         }
 
         private void Track()
         {
-            SpaceShip ship = (SpaceShip)Game.SelectObject;
+            SpaceShip ship = (SpaceShip)GameGlobals.SelectObject;
             switch (ship.TargetObj)
             {
                 case null:
-                    Game.mCamera.TargetPosition = ship.Position;
+                    GameGlobals.Camera.TargetPosition = ship.Position;
                     break;
                 case not null:
                     if (ship.Track)
                     {
                         ship.Track = false;
-                        Game.mCamera.TargetPosition = ship.TargetObj.Position;
+                        GameGlobals.Camera.TargetPosition = ship.TargetObj.Position;
                         break;
                     }
                     ship.Track = true;
@@ -169,7 +169,7 @@ namespace Galaxy_Explovive.Game.Layers
 
         private void Stop() 
         {
-            SpaceShip ship = (SpaceShip)Game.SelectObject;
+            SpaceShip ship = (SpaceShip)GameGlobals.SelectObject;
             ship.Stop = true;
         }
     }

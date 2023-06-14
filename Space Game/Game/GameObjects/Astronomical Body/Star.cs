@@ -1,9 +1,11 @@
 ﻿using Galaxy_Explovive.Core;
 using Galaxy_Explovive.Core.GameObjects.Types;
 using Galaxy_Explovive.Core.InputManagement;
+using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Game.Layers;
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
 using System;
 
 namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
@@ -11,10 +13,10 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
     [Serializable]
     public class Star : AstronomicalBody
     {
-        public Color mLightColor;
-        public StarType mType;
+        [JsonProperty] public Color mLightColor;
+        [JsonProperty] public StarType mType;
 
-        public Star(Game game, Vector2 position) : base(game)
+        public Star(Vector2 position) : base()
         {
             int randIndex = MyUtility.Random.Next(StarTypes.Types.Count);
             mType = StarTypes.Types[randIndex];
@@ -33,7 +35,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             mLightColor = mType.StarColor;
 
             // Add To Spatial Hashing
-            mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
+            GameGlobals.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
 
         public override void SelectActions(InputState inputState)
@@ -48,12 +50,12 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
         }
 
-        public override void Draw()
+        public override void Draw(TextureManager textureManager)
         {
-            base.Draw();
-            mTextureManager.DrawGameObject(this, IsHover);
-            mTextureManager.Draw("StarLightAlpha", Position, TextureOffset, TextureScale * 1.3f, 0, 2, mLightColor);
-            mGame.mDebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
+            base.Draw(textureManager);
+            textureManager.DrawGameObject(this, IsHover);
+            textureManager.Draw("StarLightAlpha", Position, TextureOffset, TextureScale * 1.3f, 0, 2, mLightColor);
+            GameGlobals.DebugSystem.DrawBoundBox(textureManager, BoundedBox);
         }
     }
 }

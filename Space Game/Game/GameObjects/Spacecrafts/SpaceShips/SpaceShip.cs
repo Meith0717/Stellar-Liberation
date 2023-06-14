@@ -1,43 +1,46 @@
 ﻿using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TargetMovementController;
+using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Core.Weapons;
 using Microsoft.Xna.Framework;
-using System.Diagnostics;
+using Newtonsoft.Json;
+using System;
 
 namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
 {
+    [Serializable]
     public class SpaceShip : Spacecraft
     {
-        public GameObject TargetObj = null;
-        public Vector2? StartPosition { get; set; } = null;
-        public float MaxVelocity { private get; set; }
-        public WeaponManager WeaponManager { private get; set; }
-        public CrossHair CrossHair { private get; set; }
+        [JsonProperty] public GameObject TargetObj = null;
+        [JsonProperty] public Vector2? StartPosition { get; set; } = null;
+        [JsonProperty] public float MaxVelocity { private get; set; }
+        [JsonIgnore] public WeaponManager WeaponManager { private get; set; }
+        [JsonIgnore] public CrossHair CrossHair { private get; set; }
 
         // Navigation
-        public bool Track = false;
-        public bool Stop = false;
-        private bool mSelect = false;
-        private float mVelocity = 0;
-        private float mTravelTime;
-        private MovementController mMovementController;
+        [JsonIgnore] public bool Track = false;
+        [JsonIgnore] public bool Stop = false;
+        [JsonIgnore] private bool mSelect = false;
+        [JsonProperty] private float mVelocity = 0;
+        [JsonIgnore] private float mTravelTime;
+        [JsonIgnore] private MovementController mMovementController;
 
-        public SpaceShip(Game game) : base(game) { mMovementController = new(this); }
+        public SpaceShip() : base() { mMovementController = new(this); }
 
         public override void SelectActions(InputState inputState)
         {
             GetTarget(inputState);
             if (IsPressed && TargetObj is not null) { Track = true; }
-            if (mGame.mCamera.MovedByUser || TargetObj == null)
+            if (GameGlobals.Camera.MovedByUser || TargetObj == null)
             {
                 Track = false;
             }
             if (IsPressed && mSelect) 
             { 
-                mSelect = Track = false; 
-                mGame.SelectObject = null;
+                mSelect = Track = false;
+                GameGlobals.SelectObject = null;
                 return;
             }
             mSelect = true;
@@ -46,23 +49,23 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
         public override void UpdateLogik(GameTime gameTime, InputState inputState)
         {
             base.UpdateLogik(gameTime, inputState);
-            Track = Track && (mGame.SelectObject == this);
-            if (Track) { mGame.mCamera.TargetPosition = Position; }
-            mSelect = mSelect && (mGame.SelectObject == this);
+            Track = Track && (GameGlobals.SelectObject == this);
+            if (Track) { GameGlobals.Camera.TargetPosition = Position; }
+            mSelect = mSelect && (GameGlobals.SelectObject == this);
             CrossHair.Update(null, 0, Color.Wheat, false);
-            mSpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
+            GameGlobals.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
             UpdateNavigation(gameTime, inputState);
             WeaponManager.Update(gameTime);
-            mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
+            GameGlobals.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
 
-        public override void Draw()
+        public override void Draw(TextureManager textureManager)
         {
-            base.Draw();
-            base.DrawLife();
-            DrawPath();
-            WeaponManager.Draw(mTextureManager);
-            DrawTargetCrosshar();
+            base.Draw(textureManager);
+            base.DrawLife(textureManager);
+            DrawPath(textureManager);
+            WeaponManager.Draw(textureManager);
+            DrawTargetCrosshar(textureManager);
         }
 
         // Input Stuff
@@ -90,25 +93,25 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
         {
             if (TargetObj != null)
             {
-                CrossHair.Update(TargetObj.Position, 1f / mGame.mCamera.Zoom, Color.Green, false); 
+                CrossHair.Update(TargetObj.Position, 1f / GameGlobals.Camera.Zoom, Color.Green, false); 
                 return; 
             }
-            var target = MovementController.SelectTargetObject(this, mSpatialHashing, mGame.mWorldMousePosition);
+            var target = MovementController.SelectTargetObject(this, GameGlobals.SpatialHashing, GameGlobals.WorldMousePosition);
             switch (target)
             {
                 case null:
-                    CrossHair.Update(mGame.mWorldMousePosition, 1f / mGame.mCamera.Zoom, Color.IndianRed, false);
+                    CrossHair.Update(GameGlobals.WorldMousePosition, 1f / GameGlobals.Camera.Zoom, Color.IndianRed, false);
                     return;
                 case not null:
-                    CrossHair.Update(target.Position, 1f / mGame.mCamera.Zoom, Color.LightGreen, false);
+                    CrossHair.Update(target.Position, 1f / GameGlobals.Camera.Zoom, Color.LightGreen, false);
                     break;
             }
 
             bool b = inputState.mMouseActionType == MouseActionType.LeftClick;
-            if (mGame.mCamera.Zoom < 0.2f && b)
+            if (GameGlobals.Camera.Zoom < 0.2f && b)
             {
-                mGame.mCamera.TargetPosition = target.Position;
-                mGame.mCamera.SetZoom(0.25f);
+                GameGlobals.Camera.TargetPosition = target.Position;
+                GameGlobals.Camera.SetZoom(0.25f);
                 return;
             }
             TargetObj = b ? target : null;
@@ -119,16 +122,16 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
         }
 
         // Draw Stuff
-        public void DrawPath()
+        public void DrawPath(TextureManager textureManager)
         {
             if (TargetObj == null) { return; }
-            mTextureManager.DrawString("text", Position + TextureOffset ,
-                MyUtility.ConvertSecondsToGameTimeUnits((int)(mTravelTime + mGame.GameTime)), 1, Color.LightBlue);
+            textureManager.DrawString("text", Position + TextureOffset ,
+                MyUtility.ConvertSecondsToGameTimeUnits((int)(mTravelTime + GameGlobals.GameTime)), 1, Color.LightBlue);
         }
 
-        public void DrawTargetCrosshar()
+        public void DrawTargetCrosshar(TextureManager textureManager)
         {
-            CrossHair.Draw();
+            CrossHair.Draw(textureManager);
         }
     }
 }

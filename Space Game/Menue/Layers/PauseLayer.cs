@@ -9,13 +9,14 @@ namespace Galaxy_Explovive.Menue.Layers
 {
     public class PauseLayer : Layer
     {
-        private Game.Game Game;
+        private Game.GameState Game;
         private MyUiFrame mBackgroundLayer;
         private MyUiFrame mForegroundLayer;
         private MyUiSprite mContinueButton;
         private MyUiSprite mExitButton;
+        private MyUiSprite mExitSaveButton;
 
-        public PauseLayer(Game1 app, Game.Game game)
+        public PauseLayer(Game1 app, Game.GameState game)
             : base(app)
         {
             UpdateBelow = false;
@@ -35,6 +36,12 @@ namespace Galaxy_Explovive.Menue.Layers
                 OnClickAction = ExitAndSave,
                 MouseActionType = MouseActionType.LeftClickReleased
             };
+            mExitSaveButton = new(mGraphicsDevice.Viewport.Width / 2 - 256, mGraphicsDevice.Viewport.Height / 2 - 64 + 200,
+                "buttonExitgame")
+            {
+                OnClickAction = Exit,
+                MouseActionType = MouseActionType.LeftClickReleased
+            };
         }
 
         public override void Destroy()
@@ -47,6 +54,7 @@ namespace Galaxy_Explovive.Menue.Layers
             mBackgroundLayer.Draw(mTextureManager);
             mContinueButton.Draw(mTextureManager);
             mExitButton.Draw(mTextureManager);
+            mExitSaveButton.Draw(mTextureManager);
             spriteBatch.End();
         }
 
@@ -55,6 +63,7 @@ namespace Galaxy_Explovive.Menue.Layers
             mBackgroundLayer.OnResolutionChanged(0, 0, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
             mContinueButton.OnResolutionChanged(mGraphicsDevice.Viewport.Width / 2 - 256, mGraphicsDevice.Viewport.Height / 2 - 64 - 100);
             mExitButton.OnResolutionChanged(mGraphicsDevice.Viewport.Width / 2 - 256, mGraphicsDevice.Viewport.Height / 2 - 64 + 100);
+            mExitSaveButton.OnResolutionChanged(mGraphicsDevice.Viewport.Width / 2 - 256, mGraphicsDevice.Viewport.Height / 2 - 64 + 200);
 
         }
 
@@ -62,6 +71,7 @@ namespace Galaxy_Explovive.Menue.Layers
         {
             mContinueButton.Update(mTextureManager, inputState);
             mExitButton.Update(mTextureManager, inputState);
+            mExitSaveButton.Update(mTextureManager, inputState);
             if (inputState.mActionList.Contains(ActionType.ESC))
             {
                 mLayerManager.PopLayer();
@@ -71,6 +81,11 @@ namespace Galaxy_Explovive.Menue.Layers
         private void ExitAndSave()
         {
             mSerialize.SerializeObject(Game, "save");
+            mLayerManager.Exit();
+        }
+
+        private void Exit()
+        {
             mLayerManager.Exit();
         }
     }

@@ -5,47 +5,31 @@ using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.Rendering;
 using Galaxy_Explovive.Core.PositionManagement;
 using Galaxy_Explovive.Core.TextureManagement;
-using Galaxy_Explovive.Game.Layers;
-using Galaxy_Explovive.Game;
+using System;
+using Newtonsoft.Json;
 
 namespace Galaxy_Explovive.Core.GameObject
 {
+    [Serializable]
     public abstract class GameObject
     {
-        // Managers
-        protected TextureManager mTextureManager;
-        protected SoundManager mSoundManager;
-        protected FrustumCuller mFrustumCuller;
-        protected SpatialHashing<GameObject> mSpatialHashing;
-        protected Game.Game mGame;
-
         // Location
-        public Vector2 Position { get; set; }
-        public float Rotation { get; set; }
+        [JsonProperty] public Vector2 Position { get; set; }
+        [JsonProperty] public float Rotation { get; set; }
 
         // Rendering
-        public Vector2 TextureOffset { get; set; }
-        public string TextureId { get; set; }
-        public float TextureScale { get; set; }
-        public int TextureWidth { get; set; }
-        public int TextureHeight { get; set; }
-        public int TextureDepth { get; set; }
-        public Color TextureColor { get; set; }
-        public CircleF BoundedBox { get; set; }
-
-        // Constructor
-        public GameObject(Game.Game game)                        
-        {
-            mGame = game;
-            mTextureManager = game.mTextureManager;
-            mSoundManager = game.mSoundManager;
-            mFrustumCuller = game.mFrustumCuller;
-            mSpatialHashing = game.mSpatialHashing;
-        }
+        [JsonProperty] public Vector2 TextureOffset { get; set; }
+        [JsonProperty] public string TextureId { get; set; }
+        [JsonProperty] public float TextureScale { get; set; }
+        [JsonProperty] public int TextureWidth { get; set; }
+        [JsonProperty] public int TextureHeight { get; set; }
+        [JsonProperty] public int TextureDepth { get; set; }
+        [JsonProperty] public Color TextureColor { get; set; }
+        [JsonProperty] public CircleF BoundedBox { get; set; }
 
         // Methods
         public abstract void UpdateLogik(GameTime gameTime, InputState inputState);
-        public abstract void Draw();
+        public abstract void Draw(TextureManager textureManager);
 
     }
 }

@@ -6,7 +6,7 @@ using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
 using System;
 using Galaxy_Explovive.Core.GameObjects.Types;
 using Galaxy_Explovive.Core.Utility;
-using Galaxy_Explovive.Game.Layers;
+using Galaxy_Explovive.Core.TextureManagement;
 
 namespace Galaxy_Explovive.Game.GameObjects
 {
@@ -15,34 +15,36 @@ namespace Galaxy_Explovive.Game.GameObjects
     {
 
         // Some Variables
-#pragma warning disable IDE0044 // Modifizierer "readonly" hinzufügen
         [JsonProperty] private double mAddAllois;
         [JsonProperty] private double mAddEnergy;
         [JsonProperty] private double mAddCrystals;
-#pragma warning restore IDE0044 // Modifizierer "readonly" hinzufügen
         [JsonProperty] private Vector2 mCenterPosition;
+        [JsonProperty] private PlanetType mPlanetType;
         [JsonProperty] public float Angle { get; private set; }
 
-        public float mRadius;
-        private float mShadowRotation;
+        [JsonProperty] public float mRadius;
+        [JsonProperty] private float mShadowRotation;
 
-        public Planet(Game game, int radius, Vector2 CenterPosition, Color lightColor, PlanetType planetType) : base(game)
+        public Planet(int orbitNr, Vector2 CenterPosition, Color StarColor, int StarSize) : base()
         {
             // Location
             Angle = MyUtility.Random.NextAngle();
-                                                                                             
+            mPlanetType = GetPlanetType(orbitNr);
+
             // Rendering
-            TextureId = planetType.Texture;
+            if (mPlanetType != null)
+            {
+                TextureId = mPlanetType.Texture;
+                TextureScale = mPlanetType.Size;
+                mRadius = StarSize + (300 * orbitNr) + (1000 * mPlanetType.Size);
+            }
             TextureWidth = TextureHeight = 1024;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
-            TextureScale = planetType.Size;
             TextureDepth = 1;
-            TextureColor = lightColor;
+            TextureColor = StarColor;
 
             // Class Stuff
-            mRadius = radius;
             mCenterPosition = CenterPosition;
-
         }
 
         public override void SelectActions(InputState inputState)
@@ -58,8 +60,8 @@ namespace Galaxy_Explovive.Game.GameObjects
             // Remove From Spatial Hashing
             RemoveFromSpatialHashing();
 
-            float velocity = MathF.Sqrt(1/(mRadius*10));   
-            float angleUpdate = Angle + mGame.GameTime * velocity;
+            float velocity = MathF.Sqrt(1/(mRadius*10));
+            float angleUpdate = Angle + GameGlobals.GameTime * velocity;
             Position = MyUtility.GetVector2(mRadius, Angle + angleUpdate) + mCenterPosition;
             Rotation += 0.004f; 
             mShadowRotation = MyUtility.GetAngle(mCenterPosition, Position);
@@ -70,26 +72,55 @@ namespace Galaxy_Explovive.Game.GameObjects
 
         public void RemoveFromSpatialHashing()
         {
-            mSpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
+            GameGlobals.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
         }
 
         private void AddToSpatialHashing()
         {
-            mSpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
+            GameGlobals.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
 
-        public void Draw(int alpha)
+        public void Draw(int alpha, TextureManager textureManager)
         {
-            base.Draw();
+            base.Draw(textureManager);
             TextureColor = new Color(alpha, alpha, alpha, alpha);
-            mTextureManager.Draw("planetShadow", Position, TextureOffset, TextureScale, mShadowRotation, TextureDepth + 1, TextureColor);
-            mTextureManager.DrawGameObject(this, IsHover);
-            mGame.mDebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
+            textureManager.Draw("planetShadow", Position, TextureOffset, TextureScale, mShadowRotation, TextureDepth + 1, TextureColor);
+            textureManager.DrawGameObject(this, IsHover);
+            GameGlobals.DebugSystem.DrawBoundBox(textureManager, BoundedBox);
         }
 
-        public override void Draw()
+        [Obsolete("This method is deprecated.")]
+        public override void Draw(TextureManager textureManager)
         {
             throw new Exception("Use The Other Draw Method please :)");
         }
+
+        private PlanetType GetPlanetType(int orbit)
+        {
+            PlanetType planetType = null;
+            switch (orbit)
+            {
+                case 1:
+                    planetType = PlanetTypes.GetOrbit1;
+                    break;
+                case 2:
+                    planetType = PlanetTypes.GetOrbit2;
+                    break;
+                case 3:
+                    planetType = PlanetTypes.GetOrbit3;
+                    break;
+                case 4:
+                    planetType = PlanetTypes.GetOrbit4;
+                    break;
+                case 5:
+                    planetType = PlanetTypes.GetOrbit5;
+                    break;
+                case 6:
+                    planetType = PlanetTypes.GetOrbit6;
+                    break;
+            }
+            return planetType;
+        }
+
     }
 }

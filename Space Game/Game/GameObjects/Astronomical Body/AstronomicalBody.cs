@@ -1,14 +1,16 @@
 ﻿using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
+using System;
 
 namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
 {
+    [Serializable]
     public abstract class AstronomicalBody : InteractiveObject
     {
-        private bool mTrack = false;
-
-        protected AstronomicalBody(Game game) : base(game) {}
+        [JsonIgnore] private bool mTrack = false;
+        protected AstronomicalBody() : base() {}
 
         public override void SelectActions(InputState inputState)
         {
@@ -16,18 +18,18 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             {
                 if (GetType() == typeof(Planet))
                 {
-                    mGame.mCamera.SetZoom(1.2f);
+                    GameGlobals.Camera.SetZoom(1.2f);
                 }
                 if (GetType() == typeof(Star))
                 {
-                    mGame.mCamera.SetZoom(0.25f);
+                    GameGlobals.Camera.SetZoom(0.25f);
                 }
             }
-            mGame.mCamera.TargetPosition = Position;
+            GameGlobals.Camera.TargetPosition = Position;
 
-            if (mGame.mCamera.MovedByUser || (inputState.mMouseActionType == MouseActionType.LeftClick && !IsHover))
+            if (GameGlobals.Camera.MovedByUser || (inputState.mMouseActionType == MouseActionType.LeftClick && !IsHover))
             {
-                mGame.SelectObject = null;
+                GameGlobals.SelectObject = null;
             }
         }
 

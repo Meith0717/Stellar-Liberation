@@ -5,18 +5,22 @@ using System.Diagnostics.Contracts;
 using Microsoft.Xna.Framework;
 using Galaxy_Explovive.Game.Layers;
 using Galaxy_Explovive.Game;
+using Newtonsoft.Json;
+using Galaxy_Explovive.Core.TextureManagement;
 
 namespace Galaxy_Explovive.Core.GameObject
 {
+    [Serializable]
     public abstract class InteractiveObject : GameObject
     {
-        public InteractiveObject(Game.Game game) : base(game) 
+        [JsonIgnore] public bool IsHover { get; private set; }
+        [JsonIgnore] public bool IsPressed { get; private set; }
+        [JsonIgnore] private CrossHair mCrossHair;
+
+        public InteractiveObject() 
         {
-            mCrossHair = new(game, Position, TextureScale, CrossHair.CrossHairType.Select);
+            mCrossHair = new(Position, TextureScale, CrossHair.CrossHairType.Select);
         }
-        public bool IsHover { get; private set; }
-        public bool IsPressed { get; private set; }
-        private CrossHair mCrossHair;
 
         public override void UpdateLogik(GameTime gameTime, InputState inputState)
         {
@@ -24,25 +28,25 @@ namespace Galaxy_Explovive.Core.GameObject
             {
                 IsPressed = false;
                 BoundedBox = new CircleF(Position, (Math.Max(TextureHeight, TextureWidth) / 2) * TextureScale);
-                var mousePosition = mGame.mCamera.ViewToWorld(inputState.mMousePosition.ToVector2());
+                var mousePosition = GameGlobals.Camera.ViewToWorld(inputState.mMousePosition.ToVector2());
                 IsHover = BoundedBox.Contains(mousePosition);
                 if (!IsHover) { return; }
                 if (inputState.mMouseActionType != MouseActionType.LeftClick) { return; }
                 IsPressed = true;
-                if (mGame.SelectObject != null) { return; }
-                mGame.SelectObject = this;
-                mGame.mCamera.TargetPosition = Position;
+                if (GameGlobals.SelectObject != null) { return; }
+                GameGlobals.SelectObject = this;
+                GameGlobals.Camera.TargetPosition = Position;
             }
             mCrossHair.Update(Position, TextureScale*20, Color.OrangeRed, false);
             CheckForSelect(inputState);
         }
 
-        public override void Draw()
+        public override void Draw(TextureManager textureManager)
         {
-            mTextureManager.DrawGameObject(this, IsHover);
-            mGame.mDebugSystem.DrawBoundBox(mTextureManager, BoundedBox);
-            if (mGame.SelectObject != this) return;
-            mCrossHair.Draw();
+            textureManager.DrawGameObject(this, IsHover);
+            GameGlobals.DebugSystem.DrawBoundBox(textureManager, BoundedBox);
+            if (GameGlobals.SelectObject != this) return;
+            mCrossHair.Draw(textureManager);
         }
 
         public abstract void SelectActions(InputState inputState);

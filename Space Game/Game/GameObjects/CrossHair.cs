@@ -7,6 +7,7 @@ using Galaxy_Explovive.Core.Rendering;
 using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Game.Layers;
 using System;
+using Galaxy_Explovive.Game;
 
 namespace Galaxy_Explovive.Core.GameObject
 {
@@ -20,7 +21,7 @@ namespace Galaxy_Explovive.Core.GameObject
         private bool mHover;
         private bool mDraw;
 
-        public CrossHair(Game.Game game, Vector2 position, float scale, CrossHairType type) : base(game)
+        public CrossHair(Vector2 position, float scale, CrossHairType type)
         {
             // Location
             Position = position;
@@ -32,7 +33,7 @@ namespace Galaxy_Explovive.Core.GameObject
             TextureHeight = 64;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
             TextureScale = scale;
-            TextureDepth = mTextureManager.MaxLayerDepth;
+            TextureDepth = GameGlobals.TextureManager.MaxLayerDepth;
             TextureColor = Color.White;
         }
 
@@ -50,10 +51,10 @@ namespace Galaxy_Explovive.Core.GameObject
         {
             throw new System.NotImplementedException();
         }
-        public override void Draw()
+        public override void Draw(TextureManager textureManager)
         {
             if (!mDraw) { return; }
-            mTextureManager.DrawGameObject(this, mHover);
+            textureManager.DrawGameObject(this, mHover);
         }
     }
 }

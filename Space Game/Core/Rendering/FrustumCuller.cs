@@ -26,6 +26,11 @@ namespace Galaxy_Explovive.Core.Rendering
             return mViewFrustum.Contains(position);
         }
 
+        public bool IsVectorOnWorldView(RectangleF rectangle)
+        {
+            return mWorldFrustum.Intersects(rectangle);
+        }
+
         public bool IsGameObjectOnWorldView(GameObject.GameObject gameObject)
         {
             return mWorldFrustum.Intersects(gameObject.BoundedBox);

@@ -12,7 +12,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
 {
     public class Cargo : SpaceShip
     {
-        public Cargo(Game game, Vector2 position) : base(game)
+        public Cargo(Vector2 position) : base()
         {
             Position = position;
             Rotation = 0;
@@ -27,8 +27,8 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             TextureDepth = 2;
             TextureColor = Color.White;
             MaxVelocity = 2f;
-            WeaponManager = new(mSoundManager, mGame.mSpatialHashing);
-            CrossHair = new(game, Vector2.Zero, TextureScale, CrossHair.CrossHairType.Target);
+            WeaponManager = new(GameGlobals.SoundManager, GameGlobals.SpatialHashing);
+            CrossHair = new(Vector2.Zero, TextureScale, CrossHair.CrossHairType.Target);
             
         }
 
@@ -37,9 +37,9 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             base.UpdateLogik(gameTime, inputState);
         }
 
-        public override void Draw()
+        public override void Draw(TextureManager textureManager)
         {
-            base.Draw();
+            base.Draw(textureManager);
         }
     }
 }

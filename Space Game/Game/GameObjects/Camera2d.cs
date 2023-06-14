@@ -6,32 +6,31 @@ using Newtonsoft.Json;
 
 namespace Galaxy_Explovive.Game.GameObjects
 {
-    [Serializable]
     public class Camera2d
     {
         // Constants
         const float mMaxZoom = 0.00000001f;
         const float mMimZoom = 1.2f;
 
-        [JsonProperty] public float Zoom { get; private set; } = 1f;
-        [JsonProperty] public Vector2 Position { get; private set; }
-        [JsonIgnore] public Vector2 TargetPosition { private get; set; }
-        [JsonIgnore] public Vector2 Movement { get; private set; }
-        [JsonIgnore] public bool MovedByUser { get; private set; } = false;
-        [JsonIgnore] private float mTargetZoom;
+        public float Zoom { get; private set; } = 1f;
+        public Vector2 Position { get; private set; }
+        public Vector2 TargetPosition { private get; set; }
+        public Vector2 Movement { get; private set; }
+        public bool MovedByUser { get; private set; } = false;
+        private float mTargetZoom;
 
         // matrix variables
-        [JsonIgnore] private Matrix mTransform = Matrix.Identity;
-        [JsonIgnore] private bool mViewTransformationMatrixChanged = true;
-        [JsonIgnore] private GraphicsDevice mGraphicsDevice;
+        private Matrix mTransform = Matrix.Identity;
+        private bool mViewTransformationMatrixChanged = true;
+        private GraphicsDevice mGraphicsDevice;
 
         // animation stuff
-        [JsonIgnore] private bool mZoomAnimation;
-        [JsonIgnore] private Vector2 mLastMousePosition;
-        [JsonIgnore] private float[] mAnimationX;
-        [JsonIgnore] private float[] mAnimationY;
-        [JsonIgnore] private int mAnimationIndex;
-        [JsonIgnore] private Vector2 mPositionBeforeAnimation;
+        private bool mZoomAnimation;
+        private Vector2 mLastMousePosition;
+        private float[] mAnimationX;
+        private float[] mAnimationY;
+        private int mAnimationIndex;
+        private Vector2 mPositionBeforeAnimation;
 
         public Camera2d(GraphicsDevice graphicsDevice)
         {
