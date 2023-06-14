@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Galaxy_Explovive.Core.TextureManagement;
 using Microsoft.Xna.Framework.Graphics;
+using Galaxy_Explovive.Game;
 
 namespace Galaxy_Explovive.Core.Effects
 {
@@ -23,6 +24,8 @@ namespace Galaxy_Explovive.Core.Effects
             mTextureId = textureId;
             mMovingScale = movingScale;
             mPosition1 = Vector2.Zero;
+            mTextureWidth = GameGlobals.GraphicsDevice.Viewport.Width;
+            mTextureHeight = GameGlobals.GraphicsDevice.Viewport.Height;
         }
 
         public void Update(Vector2 movement)

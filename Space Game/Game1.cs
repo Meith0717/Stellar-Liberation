@@ -44,7 +44,7 @@ namespace Galaxy_Explovive
             mGraphicsManager = new GraphicsDeviceManager(this);
             mLayerManager = new LayerManager(this);
             mSerialize = new Serialize();
-            ToggleFullscreen();
+            //ToggleFullscreen();
         }
 
         protected override void Initialize() 
