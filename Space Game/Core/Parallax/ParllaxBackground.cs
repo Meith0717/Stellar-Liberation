@@ -24,8 +24,8 @@ namespace Galaxy_Explovive.Core.Effects
             mTextureId = textureId;
             mMovingScale = movingScale;
             mPosition1 = Vector2.Zero;
-            mTextureWidth = GameGlobals.GraphicsDevice.Viewport.Width;
-            mTextureHeight = GameGlobals.GraphicsDevice.Viewport.Height;
+            mTextureWidth = 1920;
+            mTextureHeight = 1080;
         }
 
         public void Update(Vector2 movement)
