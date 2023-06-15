@@ -63,10 +63,10 @@ namespace Galaxy_Explovive.Game
             mParllaxManager = new();
             mMap = new(3000000, 62500);
             mMap.Generate();
-            mParllaxManager.Add(new("gameBackgroundParlax1", 0.125f));
-            mParllaxManager.Add(new("gameBackgroundParlax2", 0.25f));
-            mParllaxManager.Add(new("gameBackgroundParlax3", 0.325f));
-            mParllaxManager.Add(new("gameBackgroundParlax4", 0.5f));
+            mParllaxManager.Add(new("gameBackgroundParlax1", 0.1f));
+            mParllaxManager.Add(new("gameBackgroundParlax2", 0.15f));
+            mParllaxManager.Add(new("gameBackgroundParlax3", 0.2f));
+            mParllaxManager.Add(new("gameBackgroundParlax4", 0.25f));
             mShips.Add(new(MyUtility.GetRandomVector2(Vector2.Zero, 0)));
         }
 
@@ -102,8 +102,7 @@ namespace Galaxy_Explovive.Game
                 samplerState: SamplerState.PointClamp);
 
             mMap.Draw(GameGlobals.TextureManager);
-            mMap.DrawGrid(GameGlobals.TextureManager);
-            foreach (Cargo c in mShips)
+             foreach (Cargo c in mShips)
             {
                 c.Draw(GameGlobals.TextureManager);
             }
