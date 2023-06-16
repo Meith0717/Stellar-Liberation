@@ -53,6 +53,7 @@ namespace Galaxy_Explovive.Core.Map
 
         public void Draw(TextureManager textureManager)
         {
+            DrawGrid(textureManager);
             foreach (PlanetSystem planetSystem in PlanetSystems)
             {
                 planetSystem.Draw(textureManager);
@@ -60,7 +61,7 @@ namespace Galaxy_Explovive.Core.Map
 
         }
 
-        public void DrawGrid(TextureManager textureManager)
+        private void DrawGrid(TextureManager textureManager)
         {
             int ColorAplpha = 30;
             Color color = new(ColorAplpha, ColorAplpha, ColorAplpha);
