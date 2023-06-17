@@ -5,7 +5,6 @@ using Galaxy_Explovive.Core.TextureManagement;
 using System;
 using System.Collections.Generic;
 using Galaxy_Explovive.Core.GameObject;
-using System.Linq;
 using Galaxy_Explovive.Core.PositionManagement;
 using Galaxy_Explovive.Game.GameLogik;
 
@@ -17,6 +16,7 @@ namespace Galaxy_Explovive.Core.Debug
         const float UpdateTimeInSeconds = 1;
 
         // Some Stuff
+        public float DrawnObjectCount;
         private int mDebugLevel = 0;
         private float mCurrentFramesPerSecond;
         private float mFrameDuration;
@@ -31,6 +31,7 @@ namespace Galaxy_Explovive.Core.Debug
 
         public void Update(GameTime gameTime, InputState inputState)
         {
+            DrawnObjectCount = 0;
             if (inputState.mActionList.Contains(ActionType.Debug))
             {
                 this.ChangeMode();
@@ -59,11 +60,10 @@ namespace Galaxy_Explovive.Core.Debug
             int i = 0;
             List<string> lst = new List<string>
             {
-                $"Frames per second: {Math.Round(mCurrentFramesPerSecond)}",
-                $"Frame: {mFrameDuration} ms",
-                $"Debug Mode {mDebugLevel}",
-                $"Camera Zoom {cameraZoom}",
-                $"Position {cameraPosition}",
+                $"Level {mDebugLevel}",
+                $"{Math.Round(mCurrentFramesPerSecond)}FPS {mFrameDuration}ms",
+                $"Zoom{cameraZoom} {cameraPosition}",
+                $"Drawn Objects {DrawnObjectCount}"
             };
             foreach (string s in lst)
             {

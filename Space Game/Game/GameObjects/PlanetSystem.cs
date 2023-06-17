@@ -7,9 +7,7 @@ using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
 using System;
 using System.Collections.Generic;
 using Galaxy_Explovive.Core.RayTracing;
-using Galaxy_Explovive.Core.GameObjects.Types;
 using Galaxy_Explovive.Core.Utility;
-using Galaxy_Explovive.Game.Layers;
 using Galaxy_Explovive.Core.TextureManagement;
 
 namespace Galaxy_Explovive.Game.GameObjects
@@ -27,7 +25,6 @@ namespace Galaxy_Explovive.Game.GameObjects
         [JsonProperty] private bool mIsSystemShown;
         [JsonProperty] private int mPlanetAlpha = 255;
         [JsonIgnore] private RayTracer mRayTracing;
-
 
         public enum StarState
         {

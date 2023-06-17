@@ -4,16 +4,17 @@ using Galaxy_Explovive.Core.LayerManagement;
 using Galaxy_Explovive.Core.UserInterface;
 using Galaxy_Explovive.Core.UserInterface.Messages;
 using Galaxy_Explovive.Core.Utility;
+using Galaxy_Explovive.Game;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
-using Galaxy_Explovive.Menue.Layers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Galaxy_Explovive.Game.Layers
+namespace Galaxy_Explovive.Menue.Layers
 {
-    public class HudLayer : Layer
+    public class GameLayer : Layer
     {
+
         private readonly GameState mGameState;
         private readonly MyUiMessageManager mMessageManager;
 
@@ -35,15 +36,16 @@ namespace Galaxy_Explovive.Game.Layers
         private readonly MyUiSprite mStopButton;
 
 
-        public HudLayer(Game1 app, GameState gameState) : base(app)
+        public GameLayer(Game1 app) : base(app)
         {
-            UpdateBelow = true;
+            mGameState = new(mGraphicsDevice, mTextureManager, mSoundManager);
+            GameState loadedGame = (GameState)mSerialize.PopulateObject(mGameState, "save");
+            if (loadedGame != null) { mGameState = loadedGame; return; }
+
             mMessageManager = new(mTextureManager, mGraphicsDevice.Viewport.Width / 2, 50);
             mMessageManager.AddMessage("Hello Welcome to my new game GALAXY EXPLOVIVE", GameGlobals.GameTime);
             mMessageManager.AddMessage("Have fun with the game!!!", GameGlobals.GameTime);
             mMessageManager.AddMessage("________Toggle Shadow Mapping with Key-R________", GameGlobals.GameTime);
-
-            mGameState = gameState;
 
             GameGlobals.MessageManager = mMessageManager;
 
@@ -61,10 +63,10 @@ namespace Galaxy_Explovive.Game.Layers
             mEnergyText = new(mGraphicsDevice.Viewport.Width - 155, 5, "1/100");
             mMineralsSprite = new(mGraphicsDevice.Viewport.Width - 105, 5, "minerals");
             mMineralsText = new(mGraphicsDevice.Viewport.Width - 55, 5, "1/100");
-            mInfoButton = new(5, mGraphicsDevice.Viewport.Height - 80, "info") { Scale=0.5f};
-            mSelectObjectText = new(50, mGraphicsDevice.Viewport.Height - 72, "") { Color=Globals.MormalColor};
-            mDeselectButton = new(5, mGraphicsDevice.Viewport.Height - 35, "deSelect") 
-            { Scale = 0.5f, Disabled=true, OnClickAction=Deselect};
+            mInfoButton = new(5, mGraphicsDevice.Viewport.Height - 80, "info") { Scale = 0.5f };
+            mSelectObjectText = new(50, mGraphicsDevice.Viewport.Height - 72, "") { Color = Globals.MormalColor };
+            mDeselectButton = new(5, mGraphicsDevice.Viewport.Height - 35, "deSelect")
+            { Scale = 0.5f, Disabled = true, OnClickAction = Deselect };
             mTrackButton = new(60, mGraphicsDevice.Viewport.Height - 35, "target")
             { Scale = 0.5f, Disabled = true, OnClickAction = Track };
             mStopButton = new(115, mGraphicsDevice.Viewport.Height - 35, "stop")
@@ -77,6 +79,8 @@ namespace Galaxy_Explovive.Game.Layers
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            mGameState.Draw(spriteBatch);
+
             spriteBatch.Begin();
             mMessageManager.Draw();
             mGameTimeText.Draw(mTextureManager);
@@ -94,11 +98,14 @@ namespace Galaxy_Explovive.Game.Layers
             mDeselectButton.Draw(mTextureManager);
             mTrackButton.Draw(mTextureManager);
             mStopButton.Draw(mTextureManager);
+            GameGlobals.DebugSystem.ShowRenderInfo(mTextureManager, 
+                GameGlobals.Camera.Zoom, GameGlobals.WorldMousePosition);
             spriteBatch.End();
         }
 
         public override void OnResolutionChanged()
         {
+            mGameState.ApplyResolution();
             mMessageManager.OnResolutionChanged(mGraphicsDevice.Viewport.Width / 2, 50);
             mMenueButton.OnResolutionChanged(mGraphicsDevice.Viewport.Width - 50, mGraphicsDevice.Viewport.Height - 35);
             mAlloySprite.OnResolutionChanged(mGraphicsDevice.Viewport.Width - 305, 5);
@@ -116,14 +123,16 @@ namespace Galaxy_Explovive.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mMessageManager.Update(GameGlobals.GameTime);
+            mGameState.Update(inputState, gameTime);
+
+            mMessageManager.Update(inputState, GameGlobals.GameTime);
             mGameTimeText.Text = MyUtility.ConvertSecondsToGameTimeUnits((int)GameGlobals.GameTime);
             mMenueButton.Update(mTextureManager, inputState);
             mLevelText.Text = "1";
             mAlloyText.Text = "1/100";
             mEnergyText.Text = "1/100";
             mMineralsText.Text = "1/100";
-            mSelectObjectText.Text = (GameGlobals.SelectObject == null)? "" : GameGlobals.SelectObject.GetType().Name;
+            mSelectObjectText.Text = GameGlobals.SelectObject == null ? "" : GameGlobals.SelectObject.GetType().Name;
             mInfoButton.Hide = GameGlobals.SelectObject == null;
             mInfoButton.Update(mTextureManager, inputState);
             mDeselectButton.Update(mTextureManager, inputState);
@@ -132,7 +141,7 @@ namespace Galaxy_Explovive.Game.Layers
 
             if (inputState.mActionList.Contains(ActionType.ESC)) { Pause(); }
             mDeselectButton.Disabled = GameGlobals.SelectObject == null;
-            if (GameGlobals.SelectObject == null) { mTrackButton.Disabled = mStopButton.Disabled = true; return; }     
+            if (GameGlobals.SelectObject == null) { mTrackButton.Disabled = mStopButton.Disabled = true; return; }
             mTrackButton.Disabled = !typeof(Spacecraft).IsAssignableFrom(GameGlobals.SelectObject.GetType());
             mStopButton.Disabled = !typeof(SpaceShip).IsAssignableFrom(GameGlobals.SelectObject.GetType());
         }
@@ -167,7 +176,7 @@ namespace Galaxy_Explovive.Game.Layers
             }
         }
 
-        private void Stop() 
+        private void Stop()
         {
             SpaceShip ship = (SpaceShip)GameGlobals.SelectObject;
             ship.Stop = true;

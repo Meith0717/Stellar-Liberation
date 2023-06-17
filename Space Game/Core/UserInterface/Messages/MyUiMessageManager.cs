@@ -1,4 +1,5 @@
-﻿using Galaxy_Explovive.Core.TextureManagement;
+﻿using Galaxy_Explovive.Core.InputManagement;
+using Galaxy_Explovive.Core.TextureManagement;
 using System.Collections.Generic;
 
 
@@ -25,17 +26,20 @@ namespace Galaxy_Explovive.Core.UserInterface.Messages
             this.mTopY = topY;
         }
 
-        public void Update(float currentTime)
+        public void Update(InputState inputState, float currentTime)
         {
             List<MyUiMessage> remove = new();
             int i = 0;
             foreach (MyUiMessage message in mMessageList)
             {
-                message.Update(mCenterX, mTopY + (i * 20));
-                if (currentTime <= message.CreationTime + LiveTime) { i += 1; continue; }
-                remove.Add(message);
+                message.Update(inputState, mCenterX, mTopY + (i * 40));
+                if (currentTime > message.CreationTime + LiveTime || message.Clicked) 
+                {
+                    mMessageList.Remove(message);
+                    break; 
+                }
+                i += 1;
             }
-            foreach (MyUiMessage message in remove) { mMessageList.Remove(message); }
         }
 
         public void Draw()

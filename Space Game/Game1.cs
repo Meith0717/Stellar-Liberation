@@ -6,9 +6,8 @@ using Galaxy_Explovive.Core.LayerManagement;
 using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using System;
-using Galaxy_Explovive.Game.Layers;
-using Galaxy_Explovive.Core.Map;
 using Galaxy_Explovive.Core.Persistance;
+using Galaxy_Explovive.Menue.Layers;
 
 namespace Galaxy_Explovive
 {
@@ -51,9 +50,7 @@ namespace Galaxy_Explovive
         {
             mGraphicsManager.ApplyChanges();
             base.Initialize();
-            Game.Layers.GameLayer game = new Game.Layers.GameLayer(this);
-            mLayerManager.AddLayer(game);
-            mLayerManager.AddLayer(new HudLayer(this, game.mGame));
+            mLayerManager.AddLayer(new GameLayer(this));
             Mouse.SetCursor(MouseCursor.FromTexture2D(Content.Load<Texture2D>("cursor"), 0, 0));
         }
 

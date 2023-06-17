@@ -1,9 +1,7 @@
 ﻿using Galaxy_Explovive.Core.InputManagement;
 using System;
 using MonoGame.Extended;
-using System.Diagnostics.Contracts;
 using Microsoft.Xna.Framework;
-using Galaxy_Explovive.Game.Layers;
 using Galaxy_Explovive.Game;
 using Newtonsoft.Json;
 using Galaxy_Explovive.Core.TextureManagement;
@@ -43,6 +41,7 @@ namespace Galaxy_Explovive.Core.GameObject
 
         public override void Draw(TextureManager textureManager)
         {
+            GameGlobals.DebugSystem.DrawnObjectCount += 1;
             textureManager.DrawGameObject(this, IsHover);
             GameGlobals.DebugSystem.DrawBoundBox(textureManager, BoundedBox);
             if (GameGlobals.SelectObject != this) return;

@@ -1,12 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
-using System.Data;
-using Galaxy_Explovive.Core.Rendering;
-using Galaxy_Explovive.Core.SoundManagement;
-using Galaxy_Explovive.Game.Layers;
-using System;
 using Galaxy_Explovive.Game;
 
 namespace Galaxy_Explovive.Core.GameObject

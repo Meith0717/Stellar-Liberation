@@ -1,9 +1,7 @@
-﻿using Galaxy_Explovive.Core;
-using Galaxy_Explovive.Core.GameObjects.Types;
+﻿using Galaxy_Explovive.Core.GameObjects.Types;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.Utility;
-using Galaxy_Explovive.Game.Layers;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
@@ -46,16 +44,18 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
         public override void UpdateLogik(GameTime gameTime, InputState inputState)
         {
             base.UpdateLogik(gameTime, inputState);
-            Rotation += 0.0001f;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
+            if (mType == StarTypes.BH) return;
+            Rotation += 0.0001f;
         }
 
         public override void Draw(TextureManager textureManager)
         {
             base.Draw(textureManager);
             textureManager.DrawGameObject(this, IsHover);
-            textureManager.Draw("StarLightAlpha", Position, TextureOffset, TextureScale * 1.3f, 0, 2, mLightColor);
             GameGlobals.DebugSystem.DrawBoundBox(textureManager, BoundedBox);
+            if (mType == StarTypes.BH) return;
+            textureManager.Draw("StarLightAlpha", Position, TextureOffset, TextureScale * 1.3f, 0, 2, mLightColor);
         }
     }
 }
