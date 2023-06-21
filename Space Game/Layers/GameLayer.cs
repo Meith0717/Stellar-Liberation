@@ -10,7 +10,7 @@ using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Galaxy_Explovive.Menue.Layers
+namespace Galaxy_Explovive.Layers
 {
     public class GameLayer : Layer
     {
@@ -40,7 +40,7 @@ namespace Galaxy_Explovive.Menue.Layers
         {
             mGameState = new(mGraphicsDevice, mTextureManager, mSoundManager);
             GameState loadedGame = (GameState)mSerialize.PopulateObject(mGameState, "save");
-            if (loadedGame != null) { mGameState = loadedGame; return; }
+            if (loadedGame != null) { mGameState = loadedGame; }
 
             mMessageManager = new(mTextureManager, mGraphicsDevice.Viewport.Width / 2, 50);
             mMessageManager.AddMessage("Hello Welcome to my new game GALAXY EXPLOVIVE", GameGlobals.GameTime);
@@ -53,24 +53,22 @@ namespace Galaxy_Explovive.Menue.Layers
             mLevelSprite = new(150, 5, "level") { Scale = 0.32f };
             mLevelText = new(170, 5, "");
             mMenueButton = new(mGraphicsDevice.Viewport.Width - 50, mGraphicsDevice.Viewport.Height - 35, "menue")
-            {
-                Scale = 0.5f,
-                OnClickAction = Pause,
-            };
+            { Scale = 0.5f, OnClickAction = Pause, Color = Color.OrangeRed };
             mAlloySprite = new(mGraphicsDevice.Viewport.Width - 305, 5, "alloys");
             mAlloyText = new(mGraphicsDevice.Viewport.Width - 255, 5, "1/100");
             mEnergySprite = new(mGraphicsDevice.Viewport.Width - 205, 5, "energy");
             mEnergyText = new(mGraphicsDevice.Viewport.Width - 155, 5, "1/100");
             mMineralsSprite = new(mGraphicsDevice.Viewport.Width - 105, 5, "minerals");
             mMineralsText = new(mGraphicsDevice.Viewport.Width - 55, 5, "1/100");
-            mInfoButton = new(5, mGraphicsDevice.Viewport.Height - 80, "info") { Scale = 0.5f };
+            mInfoButton = new(5, mGraphicsDevice.Viewport.Height - 80, "info") 
+            { Scale = 0.5f, Color = Color.OrangeRed };
             mSelectObjectText = new(50, mGraphicsDevice.Viewport.Height - 72, "") { Color = Globals.MormalColor };
             mDeselectButton = new(5, mGraphicsDevice.Viewport.Height - 35, "deSelect")
-            { Scale = 0.5f, Disabled = true, OnClickAction = Deselect };
+            { Scale = 0.5f, Disabled = true, OnClickAction = Deselect, Color = Color.OrangeRed };
             mTrackButton = new(60, mGraphicsDevice.Viewport.Height - 35, "target")
-            { Scale = 0.5f, Disabled = true, OnClickAction = Track };
+            { Scale = 0.5f, Disabled = true, OnClickAction = Track, Color = Color.OrangeRed };
             mStopButton = new(115, mGraphicsDevice.Viewport.Height - 35, "stop")
-            { Scale = 0.5f, Disabled = true, OnClickAction = Stop };
+            { Scale = 0.5f, Disabled = true, OnClickAction = Stop, Color=Color.OrangeRed};
         }
 
         public override void Destroy()
@@ -98,7 +96,7 @@ namespace Galaxy_Explovive.Menue.Layers
             mDeselectButton.Draw(mTextureManager);
             mTrackButton.Draw(mTextureManager);
             mStopButton.Draw(mTextureManager);
-            GameGlobals.DebugSystem.ShowRenderInfo(mTextureManager, 
+            GameGlobals.DebugSystem.ShowRenderInfo(mTextureManager,
                 GameGlobals.Camera.Zoom, GameGlobals.WorldMousePosition);
             spriteBatch.End();
         }

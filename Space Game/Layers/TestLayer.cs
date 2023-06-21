@@ -11,7 +11,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Galaxy_Explovive.Menue.Layers
+namespace Galaxy_Explovive.Layers
 {
     internal class TestLayer : Layer
     {
@@ -22,13 +22,13 @@ namespace Galaxy_Explovive.Menue.Layers
         public TestLayer(Game1 game) : base(game)
         {
             TopFrame = new(mGraphicsDevice.Viewport.Width / 2, 15, mGraphicsDevice.Viewport.Width, 30)
-            { 
+            {
                 Color = Color.DarkOliveGreen,
                 Alpha = 0.5f
             };
             GameTime = new(2, 2, "Time");
             MenuButton = new(mGraphicsDevice.Viewport.Width - 60, mGraphicsDevice.Viewport.Height - 40, "menueButton")
-            { Color = Color.DarkOliveGreen, Scale = 0.5f};
+            { Color = Color.DarkOliveGreen, Scale = 0.5f };
         }
 
         public override void Destroy()

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.PositionManagement;
 using Galaxy_Explovive.Game.GameLogik;
+using Galaxy_Explovive.Game;
 
 namespace Galaxy_Explovive.Core.Debug
 {
@@ -61,13 +62,13 @@ namespace Galaxy_Explovive.Core.Debug
             List<string> lst = new List<string>
             {
                 $"Level {mDebugLevel}",
-                $"{Math.Round(mCurrentFramesPerSecond)}FPS {mFrameDuration}ms",
-                $"Zoom{cameraZoom} {cameraPosition}",
+                $"{Math.Round(mCurrentFramesPerSecond)}FPS, {mFrameDuration}ms",
+                $"Zoom{cameraZoom}, Pos{cameraPosition.ToPoint()}",
                 $"Drawn Objects {DrawnObjectCount}"
             };
             foreach (string s in lst)
             {
-                textureManager.DrawString("text", position + new Vector2(0, i * 20), s, 1, Color.White);
+                textureManager.DrawString("smal", position + new Vector2(0, i * 20), s, 1, Color.White);
                 i += 1;
             }
         }

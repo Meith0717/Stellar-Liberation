@@ -15,15 +15,11 @@ namespace Galaxy_Explovive.Game.GameObjects
     {
 
         // Some Variables
-        [JsonProperty] private double mAddAllois;
-        [JsonProperty] private double mAddEnergy;
-        [JsonProperty] private double mAddCrystals;
+        [JsonIgnore] private float mShadowRotation;
         [JsonProperty] private Vector2 mCenterPosition;
         [JsonProperty] private PlanetType mPlanetType;
-        [JsonProperty] public float Angle { get; private set; }
-
+        [JsonProperty] private float Angle;
         [JsonProperty] public float mRadius;
-        [JsonProperty] private float mShadowRotation;
 
         public Planet(int orbitNr, Vector2 CenterPosition, Color StarColor, int StarSize) : base()
         {

@@ -1,4 +1,4 @@
-﻿using Galaxy_Explovive.Core.Debug;
+﻿ using Galaxy_Explovive.Core.Debug;
 using Galaxy_Explovive.Core.Effects;
 using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.Map;
@@ -22,18 +22,18 @@ namespace Galaxy_Explovive.Game
 {
     public static class GameGlobals
     {
-        public static float GameTime;
-        public static Camera2d Camera;
-        public static SpatialHashing<GameObject> SpatialHashing;
-        public static FrustumCuller FrustumCuller;
-        public static DebugSystem DebugSystem;
-        public static SoundManager SoundManager;
-        public static TextureManager TextureManager;
-        public static GraphicsDevice GraphicsDevice;
-        public static MyUiMessageManager MessageManager;
-        public static Vector2 WorldMousePosition;
-        public static Vector2 ViewMousePosition;
-        public static InteractiveObject SelectObject;
+        public static float GameTime { get; set; }
+        public static Camera2d Camera { get; set; }
+        public static SpatialHashing<GameObject> SpatialHashing { get; set; }
+        public static FrustumCuller FrustumCuller { get; set; }
+        public static DebugSystem DebugSystem { get; set; }
+        public static SoundManager SoundManager { get; set; }
+        public static TextureManager TextureManager { get; set; }
+        public static GraphicsDevice GraphicsDevice { get; set; }
+        public static MyUiMessageManager MessageManager { get; set; }
+        public static Vector2 WorldMousePosition { get; set; }
+        public static Vector2 ViewMousePosition { get; set; }
+        public static InteractiveObject SelectObject { get; set; }
     }
 
     [Serializable]

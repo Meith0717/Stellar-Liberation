@@ -14,7 +14,7 @@ namespace Galaxy_Explovive.Core.UserInterface
         private string mTexture;
         public bool Disabled = false;
         public bool Hide = false;
-        public Color Color = Globals.MormalColor;
+        public Color Color = Color.White;
         public Color HoverColor = Globals.HoverColor;
         public Action OnClickAction = null;
         public float Scale = 1f;
@@ -50,7 +50,7 @@ namespace Galaxy_Explovive.Core.UserInterface
         {
             if (Hide) return;
             textureManager.Draw(mTexture, new(mX, mY), Vector2.Zero, Scale, 0, 1,
-               Disabled ? Color.DarkGray : (mHover ? HoverColor : Color)) ;
+               Disabled ? Color.Transparent : (mHover ? HoverColor : Color)) ;
         }
 
 

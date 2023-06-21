@@ -14,6 +14,19 @@ namespace Galaxy_Explovive.Core.Utility
             return (maxInt == 0) ? 0 : Random.Next(maxInt);
         }
 
+        public static Vector2 GetPointOnBorder(Rectangle rectangle, float rad)
+        {
+            float halfWidth = rectangle.Width / 2f;
+            float halfHeight = rectangle.Height / 2f;
+            float cosAngle = (float)Math.Cos(rad);
+            float sinAngle = (float)Math.Sin(rad);
+            float x = rectangle.Center.X + cosAngle * halfWidth;
+            float y = rectangle.Center.Y + sinAngle * halfHeight;
+            x = MathHelper.Clamp(x, rectangle.Left, rectangle.Right);
+            y = MathHelper.Clamp(y, rectangle.Top, rectangle.Bottom);
+            return new Vector2(x, y);
+        }
+
         public static T GetRandomElement<T>(List<T> lst)
         {
             return lst[Random.Next(lst.Count)];

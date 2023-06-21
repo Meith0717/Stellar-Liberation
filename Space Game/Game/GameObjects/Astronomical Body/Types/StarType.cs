@@ -4,12 +4,13 @@ namespace Galaxy_Explovive.Core.GameObjects.Types
 {
     public class StarType
     {
+        public string Name { get; set; }
         public float Size { get; private set; }
         public string Texture { get; private set; }
         public Color StarColor { get; private set; }
         public Color LightColor { get; private set; }
 
-        public StarType(float size, string texture, Color starColor)
+        public StarType(string name, float size, string texture, Color starColor)
         {
             Size = size;
             Texture = texture;
@@ -21,5 +22,7 @@ namespace Galaxy_Explovive.Core.GameObjects.Types
                 0
                 );
         }
+
+        public override string ToString() { return Name; }
     }
 }

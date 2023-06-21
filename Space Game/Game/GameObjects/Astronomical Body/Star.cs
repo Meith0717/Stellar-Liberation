@@ -57,5 +57,10 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             if (mType == StarTypes.BH) return;
             textureManager.Draw("StarLightAlpha", Position, TextureOffset, TextureScale * 1.3f, 0, 2, mLightColor);
         }
+
+        public string GetTypeName()
+        {
+            return $"Type {mType}";
+        }
     }
 }

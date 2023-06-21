@@ -8,8 +8,8 @@ namespace Galaxy_Explovive.Core.Rendering
 {
     public class FrustumCuller
     {
-        private RectangleF mWorldFrustum;
-        private RectangleF mViewFrustum;
+        public RectangleF mWorldFrustum { get; private set; }
+        public RectangleF mViewFrustum { get; private set; }
 
         public void Update(GraphicsDevice graphicsDevice, Func<Vector2, Vector2> ViewToWorld)
         {

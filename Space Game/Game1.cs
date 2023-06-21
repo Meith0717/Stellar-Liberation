@@ -7,7 +7,7 @@ using Galaxy_Explovive.Core.SoundManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using System;
 using Galaxy_Explovive.Core.Persistance;
-using Galaxy_Explovive.Menue.Layers;
+using Galaxy_Explovive.Layers;
 
 namespace Galaxy_Explovive
 {

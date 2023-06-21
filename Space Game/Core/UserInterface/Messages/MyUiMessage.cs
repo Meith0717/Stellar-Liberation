@@ -53,7 +53,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Messages
         public void Draw()
         {
             mTextureManager.SpriteBatch.Draw(mTextureManager.GetTexture("Layer"), mRect, Color);
-            mTextureManager.DrawString(Font, new(mX, mY), mMessage, 1, Color.Yellow);
+            mTextureManager.DrawString(Font, new(mX, mY), mMessage, 1, Color.OrangeRed);
         }
 
 

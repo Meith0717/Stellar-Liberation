@@ -6,7 +6,6 @@ using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
 using System;
 using System.Collections.Generic;
-using Galaxy_Explovive.Core.RayTracing;
 using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Core.TextureManagement;
 
@@ -17,21 +16,11 @@ namespace Galaxy_Explovive.Game.GameObjects
     {
         const int AlphaModifier = 15;
 
-        [JsonProperty] public StarState mState;
         [JsonProperty] public Star mStar;
         [JsonProperty] public List<Planet> mPlanets;
         [JsonProperty] private readonly float mRadiusLimit;
-
         [JsonProperty] private bool mIsSystemShown;
         [JsonProperty] private int mPlanetAlpha = 255;
-        [JsonIgnore] private RayTracer mRayTracing;
-
-        public enum StarState
-        {
-            Uncovered,
-            Discovered,
-            Explored
-        }
 
         public PlanetSystem(Vector2 position) : base()
         {
@@ -45,16 +34,12 @@ namespace Galaxy_Explovive.Game.GameObjects
                 mPlanets.Add(new Planet(orbitNr, position, mStar.mLightColor, (int)mRadiusLimit));    
             } 
             BoundedBox = new CircleF(position, mRadiusLimit + (orbitNr * 400));
-            mRayTracing = new(mStar.mType.LightColor, GameGlobals.SpatialHashing);
         }
 
         public override void UpdateLogik(GameTime gameTime, InputState inputState)
         {
             // Checkst if System is on Screen
             if (!GameGlobals.FrustumCuller.IsGameObjectOnWorldView(this)) { return; }
-
-            // Get Rays
-            mRayTracing.GetRays(this, GameGlobals.SpatialHashing, GameGlobals.Camera.Zoom);
 
             // Show or hide Systems
             ShowSystem(); HideSystem();
@@ -75,7 +60,6 @@ namespace Galaxy_Explovive.Game.GameObjects
             
             // Draw Stuff
             mStar.Draw(textureManager);
-            mRayTracing.Draw(textureManager);
             GameGlobals.DebugSystem.DrawBoundBox(textureManager, BoundedBox);
 
             // Draw based on Cam. Positions 
