@@ -1,4 +1,5 @@
-﻿using Galaxy_Explovive.Core.GameObject;
+﻿using Galaxy_Explovive.Core;
+using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TargetMovementController;
 using Galaxy_Explovive.Core.TextureManagement;
@@ -29,11 +30,11 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
 
         public SpaceShip() : base() { mMovementController = new(this); }
 
-        public override void SelectActions(InputState inputState)
+        public override void SelectActions(InputState inputState, Engine engine)
         {
-            GetTarget(inputState);
+            GetTarget(inputState, engine);
             if (IsPressed && TargetObj is not null) { Track = true; }
-            if (GameGlobals.Camera.MovedByUser || TargetObj == null)
+            if (GameGlobals.Camera.MovedByMouse || TargetObj == null)
             {
                 Track = false;
             }
@@ -46,17 +47,15 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             mSelect = true;
         }
 
-        public override void UpdateLogik(GameTime gameTime, InputState inputState)
+        public override void UpdateLogik(GameTime gameTime, InputState inputState, Engine engine)
         {
-            base.UpdateLogik(gameTime, inputState);
+            base.UpdateLogik(gameTime, inputState, engine);
             Track = Track && (GameGlobals.SelectObject == this);
-            if (Track) { GameGlobals.Camera.TargetPosition = Position; }
+            if (Track) { engine.mCamera2d.SetPosition(Position); }
             mSelect = mSelect && (GameGlobals.SelectObject == this);
             CrossHair.Update(null, 0, Color.Wheat, false);
-            GameGlobals.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
-            UpdateNavigation(gameTime, inputState);
+            UpdateNavigation(gameTime);
             WeaponManager.Update(gameTime);
-            GameGlobals.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
 
         public override void Draw(TextureManager textureManager)
@@ -70,7 +69,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
 
         // Input Stuff
         
-        private void UpdateNavigation(GameTime gameTime, InputState inputState)
+        private void UpdateNavigation(GameTime gameTime)
         {
             if (TargetObj == null) { return; }
 
@@ -89,7 +88,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             mTravelTime = (Vector2.Distance(Position, TargetObj.Position) /  mVelocity) / 1000;
         }
 
-        private void GetTarget(InputState inputState)
+        private void GetTarget(InputState inputState, Engine engine)
         {
             if (TargetObj != null)
             {
@@ -110,7 +109,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             bool b = inputState.mMouseActionType == MouseActionType.LeftClick;
             if (GameGlobals.Camera.Zoom < 0.2f && b)
             {
-                GameGlobals.Camera.TargetPosition = target.Position;
+                engine.mCamera2d.SetPosition(Position);
                 GameGlobals.Camera.SetZoom(0.25f);
                 return;
             }

@@ -1,4 +1,5 @@
-﻿using Galaxy_Explovive.Core.GameObject;
+﻿using Galaxy_Explovive.Core;
+using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using Microsoft.Xna.Framework;
@@ -8,7 +9,7 @@ using System;
 namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
 {
     [Serializable]
-    public abstract class Spacecraft : InteractiveObject
+    public abstract class Spacecraft : SelectableObject
     {
         [JsonIgnore] public string SelectTexture { get; set; }
         [JsonIgnore] public string NormalTexture { get; set; }
@@ -20,9 +21,9 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
 
         protected Spacecraft() : base() { }
 
-        public override void UpdateLogik(GameTime gameTime, InputState inputState)
+        public override void UpdateLogik(GameTime gameTime, InputState inputState, Engine engine)
         {
-            base.UpdateLogik(gameTime, inputState);
+            base.UpdateLogik(gameTime, inputState, engine);
             RegenerateShield();
         }
 
@@ -62,10 +63,10 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft
             float hull = (float)mHull / 100;
             float shield = (float)mShield / 100;
             textureManager.DrawLine(startPos, startPos + endPos * new Vector2(shield, 1), Color.CornflowerBlue, 8, 1);
-            textureManager.DrawLine(startPos, startPos + endPos, Color.DarkRed, 8, 0.9f);
+            textureManager.DrawLine(startPos, startPos + endPos, Color.DarkRed, 8, 0);
             startPos.Y += 10;
             textureManager.DrawLine(startPos, startPos + endPos * new Vector2(hull, 1), Color.GreenYellow, 8, 1);
-            textureManager.DrawLine(startPos, startPos + endPos, Color.DarkRed, 8, 0.9f);
+            textureManager.DrawLine(startPos, startPos + endPos, Color.DarkRed, 8, 0);
         }
 
     }

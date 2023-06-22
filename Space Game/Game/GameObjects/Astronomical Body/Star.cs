@@ -31,9 +31,6 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             TextureDepth = 1;
             TextureColor = Color.White;
             mLightColor = mType.StarColor;
-
-            // Add To Spatial Hashing
-            GameGlobals.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
 
         public override void SelectActions(InputState inputState)

@@ -1,12 +1,10 @@
-﻿ using Galaxy_Explovive.Core.Debug;
+﻿using Galaxy_Explovive.Core.Debug;
 using Galaxy_Explovive.Core.Effects;
 using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.Map;
 using Galaxy_Explovive.Core.PositionManagement;
-using Galaxy_Explovive.Core.Rendering;
 using Galaxy_Explovive.Core.UserInterface.Messages;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
-using Galaxy_Explovive.Game.GameObjects;
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
@@ -17,25 +15,11 @@ using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core;
 using Galaxy_Explovive.Core.Utility;
 using Newtonsoft.Json;
+using Galaxy_Explovive.Core.Rendering.Renderer;
+using Galaxy_Explovive.Core.GameObjects;
 
 namespace Galaxy_Explovive.Game
 {
-    public static class GameGlobals
-    {
-        public static float GameTime { get; set; }
-        public static Camera2d Camera { get; set; }
-        public static SpatialHashing<GameObject> SpatialHashing { get; set; }
-        public static FrustumCuller FrustumCuller { get; set; }
-        public static DebugSystem DebugSystem { get; set; }
-        public static SoundManager SoundManager { get; set; }
-        public static TextureManager TextureManager { get; set; }
-        public static GraphicsDevice GraphicsDevice { get; set; }
-        public static MyUiMessageManager MessageManager { get; set; }
-        public static Vector2 WorldMousePosition { get; set; }
-        public static Vector2 ViewMousePosition { get; set; }
-        public static InteractiveObject SelectObject { get; set; }
-    }
-
     [Serializable]
     public class GameState
     {
@@ -75,7 +59,6 @@ namespace Galaxy_Explovive.Game
             GameGlobals.ViewMousePosition = inputState.mMousePosition.ToVector2();
             GameGlobals.WorldMousePosition = GameGlobals.Camera.ViewToWorld(GameGlobals.ViewMousePosition);
             GameGlobals.FrustumCuller.Update(GameGlobals.GraphicsDevice, GameGlobals.Camera.ViewToWorld);
-            GameGlobals.TextureManager.Update(GameGlobals.Camera.Zoom);
             GameGlobals.GameTime = GameTime += gameTime.ElapsedGameTime.Milliseconds / 1000f;
 
             foreach (Cargo c in mShips) { c.UpdateLogik(gameTime, inputState); }
@@ -98,11 +81,11 @@ namespace Galaxy_Explovive.Game
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, 
-                transformMatrix: GameGlobals.Camera.GetViewTransformationMatrix(), 
+                transformMatrix: GameGlobals.Camera.GetViewTransformation(), 
                 samplerState: SamplerState.PointClamp);
 
             mMap.Draw(GameGlobals.TextureManager);
-             foreach (Cargo c in mShips)
+            foreach (Cargo c in mShips)
             {
                 c.Draw(GameGlobals.TextureManager);
             }

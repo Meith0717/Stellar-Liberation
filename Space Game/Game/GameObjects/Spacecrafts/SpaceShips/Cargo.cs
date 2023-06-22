@@ -1,4 +1,5 @@
-﻿using Galaxy_Explovive.Core.GameObject;
+﻿using Galaxy_Explovive.Core;
+using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using Microsoft.Xna.Framework;
@@ -27,9 +28,14 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             
         }
 
-        public override void UpdateLogik(GameTime gameTime, InputState inputState)
+        public override void UpdateLogik(GameTime gameTime, InputState inputState, Engine engine)
         {
-            base.UpdateLogik(gameTime, inputState);
+            base.UpdateLogik(gameTime, inputState, engine);
+        }
+
+        public override void SelectActions(InputState inputState, Engine engine)
+        {
+            base.SelectActions(inputState, engine);
         }
 
         public override void Draw(TextureManager textureManager)

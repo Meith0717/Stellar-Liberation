@@ -117,10 +117,10 @@ namespace Galaxy_Explovive.Core.TargetMovementController
             return angle + correction;
         }
 
-        public static InteractiveObject? SelectTargetObject(SpaceShip spaceShip,
+        public static SelectableObject? SelectTargetObject(SpaceShip spaceShip,
             SpatialHashing<GameObject.GameObject> spatialHashing, Vector2 worldMousePosition)
         {
-            var gameObject = ObjectLocator.GetObjectsInRadius<InteractiveObject>(spatialHashing, worldMousePosition, 1500);
+            var gameObject = ObjectLocator.GetObjectsInRadius<SelectableObject>(spatialHashing, worldMousePosition, 1500);
             gameObject.Remove(spaceShip);
             if (gameObject.Count == 0) { return null; }
             if (!gameObject[0].IsHover) { return null; }
