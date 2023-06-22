@@ -1,8 +1,10 @@
 using Microsoft.Xna.Framework;
 using Galaxy_Explovive.Core.InputManagement;
 using System;
+using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json;
 
-namespace Galaxy_Explovive.Core.GameObjects
+namespace Galaxy_Explovive.Game.GameObjects
 {
     public class Camera2d
     {
@@ -11,16 +13,16 @@ namespace Galaxy_Explovive.Core.GameObjects
         const float mMimZoom = 1.2f;
 
         public float Zoom { get; private set; } = 1f;
-        public Vector2 Position { get; set; }
+        public Vector2 Position { get; private set; }
+        public Vector2 TargetPosition { private get; set; }
         public Vector2 Movement { get; private set; }
-        public bool MovedByMouse { get; private set; } = false;
-
-        private Vector2 mTargetPosition;
+        public bool MovedByUser { get; private set; } = false;
         private float mTargetZoom;
 
         // matrix variables
         private Matrix mTransform = Matrix.Identity;
         private bool mViewTransformationMatrixChanged = true;
+        private GraphicsDevice mGraphicsDevice;
 
         // animation stuff
         private bool mZoomAnimation;
@@ -30,17 +32,20 @@ namespace Galaxy_Explovive.Core.GameObjects
         private int mAnimationIndex;
         private Vector2 mPositionBeforeAnimation;
 
-        public Camera2d()
+        public Camera2d(GraphicsDevice graphicsDevice)
         {
             mZoomAnimation = false;
-            Position = new Vector2(0, 0);
+            mGraphicsDevice = graphicsDevice;
+            int width = mGraphicsDevice.Viewport.Width;
+            int height = mGraphicsDevice.Viewport.Height;
+            Position = new Vector2(width / 2f, height / 2f);
         }
 
         private void MovingAnimation(GameTime gameTime, int spongy)
         {
-            Position = Vector2.Distance(Position, mTargetPosition) < 0.1 ? mTargetPosition : Position;
-            if (Position == mTargetPosition) { return; }
-            Vector2 adjustmentVector = Vector2.Subtract(mTargetPosition, Position);
+            Position = (Vector2.Distance(Position, TargetPosition) < 0.1) ? TargetPosition : Position;
+            if (Position == TargetPosition) { return; }
+            Vector2 adjustmentVector = Vector2.Subtract(TargetPosition, Position);
             Movement = adjustmentVector / spongy;
             Position += Movement;
         }
@@ -56,7 +61,7 @@ namespace Galaxy_Explovive.Core.GameObjects
         private void MoveCameraByMouse(InputState inputState)
         {
             Vector2 currentMousePosition = inputState.mMousePosition.ToVector2();
-            MovedByMouse = false;
+            MovedByUser = false;
             Movement = Vector2.Zero;
 
             if (inputState.mMouseActionType != MouseActionType.LeftClickHold)
@@ -68,8 +73,8 @@ namespace Galaxy_Explovive.Core.GameObjects
             if (mLastMousePosition != currentMousePosition)
             {
                 Movement = ViewToWorld(mLastMousePosition) - ViewToWorld(currentMousePosition);
-                mTargetPosition += Movement;
-                MovedByMouse = true;
+                TargetPosition += Movement;
+                MovedByUser = true;
                 mZoomAnimation = false;
                 mLastMousePosition = currentMousePosition;
             }
@@ -95,11 +100,6 @@ namespace Galaxy_Explovive.Core.GameObjects
             mZoomAnimation = true;
         }
 
-        public void SetPosition(Vector2 position)
-        {
-            mTargetPosition = position;
-        }
-
         // ReSharper disable once UnusedMember.Global
         public Vector2 WorldToView(Vector2 vector)
         {
@@ -111,13 +111,15 @@ namespace Galaxy_Explovive.Core.GameObjects
             return Vector2.Transform(vector, Matrix.Invert(mTransform));
         }
 
-        public Matrix GetViewTransformation(int screenWidth, int screenHeight)
+        public Matrix GetViewTransformationMatrix()
         {
             if (mViewTransformationMatrixChanged)
             {
+                int width = mGraphicsDevice.Viewport.Width;
+                int height = mGraphicsDevice.Viewport.Height;
                 mTransform = Matrix.CreateTranslation(new Vector3(-Position.X, -Position.Y, 0))
                              * Matrix.CreateScale(Zoom, Zoom, 1)
-                             * Matrix.CreateTranslation(new Vector3(screenWidth / 2f, screenHeight / 2f, 0));
+                             * Matrix.CreateTranslation(new Vector3(width / 2f, height / 2f, 0));
                 mViewTransformationMatrixChanged = false;
             }
             return mTransform;
@@ -127,7 +129,7 @@ namespace Galaxy_Explovive.Core.GameObjects
         {
             AdjustZoom(gameTime, inputState);
             MoveCameraByMouse(inputState);
-            MovingAnimation(gameTime, 2);
+            MovingAnimation(gameTime ,2);
             ZoomAnimation();
             // play animation if there is one
             if (mAnimationX != null)

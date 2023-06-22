@@ -1,5 +1,4 @@
-﻿using Galaxy_Explovive.Core;
-using Galaxy_Explovive.Core.GameObject;
+﻿using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
@@ -8,12 +7,12 @@ using System;
 namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
 {
     [Serializable]
-    public abstract class AstronomicalBody : SelectableObject
+    public abstract class AstronomicalBody : InteractiveObject
     {
         [JsonIgnore] private bool mTrack = false;
         protected AstronomicalBody() : base() {}
 
-        public override void SelectActions(InputState inputState, Engine engine)
+        public override void SelectActions(InputState inputState)
         {
             if (IsPressed)
             {
@@ -26,17 +25,17 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
                     GameGlobals.Camera.SetZoom(0.25f);
                 }
             }
-            engine.mCamera2d.SetPosition(Position);
+            GameGlobals.Camera.TargetPosition = Position;
 
-            if (GameGlobals.Camera.MovedByMouse || (inputState.mMouseActionType == MouseActionType.LeftClick && !IsHover))
+            if (GameGlobals.Camera.MovedByUser || (inputState.mMouseActionType == MouseActionType.LeftClick && !IsHover))
             {
                 GameGlobals.SelectObject = null;
             }
         }
 
-        public override void UpdateLogik(GameTime gameTime, InputState inputState, Engine engine)
+        public override void UpdateLogik(GameTime gameTime, InputState inputState)
         {
-            base.UpdateLogik(gameTime, inputState, engine);
+            base.UpdateLogik(gameTime, inputState);
         }
     }
 }

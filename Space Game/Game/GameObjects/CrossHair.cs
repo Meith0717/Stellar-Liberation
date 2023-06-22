@@ -27,7 +27,7 @@ namespace Galaxy_Explovive.Core.GameObject
             TextureHeight = 64;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
             TextureScale = scale;
-            TextureDepth = null;
+            TextureDepth = GameGlobals.TextureManager.MaxLayerDepth;
             TextureColor = Color.White;
         }
 

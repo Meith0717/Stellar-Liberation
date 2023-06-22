@@ -7,7 +7,6 @@ using System;
 using Galaxy_Explovive.Core.GameObjects.Types;
 using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Core.TextureManagement;
-using Galaxy_Explovive.Core;
 
 namespace Galaxy_Explovive.Game.GameObjects
 {
@@ -44,21 +43,37 @@ namespace Galaxy_Explovive.Game.GameObjects
             mCenterPosition = CenterPosition;
         }
 
-        public override void SelectActions(InputState inputState, Engine engine)
+        public override void SelectActions(InputState inputState)
         {
-            base.SelectActions(inputState, engine);
+            base.SelectActions(inputState);
         }
 
-        public override void UpdateLogik(GameTime gameTime, InputState inputState, Engine engine)
+        public override void UpdateLogik(GameTime gameTime, InputState inputState)
         {
             // Other Stuff
-            base.UpdateLogik(gameTime, inputState, engine);
+            base.UpdateLogik(gameTime, inputState);
+
+            // Remove From Spatial Hashing
+            RemoveFromSpatialHashing();
 
             float velocity = MathF.Sqrt(1/(mRadius*10));
             float angleUpdate = Angle + GameGlobals.GameTime * velocity;
             Position = MyUtility.GetVector2(mRadius, Angle + angleUpdate) + mCenterPosition;
             Rotation += 0.004f; 
             mShadowRotation = MyUtility.GetAngle(mCenterPosition, Position);
+
+            // Add To Spatial Hashing
+            AddToSpatialHashing();
+        }
+
+        public void RemoveFromSpatialHashing()
+        {
+            GameGlobals.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
+        }
+
+        private void AddToSpatialHashing()
+        {
+            GameGlobals.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
 
         public void Draw(int alpha, TextureManager textureManager)

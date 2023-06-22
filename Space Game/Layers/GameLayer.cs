@@ -160,13 +160,13 @@ namespace Galaxy_Explovive.Layers
             switch (ship.TargetObj)
             {
                 case null:
-                    GameGlobals.Camera.mTargetPosition = ship.Position;
+                    GameGlobals.Camera.TargetPosition = ship.Position;
                     break;
                 case not null:
                     if (ship.Track)
                     {
                         ship.Track = false;
-                        GameGlobals.Camera.mTargetPosition = ship.TargetObj.Position;
+                        GameGlobals.Camera.TargetPosition = ship.TargetObj.Position;
                         break;
                     }
                     ship.Track = true;
