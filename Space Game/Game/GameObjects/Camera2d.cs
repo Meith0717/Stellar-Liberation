@@ -22,7 +22,6 @@ namespace Galaxy_Explovive.Game.GameObjects
         // matrix variables
         private Matrix mTransform = Matrix.Identity;
         private bool mViewTransformationMatrixChanged = true;
-        private GraphicsDevice mGraphicsDevice;
 
         // animation stuff
         private bool mZoomAnimation;
@@ -32,13 +31,10 @@ namespace Galaxy_Explovive.Game.GameObjects
         private int mAnimationIndex;
         private Vector2 mPositionBeforeAnimation;
 
-        public Camera2d(GraphicsDevice graphicsDevice)
+        public Camera2d()
         {
             mZoomAnimation = false;
-            mGraphicsDevice = graphicsDevice;
-            int width = mGraphicsDevice.Viewport.Width;
-            int height = mGraphicsDevice.Viewport.Height;
-            Position = new Vector2(width / 2f, height / 2f);
+            Position = Vector2.Zero;
         }
 
         private void MovingAnimation(GameTime gameTime, int spongy)
@@ -111,15 +107,13 @@ namespace Galaxy_Explovive.Game.GameObjects
             return Vector2.Transform(vector, Matrix.Invert(mTransform));
         }
 
-        public Matrix GetViewTransformationMatrix()
+        public Matrix GetViewTransformationMatrix(int screenWidth, int screenHeight)
         {
             if (mViewTransformationMatrixChanged)
             {
-                int width = mGraphicsDevice.Viewport.Width;
-                int height = mGraphicsDevice.Viewport.Height;
                 mTransform = Matrix.CreateTranslation(new Vector3(-Position.X, -Position.Y, 0))
                              * Matrix.CreateScale(Zoom, Zoom, 1)
-                             * Matrix.CreateTranslation(new Vector3(width / 2f, height / 2f, 0));
+                             * Matrix.CreateTranslation(new Vector3(screenWidth / 2f, screenHeight / 2f, 0));
                 mViewTransformationMatrixChanged = false;
             }
             return mTransform;

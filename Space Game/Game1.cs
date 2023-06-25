@@ -50,7 +50,7 @@ namespace Galaxy_Explovive
         {
             mGraphicsManager.ApplyChanges();
             base.Initialize();
-            mLayerManager.AddLayer(new GameLayer(this));
+            mLayerManager.AddLayer(new TestLayer(this));
             Mouse.SetCursor(MouseCursor.FromTexture2D(Content.Load<Texture2D>("cursor"), 0, 0));
         }
 

@@ -7,6 +7,7 @@ using System;
 using Galaxy_Explovive.Core.GameObjects.Types;
 using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Core.TextureManagement;
+using Galaxy_Explovive.Core;
 
 namespace Galaxy_Explovive.Game.GameObjects
 {
@@ -43,50 +44,34 @@ namespace Galaxy_Explovive.Game.GameObjects
             mCenterPosition = CenterPosition;
         }
 
-        public override void SelectActions(InputState inputState)
+        public override void SelectActions(InputState inputState, GameEngine engine)
         {
-            base.SelectActions(inputState);
+            base.SelectActions(inputState, engine);
         }
 
-        public override void UpdateLogik(GameTime gameTime, InputState inputState)
+        public override void UpdateLogik(GameTime gameTime, InputState inputState, GameEngine engine)
         {
             // Other Stuff
-            base.UpdateLogik(gameTime, inputState);
-
-            // Remove From Spatial Hashing
-            RemoveFromSpatialHashing();
+            base.UpdateLogik(gameTime, inputState, engine);
 
             float velocity = MathF.Sqrt(1/(mRadius*10));
-            float angleUpdate = Angle + GameGlobals.GameTime * velocity;
+            float angleUpdate = Angle + engine.GameTime * velocity;
             Position = MyUtility.GetVector2(mRadius, Angle + angleUpdate) + mCenterPosition;
             Rotation += 0.004f; 
             mShadowRotation = MyUtility.GetAngle(mCenterPosition, Position);
-
-            // Add To Spatial Hashing
-            AddToSpatialHashing();
         }
 
-        public void RemoveFromSpatialHashing()
+        public void Draw(int alpha, TextureManager textureManager, GameEngine engine)
         {
-            GameGlobals.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
-        }
-
-        private void AddToSpatialHashing()
-        {
-            GameGlobals.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
-        }
-
-        public void Draw(int alpha, TextureManager textureManager)
-        {
-            base.Draw(textureManager);
+            base.Draw(textureManager, engine);
             TextureColor = new Color(alpha, alpha, alpha, alpha);
             textureManager.Draw("planetShadow", Position, TextureOffset, TextureScale, mShadowRotation, TextureDepth + 1, TextureColor);
             textureManager.DrawGameObject(this, IsHover);
-            GameGlobals.DebugSystem.DrawBoundBox(textureManager, BoundedBox);
+            engine.DebugSystem.DrawBoundBox(textureManager, BoundedBox);
         }
 
         [Obsolete("This method is deprecated.")]
-        public override void Draw(TextureManager textureManager)
+        public override void Draw(TextureManager textureManager, GameEngine engine)
         {
             throw new Exception("Use The Other Draw Method please :)");
         }

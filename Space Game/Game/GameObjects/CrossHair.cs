@@ -27,7 +27,7 @@ namespace Galaxy_Explovive.Core.GameObject
             TextureHeight = 64;
             TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
             TextureScale = scale;
-            TextureDepth = GameGlobals.TextureManager.MaxLayerDepth;
+            TextureDepth = 1000;
             TextureColor = Color.White;
         }
 
@@ -41,11 +41,11 @@ namespace Galaxy_Explovive.Core.GameObject
             mHover = isHover;
         }
 
-        public override void UpdateLogik(GameTime gameTime, InputState inputState)
+        public override void UpdateLogik(GameTime gameTime, InputState inputState, GameEngine engine)
         {
             throw new System.NotImplementedException();
         }
-        public override void Draw(TextureManager textureManager)
+        public override void Draw(TextureManager textureManager, GameEngine engine)
         {
             if (!mDraw) { return; }
             textureManager.DrawGameObject(this, mHover);

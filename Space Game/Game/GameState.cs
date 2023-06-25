@@ -20,22 +20,6 @@ using Newtonsoft.Json;
 
 namespace Galaxy_Explovive.Game
 {
-    public static class GameGlobals
-    {
-        public static float GameTime { get; set; }
-        public static Camera2d Camera { get; set; }
-        public static SpatialHashing<GameObject> SpatialHashing { get; set; }
-        public static FrustumCuller FrustumCuller { get; set; }
-        public static DebugSystem DebugSystem { get; set; }
-        public static SoundManager SoundManager { get; set; }
-        public static TextureManager TextureManager { get; set; }
-        public static GraphicsDevice GraphicsDevice { get; set; }
-        public static MyUiMessageManager MessageManager { get; set; }
-        public static Vector2 WorldMousePosition { get; set; }
-        public static Vector2 ViewMousePosition { get; set; }
-        public static InteractiveObject SelectObject { get; set; }
-    }
-
     [Serializable]
     public class GameState
     {
@@ -48,18 +32,12 @@ namespace Galaxy_Explovive.Game
         [JsonProperty] public readonly Map mMap;
 
         // Unsaved Classes
+        [JsonIgnore] private readonly GameEngine mGameEngine;
         [JsonIgnore] private readonly ParllaxManager mParllaxManager;
 
-        public GameState(GraphicsDevice graphicsDevice, TextureManager textureManager,
-            SoundManager soundManager)
+        public GameState(GameEngine gameEngine)
         {
-            GameGlobals.SpatialHashing = new(1000);
-            GameGlobals.FrustumCuller = new();
-            GameGlobals.Camera = new(graphicsDevice);
-            GameGlobals.DebugSystem = new();
-            GameGlobals.SoundManager = soundManager;
-            GameGlobals.TextureManager = textureManager;
-            GameGlobals.GraphicsDevice = graphicsDevice;
+            mGameEngine = gameEngine;
             mParllaxManager = new();
             mMap = new(3000000, 62500);
             mMap.Generate();
@@ -70,49 +48,35 @@ namespace Galaxy_Explovive.Game
             mShips.Add(new(MyUtility.GetRandomVector2(Vector2.Zero, 0)));
         }
 
-        public void Update(InputState inputState, GameTime gameTime) 
+        public void Update(InputState inputState, GameTime gameTime, GraphicsDevice graphicsDevice) 
         {
-            GameGlobals.ViewMousePosition = inputState.mMousePosition.ToVector2();
-            GameGlobals.WorldMousePosition = GameGlobals.Camera.ViewToWorld(GameGlobals.ViewMousePosition);
-            GameGlobals.FrustumCuller.Update(GameGlobals.GraphicsDevice, GameGlobals.Camera.ViewToWorld);
-            GameGlobals.TextureManager.Update(GameGlobals.Camera.Zoom);
-            GameGlobals.GameTime = GameTime += gameTime.ElapsedGameTime.Milliseconds / 1000f;
+            mGameEngine.UpdateEngine(gameTime, inputState, graphicsDevice);
 
-            foreach (Cargo c in mShips) { c.UpdateLogik(gameTime, inputState); }
+            mGameEngine.UpdateGameObjects(gameTime, inputState, mShips);
+            mGameEngine.UpdateGameObjects(gameTime, inputState, mMap.PlanetSystems);
+
             if (inputState.mActionList.Contains(ActionType.ToggleRayTracing))
             {
                 Globals.mRayTracing = !Globals.mRayTracing;
             }
-            if (GameGlobals.SelectObject != null) { GameGlobals.SelectObject.SelectActions(inputState); }
-            mMap.Update(gameTime, inputState);
-            mParllaxManager.Update(GameGlobals.Camera.Movement, GameGlobals.Camera.Zoom);
-            GameGlobals.DebugSystem.Update(gameTime, inputState);
-            GameGlobals.Camera.Update(gameTime, inputState);
+            mParllaxManager.Update(mGameEngine.Camera.Movement, mGameEngine.Camera.Zoom);
         }
-        public void Draw(SpriteBatch spriteBatch) 
-        {
-            GameGlobals.DebugSystem.UpdateFrameCounting();
 
+        public void Draw(SpriteBatch spriteBatch, TextureManager textureManager) 
+        {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            mParllaxManager.Draw(GameGlobals.TextureManager);
+            mParllaxManager.Draw(textureManager);
             spriteBatch.End();
 
-            spriteBatch.Begin(SpriteSortMode.FrontToBack, 
-                transformMatrix: GameGlobals.Camera.GetViewTransformationMatrix(), 
-                samplerState: SamplerState.PointClamp);
-
-            mMap.Draw(GameGlobals.TextureManager);
-             foreach (Cargo c in mShips)
-            {
-                c.Draw(GameGlobals.TextureManager);
-            }
-            GameGlobals.DebugSystem.TestSpatialHashing(GameGlobals.TextureManager, GameGlobals.SpatialHashing, GameGlobals.WorldMousePosition);
+            mGameEngine.BeginWorldDrawing(spriteBatch);
+            mGameEngine.DrawGameObjects(textureManager, mMap.PlanetSystems);
+            mGameEngine.DrawGameObjects(textureManager, mShips);
             spriteBatch.End();
         }
 
-        public void ApplyResolution()
+        public void ApplyResolution(GraphicsDevice graphicsDevice)
         {
-            mParllaxManager.OnResolutionChanged(GameGlobals.GraphicsDevice);
+            mParllaxManager.OnResolutionChanged(graphicsDevice);
         }
     }
 }

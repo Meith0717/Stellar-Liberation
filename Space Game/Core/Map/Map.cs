@@ -42,30 +42,11 @@ namespace Galaxy_Explovive.Core.Map
             System.Diagnostics.Debug.WriteLine(PlanetSystems.Count);
         }
 
-        public void Update(GameTime gameTime, InputState inputState)
-        {
-            if (PlanetSystems.Count == 0) { throw new System.Exception("No Map was Generated"); }
-            foreach (PlanetSystem planetSystem in PlanetSystems)
-            {
-                planetSystem.UpdateLogik(gameTime, inputState);
-            }
-        }
-
-        public void Draw(TextureManager textureManager)
-        {
-            DrawGrid(textureManager);
-            foreach (PlanetSystem planetSystem in PlanetSystems)
-            {
-                planetSystem.Draw(textureManager);
-            }
-
-        }
-
-        private void DrawGrid(TextureManager textureManager)
+        public void DrawGrid(TextureManager textureManager, GameEngine engine)
         {
             int ColorAplpha = 30;
             Color color = new(ColorAplpha, ColorAplpha, ColorAplpha);
-            var size = 0.5f / GameGlobals.Camera.Zoom;
+            var size = 0.5f / engine.Camera.Zoom;
             size = (size >= 60) ? 60 : size;
             for (int i = 0; i <= mWidth / SectorSize; i++)
             {
@@ -73,7 +54,7 @@ namespace Galaxy_Explovive.Core.Map
                 for (int j = 0; j <= mHeight / SectorSize; j++)
                 {
                     var y = j * SectorSize;
-                    if (!GameGlobals.FrustumCuller.IsVectorOnWorldView(new(x, y))) continue;
+                    if (!engine.FrustumCuller.VectorOnWorldView(new(x, y))) continue;
                     textureManager.DrawString("title", new(x + 25, y + 15), $"{i}, {j}", size, color);
                 }
             }

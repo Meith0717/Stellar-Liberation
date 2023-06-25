@@ -1,6 +1,8 @@
-﻿using Galaxy_Explovive.Core.InputManagement;
+﻿using Galaxy_Explovive.Core;
+using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
 using Galaxy_Explovive.Core.UserInterface;
+using Galaxy_Explovive.Game;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Serialization;
@@ -15,44 +17,32 @@ namespace Galaxy_Explovive.Layers
 {
     internal class TestLayer : Layer
     {
-        MyUiFrame TopFrame;
-        MyUiText GameTime;
-        MyUiSprite MenuButton;
+        private readonly GameState mGameState;
 
-        public TestLayer(Game1 game) : base(game)
+        public TestLayer(Game1 app) : base(app)
         {
-            TopFrame = new(mGraphicsDevice.Viewport.Width / 2, 15, mGraphicsDevice.Viewport.Width, 30)
-            {
-                Color = Color.DarkOliveGreen,
-                Alpha = 0.5f
-            };
-            GameTime = new(2, 2, "Time");
-            MenuButton = new(mGraphicsDevice.Viewport.Width - 60, mGraphicsDevice.Viewport.Height - 40, "menueButton")
-            { Color = Color.DarkOliveGreen, Scale = 0.5f };
+            GameEngine engine = new(mSoundManager, new(mTextureManager, mGraphicsDevice.Viewport.Width / 2, 50));
+            mGameState = new(engine);
         }
 
         public override void Destroy()
         {
+            throw new NotImplementedException();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
-            TopFrame.Draw(mTextureManager);
-            GameTime.Draw(mTextureManager);
-            MenuButton.Draw(mTextureManager);
-            spriteBatch.End();
+            mGameState.Draw(spriteBatch, mTextureManager);
         }
 
         public override void OnResolutionChanged()
         {
-            TopFrame.OnResolutionChanged(mGraphicsDevice.Viewport.Width / 2, 15, mGraphicsDevice.Viewport.Width, 30);
-            MenuButton.OnResolutionChanged(mGraphicsDevice.Viewport.Width - 60, mGraphicsDevice.Viewport.Height - 40);
+            mGameState.ApplyResolution(mGraphicsDevice);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            MenuButton.Update(mTextureManager, inputState);
+            mGameState.Update(inputState, gameTime, mGraphicsDevice);
         }
     }
 }

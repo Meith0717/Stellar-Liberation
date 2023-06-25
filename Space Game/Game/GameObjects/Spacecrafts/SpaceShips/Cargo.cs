@@ -1,4 +1,5 @@
-﻿using Galaxy_Explovive.Core.GameObject;
+﻿using Galaxy_Explovive.Core;
+using Galaxy_Explovive.Core.GameObject;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using Microsoft.Xna.Framework;
@@ -22,19 +23,19 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             TextureDepth = 2;
             TextureColor = Color.White;
             MaxVelocity = 5f;
-            WeaponManager = new(GameGlobals.SoundManager, GameGlobals.SpatialHashing);
+            WeaponManager = null;
             CrossHair = new(Vector2.Zero, TextureScale, CrossHair.CrossHairType.Target);
             
         }
 
-        public override void UpdateLogik(GameTime gameTime, InputState inputState)
+        public override void UpdateLogik(GameTime gameTime, InputState inputState, GameEngine engine)
         {
-            base.UpdateLogik(gameTime, inputState);
+            base.UpdateLogik(gameTime, inputState, engine);
         }
 
-        public override void Draw(TextureManager textureManager)
+        public override void Draw(TextureManager textureManager, GameEngine engine)
         {
-            base.Draw(textureManager);
+            base.Draw(textureManager, engine);
         }
     }
 }

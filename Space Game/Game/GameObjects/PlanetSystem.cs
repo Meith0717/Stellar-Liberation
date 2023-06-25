@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Core.TextureManagement;
+using Galaxy_Explovive.Core;
 
 namespace Galaxy_Explovive.Game.GameObjects
 {
@@ -36,43 +37,41 @@ namespace Galaxy_Explovive.Game.GameObjects
             BoundedBox = new CircleF(position, mRadiusLimit + (orbitNr * 400));
         }
 
-        public override void UpdateLogik(GameTime gameTime, InputState inputState)
+        public override void UpdateLogik(GameTime gameTime, InputState inputState, GameEngine engine)
         {
             // Checkst if System is on Screen
-            if (!GameGlobals.FrustumCuller.IsGameObjectOnWorldView(this)) { return; }
+            if (!engine.FrustumCuller.CircleOnWorldView(BoundedBox)) { return; }
 
             // Show or hide Systems
-            ShowSystem(); HideSystem();
-            mStar.UpdateLogik(gameTime, inputState);
+            ShowSystem(engine); HideSystem(engine);
+            mStar.UpdateLogik(gameTime, inputState, engine);
 
             // Update based on Cam. Positions 
             if (!mIsSystemShown) { return; }
             foreach (Planet planet in mPlanets)
             {
-                planet.UpdateLogik(gameTime, inputState);
+                planet.UpdateLogik(gameTime, inputState, engine);
             }
         }
 
-        public override void Draw(TextureManager textureManager)
+        public override void Draw(TextureManager textureManager, GameEngine engine)
         {
-            // Checkst if System is on Screen
-            if (!GameGlobals.FrustumCuller.IsGameObjectOnWorldView(this)) { return; }
             
             // Draw Stuff
-            mStar.Draw(textureManager);
-            GameGlobals.DebugSystem.DrawBoundBox(textureManager, BoundedBox);
+            mStar.Draw(textureManager, engine);
+            engine.DebugSystem.DrawBoundBox(textureManager, BoundedBox);
 
             // Draw based on Cam. Positions 
             if (!mIsSystemShown) { return; }
             foreach (Planet planet in mPlanets)
             {
-                planet.Draw(mPlanetAlpha, textureManager);
+                planet.Draw(mPlanetAlpha, textureManager, engine);
             }
         }
 
-        private void ShowSystem()
+        private void ShowSystem(GameEngine engine)
         {
-            if (GameGlobals.Camera.Zoom < 0.1) { return; }
+            if (engine.Camera.Zoom < 0.1) { return; }
             mIsSystemShown = true;
             if (mPlanetAlpha <= 255 - AlphaModifier)
             {
@@ -81,9 +80,9 @@ namespace Galaxy_Explovive.Game.GameObjects
             }
             mPlanetAlpha = 255;
         }
-        private void HideSystem()
+        private void HideSystem(GameEngine engine)
         {
-            if (GameGlobals.Camera.Zoom > 0.1) { return; }
+            if (engine.Camera.Zoom > 0.1) { return; }
             if (!mIsSystemShown) { return; }
             if (mPlanetAlpha >= AlphaModifier)
             {
@@ -93,9 +92,8 @@ namespace Galaxy_Explovive.Game.GameObjects
             mPlanetAlpha = 0;
             foreach (Planet p in mPlanets) 
             { 
-                p.RemoveFromSpatialHashing();
-                if (GameGlobals.SelectObject != p) continue;
-                GameGlobals.SelectObject = null;
+                if (engine.SelectObject != p) continue;
+                engine.SelectObject = null;
             }
             mIsSystemShown = false;
         }

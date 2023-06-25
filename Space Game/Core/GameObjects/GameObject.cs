@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.SoundManagement;
-using Galaxy_Explovive.Core.Rendering;
-using Galaxy_Explovive.Core.PositionManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using System;
 using Newtonsoft.Json;
@@ -28,8 +25,8 @@ namespace Galaxy_Explovive.Core.GameObject
         [JsonProperty] public CircleF BoundedBox { get; set; }
 
         // Methods
-        public abstract void UpdateLogik(GameTime gameTime, InputState inputState);
-        public abstract void Draw(TextureManager textureManager);
+        public abstract void UpdateLogik(GameTime gameTime, InputState inputState, GameEngine engine);
+        public abstract void Draw(TextureManager textureManager, GameEngine engine);
 
     }
 }
