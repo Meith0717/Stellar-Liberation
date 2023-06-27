@@ -18,6 +18,7 @@ namespace Galaxy_Explovive.Core.Debug
 
         // Some Stuff
         public float DrawnObjectCount;
+        public float UpdateObjectCount;
         private int mDebugLevel = 0;
         private float mCurrentFramesPerSecond;
         private float mFrameDuration;
@@ -80,7 +81,7 @@ namespace Galaxy_Explovive.Core.Debug
             List<InteractiveObject> GameObjects = ObjectLocator.GetObjectsInRadius<InteractiveObject>(spatial, mouseWorldPosition, radius);
             foreach (InteractiveObject obj in GameObjects) 
             {
-                textureManager.DrawAdaptiveLine(mouseWorldPosition, obj.Position, Color.LightBlue, 2, textureManager.MaxLayerDepth);
+                textureManager.DrawAdaptiveLine(mouseWorldPosition, obj.Position, Color.LightBlue, 50, textureManager.MaxLayerDepth);
             }
         }
 

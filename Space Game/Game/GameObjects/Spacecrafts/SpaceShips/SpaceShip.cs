@@ -21,9 +21,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
         [JsonIgnore] public CrossHair CrossHair { private get; set; }
 
         // Navigation
-        [JsonIgnore] public bool Track = false;
         [JsonIgnore] public bool Stop = false;
-        [JsonIgnore] private bool mSelect = false;
         [JsonProperty] private float mVelocity = 0;
         [JsonIgnore] private float mTravelTime;
         [JsonIgnore] private MovementController mMovementController;
@@ -32,37 +30,20 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
 
         public override void SelectActions(InputState inputState, GameEngine engine)
         {
+            base.SelectActions(inputState, engine);
             GetTarget(inputState, engine);
-            if (IsPressed && TargetObj is not null) { Track = true; }
-            if (engine.Camera.MovedByUser || TargetObj == null)
-            {
-                Track = false;
-            }
-            if (IsPressed && mSelect) 
-            { 
-                mSelect = Track = false;
-                engine.SelectObject = null;
-                return;
-            }
-            mSelect = true;
+            if (engine.Camera.MovedByUser) { IsTracked = false; }
         }
 
-        public override void UpdateLogik(GameTime gameTime, InputState inputState, GameEngine engine)
+        public override void UpdateLogic(GameTime gameTime, InputState inputState, GameEngine engine)
         {
-            base.UpdateLogik(gameTime, inputState, engine);
-            Track = Track && (engine.SelectObject == this);
-            if (Track) { engine.Camera.TargetPosition = Position; }
-            mSelect = mSelect && (engine.SelectObject == this);
-            CrossHair.Update(null, 0, Color.Wheat, false);
-            engine.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
+            base.UpdateLogic(gameTime, inputState, engine);
             UpdateNavigation(gameTime, inputState);
-            engine.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
 
         public override void Draw(TextureManager textureManager, GameEngine engine)
         {
             base.Draw(textureManager, engine);
-            base.DrawLife(textureManager);
             DrawPath(textureManager, engine);
             DrawTargetCrosshar(textureManager, engine);
         }
@@ -109,7 +90,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             bool b = inputState.mMouseActionType == MouseActionType.LeftClick;
             if (engine.Camera.Zoom < 0.2f && b)
             {
-                engine.Camera.TargetPosition = target.Position;
+                engine.Camera.SetTarget(target.Position);
                 engine.Camera.SetZoom(0.25f);
                 return;
             }
@@ -117,7 +98,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
             StartPosition = b ? Position : null;
             if (!b) return;
             mVelocity = 0.1f;
-            Track = true;
+            IsTracked = true;
         }
 
         // Draw Stuff

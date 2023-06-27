@@ -1,6 +1,5 @@
 ﻿using Galaxy_Explovive.Core;
 using Galaxy_Explovive.Core.GameObject;
-using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using Microsoft.Xna.Framework;
 
@@ -12,30 +11,25 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
         {
             Position = position;
             Rotation = 0;
+            SelectZoom = 1;
 
             // Rendering
-            NormalTexture = TextureId = "ship";
-            SelectTexture = "shipSekect";
+            TextureId = "ship";
             TextureScale = 0.5f;
-            TextureWidth = 209;
-            TextureHeight = 128;
-            TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
+            Width = 209;
+            Height = 128;
+            TextureOffset = new Vector2(Width, Height) / 2;
             TextureDepth = 2;
             TextureColor = Color.White;
             MaxVelocity = 5f;
             WeaponManager = null;
-            CrossHair = new(Vector2.Zero, TextureScale, CrossHair.CrossHairType.Target);
-            
-        }
-
-        public override void UpdateLogik(GameTime gameTime, InputState inputState, GameEngine engine)
-        {
-            base.UpdateLogik(gameTime, inputState, engine);
+            CrossHair = new(CrossHair.CrossHairType.Target);
         }
 
         public override void Draw(TextureManager textureManager, GameEngine engine)
         {
             base.Draw(textureManager, engine);
+            textureManager.DrawGameObject(this, IsHover);
         }
     }
 }

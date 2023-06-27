@@ -25,24 +25,21 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
 
             // Rendering
             TextureId = mType.Texture;
-            TextureWidth = 1024;
-            TextureHeight = 1024;
-            TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
+            Width = 1024;
+            Height = 1024;
+            TextureOffset = new Vector2(Width, Height) / 2;
             TextureScale = mType.Size;
             TextureDepth = 1;
             TextureColor = Color.White;
             mLightColor = mType.StarColor;
+            SelectZoom = 1;
+            UpdatePosition = false;
         }
 
-        public override void SelectActions(InputState inputState, GameEngine engine)
+        public override void UpdateLogic(GameTime gameTime, InputState inputState, GameEngine engine)
         {
-            base.SelectActions(inputState, engine);
-        }
-
-        public override void UpdateLogik(GameTime gameTime, InputState inputState, GameEngine engine)
-        {
-            base.UpdateLogik(gameTime, inputState, engine);
-            TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
+            base.UpdateLogic(gameTime, inputState, engine);
+            TextureOffset = new Vector2(Width, Height) / 2;
             if (mType == StarTypes.BH) return;
             Rotation += 0.0001f;
         }
@@ -51,14 +48,8 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
         {
             base.Draw(textureManager, engine);
             textureManager.DrawGameObject(this, IsHover);
-            engine.DebugSystem.DrawBoundBox(textureManager, BoundedBox);
             if (mType == StarTypes.BH) return;
             textureManager.Draw("StarLightAlpha", Position, TextureOffset, TextureScale * 1.3f, 0, 2, mLightColor);
-        }
-
-        public string GetTypeName()
-        {
-            return $"Type {mType}";
         }
     }
 }

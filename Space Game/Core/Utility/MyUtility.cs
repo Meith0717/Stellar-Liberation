@@ -2,6 +2,7 @@
 using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 
 namespace Galaxy_Explovive.Core.Utility
 {
@@ -92,6 +93,24 @@ namespace Galaxy_Explovive.Core.Utility
                 return str.ToString();
             }
             return $"0{str}";
+        }
+
+        public static Matrix GetViewTransforationMatrix(Vector2 cameraPosition, float cameraZoom, 
+            int screenWidth, int screenHeight)
+        {
+            return Matrix.CreateTranslation(new Vector3(-cameraPosition.X, -cameraPosition.Y, 0))
+                * Matrix.CreateScale(cameraZoom, cameraZoom, 1)
+                * Matrix.CreateTranslation(new Vector3(screenWidth / 2f, screenHeight / 2f, 0));
+        }
+
+        public static Vector2 ScreenToWorldProjection(Matrix ViewTransformationMatrix, Vector2 position)
+        {
+            return Vector2.Transform(position, ViewTransformationMatrix);
+        }
+
+        public static Vector2 WorldToScreenProjection(Matrix ViewTransformationMatrix, Vector2 position)
+        {
+            return Vector2.Transform(position, Matrix.Invert(ViewTransformationMatrix));
         }
     }
 }

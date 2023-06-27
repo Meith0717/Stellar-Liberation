@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
-using Galaxy_Explovive.Game;
 
 namespace Galaxy_Explovive.Core.GameObject
 {
@@ -15,20 +14,19 @@ namespace Galaxy_Explovive.Core.GameObject
         private bool mHover;
         private bool mDraw;
 
-        public CrossHair(Vector2 position, float scale, CrossHairType type)
+        public CrossHair(CrossHairType type)
         {
             // Location
-            Position = position;
             Rotation = 0;
 
             // Rendering
             TextureId = (type == CrossHairType.Target) ? "targetCrosshair" : "selectCrosshait";
-            TextureWidth = 64;
-            TextureHeight = 64;
-            TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
-            TextureScale = scale;
+            Width = 64;
+            Height = 64;
+            TextureOffset = new Vector2(Width, Height) / 2;
             TextureDepth = 1000;
             TextureColor = Color.White;
+            UpdatePosition = InitializePosition = false;
         }
 
         public void Update(Vector2? position, float scale, Color color, bool isHover) 
@@ -41,10 +39,6 @@ namespace Galaxy_Explovive.Core.GameObject
             mHover = isHover;
         }
 
-        public override void UpdateLogik(GameTime gameTime, InputState inputState, GameEngine engine)
-        {
-            throw new System.NotImplementedException();
-        }
         public override void Draw(TextureManager textureManager, GameEngine engine)
         {
             if (!mDraw) { return; }

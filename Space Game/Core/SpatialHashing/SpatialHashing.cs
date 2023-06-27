@@ -8,7 +8,6 @@ namespace Galaxy_Explovive.Core.PositionManagement
     {
         public int mCellSize;
         private Dictionary<int, List<T>> mPositionBuckets;
-        private int mCount;
 
         public SpatialHashing(int cellSize)
         {
@@ -37,7 +36,6 @@ namespace Galaxy_Explovive.Core.PositionManagement
             }
 
             objectBucket.Add(myObject);
-            mCount++;
             mPositionBuckets[hash] = objectBucket;
         }
 
@@ -57,7 +55,6 @@ namespace Galaxy_Explovive.Core.PositionManagement
 
             objectBucket.Remove(gameObject);
 
-
             mPositionBuckets[hash] = objectBucket;
         }
 
@@ -70,6 +67,16 @@ namespace Galaxy_Explovive.Core.PositionManagement
         {
             var hash = Hash(xCoordinate, yCoordinate);
             return mPositionBuckets.TryGetValue(hash, out var objectsInBucket) ? objectsInBucket : new List<T>();
+        }
+
+        public override string ToString()
+        {
+            string s = "";
+            foreach (var bucket in mPositionBuckets.Values)
+            {
+                s += $"{bucket}, ";
+            }
+            return s;
         }
 
     }

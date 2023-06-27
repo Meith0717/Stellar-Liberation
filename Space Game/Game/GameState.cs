@@ -1,12 +1,6 @@
-﻿ using Galaxy_Explovive.Core.Debug;
-using Galaxy_Explovive.Core.Effects;
-using Galaxy_Explovive.Core.GameObject;
+﻿using Galaxy_Explovive.Core.Effects;
 using Galaxy_Explovive.Core.Map;
-using Galaxy_Explovive.Core.PositionManagement;
-using Galaxy_Explovive.Core.Rendering;
-using Galaxy_Explovive.Core.UserInterface.Messages;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
-using Galaxy_Explovive.Game.GameObjects;
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
@@ -50,15 +44,16 @@ namespace Galaxy_Explovive.Game
 
         public void Update(InputState inputState, GameTime gameTime, GraphicsDevice graphicsDevice) 
         {
-            mGameEngine.UpdateEngine(gameTime, inputState, graphicsDevice);
-
+            mGameEngine.BeginUpdateEngine(gameTime, inputState, graphicsDevice);
             mGameEngine.UpdateGameObjects(gameTime, inputState, mShips);
-            mGameEngine.UpdateGameObjects(gameTime, inputState, mMap.PlanetSystems);
+            //mMap.Update(gameTime, inputState, mGameEngine);
+            mGameEngine.EndUpdateEngine(inputState);
 
             if (inputState.mActionList.Contains(ActionType.ToggleRayTracing))
             {
                 Globals.mRayTracing = !Globals.mRayTracing;
             }
+
             mParllaxManager.Update(mGameEngine.Camera.Movement, mGameEngine.Camera.Zoom);
         }
 
@@ -68,10 +63,11 @@ namespace Galaxy_Explovive.Game
             mParllaxManager.Draw(textureManager);
             spriteBatch.End();
 
-            mGameEngine.BeginWorldDrawing(spriteBatch);
-            mGameEngine.DrawGameObjects(textureManager, mMap.PlanetSystems);
+            mGameEngine.BeginWorldDrawing(spriteBatch, textureManager);
+            //mMap.Draw(textureManager, mGameEngine);
             mGameEngine.DrawGameObjects(textureManager, mShips);
-            spriteBatch.End();
+            mMap.DrawGrid(textureManager, mGameEngine);
+            mGameEngine.EndWorldDrawing(spriteBatch);
         }
 
         public void ApplyResolution(GraphicsDevice graphicsDevice)

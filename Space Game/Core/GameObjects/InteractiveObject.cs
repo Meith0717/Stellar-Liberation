@@ -1,50 +1,96 @@
 ﻿using Galaxy_Explovive.Core.InputManagement;
 using System;
-using MonoGame.Extended;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using Galaxy_Explovive.Core.TextureManagement;
+using System.ComponentModel;
+using Newtonsoft.Json.Converters;
 
 namespace Galaxy_Explovive.Core.GameObject
 {
+    /// <summary>
+    /// Abstract class representing an interactive game object derived from the GameObject class.
+    /// </summary>
     [Serializable]
     public abstract class InteractiveObject : GameObject
     {
-        [JsonIgnore] private readonly CrossHair mCrossHair;
-        [JsonIgnore] public bool IsHover { get; private set; }
-        [JsonIgnore] public bool IsPressed { get; private set; }
+        /// <summary>
+        /// Gets a value indicating whether the object is currently selected.
+        /// </summary>
+        public bool IsSelected { get; private set; }
 
-        public InteractiveObject() 
-        {
-            mCrossHair = new(Position, TextureScale * 20, CrossHair.CrossHairType.Select);
-        }
+        /// <summary>
+        /// Gets or sets the zoom level applied when the interactive object is selected.
+        /// </summary>
+        [JsonIgnore]
+        public float SelectZoom { get; set; }
 
-        public override void UpdateLogik(GameTime gameTime, InputState inputState, GameEngine gameEngine)
+        /// <summary>
+        /// Gets or sets a value indicating whether the interactive object is tracked.
+        /// </summary>
+        [JsonIgnore]
+        public bool IsTracked { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the interactive object is currently being hovered over by the mouse cursor.
+        /// </summary>
+        [JsonIgnore]
+        public bool IsHover { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the interactive object is currently being pressed by the mouse cursor.
+        /// </summary>
+        [JsonIgnore]
+        public bool IsPressed { get; private set; }
+
+        /// <summary>
+        /// Updates the logic of the interactive object, including hover, press and track states.
+        /// Object is select when pressed. Object is deselect when pressed while select.
+        /// </summary>
+        /// <param name="gameTime">The game time information.</param>
+        /// <param name="inputState">The input state of the game.</param>
+        /// <param name="gameEngine">The game engine instance.</param>
+        public override void UpdateLogic(GameTime gameTime, InputState inputState, GameEngine gameEngine)
         {
-            void CheckForSelect(InputState inputState)
+            if (SelectZoom == 0f) throw new WarningException("No Value Given to SelectZoom");
+
+            base.UpdateLogic(gameTime, inputState, gameEngine);
+
+            IsHover = BoundedBox.Contains(gameEngine.WorldMousePosition);
+            IsPressed = IsHover && (inputState.mMouseActionType == MouseActionType.LeftClickReleased);
+
+            if (gameEngine.SelectObject == this && IsPressed)
+            {
+                IsSelected = IsPressed = IsTracked = false;
+                gameEngine.SelectObject = null;
+                return;
+            }
+
+            if (gameEngine.SelectObject == null && IsPressed)
             {
                 IsPressed = false;
-                BoundedBox = new CircleF(Position, (Math.Max(TextureHeight, TextureWidth) / 2) * TextureScale);
-                IsHover = BoundedBox.Contains(gameEngine.WorldMousePosition);
-                if (!IsHover || inputState.mMouseActionType != MouseActionType.LeftClick) { return; }
-                IsPressed = true;
-                if (gameEngine.SelectObject != null) { return; }
+                IsTracked = IsSelected = true;
                 gameEngine.SelectObject = this;
-                gameEngine.Camera.TargetPosition = Position;
+                gameEngine.Camera.SetZoom(SelectZoom);
             }
-            mCrossHair.Update(Position, TextureScale * 20, Color.OrangeRed, false);
-            CheckForSelect(inputState);
         }
 
-        public override void Draw(TextureManager textureManager, GameEngine gameEngine)
+        /// <summary>
+        /// Performs actions related to the selection of the interactive object.
+        /// Performs the tracking of the object.
+        /// </summary>
+        /// <param name="inputState">The input state of the game.</param>
+        /// <param name="gameEngine">The game engine instance.</param>
+        public virtual void SelectActions(InputState inputState, GameEngine gameEngine)
         {
-            gameEngine.DebugSystem.DrawnObjectCount += 1;
-            textureManager.DrawGameObject(this, IsHover);
-            gameEngine.DebugSystem.DrawBoundBox(textureManager, BoundedBox);
-            if (gameEngine.SelectObject != this) return;
-            mCrossHair.Draw(textureManager, gameEngine);
+            if (gameEngine.Camera.MovedByUser)
+            {
+                IsTracked = false;
+            }
+            if (IsTracked)
+            {
+                gameEngine.Camera.SetTarget(Position);
+            }
         }
-
-        public abstract void SelectActions(InputState inputState, GameEngine gameEngine);
     }
 }

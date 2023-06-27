@@ -35,45 +35,34 @@ namespace Galaxy_Explovive.Game.GameObjects
                 TextureScale = mPlanetType.Size;
                 mRadius = StarSize + (300 * orbitNr) + (1000 * mPlanetType.Size);
             }
-            TextureWidth = TextureHeight = 1024;
-            TextureOffset = new Vector2(TextureWidth, TextureHeight) / 2;
+            Width = Height = 1024;
+            TextureOffset = new Vector2(Width, Height) / 2;
             TextureDepth = 1;
             TextureColor = StarColor;
 
             // Class Stuff
             mCenterPosition = CenterPosition;
+            SelectZoom = 1;
         }
 
-        public override void SelectActions(InputState inputState, GameEngine engine)
+        public override void UpdateLogic(GameTime gameTime, InputState inputState, GameEngine engine)
         {
-            base.SelectActions(inputState, engine);
-        }
-
-        public override void UpdateLogik(GameTime gameTime, InputState inputState, GameEngine engine)
-        {
-            // Other Stuff
-            base.UpdateLogik(gameTime, inputState, engine);
+            base.UpdateLogic(gameTime, inputState, engine);
 
             float velocity = MathF.Sqrt(1/(mRadius*10));
-            float angleUpdate = Angle + engine.GameTime * velocity;
+            float angleUpdate = Angle + (engine.GameTime/1000) * velocity;
             Position = MyUtility.GetVector2(mRadius, Angle + angleUpdate) + mCenterPosition;
             Rotation += 0.004f; 
             mShadowRotation = MyUtility.GetAngle(mCenterPosition, Position);
         }
 
-        public void Draw(int alpha, TextureManager textureManager, GameEngine engine)
+        public override void Draw(TextureManager textureManager, GameEngine engine)
         {
             base.Draw(textureManager, engine);
-            TextureColor = new Color(alpha, alpha, alpha, alpha);
+            TextureColor = new Color(100, 100, 100, 100);
             textureManager.Draw("planetShadow", Position, TextureOffset, TextureScale, mShadowRotation, TextureDepth + 1, TextureColor);
             textureManager.DrawGameObject(this, IsHover);
             engine.DebugSystem.DrawBoundBox(textureManager, BoundedBox);
-        }
-
-        [Obsolete("This method is deprecated.")]
-        public override void Draw(TextureManager textureManager, GameEngine engine)
-        {
-            throw new Exception("Use The Other Draw Method please :)");
         }
 
         private PlanetType GetPlanetType(int orbit)

@@ -7,36 +7,22 @@ using System;
 
 namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
 {
+    /// <summary>
+    /// Abstract class representing an astronomical body, derived from the InteractiveObject class.
+    /// </summary>
     [Serializable]
     public abstract class AstronomicalBody : InteractiveObject
     {
-        [JsonIgnore] private bool mTrack = false;
-        protected AstronomicalBody() : base() {}
-
+        /// <summary>
+        /// Performs actions related to the selection of the astronomical body.
+        /// Is deselect when pressing anywhere or moving the camera.
+        /// </summary>
+        /// <param name="inputState">The input state of the game.</param>
+        /// <param name="engine">The game engine instance.</param>
         public override void SelectActions(InputState inputState, GameEngine engine)
         {
-            if (IsPressed)
-            {
-                if (GetType() == typeof(Planet))
-                {
-                    engine.Camera.SetZoom(1.2f);
-                }
-                if (GetType() == typeof(Star))
-                {
-                    engine.Camera.SetZoom(0.25f);
-                }
-            }
-            engine.Camera.TargetPosition = Position;
-
-            if (engine.Camera.MovedByUser || (inputState.mMouseActionType == MouseActionType.LeftClick && !IsHover))
-            {
-                engine.SelectObject = null;
-            }
-        }
-
-        public override void UpdateLogik(GameTime gameTime, InputState inputState, GameEngine engine)
-        {
-            base.UpdateLogik(gameTime, inputState, engine);
+            // Check if the camera was moved by the user or if left-click occurred outside the body's hover area
+            base.SelectActions(inputState, engine);
         }
     }
 }

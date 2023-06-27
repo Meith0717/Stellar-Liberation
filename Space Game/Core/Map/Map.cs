@@ -42,6 +42,14 @@ namespace Galaxy_Explovive.Core.Map
             System.Diagnostics.Debug.WriteLine(PlanetSystems.Count);
         }
 
+        public void Update(GameTime time, InputState input, GameEngine engine)
+        {
+            foreach (PlanetSystem system in PlanetSystems)
+            {
+                system.Update(time, input, engine);
+            }
+        }
+
         public void DrawGrid(TextureManager textureManager, GameEngine engine)
         {
             int ColorAplpha = 30;
@@ -59,7 +67,6 @@ namespace Galaxy_Explovive.Core.Map
                 }
             }
 
-
             for (int x = 0; x <= mWidth + SectorSize; x += SectorSize)
             {
                 textureManager.DrawAdaptiveLine(new(x, 0), new(x, mHeight + SectorSize), color, 1, 0);
@@ -69,7 +76,14 @@ namespace Galaxy_Explovive.Core.Map
             {
                 textureManager.DrawAdaptiveLine(new(0, y), new(mWidth + SectorSize, y), color, 1, 0);
             }
+        }
 
+        public void Draw(TextureManager textureManager, GameEngine engine)
+        {
+            foreach (PlanetSystem system in PlanetSystems)
+            {
+                system.Draw(textureManager, engine);
+            }
         }
     }
 }
