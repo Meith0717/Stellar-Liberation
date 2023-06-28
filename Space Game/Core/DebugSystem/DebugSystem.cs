@@ -33,7 +33,6 @@ namespace Galaxy_Explovive.Core.Debug
 
         public void Update(GameTime gameTime, InputState inputState)
         {
-            DrawnObjectCount = 0;
             if (inputState.mActionList.Contains(ActionType.Debug))
             {
                 this.ChangeMode();
@@ -65,13 +64,16 @@ namespace Galaxy_Explovive.Core.Debug
                 $"Level {mDebugLevel}",
                 $"{Math.Round(mCurrentFramesPerSecond)}FPS, {mFrameDuration}ms",
                 $"Zoom{cameraZoom}, Pos{cameraPosition.ToPoint()}",
-                $"Drawn Objects {DrawnObjectCount}"
+                $"Drawn Objects {DrawnObjectCount}",
+                $"Updated Objects {UpdateObjectCount}"
             };
             foreach (string s in lst)
             {
                 textureManager.DrawString("smal", position + new Vector2(0, i * 20), s, 1, Color.White);
                 i += 1;
             }
+            DrawnObjectCount = 0;
+            UpdateObjectCount = 0;
         }
 
         public void TestSpatialHashing(TextureManager textureManager, SpatialHashing<GameObject.GameObject> spatial, Vector2 mouseWorldPosition)
@@ -88,7 +90,7 @@ namespace Galaxy_Explovive.Core.Debug
         public void DrawBoundBox(TextureManager textureManager, CircleF box)
         {
             if (mDebugLevel < 2) { return; }
-            textureManager.DrawAdaptiveCircle(box.Position, box.Radius, Color.Red, 1, textureManager.MaxLayerDepth);
+            textureManager.DrawCircle(box.Position, box.Radius, Color.Red, 10, textureManager.MaxLayerDepth);
         }
     }
 }

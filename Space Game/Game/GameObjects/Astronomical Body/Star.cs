@@ -33,7 +33,6 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             TextureColor = Color.White;
             mLightColor = mType.StarColor;
             SelectZoom = 1;
-            UpdatePosition = false;
         }
 
         public override void UpdateLogic(GameTime gameTime, InputState inputState, GameEngine engine)

@@ -42,6 +42,7 @@ namespace Galaxy_Explovive.Game.GameObjects
 
             // Class Stuff
             mCenterPosition = CenterPosition;
+            Position = MyUtility.GetVector2(mRadius, Angle) + mCenterPosition;
             SelectZoom = 1;
         }
 

@@ -15,36 +15,39 @@ namespace Galaxy_Explovive.Game.GameObjects
     [Serializable]
     public class PlanetSystem
     {
-        [JsonProperty] public Star Star;
-        [JsonProperty] public List<Planet> Planets;
-        [JsonProperty] private CircleF BoundBox;
+        [JsonProperty] readonly private List<Planet> mPlanets;
+        [JsonProperty] readonly private Star mStar;
+        [JsonProperty] private CircleF mBoundedBox;
 
-        public PlanetSystem(Vector2 position) : base()
+        public PlanetSystem(Vector2 position)
         {
-            Star = new(position);
-            Planets = new();
-            int radiusLimit = (int)(Star.Width / 2 * Star.TextureScale);
+            mStar = new(position);
+            mPlanets = new();
+            int radiusLimit = (int)(mStar.Width / 2 * mStar.TextureScale);
             int orbitNr;
             for (orbitNr = 1; orbitNr <= MyUtility.Random.Next(2, 6); orbitNr++)
             {
-                Planets.Add(new Planet(orbitNr, position, Star.mLightColor, radiusLimit));    
+                mPlanets.Add(new Planet(orbitNr, position, mStar.mLightColor, radiusLimit));    
             }
-            BoundBox = new CircleF(position, 5000);
+            mBoundedBox = new CircleF(position, 2500);
         }
 
         public void Update(GameTime time, InputState inputState, GameEngine engine)
         {
-            if (engine.FrustumCuller.CircleOnWorldView(Star.BoundedBox))
+            if (engine.FrustumCuller.CircleOnWorldView(mBoundedBox))
             {                
-                engine.UpdateGameObject(time, inputState, Star);
-                engine.UpdateGameObjects(time, inputState, Planets);
+                engine.UpdateGameObject(time, inputState, mStar);
+                engine.UpdateGameObjects(time, inputState, mPlanets);
             }
         }
 
         public void Draw(TextureManager textureManager, GameEngine engine)
         {
-            engine.DrawGameObject(textureManager, Star);
-            engine.DrawGameObjects(textureManager, Planets);
+            engine.DrawGameObject(textureManager, mStar);
+            engine.DrawGameObjects(textureManager, mPlanets);
+            engine.DebugSystem.DrawBoundBox(textureManager, mBoundedBox);
         }
+
+        // Planets need to be hide
     }
 }

@@ -33,7 +33,7 @@ namespace Galaxy_Explovive.Game
         {
             mGameEngine = gameEngine;
             mParllaxManager = new();
-            mMap = new(3000000, 62500);
+            mMap = new(50000, 100);
             mMap.Generate();
             mParllaxManager.Add(new("gameBackgroundParlax1", 0.1f));
             mParllaxManager.Add(new("gameBackgroundParlax2", 0.15f));
@@ -46,7 +46,7 @@ namespace Galaxy_Explovive.Game
         {
             mGameEngine.BeginUpdateEngine(gameTime, inputState, graphicsDevice);
             mGameEngine.UpdateGameObjects(gameTime, inputState, mShips);
-            //mMap.Update(gameTime, inputState, mGameEngine);
+            mMap.Update(gameTime, inputState, mGameEngine);
             mGameEngine.EndUpdateEngine(inputState);
 
             if (inputState.mActionList.Contains(ActionType.ToggleRayTracing))
@@ -64,7 +64,7 @@ namespace Galaxy_Explovive.Game
             spriteBatch.End();
 
             mGameEngine.BeginWorldDrawing(spriteBatch, textureManager);
-            //mMap.Draw(textureManager, mGameEngine);
+            mMap.Draw(textureManager, mGameEngine);
             mGameEngine.DrawGameObjects(textureManager, mShips);
             mMap.DrawGrid(textureManager, mGameEngine);
             mGameEngine.EndWorldDrawing(spriteBatch);

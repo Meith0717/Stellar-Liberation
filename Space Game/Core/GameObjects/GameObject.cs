@@ -74,21 +74,6 @@ namespace Galaxy_Explovive.Core.GameObject
         public CircleF BoundedBox { get; set; }
 
         /// <summary>
-        /// Represents a flag indicating whether the position of the game object should be updated.
-        /// </summary>
-        [JsonProperty]
-        protected bool UpdatePosition { get; set; } = true;
-
-        /// <summary>
-        /// Gets or sets a flag indicating whether the position of the game object is initialized.
-        /// </summary>
-        [JsonProperty]
-        protected bool InitializePosition { get; set; } = true;
-        [JsonProperty]
-        private bool mPositionWasInitialize = false;
-
-        /// <summary>
-        /// Saves the position of the game object on first call.
         /// Updates the game object's logic.
         /// UpdateObjectCount is incrememted and the BoundBox is updatet.
         /// </summary>
@@ -97,11 +82,6 @@ namespace Galaxy_Explovive.Core.GameObject
         /// <param name="engine">The game engine instance.</param>
         public virtual void UpdateLogic(GameTime gameTime, InputState inputState, GameEngine engine)
         {
-            if (InitializePosition && !mPositionWasInitialize)
-            {
-                engine.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
-                mPositionWasInitialize = true;
-            }
             engine.DebugSystem.UpdateObjectCount += 1;
             BoundedBox = new CircleF(Position, (Math.Max(Height, Width) / 2) * TextureScale);
         }
@@ -112,7 +92,6 @@ namespace Galaxy_Explovive.Core.GameObject
         /// <param name="engine">The game engine instance.</param>
         public void AddToSpatialHashing(GameEngine engine)
         {
-            if (!UpdatePosition) return;
             engine.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
 
@@ -122,7 +101,6 @@ namespace Galaxy_Explovive.Core.GameObject
         /// <param name="engine">The game engine instance.</param>
         public void RemoveFromSpatialHashing(GameEngine engine)
         {
-            if (!UpdatePosition) return;
             engine.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
         }
 
