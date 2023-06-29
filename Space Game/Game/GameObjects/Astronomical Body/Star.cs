@@ -4,6 +4,7 @@ using Galaxy_Explovive.Core.InputManagement;
 using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.Utility;
 using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using Newtonsoft.Json;
 using System;
 
@@ -14,6 +15,7 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
     {
         [JsonProperty] public Color mLightColor;
         [JsonProperty] public StarType mType;
+        [JsonIgnore] private bool mWasAddetToSpartialHashing;
 
         public Star(Vector2 position) : base()
         {
@@ -33,10 +35,12 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
             TextureColor = Color.White;
             mLightColor = mType.StarColor;
             SelectZoom = 1;
+            BoundedBox = new CircleF(Position, (Math.Max(Height, Width) / 2) * TextureScale);
         }
 
         public override void UpdateLogic(GameTime gameTime, InputState inputState, GameEngine engine)
         {
+            AddToSpatialHashing(engine);
             base.UpdateLogic(gameTime, inputState, engine);
             TextureOffset = new Vector2(Width, Height) / 2;
             if (mType == StarTypes.BH) return;

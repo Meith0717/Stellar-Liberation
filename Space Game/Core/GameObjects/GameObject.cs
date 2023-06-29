@@ -73,6 +73,9 @@ namespace Galaxy_Explovive.Core.GameObject
         [JsonProperty]
         public CircleF BoundedBox { get; set; }
 
+        [JsonIgnore]
+        private bool WasRemovedFromSpatialHashing;
+
         /// <summary>
         /// Updates the game object's logic.
         /// UpdateObjectCount is incrememted and the BoundBox is updatet.
@@ -92,6 +95,7 @@ namespace Galaxy_Explovive.Core.GameObject
         /// <param name="engine">The game engine instance.</param>
         public void AddToSpatialHashing(GameEngine engine)
         {
+            if (!WasRemovedFromSpatialHashing) return;
             engine.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
 
@@ -101,6 +105,7 @@ namespace Galaxy_Explovive.Core.GameObject
         /// <param name="engine">The game engine instance.</param>
         public void RemoveFromSpatialHashing(GameEngine engine)
         {
+            WasRemovedFromSpatialHashing = true;
             engine.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
         }
 
@@ -112,7 +117,7 @@ namespace Galaxy_Explovive.Core.GameObject
         public virtual void Draw(TextureManager textureManager, GameEngine engine)
         {
             engine.DebugSystem.DrawnObjectCount += 1;
-            engine.DebugSystem.DrawBoundBox(textureManager, BoundedBox);
+            engine.DebugSystem.DrawBoundBox(textureManager, BoundedBox, engine);
         }
     }
 }

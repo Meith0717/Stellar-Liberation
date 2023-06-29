@@ -33,7 +33,7 @@ namespace Galaxy_Explovive.Game
         {
             mGameEngine = gameEngine;
             mParllaxManager = new();
-            mMap = new(50000, 100);
+            mMap = new(3000000, 62500);
             mMap.Generate();
             mParllaxManager.Add(new("gameBackgroundParlax1", 0.1f));
             mParllaxManager.Add(new("gameBackgroundParlax2", 0.15f));

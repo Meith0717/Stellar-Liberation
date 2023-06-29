@@ -105,12 +105,12 @@ namespace Galaxy_Explovive.Core.Utility
 
         public static Vector2 ScreenToWorldProjection(Matrix ViewTransformationMatrix, Vector2 position)
         {
-            return Vector2.Transform(position, ViewTransformationMatrix);
+            return Vector2.Transform(position, Matrix.Invert(ViewTransformationMatrix));
         }
 
         public static Vector2 WorldToScreenProjection(Matrix ViewTransformationMatrix, Vector2 position)
         {
-            return Vector2.Transform(position, Matrix.Invert(ViewTransformationMatrix));
+            return Vector2.Transform(position, ViewTransformationMatrix);
         }
     }
 }

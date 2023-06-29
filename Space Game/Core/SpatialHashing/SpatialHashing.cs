@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Galaxy_Explovive.Core.PositionManagement
 {
@@ -12,10 +10,10 @@ namespace Galaxy_Explovive.Core.PositionManagement
         public SpatialHashing(int cellSize)
         {
             mCellSize = cellSize;
-            mPositionBuckets = new Dictionary<int, List<T>>();
+            mPositionBuckets = new();
         }
 
-        public int Hash(int xCoordinate, int yCoordinate)
+        private int Hash(int xCoordinate, int yCoordinate)
         {
             const int shiftingFactor = 10000;
             return xCoordinate / mCellSize * shiftingFactor + yCoordinate / mCellSize;
@@ -68,16 +66,5 @@ namespace Galaxy_Explovive.Core.PositionManagement
             var hash = Hash(xCoordinate, yCoordinate);
             return mPositionBuckets.TryGetValue(hash, out var objectsInBucket) ? objectsInBucket : new List<T>();
         }
-
-        public override string ToString()
-        {
-            string s = "";
-            foreach (var bucket in mPositionBuckets.Values)
-            {
-                s += $"{bucket}, ";
-            }
-            return s;
-        }
-
     }
 }

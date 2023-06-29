@@ -27,8 +27,7 @@ namespace Galaxy_Explovive.Core.Debug
 
         private void ChangeMode()
         {
-            mDebugLevel++;
-            if (mDebugLevel > 5) { mDebugLevel = 0; }
+            mDebugLevel += (mDebugLevel > 5) ? -5 : 1;
         }
 
         public void Update(GameTime gameTime, InputState inputState)
@@ -83,14 +82,15 @@ namespace Galaxy_Explovive.Core.Debug
             List<InteractiveObject> GameObjects = ObjectLocator.GetObjectsInRadius<InteractiveObject>(spatial, mouseWorldPosition, radius);
             foreach (InteractiveObject obj in GameObjects) 
             {
-                textureManager.DrawAdaptiveLine(mouseWorldPosition, obj.Position, Color.LightBlue, 50, textureManager.MaxLayerDepth);
+                textureManager.DrawAdaptiveLine(mouseWorldPosition, obj.Position, Color.LightBlue, 1, textureManager.MaxLayerDepth);
             }
         }
 
-        public void DrawBoundBox(TextureManager textureManager, CircleF box)
+        public void DrawBoundBox(TextureManager textureManager, CircleF box, GameEngine engine)
         {
+            if (!engine.FrustumCuller.CircleOnWorldView(box)) return;
             if (mDebugLevel < 2) { return; }
-            textureManager.DrawCircle(box.Position, box.Radius, Color.Red, 10, textureManager.MaxLayerDepth);
+            textureManager.DrawCircle(box.Position, box.Radius, Color.Red, 1, textureManager.MaxLayerDepth);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Galaxy_Explovive.Core
             GameTime += time.ElapsedGameTime.Milliseconds;
             mViewTransformationMatrix = MyUtility.GetViewTransforationMatrix(Camera.Position, Camera.Zoom, screenWidth, screenHeight);
             ViewMousePosition = input.mMousePosition.ToVector2();
-            WorldMousePosition = Vector2.Transform(ViewMousePosition, Matrix.Invert(mViewTransformationMatrix));
+            WorldMousePosition = MyUtility.ScreenToWorldProjection(mViewTransformationMatrix, ViewMousePosition);
 
             Camera.Update(time, input, WorldMousePosition);
             FrustumCuller.Update(screenWidth, screenHeight, mViewTransformationMatrix);
@@ -65,28 +65,24 @@ namespace Galaxy_Explovive.Core
 
         public void EndUpdateEngine(InputState input)
         {
-            System.Diagnostics.Debug.WriteLine(SpatialHashing.ToString());
         }
 
         public void UpdateGameObject<T>(GameTime time, InputState input,  T obj) where T : GameObject.GameObject
         {
-            obj.RemoveFromSpatialHashing(this);
             obj.UpdateLogic(time, input, this);
-            obj.AddToSpatialHashing(this);
         }
 
         public void UpdateGameObjects<T>(GameTime time, InputState input, List<T> objects) where T : GameObject.GameObject
         {
             foreach(T obj in objects)
             {
-                obj.RemoveFromSpatialHashing(this);
                 obj.UpdateLogic(time, input, this);
-                obj.AddToSpatialHashing(this);
             }
         }
 
         public void DrawGameObject<T>(TextureManager textureManager, T obj) where T : GameObject.GameObject
         {
+            if (obj.BoundedBox.Radius == 0) throw new System.Exception($"BoundedBox Radius is Zero {obj}");
             if (FrustumCuller.CircleOnWorldView(obj.BoundedBox))
             {
                 obj.Draw(textureManager, this);
@@ -97,6 +93,7 @@ namespace Galaxy_Explovive.Core
         { 
             foreach (T obj in objects)
             {
+                if (obj.BoundedBox.Radius == 0) throw new System.Exception($"BoundedBox Radius is Zero {obj}");
                 if (FrustumCuller.CircleOnWorldView(obj.BoundedBox))
                 {
                     obj.Draw(textureManager, this);

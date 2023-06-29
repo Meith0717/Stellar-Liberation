@@ -39,13 +39,13 @@ namespace Galaxy_Explovive.Core.Map
                     PlanetSystems.Add(new(randomPos));
                 }
             }
-            System.Diagnostics.Debug.WriteLine(PlanetSystems.Count);
         }
 
         public void Update(GameTime time, InputState input, GameEngine engine)
         {
             foreach (PlanetSystem system in PlanetSystems)
             {
+                if (!engine.FrustumCuller.CircleOnWorldView(system.BoundedBox)) continue; 
                 system.Update(time, input, engine);
             }
         }

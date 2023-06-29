@@ -8,24 +8,26 @@ using Galaxy_Explovive.Core.GameObjects.Types;
 using Galaxy_Explovive.Core.Utility;
 using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core;
+using Galaxy_Explovive.Core.GameObject;
 
 namespace Galaxy_Explovive.Game.GameObjects
 {
     [Serializable]
-    public class Planet : AstronomicalBody
+    public class Planet : InteractiveObject
     {
+        [JsonIgnore] private float mAlpha { get; set; } = 0;
 
         // Some Variables
         [JsonIgnore] private float mShadowRotation;
         [JsonProperty] private Vector2 mCenterPosition;
-        [JsonProperty] private PlanetType mPlanetType;
-        [JsonProperty] private float Angle;
-        [JsonProperty] public float mRadius;
+        [JsonProperty] private readonly PlanetType mPlanetType;
+        [JsonProperty] private readonly float mAngle;
+        [JsonProperty] private readonly float mRadius;
 
         public Planet(int orbitNr, Vector2 CenterPosition, Color StarColor, int StarSize) : base()
         {
             // Location
-            Angle = MyUtility.Random.NextAngle();
+            mAngle = MyUtility.Random.NextAngle();
             mPlanetType = GetPlanetType(orbitNr);
 
             // Rendering
@@ -42,28 +44,40 @@ namespace Galaxy_Explovive.Game.GameObjects
 
             // Class Stuff
             mCenterPosition = CenterPosition;
-            Position = MyUtility.GetVector2(mRadius, Angle) + mCenterPosition;
+            Position = MyUtility.GetVector2(mRadius, mAngle) + mCenterPosition;
             SelectZoom = 1;
+            BoundedBox = new CircleF(Position, (Math.Max(Height, Width) / 2) * TextureScale);
         }
 
         public override void UpdateLogic(GameTime gameTime, InputState inputState, GameEngine engine)
         {
+            RemoveFromSpatialHashing(engine);
+            if (mAlpha <= 0) 
+            {
+                engine.SelectObject = (engine.SelectObject == this) ? null : engine.SelectObject;
+                return;
+            }
+
             base.UpdateLogic(gameTime, inputState, engine);
 
             float velocity = MathF.Sqrt(1/(mRadius*10));
-            float angleUpdate = Angle + (engine.GameTime/1000) * velocity;
-            Position = MyUtility.GetVector2(mRadius, Angle + angleUpdate) + mCenterPosition;
+            float angleUpdate = mAngle + (engine.GameTime/1000) * velocity;
+            Position = MyUtility.GetVector2(mRadius, mAngle + angleUpdate) + mCenterPosition;
             Rotation += 0.004f; 
             mShadowRotation = MyUtility.GetAngle(mCenterPosition, Position);
+            AddToSpatialHashing(engine);
         }
 
         public override void Draw(TextureManager textureManager, GameEngine engine)
         {
+            if (mAlpha <= 0) return;
+
             base.Draw(textureManager, engine);
-            TextureColor = new Color(100, 100, 100, 100);
-            textureManager.Draw("planetShadow", Position, TextureOffset, TextureScale, mShadowRotation, TextureDepth + 1, TextureColor);
+
+            TextureColor = new Color((int)mAlpha, (int)mAlpha, (int)mAlpha, (int)mAlpha);
+            textureManager.Draw("planetShadow", Position, TextureOffset, TextureScale, mShadowRotation, TextureDepth + 1, Color.White);
             textureManager.DrawGameObject(this, IsHover);
-            engine.DebugSystem.DrawBoundBox(textureManager, BoundedBox);
+            engine.DebugSystem.DrawBoundBox(textureManager, BoundedBox, engine);
         }
 
         private PlanetType GetPlanetType(int orbit)
@@ -93,5 +107,16 @@ namespace Galaxy_Explovive.Game.GameObjects
             return planetType;
         }
 
+        public void IncreaseVisibility()
+        {
+            if (mAlpha == 255) { return; }
+            mAlpha = (mAlpha >= 255) ? 255 : mAlpha + 50;
+        }
+
+        public void DecreaseVisibility()
+        {
+            if (mAlpha == 0) { return; }
+            mAlpha = (mAlpha <= 0) ? 0 : mAlpha - 50;
+        }
     }
 }
