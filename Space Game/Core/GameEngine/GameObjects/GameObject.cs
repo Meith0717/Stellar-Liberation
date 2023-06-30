@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Galaxy_Explovive.Core.GameEngine.InputManagement;
+using Galaxy_Explovive.Core.GameEngine.Rendering;
+using Microsoft.Xna.Framework;
 using MonoGame.Extended;
-using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.TextureManagement;
-using System;
 using Newtonsoft.Json;
+using System;
 
-namespace Galaxy_Explovive.Core.GameObject
+namespace Galaxy_Explovive.Core.GameEngine.GameObjects
 {
     /// <summary>
     /// Abstract class representing a game object in the game engine.
@@ -86,7 +86,7 @@ namespace Galaxy_Explovive.Core.GameObject
         public virtual void UpdateLogic(GameTime gameTime, InputState inputState, GameEngine engine)
         {
             engine.DebugSystem.UpdateObjectCount += 1;
-            BoundedBox = new CircleF(Position, (Math.Max(Height, Width) / 2) * TextureScale);
+            BoundedBox = new CircleF(Position, Math.Max(Height, Width) / 2 * TextureScale);
         }
 
         /// <summary>

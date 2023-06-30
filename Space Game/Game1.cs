@@ -1,13 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Galaxy_Explovive.Core.GameEngine;
+using Galaxy_Explovive.Core.GameEngine.InputManagement;
+using Galaxy_Explovive.Core.GameEngine.Persistance;
+using Galaxy_Explovive.Core.GameEngine.Rendering;
+using Galaxy_Explovive.Core.LayerManagement;
+using Galaxy_Explovive.Layers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.LayerManagement;
-using Galaxy_Explovive.Core.SoundManagement;
-using Galaxy_Explovive.Core.TextureManagement;
 using System;
-using Galaxy_Explovive.Core.Persistance;
-using Galaxy_Explovive.Layers;
 
 namespace Galaxy_Explovive
 {
@@ -46,7 +46,7 @@ namespace Galaxy_Explovive
             //ToggleFullscreen();
         }
 
-        protected override void Initialize() 
+        protected override void Initialize()
         {
             mGraphicsManager.ApplyChanges();
             base.Initialize();

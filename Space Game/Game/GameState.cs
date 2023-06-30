@@ -1,16 +1,16 @@
-﻿using Galaxy_Explovive.Core.Effects;
+﻿using Galaxy_Explovive.Core;
+using Galaxy_Explovive.Core.Effects;
+using Galaxy_Explovive.Core.GameEngine;
+using Galaxy_Explovive.Core.GameEngine.InputManagement;
+using Galaxy_Explovive.Core.GameEngine.Rendering;
+using Galaxy_Explovive.Core.GameEngine.Utility;
 using Galaxy_Explovive.Core.Map;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
-using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Galaxy_Explovive.Core.TextureManagement;
-using Galaxy_Explovive.Core.SoundManagement;
-using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core;
-using Galaxy_Explovive.Core.Utility;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 
 namespace Galaxy_Explovive.Game
 {
@@ -42,12 +42,11 @@ namespace Galaxy_Explovive.Game
             mShips.Add(new(MyUtility.GetRandomVector2(Vector2.Zero, 0)));
         }
 
-        public void Update(InputState inputState, GameTime gameTime, GraphicsDevice graphicsDevice) 
+        public void Update(InputState inputState, GameTime gameTime, GraphicsDevice graphicsDevice)
         {
-            mGameEngine.BeginUpdateEngine(gameTime, inputState, graphicsDevice);
+            mGameEngine.UpdateEngine(gameTime, inputState, graphicsDevice);
             mGameEngine.UpdateGameObjects(gameTime, inputState, mShips);
             mMap.Update(gameTime, inputState, mGameEngine);
-            mGameEngine.EndUpdateEngine(inputState);
 
             if (inputState.mActionList.Contains(ActionType.ToggleRayTracing))
             {
@@ -57,7 +56,7 @@ namespace Galaxy_Explovive.Game
             mParllaxManager.Update(mGameEngine.Camera.Movement, mGameEngine.Camera.Zoom);
         }
 
-        public void Draw(SpriteBatch spriteBatch, TextureManager textureManager) 
+        public void Draw(SpriteBatch spriteBatch, TextureManager textureManager)
         {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             mParllaxManager.Draw(textureManager);

@@ -1,5 +1,5 @@
-﻿using Galaxy_Explovive.Core.GameObject;
-using Galaxy_Explovive.Core.PositionManagement;
+﻿using Galaxy_Explovive.Core.GameEngine;
+using Galaxy_Explovive.Core.GameEngine.GameObjects;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;

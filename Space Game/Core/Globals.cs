@@ -1,5 +1,4 @@
-﻿ using Galaxy_Explovive.Core.GameObject;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace Galaxy_Explovive.Core
 {

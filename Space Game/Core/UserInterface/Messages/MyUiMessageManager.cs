@@ -1,5 +1,5 @@
-﻿using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.TextureManagement;
+﻿using Galaxy_Explovive.Core.GameEngine.InputManagement;
+using Galaxy_Explovive.Core.GameEngine.Rendering;
 using System.Collections.Generic;
 
 
@@ -33,10 +33,10 @@ namespace Galaxy_Explovive.Core.UserInterface.Messages
             foreach (MyUiMessage message in mMessageList)
             {
                 message.Update(inputState, mCenterX, mTopY + (i * 40));
-                if (currentTime > message.CreationTime + LiveTime || message.Clicked) 
+                if (currentTime > message.CreationTime + LiveTime || message.Clicked)
                 {
                     mMessageList.Remove(message);
-                    break; 
+                    break;
                 }
                 i += 1;
             }

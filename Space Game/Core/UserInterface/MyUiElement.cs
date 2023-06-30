@@ -1,10 +1,4 @@
-﻿using Galaxy_Explovive.Core.TextureManagement;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Galaxy_Explovive.Core.GameEngine.Rendering;
 
 namespace Galaxy_Explovive.Core.UserInterface
 {

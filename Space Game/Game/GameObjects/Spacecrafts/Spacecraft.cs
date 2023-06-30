@@ -1,7 +1,7 @@
-﻿using Galaxy_Explovive.Core;
-using Galaxy_Explovive.Core.GameObject;
-using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.TextureManagement;
+﻿using Galaxy_Explovive.Core.GameEngine;
+using Galaxy_Explovive.Core.GameEngine.GameObjects;
+using Galaxy_Explovive.Core.GameEngine.InputManagement;
+using Galaxy_Explovive.Core.GameEngine.Rendering;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;

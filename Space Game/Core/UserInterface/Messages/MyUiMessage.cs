@@ -1,8 +1,6 @@
-﻿using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.TextureManagement;
-using Galaxy_Explovive.Game;
+﻿using Galaxy_Explovive.Core.GameEngine.InputManagement;
+using Galaxy_Explovive.Core.GameEngine.Rendering;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended;
 
 namespace Galaxy_Explovive.Core.UserInterface.Messages
 {
@@ -10,7 +8,7 @@ namespace Galaxy_Explovive.Core.UserInterface.Messages
     {
         const string Font = "text";
         public float CreationTime;
-        public bool Clicked = false; 
+        public bool Clicked = false;
         private TextureManager mTextureManager;
         private Rectangle mRect = Rectangle.Empty;
         private string mMessage;

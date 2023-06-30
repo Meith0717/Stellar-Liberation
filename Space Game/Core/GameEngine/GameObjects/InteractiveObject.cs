@@ -1,12 +1,10 @@
-﻿using Galaxy_Explovive.Core.InputManagement;
-using System;
+﻿using Galaxy_Explovive.Core.GameEngine.InputManagement;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
-using Galaxy_Explovive.Core.TextureManagement;
+using System;
 using System.ComponentModel;
-using Newtonsoft.Json.Converters;
 
-namespace Galaxy_Explovive.Core.GameObject
+namespace Galaxy_Explovive.Core.GameEngine.GameObjects
 {
     /// <summary>
     /// Abstract class representing an interactive game object derived from the GameObject class.
@@ -57,7 +55,7 @@ namespace Galaxy_Explovive.Core.GameObject
             base.UpdateLogic(gameTime, inputState, gameEngine);
 
             IsHover = BoundedBox.Contains(gameEngine.WorldMousePosition);
-            IsPressed = IsHover && (inputState.mMouseActionType == MouseActionType.LeftClickReleased);
+            IsPressed = IsHover && inputState.mMouseActionType == MouseActionType.LeftClickReleased;
 
             if (gameEngine.SelectObject == this && IsPressed)
             {

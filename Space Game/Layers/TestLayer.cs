@@ -1,17 +1,10 @@
-﻿using Galaxy_Explovive.Core;
-using Galaxy_Explovive.Core.InputManagement;
+﻿using Galaxy_Explovive.Core.GameEngine;
+using Galaxy_Explovive.Core.GameEngine.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
-using Galaxy_Explovive.Core.UserInterface;
 using Galaxy_Explovive.Game;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json.Serialization;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Galaxy_Explovive.Layers
 {

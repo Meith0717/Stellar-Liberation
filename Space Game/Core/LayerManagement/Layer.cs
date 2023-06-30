@@ -1,11 +1,11 @@
+using Galaxy_Explovive.Core.GameEngine;
+using Galaxy_Explovive.Core.GameEngine.InputManagement;
+using Galaxy_Explovive.Core.GameEngine.Persistance;
+using Galaxy_Explovive.Core.GameEngine.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
-using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.SoundManagement;
 using System;
-using Galaxy_Explovive.Core.TextureManagement;
-using Galaxy_Explovive.Core.Persistance;
 
 namespace Galaxy_Explovive.Core.LayerManagement;
 

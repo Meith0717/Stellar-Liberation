@@ -1,8 +1,8 @@
+using Galaxy_Explovive.Core.GameEngine.InputManagement;
 using Microsoft.Xna.Framework;
-using Galaxy_Explovive.Core.InputManagement;
 using System;
 
-namespace Galaxy_Explovive.Core.GameObjects
+namespace Galaxy_Explovive.Core.GameEngine.GameObjects
 {
     public class Camera
     {
@@ -57,7 +57,7 @@ namespace Galaxy_Explovive.Core.GameObjects
 
             if (mLastMousePosition != mousePosition)
             {
-                Movement =  mLastMousePosition - mousePosition;
+                Movement = mLastMousePosition - mousePosition;
                 mTargetPosition += Movement;
                 MovedByUser = true;
                 mZoomAnimation = false;
@@ -74,14 +74,15 @@ namespace Galaxy_Explovive.Core.GameObjects
             if (zoom != 0)
             {
                 mZoomAnimation = false;
-                Zoom *= 1 + zoom * 0.001f * gameTime.ElapsedGameTime.Milliseconds;            }
+                Zoom *= 1 + zoom * 0.001f * gameTime.ElapsedGameTime.Milliseconds;
+            }
         }
 
         public void SetZoom(float zoom)
         {
             mTargetZoom = zoom;
             mZoomAnimation = true;
-        } 
+        }
 
         public void SetTarget(Vector2 position)
         {

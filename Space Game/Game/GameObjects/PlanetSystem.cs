@@ -1,14 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-using Newtonsoft.Json;
-using Galaxy_Explovive.Core.GameObject;
-using Galaxy_Explovive.Core.InputManagement;
+﻿using Galaxy_Explovive.Core.GameEngine;
+using Galaxy_Explovive.Core.GameEngine.InputManagement;
+using Galaxy_Explovive.Core.GameEngine.Rendering;
+using Galaxy_Explovive.Core.GameEngine.Utility;
 using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
+using Microsoft.Xna.Framework;
+using MonoGame.Extended;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using Galaxy_Explovive.Core.Utility;
-using Galaxy_Explovive.Core.TextureManagement;
-using Galaxy_Explovive.Core;
-using MonoGame.Extended;
 
 namespace Galaxy_Explovive.Game.GameObjects
 {
@@ -27,7 +26,7 @@ namespace Galaxy_Explovive.Game.GameObjects
             int orbitNr;
             for (orbitNr = 1; orbitNr <= MyUtility.Random.Next(1, 1); orbitNr++)
             {
-                mPlanets.Add(new Planet(orbitNr, position, mStar.mLightColor, radiusLimit));    
+                mPlanets.Add(new Planet(orbitNr, position, mStar.mLightColor, radiusLimit));
             }
             BoundedBox = new CircleF(position, 2500);
         }

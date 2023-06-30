@@ -1,10 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.TextureManagement;
+﻿using Galaxy_Explovive.Core.GameEngine.Rendering;
+using Microsoft.Xna.Framework;
 
 namespace Galaxy_Explovive.Core.GameObject
 {
-    public class CrossHair : GameObject
+    public class CrossHair : GameEngine.GameObjects.GameObject
     {
         public enum CrossHairType
         {
@@ -28,9 +27,9 @@ namespace Galaxy_Explovive.Core.GameObject
             TextureColor = Color.White;
         }
 
-        public void Update(Vector2? position, float scale, Color color, bool isHover) 
+        public void Update(Vector2? position, float scale, Color color, bool isHover)
         {
-            if (position  == null) { mDraw = false; return; }
+            if (position == null) { mDraw = false; return; }
             mDraw = true;
             Position = (Vector2)position;
             TextureScale = scale;
@@ -38,7 +37,7 @@ namespace Galaxy_Explovive.Core.GameObject
             mHover = isHover;
         }
 
-        public override void Draw(TextureManager textureManager, GameEngine engine)
+        public override void Draw(TextureManager textureManager, GameEngine.GameEngine engine)
         {
             if (!mDraw) { return; }
             textureManager.DrawGameObject(this, mHover);

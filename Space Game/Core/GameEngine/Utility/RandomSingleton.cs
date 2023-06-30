@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Net.Http.Headers;
 
-namespace Galaxy_Explovive.Core.Utility
+namespace Galaxy_Explovive.Core.GameEngine.Utility
 {
     internal class RandomSingleton
     {

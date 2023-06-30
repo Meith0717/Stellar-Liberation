@@ -1,4 +1,4 @@
-﻿using Galaxy_Explovive.Core.InputManagement;
+﻿using Galaxy_Explovive.Core.GameEngine.InputManagement;
 using Galaxy_Explovive.Core.LayerManagement;
 using Galaxy_Explovive.Core.UserInterface;
 using Galaxy_Explovive.Game;

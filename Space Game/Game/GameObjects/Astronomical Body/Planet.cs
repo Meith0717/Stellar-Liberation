@@ -1,14 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Galaxy_Explovive.Core.GameEngine;
+using Galaxy_Explovive.Core.GameEngine.GameObjects;
+using Galaxy_Explovive.Core.GameEngine.InputManagement;
+using Galaxy_Explovive.Core.GameEngine.Rendering;
+using Galaxy_Explovive.Core.GameEngine.Utility;
+using Galaxy_Explovive.Core.GameObjects.Types;
+using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
+using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
-using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
 using System;
-using Galaxy_Explovive.Core.GameObjects.Types;
-using Galaxy_Explovive.Core.Utility;
-using Galaxy_Explovive.Core.TextureManagement;
-using Galaxy_Explovive.Core;
-using Galaxy_Explovive.Core.GameObject;
 
 namespace Galaxy_Explovive.Game.GameObjects
 {
@@ -52,7 +52,7 @@ namespace Galaxy_Explovive.Game.GameObjects
         public override void UpdateLogic(GameTime gameTime, InputState inputState, GameEngine engine)
         {
             RemoveFromSpatialHashing(engine);
-            if (mAlpha <= 0) 
+            if (mAlpha <= 0)
             {
                 engine.SelectObject = (engine.SelectObject == this) ? null : engine.SelectObject;
                 return;
@@ -60,10 +60,10 @@ namespace Galaxy_Explovive.Game.GameObjects
 
             base.UpdateLogic(gameTime, inputState, engine);
 
-            float velocity = MathF.Sqrt(1/(mRadius*10));
-            float angleUpdate = mAngle + (engine.GameTime/1000) * velocity;
+            float velocity = MathF.Sqrt(1 / (mRadius * 10));
+            float angleUpdate = mAngle + (engine.GameTime / 1000) * velocity;
             Position = MyUtility.GetVector2(mRadius, mAngle + angleUpdate) + mCenterPosition;
-            Rotation += 0.004f; 
+            Rotation += 0.004f;
             mShadowRotation = MyUtility.GetAngle(mCenterPosition, Position);
             AddToSpatialHashing(engine);
         }

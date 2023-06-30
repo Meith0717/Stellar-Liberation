@@ -1,8 +1,6 @@
-﻿using Galaxy_Explovive.Core;
-using Galaxy_Explovive.Core.GameObject;
-using Galaxy_Explovive.Core.InputManagement;
-using Microsoft.Xna.Framework;
-using Newtonsoft.Json;
+﻿using Galaxy_Explovive.Core.GameEngine;
+using Galaxy_Explovive.Core.GameEngine.GameObjects;
+using Galaxy_Explovive.Core.GameEngine.InputManagement;
 using System;
 
 namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body

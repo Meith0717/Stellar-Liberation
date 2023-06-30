@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Galaxy_Explovive.Core.InputManagement
+namespace Galaxy_Explovive.Core.GameEngine.InputManagement
 {
     public class InputManager
     {
@@ -67,8 +67,8 @@ namespace Galaxy_Explovive.Core.InputManagement
         private void UpdateMouseState()
         {
             // Get mouse state and position.
-            this.mCurrentMouseState = Mouse.GetState();
-            this.mCurrentMousePosition = Mouse.GetState().Position;
+            mCurrentMouseState = Mouse.GetState();
+            mCurrentMousePosition = Mouse.GetState().Position;
 
             // Add mouse position to InputState.
             mInputState.mMousePosition = mCurrentMousePosition;
@@ -76,7 +76,7 @@ namespace Galaxy_Explovive.Core.InputManagement
             // Add mouse action for left and right button to InputState.
             if (LeftMouseButtonPressed())
             {
-                if (!(IsLeftMouseButtonDown()))
+                if (!IsLeftMouseButtonDown())
                 {
                     mInputState.mMouseActionType = MouseActionType.LeftClick;
 
@@ -94,7 +94,7 @@ namespace Galaxy_Explovive.Core.InputManagement
 
             if (RightMouseButtonPressed())
             {
-                mInputState.mMouseActionType = !(IsRightMouseButtonDown()) ? MouseActionType.RightClick : MouseActionType.RightClickHold;
+                mInputState.mMouseActionType = !IsRightMouseButtonDown() ? MouseActionType.RightClick : MouseActionType.RightClickHold;
             }
 
             // Has mouse button just been released?
@@ -150,7 +150,7 @@ namespace Galaxy_Explovive.Core.InputManagement
             /*mKeysKeyEventTypes.Clear();*/
 
             // Get current keys pressed.
-            this.mCurrentKeysPressed = Keyboard.GetState().GetPressedKeys();
+            mCurrentKeysPressed = Keyboard.GetState().GetPressedKeys();
 
             // Get KeyEventTypes (down or pressed) for keys.
             foreach (Keys key in mCurrentKeysPressed)
@@ -173,13 +173,13 @@ namespace Galaxy_Explovive.Core.InputManagement
         private void UpdateKeyState()
         {
             // Get current keys pressed.
-            this.mCurrentKeysPressed = Keyboard.GetState().GetPressedKeys();
+            mCurrentKeysPressed = Keyboard.GetState().GetPressedKeys();
 
             // Get current KeyEventTypes for keys pressed.
             UpdateKeysKeyEventTypes();
 
             // Add actions to InputState.mActionList depending on keys and KeyEventType.
-            foreach (Keys key in this.mCurrentKeysPressed)
+            foreach (Keys key in mCurrentKeysPressed)
             {
                 // Add actions to InputState.mActionList for keys down.
                 if (mKeyBindingsKeyboardPressed.ContainsKey(key))
@@ -223,21 +223,21 @@ namespace Galaxy_Explovive.Core.InputManagement
         // Return true if mouse was constantly down.
         private bool IsLeftMouseButtonDown()
         {
-            return (mCurrentMouseState.LeftButton == ButtonState.Pressed &&
-                    mPreviousMouseState.LeftButton == ButtonState.Pressed);
+            return mCurrentMouseState.LeftButton == ButtonState.Pressed &&
+                    mPreviousMouseState.LeftButton == ButtonState.Pressed;
         }
 
         private bool IsRightMouseButtonDown()
         {
-            return (mCurrentMouseState.RightButton == ButtonState.Pressed &&
-                    mPreviousMouseState.RightButton == ButtonState.Pressed);
+            return mCurrentMouseState.RightButton == ButtonState.Pressed &&
+                    mPreviousMouseState.RightButton == ButtonState.Pressed;
         }
 
         // Is mouse button released?
         private bool IsLeftMouseButtonReleased()
         {
-            return (mCurrentMouseState.LeftButton == ButtonState.Released &&
-                    mPreviousMouseState.LeftButton == ButtonState.Pressed);
+            return mCurrentMouseState.LeftButton == ButtonState.Released &&
+                    mPreviousMouseState.LeftButton == ButtonState.Pressed;
         }
 
         // Update current and previous MouseWheelValue

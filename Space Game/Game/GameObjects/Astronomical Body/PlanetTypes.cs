@@ -1,5 +1,5 @@
-﻿using Galaxy_Explovive.Core.GameObjects.Types;
-using Galaxy_Explovive.Core.Utility;
+﻿using Galaxy_Explovive.Core.GameEngine.Utility;
+using Galaxy_Explovive.Core.GameObjects.Types;
 using System.Collections.Generic;
 
 namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body

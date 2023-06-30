@@ -1,6 +1,6 @@
-﻿using Galaxy_Explovive.Core;
+﻿using Galaxy_Explovive.Core.GameEngine;
+using Galaxy_Explovive.Core.GameEngine.Rendering;
 using Galaxy_Explovive.Core.GameObject;
-using Galaxy_Explovive.Core.TextureManagement;
 using Microsoft.Xna.Framework;
 
 namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips

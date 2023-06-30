@@ -1,4 +1,4 @@
-﻿using Galaxy_Explovive.Core.TextureManagement;
+﻿using Galaxy_Explovive.Core.GameEngine.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;

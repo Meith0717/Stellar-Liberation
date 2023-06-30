@@ -1,11 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using System.Collections.Generic;
+﻿using Galaxy_Explovive.Core.GameEngine;
+using Galaxy_Explovive.Core.GameEngine.Rendering;
 using Galaxy_Explovive.Core.Waepons;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft;
-using Galaxy_Explovive.Core.SoundManagement;
-using Galaxy_Explovive.Core.TextureManagement;
-using Galaxy_Explovive.Core.PositionManagement;
-using Galaxy_Explovive.Core.GameObject;
+using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace Galaxy_Explovive.Core.Weapons
 {
@@ -14,10 +12,10 @@ namespace Galaxy_Explovive.Core.Weapons
 
         private readonly List<WeaponsProjectile> mProjectiles = new();
         private readonly SoundManager mSoundManager;
-        private readonly SpatialHashing<GameObject.GameObject> mSpatialHashing;
+        private readonly SpatialHashing<GameEngine.GameObjects.GameObject> mSpatialHashing;
 
-        public WeaponManager(SoundManager soundManager, SpatialHashing<GameObject.GameObject> spatial) 
-        { 
+        public WeaponManager(SoundManager soundManager, SpatialHashing<GameEngine.GameObjects.GameObject> spatial)
+        {
             mSoundManager = soundManager;
             mSpatialHashing = spatial;
         }

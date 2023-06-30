@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
-namespace Galaxy_Explovive.Core.InputManagement
+namespace Galaxy_Explovive.Core.GameEngine.InputManagement
 {
     public enum ActionType
     {

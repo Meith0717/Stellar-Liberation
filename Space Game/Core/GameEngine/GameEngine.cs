@@ -1,24 +1,20 @@
-﻿using Galaxy_Explovive.Core.Debug;
+﻿using Galaxy_Explovive.Core.GameEngine.GameObjects;
+using Galaxy_Explovive.Core.GameEngine.InputManagement;
+using Galaxy_Explovive.Core.GameEngine.Rendering;
+using Galaxy_Explovive.Core.GameEngine.Utility;
 using Galaxy_Explovive.Core.GameObject;
-using Galaxy_Explovive.Core.GameObjects;
-using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.PositionManagement;
-using Galaxy_Explovive.Core.Rendering;
-using Galaxy_Explovive.Core.SoundManagement;
-using Galaxy_Explovive.Core.TextureManagement;
 using Galaxy_Explovive.Core.UserInterface.Messages;
-using Galaxy_Explovive.Core.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System.Collections.Generic;
 
-namespace Galaxy_Explovive.Core
+namespace Galaxy_Explovive.Core.GameEngine
 {
     public class GameEngine
     {
         public Camera Camera { get; private set; } = new();
-        public SpatialHashing<GameObject.GameObject> SpatialHashing { get; private set; } = new(1000);
+        public SpatialHashing<GameObjects.GameObject> SpatialHashing { get; private set; } = new(1000);
         public FrustumCuller FrustumCuller { get; private set; } = new();
         public DebugSystem DebugSystem { get; private set; } = new();
 
@@ -30,7 +26,7 @@ namespace Galaxy_Explovive.Core
         public SoundManager SoundManager { get; private set; }
         public MyUiMessageManager MessageManager { get; private set; }
 
-        private readonly CrossHair mSelectObjCrossHair; 
+        private readonly CrossHair mSelectObjCrossHair;
         private Matrix mViewTransformationMatrix;
 
         public GameEngine(SoundManager soundManager, MyUiMessageManager messageManager)
@@ -40,7 +36,7 @@ namespace Galaxy_Explovive.Core
             mSelectObjCrossHair = new(CrossHair.CrossHairType.Select);
         }
 
-        public void BeginUpdateEngine(GameTime time, InputState input, GraphicsDevice graphicsDevice)
+        public void UpdateEngine(GameTime time, InputState input, GraphicsDevice graphicsDevice)
         {
             int screenWidth = graphicsDevice.Viewport.Width;
             int screenHeight = graphicsDevice.Viewport.Height;
@@ -55,7 +51,7 @@ namespace Galaxy_Explovive.Core
             Camera.Update(time, input, WorldMousePosition);
             FrustumCuller.Update(screenWidth, screenHeight, mViewTransformationMatrix);
 
-            if (SelectObject == null) 
+            if (SelectObject == null)
             {
                 mSelectObjCrossHair.Update(null, 0, Color.Transparent, false);
                 return;
@@ -64,24 +60,20 @@ namespace Galaxy_Explovive.Core
             mSelectObjCrossHair.Update(SelectObject.Position, SelectObject.TextureScale * 20, Color.OrangeRed, false);
         }
 
-        public void EndUpdateEngine(InputState input)
-        {
-        }
-
-            public void UpdateGameObject<T>(GameTime time, InputState input,  T obj) where T : GameObject.GameObject
+        public void UpdateGameObject<T>(GameTime time, InputState input, T obj) where T : GameObjects.GameObject
         {
             obj.UpdateLogic(time, input, this);
         }
 
-        public void UpdateGameObjects<T>(GameTime time, InputState input, List<T> objects) where T : GameObject.GameObject
+        public void UpdateGameObjects<T>(GameTime time, InputState input, List<T> objects) where T : GameObjects.GameObject
         {
-            foreach(T obj in objects)
+            foreach (T obj in objects)
             {
                 obj.UpdateLogic(time, input, this);
             }
         }
 
-        public void DrawGameObject<T>(TextureManager textureManager, T obj) where T : GameObject.GameObject
+        public void DrawGameObject<T>(TextureManager textureManager, T obj) where T : GameObjects.GameObject
         {
             if (obj.BoundedBox.Radius == 0) throw new System.Exception($"BoundedBox Radius is Zero {obj}");
             if (FrustumCuller.CircleOnWorldView(obj.BoundedBox))
@@ -90,8 +82,8 @@ namespace Galaxy_Explovive.Core
             }
         }
 
-        public void DrawGameObjects<T>(TextureManager textureManager, List<T> objects) where T : GameObject.GameObject
-        { 
+        public void DrawGameObjects<T>(TextureManager textureManager, List<T> objects) where T : GameObjects.GameObject
+        {
             foreach (T obj in objects)
             {
                 if (obj.BoundedBox.Radius == 0) throw new System.Exception($"BoundedBox Radius is Zero {obj}");
@@ -112,7 +104,7 @@ namespace Galaxy_Explovive.Core
 
             spriteBatch.Begin(
                 SpriteSortMode.FrontToBack,
-                transformMatrix:mViewTransformationMatrix,
+                transformMatrix: mViewTransformationMatrix,
                 samplerState: SamplerState.PointClamp
             );
             DebugSystem.TestSpatialHashing(textureManager, SpatialHashing, WorldMousePosition);
@@ -122,17 +114,17 @@ namespace Galaxy_Explovive.Core
         public void DrawObjectsOnScreen(TextureManager textureManager)
         {
             var objects = SpatialHashing.GetObjectsInSpace(FrustumCuller.WorldFrustum.ToRectangle());
-            foreach (GameObject.GameObject obj in objects)
+            foreach (GameObjects.GameObject obj in objects)
             {
                 DrawGameObject(textureManager, obj);
             }
         }
 
-        #pragma warning disable CA1822 // Mark members as static
+#pragma warning disable CA1822 // Mark members as static
         public void EndWorldDrawing(SpriteBatch spriteBatch)
         {
             spriteBatch.End();
         }
-        #pragma warning restore CA1822 // Mark members as static
+#pragma warning restore CA1822 // Mark members as static
     }
 }

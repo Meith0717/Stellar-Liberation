@@ -1,5 +1,5 @@
-﻿using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.TextureManagement;
+﻿using Galaxy_Explovive.Core.GameEngine.InputManagement;
+using Galaxy_Explovive.Core.GameEngine.Rendering;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
@@ -20,7 +20,7 @@ namespace Galaxy_Explovive.Core.UserInterface
         public float Scale = 1f;
         public MouseActionType MouseActionType = MouseActionType.LeftClick;
 
-        public MyUiSprite(float x, float y, string texture) 
+        public MyUiSprite(float x, float y, string texture)
         {
             mX = x;
             mY = y;
@@ -31,11 +31,11 @@ namespace Galaxy_Explovive.Core.UserInterface
         {
             if (Hide || Disabled) return;
             var texture = textureManager.GetTexture(mTexture);
-            var rect = new RectangleF(mX, mY, texture.Width*Scale, texture.Height*Scale);
+            var rect = new RectangleF(mX, mY, texture.Width * Scale, texture.Height * Scale);
             mHover = rect.Contains(inputState.mMousePosition);
-            if (mHover && 
-                inputState.mMouseActionType == MouseActionType && 
-                OnClickAction != null) 
+            if (mHover &&
+                inputState.mMouseActionType == MouseActionType &&
+                OnClickAction != null)
             { OnClickAction(); inputState.mMouseActionType = MouseActionType.None; }
         }
 
@@ -50,7 +50,7 @@ namespace Galaxy_Explovive.Core.UserInterface
         {
             if (Hide) return;
             textureManager.Draw(mTexture, new(mX, mY), Vector2.Zero, Scale, 0, 1,
-               Disabled ? Color.Transparent : (mHover ? HoverColor : Color)) ;
+               Disabled ? Color.Transparent : (mHover ? HoverColor : Color));
         }
 
 

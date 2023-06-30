@@ -1,13 +1,11 @@
-﻿using Galaxy_Explovive.Core.TextureManagement;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using System.Linq;
-using Galaxy_Explovive.Game.GameObjects.Spacecraft;
-using MonoGame.Extended;
-using Galaxy_Explovive.Core.Utility;
-using Galaxy_Explovive.Core.SoundManagement;
-using Galaxy_Explovive.Core.PositionManagement;
+﻿using Galaxy_Explovive.Core.GameEngine;
+using Galaxy_Explovive.Core.GameEngine.Rendering;
+using Galaxy_Explovive.Core.GameEngine.Utility;
 using Galaxy_Explovive.Game.GameLogik;
+using Galaxy_Explovive.Game.GameObjects.Spacecraft;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
 
 namespace Galaxy_Explovive.Core.Waepons
 {
@@ -35,7 +33,7 @@ namespace Galaxy_Explovive.Core.Waepons
             Rotation = MyUtility.GetAngle(Position, Vector2.Zero);
         }
 
-        public void Update(GameTime gameTime, SoundManager soundManager, SpatialHashing<GameObject.GameObject> spatial)
+        public void Update(GameTime gameTime, SoundManager soundManager, SpatialHashing<GameEngine.GameObjects.GameObject> spatial)
         {
             var direction = Direction * Velocity * gameTime.ElapsedGameTime.Milliseconds;
             CheckForDamage(soundManager, spatial);
@@ -51,7 +49,7 @@ namespace Galaxy_Explovive.Core.Waepons
                 ProjectileColor, Rotation, new Vector2(16, 16), 0.25f, SpriteEffects.None, 0);
         }
 
-        private void CheckForDamage(SoundManager soundManager, SpatialHashing<GameObject.GameObject> spatial)
+        private void CheckForDamage(SoundManager soundManager, SpatialHashing<GameEngine.GameObjects.GameObject> spatial)
         {
             var ships = ObjectLocator.GetObjectsInRadius<Spacecraft>(spatial, Position, 40);
             ships.Remove(OriginShip);

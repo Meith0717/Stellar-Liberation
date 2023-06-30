@@ -1,19 +1,17 @@
-﻿
-using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.TextureManagement;
+﻿using Galaxy_Explovive.Core.GameEngine.Rendering;
 using Microsoft.Xna.Framework;
 
 namespace Galaxy_Explovive.Core.UserInterface
 {
     internal class MyUiText
     {
-        float mX; 
+        float mX;
         private float mY;
         private string mFont;
         public string Text;
         public Color Color = Color.White;
 
-        public MyUiText(float x, float y, string text, string font = "text") 
+        public MyUiText(float x, float y, string text, string font = "text")
         {
             mX = x;
             mY = y;

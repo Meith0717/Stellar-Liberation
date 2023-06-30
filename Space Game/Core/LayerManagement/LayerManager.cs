@@ -1,6 +1,6 @@
+using Galaxy_Explovive.Core.GameEngine.InputManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Galaxy_Explovive.Core.InputManagement;
 using System.Collections.Generic;
 using System.Linq;
 

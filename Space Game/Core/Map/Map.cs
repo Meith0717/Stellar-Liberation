@@ -1,7 +1,6 @@
-﻿using Galaxy_Explovive.Core.InputManagement;
-using Galaxy_Explovive.Core.TextureManagement;
-using Galaxy_Explovive.Core.Utility;
-using Galaxy_Explovive.Game;
+﻿using Galaxy_Explovive.Core.GameEngine.InputManagement;
+using Galaxy_Explovive.Core.GameEngine.Rendering;
+using Galaxy_Explovive.Core.GameEngine.Utility;
 using Galaxy_Explovive.Game.GameObjects;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
@@ -20,11 +19,11 @@ namespace Galaxy_Explovive.Core.Map
         [JsonProperty] public int SectorSize;
         [JsonProperty] public List<PlanetSystem> PlanetSystems = new();
 
-        public Map(int edgeLength, int SectorAmount) 
+        public Map(int edgeLength, int SectorAmount)
         {
             if (Math.Sqrt(SectorAmount) % 1 != 0) { throw new Exception("Square Root of Sector amount has to be Integer"); }
             mWidth = mHeight = edgeLength;
-            SectorSize = (edgeLength == 0) ? 0 : edgeLength/(int)Math.Sqrt(SectorAmount);
+            SectorSize = (edgeLength == 0) ? 0 : edgeLength / (int)Math.Sqrt(SectorAmount);
         }
 
         public void Generate()
@@ -34,23 +33,23 @@ namespace Galaxy_Explovive.Core.Map
                 for (int y = 0; y <= mHeight; y += SectorSize)
                 {
                     if (MyUtility.Random.NextDouble() < 0.3) { continue; }
-                    Vector2 randomPos = MyUtility.GetRandomVector2(x + 2000, x+SectorSize - 2000,
-                        y + 2000, y+SectorSize -2000);
+                    Vector2 randomPos = MyUtility.GetRandomVector2(x + 2000, x + SectorSize - 2000,
+                        y + 2000, y + SectorSize - 2000);
                     PlanetSystems.Add(new(randomPos));
                 }
             }
         }
 
-        public void Update(GameTime time, InputState input, GameEngine engine)
+        public void Update(GameTime time, InputState input, GameEngine.GameEngine engine)
         {
             foreach (PlanetSystem system in PlanetSystems)
             {
-                if (!engine.FrustumCuller.CircleOnWorldView(system.BoundedBox)) continue; 
+                if (!engine.FrustumCuller.CircleOnWorldView(system.BoundedBox)) continue;
                 system.Update(time, input, engine);
             }
         }
 
-        public void DrawGrid(TextureManager textureManager, GameEngine engine)
+        public void DrawGrid(TextureManager textureManager, GameEngine.GameEngine engine)
         {
             int ColorAplpha = 30;
             Color color = new(ColorAplpha, ColorAplpha, ColorAplpha);
@@ -78,7 +77,7 @@ namespace Galaxy_Explovive.Core.Map
             }
         }
 
-        public void Draw(TextureManager textureManager, GameEngine engine)
+        public void Draw(TextureManager textureManager, GameEngine.GameEngine engine)
         {
             foreach (PlanetSystem system in PlanetSystems)
             {

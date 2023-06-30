@@ -1,4 +1,4 @@
-﻿using Galaxy_Explovive.Core.TextureManagement;
+﻿using Galaxy_Explovive.Core.GameEngine.Rendering;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 
@@ -16,7 +16,7 @@ namespace Galaxy_Explovive.Core.UserInterface
         }
 
         public void OnResolutionChanged(float x, float y, float width, float height)
-        { 
+        {
             Frame.X = x;
             Frame.Y = y;
             Frame.Width = width;

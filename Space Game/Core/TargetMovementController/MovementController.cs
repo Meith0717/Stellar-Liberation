@@ -1,11 +1,10 @@
-﻿using Galaxy_Explovive.Core.GameObject;
-using Galaxy_Explovive.Core.PositionManagement;
-using Galaxy_Explovive.Core.Utility;
+﻿using Galaxy_Explovive.Core.GameEngine;
+using Galaxy_Explovive.Core.GameEngine.GameObjects;
+using Galaxy_Explovive.Core.GameEngine.Utility;
 using Galaxy_Explovive.Game.GameLogik;
 using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
 using Microsoft.Xna.Framework;
 using System;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Galaxy_Explovive.Core.TargetMovementController
 {
@@ -24,24 +23,24 @@ namespace Galaxy_Explovive.Core.TargetMovementController
     {
         const int minDistanceToTarget = 100;
         const float OptimalAngle = 0.1f;
-        private GameObject.GameObject mSourceObject;
+        private GameEngine.GameObjects.GameObject mSourceObject;
         private float mDistanceToTarget;
         private float mTotalDistance;
         private float mAngleToTarget;
         private float mTargetAngle;
         private Movement mMovement = new();
 
-        public MovementController(GameObject.GameObject sourceObject)
+        public MovementController(GameEngine.GameObjects.GameObject sourceObject)
         {
             mSourceObject = sourceObject;
         }
 
-        public Movement GetMovement() { return mMovement;  }
+        public Movement GetMovement() { return mMovement; }
 
         /// <summary> Returns False if Target is reached. Returns True if not. </summary>
-        public bool MoveToTarget(GameObject.GameObject targetObject, Vector2 originPosition, 
-            float rotation, float velocity, float maxVelocity, bool stop=false)
-        {            
+        public bool MoveToTarget(GameEngine.GameObjects.GameObject targetObject, Vector2 originPosition,
+            float rotation, float velocity, float maxVelocity, bool stop = false)
+        {
             // Define moving and target Positions
             Vector2 movingPosition = mSourceObject.Position;
             Vector2 targetPosition = targetObject.BoundedBox.ClosestPointTo(movingPosition);
@@ -54,7 +53,7 @@ namespace Galaxy_Explovive.Core.TargetMovementController
 
             // Check if Destination is reached or velocity is zero
             if (mDistanceToTarget <= minDistanceToTarget || velocity <= 0) { return false; }
-            
+
             mMovement.Angle = RotationController(rotation);
             mMovement.Velocity = VelocityController(velocity, maxVelocity, stop);
             return true;
@@ -67,7 +66,7 @@ namespace Galaxy_Explovive.Core.TargetMovementController
             {
                 return (velocity <= 0.1f) ? 0 : velocity / 1.1f;
             }
-                switch (mAngleToTarget)
+            switch (mAngleToTarget)
             {
                 case > OptimalAngle: // Need To Correct angle
                     return 0.1f;
@@ -83,7 +82,7 @@ namespace Galaxy_Explovive.Core.TargetMovementController
 
                             if (mDistanceToTarget < slowDownDistance) // Slow Down if approaching to Target
                             {
-                                return (velocity <= 0.1f) ? 0 : 
+                                return (velocity <= 0.1f) ? 0 :
                                     (maxVelocity * (mDistanceToTarget / slowDownDistance));
                             }
 
@@ -91,7 +90,7 @@ namespace Galaxy_Explovive.Core.TargetMovementController
                             {
                                 return velocity * 2f;
                             }
-                            
+
                             return maxVelocity; // Traveling
                     }
                     break;
@@ -118,7 +117,7 @@ namespace Galaxy_Explovive.Core.TargetMovementController
         }
 
         public static InteractiveObject? SelectTargetObject(SpaceShip spaceShip,
-            SpatialHashing<GameObject.GameObject> spatialHashing, Vector2 worldMousePosition)
+            SpatialHashing<GameEngine.GameObjects.GameObject> spatialHashing, Vector2 worldMousePosition)
         {
             var gameObject = ObjectLocator.GetObjectsInRadius<InteractiveObject>(spatialHashing, worldMousePosition, 1500);
             gameObject.Remove(spaceShip);

@@ -1,12 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Galaxy_Explovive.Core.Persistance
+namespace Galaxy_Explovive.Core.GameEngine.Persistance
 {
     public class Serialize
     {
@@ -15,7 +11,7 @@ namespace Galaxy_Explovive.Core.Persistance
         public Serialize(string gameName = ".galaxy-explovive")
         {
             string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            string GameDataPath = Path.Combine(AppDataPath, gameName); 
+            string GameDataPath = Path.Combine(AppDataPath, gameName);
             mSaveFilePath = Path.Combine(GameDataPath, "Saves");
             CreateFolder(GameDataPath);
             CreateFolder(mSaveFilePath);
