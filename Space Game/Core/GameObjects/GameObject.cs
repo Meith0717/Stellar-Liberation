@@ -74,7 +74,7 @@ namespace Galaxy_Explovive.Core.GameObject
         public CircleF BoundedBox { get; set; }
 
         [JsonIgnore]
-        private bool WasRemovedFromSpatialHashing;
+        private bool WasRemovedFromSpatialHashing = true;
 
         /// <summary>
         /// Updates the game object's logic.
@@ -97,6 +97,7 @@ namespace Galaxy_Explovive.Core.GameObject
         {
             if (!WasRemovedFromSpatialHashing) return;
             engine.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
+            WasRemovedFromSpatialHashing = false;
         }
 
         /// <summary>

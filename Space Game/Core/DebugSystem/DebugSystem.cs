@@ -82,7 +82,7 @@ namespace Galaxy_Explovive.Core.Debug
             List<InteractiveObject> GameObjects = ObjectLocator.GetObjectsInRadius<InteractiveObject>(spatial, mouseWorldPosition, radius);
             foreach (InteractiveObject obj in GameObjects) 
             {
-                textureManager.DrawAdaptiveLine(mouseWorldPosition, obj.Position, Color.LightBlue, 1, textureManager.MaxLayerDepth);
+                textureManager.DrawLine(mouseWorldPosition, obj.Position, Color.LightBlue, 10, textureManager.MaxLayerDepth);
             }
         }
 

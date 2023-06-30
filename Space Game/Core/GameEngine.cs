@@ -10,6 +10,7 @@ using Galaxy_Explovive.Core.UserInterface.Messages;
 using Galaxy_Explovive.Core.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
 using System.Collections.Generic;
 
 namespace Galaxy_Explovive.Core
@@ -67,7 +68,7 @@ namespace Galaxy_Explovive.Core
         {
         }
 
-        public void UpdateGameObject<T>(GameTime time, InputState input,  T obj) where T : GameObject.GameObject
+            public void UpdateGameObject<T>(GameTime time, InputState input,  T obj) where T : GameObject.GameObject
         {
             obj.UpdateLogic(time, input, this);
         }
@@ -116,6 +117,15 @@ namespace Galaxy_Explovive.Core
             );
             DebugSystem.TestSpatialHashing(textureManager, SpatialHashing, WorldMousePosition);
             mSelectObjCrossHair.Draw(textureManager, this);
+        }
+
+        public void DrawObjectsOnScreen(TextureManager textureManager)
+        {
+            var objects = SpatialHashing.GetObjectsInSpace(FrustumCuller.WorldFrustum.ToRectangle());
+            foreach (GameObject.GameObject obj in objects)
+            {
+                DrawGameObject(textureManager, obj);
+            }
         }
 
         #pragma warning disable CA1822 // Mark members as static

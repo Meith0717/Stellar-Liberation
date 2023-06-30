@@ -15,7 +15,6 @@ namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
     {
         [JsonProperty] public Color mLightColor;
         [JsonProperty] public StarType mType;
-        [JsonIgnore] private bool mWasAddetToSpartialHashing;
 
         public Star(Vector2 position) : base()
         {

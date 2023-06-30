@@ -37,8 +37,10 @@ namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
 
         public override void UpdateLogic(GameTime gameTime, InputState inputState, GameEngine engine)
         {
+            RemoveFromSpatialHashing(engine);
             base.UpdateLogic(gameTime, inputState, engine);
             UpdateNavigation(gameTime, inputState);
+            AddToSpatialHashing(engine);
         }
 
         public override void Draw(TextureManager textureManager, GameEngine engine)
