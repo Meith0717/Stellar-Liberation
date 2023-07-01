@@ -37,7 +37,7 @@ namespace Galaxy_Explovive.Core.GameEngine.GameObjects
         /// <summary>
         /// Indicates whether the camera has been moved by the user.
         /// </summary>
-        public bool MovedByUser { get; private set; } = false;
+        public bool MovedByUser { get; private set; }
 
         private Vector2 mTargetPosition;
         private float mTargetZoom;
@@ -128,5 +128,4 @@ namespace Galaxy_Explovive.Core.GameEngine.GameObjects
             ZoomAnimation();
         }
     }
-}
 }
