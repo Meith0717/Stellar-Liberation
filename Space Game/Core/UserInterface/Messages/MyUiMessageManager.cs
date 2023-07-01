@@ -1,9 +1,9 @@
-﻿using Galaxy_Explovive.Core.GameEngine.InputManagement;
-using Galaxy_Explovive.Core.GameEngine.Rendering;
+﻿using GalaxyExplovive.Core.GameEngine.InputManagement;
+using GalaxyExplovive.Core.GameEngine.Rendering;
 using System.Collections.Generic;
 
 
-namespace Galaxy_Explovive.Core.UserInterface.Messages
+namespace GalaxyExplovive.Core.UserInterface.Messages
 {
     public class MyUiMessageManager
     {

@@ -1,6 +1,6 @@
-﻿using Galaxy_Explovive.Core.GameEngine.Rendering;
+﻿using GalaxyExplovive.Core.GameEngine.Rendering;
 
-namespace Galaxy_Explovive.Core.UserInterface
+namespace GalaxyExplovive.Core.UserInterface
 {
     internal abstract class MyUiElement
     {

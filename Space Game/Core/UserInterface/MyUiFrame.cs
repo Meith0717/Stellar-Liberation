@@ -1,8 +1,8 @@
-﻿using Galaxy_Explovive.Core.GameEngine.Rendering;
+﻿using GalaxyExplovive.Core.GameEngine.Rendering;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 
-namespace Galaxy_Explovive.Core.UserInterface
+namespace GalaxyExplovive.Core.UserInterface
 {
     internal class MyUiFrame
     {

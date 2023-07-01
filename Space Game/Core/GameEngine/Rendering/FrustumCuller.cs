@@ -8,7 +8,7 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 
-namespace Galaxy_Explovive.Core.GameEngine.Rendering
+namespace GalaxyExplovive.Core.GameEngine.Rendering
 {
     /// <summary>
     /// Represents a frustum culler for efficient visibility testing of objects within a view frustum.

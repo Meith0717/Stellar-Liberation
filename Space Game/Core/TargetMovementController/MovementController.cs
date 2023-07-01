@@ -1,12 +1,12 @@
-﻿using Galaxy_Explovive.Core.GameEngine;
-using Galaxy_Explovive.Core.GameEngine.GameObjects;
-using Galaxy_Explovive.Core.GameEngine.Utility;
-using Galaxy_Explovive.Game.GameLogik;
-using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
+﻿using GalaxyExplovive.Core.GameEngine;
+using GalaxyExplovive.Core.GameEngine.GameObjects;
+using GalaxyExplovive.Core.GameEngine.Utility;
+using GalaxyExplovive.Game.GameLogik;
+using GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips;
 using Microsoft.Xna.Framework;
 using System;
 
-namespace Galaxy_Explovive.Core.TargetMovementController
+namespace GalaxyExplovive.Core.TargetMovementController
 {
     public class Movement
     {

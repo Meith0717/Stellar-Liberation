@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Galaxy_Explovive.Core.GameEngine.Utility
+namespace GalaxyExplovive.Core.GameEngine.Utility
 {
     internal class RandomSingleton
     {

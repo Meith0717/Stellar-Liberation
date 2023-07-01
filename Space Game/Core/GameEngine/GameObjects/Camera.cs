@@ -5,11 +5,11 @@
  *  All rights reserved.
  */
 
-using Galaxy_Explovive.Core.GameEngine.InputManagement;
+using GalaxyExplovive.Core.GameEngine.InputManagement;
 using Microsoft.Xna.Framework;
 using System;
 
-namespace Galaxy_Explovive.Core.GameEngine.GameObjects
+namespace GalaxyExplovive.Core.GameEngine.GameObjects
 {
     /// <summary>
     /// Represents a camera used for viewing and manipulating the game world.

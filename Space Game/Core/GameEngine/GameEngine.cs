@@ -1,15 +1,15 @@
-﻿using Galaxy_Explovive.Core.GameEngine.GameObjects;
-using Galaxy_Explovive.Core.GameEngine.InputManagement;
-using Galaxy_Explovive.Core.GameEngine.Rendering;
-using Galaxy_Explovive.Core.GameEngine.Utility;
-using Galaxy_Explovive.Core.GameObject;
-using Galaxy_Explovive.Core.UserInterface.Messages;
+﻿using GalaxyExplovive.Core.GameEngine.GameObjects;
+using GalaxyExplovive.Core.GameEngine.InputManagement;
+using GalaxyExplovive.Core.GameEngine.Rendering;
+using GalaxyExplovive.Core.GameEngine.Utility;
+using GalaxyExplovive.Core.GameObject;
+using GalaxyExplovive.Core.UserInterface.Messages;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System.Collections.Generic;
 
-namespace Galaxy_Explovive.Core.GameEngine
+namespace GalaxyExplovive.Core.GameEngine
 {
     public class GameEngine
     {

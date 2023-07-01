@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace Galaxy_Explovive.Core.GameEngine.Persistance
+namespace GalaxyExplovive.Core.GameEngine.Persistance
 {
     public class Serialize
     {

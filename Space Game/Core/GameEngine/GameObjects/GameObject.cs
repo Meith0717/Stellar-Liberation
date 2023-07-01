@@ -5,14 +5,14 @@
  *  All rights reserved.
  */
 
-using Galaxy_Explovive.Core.GameEngine.InputManagement;
-using Galaxy_Explovive.Core.GameEngine.Rendering;
+using GalaxyExplovive.Core.GameEngine.InputManagement;
+using GalaxyExplovive.Core.GameEngine.Rendering;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
 using System;
 
-namespace Galaxy_Explovive.Core.GameEngine.GameObjects
+namespace GalaxyExplovive.Core.GameEngine.GameObjects
 {
     /// <summary>
     /// Abstract class representing a game object in the game engine.

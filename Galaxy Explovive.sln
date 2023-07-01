@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Galaxy Explovive", "Space Game\Galaxy Explovive.csproj", "{2F5D5647-D40E-41A3-B04D-8560110E90D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GalaxyExplovive", "Space Game\GalaxyExplovive.csproj", "{2F5D5647-D40E-41A3-B04D-8560110E90D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

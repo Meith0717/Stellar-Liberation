@@ -1,12 +1,12 @@
-﻿using Galaxy_Explovive.Core.GameEngine;
-using Galaxy_Explovive.Core.GameEngine.InputManagement;
-using Galaxy_Explovive.Core.LayerManagement;
-using Galaxy_Explovive.Game;
+﻿using GalaxyExplovive.Core.GameEngine;
+using GalaxyExplovive.Core.GameEngine.InputManagement;
+using GalaxyExplovive.Core.LayerManagement;
+using GalaxyExplovive.Game;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
-namespace Galaxy_Explovive.Layers
+namespace GalaxyExplovive.Layers
 {
     internal class TestLayer : Layer
     {

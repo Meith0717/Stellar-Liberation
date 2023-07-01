@@ -1,6 +1,6 @@
 ﻿
 
-namespace Galaxy_Explovive.Core.GameObjects.Types
+namespace GalaxyExplovive.Core.GameObjects.Types
 {
     public class PlanetType
     {

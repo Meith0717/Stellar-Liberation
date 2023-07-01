@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Galaxy_Explovive.Core.GameEngine
+namespace GalaxyExplovive.Core.GameEngine
 {
     /// <summary>
     /// Represents a spatial hashing data structure for efficient object retrieval based on their coordinates.

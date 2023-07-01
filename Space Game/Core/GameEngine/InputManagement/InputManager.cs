@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Galaxy_Explovive.Core.GameEngine.InputManagement
+namespace GalaxyExplovive.Core.GameEngine.InputManagement
 {
     public class InputManager
     {

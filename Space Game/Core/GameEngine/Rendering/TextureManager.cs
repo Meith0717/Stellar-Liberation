@@ -5,7 +5,7 @@ using MonoGame.Extended;
 using System;
 using System.Collections;
 
-namespace Galaxy_Explovive.Core.GameEngine.Rendering;
+namespace GalaxyExplovive.Core.GameEngine.Rendering;
 
 public class TextureManager
 {

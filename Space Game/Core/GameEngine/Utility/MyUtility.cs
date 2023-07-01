@@ -3,7 +3,7 @@ using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
 
-namespace Galaxy_Explovive.Core.GameEngine.Utility
+namespace GalaxyExplovive.Core.GameEngine.Utility
 {
     public class MyUtility
     {

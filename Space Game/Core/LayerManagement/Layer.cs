@@ -1,13 +1,13 @@
-using Galaxy_Explovive.Core.GameEngine;
-using Galaxy_Explovive.Core.GameEngine.InputManagement;
-using Galaxy_Explovive.Core.GameEngine.Persistance;
-using Galaxy_Explovive.Core.GameEngine.Rendering;
+using GalaxyExplovive.Core.GameEngine;
+using GalaxyExplovive.Core.GameEngine.InputManagement;
+using GalaxyExplovive.Core.GameEngine.Persistance;
+using GalaxyExplovive.Core.GameEngine.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using System;
 
-namespace Galaxy_Explovive.Core.LayerManagement;
+namespace GalaxyExplovive.Core.LayerManagement;
 
 [Serializable]
 public abstract class Layer

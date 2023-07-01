@@ -1,11 +1,11 @@
-﻿using Galaxy_Explovive.Core.GameEngine.InputManagement;
-using Galaxy_Explovive.Core.LayerManagement;
-using Galaxy_Explovive.Core.UserInterface;
-using Galaxy_Explovive.Game;
+﻿using GalaxyExplovive.Core.GameEngine.InputManagement;
+using GalaxyExplovive.Core.LayerManagement;
+using GalaxyExplovive.Core.UserInterface;
+using GalaxyExplovive.Game;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Galaxy_Explovive.Layers
+namespace GalaxyExplovive.Layers
 {
     public class PauseLayer : Layer
     {

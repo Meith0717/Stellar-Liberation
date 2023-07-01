@@ -1,7 +1,7 @@
-﻿using Galaxy_Explovive.Core.GameEngine.Rendering;
+﻿using GalaxyExplovive.Core.GameEngine.Rendering;
 using Microsoft.Xna.Framework;
 
-namespace Galaxy_Explovive.Core.GameObject
+namespace GalaxyExplovive.Core.GameObject
 {
     public class CrossHair : GameEngine.GameObjects.GameObject
     {

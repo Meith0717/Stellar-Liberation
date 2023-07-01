@@ -1,18 +1,18 @@
-﻿using Galaxy_Explovive.Core;
-using Galaxy_Explovive.Core.Effects;
-using Galaxy_Explovive.Core.GameEngine;
-using Galaxy_Explovive.Core.GameEngine.InputManagement;
-using Galaxy_Explovive.Core.GameEngine.Rendering;
-using Galaxy_Explovive.Core.GameEngine.Utility;
-using Galaxy_Explovive.Core.Map;
-using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
+﻿using GalaxyExplovive.Core;
+using GalaxyExplovive.Core.Effects;
+using GalaxyExplovive.Core.GameEngine;
+using GalaxyExplovive.Core.GameEngine.InputManagement;
+using GalaxyExplovive.Core.GameEngine.Rendering;
+using GalaxyExplovive.Core.GameEngine.Utility;
+using GalaxyExplovive.Core.Map;
+using GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
-namespace Galaxy_Explovive.Game
+namespace GalaxyExplovive.Game
 {
     [Serializable]
     public class GameState

@@ -1,9 +1,9 @@
-﻿using Galaxy_Explovive.Core.GameEngine.Rendering;
+﻿using GalaxyExplovive.Core.GameEngine.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
-namespace Galaxy_Explovive.Core.Effects
+namespace GalaxyExplovive.Core.Effects
 {
     internal class ParllaxManager
     {

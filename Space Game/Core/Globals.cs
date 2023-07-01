@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Galaxy_Explovive.Core
+namespace GalaxyExplovive.Core
 {
     public class Globals
     {

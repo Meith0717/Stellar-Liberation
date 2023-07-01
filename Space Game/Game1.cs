@@ -1,15 +1,15 @@
-﻿using Galaxy_Explovive.Core.GameEngine;
-using Galaxy_Explovive.Core.GameEngine.InputManagement;
-using Galaxy_Explovive.Core.GameEngine.Persistance;
-using Galaxy_Explovive.Core.GameEngine.Rendering;
-using Galaxy_Explovive.Core.LayerManagement;
-using Galaxy_Explovive.Layers;
+﻿using GalaxyExplovive.Core.GameEngine;
+using GalaxyExplovive.Core.GameEngine.InputManagement;
+using GalaxyExplovive.Core.GameEngine.Persistance;
+using GalaxyExplovive.Core.GameEngine.Rendering;
+using GalaxyExplovive.Core.LayerManagement;
+using GalaxyExplovive.Layers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 
-namespace Galaxy_Explovive
+namespace GalaxyExplovive
 {
     public class Game1 : Microsoft.Xna.Framework.Game
     {

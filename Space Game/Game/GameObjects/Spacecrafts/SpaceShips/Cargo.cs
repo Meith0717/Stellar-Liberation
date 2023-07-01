@@ -1,9 +1,9 @@
-﻿using Galaxy_Explovive.Core.GameEngine;
-using Galaxy_Explovive.Core.GameEngine.Rendering;
-using Galaxy_Explovive.Core.GameObject;
+﻿using GalaxyExplovive.Core.GameEngine;
+using GalaxyExplovive.Core.GameEngine.Rendering;
+using GalaxyExplovive.Core.GameObject;
 using Microsoft.Xna.Framework;
 
-namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
+namespace GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips
 {
     public class Cargo : SpaceShip
     {

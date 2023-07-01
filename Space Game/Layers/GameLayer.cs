@@ -1,16 +1,16 @@
-﻿// using Galaxy_Explovive.Core;
-// using Galaxy_Explovive.Core.InputManagement;
-// using Galaxy_Explovive.Core.LayerManagement;
-// using Galaxy_Explovive.Core.UserInterface;
-// using Galaxy_Explovive.Core.UserInterface.Messages;
-// using Galaxy_Explovive.Core.Utility;
-// using Galaxy_Explovive.Game;
-// using Galaxy_Explovive.Game.GameObjects.Spacecraft;
-// using Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips;
+﻿// using GalaxyExplovive.Core;
+// using GalaxyExplovive.Core.InputManagement;
+// using GalaxyExplovive.Core.LayerManagement;
+// using GalaxyExplovive.Core.UserInterface;
+// using GalaxyExplovive.Core.UserInterface.Messages;
+// using GalaxyExplovive.Core.Utility;
+// using GalaxyExplovive.Game;
+// using GalaxyExplovive.Game.GameObjects.Spacecraft;
+// using GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips;
 // using Microsoft.Xna.Framework;
 // using Microsoft.Xna.Framework.Graphics;
 // 
-// namespace Galaxy_Explovive.Layers
+// namespace GalaxyExplovive.Layers
 // {
 //     public class GameLayer : Layer
 //     {

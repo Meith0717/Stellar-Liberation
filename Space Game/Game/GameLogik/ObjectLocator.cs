@@ -1,11 +1,11 @@
-﻿using Galaxy_Explovive.Core.GameEngine;
-using Galaxy_Explovive.Core.GameEngine.GameObjects;
+﻿using GalaxyExplovive.Core.GameEngine;
+using GalaxyExplovive.Core.GameEngine.GameObjects;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Galaxy_Explovive.Game.GameLogik
+namespace GalaxyExplovive.Game.GameLogik
 {
     internal static class ObjectLocator
     {

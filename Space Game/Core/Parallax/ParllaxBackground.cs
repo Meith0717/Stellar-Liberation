@@ -1,8 +1,8 @@
-﻿using Galaxy_Explovive.Core.GameEngine.Rendering;
+﻿using GalaxyExplovive.Core.GameEngine.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Galaxy_Explovive.Core.Effects
+namespace GalaxyExplovive.Core.Effects
 {
     internal class ParllaxBackground
     {

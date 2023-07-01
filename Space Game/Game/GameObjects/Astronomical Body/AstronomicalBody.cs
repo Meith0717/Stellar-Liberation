@@ -1,9 +1,9 @@
-﻿using Galaxy_Explovive.Core.GameEngine;
-using Galaxy_Explovive.Core.GameEngine.GameObjects;
-using Galaxy_Explovive.Core.GameEngine.InputManagement;
+﻿using GalaxyExplovive.Core.GameEngine;
+using GalaxyExplovive.Core.GameEngine.GameObjects;
+using GalaxyExplovive.Core.GameEngine.InputManagement;
 using System;
 
-namespace Galaxy_Explovive.Game.GameObjects.Astronomical_Body
+namespace GalaxyExplovive.Game.GameObjects.Astronomical_Body
 {
     /// <summary>
     /// Abstract class representing an astronomical body, derived from the InteractiveObject class.

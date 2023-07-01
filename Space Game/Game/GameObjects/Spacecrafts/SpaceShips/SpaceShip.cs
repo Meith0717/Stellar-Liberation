@@ -1,16 +1,16 @@
-﻿using Galaxy_Explovive.Core.GameEngine;
-using Galaxy_Explovive.Core.GameEngine.GameObjects;
-using Galaxy_Explovive.Core.GameEngine.InputManagement;
-using Galaxy_Explovive.Core.GameEngine.Rendering;
-using Galaxy_Explovive.Core.GameEngine.Utility;
-using Galaxy_Explovive.Core.GameObject;
-using Galaxy_Explovive.Core.TargetMovementController;
-using Galaxy_Explovive.Core.Weapons;
+﻿using GalaxyExplovive.Core.GameEngine;
+using GalaxyExplovive.Core.GameEngine.GameObjects;
+using GalaxyExplovive.Core.GameEngine.InputManagement;
+using GalaxyExplovive.Core.GameEngine.Rendering;
+using GalaxyExplovive.Core.GameEngine.Utility;
+using GalaxyExplovive.Core.GameObject;
+using GalaxyExplovive.Core.TargetMovementController;
+using GalaxyExplovive.Core.Weapons;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
 
-namespace Galaxy_Explovive.Game.GameObjects.Spacecraft.SpaceShips
+namespace GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips
 {
     [Serializable]
     public class SpaceShip : Spacecraft

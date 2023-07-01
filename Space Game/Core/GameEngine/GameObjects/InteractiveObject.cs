@@ -5,13 +5,13 @@
  *  All rights reserved.
  */
 
-using Galaxy_Explovive.Core.GameEngine.InputManagement;
+using GalaxyExplovive.Core.GameEngine.InputManagement;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 
-namespace Galaxy_Explovive.Core.GameEngine.GameObjects
+namespace GalaxyExplovive.Core.GameEngine.GameObjects
 {
     /// <summary>
     /// Abstract class representing an interactive game object derived from the GameObject class.

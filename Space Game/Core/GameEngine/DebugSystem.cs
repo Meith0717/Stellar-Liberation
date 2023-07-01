@@ -1,13 +1,13 @@
-﻿using Galaxy_Explovive.Core.GameEngine.GameObjects;
-using Galaxy_Explovive.Core.GameEngine.InputManagement;
-using Galaxy_Explovive.Core.GameEngine.Rendering;
-using Galaxy_Explovive.Game.GameLogik;
+﻿using GalaxyExplovive.Core.GameEngine.GameObjects;
+using GalaxyExplovive.Core.GameEngine.InputManagement;
+using GalaxyExplovive.Core.GameEngine.Rendering;
+using GalaxyExplovive.Game.GameLogik;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
 
-namespace Galaxy_Explovive.Core.GameEngine
+namespace GalaxyExplovive.Core.GameEngine
 {
     public class DebugSystem
     {

@@ -1,16 +1,16 @@
-﻿using Galaxy_Explovive.Core.GameEngine;
-using Galaxy_Explovive.Core.GameEngine.GameObjects;
-using Galaxy_Explovive.Core.GameEngine.InputManagement;
-using Galaxy_Explovive.Core.GameEngine.Rendering;
-using Galaxy_Explovive.Core.GameEngine.Utility;
-using Galaxy_Explovive.Core.GameObjects.Types;
-using Galaxy_Explovive.Game.GameObjects.Astronomical_Body;
+﻿using GalaxyExplovive.Core.GameEngine;
+using GalaxyExplovive.Core.GameEngine.GameObjects;
+using GalaxyExplovive.Core.GameEngine.InputManagement;
+using GalaxyExplovive.Core.GameEngine.Rendering;
+using GalaxyExplovive.Core.GameEngine.Utility;
+using GalaxyExplovive.Core.GameObjects.Types;
+using GalaxyExplovive.Game.GameObjects.Astronomical_Body;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
 using System;
 
-namespace Galaxy_Explovive.Game.GameObjects
+namespace GalaxyExplovive.Game.GameObjects
 {
     [Serializable]
     public class Planet : InteractiveObject

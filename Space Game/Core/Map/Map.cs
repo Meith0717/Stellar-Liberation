@@ -1,13 +1,13 @@
-﻿using Galaxy_Explovive.Core.GameEngine.InputManagement;
-using Galaxy_Explovive.Core.GameEngine.Rendering;
-using Galaxy_Explovive.Core.GameEngine.Utility;
-using Galaxy_Explovive.Game.GameObjects;
+﻿using GalaxyExplovive.Core.GameEngine.InputManagement;
+using GalaxyExplovive.Core.GameEngine.Rendering;
+using GalaxyExplovive.Core.GameEngine.Utility;
+using GalaxyExplovive.Game.GameObjects;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
-namespace Galaxy_Explovive.Core.Map
+namespace GalaxyExplovive.Core.Map
 {
     [Serializable]
     public class Map

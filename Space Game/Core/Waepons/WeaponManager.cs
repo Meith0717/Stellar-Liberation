@@ -1,11 +1,11 @@
-﻿using Galaxy_Explovive.Core.GameEngine;
-using Galaxy_Explovive.Core.GameEngine.Rendering;
-using Galaxy_Explovive.Core.Waepons;
-using Galaxy_Explovive.Game.GameObjects.Spacecraft;
+﻿using GalaxyExplovive.Core.GameEngine;
+using GalaxyExplovive.Core.GameEngine.Rendering;
+using GalaxyExplovive.Core.Waepons;
+using GalaxyExplovive.Game.GameObjects.Spacecraft;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
-namespace Galaxy_Explovive.Core.Weapons
+namespace GalaxyExplovive.Core.Weapons
 {
     public class WeaponManager
     {

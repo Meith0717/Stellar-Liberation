@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Galaxy_Explovive.Core.GameEngine
+namespace GalaxyExplovive.Core.GameEngine
 {
     public class SoundManager
     {

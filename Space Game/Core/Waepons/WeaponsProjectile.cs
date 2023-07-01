@@ -1,13 +1,13 @@
-﻿using Galaxy_Explovive.Core.GameEngine;
-using Galaxy_Explovive.Core.GameEngine.Rendering;
-using Galaxy_Explovive.Core.GameEngine.Utility;
-using Galaxy_Explovive.Game.GameLogik;
-using Galaxy_Explovive.Game.GameObjects.Spacecraft;
+﻿using GalaxyExplovive.Core.GameEngine;
+using GalaxyExplovive.Core.GameEngine.Rendering;
+using GalaxyExplovive.Core.GameEngine.Utility;
+using GalaxyExplovive.Game.GameLogik;
+using GalaxyExplovive.Game.GameObjects.Spacecraft;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 
-namespace Galaxy_Explovive.Core.Waepons
+namespace GalaxyExplovive.Core.Waepons
 {
     public class WeaponsProjectile
     {

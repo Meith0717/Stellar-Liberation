@@ -1,10 +1,10 @@
-using Galaxy_Explovive.Core.GameEngine.InputManagement;
+using GalaxyExplovive.Core.GameEngine.InputManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Galaxy_Explovive.Core.LayerManagement;
+namespace GalaxyExplovive.Core.LayerManagement;
 
 public class LayerManager
 {
