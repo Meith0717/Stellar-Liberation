@@ -53,14 +53,17 @@ namespace Galaxy_Explovive.Core.GameEngine
 
         public void ShowRenderInfo(TextureManager textureManager, float cameraZoom, Vector2 cameraPosition)
         {
-            Vector2 position = new(10, 50);
             if (mDebugLevel < 1) { return; }
+            Vector2 position = new(10, 50);
             int i = 0;
             List<string> lst = new List<string>
             {
                 $"Level {mDebugLevel}",
-                $"{Math.Round(mCurrentFramesPerSecond)}FPS, {mFrameDuration}ms",
-                $"Zoom{cameraZoom}, Pos{cameraPosition.ToPoint()}",
+                $"",
+                $"{Math.Round(mCurrentFramesPerSecond)} FPS, {mFrameDuration} ms",
+                $"",
+                $"Zoom {cameraZoom}, Pos {cameraPosition.ToPoint()}",
+                $"",
                 $"Drawn Objects {DrawnObjectCount}",
                 $"Updated Objects {UpdateObjectCount}"
             };

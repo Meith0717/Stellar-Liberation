@@ -1,21 +1,44 @@
+/*
+ *  Camera.cs
+ *
+ *  Copyright (c) 2023 Thierry Meiers
+ *  All rights reserved.
+ */
+
 using Galaxy_Explovive.Core.GameEngine.InputManagement;
 using Microsoft.Xna.Framework;
 using System;
 
 namespace Galaxy_Explovive.Core.GameEngine.GameObjects
 {
+    /// <summary>
+    /// Represents a camera used for viewing and manipulating the game world.
+    /// </summary>
     public class Camera
     {
-        // Constants
-        const float mMaxZoom = 0.001f;
-        const float mMimZoom = 1f;
+        private const float MaxZoom = 0.001f;
+        private const float MimZoom = 1f;
 
+        /// <summary>
+        /// Current zoom level of the camera.
+        /// </summary>
         public float Zoom { get; private set; } = 1f;
+
+        /// <summary>
+        /// Current position of the camera.
+        /// </summary>
         public Vector2 Position { get; private set; }
+
+        /// <summary>
+        /// Current movement vector of the camera.
+        /// </summary>
         public Vector2 Movement { get; private set; }
+
+        /// <summary>
+        /// Indicates whether the camera has been moved by the user.
+        /// </summary>
         public bool MovedByUser { get; private set; } = false;
 
-        // animation stuff
         private Vector2 mTargetPosition;
         private float mTargetZoom;
         private bool mZoomAnimation;
@@ -29,17 +52,18 @@ namespace Galaxy_Explovive.Core.GameEngine.GameObjects
 
         private void MovingAnimation(int spongy)
         {
-            Position = Vector2.Distance(Position, mTargetPosition) < 0.1 ? mTargetPosition : Position;
             if (Position == mTargetPosition) { return; }
-            Vector2 adjustmentVector = Vector2.Subtract(mTargetPosition, Position);
+            var adjustmentVector = mTargetPosition - Position;
             Movement = adjustmentVector / spongy;
             Position += Movement;
+            if (Vector2.Distance(Position, mTargetPosition) < 0.1)
+                Position = mTargetPosition;
         }
 
         private void ZoomAnimation()
         {
             if (!mZoomAnimation) { return; }
-            float zoomUpdate = -((Zoom - mTargetZoom) / 10);
+            var zoomUpdate = -((Zoom - mTargetZoom) / 10);
             if (Math.Abs(zoomUpdate) > 0.0001f) { Zoom += zoomUpdate; return; }
             mZoomAnimation = false;
         }
@@ -48,47 +72,54 @@ namespace Galaxy_Explovive.Core.GameEngine.GameObjects
         {
             MovedByUser = false;
             Movement = Vector2.Zero;
-
             if (inputState.mMouseActionType != MouseActionType.LeftClickHold)
             {
                 mLastMousePosition = mousePosition;
                 return;
             }
-
-            if (mLastMousePosition != mousePosition)
-            {
-                Movement = mLastMousePosition - mousePosition;
-                mTargetPosition += Movement;
-                MovedByUser = true;
-                mZoomAnimation = false;
-                mLastMousePosition = mousePosition;
-            }
+            if (mLastMousePosition == mousePosition) return;
+            Movement = mLastMousePosition - mousePosition;
+            mTargetPosition += Movement;
+            MovedByUser = true;
+            mZoomAnimation = false;
+            mLastMousePosition = mousePosition;
         }
 
         private void AdjustZoom(GameTime gameTime, InputState inputState)
         {
-            // adjust zoom
-            int zoom = 0;
-            if (inputState.mActionList.Contains(ActionType.CameraZoomIn) && Zoom + 0.0041 < mMimZoom) { zoom += 7; }
-            if (inputState.mActionList.Contains(ActionType.CameraZoomOut) && Zoom - 0.0041 > mMaxZoom) { zoom -= 7; }
-            if (zoom != 0)
-            {
-                mZoomAnimation = false;
-                Zoom *= 1 + zoom * 0.001f * gameTime.ElapsedGameTime.Milliseconds;
-            }
+            var zoom = 0;
+            if (inputState.mActionList.Contains(ActionType.CameraZoomIn) && Zoom + 0.0041 < MimZoom) { zoom += 7; }
+            if (inputState.mActionList.Contains(ActionType.CameraZoomOut) && Zoom - 0.0041 > MaxZoom) { zoom -= 7; }
+            if (zoom == 0) return;
+            mZoomAnimation = false;
+            Zoom *= 1 + zoom * 0.001f * gameTime.ElapsedGameTime.Milliseconds;
         }
 
+        /// <summary>
+        /// Sets the target zoom level for the camera.
+        /// </summary>
+        /// <param name="zoom">The target zoom level.</param>
         public void SetZoom(float zoom)
         {
             mTargetZoom = zoom;
             mZoomAnimation = true;
         }
 
+        /// <summary>
+        /// Sets the target position for the camera.
+        /// </summary>
+        /// <param name="position">The target position.</param>
         public void SetTarget(Vector2 position)
         {
             mTargetPosition = position;
         }
 
+        /// <summary>
+        /// Updates the camera based on the current game state.
+        /// </summary>
+        /// <param name="gameTime">The game time.</param>
+        /// <param name="inputState">The input state.</param>
+        /// <param name="mousePosition">The current mouse position.</param>
         public void Update(GameTime gameTime, InputState inputState, Vector2 mousePosition)
         {
             AdjustZoom(gameTime, inputState);
@@ -98,4 +129,4 @@ namespace Galaxy_Explovive.Core.GameEngine.GameObjects
         }
     }
 }
-
+}

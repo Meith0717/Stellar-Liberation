@@ -1,4 +1,11 @@
-﻿using Galaxy_Explovive.Core.GameEngine.InputManagement;
+﻿/*
+ *  InteractiveObject.cs
+ *
+ *  Copyright (c) 2023 Thierry Meiers
+ *  All rights reserved.
+ */
+
+using Galaxy_Explovive.Core.GameEngine.InputManagement;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;

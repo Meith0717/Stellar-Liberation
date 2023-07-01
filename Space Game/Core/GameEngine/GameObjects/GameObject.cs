@@ -1,4 +1,11 @@
-﻿using Galaxy_Explovive.Core.GameEngine.InputManagement;
+﻿/*
+ *  GameObject.cs
+ *
+ *  Copyright (c) 2023 Thierry Meiers
+ *  All rights reserved.
+ */
+
+using Galaxy_Explovive.Core.GameEngine.InputManagement;
 using Galaxy_Explovive.Core.GameEngine.Rendering;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
@@ -74,7 +81,7 @@ namespace Galaxy_Explovive.Core.GameEngine.GameObjects
         public CircleF BoundedBox { get; set; }
 
         [JsonIgnore]
-        private bool WasRemovedFromSpatialHashing = true;
+        private bool mWasRemovedFromSpatialHashing = true;
 
         /// <summary>
         /// Updates the game object's logic.
@@ -86,7 +93,7 @@ namespace Galaxy_Explovive.Core.GameEngine.GameObjects
         public virtual void UpdateLogic(GameTime gameTime, InputState inputState, GameEngine engine)
         {
             engine.DebugSystem.UpdateObjectCount += 1;
-            BoundedBox = new CircleF(Position, Math.Max(Height, Width) / 2 * TextureScale);
+            BoundedBox = new CircleF(Position, MathF.Max(Height, Width) / 2 * TextureScale);
         }
 
         /// <summary>
@@ -95,9 +102,9 @@ namespace Galaxy_Explovive.Core.GameEngine.GameObjects
         /// <param name="engine">The game engine instance.</param>
         public void AddToSpatialHashing(GameEngine engine)
         {
-            if (!WasRemovedFromSpatialHashing) return;
+            if (!mWasRemovedFromSpatialHashing) return;
             engine.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
-            WasRemovedFromSpatialHashing = false;
+            mWasRemovedFromSpatialHashing = false;
         }
 
         /// <summary>
@@ -106,7 +113,7 @@ namespace Galaxy_Explovive.Core.GameEngine.GameObjects
         /// <param name="engine">The game engine instance.</param>
         public void RemoveFromSpatialHashing(GameEngine engine)
         {
-            WasRemovedFromSpatialHashing = true;
+            mWasRemovedFromSpatialHashing = true;
             engine.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
         }
 
