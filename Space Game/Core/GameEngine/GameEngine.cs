@@ -44,9 +44,9 @@ namespace GalaxyExplovive.Core.GameEngine
             DebugSystem.Update(time, input);
 
             GameTime += time.ElapsedGameTime.Milliseconds;
-            mViewTransformationMatrix = MyUtility.GetViewTransforationMatrix(Camera.Position, Camera.Zoom, screenWidth, screenHeight);
+            mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera.Position, Camera.Zoom, screenWidth, screenHeight);
             ViewMousePosition = input.mMousePosition.ToVector2();
-            WorldMousePosition = MyUtility.ScreenToWorldProjection(mViewTransformationMatrix, ViewMousePosition);
+            WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, ViewMousePosition);
 
             Camera.Update(time, input, WorldMousePosition);
             FrustumCuller.Update(screenWidth, screenHeight, mViewTransformationMatrix);

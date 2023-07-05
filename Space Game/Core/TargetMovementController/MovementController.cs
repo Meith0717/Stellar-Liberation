@@ -48,7 +48,7 @@ namespace GalaxyExplovive.Core.TargetMovementController
             // Defining some helpfull Variables
             mDistanceToTarget = Vector2.Distance(movingPosition, targetPosition);
             mTotalDistance = Vector2.Distance(originPosition, targetPosition);
-            mTargetAngle = MyUtility.GetAngle(movingPosition, targetPosition);
+            mTargetAngle = Geometry.AngleBetweenVectors(movingPosition, targetPosition);
             mAngleToTarget = MathF.Abs(rotation - mTargetAngle);
 
             // Check if Destination is reached or velocity is zero

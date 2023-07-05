@@ -39,7 +39,7 @@ namespace GalaxyExplovive.Game
             mParllaxManager.Add(new("gameBackgroundParlax2", 0.15f));
             mParllaxManager.Add(new("gameBackgroundParlax3", 0.2f));
             mParllaxManager.Add(new("gameBackgroundParlax4", 0.25f));
-            mShips.Add(new(MyUtility.GetRandomVector2(Vector2.Zero, 0)));
+            mShips.Add(new(Utility.GetRandomVector2(Vector2.Zero, 0)));
         }
 
         public void Update(InputState inputState, GameTime gameTime, GraphicsDevice graphicsDevice)

@@ -30,7 +30,7 @@ namespace GalaxyExplovive.Core.Waepons
             ProjectileColor = color;
             Velocity = 0.5f;
             Direction = (target.Position - Position).NormalizedCopy();
-            Rotation = MyUtility.GetAngle(Position, Vector2.Zero);
+            Rotation = Geometry.AngleBetweenVectors(Position, Vector2.Zero);
         }
 
         public void Update(GameTime gameTime, SoundManager soundManager, SpatialHashing<GameEngine.GameObjects.GameObject> spatial)
@@ -54,7 +54,7 @@ namespace GalaxyExplovive.Core.Waepons
             var ships = ObjectLocator.GetObjectsInRadius<Spacecraft>(spatial, Position, 40);
             ships.Remove(OriginShip);
             if (ships.Count <= 0) { return; }
-            soundManager.PlaySound("hit", (float)MyUtility.Random.NextDouble());
+            soundManager.PlaySound("hit", (float)Utility.Random.NextDouble());
             ships[0].Hit(10);
             Remove = true;
         }

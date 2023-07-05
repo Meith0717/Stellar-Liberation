@@ -18,7 +18,7 @@ namespace GalaxyExplovive.Game.GameObjects.Astronomical_Body
 
         public Star(Vector2 position) : base()
         {
-            int randIndex = MyUtility.Random.Next(StarTypes.Types.Count);
+            int randIndex = Utility.Random.Next(StarTypes.Types.Count);
             mType = StarTypes.Types[randIndex];
             // Location
             Position = position;

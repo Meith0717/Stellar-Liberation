@@ -24,7 +24,7 @@ namespace GalaxyExplovive.Game.GameObjects
             mPlanets = new();
             int radiusLimit = (int)(mStar.Width / 2 * mStar.TextureScale);
             int orbitNr;
-            for (orbitNr = 1; orbitNr <= MyUtility.Random.Next(1, 1); orbitNr++)
+            for (orbitNr = 1; orbitNr <= Utility.Random.Next(1, 1); orbitNr++)
             {
                 mPlanets.Add(new Planet(orbitNr, position, mStar.mLightColor, radiusLimit));
             }

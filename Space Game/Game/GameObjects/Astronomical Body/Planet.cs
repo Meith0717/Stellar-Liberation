@@ -27,7 +27,7 @@ namespace GalaxyExplovive.Game.GameObjects
         public Planet(int orbitNr, Vector2 CenterPosition, Color StarColor, int StarSize) : base()
         {
             // Location
-            mAngle = MyUtility.Random.NextAngle();
+            mAngle = Utility.Random.NextAngle();
             mPlanetType = GetPlanetType(orbitNr);
 
             // Rendering
@@ -44,7 +44,7 @@ namespace GalaxyExplovive.Game.GameObjects
 
             // Class Stuff
             mCenterPosition = CenterPosition;
-            Position = MyUtility.GetVector2(mRadius, mAngle) + mCenterPosition;
+            Position = Geometry.GetPointOnCircle(mCenterPosition, mRadius, mAngle);
             SelectZoom = 1;
             BoundedBox = new CircleF(Position, (Math.Max(Height, Width) / 2) * TextureScale);
         }
@@ -62,9 +62,9 @@ namespace GalaxyExplovive.Game.GameObjects
 
             float velocity = MathF.Sqrt(1 / (mRadius * 10));
             float angleUpdate = mAngle + (engine.GameTime / 1000) * velocity;
-            Position = MyUtility.GetVector2(mRadius, mAngle + angleUpdate) + mCenterPosition;
+            Position = Geometry.GetPointOnCircle(mCenterPosition, mRadius, mAngle + angleUpdate);
             Rotation += 0.004f;
-            mShadowRotation = MyUtility.GetAngle(mCenterPosition, Position);
+            mShadowRotation = Geometry.AngleBetweenVectors(mCenterPosition, Position);
             AddToSpatialHashing(engine);
         }
 

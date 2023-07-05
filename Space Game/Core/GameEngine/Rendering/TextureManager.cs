@@ -1,9 +1,16 @@
+/*
+ *  TextureManager.cs
+ *
+ *  Copyright (c) 2023 Thierry Meiers
+ *  All rights reserved.
+ */
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace GalaxyExplovive.Core.GameEngine.Rendering;
 
@@ -11,55 +18,57 @@ public class TextureManager
 {
     public int MaxLayerDepth = 10000;
 
-    private readonly Hashtable mTextures = new();
-    private readonly Hashtable mSpriteFonts = new();
-    private readonly ContentManager mContentManager;
+    private readonly Dictionary<string, Texture2D> mTextures = new();
+    private readonly Dictionary<string, SpriteFont> mSpriteFonts = new();
     public SpriteBatch SpriteBatch { get; private set; }
-    private float mCamZoom;
-
-    public TextureManager(ContentManager contentManager)
-    {
-        mContentManager = contentManager;
-    }
-
-    public void Update(float camZoom)
-    {
-        mCamZoom = camZoom;
-    }
 
     public void SetSpriteBatch(SpriteBatch spriteBatch)
     {
         SpriteBatch = spriteBatch;
     }
 
-    public void LoadTexture(string id, string fileName)
+    public void LoadTexture(ContentManager content, string id, string fileName)
     {
-        Texture2D texture = mContentManager.Load<Texture2D>(fileName);
-        mTextures.Add(id, texture);
+        try
+        {
+            Texture2D texture = content.Load<Texture2D>(fileName);
+            mTextures.Add(id, texture);
+        } 
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Something did'nt work when loading {id} Texture: {ex}");
+        }
     }
 
-    public void LoadSpriteTexture(string id, string fileName)
+    public void LoadSpriteTexture(ContentManager content, string id, string fileName)
     {
-        SpriteFont spriteFont = mContentManager.Load<SpriteFont>(fileName);
-        mSpriteFonts.Add(id, spriteFont);
+        try
+        {
+            SpriteFont spriteFont = content.Load<SpriteFont>(fileName);
+            mSpriteFonts.Add(id, spriteFont);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Something did'nt work when loading {id} Sprite: {ex}");
+        }
     }
 
     public Texture2D GetTexture(string id)
     {
-        Texture2D texture = (Texture2D)mTextures[id];
+        Texture2D texture = mTextures[id];
         if (texture == null)
         {
-            throw new Exception($"Error, Texture {id} was not found!");
+            throw new Exception($"Error, Texture {id} was not found in TextureManager");
         }
 
         return texture;
     }
     public SpriteFont GetSpriteFont(string id)
     {
-        SpriteFont spriteFont = (SpriteFont)mSpriteFonts[id];
+        SpriteFont spriteFont = mSpriteFonts[id];
         if (spriteFont == null)
         {
-            throw new Exception("Error, Texture was not found!");
+            throw new Exception("Error, Texture was not found in TextureManager");
         }
 
         return spriteFont;
@@ -103,7 +112,7 @@ public class TextureManager
 
     public void DrawAdaptiveCircle(Vector2 center, float radius, Color color, float thickness, int depth)
     {
-        SpriteBatch.DrawCircle(center, radius, 90, color, thickness / mCamZoom, depth / MaxLayerDepth);
+        SpriteBatch.DrawCircle(center, radius, 90, color, thickness / 1, depth / MaxLayerDepth);
     }
 
     // render Rectangle ___________________________________________________________________________
@@ -114,7 +123,7 @@ public class TextureManager
 
     public void DrawAdaptiveRectangleF(RectangleF rectangle, Color color, float thickness, int depth)
     {
-        SpriteBatch.DrawRectangle(rectangle, color, thickness / mCamZoom, depth / MaxLayerDepth);
+        SpriteBatch.DrawRectangle(rectangle, color, thickness / 1, depth / MaxLayerDepth);
     }
 
 
@@ -126,7 +135,7 @@ public class TextureManager
 
     public void DrawAdaptiveLine(Vector2 start, Vector2 end, Color color, float thickness, float depth)
     {
-        SpriteBatch.DrawLine(start, end, color, thickness / mCamZoom, depth / MaxLayerDepth);
+        SpriteBatch.DrawLine(start, end, color, thickness / 1, depth / MaxLayerDepth);
     }
 
 

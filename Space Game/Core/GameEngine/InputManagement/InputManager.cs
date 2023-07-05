@@ -1,4 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿/*
+    Copyright 2023 Thierry Meiers
+
+    Code from the "Rache der RETI" project.
+    https://meith0717.itch.io/rache-der-reti
+*/
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -9,7 +16,7 @@ namespace GalaxyExplovive.Core.GameEngine.InputManagement
     public class InputManager
     {
         // Dictionary which contains actions for key inputs.
-        private Dictionary<Keys, ActionType> mKeyBindingsKeyboardPressed, mKeyBindingsKeyboardHold;
+        private readonly Dictionary<Keys, ActionType> mKeyBindingsKeyboardPressed, mKeyBindingsKeyboardHold;
         private readonly Dictionary<MouseActionType, ActionType> mKeyBindingsMouse;
 
         // Attributes keyboard. new.
@@ -24,8 +31,6 @@ namespace GalaxyExplovive.Core.GameEngine.InputManagement
 
         private int mCurrentMouseWheelValue, mPreviousMouseWheelValue;
         private Point mMouseRectangleStart, mMouseRectangleEnd;
-
-        private double mDalay = 0;
 
         // InputState contains all the actions made by the player and mouse position.
         private readonly InputState mInputState;
@@ -49,7 +54,7 @@ namespace GalaxyExplovive.Core.GameEngine.InputManagement
             mKeyBindingsKeyboardHold = new Dictionary<Keys, ActionType>
             {
                 { Keys.LeftShift, ActionType.Accelerate },
-                { Keys.LeftControl, ActionType.Deaccelerate },
+                { Keys.LeftControl, ActionType.Decelerate },
             };
 
 
@@ -108,18 +113,18 @@ namespace GalaxyExplovive.Core.GameEngine.InputManagement
 
             // create mouse rectangle
             Point topLeft =
-                new Point(
+                new(
                     Math.Min(mMouseRectangleStart.X, mMouseRectangleEnd.X),
                     Math.Min(mMouseRectangleStart.Y, mMouseRectangleEnd.Y)
                 );
 
             Point bottomRight =
-                new Point(
+                new(
                     Math.Max(mMouseRectangleStart.X, mMouseRectangleEnd.X),
                     Math.Max(mMouseRectangleStart.Y, mMouseRectangleEnd.Y)
                 );
 
-            Point mouseRectangleSize = new Point(Math.Abs(bottomRight.X - topLeft.X),
+            Point mouseRectangleSize = new(Math.Abs(bottomRight.X - topLeft.X),
                 Math.Abs(bottomRight.Y - topLeft.Y));
 
             mInputState.mMouseRectangle = new Rectangle(topLeft, mouseRectangleSize);
@@ -153,7 +158,7 @@ namespace GalaxyExplovive.Core.GameEngine.InputManagement
             mCurrentKeysPressed = Keyboard.GetState().GetPressedKeys();
 
             // Get KeyEventTypes (down or pressed) for keys.
-            foreach (Keys key in mCurrentKeysPressed)
+            foreach (var key in mCurrentKeysPressed)
             {
 
                 // Key is constantly pressed (down).
@@ -179,23 +184,21 @@ namespace GalaxyExplovive.Core.GameEngine.InputManagement
             UpdateKeysKeyEventTypes();
 
             // Add actions to InputState.mActionList depending on keys and KeyEventType.
-            foreach (Keys key in mCurrentKeysPressed)
+            foreach (var key in mCurrentKeysPressed)
             {
                 // Add actions to InputState.mActionList for keys down.
-                if (mKeyBindingsKeyboardPressed.ContainsKey(key))
+                if (mKeyBindingsKeyboardPressed.TryGetValue(key, out var actionPressed))
                 {
                     if (mKeysKeyEventTypes[key] == KeyEventType.OnButtonDown)
                     {
-                        mInputState.mActionList.Add(mKeyBindingsKeyboardPressed[key]);
+                        mInputState.mActionList.Add(actionPressed);
                     }
                 }
                 // Add actions to InputState.mActionList for keys pressed.
-                if (mKeyBindingsKeyboardHold.ContainsKey(key))
+                if (!mKeyBindingsKeyboardHold.TryGetValue(key, out var actionHold)) return;
+                if (mKeysKeyEventTypes[key] == KeyEventType.OnButtonPressed)
                 {
-                    if (mKeysKeyEventTypes[key] == KeyEventType.OnButtonPressed)
-                    {
-                        mInputState.mActionList.Add(mKeyBindingsKeyboardHold[key]);
-                    }
+                    mInputState.mActionList.Add(actionHold);
                 }
             }
         }
@@ -263,10 +266,8 @@ namespace GalaxyExplovive.Core.GameEngine.InputManagement
         }
 
         // Updates all the inputs and returns actions and mouse position in InputState.
-        public InputState Update(GameTime gameTime)
+        public InputState Update()
         {
-            mDalay += gameTime.ElapsedGameTime.Milliseconds;
-            if (mDalay > 750) { mDalay = 0; }
             SavePreviousMouseState();
             SavePreviousKeyState();
             ClearActionList();
@@ -275,7 +276,6 @@ namespace GalaxyExplovive.Core.GameEngine.InputManagement
             UpdateMouseWheelValue();
             UpdateMouseState();
             UpdateKeyState();
-
             return mInputState;
         }
     }

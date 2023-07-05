@@ -1,4 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿/*
+    Copyright 2023 Thierry Meiers
+
+    Code from the "Rache der RETI" project.
+    https://meith0717.itch.io/rache-der-reti
+*/
+
+using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,18 +17,10 @@ namespace GalaxyExplovive.Core.GameEngine.InputManagement
         ESC,
         CameraZoomIn,
         CameraZoomOut,
-        CameraZoomInFast,
-        CameraZoomOutFast,
-        MoveRight,
-        MoveLeft,
-        MoveUp,
-        MoveDown,
-        SaveGame,
-        LoadGame,
         ToggleFullscreen,
         GoHome,
         Accelerate,
-        Deaccelerate,
+        Decelerate,
         Test,
         Debug,
         ToggleRayTracing,

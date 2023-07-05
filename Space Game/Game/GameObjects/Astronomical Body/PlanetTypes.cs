@@ -88,27 +88,27 @@ namespace GalaxyExplovive.Game.GameObjects.Astronomical_Body
 
         public static PlanetType GetOrbit1
         {
-            get { return MyUtility.GetRandomElement(Orbit_1); }
+            get { return Utility.GetRandomElement(Orbit_1); }
         }
         public static PlanetType GetOrbit2
         {
-            get { return MyUtility.GetRandomElement(Orbit_2); }
+            get { return Utility.GetRandomElement(Orbit_2); }
         }
         public static PlanetType GetOrbit3
         {
-            get { return MyUtility.GetRandomElement(Orbit_3); }
+            get { return Utility.GetRandomElement(Orbit_3); }
         }
         public static PlanetType GetOrbit4
         {
-            get { return MyUtility.GetRandomElement(Orbit_4); }
+            get { return Utility.GetRandomElement(Orbit_4); }
         }
         public static PlanetType GetOrbit5
         {
-            get { return MyUtility.GetRandomElement(Orbit_5); }
+            get { return Utility.GetRandomElement(Orbit_5); }
         }
         public static PlanetType GetOrbit6
         {
-            get { return MyUtility.GetRandomElement(Orbit_5); }
+            get { return Utility.GetRandomElement(Orbit_5); }
         }
     }
 }

@@ -17,7 +17,6 @@ namespace GalaxyExplovive.Core.GameEngine
 
         // config to sound good
         private readonly float mBackgroundMusicVolume = 0.7f;
-        private ContentManager mContent;
 
         internal SoundManager(int maxSoundEffectInstances = 5)
         {
@@ -26,19 +25,14 @@ namespace GalaxyExplovive.Core.GameEngine
             MaxSoundEffectInstances = maxSoundEffectInstances;
         }
 
-        public void SetContentManager(ContentManager content)
-        {
-            mContent = content;
-        }
-
-        public void LoadSoundEffects(string id, string fileName)
+        public void LoadSoundEffects(ContentManager content, string id, string fileName)
         {
             if (SoundEffects[fileName] != null)
             {
                 SoundEffects.Remove(fileName);
             }
 
-            var soundEffect = mContent.Load<SoundEffect>(fileName);
+            var soundEffect = content.Load<SoundEffect>(fileName);
             SoundEffects.Add(id, soundEffect);
         }
 

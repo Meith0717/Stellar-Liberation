@@ -39,7 +39,7 @@ namespace GalaxyExplovive
 
             mInputManager = new InputManager();
             mSoundManager = new SoundManager();
-            mTextureManager = new TextureManager(Content);
+            mTextureManager = new TextureManager();
             mGraphicsManager = new GraphicsDeviceManager(this);
             mLayerManager = new LayerManager(this);
             mSerialize = new Serialize();
@@ -59,72 +59,72 @@ namespace GalaxyExplovive
             mSpriteBatch = new SpriteBatch(GraphicsDevice);
 
             // setup texture manager
-            mSoundManager.SetContentManager(Content);
             mTextureManager.SetSpriteBatch(mSpriteBatch);
 
-            mSoundManager.LoadSoundEffects("hit", "SoundEffects/hit");
+            mSoundManager.LoadSoundEffects(Content, "hit", "SoundEffects/hit");
             mSoundManager.CreateSoundEffectInstances();
 
             // Load Star Textures
-            mTextureManager.LoadTexture("StarLightAlpha", "GameObjects/Stars/StarLightAlpha");
-            mTextureManager.LoadTexture("M", "GameObjects/Stars/M");
-            mTextureManager.LoadTexture("K", "GameObjects/Stars/K");
-            mTextureManager.LoadTexture("G", "GameObjects/Stars/G");
-            mTextureManager.LoadTexture("F", "GameObjects/Stars/F");
-            mTextureManager.LoadTexture("A", "GameObjects/Stars/A");
-            mTextureManager.LoadTexture("B", "GameObjects/Stars/B");
-            mTextureManager.LoadTexture("O", "GameObjects/Stars/O");
-            mTextureManager.LoadTexture("BH", "GameObjects/Stars/BH");
+            mTextureManager.LoadTexture(Content, "StarLightAlpha", "GameObjects/Stars/StarLightAlpha");
+            mTextureManager.LoadTexture(Content, "M", "GameObjects/Stars/M");
+            mTextureManager.LoadTexture(Content, "K", "GameObjects/Stars/K");
+            mTextureManager.LoadTexture(Content, "G", "GameObjects/Stars/G");
+            mTextureManager.LoadTexture(Content, "F", "GameObjects/Stars/F");
+            mTextureManager.LoadTexture(Content, "A", "GameObjects/Stars/A");
+            mTextureManager.LoadTexture(Content, "B", "GameObjects/Stars/B");
+            mTextureManager.LoadTexture(Content, "O", "GameObjects/Stars/O");
+            mTextureManager.LoadTexture(Content, "BH", "GameObjects/Stars/BH");
 
             // Load Planet Textures
             string planetPath = "GameObjects/Planets/";
-            for (int i = 1; i <= 4; i++) { mTextureManager.LoadTexture($"cold{i}", $"{planetPath}cold{i}"); }
-            for (int i = 1; i <= 6; i++) { mTextureManager.LoadTexture($"dry{i}", $"{planetPath}dry{i}"); }
-            for (int i = 1; i <= 4; i++) { mTextureManager.LoadTexture($"gas{i}", $"{planetPath}gas{i}"); }
-            for (int i = 1; i <= 6; i++) { mTextureManager.LoadTexture($"stone{i}", $"{planetPath}stone{i}"); }
-            for (int i = 1; i <= 8; i++) { mTextureManager.LoadTexture($"terrestrial{i}", $"{planetPath}terrestrial{i}"); }
-            for (int i = 1; i <= 4; i++) { mTextureManager.LoadTexture($"warm{i}", $"{planetPath}warm{i}"); }
-            mTextureManager.LoadTexture("planetShadow", "GameObjects/Planets/planetShadow");
+            for (int i = 1; i <= 4; i++) { mTextureManager.LoadTexture(Content, $"cold{i}", $"{planetPath}cold{i}"); }
+            for (int i = 1; i <= 6; i++) { mTextureManager.LoadTexture(Content, $"dry{i}", $"{planetPath}dry{i}"); }
+            for (int i = 1; i <= 4; i++) { mTextureManager.LoadTexture(Content, $"gas{i}", $"{planetPath}gas{i}"); }
+            for (int i = 1; i <= 6; i++) { mTextureManager.LoadTexture(Content, $"stone{i}", $"{planetPath}stone{i}"); }
+            for (int i = 1; i <= 8; i++) { mTextureManager.LoadTexture(Content, $"terrestrial{i}", $"{planetPath}terrestrial{i}"); }
+            for (int i = 1; i <= 4; i++) { mTextureManager.LoadTexture(Content, $"warm{i}", $"{planetPath}warm{i}"); }
+            mTextureManager.LoadTexture(Content, "planetShadow", "GameObjects/Planets/planetShadow");
 
             // Load CrossHair
-            mTextureManager.LoadTexture("selectCrosshait", "GameObjects/crossHair/selectCrosshait");
-            mTextureManager.LoadTexture("targetCrosshair", "GameObjects/crossHair/targetCrosshair");
+            mTextureManager.LoadTexture(Content, "selectCrosshait", "GameObjects/crossHair/selectCrosshait");
+            mTextureManager.LoadTexture(Content, "targetCrosshair", "GameObjects/crossHair/targetCrosshair");
 
             // Load other STuff
-            mTextureManager.LoadTexture("gameBackground", "gameBackground");
-            mTextureManager.LoadTexture("gameBackgroundParlax1", "gameBackgroundParlax");
-            mTextureManager.LoadTexture("gameBackgroundParlax2", "gameBackgroundParlax2");
-            mTextureManager.LoadTexture("gameBackgroundParlax3", "gameBackgroundParlax3");
-            mTextureManager.LoadTexture("gameBackgroundParlax4", "gameBackgroundParlax4");
-            mTextureManager.LoadTexture("ship", "GameObjects/Ships/ship");
-            mTextureManager.LoadTexture("shipSekect", "GameObjects/Ships/shipSekect");
-            mTextureManager.LoadTexture("warpAnimation", "GameObjects/Ships/warpAnimation");
-            mTextureManager.LoadTexture("systemState", "GameObjects/systemState");
-            mTextureManager.LoadTexture("cursor", "cursor");
-            mTextureManager.LoadTexture("transparent", "GameObjects/transparent");
-            mTextureManager.LoadTexture("projectile", "GameObjects/projectile");
-            mTextureManager.LoadTexture("spaceStation", "GameObjects/spaceStation");
+
+            mTextureManager.LoadTexture(Content, "gameBackground", "gameBackground");
+            mTextureManager.LoadTexture(Content, "gameBackgroundParlax1", "gameBackgroundParlax");
+            mTextureManager.LoadTexture(Content, "gameBackgroundParlax2", "gameBackgroundParlax2");
+            mTextureManager.LoadTexture(Content, "gameBackgroundParlax3", "gameBackgroundParlax3");
+            mTextureManager.LoadTexture(Content, "gameBackgroundParlax4", "gameBackgroundParlax4");
+            mTextureManager.LoadTexture(Content, "ship", "GameObjects/Ships/ship");
+            mTextureManager.LoadTexture(Content, "shipSekect", "GameObjects/Ships/shipSekect");
+            mTextureManager.LoadTexture(Content, "warpAnimation", "GameObjects/Ships/warpAnimation");
+            mTextureManager.LoadTexture(Content, "systemState", "GameObjects/systemState");
+            mTextureManager.LoadTexture(Content, "cursor", "cursor");
+            mTextureManager.LoadTexture(Content, "transparent", "GameObjects/transparent");
+            mTextureManager.LoadTexture(Content, "projectile", "GameObjects/projectile");
+            mTextureManager.LoadTexture(Content, "spaceStation", "GameObjects/spaceStation");
 
             // Ui
-            mTextureManager.LoadTexture("Layer", "UserInterface/Layer/layer");
-            mTextureManager.LoadTexture("Circle", "UserInterface/Layer/circle");
-            mTextureManager.LoadTexture("buttonExitgame", "UserInterface/PauseLayer/buttonExitgame");
-            mTextureManager.LoadTexture("buttonContinue", "UserInterface/PauseLayer/buttonContinue");
-            mTextureManager.LoadTexture("level", "UserInterface/HUDLayer/level");
-            mTextureManager.LoadTexture("menue", "UserInterface/HUDLayer/menue");
-            mTextureManager.LoadTexture("alloys", "UserInterface/HUDLayer/Alloys");
-            mTextureManager.LoadTexture("energy", "UserInterface/HUDLayer/Energy");
-            mTextureManager.LoadTexture("minerals", "UserInterface/HUDLayer/Minerals");
-            mTextureManager.LoadTexture("exit", "UserInterface/HUDLayer/exit");
-            mTextureManager.LoadTexture("info", "UserInterface/HUDLayer/info");
-            mTextureManager.LoadTexture("deSelect", "UserInterface/HUDLayer/deSelect");
-            mTextureManager.LoadTexture("target", "UserInterface/HUDLayer/target");
-            mTextureManager.LoadTexture("stop", "UserInterface/HUDLayer/stop");
+            mTextureManager.LoadTexture(Content, "Layer", "UserInterface/Layer/layer");
+            mTextureManager.LoadTexture(Content, "Circle", "UserInterface/Layer/circle");
+            mTextureManager.LoadTexture(Content, "buttonExitgame", "UserInterface/PauseLayer/buttonExitgame");
+            mTextureManager.LoadTexture(Content, "buttonContinue", "UserInterface/PauseLayer/buttonContinue");
+            mTextureManager.LoadTexture(Content, "level", "UserInterface/HUDLayer/level");
+            mTextureManager.LoadTexture(Content, "menue", "UserInterface/HUDLayer/menue");
+            mTextureManager.LoadTexture(Content, "alloys", "UserInterface/HUDLayer/Alloys");
+            mTextureManager.LoadTexture(Content, "energy", "UserInterface/HUDLayer/Energy");
+            mTextureManager.LoadTexture(Content, "minerals", "UserInterface/HUDLayer/Minerals");
+            mTextureManager.LoadTexture(Content, "exit", "UserInterface/HUDLayer/exit");
+            mTextureManager.LoadTexture(Content, "info", "UserInterface/HUDLayer/info");
+            mTextureManager.LoadTexture(Content, "deSelect", "UserInterface/HUDLayer/deSelect");
+            mTextureManager.LoadTexture(Content, "target", "UserInterface/HUDLayer/target");
+            mTextureManager.LoadTexture(Content, "stop", "UserInterface/HUDLayer/stop");
 
             // game fonts
-            mTextureManager.LoadSpriteTexture("text", "fonts/text");
-            mTextureManager.LoadSpriteTexture("title", "fonts/title");
-            mTextureManager.LoadSpriteTexture("smal", "fonts/smal");
+            mTextureManager.LoadSpriteTexture(Content, "text", "fonts/text");
+            mTextureManager.LoadSpriteTexture(Content, "title", "fonts/title");
+            mTextureManager.LoadSpriteTexture(Content, "smal", "fonts/smal");
         }
 
         protected override void Update(GameTime gameTime)
@@ -138,7 +138,7 @@ namespace GalaxyExplovive
             {
                 mLayerManager.OnResolutionChanged();
             }
-            InputState inputState = mInputManager.Update(gameTime);
+            InputState inputState = mInputManager.Update();
             if (inputState.mActionList.Contains(ActionType.ToggleFullscreen)) { ToggleFullscreen(); }
             mLayerManager.Update(gameTime, inputState);
             base.Update(gameTime);

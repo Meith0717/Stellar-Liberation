@@ -67,7 +67,7 @@ namespace GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips
             }
             Rotation = mMovementController.GetMovement().Angle;
             mVelocity = mMovementController.GetMovement().Velocity;
-            Position += MyUtility.GetDirection(Rotation) * mVelocity * gameTime.ElapsedGameTime.Milliseconds;
+            Position += Geometry.CalculateDirectionVector(Rotation) * mVelocity * gameTime.ElapsedGameTime.Milliseconds;
 
             mTravelTime = (Vector2.Distance(Position, TargetObj.Position) / mVelocity) / 1000;
         }
@@ -109,7 +109,7 @@ namespace GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips
         {
             if (TargetObj == null) { return; }
             textureManager.DrawString("text", Position + TextureOffset,
-                MyUtility.ConvertSecondsToGameTimeUnits((int)(mTravelTime + engine.GameTime)), 1, Color.LightBlue);
+                Utility.ConvertSecondsToGameTimeUnits((int)(mTravelTime + engine.GameTime)), 1, Color.LightBlue);
         }
 
         public void DrawTargetCrosshar(TextureManager textureManager, GameEngine engine)
