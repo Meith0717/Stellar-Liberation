@@ -1,12 +1,12 @@
-﻿using GalaxyExplovive.Core.GameEngine.GameObjects;
+﻿using GalaxyExplovive.Core.GameEngine.Content_Management;
+using GalaxyExplovive.Core.GameEngine.GameObjects;
 using GalaxyExplovive.Core.GameEngine.InputManagement;
-using GalaxyExplovive.Core.GameEngine.Rendering;
+using GalaxyExplovive.Core.GameEngine.Position_Management;
 using GalaxyExplovive.Core.GameEngine.Utility;
 using GalaxyExplovive.Core.GameObject;
 using GalaxyExplovive.Core.UserInterface.Messages;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended;
 using System.Collections.Generic;
 
 namespace GalaxyExplovive.Core.GameEngine
@@ -73,27 +73,6 @@ namespace GalaxyExplovive.Core.GameEngine
             }
         }
 
-        public void DrawGameObject<T>(TextureManager textureManager, T obj) where T : GameObjects.GameObject
-        {
-            if (obj.BoundedBox.Radius == 0) throw new System.Exception($"BoundedBox Radius is Zero {obj}");
-            if (FrustumCuller.CircleOnWorldView(obj.BoundedBox))
-            {
-                obj.Draw(textureManager, this);
-            }
-        }
-
-        public void DrawGameObjects<T>(TextureManager textureManager, List<T> objects) where T : GameObjects.GameObject
-        {
-            foreach (T obj in objects)
-            {
-                if (obj.BoundedBox.Radius == 0) throw new System.Exception($"BoundedBox Radius is Zero {obj}");
-                if (FrustumCuller.CircleOnWorldView(obj.BoundedBox))
-                {
-                    obj.Draw(textureManager, this);
-                }
-            }
-        }
-
         public void BeginWorldDrawing(SpriteBatch spriteBatch, TextureManager textureManager)
         {
             DebugSystem.UpdateFrameCounting();
@@ -107,17 +86,10 @@ namespace GalaxyExplovive.Core.GameEngine
                 transformMatrix: mViewTransformationMatrix,
                 samplerState: SamplerState.PointClamp
             );
+
             DebugSystem.TestSpatialHashing(textureManager, SpatialHashing, WorldMousePosition);
             mSelectObjCrossHair.Draw(textureManager, this);
-        }
-
-        public void DrawObjectsOnScreen(TextureManager textureManager)
-        {
-            var objects = SpatialHashing.GetObjectsInSpace(FrustumCuller.WorldFrustum.ToRectangle());
-            foreach (GameObjects.GameObject obj in objects)
-            {
-                DrawGameObject(textureManager, obj);
-            }
+            Rendering.RenderObjectsOnScreen(textureManager, this);
         }
 
 #pragma warning disable CA1822 // Mark members as static

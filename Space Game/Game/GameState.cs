@@ -1,8 +1,9 @@
 ﻿using GalaxyExplovive.Core;
 using GalaxyExplovive.Core.Effects;
 using GalaxyExplovive.Core.GameEngine;
+using GalaxyExplovive.Core.GameEngine.Content_Management;
 using GalaxyExplovive.Core.GameEngine.InputManagement;
-using GalaxyExplovive.Core.GameEngine.Rendering;
+
 using GalaxyExplovive.Core.GameEngine.Utility;
 using GalaxyExplovive.Core.Map;
 using GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips;
@@ -63,7 +64,6 @@ namespace GalaxyExplovive.Game
             spriteBatch.End();
 
             mGameEngine.BeginWorldDrawing(spriteBatch, textureManager);
-            mGameEngine.DrawObjectsOnScreen(textureManager);
             mGameEngine.EndWorldDrawing(spriteBatch);
         }
 

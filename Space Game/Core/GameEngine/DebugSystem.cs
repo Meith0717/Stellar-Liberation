@@ -1,6 +1,7 @@
-﻿using GalaxyExplovive.Core.GameEngine.GameObjects;
+﻿using GalaxyExplovive.Core.GameEngine.Content_Management;
+using GalaxyExplovive.Core.GameEngine.GameObjects;
 using GalaxyExplovive.Core.GameEngine.InputManagement;
-using GalaxyExplovive.Core.GameEngine.Rendering;
+using GalaxyExplovive.Core.GameEngine.Position_Management;
 using GalaxyExplovive.Game.GameLogik;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;

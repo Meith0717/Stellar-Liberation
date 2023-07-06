@@ -1,5 +1,5 @@
 ﻿using GalaxyExplovive.Core.GameEngine;
-using GalaxyExplovive.Core.GameEngine.Rendering;
+using GalaxyExplovive.Core.GameEngine.Content_Management;
 using GalaxyExplovive.Core.GameObject;
 using Microsoft.Xna.Framework;
 

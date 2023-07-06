@@ -1,5 +1,6 @@
 ﻿using GalaxyExplovive.Core.GameEngine;
-using GalaxyExplovive.Core.GameEngine.Rendering;
+using GalaxyExplovive.Core.GameEngine.Content_Management;
+using GalaxyExplovive.Core.GameEngine.Position_Management;
 using GalaxyExplovive.Core.Waepons;
 using GalaxyExplovive.Game.GameObjects.Spacecraft;
 using Microsoft.Xna.Framework;

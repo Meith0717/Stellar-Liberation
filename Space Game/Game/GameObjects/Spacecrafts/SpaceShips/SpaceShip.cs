@@ -1,7 +1,8 @@
 ﻿using GalaxyExplovive.Core.GameEngine;
+using GalaxyExplovive.Core.GameEngine.Content_Management;
 using GalaxyExplovive.Core.GameEngine.GameObjects;
 using GalaxyExplovive.Core.GameEngine.InputManagement;
-using GalaxyExplovive.Core.GameEngine.Rendering;
+
 using GalaxyExplovive.Core.GameEngine.Utility;
 using GalaxyExplovive.Core.GameObject;
 using GalaxyExplovive.Core.TargetMovementController;

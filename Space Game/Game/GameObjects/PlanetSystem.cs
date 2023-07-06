@@ -1,6 +1,7 @@
 ﻿using GalaxyExplovive.Core.GameEngine;
+using GalaxyExplovive.Core.GameEngine.Content_Management;
 using GalaxyExplovive.Core.GameEngine.InputManagement;
-using GalaxyExplovive.Core.GameEngine.Rendering;
+
 using GalaxyExplovive.Core.GameEngine.Utility;
 using GalaxyExplovive.Game.GameObjects.Astronomical_Body;
 using Microsoft.Xna.Framework;
@@ -51,8 +52,8 @@ namespace GalaxyExplovive.Game.GameObjects
 
         public void Draw(TextureManager textureManager, GameEngine engine)
         {
-            engine.DrawGameObject(textureManager, mStar);
-            engine.DrawGameObjects(textureManager, mPlanets);
+            Rendering.DrawGameObject(textureManager, engine, mStar);
+            Rendering.DrawGameObjects(textureManager, engine, mPlanets);
             engine.DebugSystem.DrawBoundBox(textureManager, BoundedBox, engine);
         }
 
