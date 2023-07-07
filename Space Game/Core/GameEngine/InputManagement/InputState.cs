@@ -24,6 +24,7 @@ namespace GalaxyExplovive.Core.GameEngine.InputManagement
         Test,
         Debug,
         ToggleRayTracing,
+        ToggleHUD,
         Stop
     }
 

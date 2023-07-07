@@ -73,4 +73,9 @@ public class LayerManager
             layer.OnResolutionChanged();
         }
     }
+
+    public bool ContainsLayer(Layer layer)
+    {
+        return mLayerStack.Contains(layer);
+    }
 }

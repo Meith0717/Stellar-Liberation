@@ -48,6 +48,7 @@ namespace GalaxyExplovive.Core.GameEngine.InputManagement
                 { Keys.F12, ActionType.Debug },
                 { Keys.R, ActionType.ToggleRayTracing },
                 { Keys.Space, ActionType.Test},
+                { Keys.F1, ActionType.ToggleHUD },
             };
 
             // Dictionary for keyboard keys that have been hold and corresponding actions.
