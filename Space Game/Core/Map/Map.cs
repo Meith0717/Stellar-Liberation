@@ -38,7 +38,8 @@ namespace GalaxyExplovive.Core.Map
                     if (Utility.Random.NextDouble() < 0.3) { continue; }
                     Vector2 randomPos = Utility.GetRandomVector2(x + 2000, x + SectorSize - 2000,
                         y + 2000, y + SectorSize - 2000);
-                    PlanetSystems.Add(new(randomPos));
+                    PlanetSystem system = new (randomPos);
+                    PlanetSystems.Add(system);
                 }
             }
         }

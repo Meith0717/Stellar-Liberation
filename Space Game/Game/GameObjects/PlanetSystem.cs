@@ -1,7 +1,6 @@
 ﻿using GalaxyExplovive.Core.GameEngine;
 using GalaxyExplovive.Core.GameEngine.Content_Management;
 using GalaxyExplovive.Core.GameEngine.InputManagement;
-
 using GalaxyExplovive.Core.GameEngine.Utility;
 using GalaxyExplovive.Game.GameObjects.Astronomical_Body;
 using Microsoft.Xna.Framework;
@@ -9,6 +8,7 @@ using MonoGame.Extended;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using MathNet.Numerics.Distributions;
 
 namespace GalaxyExplovive.Game.GameObjects
 {
@@ -25,7 +25,8 @@ namespace GalaxyExplovive.Game.GameObjects
             mPlanets = new();
             int radiusLimit = (int)(mStar.Width / 2 * mStar.TextureScale);
             int orbitNr;
-            for (orbitNr = 1; orbitNr <= Utility.Random.Next(1, 1); orbitNr++)
+            var maxOrbit = new Triangular(1, 7, 5);
+            for (orbitNr = 1; orbitNr <= (int)maxOrbit.Sample(); orbitNr++)
             {
                 mPlanets.Add(new Planet(orbitNr, position, mStar.mLightColor, radiusLimit));
             }
