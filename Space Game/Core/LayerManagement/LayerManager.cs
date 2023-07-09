@@ -39,10 +39,7 @@ public class LayerManager
         foreach (Layer layer in mLayerStack.Reverse())
         {
             layer.Update(gameTime, inputState);
-            if (!layer.UpdateBelow)
-            {
-                break;
-            }
+            if (!layer.UpdateBelow) break;
         }
     }
 

@@ -19,7 +19,7 @@ namespace GalaxyExplovive.Core.UserInterface
         public Color HoverColor = Globals.HoverColor;
         public Action OnClickAction = null;
         public float Scale = 1f;
-        public MouseActionType MouseActionType = MouseActionType.LeftClick;
+        public MouseActionType MouseActionType = MouseActionType.LeftClickReleased;
 
         public MyUiSprite(float x, float y, string texture)
         {
@@ -37,7 +37,9 @@ namespace GalaxyExplovive.Core.UserInterface
             if (mHover &&
                 inputState.mMouseActionType == MouseActionType &&
                 OnClickAction != null)
-            { OnClickAction(); inputState.mMouseActionType = MouseActionType.None; }
+            { 
+                OnClickAction();
+            }
         }
 
         public void OnResolutionChanged(float x, float y)
@@ -53,7 +55,5 @@ namespace GalaxyExplovive.Core.UserInterface
             textureManager.Draw(mTexture, new(mX, mY), Vector2.Zero, Scale, 0, 1,
                Disabled ? Color.Transparent : (mHover ? HoverColor : Color));
         }
-
-
     }
 }

@@ -16,7 +16,7 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
     /// </summary>
     public class Camera
     {
-        private const int CameraGlide = 5;
+        private const int CameraGlide = 2;
         private const float MaxZoom = 0.001f;
         private const float MimZoom = 1f;
 
@@ -44,6 +44,7 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
         private float mTargetZoom;
         private bool mZoomAnimation;
         private bool mMoveAnimation;
+        private float mMoveWithMouseDellay;
         private Vector2 mLastMousePosition;
 
         public Camera()
@@ -53,14 +54,15 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
 
         private void MovingAnimation()
         {
-            mMoveAnimation = false;
-            mTargetPosition = Vector2.Distance(Position, mTargetPosition) < 5 ? Position : mTargetPosition;
+            mTargetPosition = Vector2.Distance(Position, mTargetPosition) < 10 ? Position : mTargetPosition;
             if (Position != mTargetPosition)
             {
                 mMoveAnimation = true;
                 Movement = (mTargetPosition - Position) / CameraGlide;
                 Position += Movement;
+                return;
             }
+            mMoveAnimation = false;
         }
 
         private void ZoomAnimation()
@@ -78,10 +80,13 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
             MovedByUser = false;
             if (inputState.mMouseActionType is MouseActionType.LeftClickHold)
             {
+                mMoveWithMouseDellay += 1;
+                if (mMoveWithMouseDellay < 5) return;
                 MovedByUser = true;
                 mTargetPosition += mLastMousePosition - mousePosition;
                 return;
             }
+            mMoveWithMouseDellay = 0;
             mLastMousePosition = mousePosition;
         }
 
@@ -112,6 +117,7 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
         public void MoveToTarget(Vector2 position)
         {
             if (MovedByUser) return;
+            mMoveAnimation = true;
             mTargetPosition = position;
         }
 

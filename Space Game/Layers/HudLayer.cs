@@ -6,7 +6,6 @@ using GalaxyExplovive.Core.LayerManagement;
 using GalaxyExplovive.Core.UserInterface;
 using GalaxyExplovive.Core.UserInterface.Messages;
 using GalaxyExplovive.Game;
-using GalaxyExplovive.Game.GameObjects.Spacecraft;
 using GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -126,9 +125,12 @@ namespace GalaxyExplovive.Layers
             mStopButton.Update(mTextureManager, inputState);
 
             if (inputState.mActionList.Contains(ActionType.ESC)) { Pause(); }
-            mDeselectButton.Disabled = mEngine.SelectObject == null; ;
-            if (mEngine.SelectObject == null) { mTrackButton.Disabled = mStopButton.Disabled = true; return; }
-            mTrackButton.Disabled = !typeof(Spacecraft).IsAssignableFrom(mEngine.SelectObject.GetType());
+
+            var SelectObjectIsNull = mEngine.SelectObject == null;
+            mDeselectButton.Disabled = SelectObjectIsNull;
+            mTrackButton.Disabled = SelectObjectIsNull;
+
+            if (SelectObjectIsNull) { mStopButton.Disabled = true; return; }
             mStopButton.Disabled = !typeof(SpaceShip).IsAssignableFrom(mEngine.SelectObject.GetType());
         }
 
@@ -144,21 +146,30 @@ namespace GalaxyExplovive.Layers
 
         private void Track()
         {
-            SpaceShip ship = (SpaceShip)mEngine.SelectObject;
-            switch (ship.TargetObj)
+            switch (mEngine.SelectObject)
             {
-                case null:
-                    mEngine.Camera.MoveToTarget(ship.Position);
-                    return;
-                case not null:
-                    if (ship.IsTracked)
+                case SpaceShip ship:
+                    switch (ship.TargetObj)
                     {
-                        ship.IsTracked = false;
-                        mEngine.Camera.MoveToTarget(ship.TargetObj.Position);
-                        return;
+                        case null:
+                            mEngine.SelectObject.IsTracked = !mEngine.SelectObject.IsTracked;
+                            break;
+                        case not null:
+                            if (mEngine.SelectObject.IsTracked) 
+                            {
+                                mEngine.Camera.MoveToTarget(ship.TargetObj.Position);
+                                mEngine.SelectObject.IsTracked = false;
+                                break;
+                            }
+                            mEngine.SelectObject.IsTracked = !mEngine.SelectObject.IsTracked;
+                            break;
                     }
-                    ship.IsTracked = true;
-                    return;
+                    break;
+
+                default:
+                    mEngine.SelectObject.IsTracked = !mEngine.SelectObject.IsTracked;
+                    mEngine.Camera.MoveToTarget(mEngine.SelectObject.Position);
+                    break;
             }
         }
 
