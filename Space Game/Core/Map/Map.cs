@@ -19,13 +19,14 @@ namespace GalaxyExplovive.Core.Map
         [JsonProperty] public int SectorSize;
         [JsonProperty] public List<PlanetSystem> PlanetSystems = new();
 
-        [JsonProperty] private int SectorGridMode;
+        [JsonProperty] private int mSectorGridMode;
 
         public Map(int edgeLength, int SectorAmount)
         {
             if (Math.Sqrt(SectorAmount) % 1 != 0) { throw new Exception("Square Root of Sector amount has to be Integer"); }
             mWidth = mHeight = edgeLength;
             SectorSize = (edgeLength == 0) ? 0 : edgeLength / (int)Math.Sqrt(SectorAmount);
+            mSectorGridMode = 3;
         }
 
         public void Generate()
@@ -46,7 +47,7 @@ namespace GalaxyExplovive.Core.Map
         {
             if (input.mActionList.Contains(ActionType.ToggleSectorGrid))
             {
-                SectorGridMode += SectorGridMode < 3 ? 1 : -3;
+                mSectorGridMode += mSectorGridMode < 3 ? 1 : -mSectorGridMode;
             }
 
             foreach (PlanetSystem system in PlanetSystems)
@@ -67,7 +68,7 @@ namespace GalaxyExplovive.Core.Map
             {
                 textureManager.DrawAdaptiveLine(new(0, y), new(mWidth + SectorSize, y), color, 1, 0, engine.Camera.Zoom);
             }
-            if (SectorGridMode >= 2)
+            if (mSectorGridMode >= 2)
             {
                 
             }
@@ -94,7 +95,7 @@ namespace GalaxyExplovive.Core.Map
             int ColorAplpha = 30;
             Color color = new(ColorAplpha, ColorAplpha, ColorAplpha);
 
-            switch (SectorGridMode)
+            switch (mSectorGridMode)
             {
                 case 0:
                     break;
@@ -102,6 +103,10 @@ namespace GalaxyExplovive.Core.Map
                     DrawGrid(textureManager, engine, color);
                     break;
                 case 2:
+                    DrawGrid(textureManager, engine, color);
+                    DrawSectorInfo(textureManager, engine, color);
+                    break;
+                case 3:
                     DrawGrid(textureManager, engine, color);
                     DrawSectorInfo(textureManager, engine, color);
                     break;
