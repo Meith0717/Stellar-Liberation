@@ -48,7 +48,7 @@ namespace GalaxyExplovive.Core.GameEngine
             ViewMousePosition = input.mMousePosition.ToVector2();
             WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, ViewMousePosition);
 
-            Camera.Update(time, input, WorldMousePosition);
+            Camera.Update(time, input, ViewMousePosition, mViewTransformationMatrix);
             FrustumCuller.Update(screenWidth, screenHeight, mViewTransformationMatrix);
 
             if (SelectObject == null)

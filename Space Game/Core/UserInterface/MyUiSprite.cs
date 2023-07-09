@@ -19,7 +19,7 @@ namespace GalaxyExplovive.Core.UserInterface
         public Color HoverColor = Globals.HoverColor;
         public Action OnClickAction = null;
         public float Scale = 1f;
-        public MouseActionType MouseActionType = MouseActionType.LeftClickReleased;
+        public MouseActionType MouseActionType = MouseActionType.LeftClick;
 
         public MyUiSprite(float x, float y, string texture)
         {

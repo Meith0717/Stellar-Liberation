@@ -6,6 +6,8 @@
  */
 
 using GalaxyExplovive.Core.GameEngine.InputManagement;
+using GalaxyExplovive.Core.GameEngine.Utility;
+using GalaxyExplovive.Core.TargetMovementController;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -29,6 +31,7 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
         /// Current position of the camera.
         /// </summary>
         public Vector2 Position { get; private set; }
+        private Vector2 mLastPosition;
 
         /// <summary>
         /// Current movement vector of the camera.
@@ -44,8 +47,7 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
         private float mTargetZoom;
         private bool mZoomAnimation;
         private bool mMoveAnimation;
-        private float mMoveWithMouseDellay;
-        private Vector2 mLastMousePosition;
+        private Vector2 mLastScreenMousePosition;
 
         public Camera()
         {
@@ -58,8 +60,7 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
             if (Position != mTargetPosition)
             {
                 mMoveAnimation = true;
-                Movement = (mTargetPosition - Position) / CameraGlide;
-                Position += Movement;
+                Position += (mTargetPosition - Position) / CameraGlide; ;
                 return;
             }
             mMoveAnimation = false;
@@ -75,19 +76,20 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
             }
         }
 
-        private void MoveCameraByMouse(InputState inputState, Vector2 mousePosition)
+        private void MoveCameraByMouse(InputState inputState, Vector2 screenMousePosition, Matrix ViewTransformation)
         {
             MovedByUser = false;
-            if (inputState.mMouseActionType is MouseActionType.LeftClickHold)
+            if (Vector2.Distance(mLastScreenMousePosition, screenMousePosition) > 1)
             {
-                mMoveWithMouseDellay += 1;
-                if (mMoveWithMouseDellay < 5) return;
-                MovedByUser = true;
-                mTargetPosition += mLastMousePosition - mousePosition;
-                return;
-            }
-            mMoveWithMouseDellay = 0;
-            mLastMousePosition = mousePosition;
+                if (inputState.mMouseActionType is MouseActionType.LeftClickHold)
+                {
+                    MovedByUser = true;
+                    var lastWorldMousePosition = Transformations.ScreenToWorld(ViewTransformation, mLastScreenMousePosition);
+                    var worldMousePosition = Transformations.ScreenToWorld(ViewTransformation, screenMousePosition);
+                    mTargetPosition += lastWorldMousePosition - worldMousePosition;
+                }
+            };
+            mLastScreenMousePosition = screenMousePosition;
         }
 
         private void AdjustZoomByMouse(GameTime gameTime, InputState inputState)
@@ -133,13 +135,15 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
         /// <param name="gameTime">The game time.</param>
         /// <param name="inputState">The input state.</param>
         /// <param name="mousePosition">The current mouse position.</param>
-        public void Update(GameTime gameTime, InputState inputState, Vector2 mousePosition)
+        public void Update(GameTime gameTime, InputState inputState, Vector2 screenMousePosition, Matrix ViewTransformation)
         {
             Movement = Vector2.Zero;
             AdjustZoomByMouse(gameTime, inputState);
-            MoveCameraByMouse(inputState, mousePosition);
+            MoveCameraByMouse(inputState, screenMousePosition, ViewTransformation);
             MovingAnimation();
             ZoomAnimation();
+            Movement = Position - mLastPosition;
+            mLastPosition = Position;
         }
     }
 }
