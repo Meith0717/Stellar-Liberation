@@ -2,7 +2,6 @@
 using GalaxyExplovive.Core.GameEngine.Content_Management;
 using GalaxyExplovive.Core.GameEngine.GameObjects;
 using GalaxyExplovive.Core.GameEngine.InputManagement;
-
 using GalaxyExplovive.Core.GameEngine.Utility;
 using GalaxyExplovive.Core.GameObject;
 using GalaxyExplovive.Core.TargetMovementController;
@@ -20,7 +19,6 @@ namespace GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips
         [JsonProperty] public Vector2? StartPosition { get; set; } = null;
         [JsonProperty] public float MaxVelocity { private get; set; }
         [JsonIgnore] public WeaponManager WeaponManager { private get; set; }
-        [JsonIgnore] public CrossHair CrossHair { private get; set; }
 
         // Navigation
         [JsonIgnore] public bool Stop = false;
@@ -34,7 +32,8 @@ namespace GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips
         {
             base.SelectActions(inputState, engine);
             GetTarget(inputState, engine);
-            if (engine.Camera.MovedByUser) { IsTracked = false; }
+            if (!engine.Camera.MovedByUser) return; 
+            IsTracked = false; 
         }
 
         public override void UpdateLogic(GameTime gameTime, InputState inputState, GameEngine engine)
@@ -43,13 +42,13 @@ namespace GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips
             base.UpdateLogic(gameTime, inputState, engine);
             UpdateNavigation(gameTime, inputState);
             AddToSpatialHashing(engine);
+            System.Diagnostics.Debug.WriteLine(IsTracked);
         }
 
         public override void Draw(TextureManager textureManager, GameEngine engine)
         {
             base.Draw(textureManager, engine);
             DrawPath(textureManager, engine);
-            DrawTargetCrosshar(textureManager, engine);
         }
 
         // Input Stuff
@@ -63,6 +62,7 @@ namespace GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips
             if (hasReachedTarget)
             {
                 Stop = false;
+                IsTracked = false;
                 TargetObj = null;
                 return;
             }
@@ -70,37 +70,25 @@ namespace GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips
             mVelocity = mMovementController.GetMovement().Velocity;
             Position += Geometry.CalculateDirectionVector(Rotation) * mVelocity * gameTime.ElapsedGameTime.Milliseconds;
 
-            mTravelTime = (Vector2.Distance(Position, TargetObj.Position) / mVelocity) / 1000;
+            mTravelTime = Vector2.Distance(Position, TargetObj.Position) / mVelocity / 1000;
         }
 
         private void GetTarget(InputState inputState, GameEngine engine)
         {
-            if (TargetObj != null)
-            {
-                CrossHair.Update(TargetObj.Position, 1f / engine.Camera.Zoom, Color.Green, false);
-                return;
-            }
+            if (TargetObj != null) return;
             var target = MovementController.SelectTargetObject(this, engine.SpatialHashing, engine.WorldMousePosition);
-            switch (target)
+            if (target == null) return;
+            bool IsLeftClick = inputState.mMouseActionType == MouseActionType.LeftClickReleased;
+            if (engine.Camera.Zoom < 0.2f && IsLeftClick)
             {
-                case null:
-                    CrossHair.Update(engine.WorldMousePosition, 1f / engine.Camera.Zoom, Color.IndianRed, false);
-                    return;
-                case not null:
-                    CrossHair.Update(target.Position, 1f / engine.Camera.Zoom, Color.LightGreen, false);
-                    break;
-            }
-
-            bool b = inputState.mMouseActionType == MouseActionType.LeftClick;
-            if (engine.Camera.Zoom < 0.2f && b)
-            {
+                
                 engine.Camera.SetTarget(target.Position);
                 engine.Camera.SetZoom(0.25f);
                 return;
             }
-            TargetObj = b ? target : null;
-            StartPosition = b ? Position : null;
-            if (!b) return;
+            TargetObj = IsLeftClick ? target : null;
+            StartPosition = IsLeftClick ? Position : null;
+            if (!IsLeftClick) return;
             mVelocity = 0.1f;
             IsTracked = true;
         }
@@ -110,12 +98,7 @@ namespace GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips
         {
             if (TargetObj == null) { return; }
             textureManager.DrawString("text", Position + TextureOffset,
-                Utility.ConvertSecondsToGameTimeUnits((int)(mTravelTime + engine.GameTime)), 1, Color.LightBlue);
-        }
-
-        public void DrawTargetCrosshar(TextureManager textureManager, GameEngine engine)
-        {
-            CrossHair.Draw(textureManager, engine);
+                Utility.ConvertSecondsToTimeUnits((int)mTravelTime), 1, Color.LightBlue);
         }
     }
 }

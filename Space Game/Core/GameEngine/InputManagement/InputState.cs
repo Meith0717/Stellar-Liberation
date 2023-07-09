@@ -45,6 +45,7 @@ namespace GalaxyExplovive.Core.GameEngine.InputManagement
         OnButtonDown,
         OnButtonPressed
     }
+
     [Serializable]
     public class InputState
     {

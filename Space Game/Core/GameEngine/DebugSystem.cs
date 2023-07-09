@@ -26,7 +26,7 @@ namespace GalaxyExplovive.Core.GameEngine
 
         private void ChangeMode()
         {
-            mDebugLevel += mDebugLevel > 5 ? -5 : 1;
+            mDebugLevel += mDebugLevel > 5 ? -6 : 1;
         }
 
         public void Update(GameTime gameTime, InputState inputState)
@@ -77,14 +77,15 @@ namespace GalaxyExplovive.Core.GameEngine
             UpdateObjectCount = 0;
         }
 
-        public void TestSpatialHashing(TextureManager textureManager, SpatialHashing<GameObjects.GameObject> spatial, Vector2 mouseWorldPosition)
+        public void TestSpatialHashing(TextureManager textureManager, GameEngine engine)
         {
             if (mDebugLevel < 3) { return; }
             var radius = Globals.MouseSpatialHashingRadius;
-            List<InteractiveObject> GameObjects = ObjectLocator.GetObjectsInRadius<InteractiveObject>(spatial, mouseWorldPosition, radius);
+            List<InteractiveObject> GameObjects = ObjectLocator.GetObjectsInRadius<InteractiveObject>(engine.SpatialHashing, engine.WorldMousePosition, radius);
             foreach (InteractiveObject obj in GameObjects)
             {
-                textureManager.DrawLine(mouseWorldPosition, obj.Position, Color.LightBlue, 10, textureManager.MaxLayerDepth);
+                textureManager.DrawAdaptiveLine(engine.WorldMousePosition, obj.Position, Color.LightBlue, 2, textureManager.MaxLayerDepth,
+                engine.Camera.Zoom);
             }
         }
 
@@ -92,7 +93,8 @@ namespace GalaxyExplovive.Core.GameEngine
         {
             if (!engine.FrustumCuller.CircleOnWorldView(box)) return;
             if (mDebugLevel < 2) { return; }
-            textureManager.DrawCircle(box.Position, box.Radius, Color.Red, 1, textureManager.MaxLayerDepth);
+            textureManager.DrawAdaptiveCircle(box.Position, box.Radius, Color.Red, 2, textureManager.MaxLayerDepth,
+                engine.Camera.Zoom);
         }
     }
 }

@@ -87,9 +87,9 @@ namespace GalaxyExplovive.Core.GameEngine
                 samplerState: SamplerState.PointClamp
             );
 
-            DebugSystem.TestSpatialHashing(textureManager, SpatialHashing, WorldMousePosition);
-            mSelectObjCrossHair.Draw(textureManager, this);
+            DebugSystem.TestSpatialHashing(textureManager, this);
             Rendering.RenderObjectsOnScreen(textureManager, this);
+            mSelectObjCrossHair.Draw(textureManager, this);
         }
 
 #pragma warning disable CA1822 // Mark members as static

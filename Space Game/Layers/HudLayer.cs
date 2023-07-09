@@ -112,7 +112,7 @@ namespace GalaxyExplovive.Layers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             mMessageManager.Update(inputState, mEngine.GameTime);
-            mGameTimeText.Text = Utility.ConvertSecondsToGameTimeUnits(0);
+            mGameTimeText.Text = Utility.ConvertSecondsToGameTimeUnits((int)mEngine.GameTime/1000);
             mMenueButton.Update(mTextureManager, inputState);
             mLevelText.Text = "1";
             mAlloyText.Text = "1/100";
@@ -126,7 +126,7 @@ namespace GalaxyExplovive.Layers
             mStopButton.Update(mTextureManager, inputState);
 
             if (inputState.mActionList.Contains(ActionType.ESC)) { Pause(); }
-            mDeselectButton.Disabled = true;
+            mDeselectButton.Disabled = mEngine.SelectObject == null; ;
             if (mEngine.SelectObject == null) { mTrackButton.Disabled = mStopButton.Disabled = true; return; }
             mTrackButton.Disabled = !typeof(Spacecraft).IsAssignableFrom(mEngine.SelectObject.GetType());
             mStopButton.Disabled = !typeof(SpaceShip).IsAssignableFrom(mEngine.SelectObject.GetType());
@@ -149,16 +149,16 @@ namespace GalaxyExplovive.Layers
             {
                 case null:
                     mEngine.Camera.SetTarget(ship.Position);
-                    break;
+                    return;
                 case not null:
                     if (ship.IsTracked)
                     {
                         ship.IsTracked = false;
                         mEngine.Camera.SetTarget(ship.TargetObj.Position);
-                        break;
+                        return;
                     }
                     ship.IsTracked = true;
-                    break;
+                    return;
             }
         }
 

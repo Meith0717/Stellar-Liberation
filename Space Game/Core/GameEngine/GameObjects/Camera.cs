@@ -52,12 +52,11 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
 
         private void MovingAnimation(int spongy)
         {
-            if (Position == mTargetPosition) { return; }
+            mTargetPosition = (Vector2.Distance(Position, mTargetPosition) < 0.1) ? Position : mTargetPosition;
+            if (Position == mTargetPosition)  return;
             var adjustmentVector = mTargetPosition - Position;
             Movement = adjustmentVector / spongy;
             Position += Movement;
-            if (Vector2.Distance(Position, mTargetPosition) < 0.1)
-                Position = mTargetPosition;
         }
 
         private void ZoomAnimation()

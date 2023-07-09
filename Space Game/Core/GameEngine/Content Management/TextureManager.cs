@@ -110,9 +110,9 @@ namespace GalaxyExplovive.Core.GameEngine.Content_Management
             SpriteBatch.DrawCircle(center, radius, 90, color, thickness, depth / MaxLayerDepth);
         }
 
-        public void DrawAdaptiveCircle(Vector2 center, float radius, Color color, float thickness, int depth)
+        public void DrawAdaptiveCircle(Vector2 center, float radius, Color color, float thickness, int depth, float zoom)
         {
-            SpriteBatch.DrawCircle(center, radius, 90, color, thickness / 1, depth / MaxLayerDepth);
+            SpriteBatch.DrawCircle(center, radius, 90, color, thickness / zoom, depth / MaxLayerDepth);
         }
 
         // render Rectangle ___________________________________________________________________________
@@ -121,9 +121,9 @@ namespace GalaxyExplovive.Core.GameEngine.Content_Management
             SpriteBatch.DrawRectangle(rectangle, color, thickness, depth / MaxLayerDepth);
         }
 
-        public void DrawAdaptiveRectangleF(RectangleF rectangle, Color color, float thickness, int depth)
+        public void DrawAdaptiveRectangleF(RectangleF rectangle, Color color, float thickness, int depth, float zoom)
         {
-            SpriteBatch.DrawRectangle(rectangle, color, thickness / 1, depth / MaxLayerDepth);
+            SpriteBatch.DrawRectangle(rectangle, color, thickness / zoom, depth / MaxLayerDepth);
         }
 
 
@@ -133,9 +133,9 @@ namespace GalaxyExplovive.Core.GameEngine.Content_Management
             SpriteBatch.DrawLine(start, end, color, thickness, depth / MaxLayerDepth);
         }
 
-        public void DrawAdaptiveLine(Vector2 start, Vector2 end, Color color, float thickness, float depth)
+        public void DrawAdaptiveLine(Vector2 start, Vector2 end, Color color, float thickness, float depth, float zoom)
         {
-            SpriteBatch.DrawLine(start, end, color, thickness / 1, depth / MaxLayerDepth);
+            SpriteBatch.DrawLine(start, end, color, thickness / zoom, depth / MaxLayerDepth);
         }
     }
 }

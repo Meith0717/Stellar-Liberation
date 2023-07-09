@@ -53,6 +53,10 @@ namespace GalaxyExplovive.Game
             {
                 Globals.mRayTracing = !Globals.mRayTracing;
             }
+            if (inputState.mActionList.Contains(ActionType.Test))
+            {
+                mGameEngine.Camera.SetTarget(Vector2.Zero);
+            }
 
             mParllaxManager.Update(mGameEngine.Camera.Movement, mGameEngine.Camera.Zoom);
         }
@@ -64,6 +68,7 @@ namespace GalaxyExplovive.Game
             spriteBatch.End();
 
             mGameEngine.BeginWorldDrawing(spriteBatch, textureManager);
+            mMap.DrawGrid(textureManager, mGameEngine);
             mGameEngine.EndWorldDrawing(spriteBatch);
         }
 

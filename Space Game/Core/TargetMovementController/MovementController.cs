@@ -124,6 +124,7 @@ namespace GalaxyExplovive.Core.TargetMovementController
             gameObject.Remove(spaceShip);
             if (gameObject.Count == 0) { return null; }
             if (!gameObject[0].IsHover) { return null; }
+            spaceShip.IsTracked = false;
             return gameObject[0];
         }
     }

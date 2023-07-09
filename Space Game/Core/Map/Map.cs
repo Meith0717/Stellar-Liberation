@@ -69,12 +69,12 @@ namespace GalaxyExplovive.Core.Map
 
             for (int x = 0; x <= mWidth + SectorSize; x += SectorSize)
             {
-                textureManager.DrawAdaptiveLine(new(x, 0), new(x, mHeight + SectorSize), color, 1, 0);
+                textureManager.DrawAdaptiveLine(new(x, 0), new(x, mHeight + SectorSize), color, 1, 0, engine.Camera.Zoom);
             }
 
             for (int y = 0; y <= mHeight + SectorSize; y += SectorSize)
             {
-                textureManager.DrawAdaptiveLine(new(0, y), new(mWidth + SectorSize, y), color, 1, 0);
+                textureManager.DrawAdaptiveLine(new(0, y), new(mWidth + SectorSize, y), color, 1, 0, engine.Camera.Zoom);
             }
         }
 

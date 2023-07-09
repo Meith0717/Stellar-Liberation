@@ -23,7 +23,6 @@ namespace GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips
             TextureColor = Color.White;
             MaxVelocity = 5f;
             WeaponManager = null;
-            CrossHair = new(CrossHair.CrossHairType.Target);
         }
 
         public override void Draw(TextureManager textureManager, GameEngine engine)
