@@ -64,7 +64,7 @@ namespace GalaxyExplovive.Game
             spriteBatch.End();
 
             mGameEngine.BeginWorldDrawing(spriteBatch, textureManager);
-            mMap.DrawGrid(textureManager, mGameEngine);
+            mMap.Draw(textureManager, mGameEngine);
             mGameEngine.EndWorldDrawing(spriteBatch);
         }
 

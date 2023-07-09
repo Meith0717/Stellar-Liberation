@@ -1,6 +1,5 @@
 ﻿using GalaxyExplovive.Core.GameEngine.Content_Management;
 using GalaxyExplovive.Core.GameEngine.InputManagement;
-
 using GalaxyExplovive.Core.GameEngine.Utility;
 using GalaxyExplovive.Game.GameObjects;
 using Microsoft.Xna.Framework;
@@ -57,44 +56,55 @@ namespace GalaxyExplovive.Core.Map
             }
         }
 
-        public void DrawGrid(TextureManager textureManager, GameEngine.GameEngine engine)
+        private void DrawGrid(TextureManager textureManager, GameEngine.GameEngine engine, Color color)
         {
-            int ColorAplpha = 30;
-            Color color = new(ColorAplpha, ColorAplpha, ColorAplpha);
-            if (SectorGridMode >= 1)
+            for (int x = 0; x <= mWidth + SectorSize; x += SectorSize)
             {
-                for (int x = 0; x <= mWidth + SectorSize; x += SectorSize)
-                {
-                    textureManager.DrawAdaptiveLine(new(x, 0), new(x, mHeight + SectorSize), color, 1, 0, engine.Camera.Zoom);
-                }
+                textureManager.DrawAdaptiveLine(new(x, 0), new(x, mHeight + SectorSize), color, 1, 0, engine.Camera.Zoom);
+            }
 
-                for (int y = 0; y <= mHeight + SectorSize; y += SectorSize)
-                {
-                    textureManager.DrawAdaptiveLine(new(0, y), new(mWidth + SectorSize, y), color, 1, 0, engine.Camera.Zoom);
-                }
+            for (int y = 0; y <= mHeight + SectorSize; y += SectorSize)
+            {
+                textureManager.DrawAdaptiveLine(new(0, y), new(mWidth + SectorSize, y), color, 1, 0, engine.Camera.Zoom);
             }
             if (SectorGridMode >= 2)
             {
-                var size = 0.5f / engine.Camera.Zoom;
-                size = (size >= 60) ? 60 : size;
-                for (int i = 0; i <= mWidth / SectorSize; i++)
+                
+            }
+        }
+
+        private void DrawSectorInfo(TextureManager textureManager, GameEngine.GameEngine engine, Color color)
+        {
+            var size = 0.5f / engine.Camera.Zoom;
+            size = (size >= 60) ? 60 : size;
+            for (int i = 0; i <= mWidth / SectorSize; i++)
+            {
+                var x = i * SectorSize;
+                for (int j = 0; j <= mHeight / SectorSize; j++)
                 {
-                    var x = i * SectorSize;
-                    for (int j = 0; j <= mHeight / SectorSize; j++)
-                    {
-                        var y = j * SectorSize;
-                        if (!engine.FrustumCuller.VectorOnWorldView(new(x, y))) continue;
-                        textureManager.DrawString("title", new(x + 25, y + 15), $"{i}, {j}", size, color);
-                    }
+                    var y = j * SectorSize;
+                    if (!engine.FrustumCuller.VectorOnWorldView(new(x, y))) continue;
+                    textureManager.DrawString("title", new(x + 25, y + 15), $"{i}, {j}", size, color);
                 }
             }
         }
 
         public void Draw(TextureManager textureManager, GameEngine.GameEngine engine)
         {
-            foreach (PlanetSystem system in PlanetSystems)
+            int ColorAplpha = 30;
+            Color color = new(ColorAplpha, ColorAplpha, ColorAplpha);
+
+            switch (SectorGridMode)
             {
-                system.Draw(textureManager, engine);
+                case 0:
+                    break;
+                case 1:
+                    DrawGrid(textureManager, engine, color);
+                    break;
+                case 2:
+                    DrawGrid(textureManager, engine, color);
+                    DrawSectorInfo(textureManager, engine, color);
+                    break;
             }
         }
     }
