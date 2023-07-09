@@ -3,7 +3,6 @@ using GalaxyExplovive.Core.GameEngine.Content_Management;
 using GalaxyExplovive.Core.GameEngine.GameObjects;
 using GalaxyExplovive.Core.GameEngine.InputManagement;
 using GalaxyExplovive.Core.GameEngine.Utility;
-using GalaxyExplovive.Core.GameObject;
 using GalaxyExplovive.Core.TargetMovementController;
 using GalaxyExplovive.Core.Weapons;
 using Microsoft.Xna.Framework;
@@ -42,7 +41,6 @@ namespace GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips
             base.UpdateLogic(gameTime, inputState, engine);
             UpdateNavigation(gameTime, inputState);
             AddToSpatialHashing(engine);
-            System.Diagnostics.Debug.WriteLine(IsTracked);
         }
 
         public override void Draw(TextureManager textureManager, GameEngine engine)
@@ -81,9 +79,8 @@ namespace GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips
             bool IsLeftClick = inputState.mMouseActionType == MouseActionType.LeftClickReleased;
             if (engine.Camera.Zoom < 0.2f && IsLeftClick)
             {
-                
-                engine.Camera.SetTarget(target.Position);
-                engine.Camera.SetZoom(0.25f);
+                engine.Camera.MoveToTarget(target.Position);
+                engine.Camera.MoveToZoom(0.25f);
                 return;
             }
             TargetObj = IsLeftClick ? target : null;

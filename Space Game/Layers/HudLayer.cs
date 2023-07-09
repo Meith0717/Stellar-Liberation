@@ -148,13 +148,13 @@ namespace GalaxyExplovive.Layers
             switch (ship.TargetObj)
             {
                 case null:
-                    mEngine.Camera.SetTarget(ship.Position);
+                    mEngine.Camera.MoveToTarget(ship.Position);
                     return;
                 case not null:
                     if (ship.IsTracked)
                     {
                         ship.IsTracked = false;
-                        mEngine.Camera.SetTarget(ship.TargetObj.Position);
+                        mEngine.Camera.MoveToTarget(ship.TargetObj.Position);
                         return;
                     }
                     ship.IsTracked = true;

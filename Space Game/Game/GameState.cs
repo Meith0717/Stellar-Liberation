@@ -55,7 +55,7 @@ namespace GalaxyExplovive.Game
             }
             if (inputState.mActionList.Contains(ActionType.Test))
             {
-                mGameEngine.Camera.SetTarget(Vector2.Zero);
+                mGameEngine.Camera.MoveToTarget(Vector2.Zero);
             }
 
             mParllaxManager.Update(mGameEngine.Camera.Movement, mGameEngine.Camera.Zoom);

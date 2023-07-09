@@ -62,7 +62,7 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
             base.UpdateLogic(gameTime, inputState, gameEngine);
 
             IsHover = BoundedBox.Contains(gameEngine.WorldMousePosition);
-            IsPressed = IsHover && inputState.mMouseActionType == MouseActionType.LeftClick;
+            IsPressed = IsHover && inputState.mMouseActionType == MouseActionType.LeftClickReleased;
 
             if (gameEngine.SelectObject == this && IsPressed)
             {
@@ -76,7 +76,8 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
                 IsPressed = false;
                 IsTracked = IsSelected = true;
                 gameEngine.SelectObject = this;
-                gameEngine.Camera.SetZoom(SelectZoom);
+                gameEngine.Camera.MoveToZoom(SelectZoom);
+                gameEngine.Camera.MoveToTarget(Position);
             }
         }
 
@@ -94,7 +95,7 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
             }
             if (IsTracked)
             {
-                gameEngine.Camera.SetTarget(Position);
+                gameEngine.Camera.SetPosition(Position);
             }
         }
     }
