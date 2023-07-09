@@ -49,10 +49,6 @@ namespace GalaxyExplovive.Game
             mGameEngine.UpdateGameObjects(gameTime, inputState, mShips);
             mMap.Update(gameTime, inputState, mGameEngine);
 
-            if (inputState.mActionList.Contains(ActionType.ToggleRayTracing))
-            {
-                Globals.mRayTracing = !Globals.mRayTracing;
-            }
             if (inputState.mActionList.Contains(ActionType.Test))
             {
                 mGameEngine.Camera.MoveToTarget(Vector2.Zero);

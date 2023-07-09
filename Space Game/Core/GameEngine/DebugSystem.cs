@@ -31,7 +31,7 @@ namespace GalaxyExplovive.Core.GameEngine
 
         public void Update(GameTime gameTime, InputState inputState)
         {
-            if (inputState.mActionList.Contains(ActionType.Debug))
+            if (inputState.mActionList.Contains(ActionType.ToggleDebugModes))
             {
                 ChangeMode();
             }

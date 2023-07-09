@@ -42,20 +42,17 @@ namespace GalaxyExplovive.Core.GameEngine.InputManagement
             mKeyBindingsKeyboardPressed = new Dictionary<Keys, ActionType>
             {
                 { Keys.Escape, ActionType.ESC },
-                { Keys.Tab, ActionType.GoHome },
                 { Keys.F11, ActionType.ToggleFullscreen},
                 { Keys.X, ActionType.Stop },
-                { Keys.F12, ActionType.Debug },
-                { Keys.R, ActionType.ToggleRayTracing },
+                { Keys.F12, ActionType.ToggleDebugModes },
                 { Keys.Space, ActionType.Test},
-                { Keys.F1, ActionType.ToggleHUD },
+                { Keys.F1, ActionType.ToggleHeadUpDisplay },
+                { Keys.F2, ActionType.ToggleSectorGrid },
             };
 
             // Dictionary for keyboard keys that have been hold and corresponding actions.
             mKeyBindingsKeyboardHold = new Dictionary<Keys, ActionType>
             {
-                { Keys.LeftShift, ActionType.Accelerate },
-                { Keys.LeftControl, ActionType.Decelerate },
             };
 
 

@@ -20,6 +20,8 @@ namespace GalaxyExplovive.Core.Map
         [JsonProperty] public int SectorSize;
         [JsonProperty] public List<PlanetSystem> PlanetSystems = new();
 
+        [JsonProperty] private int SectorGridMode;
+
         public Map(int edgeLength, int SectorAmount)
         {
             if (Math.Sqrt(SectorAmount) % 1 != 0) { throw new Exception("Square Root of Sector amount has to be Integer"); }
@@ -43,6 +45,11 @@ namespace GalaxyExplovive.Core.Map
 
         public void Update(GameTime time, InputState input, GameEngine.GameEngine engine)
         {
+            if (input.mActionList.Contains(ActionType.ToggleSectorGrid))
+            {
+                SectorGridMode += SectorGridMode < 3 ? 1 : -3;
+            }
+
             foreach (PlanetSystem system in PlanetSystems)
             {
                 if (!engine.FrustumCuller.CircleOnWorldView(system.BoundedBox)) continue;
@@ -54,27 +61,32 @@ namespace GalaxyExplovive.Core.Map
         {
             int ColorAplpha = 30;
             Color color = new(ColorAplpha, ColorAplpha, ColorAplpha);
-            var size = 0.5f / engine.Camera.Zoom;
-            size = (size >= 60) ? 60 : size;
-            for (int i = 0; i <= mWidth / SectorSize; i++)
+            if (SectorGridMode >= 1)
             {
-                var x = i * SectorSize;
-                for (int j = 0; j <= mHeight / SectorSize; j++)
+                for (int x = 0; x <= mWidth + SectorSize; x += SectorSize)
                 {
-                    var y = j * SectorSize;
-                    if (!engine.FrustumCuller.VectorOnWorldView(new(x, y))) continue;
-                    textureManager.DrawString("title", new(x + 25, y + 15), $"{i}, {j}", size, color);
+                    textureManager.DrawAdaptiveLine(new(x, 0), new(x, mHeight + SectorSize), color, 1, 0, engine.Camera.Zoom);
+                }
+
+                for (int y = 0; y <= mHeight + SectorSize; y += SectorSize)
+                {
+                    textureManager.DrawAdaptiveLine(new(0, y), new(mWidth + SectorSize, y), color, 1, 0, engine.Camera.Zoom);
                 }
             }
-
-            for (int x = 0; x <= mWidth + SectorSize; x += SectorSize)
+            if (SectorGridMode >= 2)
             {
-                textureManager.DrawAdaptiveLine(new(x, 0), new(x, mHeight + SectorSize), color, 1, 0, engine.Camera.Zoom);
-            }
-
-            for (int y = 0; y <= mHeight + SectorSize; y += SectorSize)
-            {
-                textureManager.DrawAdaptiveLine(new(0, y), new(mWidth + SectorSize, y), color, 1, 0, engine.Camera.Zoom);
+                var size = 0.5f / engine.Camera.Zoom;
+                size = (size >= 60) ? 60 : size;
+                for (int i = 0; i <= mWidth / SectorSize; i++)
+                {
+                    var x = i * SectorSize;
+                    for (int j = 0; j <= mHeight / SectorSize; j++)
+                    {
+                        var y = j * SectorSize;
+                        if (!engine.FrustumCuller.VectorOnWorldView(new(x, y))) continue;
+                        textureManager.DrawString("title", new(x + 25, y + 15), $"{i}, {j}", size, color);
+                    }
+                }
             }
         }
 

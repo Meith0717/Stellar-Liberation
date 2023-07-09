@@ -41,7 +41,7 @@ namespace GalaxyExplovive.Layers
         {
             mGameState.Update(inputState, gameTime, mGraphicsDevice);
 
-            if (inputState.mActionList.Contains(ActionType.ToggleHUD) || !mInitialized)
+            if (inputState.mActionList.Contains(ActionType.ToggleHeadUpDisplay) || !mInitialized)
             {
                 mInitialized = true;
                 if (mLayerManager.ContainsLayer(mHudLayer))

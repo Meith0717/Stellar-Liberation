@@ -18,13 +18,10 @@ namespace GalaxyExplovive.Core.GameEngine.InputManagement
         CameraZoomIn,
         CameraZoomOut,
         ToggleFullscreen,
-        GoHome,
-        Accelerate,
-        Decelerate,
         Test,
-        Debug,
-        ToggleRayTracing,
-        ToggleHUD,
+        ToggleDebugModes,
+        ToggleHeadUpDisplay,
+        ToggleSectorGrid,
         Stop
     }
 
