@@ -140,7 +140,7 @@ namespace GalaxyExplovive.Layers
             mSelectObjCrossHair.Update(null, 0, Color.Transparent, false);
 
             if (SelectObjectIsNull) { mStopButton.Disabled = true; return; }
-            mSelectObjCrossHair.Update(mEngine.SelectObject.Position, mEngine.SelectObject.TextureScale * 15, Color.OrangeRed, false);
+            mSelectObjCrossHair.Update(mEngine.SelectObject.Position, mEngine.SelectObject.TextureScale * 20, Color.OrangeRed, false);
             mStopButton.Disabled = !typeof(SpaceShip).IsAssignableFrom(mEngine.SelectObject.GetType());
         }
 
