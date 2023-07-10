@@ -61,9 +61,11 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
 
             IsHover = BoundedBox.Contains(gameEngine.WorldMousePosition);
             IsPressed = IsHover && inputState.mMouseActionType == MouseActionType.LeftClickReleased;
+            IsSelected = gameEngine.SelectObject == this;
 
             ManageObjectSelection(gameEngine);
             ManageObjectTracking(gameEngine);
+
 
             base.Update(gameTime, inputState, gameEngine);
 

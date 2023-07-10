@@ -18,7 +18,6 @@ namespace GalaxyExplovive.Layers
         private readonly GameEngine mEngine;
         private readonly GameState mGameState;
         private readonly MyUiMessageManager mMessageManager;
-        private readonly CrossHair mSelectObjCrossHair;
 
         private readonly MyUiText mGameTimeText;
         private readonly MyUiSprite mLevelSprite;
@@ -45,7 +44,6 @@ namespace GalaxyExplovive.Layers
             mEngine = engine;
             mGameState = gameState;
 
-            mSelectObjCrossHair = new(CrossHair.CrossHairType.Select);
             mGameTimeText = new(5, 5, "");
             mLevelSprite = new(150, 5, "level") { Scale = 0.32f };
             mLevelText = new(170, 5, "");
@@ -75,7 +73,6 @@ namespace GalaxyExplovive.Layers
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin(transformMatrix: mEngine.ViewTransformationMatrix);
-            mSelectObjCrossHair.Draw(mTextureManager, mEngine);
             spriteBatch.End();
 
             spriteBatch.Begin();
@@ -137,10 +134,7 @@ namespace GalaxyExplovive.Layers
             mDeselectButton.Disabled = SelectObjectIsNull;
             mTrackButton.Disabled = SelectObjectIsNull;
 
-            mSelectObjCrossHair.Update(null, 0, Color.Transparent, false);
-
             if (SelectObjectIsNull) { mStopButton.Disabled = true; return; }
-            mSelectObjCrossHair.Update(mEngine.SelectObject.Position, mEngine.SelectObject.TextureScale * 20, Color.OrangeRed, false);
             mStopButton.Disabled = !typeof(SpaceShip).IsAssignableFrom(mEngine.SelectObject.GetType());
         }
 

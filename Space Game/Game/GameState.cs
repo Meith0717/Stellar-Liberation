@@ -5,6 +5,7 @@ using GalaxyExplovive.Core.GameEngine.Content_Management;
 using GalaxyExplovive.Core.GameEngine.InputManagement;
 
 using GalaxyExplovive.Core.GameEngine.Utility;
+using GalaxyExplovive.Core.GameObject;
 using GalaxyExplovive.Core.Map;
 using GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips;
 using Microsoft.Xna.Framework;
@@ -29,6 +30,7 @@ namespace GalaxyExplovive.Game
         // Unsaved Classes
         [JsonIgnore] private readonly GameEngine mGameEngine;
         [JsonIgnore] private readonly ParllaxManager mParllaxManager;
+        [JsonIgnore] private readonly CrossHair mSelectObjCrossHair;
 
         public GameState(GameEngine gameEngine)
         {
@@ -42,6 +44,7 @@ namespace GalaxyExplovive.Game
             mParllaxManager.Add(new("gameBackgroundParlax3", 0.2f));
             mParllaxManager.Add(new("gameBackgroundParlax4", 0.25f));
             mShips.Add(new(Utility.GetRandomVector2(Vector2.Zero, 0)));
+            mSelectObjCrossHair = new(CrossHair.CrossHairType.Select);
         }
 
         public void Update(InputState inputState, GameTime gameTime, GraphicsDevice graphicsDevice)
@@ -56,6 +59,11 @@ namespace GalaxyExplovive.Game
             }
 
             mParllaxManager.Update(mGameEngine.Camera.Movement, mGameEngine.Camera.Zoom);
+
+            mSelectObjCrossHair.Update(null, 0, Color.Transparent, false);
+            if (mGameEngine.SelectObject == null) return;
+            mSelectObjCrossHair.Update(mGameEngine.SelectObject.Position, 
+                mGameEngine.SelectObject.TextureScale * 20, Color.OrangeRed, false);
         }
 
         public void Draw(SpriteBatch spriteBatch, TextureManager textureManager)
@@ -66,7 +74,9 @@ namespace GalaxyExplovive.Game
 
             mGameEngine.BeginWorldDrawing(spriteBatch, textureManager);
             mMap.Draw(textureManager, mGameEngine);
-            mGameEngine.EndWorldDrawing(spriteBatch);
+            mGameEngine.RenderWorldObjectsOnScreen(textureManager);
+            mSelectObjCrossHair.Draw(textureManager, mGameEngine);
+            mGameEngine.EndWorldDrawing(spriteBatch, textureManager);
         }
 
         public void ApplyResolution(GraphicsDevice graphicsDevice)

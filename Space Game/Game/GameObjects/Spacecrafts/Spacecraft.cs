@@ -96,15 +96,15 @@ namespace GalaxyExplovive.Game.GameObjects.Spacecraft
         public override void Draw(TextureManager textureManager, GameEngine engine)
         {
             base.Draw(textureManager, engine);
-            Vector2 startPos = Position - TextureOffset - new Vector2(0, 50);
-            Vector2 endPos = new(TextureOffset.X * 2, 0);
-            float hull = (float)mHull / 100;
-            float shield = (float)mShield / 100;
-            textureManager.DrawLine(startPos, startPos + endPos * new Vector2(shield, 1), Color.CornflowerBlue, 8, 1);
-            textureManager.DrawLine(startPos, startPos + endPos, Color.DarkRed, 8, 0.9f);
-            startPos.Y += 10;
-            textureManager.DrawLine(startPos, startPos + endPos * new Vector2(hull, 1), Color.GreenYellow, 8, 1);
-            textureManager.DrawLine(startPos, startPos + endPos, Color.DarkRed, 8, 0.9f);
+            // Vector2 startPos = Position - TextureOffset - new Vector2(0, 50);
+            // Vector2 endPos = new(TextureOffset.X * 2, 0);
+            // float hull = (float)mHull / 100;
+            // float shield = (float)mShield / 100;
+            // textureManager.DrawLine(startPos, startPos + endPos * new Vector2(shield, 1), Color.CornflowerBlue, 8, 1);
+            // textureManager.DrawLine(startPos, startPos + endPos, Color.DarkRed, 8, 0.9f);
+            // startPos.Y += 10;
+            // textureManager.DrawLine(startPos, startPos + endPos * new Vector2(hull, 1), Color.GreenYellow, 8, 1);
+            // textureManager.DrawLine(startPos, startPos + endPos, Color.DarkRed, 8, 0.9f);
         }
     }
 }

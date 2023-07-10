@@ -55,7 +55,7 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
 
         private void MovingAnimation()
         {
-            mTargetPosition = Vector2.Distance(Position, mTargetPosition) < 10 ? Position : mTargetPosition;
+            mTargetPosition = Vector2.Distance(Position, mTargetPosition) < 1 ? Position : mTargetPosition;
             if (Position != mTargetPosition)
             {
                 mMoveAnimation = true;

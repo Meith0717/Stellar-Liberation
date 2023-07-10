@@ -7,6 +7,7 @@ using GalaxyExplovive.Core.GameObject;
 using GalaxyExplovive.Core.UserInterface.Messages;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 
 namespace GalaxyExplovive.Core.GameEngine
@@ -76,16 +77,17 @@ namespace GalaxyExplovive.Core.GameEngine
                 transformMatrix: ViewTransformationMatrix,
                 samplerState: SamplerState.PointClamp
             );
+        }
 
-            DebugSystem.TestSpatialHashing(textureManager, this);
+        public void RenderWorldObjectsOnScreen(TextureManager textureManager)
+        {
             Rendering.RenderObjectsOnScreen(textureManager, this);
         }
 
-#pragma warning disable CA1822 // Mark members as static
-        public void EndWorldDrawing(SpriteBatch spriteBatch)
+        public void EndWorldDrawing(SpriteBatch spriteBatch, TextureManager textureManager)
         {
+            DebugSystem.TestSpatialHashing(textureManager, this);
             spriteBatch.End();
         }
-#pragma warning restore CA1822 // Mark members as static
     }
 }
