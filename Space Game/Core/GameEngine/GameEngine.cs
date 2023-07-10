@@ -26,14 +26,12 @@ namespace GalaxyExplovive.Core.GameEngine
         public SoundManager SoundManager { get; private set; }
         public MyUiMessageManager MessageManager { get; private set; }
 
-        private readonly CrossHair mSelectObjCrossHair;
-        private Matrix mViewTransformationMatrix;
+        public Matrix ViewTransformationMatrix { get; private set; }
 
         public GameEngine(SoundManager soundManager, MyUiMessageManager messageManager)
         {
             SoundManager = soundManager;
             MessageManager = messageManager;
-            mSelectObjCrossHair = new(CrossHair.CrossHairType.Select);
         }
 
         public void UpdateEngine(GameTime time, InputState input, GraphicsDevice graphicsDevice)
@@ -44,19 +42,12 @@ namespace GalaxyExplovive.Core.GameEngine
             DebugSystem.Update(time, input);
 
             GameTime += time.ElapsedGameTime.Milliseconds;
-            mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera.Position, Camera.Zoom, screenWidth, screenHeight);
+            ViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera.Position, Camera.Zoom, screenWidth, screenHeight);
             ViewMousePosition = input.mMousePosition.ToVector2();
-            WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, ViewMousePosition);
+            WorldMousePosition = Transformations.ScreenToWorld(ViewTransformationMatrix, ViewMousePosition);
 
-            Camera.Update(time, input, ViewMousePosition, mViewTransformationMatrix);
-            FrustumCuller.Update(screenWidth, screenHeight, mViewTransformationMatrix);
-
-            if (SelectObject == null)
-            {
-                mSelectObjCrossHair.Update(null, 0, Color.Transparent, false);
-                return;
-            }
-            mSelectObjCrossHair.Update(SelectObject.Position, SelectObject.TextureScale * 20, Color.OrangeRed, false);
+            Camera.Update(time, input, ViewMousePosition, ViewTransformationMatrix);
+            FrustumCuller.Update(screenWidth, screenHeight, ViewTransformationMatrix);
         }
 
         public void UpdateGameObject<T>(GameTime time, InputState input, T obj) where T : GameObjects.GameObject
@@ -82,13 +73,12 @@ namespace GalaxyExplovive.Core.GameEngine
 
             spriteBatch.Begin(
                 SpriteSortMode.FrontToBack,
-                transformMatrix: mViewTransformationMatrix,
+                transformMatrix: ViewTransformationMatrix,
                 samplerState: SamplerState.PointClamp
             );
 
             DebugSystem.TestSpatialHashing(textureManager, this);
             Rendering.RenderObjectsOnScreen(textureManager, this);
-            mSelectObjCrossHair.Draw(textureManager, this);
         }
 
 #pragma warning disable CA1822 // Mark members as static

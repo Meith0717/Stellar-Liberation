@@ -7,7 +7,6 @@
 
 using GalaxyExplovive.Core.GameEngine.InputManagement;
 using GalaxyExplovive.Core.GameEngine.Utility;
-using GalaxyExplovive.Core.TargetMovementController;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -18,7 +17,7 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
     /// </summary>
     public class Camera
     {
-        private const int CameraGlide = 5;
+        private const int CameraGlide = 2;
         private const float MaxZoom = 0.001f;
         private const float MimZoom = 1f;
 
