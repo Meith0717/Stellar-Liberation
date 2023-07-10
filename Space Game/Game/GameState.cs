@@ -36,6 +36,7 @@ namespace GalaxyExplovive.Game
             mParllaxManager = new();
             mMap = new(9000000, 67600);
             mMap.Generate();
+            mParllaxManager.Add(new("gameBackground", 0.05f));
             mParllaxManager.Add(new("gameBackgroundParlax1", 0.1f));
             mParllaxManager.Add(new("gameBackgroundParlax2", 0.15f));
             mParllaxManager.Add(new("gameBackgroundParlax3", 0.2f));
@@ -45,9 +46,9 @@ namespace GalaxyExplovive.Game
 
         public void Update(InputState inputState, GameTime gameTime, GraphicsDevice graphicsDevice)
         {
-            mGameEngine.UpdateEngine(gameTime, inputState, graphicsDevice);
             mGameEngine.UpdateGameObjects(gameTime, inputState, mShips);
             mMap.Update(gameTime, inputState, mGameEngine);
+            mGameEngine.UpdateEngine(gameTime, inputState, graphicsDevice);
 
             if (inputState.mActionList.Contains(ActionType.Test))
             {

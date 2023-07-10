@@ -56,20 +56,19 @@ namespace GalaxyExplovive.Core.GameEngine
                 mSelectObjCrossHair.Update(null, 0, Color.Transparent, false);
                 return;
             }
-            SelectObject.SelectActions(input, this);
             mSelectObjCrossHair.Update(SelectObject.Position, SelectObject.TextureScale * 20, Color.OrangeRed, false);
         }
 
         public void UpdateGameObject<T>(GameTime time, InputState input, T obj) where T : GameObjects.GameObject
         {
-            obj.UpdateLogic(time, input, this);
+            obj.Update(time, input, this);
         }
 
         public void UpdateGameObjects<T>(GameTime time, InputState input, List<T> objects) where T : GameObjects.GameObject
         {
             foreach (T obj in objects)
             {
-                obj.UpdateLogic(time, input, this);
+                obj.Update(time, input, this);
             }
         }
 

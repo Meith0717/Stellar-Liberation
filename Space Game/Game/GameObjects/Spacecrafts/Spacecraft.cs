@@ -40,11 +40,11 @@ namespace GalaxyExplovive.Game.GameObjects.Spacecraft
         /// <param name="gameTime">The game time information.</param>
         /// <param name="inputState">The input state of the game.</param>
         /// <param name="engine">The game engine instance.</param>
-        public override void UpdateLogic(GameTime gameTime, InputState inputState, GameEngine engine)
+        public override void Update(GameTime gameTime, InputState inputState, GameEngine engine)
         {
-            base.UpdateLogic(gameTime, inputState, engine);
             RegenerateShield();
             RegenerateHull();
+            base.Update(gameTime, inputState, engine);
         }
 
         /// <summary>

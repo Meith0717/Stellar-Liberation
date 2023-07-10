@@ -27,19 +27,20 @@ namespace GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips
 
         public SpaceShip() : base() { mMovementController = new(this); }
 
-        public override void SelectActions(InputState inputState, GameEngine engine)
+        internal override void SelectActions(InputState inputState, GameEngine engine)
         {
-            base.SelectActions(inputState, engine);
+            if (engine.Camera.MovedByUser) 
+            { 
+                IsTracked = false; 
+            } 
             GetTarget(inputState, engine);
-            if (!engine.Camera.MovedByUser) return; 
-            IsTracked = false; 
         }
 
-        public override void UpdateLogic(GameTime gameTime, InputState inputState, GameEngine engine)
+        public override void Update(GameTime gameTime, InputState inputState, GameEngine engine)
         {
             RemoveFromSpatialHashing(engine);
-            base.UpdateLogic(gameTime, inputState, engine);
             UpdateNavigation(gameTime, inputState);
+            base.Update(gameTime, inputState, engine);
             AddToSpatialHashing(engine);
         }
 

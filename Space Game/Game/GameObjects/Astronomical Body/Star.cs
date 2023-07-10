@@ -38,10 +38,10 @@ namespace GalaxyExplovive.Game.GameObjects.Astronomical_Body
             BoundedBox = new CircleF(Position, (Math.Max(Height, Width) / 2) * TextureScale);
         }
 
-        public override void UpdateLogic(GameTime gameTime, InputState inputState, GameEngine engine)
+        public override void Update(GameTime gameTime, InputState inputState, GameEngine engine)
         {
             AddToSpatialHashing(engine);
-            base.UpdateLogic(gameTime, inputState, engine);
+            base.Update(gameTime, inputState, engine);
             TextureOffset = new Vector2(Width, Height) / 2;
             if (mType == StarTypes.BH) return;
             Rotation += 0.0001f;
@@ -54,5 +54,7 @@ namespace GalaxyExplovive.Game.GameObjects.Astronomical_Body
             if (mType == StarTypes.BH) return;
             textureManager.Draw("StarLightAlpha", Position, TextureOffset, TextureScale * 1.3f, 0, 2, mLightColor);
         }
+
+        internal override void SelectActions(InputState inputState, GameEngine gameEngine) { }
     }
 }

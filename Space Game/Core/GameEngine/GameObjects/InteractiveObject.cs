@@ -55,40 +55,47 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
         /// <param name="gameTime">The game time information.</param>
         /// <param name="inputState">The input state of the game.</param>
         /// <param name="gameEngine">The game engine instance.</param>
-        public override void UpdateLogic(GameTime gameTime, InputState inputState, GameEngine gameEngine)
+        public override void Update(GameTime gameTime, InputState inputState, GameEngine gameEngine)
         {
             if (SelectZoom == 0f) throw new WarningException("No Value Given to SelectZoom");
-
-            base.UpdateLogic(gameTime, inputState, gameEngine);
 
             IsHover = BoundedBox.Contains(gameEngine.WorldMousePosition);
             IsPressed = IsHover && inputState.mMouseActionType == MouseActionType.LeftClickReleased;
 
-            if (gameEngine.SelectObject == this && IsPressed)
+            ManageObjectSelection(gameEngine);
+            ManageObjectTracking(gameEngine);
+
+            base.Update(gameTime, inputState, gameEngine);
+
+            if (IsSelected) { SelectActions(inputState, gameEngine); }
+        }
+
+        private void ManageObjectSelection(GameEngine gameEngine)
+        {
+            if (!IsPressed) return;
+            IsPressed = false;
+
+            if (gameEngine.SelectObject == this)
             {
-                IsSelected = IsPressed = IsTracked = false;
                 gameEngine.SelectObject = null;
+
+                IsSelected = false;
+                IsTracked = false;
+
                 return;
             }
 
-            if (gameEngine.SelectObject == null && IsPressed)
-            {
-                IsPressed = false;
-                IsTracked = IsSelected = true;
-                gameEngine.SelectObject = this;
-                gameEngine.Camera.MoveToZoom(SelectZoom);
-                gameEngine.Camera.MoveToTarget(Position);
-            }
-        }
+            if (gameEngine.SelectObject != null) return;
+            gameEngine.SelectObject = this;
+            gameEngine.Camera.MoveToZoom(SelectZoom);
+            gameEngine.Camera.MoveToTarget(Position);
 
-        /// <summary>
-        /// Performs actions related to the selection of the interactive object.
-        /// Performs the tracking of the object.
-        /// </summary>
-        /// <param name="inputState">The input state of the game.</param>
-        /// <param name="gameEngine">The game engine instance.</param>
-        public virtual void SelectActions(InputState inputState, GameEngine gameEngine)
+            IsTracked = true;
+            IsSelected = true;
+        }
+        private void ManageObjectTracking(GameEngine gameEngine)
         {
+            if (!IsSelected) return;
             if (gameEngine.Camera.MovedByUser)
             {
                 IsTracked = false;
@@ -98,5 +105,13 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
                 gameEngine.Camera.SetPosition(Position);
             }
         }
+
+        /// <summary>
+        /// Performs actions related to the selection of the interactive object.
+        /// Iss caaled in Update Method of Interactive Objects.
+        /// </summary>
+        /// <param name="inputState">The input state of the game.</param>
+        /// <param name="gameEngine">The game engine instance.</param>
+        internal abstract void SelectActions(InputState inputState, GameEngine gameEngine);
     }
 }

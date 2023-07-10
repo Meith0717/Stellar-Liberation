@@ -50,7 +50,7 @@ namespace GalaxyExplovive.Game.GameObjects
             BoundedBox = new CircleF(Position, (Math.Max(Height, Width) / 2) * TextureScale);
         }
 
-        public override void UpdateLogic(GameTime gameTime, InputState inputState, GameEngine engine)
+        public override void Update(GameTime gameTime, InputState inputState, GameEngine engine)
         {
             RemoveFromSpatialHashing(engine);
             if (mAlpha <= 0)
@@ -59,7 +59,7 @@ namespace GalaxyExplovive.Game.GameObjects
                 return;
             }
 
-            base.UpdateLogic(gameTime, inputState, engine);
+            base.Update(gameTime, inputState, engine);
 
             float velocity = MathF.Sqrt(1 / (mRadius * 10));
             float angleUpdate = mAngle + (engine.GameTime / 1000) * velocity;
@@ -119,5 +119,7 @@ namespace GalaxyExplovive.Game.GameObjects
             if (mAlpha == 0) { return; }
             mAlpha = (mAlpha <= 0) ? 0 : mAlpha - 50;
         }
+
+        internal override void SelectActions(InputState inputState, GameEngine gameEngine) { }
     }
 }

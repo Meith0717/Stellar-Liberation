@@ -91,7 +91,7 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
         /// <param name="gameTime">The game time information.</param>
         /// <param name="inputState">The input state of the game.</param>
         /// <param name="engine">The game engine instance.</param>
-        public virtual void UpdateLogic(GameTime gameTime, InputState inputState, GameEngine engine)
+        public virtual void Update(GameTime gameTime, InputState inputState, GameEngine engine)
         {
             engine.DebugSystem.UpdateObjectCount += 1;
             BoundedBox = new CircleF(Position, MathF.Max(Height, Width) / 2 * TextureScale);
@@ -101,7 +101,7 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
         /// Adds the game object to the spatial hashing system of the game engine if UpdatePosition is set true.
         /// </summary>
         /// <param name="engine">The game engine instance.</param>
-        public void AddToSpatialHashing(GameEngine engine)
+        internal void AddToSpatialHashing(GameEngine engine)
         {
             if (!mWasRemovedFromSpatialHashing) return;
             engine.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
@@ -112,7 +112,7 @@ namespace GalaxyExplovive.Core.GameEngine.GameObjects
         /// Removes the game object from the spatial hashing system of the game engine if UpdatePosition is set true.
         /// </summary>
         /// <param name="engine">The game engine instance.</param>
-        public void RemoveFromSpatialHashing(GameEngine engine)
+        internal void RemoveFromSpatialHashing(GameEngine engine)
         {
             mWasRemovedFromSpatialHashing = true;
             engine.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
