@@ -1,7 +1,6 @@
 ﻿using GalaxyExplovive.Core.GameEngine;
 using GalaxyExplovive.Core.GameEngine.Content_Management;
 using GalaxyExplovive.Core.GameEngine.InputManagement;
-using GalaxyExplovive.Core.GameEngine.Utility;
 using GalaxyExplovive.Game.GameObjects.Astronomical_Body;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
@@ -18,6 +17,7 @@ namespace GalaxyExplovive.Game.GameObjects
         [JsonProperty] readonly private List<Planet> mPlanets;
         [JsonProperty] readonly private Star mStar;
         [JsonProperty] public CircleF BoundedBox;
+        [JsonProperty] public Species Occupant;
 
         public PlanetSystem(Vector2 position)
         {
@@ -34,19 +34,7 @@ namespace GalaxyExplovive.Game.GameObjects
         }
 
         public void Update(GameTime time, InputState inputState, GameEngine engine)
-        {
-            foreach (Planet planet in mPlanets)
-            {
-                switch (BoundedBox.Contains(engine.WorldMousePosition))
-                {
-                    case true:
-                        planet.IncreaseVisibility();
-                        break;
-                    case false:
-                        planet.DecreaseVisibility();
-                        break;
-                }
-            }
+        { 
             engine.UpdateGameObject(time, inputState, mStar);
             engine.UpdateGameObjects(time, inputState, mPlanets);
         }
@@ -56,6 +44,22 @@ namespace GalaxyExplovive.Game.GameObjects
             Rendering.DrawGameObject(textureManager, engine, mStar);
             Rendering.DrawGameObjects(textureManager, engine, mPlanets);
             engine.DebugSystem.DrawBoundBox(textureManager, BoundedBox, engine);
+        }
+
+        public void Hide()
+        {
+            foreach (Planet planet in mPlanets)
+            {
+                planet.DecreaseVisibility();
+            }
+        }
+
+        public void Show()
+        {
+            foreach (Planet planet in mPlanets)
+            {
+                planet.IncreaseVisibility();
+            }
         }
 
     }

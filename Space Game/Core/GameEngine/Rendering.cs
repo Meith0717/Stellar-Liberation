@@ -6,15 +6,6 @@ namespace GalaxyExplovive.Core.GameEngine
 {
     public static class Rendering
     {
-        public static void RenderObjectsOnScreen(TextureManager textureManager, GameEngine engine)
-        {
-            var screen = engine.FrustumCuller.WorldFrustum.ToRectangle();
-            var objects = engine.SpatialHashing.GetObjectsInSpace(screen);
-            foreach (GameObjects.GameObject obj in objects)
-            {
-                DrawGameObject(textureManager, engine, obj);
-            }
-        }
 
         public static void DrawGameObject<T>(TextureManager textureManager, GameEngine engine, T obj) where T : GameObjects.GameObject
         {

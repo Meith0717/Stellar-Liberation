@@ -7,9 +7,8 @@ namespace GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips
 {
     public class Cargo : SpaceShip
     {
-        public Cargo(Vector2 position) : base()
+        public Cargo(Vector2 position) : base(position)
         {
-            Position = position;
             Rotation = 0;
             SelectZoom = 1;
 

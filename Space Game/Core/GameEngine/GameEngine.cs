@@ -7,7 +7,7 @@ using GalaxyExplovive.Core.GameObject;
 using GalaxyExplovive.Core.UserInterface.Messages;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using MonoGame.Extended;
 using System.Collections.Generic;
 
 namespace GalaxyExplovive.Core.GameEngine
@@ -28,6 +28,7 @@ namespace GalaxyExplovive.Core.GameEngine
         public MyUiMessageManager MessageManager { get; private set; }
 
         public Matrix ViewTransformationMatrix { get; private set; }
+        public List<GameObjects.GameObject> ObjectsOnScreen { get; private set; }
 
         public GameEngine(SoundManager soundManager, MyUiMessageManager messageManager)
         {
@@ -49,6 +50,7 @@ namespace GalaxyExplovive.Core.GameEngine
 
             Camera.Update(time, input, ViewMousePosition, ViewTransformationMatrix);
             FrustumCuller.Update(screenWidth, screenHeight, ViewTransformationMatrix);
+            ObjectsOnScreen = SpatialHashing.GetObjectsInSpace(FrustumCuller.WorldFrustum.ToRectangle());
         }
 
         public void UpdateGameObject<T>(GameTime time, InputState input, T obj) where T : GameObjects.GameObject
@@ -81,7 +83,7 @@ namespace GalaxyExplovive.Core.GameEngine
 
         public void RenderWorldObjectsOnScreen(TextureManager textureManager)
         {
-            Rendering.RenderObjectsOnScreen(textureManager, this);
+            Rendering.DrawGameObjects(textureManager, this, ObjectsOnScreen);
         }
 
         public void EndWorldDrawing(SpriteBatch spriteBatch, TextureManager textureManager)

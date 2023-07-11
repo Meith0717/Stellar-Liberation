@@ -25,7 +25,7 @@ namespace GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips
         [JsonIgnore] private float mTravelTime;
         [JsonIgnore] private MovementController mMovementController;
 
-        public SpaceShip() : base() { mMovementController = new(this); }
+        public SpaceShip(Vector2 position) : base(position) { mMovementController = new(this); }
 
         internal override void SelectActions(InputState inputState, GameEngine engine)
         {

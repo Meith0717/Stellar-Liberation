@@ -1,4 +1,5 @@
 ﻿using GalaxyExplovive.Core.GameEngine.Content_Management;
+using GalaxyExplovive.Core.GameEngine.GameObjects;
 using GalaxyExplovive.Core.GameEngine.InputManagement;
 using GalaxyExplovive.Core.GameEngine.Utility;
 using GalaxyExplovive.Game.GameObjects;
@@ -56,6 +57,19 @@ namespace GalaxyExplovive.Core.Map
                 if (!engine.FrustumCuller.CircleOnWorldView(system.BoundedBox)) continue;
                 system.Update(time, input, engine);
             }
+        }
+
+        private void ManageSystemVisibility(Camera camera)
+        {
+            switch (camera.Zoom)
+            {
+                case <= 0.5f:
+                    foreach (PlanetSystem system in PlanetSystems) { system.Show(); }
+                    break;
+                case > 0.5f:
+                    foreach (PlanetSystem system in PlanetSystems) { system.Hide(); }
+                    break;
+            } 
         }
 
         private void DrawGrid(TextureManager textureManager, GameEngine.GameEngine engine, Color color)

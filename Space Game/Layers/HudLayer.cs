@@ -72,9 +72,6 @@ namespace GalaxyExplovive.Layers
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin(transformMatrix: mEngine.ViewTransformationMatrix);
-            spriteBatch.End();
-
             spriteBatch.Begin();
             mMessageManager.Draw();
             mGameTimeText.Draw(mTextureManager);

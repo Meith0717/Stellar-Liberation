@@ -34,6 +34,11 @@ namespace GalaxyExplovive.Game.GameObjects.Spacecraft
         [JsonProperty]
         private double mHull = 100;
 
+        internal Spacecraft(Vector2 position)
+        {
+            Position = position;
+        }
+
         /// <summary>
         /// Updates the logic of the spacecraft, including regeneration of shield and hull.
         /// </summary>

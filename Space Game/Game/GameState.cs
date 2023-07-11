@@ -7,6 +7,7 @@ using GalaxyExplovive.Core.GameEngine.InputManagement;
 using GalaxyExplovive.Core.GameEngine.Utility;
 using GalaxyExplovive.Core.GameObject;
 using GalaxyExplovive.Core.Map;
+using GalaxyExplovive.Game.GameObjects;
 using GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -24,7 +25,7 @@ namespace GalaxyExplovive.Game
         [JsonProperty] public double mAlloys;
         [JsonProperty] public double mEnergy;
         [JsonProperty] public double mCrystals;
-        [JsonProperty] private List<Cargo> mShips = new(); // Has to be set to JsonProperty !!!!
+        [JsonProperty] private List<Species> mSpecies = new(); // Has to be set to JsonProperty !!!!
         [JsonProperty] public readonly Map mMap;
 
         // Unsaved Classes
@@ -43,23 +44,26 @@ namespace GalaxyExplovive.Game
             mParllaxManager.Add(new("gameBackgroundParlax2", 0.15f));
             mParllaxManager.Add(new("gameBackgroundParlax3", 0.2f));
             mParllaxManager.Add(new("gameBackgroundParlax4", 0.25f));
-            mShips.Add(new(Utility.GetRandomVector2(Vector2.Zero, 0)));
+            Species terran = new("Terran");
+            terran.SpawnCargo(Vector2.Zero);
+            mSpecies.Add(terran);
             mSelectObjCrossHair = new(CrossHair.CrossHairType.Select);
         }
 
         public void Update(InputState inputState, GameTime gameTime, GraphicsDevice graphicsDevice)
         {
-            mGameEngine.UpdateGameObjects(gameTime, inputState, mShips);
-            mMap.Update(gameTime, inputState, mGameEngine);
-            mGameEngine.UpdateEngine(gameTime, inputState, graphicsDevice);
-
             if (inputState.mActionList.Contains(ActionType.Test))
             {
                 mGameEngine.Camera.MoveToTarget(Vector2.Zero);
             }
 
+            mGameEngine.UpdateEngine(gameTime, inputState, graphicsDevice);
+            foreach(Species species in mSpecies)
+            {
+                mGameEngine.UpdateGameObjects(gameTime, inputState, species.Ships);
+            }
+            mMap.Update(gameTime, inputState, mGameEngine);
             mParllaxManager.Update(mGameEngine.Camera.Movement, mGameEngine.Camera.Zoom);
-
             mSelectObjCrossHair.Update(null, 0, Color.Transparent, false);
             if (mGameEngine.SelectObject == null) return;
             mSelectObjCrossHair.Update(mGameEngine.SelectObject.Position, 
