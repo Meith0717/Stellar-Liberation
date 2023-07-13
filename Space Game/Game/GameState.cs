@@ -45,7 +45,7 @@ namespace GalaxyExplovive.Game
             mParllaxManager.Add(new("gameBackgroundParlax3", 0.2f));
             mParllaxManager.Add(new("gameBackgroundParlax4", 0.25f));
             Species terran = new("Terran");
-            terran.SpawnCargo(Vector2.Zero);
+            terran.SpawnScience(Vector2.Zero);
             mSpecies.Add(terran);
             mSelectObjCrossHair = new(CrossHair.CrossHairType.Select);
         }

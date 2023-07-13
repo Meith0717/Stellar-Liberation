@@ -1,4 +1,5 @@
 ﻿using GalaxyExplovive.Core.GameEngine;
+using GalaxyExplovive.Game.GameObjects.Spacecraft.ScienceShip;
 using GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
@@ -23,6 +24,12 @@ namespace GalaxyExplovive.Game.GameObjects
         public void SpawnCargo(Vector2 position) 
         {
             Cargo ship = new(position);
+            Ships.Add(ship);
+        }
+
+        public void SpawnScience(Vector2 position)
+        {
+            ScienceShip ship = new(position);
             Ships.Add(ship);
         }
 

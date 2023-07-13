@@ -1,12 +1,13 @@
 ﻿using GalaxyExplovive.Core.GameEngine;
 using GalaxyExplovive.Core.GameEngine.Content_Management;
+using GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips;
 using Microsoft.Xna.Framework;
 
-namespace GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips
+namespace GalaxyExplovive.Game.GameObjects.Spacecraft.ScienceShip
 {
-    public class Cargo : SpaceShip
+    public class ScienceShip : SpaceShip
     {
-        public Cargo(Vector2 position) : base(position)
+        public ScienceShip(Vector2 position) : base(position)
         {
             Rotation = 0;
             SelectZoom = 1;
