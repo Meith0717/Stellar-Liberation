@@ -11,9 +11,9 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Core\ActionManager\**" />
-    <EmbeddedResource Remove="Core\ActionManager\**" />
-    <None Remove="Core\ActionManager\**" />
+    <Compile Remove="Game\Core\ActionManager\**" />
+    <EmbeddedResource Remove="Game\Core\ActionManager\**" />
+    <None Remove="Game\Core\ActionManager\**" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Icon.ico" />
