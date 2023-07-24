@@ -1,12 +1,12 @@
-﻿using GalaxyExplovive.Core.GameEngine;
-using GalaxyExplovive.Core.GameEngine.GameObjects;
-using GalaxyExplovive.Core.GameEngine.Position_Management;
+﻿using CelestialOdyssey.Core.GameEngine;
+using CelestialOdyssey.Core.GameEngine.GameObjects;
+using CelestialOdyssey.Core.GameEngine.Position_Management;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GalaxyExplovive.Game.GameLogik
+namespace CelestialOdyssey.Game.GameLogik
 {
     internal static class ObjectLocator
     {

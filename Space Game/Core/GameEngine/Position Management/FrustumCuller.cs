@@ -8,7 +8,7 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 
-namespace GalaxyExplovive.Core.GameEngine.Position_Management
+namespace CelestialOdyssey.Core.GameEngine.Position_Management
 {
     /// <summary>
     /// Represents a frustum culler for efficient visibility testing of objects within a view frustum.

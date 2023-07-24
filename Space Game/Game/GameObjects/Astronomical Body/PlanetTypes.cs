@@ -1,8 +1,8 @@
-﻿using GalaxyExplovive.Core.GameEngine.Utility;
-using GalaxyExplovive.Core.GameObjects.Types;
+﻿using CelestialOdyssey.Core.GameEngine.Utility;
+using CelestialOdyssey.Core.GameObjects.Types;
 using System.Collections.Generic;
 
-namespace GalaxyExplovive.Game.GameObjects.Astronomical_Body
+namespace CelestialOdyssey.Game.GameObjects.Astronomical_Body
 {
     public class PlanetTypes
     {

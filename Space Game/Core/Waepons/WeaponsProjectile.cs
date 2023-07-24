@@ -1,14 +1,14 @@
-﻿using GalaxyExplovive.Core.GameEngine;
-using GalaxyExplovive.Core.GameEngine.Content_Management;
-using GalaxyExplovive.Core.GameEngine.Position_Management;
-using GalaxyExplovive.Core.GameEngine.Utility;
-using GalaxyExplovive.Game.GameLogik;
-using GalaxyExplovive.Game.GameObjects.Spacecraft;
+﻿using CelestialOdyssey.Core.GameEngine;
+using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Core.GameEngine.Position_Management;
+using CelestialOdyssey.Core.GameEngine.Utility;
+using CelestialOdyssey.Game.GameLogik;
+using CelestialOdyssey.Game.GameObjects.Spacecraft;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 
-namespace GalaxyExplovive.Core.Waepons
+namespace CelestialOdyssey.Core.Waepons
 {
     public class WeaponsProjectile
     {

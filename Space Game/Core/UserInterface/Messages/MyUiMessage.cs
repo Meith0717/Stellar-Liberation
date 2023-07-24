@@ -1,9 +1,9 @@
-﻿using GalaxyExplovive.Core.GameEngine.Content_Management;
-using GalaxyExplovive.Core.GameEngine.InputManagement;
+﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Core.GameEngine.InputManagement;
 
 using Microsoft.Xna.Framework;
 
-namespace GalaxyExplovive.Core.UserInterface.Messages
+namespace CelestialOdyssey.Core.UserInterface.Messages
 {
     public class MyUiMessage
     {

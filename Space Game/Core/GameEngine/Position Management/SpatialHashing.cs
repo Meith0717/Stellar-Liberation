@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GalaxyExplovive.Core.GameEngine.Position_Management
+namespace CelestialOdyssey.Core.GameEngine.Position_Management
 {
     /// <summary>
     /// Represents a spatial hashing data structure for efficient object retrieval based on their coordinates.

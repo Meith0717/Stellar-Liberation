@@ -1,10 +1,10 @@
 ﻿
-using GalaxyExplovive.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Core.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
-namespace GalaxyExplovive.Core.Effects
+namespace CelestialOdyssey.Core.Effects
 {
     internal class ParllaxManager
     {

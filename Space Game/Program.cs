@@ -1,3 +1,3 @@
 ﻿
-using var game = new GalaxyExplovive.Game1();
+using var game = new CelestialOdyssey.Game1();
 game.Run();

@@ -1,9 +1,9 @@
-﻿using GalaxyExplovive.Core.GameEngine;
-using GalaxyExplovive.Core.GameEngine.Content_Management;
-using GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips;
+﻿using CelestialOdyssey.Core.GameEngine;
+using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Game.GameObjects.Spacecraft.SpaceShips;
 using Microsoft.Xna.Framework;
 
-namespace GalaxyExplovive.Game.GameObjects.Spacecraft.ScienceShip
+namespace CelestialOdyssey.Game.GameObjects.Spacecraft.ScienceShip
 {
     public class ScienceShip : SpaceShip
     {

@@ -1,21 +1,21 @@
-﻿using GalaxyExplovive.Core;
-using GalaxyExplovive.Core.Effects;
-using GalaxyExplovive.Core.GameEngine;
-using GalaxyExplovive.Core.GameEngine.Content_Management;
-using GalaxyExplovive.Core.GameEngine.InputManagement;
+﻿using CelestialOdyssey.Core;
+using CelestialOdyssey.Core.Effects;
+using CelestialOdyssey.Core.GameEngine;
+using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Core.GameEngine.InputManagement;
 
-using GalaxyExplovive.Core.GameEngine.Utility;
-using GalaxyExplovive.Core.GameObject;
-using GalaxyExplovive.Core.Map;
-using GalaxyExplovive.Game.GameObjects;
-using GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips;
+using CelestialOdyssey.Core.GameEngine.Utility;
+using CelestialOdyssey.Core.GameObject;
+using CelestialOdyssey.Core.Map;
+using CelestialOdyssey.Game.GameObjects;
+using CelestialOdyssey.Game.GameObjects.Spacecraft.SpaceShips;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
-namespace GalaxyExplovive.Game
+namespace CelestialOdyssey.Game
 {
     [Serializable]
     public class GameState

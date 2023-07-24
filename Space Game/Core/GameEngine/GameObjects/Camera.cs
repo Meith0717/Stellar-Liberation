@@ -5,12 +5,12 @@
  *  All rights reserved.
  */
 
-using GalaxyExplovive.Core.GameEngine.InputManagement;
-using GalaxyExplovive.Core.GameEngine.Utility;
+using CelestialOdyssey.Core.GameEngine.InputManagement;
+using CelestialOdyssey.Core.GameEngine.Utility;
 using Microsoft.Xna.Framework;
 using System;
 
-namespace GalaxyExplovive.Core.GameEngine.GameObjects
+namespace CelestialOdyssey.Core.GameEngine.GameObjects
 {
     /// <summary>
     /// Represents a camera used for viewing and manipulating the game world.

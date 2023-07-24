@@ -1,13 +1,13 @@
-﻿using GalaxyExplovive.Core.GameEngine;
-using GalaxyExplovive.Core.GameEngine.GameObjects;
-using GalaxyExplovive.Core.GameEngine.Position_Management;
-using GalaxyExplovive.Core.GameEngine.Utility;
-using GalaxyExplovive.Game.GameLogik;
-using GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips;
+﻿using CelestialOdyssey.Core.GameEngine;
+using CelestialOdyssey.Core.GameEngine.GameObjects;
+using CelestialOdyssey.Core.GameEngine.Position_Management;
+using CelestialOdyssey.Core.GameEngine.Utility;
+using CelestialOdyssey.Game.GameLogik;
+using CelestialOdyssey.Game.GameObjects.Spacecraft.SpaceShips;
 using Microsoft.Xna.Framework;
 using System;
 
-namespace GalaxyExplovive.Core.TargetMovementController
+namespace CelestialOdyssey.Core.TargetMovementController
 {
     public class Movement
     {

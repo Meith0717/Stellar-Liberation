@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace GalaxyExplovive.Core.GameObjects.Types
+namespace CelestialOdyssey.Core.GameObjects.Types
 {
     public class StarType
     {

@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
-namespace GalaxyExplovive.Core.GameEngine.InputManagement
+namespace CelestialOdyssey.Core.GameEngine.InputManagement
 {
     public enum ActionType
     {

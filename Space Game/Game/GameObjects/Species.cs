@@ -1,12 +1,12 @@
-﻿using GalaxyExplovive.Core.GameEngine;
-using GalaxyExplovive.Game.GameObjects.Spacecraft.ScienceShip;
-using GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips;
+﻿using CelestialOdyssey.Core.GameEngine;
+using CelestialOdyssey.Game.GameObjects.Spacecraft.ScienceShip;
+using CelestialOdyssey.Game.GameObjects.Spacecraft.SpaceShips;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
-namespace GalaxyExplovive.Game.GameObjects
+namespace CelestialOdyssey.Game.GameObjects
 {
     [Serializable]
     public class Species

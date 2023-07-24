@@ -1,16 +1,16 @@
-﻿using GalaxyExplovive.Core.GameEngine.Content_Management;
-using GalaxyExplovive.Core.GameEngine.GameObjects;
-using GalaxyExplovive.Core.GameEngine.InputManagement;
-using GalaxyExplovive.Core.GameEngine.Position_Management;
-using GalaxyExplovive.Core.GameEngine.Utility;
-using GalaxyExplovive.Core.GameObject;
-using GalaxyExplovive.Core.UserInterface.Messages;
+﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Core.GameEngine.GameObjects;
+using CelestialOdyssey.Core.GameEngine.InputManagement;
+using CelestialOdyssey.Core.GameEngine.Position_Management;
+using CelestialOdyssey.Core.GameEngine.Utility;
+using CelestialOdyssey.Core.GameObject;
+using CelestialOdyssey.Core.UserInterface.Messages;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System.Collections.Generic;
 
-namespace GalaxyExplovive.Core.GameEngine
+namespace CelestialOdyssey.Core.GameEngine
 {
     public class GameEngine
     {

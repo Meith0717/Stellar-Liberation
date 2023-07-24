@@ -1,10 +1,10 @@
-﻿using GalaxyExplovive.Core.GameEngine;
-using GalaxyExplovive.Core.GameEngine.GameObjects;
-using GalaxyExplovive.Core.GameEngine.InputManagement;
+﻿using CelestialOdyssey.Core.GameEngine;
+using CelestialOdyssey.Core.GameEngine.GameObjects;
+using CelestialOdyssey.Core.GameEngine.InputManagement;
 using Microsoft.Xna.Framework;
 using System;
 
-namespace GalaxyExplovive.Game.GameObjects.Astronomical_Body
+namespace CelestialOdyssey.Game.GameObjects.Astronomical_Body
 {
     /// <summary>
     /// Abstract class representing an astronomical body, derived from the InteractiveObject class.

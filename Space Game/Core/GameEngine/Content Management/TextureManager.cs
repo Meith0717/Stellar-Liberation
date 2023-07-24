@@ -12,7 +12,7 @@ using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
 
-namespace GalaxyExplovive.Core.GameEngine.Content_Management
+namespace CelestialOdyssey.Core.GameEngine.Content_Management
 {
     public class TextureManager
     {

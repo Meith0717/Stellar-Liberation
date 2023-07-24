@@ -1,8 +1,8 @@
 ﻿
-using GalaxyExplovive.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Core.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 
-namespace GalaxyExplovive.Core.GameObject
+namespace CelestialOdyssey.Core.GameObject
 {
     public class CrossHair : GameEngine.GameObjects.GameObject
     {

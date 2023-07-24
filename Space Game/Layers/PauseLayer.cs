@@ -1,11 +1,11 @@
-﻿using GalaxyExplovive.Core.GameEngine.InputManagement;
-using GalaxyExplovive.Core.LayerManagement;
-using GalaxyExplovive.Core.UserInterface;
-using GalaxyExplovive.Game;
+﻿using CelestialOdyssey.Core.GameEngine.InputManagement;
+using CelestialOdyssey.Core.LayerManagement;
+using CelestialOdyssey.Core.UserInterface;
+using CelestialOdyssey.Game;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GalaxyExplovive.Layers
+namespace CelestialOdyssey.Layers
 {
     public class PauseLayer : Layer
     {

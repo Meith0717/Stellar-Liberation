@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace GalaxyExplovive.Core
+namespace CelestialOdyssey.Core
 {
     public class Globals
     {

@@ -3,7 +3,7 @@ using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
 
-namespace GalaxyExplovive.Core.GameEngine.Utility
+namespace CelestialOdyssey.Core.GameEngine.Utility
 {
     public static class Utility
     {

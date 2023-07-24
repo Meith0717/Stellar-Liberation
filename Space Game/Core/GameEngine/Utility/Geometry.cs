@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
 
-namespace GalaxyExplovive.Core.GameEngine.Utility
+namespace CelestialOdyssey.Core.GameEngine.Utility
 {
     /// <summary>
     /// Provides geometric calculations and operations.

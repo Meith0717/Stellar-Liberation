@@ -1,14 +1,14 @@
-using GalaxyExplovive.Core.GameEngine;
-using GalaxyExplovive.Core.GameEngine.Content_Management;
-using GalaxyExplovive.Core.GameEngine.InputManagement;
-using GalaxyExplovive.Core.GameEngine.Persistance;
+using CelestialOdyssey.Core.GameEngine;
+using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Core.GameEngine.InputManagement;
+using CelestialOdyssey.Core.GameEngine.Persistance;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using System;
 
-namespace GalaxyExplovive.Core.LayerManagement;
+namespace CelestialOdyssey.Core.LayerManagement;
 
 [Serializable]
 public abstract class Layer

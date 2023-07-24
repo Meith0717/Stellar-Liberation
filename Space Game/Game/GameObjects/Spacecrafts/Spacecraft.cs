@@ -1,13 +1,13 @@
-﻿using GalaxyExplovive.Core.GameEngine;
-using GalaxyExplovive.Core.GameEngine.Content_Management;
-using GalaxyExplovive.Core.GameEngine.GameObjects;
-using GalaxyExplovive.Core.GameEngine.InputManagement;
+﻿using CelestialOdyssey.Core.GameEngine;
+using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Core.GameEngine.GameObjects;
+using CelestialOdyssey.Core.GameEngine.InputManagement;
 
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
 
-namespace GalaxyExplovive.Game.GameObjects.Spacecraft
+namespace CelestialOdyssey.Game.GameObjects.Spacecraft
 {
     /// <summary>
     /// Abstract class representing a spacecraft, derived from the InteractiveObject class.

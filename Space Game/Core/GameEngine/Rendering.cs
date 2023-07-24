@@ -1,8 +1,8 @@
-﻿using GalaxyExplovive.Core.GameEngine.Content_Management;
+﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
 using MonoGame.Extended;
 using System.Collections.Generic;
 
-namespace GalaxyExplovive.Core.GameEngine
+namespace CelestialOdyssey.Core.GameEngine
 {
     public static class Rendering
     {

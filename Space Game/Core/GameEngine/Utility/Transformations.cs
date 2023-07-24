@@ -7,7 +7,7 @@
 
 using Microsoft.Xna.Framework;
 
-namespace GalaxyExplovive.Core.GameEngine.Utility
+namespace CelestialOdyssey.Core.GameEngine.Utility
 {
     /// <summary>
     /// Provides methods for transforming positions between screen space and world space using a view transformation matrix.

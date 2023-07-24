@@ -1,7 +1,7 @@
-﻿using GalaxyExplovive.Core.GameEngine;
-using GalaxyExplovive.Core.GameEngine.Content_Management;
-using GalaxyExplovive.Core.GameEngine.InputManagement;
-using GalaxyExplovive.Game.GameObjects.Astronomical_Body;
+﻿using CelestialOdyssey.Core.GameEngine;
+using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Core.GameEngine.InputManagement;
+using CelestialOdyssey.Game.GameObjects.Astronomical_Body;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using MathNet.Numerics.Distributions;
 
-namespace GalaxyExplovive.Game.GameObjects
+namespace CelestialOdyssey.Game.GameObjects
 {
     [Serializable]
     public class PlanetSystem

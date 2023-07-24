@@ -1,15 +1,15 @@
-﻿using GalaxyExplovive.Core.GameEngine;
-using GalaxyExplovive.Core.GameEngine.Content_Management;
-using GalaxyExplovive.Core.GameEngine.InputManagement;
+﻿using CelestialOdyssey.Core.GameEngine;
+using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Core.GameEngine.InputManagement;
 
-using GalaxyExplovive.Core.GameEngine.Utility;
-using GalaxyExplovive.Core.GameObjects.Types;
+using CelestialOdyssey.Core.GameEngine.Utility;
+using CelestialOdyssey.Core.GameObjects.Types;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
 using System;
 
-namespace GalaxyExplovive.Game.GameObjects.Astronomical_Body
+namespace CelestialOdyssey.Game.GameObjects.Astronomical_Body
 {
     [Serializable]
     public class Star : AstronomicalBody

@@ -1,17 +1,17 @@
-﻿using GalaxyExplovive.Core;
-using GalaxyExplovive.Core.GameEngine;
-using GalaxyExplovive.Core.GameEngine.InputManagement;
-using GalaxyExplovive.Core.GameEngine.Utility;
-using GalaxyExplovive.Core.GameObject;
-using GalaxyExplovive.Core.LayerManagement;
-using GalaxyExplovive.Core.UserInterface;
-using GalaxyExplovive.Core.UserInterface.Messages;
-using GalaxyExplovive.Game;
-using GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips;
+﻿using CelestialOdyssey.Core;
+using CelestialOdyssey.Core.GameEngine;
+using CelestialOdyssey.Core.GameEngine.InputManagement;
+using CelestialOdyssey.Core.GameEngine.Utility;
+using CelestialOdyssey.Core.GameObject;
+using CelestialOdyssey.Core.LayerManagement;
+using CelestialOdyssey.Core.UserInterface;
+using CelestialOdyssey.Core.UserInterface.Messages;
+using CelestialOdyssey.Game;
+using CelestialOdyssey.Game.GameObjects.Spacecraft.SpaceShips;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GalaxyExplovive.Layers
+namespace CelestialOdyssey.Layers
 {
     public class HudLayer : Layer
     {

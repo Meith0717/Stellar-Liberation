@@ -1,10 +1,10 @@
-using GalaxyExplovive.Core.GameEngine.InputManagement;
+using CelestialOdyssey.Core.GameEngine.InputManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GalaxyExplovive.Core.LayerManagement;
+namespace CelestialOdyssey.Core.LayerManagement;
 
 public class LayerManager
 {

@@ -1,16 +1,16 @@
-﻿using GalaxyExplovive.Core.GameEngine;
-using GalaxyExplovive.Core.GameEngine.Content_Management;
-using GalaxyExplovive.Core.GameEngine.InputManagement;
-using GalaxyExplovive.Core.GameEngine.Persistance;
+﻿using CelestialOdyssey.Core.GameEngine;
+using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Core.GameEngine.InputManagement;
+using CelestialOdyssey.Core.GameEngine.Persistance;
 
-using GalaxyExplovive.Core.LayerManagement;
-using GalaxyExplovive.Layers;
+using CelestialOdyssey.Core.LayerManagement;
+using CelestialOdyssey.Layers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 
-namespace GalaxyExplovive
+namespace CelestialOdyssey
 {
     public class Game1 : Microsoft.Xna.Framework.Game
     {

@@ -1,15 +1,15 @@
-﻿using GalaxyExplovive.Core.GameEngine;
-using GalaxyExplovive.Core.GameEngine.Content_Management;
-using GalaxyExplovive.Core.GameEngine.GameObjects;
-using GalaxyExplovive.Core.GameEngine.InputManagement;
-using GalaxyExplovive.Core.GameEngine.Utility;
-using GalaxyExplovive.Core.TargetMovementController;
-using GalaxyExplovive.Core.Weapons;
+﻿using CelestialOdyssey.Core.GameEngine;
+using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Core.GameEngine.GameObjects;
+using CelestialOdyssey.Core.GameEngine.InputManagement;
+using CelestialOdyssey.Core.GameEngine.Utility;
+using CelestialOdyssey.Core.TargetMovementController;
+using CelestialOdyssey.Core.Weapons;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
 
-namespace GalaxyExplovive.Game.GameObjects.Spacecraft.SpaceShips
+namespace CelestialOdyssey.Game.GameObjects.Spacecraft.SpaceShips
 {
     [Serializable]
     public class SpaceShip : Spacecraft

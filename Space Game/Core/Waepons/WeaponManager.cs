@@ -1,12 +1,12 @@
-﻿using GalaxyExplovive.Core.GameEngine;
-using GalaxyExplovive.Core.GameEngine.Content_Management;
-using GalaxyExplovive.Core.GameEngine.Position_Management;
-using GalaxyExplovive.Core.Waepons;
-using GalaxyExplovive.Game.GameObjects.Spacecraft;
+﻿using CelestialOdyssey.Core.GameEngine;
+using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Core.GameEngine.Position_Management;
+using CelestialOdyssey.Core.Waepons;
+using CelestialOdyssey.Game.GameObjects.Spacecraft;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
-namespace GalaxyExplovive.Core.Weapons
+namespace CelestialOdyssey.Core.Weapons
 {
     public class WeaponManager
     {

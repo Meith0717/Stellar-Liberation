@@ -5,13 +5,13 @@
  *  All rights reserved.
  */
 
-using GalaxyExplovive.Core.GameEngine.InputManagement;
+using CelestialOdyssey.Core.GameEngine.InputManagement;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 
-namespace GalaxyExplovive.Core.GameEngine.GameObjects
+namespace CelestialOdyssey.Core.GameEngine.GameObjects
 {
     /// <summary>
     /// Abstract class representing an interactive game object derived from the GameObject class.

@@ -1,8 +1,8 @@
-﻿using GalaxyExplovive.Core.GameObjects.Types;
+﻿using CelestialOdyssey.Core.GameObjects.Types;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
-namespace GalaxyExplovive.Game.GameObjects.Astronomical_Body
+namespace CelestialOdyssey.Game.GameObjects.Astronomical_Body
 {
     public class StarTypes
     {

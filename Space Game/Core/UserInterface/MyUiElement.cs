@@ -1,8 +1,8 @@
 ﻿
 
-using GalaxyExplovive.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Core.GameEngine.Content_Management;
 
-namespace GalaxyExplovive.Core.UserInterface
+namespace CelestialOdyssey.Core.UserInterface
 {
     internal abstract class MyUiElement
     {

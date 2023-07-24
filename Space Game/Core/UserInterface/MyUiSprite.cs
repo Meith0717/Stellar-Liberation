@@ -1,11 +1,11 @@
-﻿using GalaxyExplovive.Core.GameEngine.Content_Management;
-using GalaxyExplovive.Core.GameEngine.InputManagement;
+﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Core.GameEngine.InputManagement;
 
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
 
-namespace GalaxyExplovive.Core.UserInterface
+namespace CelestialOdyssey.Core.UserInterface
 {
     internal class MyUiSprite
     {
