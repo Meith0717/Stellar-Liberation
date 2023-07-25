@@ -93,9 +93,16 @@ namespace CelestialOdyssey.GameEngine.GameObjects
 
         private void AdjustZoomByMouse(GameTime gameTime, InputState inputState)
         {
-            var zoom = 0;
-            if (inputState.mActionList.Contains(ActionType.CameraZoomIn) && Zoom + 0.0041 < MimZoom) { zoom += 7; }
-            if (inputState.mActionList.Contains(ActionType.CameraZoomOut) && Zoom - 0.0041 > MaxZoom) { zoom -= 7; }
+            var zoom = 0f;
+            if (inputState.mActionList.Contains(ActionType.CameraZoomIn))
+            { 
+                zoom += 5f * inputState.mGamePadValues.mRightThumbSticks.Y; 
+            }
+            if (inputState.mActionList.Contains(ActionType.CameraZoomOut)) 
+            {
+                zoom += 5f * inputState.mGamePadValues.mRightThumbSticks.Y;
+            }
+
             if (zoom == 0) return;
             mZoomAnimation = false;
             Zoom *= 1 + zoom * 0.001f * gameTime.ElapsedGameTime.Milliseconds;

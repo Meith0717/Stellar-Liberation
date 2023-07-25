@@ -39,6 +39,11 @@ namespace CelestialOdyssey.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            if (inputState.mActionList.Contains(ActionType.ESC))
+            {
+                mLayerManager.AddLayer(new PauseLayer(mApp, mGameState));
+            }
+
             mGameState.Update(inputState, gameTime, mGraphicsDevice);
 
             if (inputState.mActionList.Contains(ActionType.ToggleHeadUpDisplay) || !mInitialized)

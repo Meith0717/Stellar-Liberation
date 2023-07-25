@@ -1,0 +1,86 @@
+﻿using CelestialOdyssey.Game.GameObjects.Weapons;
+using CelestialOdyssey.GameEngine.GameObjects;
+using CelestialOdyssey.GameEngine.InputManagement;
+using CelestialOdyssey.GameEngine.Utility;
+using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+
+namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
+{
+    [Serializable]
+    public abstract class SpaceShip : InteractiveObject
+    {
+        public float Velocity { get; internal set; } = 0;
+        internal float mMaxVelocity = 5;
+
+        public Vector2 MovingDirection { get; internal set; }
+
+        private float mMaxShieldForce = 100;
+        private float mShieldForce;
+        private float mMaxHullForce = 100;
+        private float mHullForce;
+
+        public SpaceShip(Vector2 position, string textureId, float textureScale, int textureDepth)
+            : base(position, textureId, textureScale, textureDepth)
+        {
+            mShieldForce = mMaxHullForce;
+            mHullForce = mMaxHullForce;
+        }
+
+        public virtual void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine gameEngine, WeaponManager weaponManager)
+        {
+            RemoveFromSpatialHashing(gameEngine);
+            MovingDirection = Geometry.CalculateDirectionVector(Rotation) * Velocity;
+            Position += MovingDirection * gameTime.ElapsedGameTime.Milliseconds;
+            ChechForHit(gameEngine);
+            base.Update(gameTime, inputState, gameEngine);
+            AddToSpatialHashing(gameEngine);
+        }
+
+        internal float ManageRotation(float currentRotation, float targetRotation)
+        {
+            float delta = Geometry.AngleDelta(Geometry.RadToDeg(currentRotation), Geometry.RadToDeg(targetRotation));
+            delta = Geometry.DegToRad(delta);
+            return delta switch
+            {
+                float.NaN => 0,
+                _ => delta * 0.02f,
+            };
+        }
+
+        internal void ChechForHit(GameEngine.GameEngine engine)
+        {
+            List<Projectile> projectiles = engine.GetObjectsInRadius<Projectile>(Position, 200);
+            foreach (var item in projectiles)
+            {
+                if (!BoundedBox.Contains(item.Position)) continue;
+                item.LiveTime = float.PositiveInfinity;
+                DoDamage(1);
+            }
+        }
+
+        private void DoDamage(int damage)
+        {
+            if (mShieldForce > 0)
+            {
+                mShieldForce -= damage;
+                return;
+            }
+            mHullForce -= mHullForce > 0 ? damage : 0;
+        }
+
+        internal bool SpaceshipsInRadius(GameEngine.GameEngine gameEngine, out List<SpaceShip> spaceShips) 
+        {
+            spaceShips = gameEngine.GetObjectsInRadius<SpaceShip>(Position, 10000);
+            spaceShips.Remove(this);
+            if (spaceShips.Count == 0) return false;
+            return true;
+        }
+
+        public double ShildLevel { get { return mShieldForce / mMaxShieldForce; } }
+        public double HullLevel { get { return mHullForce / mMaxHullForce; } }
+        public double SpeedLevel { get { return Velocity / mMaxVelocity; } }
+
+    }
+}

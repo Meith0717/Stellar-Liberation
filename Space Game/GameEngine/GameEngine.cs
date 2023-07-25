@@ -45,7 +45,7 @@ namespace CelestialOdyssey.GameEngine
 
             GameTime += time.ElapsedGameTime.Milliseconds;
             ViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera.Position, Camera.Zoom, screenWidth, screenHeight);
-            ViewMousePosition = input.mMousePosition.ToVector2();
+            ViewMousePosition = input.mMousePosition;
             WorldMousePosition = Transformations.ScreenToWorld(ViewTransformationMatrix, ViewMousePosition);
 
             Camera.Update(time, input, ViewMousePosition, ViewTransformationMatrix);

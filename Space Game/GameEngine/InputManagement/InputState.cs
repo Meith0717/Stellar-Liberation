@@ -18,16 +18,15 @@ namespace CelestialOdyssey.GameEngine.InputManagement
         ESC,
         CameraZoomIn,
         CameraZoomOut,
-        MoveUp,
-        MoveDown,
-        MoveL,
-        MoveR,
+        ShootProjectile,
         ToggleFullscreen,
         Test,
         ToggleDebugModes,
         ToggleHeadUpDisplay,
         ToggleSectorGrid,
-        Stop
+        Stop,
+        Accelerate,
+        Decelerate
     }
 
     public enum MouseActionType
@@ -48,12 +47,21 @@ namespace CelestialOdyssey.GameEngine.InputManagement
         OnButtonPressed
     }
 
+    internal class GamePadValues
+    {
+        internal Vector2 mLeftThumbSticks;
+        internal Vector2 mRightThumbSticks;
+        internal float mLeftTrigger;
+        internal float mRightTrigger;
+    }
+
     public class InputState
     {
         internal readonly List<ActionType> mActionList;
         internal MouseActionType mMouseActionType;
-        internal Point mMousePosition;
-
+        internal Vector2 mMousePosition;
+        internal GamePadValues mGamePadValues;
+        internal GamePadValues mPrevGamePadValues;
 
         // Constructor.
         public InputState()

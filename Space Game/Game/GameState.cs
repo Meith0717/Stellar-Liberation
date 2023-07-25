@@ -1,11 +1,13 @@
-﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
-using CelestialOdyssey.Game.Core.Parallax;
-using CelestialOdyssey.Game.GameObjects;
+﻿using CelestialOdyssey.Game.Core.Parallax;
+using CelestialOdyssey.Game.GameObjects.SpaceShips;
+using CelestialOdyssey.Game.GameObjects.Weapons;
 using CelestialOdyssey.GameEngine.InputManagement;
+using CelestialOdyssey.GameEngine.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game
 {
@@ -19,6 +21,9 @@ namespace CelestialOdyssey.Game
         [JsonProperty] public double mCrystals;
         [JsonProperty] public Player mMainShip;
 
+        public List<Pirate> mPirates = new();
+        private readonly WeaponManager mWeaponManager = new(); 
+
         // Unsaved Classes
         [JsonIgnore] private readonly GameEngine.GameEngine mGameEngine;
         [JsonIgnore] private readonly ParllaxManager mParllaxManager;
@@ -27,6 +32,9 @@ namespace CelestialOdyssey.Game
         {
             mGameEngine = gameEngine;
             mMainShip = new();
+
+            mPirates.Add(new());
+
             mParllaxManager = new();
             mParllaxManager.Add(new("gameBackground", 0.05f));
             mParllaxManager.Add(new("gameBackgroundParlax1", 0.1f));
@@ -37,12 +45,12 @@ namespace CelestialOdyssey.Game
 
         public void Update(InputState inputState, GameTime gameTime, GraphicsDevice graphicsDevice)
         {
-            if (inputState.mActionList.Contains(ActionType.Test))
+            mMainShip.Update(gameTime, inputState, mGameEngine, mWeaponManager);
+            foreach (var pirate in mPirates)
             {
-                mGameEngine.Camera.MoveToTarget(Vector2.Zero);
+                pirate.Update(gameTime, inputState, mGameEngine, mWeaponManager);  
             }
-
-            mMainShip.Update(gameTime, inputState, mGameEngine);
+            mWeaponManager.Update(gameTime, inputState, mGameEngine);
             mGameEngine.UpdateEngine(gameTime, inputState, graphicsDevice);
             mParllaxManager.Update(mGameEngine.Camera.Movement, mGameEngine.Camera.Zoom);
         }
@@ -54,7 +62,6 @@ namespace CelestialOdyssey.Game
             spriteBatch.End();
 
             mGameEngine.BeginWorldDrawing(spriteBatch);
-            mMainShip.Draw(mGameEngine);
             mGameEngine.RenderWorldObjectsOnScreen();
             mGameEngine.EndWorldDrawing(spriteBatch);
         }
