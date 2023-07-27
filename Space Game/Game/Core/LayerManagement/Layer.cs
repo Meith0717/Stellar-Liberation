@@ -15,7 +15,6 @@ public abstract class Layer
     protected Game1 mApp;
     protected LayerManager mLayerManager;
     protected GraphicsDevice mGraphicsDevice;
-    public SoundManager mSoundManager;
     public Serialize mSerialize;
 
     [JsonProperty]
@@ -25,7 +24,6 @@ public abstract class Layer
     {
         mApp = app;
         mLayerManager = app.mLayerManager;
-        mSoundManager = app.mSoundManager;
         mGraphicsDevice = app.GraphicsDevice;
         mSerialize = app.mSerialize;
     }

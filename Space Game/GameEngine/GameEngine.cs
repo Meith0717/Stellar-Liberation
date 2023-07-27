@@ -24,15 +24,13 @@ namespace CelestialOdyssey.GameEngine
         public Vector2 WorldMousePosition { get; private set; } = Vector2.Zero;
         public Vector2 ViewMousePosition { get; private set; } = Vector2.Zero;
 
-        public SoundManager SoundManager { get; private set; }
         public MyUiMessageManager MessageManager { get; private set; }
 
         public Matrix ViewTransformationMatrix { get; private set; }
         public List<GameObject> ObjectsOnScreen { get; private set; }
 
-        public GameEngine(SoundManager soundManager, MyUiMessageManager messageManager)
+        public GameEngine(MyUiMessageManager messageManager)
         {
-            SoundManager = soundManager;
             MessageManager = messageManager;
         }
 

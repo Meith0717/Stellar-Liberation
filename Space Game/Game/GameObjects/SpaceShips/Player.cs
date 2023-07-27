@@ -1,41 +1,29 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Game.Core;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
-using CelestialOdyssey.Game.GameObjects.Weapons;
 using CelestialOdyssey.GameEngine.InputManagement;
 using CelestialOdyssey.GameEngine.Utility;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 {
     public class Player : SpaceShip
     {
+        public Player() : base(new Vector2(1000, 1000), "ship", 1, 0) { }
 
-        private float mAcceleration;
-        private float mDeacceleration;
-
-        public Player() : base(Vector2.Zero, "ship", 1, 0) { }
-
-        public override void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine gameEngine, WeaponManager weaponManager)
+        public override void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine gameEngine)
         {
-            if (SpaceshipsInRadius(gameEngine, out var spaceShips))
-            {
-                if (inputState.mActionList.Contains(ActionType.ShootProjectile))
-                {
-                    weaponManager.AddProjectile(this, spaceShips[0]);
-                }
-            }
 
             if (inputState.mGamePadValues.mLeftThumbSticks != Vector2.Zero)
             {
                 var targetAngle = Geometry.AngleBetweenVectors(Vector2.Zero, inputState.mGamePadValues.mLeftThumbSticks);
-                Rotation += ManageRotation(Rotation, targetAngle);
+                Rotation += MovementController.GetRotationUpdate(Rotation, targetAngle, 0.02f);
             }
 
-            Velocity += ControllVelocity(inputState);
-            Velocity = (Velocity < 0) ? 0 : Velocity;
-            Velocity = (Velocity > mMaxVelocity) ? mMaxVelocity : Velocity;
+            ManageVelocity(inputState);
 
-            base.Update(gameTime, inputState, gameEngine, weaponManager);
+            base.Update(gameTime, inputState, gameEngine);
             gameEngine.Camera.SetPosition(Position);
         }
 
@@ -45,14 +33,31 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
             TextureManager.Instance.DrawGameObject(this);
         }
 
-        
-        private float ControllVelocity(InputState inputState) 
+        private bool mToggleMaxSpeed;
+
+        private void ManageVelocity(InputState inputState)
         {
-            var rightTrigger = inputState.mGamePadValues.mRightTrigger;
-            var leftTrigger = inputState.mGamePadValues.mLeftTrigger;
-            if (inputState.mActionList.Contains(ActionType.Accelerate)) return 0.1f * rightTrigger;
-            if (inputState.mActionList.Contains(ActionType.Decelerate)) return -0.1f * leftTrigger;
-            return 0;
+            if (inputState.mActionList.Contains(ActionType.MaxAcceleration)) mToggleMaxSpeed = !mToggleMaxSpeed;
+
+            var maxSpeed = 1f;
+
+            if (mToggleMaxSpeed) maxSpeed = mMaxVelocity;
+
+            var maxThumbStickVal = MathF.Max(
+                MathF.Abs(inputState.mGamePadValues.mLeftThumbSticks.X),
+                MathF.Abs(inputState.mGamePadValues.mLeftThumbSticks.Y)
+                ) * maxSpeed;
+
+            if (maxThumbStickVal <= 0 || maxThumbStickVal < Velocity)
+            {
+                if (mToggleMaxSpeed) return;
+                Velocity = (Velocity <= 0)
+                    ? 0 : MovementController.GetVelocity(Velocity, -0.05f * maxSpeed);
+                return;
+            }
+            if (maxThumbStickVal < Velocity) return;
+            Velocity = (Velocity > maxThumbStickVal)
+                ? maxThumbStickVal : MovementController.GetVelocity(Velocity, 0.05f * maxSpeed); ;
         }
     }
 }

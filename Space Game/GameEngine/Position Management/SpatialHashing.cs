@@ -5,6 +5,8 @@
  *  All rights reserved.
  */
 
+using CelestialOdyssey.Core.GameEngine.Content_Management;
+using MathNet.Numerics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +19,7 @@ namespace CelestialOdyssey.Core.GameEngine.Position_Management
     /// <typeparam name="T">The type of objects stored in the spatial hashing structure.</typeparam>
     public class SpatialHashing<T>
     {
+
         /// <summary>
         /// The size of each cell in the spatial grid.
         /// </summary>
@@ -53,10 +56,10 @@ namespace CelestialOdyssey.Core.GameEngine.Position_Management
         /// <summary>
         /// Inserts an object into the spatial hashing structure at the specified coordinates.
         /// </summary>
-        /// <param name="myObject">The object to insert.</param>
+        /// <param name="obj">The object to insert.</param>
         /// <param name="xCoordinate">The X coordinate.</param>
         /// <param name="yCoordinate">The Y coordinate.</param>
-        public void InsertObject(T myObject, int x, int y)
+        public void InsertObject(T obj, int x, int y)
         {
             var hash = Hash(x, y);
             if (!mSpatialGrids.ContainsKey(hash))
@@ -67,17 +70,17 @@ namespace CelestialOdyssey.Core.GameEngine.Position_Management
             var objectBucket = mSpatialGrids[hash];
             if (objectBucket == null) return;
 
-            objectBucket.Add(myObject);
+            objectBucket.Add(obj);
             mSpatialGrids[hash] = objectBucket;
         }
 
         /// <summary>
         /// Removes an object from the spatial hashing structure at the specified coordinates.
         /// </summary>
-        /// <param name="gameObject">The object to remove.</param>
+        /// <param name="obj">The object to remove.</param>
         /// <param name="xCoordinate">The X coordinate.</param>
         /// <param name="yCoordinate">The Y coordinate.</param>
-        public void RemoveObject(T gameObject, int x, int y)
+        public void RemoveObject(T obj, int x, int y)
         {
             var hash = Hash(x, y);
             if (!mSpatialGrids.ContainsKey(hash)) return;
@@ -85,7 +88,7 @@ namespace CelestialOdyssey.Core.GameEngine.Position_Management
             var objectBucket = mSpatialGrids[hash];
             if (objectBucket == null || objectBucket.Count == 0) return;
 
-            objectBucket.Remove(gameObject);
+            objectBucket.Remove(obj);
             mSpatialGrids[hash] = objectBucket;
         }
 

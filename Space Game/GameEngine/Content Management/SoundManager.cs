@@ -8,6 +8,17 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
 {
     public class SoundManager
     {
+        private static SoundManager mInstance;
+
+        public static SoundManager Instance
+        {
+            get
+            {
+                if (mInstance == null) { mInstance = new(); }
+                return mInstance;
+            }
+        }
+
         private Hashtable SoundEffects { get; }
         private Hashtable SoundEffectInstances { get; }
         private int MaxSoundEffectInstances { get; }

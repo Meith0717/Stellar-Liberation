@@ -20,7 +20,6 @@ namespace CelestialOdyssey
         // Global Classes
         private SpriteBatch mSpriteBatch;
         public readonly LayerManager mLayerManager;
-        public readonly SoundManager mSoundManager;
         public readonly Serialize mSerialize;
 
         // Window attributes
@@ -37,7 +36,6 @@ namespace CelestialOdyssey
             Window.ClientSizeChanged += delegate { mResulutionWasResized = true; };
 
             mInputManager = new InputManager();
-            mSoundManager = new SoundManager();
             mGraphicsManager = new GraphicsDeviceManager(this);
             mLayerManager = new LayerManager(this);
             mSerialize = new Serialize();
@@ -59,8 +57,9 @@ namespace CelestialOdyssey
             // setup texture manager
             TextureManager.Instance.SetSpriteBatch(mSpriteBatch);
 
-            mSoundManager.LoadSoundEffects(Content, "hit", "SoundEffects/hit");
-            mSoundManager.CreateSoundEffectInstances();
+            SoundManager.Instance.LoadSoundEffects(Content, "hit", "SoundEffects/hit");
+            SoundManager.Instance.LoadSoundEffects(Content, "collect", "SoundEffects/collect");
+            SoundManager.Instance.CreateSoundEffectInstances();
 
             // Load Star Textures
             TextureManager.Instance.LoadTexture(Content, "StarLightAlpha", "GameObjects/Stars/StarLightAlpha");

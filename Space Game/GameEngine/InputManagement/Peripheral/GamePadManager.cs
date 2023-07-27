@@ -18,13 +18,11 @@ namespace CelestialOdyssey.GameEngine.InputManagement.Peripheral
             mActionOnPadPressed = new()
             {
                 { Buttons.Start, ActionType.ESC },
-                { Buttons.A, ActionType.ShootProjectile },
+                { Buttons.LeftStick, ActionType.MaxAcceleration },
             };
 
             mActionOnPadHold = new() 
             {                
-                { Buttons.RightTrigger, ActionType.Accelerate },
-                { Buttons.LeftTrigger, ActionType.Decelerate },
                 { Buttons.RightThumbstickUp, ActionType.CameraZoomIn },
                 { Buttons.RightThumbstickDown, ActionType.CameraZoomOut },
             };

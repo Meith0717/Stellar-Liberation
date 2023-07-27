@@ -80,6 +80,12 @@ namespace CelestialOdyssey.GameEngine.GameObjects
         [JsonProperty]
         public CircleF BoundedBox { get; set; }
 
+        /// <summary>
+        /// Gets or sets whether the game object should only be updated when it's on-screen.
+        /// </summary>
+        [JsonProperty]
+        public bool UpdateOnlyOnScreen { get; set; } = false;
+
         [JsonIgnore]
         private bool mWasRemovedFromSpatialHashing = true;
 

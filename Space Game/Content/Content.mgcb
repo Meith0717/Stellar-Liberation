@@ -718,6 +718,12 @@
 /processorParam:TextureFormat=Color
 /build:GameObjects/transparent.png
 
+#begin SoundEffects/collect.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SoundEffects/collect.wav
+
 #begin SoundEffects/engineSound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

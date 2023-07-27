@@ -14,6 +14,11 @@ namespace CelestialOdyssey.GameEngine.Utility
             return lst[Random.Next(lst.Count)];
         }
 
+        public static float GetMaxFromVector2(Vector2 vector)
+        {
+            return MathF.Max(vector.X, vector.Y);
+        }
+
         public static Vector2 GetRandomVector2(Vector2 Origin, int radius)
         {
             return Origin + new Vector2(Random.Next(radius), Random.Next(radius));

@@ -1,6 +1,7 @@
-﻿using CelestialOdyssey.Game.Core.Parallax;
+﻿using CelestialOdyssey.Game.Core;
+using CelestialOdyssey.Game.Core.Inventory;
+using CelestialOdyssey.Game.Core.Parallax;
 using CelestialOdyssey.Game.GameObjects.SpaceShips;
-using CelestialOdyssey.Game.GameObjects.Weapons;
 using CelestialOdyssey.GameEngine.InputManagement;
 using CelestialOdyssey.GameEngine.Utility;
 using Microsoft.Xna.Framework;
@@ -21,8 +22,7 @@ namespace CelestialOdyssey.Game
         [JsonProperty] public double mCrystals;
         [JsonProperty] public Player mMainShip;
 
-        public List<Pirate> mPirates = new();
-        private readonly WeaponManager mWeaponManager = new(); 
+        public MapItemsManager ItemsManager = new();
 
         // Unsaved Classes
         [JsonIgnore] private readonly GameEngine.GameEngine mGameEngine;
@@ -33,7 +33,7 @@ namespace CelestialOdyssey.Game
             mGameEngine = gameEngine;
             mMainShip = new();
 
-            mPirates.Add(new());
+            ItemsManager.SpawnItem(Vector2.Zero);
 
             mParllaxManager = new();
             mParllaxManager.Add(new("gameBackground", 0.05f));
@@ -45,13 +45,9 @@ namespace CelestialOdyssey.Game
 
         public void Update(InputState inputState, GameTime gameTime, GraphicsDevice graphicsDevice)
         {
-            mMainShip.Update(gameTime, inputState, mGameEngine, mWeaponManager);
-            foreach (var pirate in mPirates)
-            {
-                pirate.Update(gameTime, inputState, mGameEngine, mWeaponManager);  
-            }
-            mWeaponManager.Update(gameTime, inputState, mGameEngine);
             mGameEngine.UpdateEngine(gameTime, inputState, graphicsDevice);
+            mMainShip.Update(gameTime, inputState, mGameEngine);
+            ItemsManager.Update(gameTime, inputState, mGameEngine);
             mParllaxManager.Update(mGameEngine.Camera.Movement, mGameEngine.Camera.Zoom);
         }
 

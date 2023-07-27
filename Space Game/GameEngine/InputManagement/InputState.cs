@@ -24,9 +24,7 @@ namespace CelestialOdyssey.GameEngine.InputManagement
         ToggleDebugModes,
         ToggleHeadUpDisplay,
         ToggleSectorGrid,
-        Stop,
-        Accelerate,
-        Decelerate
+        MaxAcceleration,
     }
 
     public enum MouseActionType

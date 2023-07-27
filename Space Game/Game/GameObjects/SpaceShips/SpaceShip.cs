@@ -1,4 +1,5 @@
-﻿using CelestialOdyssey.Game.GameObjects.Weapons;
+﻿using CelestialOdyssey.Game.Core;
+using CelestialOdyssey.Game.GameObjects.Weapons;
 using CelestialOdyssey.GameEngine.GameObjects;
 using CelestialOdyssey.GameEngine.InputManagement;
 using CelestialOdyssey.GameEngine.Utility;
@@ -28,7 +29,7 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
             mHullForce = mMaxHullForce;
         }
 
-        public virtual void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine gameEngine, WeaponManager weaponManager)
+        public override void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine gameEngine)
         {
             RemoveFromSpatialHashing(gameEngine);
             MovingDirection = Geometry.CalculateDirectionVector(Rotation) * Velocity;
@@ -36,17 +37,6 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
             ChechForHit(gameEngine);
             base.Update(gameTime, inputState, gameEngine);
             AddToSpatialHashing(gameEngine);
-        }
-
-        internal float ManageRotation(float currentRotation, float targetRotation)
-        {
-            float delta = Geometry.AngleDelta(Geometry.RadToDeg(currentRotation), Geometry.RadToDeg(targetRotation));
-            delta = Geometry.DegToRad(delta);
-            return delta switch
-            {
-                float.NaN => 0,
-                _ => delta * 0.02f,
-            };
         }
 
         internal void ChechForHit(GameEngine.GameEngine engine)
