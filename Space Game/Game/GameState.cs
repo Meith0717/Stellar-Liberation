@@ -33,7 +33,10 @@ namespace CelestialOdyssey.Game
             mGameEngine = gameEngine;
             mMainShip = new();
 
-            ItemsManager.SpawnItem(Vector2.Zero);
+            for (int i = 0; i < 20; i++)
+            {
+                ItemsManager.SpawnItem(Utility.GetRandomVector2(-1000, 1000, -1000, 1000));
+            }
 
             mParllaxManager = new();
             mParllaxManager.Add(new("gameBackground", 0.05f));

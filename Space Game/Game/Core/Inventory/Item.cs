@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace CelestialOdyssey.Game.Core.Inventory
 {
-    internal class Item : GameObject
+    public class Item : GameObject
     {
         public float LiveTime = 120;
 
@@ -17,15 +17,6 @@ namespace CelestialOdyssey.Game.Core.Inventory
         {
             RemoveFromSpatialHashing(engine);
             LiveTime -= gameTime.ElapsedGameTime.Milliseconds / 1000;
-            var objects = engine.GetObjectsInRadius<Player>(Position, 500);
-            if (objects.Count != 0 && objects[0].BoundedBox.Contains(Position))
-            {
-                if (objects[0].BoundedBox.Contains(Position))
-                {
-                    LiveTime = 0;
-                    SoundManager.Instance.PlaySound("collect", 1);
-                }  
-            }
             base.Update(gameTime, inputState, engine);
             AddToSpatialHashing(engine);
         }

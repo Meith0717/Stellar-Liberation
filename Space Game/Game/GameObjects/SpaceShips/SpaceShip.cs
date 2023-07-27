@@ -13,9 +13,9 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
     public abstract class SpaceShip : InteractiveObject
     {
         public float Velocity { get; internal set; } = 0;
+        internal Vector2 mMovingDirection;
         internal float mMaxVelocity = 5;
 
-        public Vector2 MovingDirection { get; internal set; }
 
         private float mMaxShieldForce = 100;
         private float mShieldForce;
@@ -32,8 +32,8 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
         public override void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine gameEngine)
         {
             RemoveFromSpatialHashing(gameEngine);
-            MovingDirection = Geometry.CalculateDirectionVector(Rotation) * Velocity;
-            Position += MovingDirection * gameTime.ElapsedGameTime.Milliseconds;
+            mMovingDirection += Geometry.CalculateDirectionVector(Rotation) * Velocity;
+            Position = mMovingDirection * gameTime.ElapsedGameTime.Milliseconds;
             ChechForHit(gameEngine);
             base.Update(gameTime, inputState, gameEngine);
             AddToSpatialHashing(gameEngine);

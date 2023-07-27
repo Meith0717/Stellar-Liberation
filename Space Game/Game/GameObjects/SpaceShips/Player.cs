@@ -1,5 +1,6 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core;
+using CelestialOdyssey.Game.Core.Inventory;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using CelestialOdyssey.GameEngine.InputManagement;
 using CelestialOdyssey.GameEngine.Utility;
@@ -10,7 +11,10 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 {
     public class Player : SpaceShip
     {
-        public Player() : base(new Vector2(1000, 1000), "ship", 1, 0) { }
+
+        public Inventory Inventory { get; private set; }
+
+        public Player() : base(new Vector2(1000, 1000), "ship", 1, 0) { Inventory = new(16); }
 
         public override void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine gameEngine)
         {
@@ -18,10 +22,11 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
             if (inputState.mGamePadValues.mLeftThumbSticks != Vector2.Zero)
             {
                 var targetAngle = Geometry.AngleBetweenVectors(Vector2.Zero, inputState.mGamePadValues.mLeftThumbSticks);
-                Rotation += MovementController.GetRotationUpdate(Rotation, targetAngle, 0.02f);
+                Rotation += MovementController.GetRotationUpdate(Rotation, targetAngle, 0.07f);
             }
 
             ManageVelocity(inputState);
+            CollectItems(gameEngine);
 
             base.Update(gameTime, inputState, gameEngine);
             gameEngine.Camera.SetPosition(Position);
@@ -39,25 +44,31 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
         {
             if (inputState.mActionList.Contains(ActionType.MaxAcceleration)) mToggleMaxSpeed = !mToggleMaxSpeed;
 
-            var maxSpeed = 1f;
+            var stickValue = inputState.mGamePadValues.mLeftThumbSticks.Length();
+            var maxSpeed = stickValue * (mToggleMaxSpeed ? mMaxVelocity : 1);
 
-            if (mToggleMaxSpeed) maxSpeed = mMaxVelocity;
-
-            var maxThumbStickVal = MathF.Max(
-                MathF.Abs(inputState.mGamePadValues.mLeftThumbSticks.X),
-                MathF.Abs(inputState.mGamePadValues.mLeftThumbSticks.Y)
-                ) * maxSpeed;
-
-            if (maxThumbStickVal <= 0 || maxThumbStickVal < Velocity)
+            if (Velocity > maxSpeed)
             {
                 if (mToggleMaxSpeed) return;
-                Velocity = (Velocity <= 0)
-                    ? 0 : MovementController.GetVelocity(Velocity, -0.05f * maxSpeed);
-                return;
+                Velocity = MovementController.GetVelocity(Velocity, -0.05f);
+                Velocity = (Velocity < 0) ? 0 : Velocity;
+            } 
+            else if (Velocity < maxSpeed)
+            {
+                Velocity = MovementController.GetVelocity(Velocity, 0.05f);
+                Velocity = (Velocity > maxSpeed) ? maxSpeed : Velocity;
             }
-            if (maxThumbStickVal < Velocity) return;
-            Velocity = (Velocity > maxThumbStickVal)
-                ? maxThumbStickVal : MovementController.GetVelocity(Velocity, 0.05f * maxSpeed); ;
+        }
+
+        private void CollectItems(GameEngine.GameEngine engine)
+        {
+            var objects = engine.GetObjectsInRadius<Item>(Position, 500);
+            foreach (var item in objects)
+            {
+                if (!BoundedBox.Contains(item.Position) || !Inventory.AddItem(item)) continue;
+                item.LiveTime = 0;
+                SoundManager.Instance.PlaySound("collect", 1);
+            }
         }
     }
 }
