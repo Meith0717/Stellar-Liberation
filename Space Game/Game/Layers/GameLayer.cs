@@ -46,16 +46,16 @@ namespace CelestialOdyssey.Game.Layers
 
             mGameState.Update(inputState, gameTime, mGraphicsDevice);
 
-            if (inputState.mActionList.Contains(ActionType.ToggleHeadUpDisplay) || !mInitialized)
-            {
-                mInitialized = true;
-                if (mLayerManager.ContainsLayer(mHudLayer))
-                {
-                    mLayerManager.PopLayer();
-                    return;
-                }
-                mLayerManager.AddLayer(mHudLayer);
-            };
+            // if (inputState.mActionList.Contains(ActionType.ToggleHeadUpDisplay) || !mInitialized)
+            // {
+            //     mInitialized = true;
+            //     if (mLayerManager.ContainsLayer(mHudLayer))
+            //     {
+            //         mLayerManager.PopLayer();
+            //         return;
+            //     }
+            //     mLayerManager.AddLayer(mHudLayer);
+            // };
         }
     }
 }

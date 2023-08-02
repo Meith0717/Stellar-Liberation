@@ -4,17 +4,23 @@ using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.Core.Inventory
 {
+    public enum ItemType
+    {
+        postyum,
+        odyssyum
+    }
     public class MapItemsManager
     {
         private List<Item> mItemsOnMap = new();
 
         public void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine engine)
         {
+
             for (int i = 0; i < mItemsOnMap.Count; i++)
             {
                 var item = mItemsOnMap[i];
                 if (item == null) continue;
-                if (item.LiveTime != 0)
+                if (item.IsOnMap)
                 {
                     item.Update(gameTime, inputState, engine);
                     continue;
@@ -24,9 +30,17 @@ namespace CelestialOdyssey.Game.Core.Inventory
             }
         }
 
-        public void SpawnItem(Vector2 position)
+        public void SpawnItem(Vector2 position, ItemType type)
         {
-            mItemsOnMap.Add(new(position, "projectile", 0.5f, 0));
+            switch (type)
+            {
+                case ItemType.postyum:
+                    mItemsOnMap.Add(new Postyum(position));
+                    break;
+                case ItemType.odyssyum:
+                    mItemsOnMap.Add(new Odyssyum(position));
+                    break;
+            }
         }
     }
 }

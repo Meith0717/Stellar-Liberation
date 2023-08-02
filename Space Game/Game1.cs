@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.IO;
 
 namespace CelestialOdyssey
 {
@@ -53,6 +54,7 @@ namespace CelestialOdyssey
         protected override void LoadContent()
         {
             mSpriteBatch = new SpriteBatch(GraphicsDevice);
+            System.Diagnostics.Debug.WriteLine(Path.GetFullPath("/Content"));
 
             // setup texture manager
             TextureManager.Instance.SetSpriteBatch(mSpriteBatch);
@@ -87,7 +89,6 @@ namespace CelestialOdyssey
             TextureManager.Instance.LoadTexture(Content, "targetCrosshair", "GameObjects/crossHair/targetCrosshair");
 
             // Load other STuff
-
             TextureManager.Instance.LoadTexture(Content, "gameBackground", "gameBackground");
             TextureManager.Instance.LoadTexture(Content, "gameBackgroundParlax1", "gameBackgroundParlax");
             TextureManager.Instance.LoadTexture(Content, "gameBackgroundParlax2", "gameBackgroundParlax2");
@@ -101,7 +102,9 @@ namespace CelestialOdyssey
             TextureManager.Instance.LoadTexture(Content, "transparent", "GameObjects/transparent");
             TextureManager.Instance.LoadTexture(Content, "projectile", "GameObjects/projectile");
             TextureManager.Instance.LoadTexture(Content, "spaceStation", "GameObjects/spaceStation");
-
+            // Items
+            TextureManager.Instance.LoadTexture(Content, "odyssyum", "GameObjects/Items/odyssyum");
+            TextureManager.Instance.LoadTexture(Content, "postyum", "GameObjects/Items/postyum");
             // Ui
             TextureManager.Instance.LoadTexture(Content, "Layer", "UserInterface/Layer/layer");
             TextureManager.Instance.LoadTexture(Content, "Circle", "UserInterface/Layer/circle");

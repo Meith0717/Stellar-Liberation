@@ -12,7 +12,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
     public class Player : SpaceShip
     {
 
-        public Inventory Inventory { get; private set; }
+        public CargoHold Inventory { get; private set; }
 
         public Player() : base(new Vector2(1000, 1000), "ship", 1, 0) { Inventory = new(16); }
 
@@ -66,8 +66,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
             foreach (var item in objects)
             {
                 if (!BoundedBox.Contains(item.Position) || !Inventory.AddItem(item)) continue;
-                item.LiveTime = 0;
-                SoundManager.Instance.PlaySound("collect", 1);
+                item.Collect();
             }
         }
     }

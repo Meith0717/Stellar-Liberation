@@ -35,7 +35,9 @@ namespace CelestialOdyssey.Game
 
             for (int i = 0; i < 20; i++)
             {
-                ItemsManager.SpawnItem(Utility.GetRandomVector2(-1000, 1000, -1000, 1000));
+                List<ItemType> types = new() { ItemType.odyssyum, ItemType.postyum };
+                ItemsManager.SpawnItem(Utility.GetRandomVector2(-5000, 5000, -5000, 5000),
+                    Utility.GetRandomElement(types));
             }
 
             mParllaxManager = new();
