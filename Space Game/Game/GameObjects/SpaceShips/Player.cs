@@ -5,14 +5,15 @@ using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using CelestialOdyssey.GameEngine.InputManagement;
 using CelestialOdyssey.GameEngine.Utility;
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
 using System;
 
 namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 {
+    [Serializable]
     public class Player : SpaceShip
     {
-
-        public CargoHold Inventory { get; private set; }
+        [JsonProperty] public CargoHold Inventory { get; private set; }
 
         public Player() : base(new Vector2(1000, 1000), "ship", 1, 0) { Inventory = new(16); }
 

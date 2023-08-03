@@ -1,15 +1,20 @@
-﻿using System.Collections;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.Core.Inventory
 {
+    [Serializable]
     public class CargoHold
     {
-        private List<Item> mInventory = new();
-        public int MaxMass { get; private set; }
-        public int TotalMass { get; private set; }
+        [JsonProperty] private readonly List<Item> mInventory = new();
+        [JsonProperty] public int MaxMass { get; private set; }
+        [JsonProperty] public int TotalMass { get; private set; }
 
-        public CargoHold(int maxMass) { MaxMass = maxMass; }
+        public CargoHold(int maxMass) 
+        { 
+            MaxMass = maxMass;
+        }
 
         public bool RemoveItem(Item item) 
         {
@@ -28,11 +33,7 @@ namespace CelestialOdyssey.Game.Core.Inventory
             return true;
         }
 
-        public override string ToString()
-        {
-            string s = "";
-            foreach (var item in mInventory) { s += $"{item.GetType().Name}, "; }
-            return s;
-        }
+        public bool IsEmpty { get { return mInventory.Count == 0; } }
+        public bool IsFull { get { return MaxMass == TotalMass;} }
     }
 }

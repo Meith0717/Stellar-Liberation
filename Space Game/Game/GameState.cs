@@ -17,12 +17,9 @@ namespace CelestialOdyssey.Game
     {
         // Saved Classes
         [JsonProperty] public float GameTime;
-        [JsonProperty] public double mAlloys;
-        [JsonProperty] public double mEnergy;
-        [JsonProperty] public double mCrystals;
         [JsonProperty] public Player mMainShip;
 
-        public MapItemsManager ItemsManager = new();
+        [JsonIgnore] public MapItemsManager ItemsManager = new();
 
         // Unsaved Classes
         [JsonIgnore] private readonly GameEngine.GameEngine mGameEngine;
