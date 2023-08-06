@@ -1,26 +1,26 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.GameEngine.Content_Management;
 using CelestialOdyssey.GameEngine.GameObjects;
 using CelestialOdyssey.GameEngine.InputManagement;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
 {
-    public abstract class Star : GameObject
+    public class Star : GameObject
     {
-        public Star(Vector2 position, string textureId, float textureScale, int textureDepth) 
-            : base(position, textureId, textureScale, textureDepth)
+        private Color mStarColor;
+
+        public Star(Vector2 position, string textureId, float textureScale, Color starColor) 
+            : base(position, textureId, textureScale, 2)
         {
+            mStarColor = starColor;
         }
 
         public override void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine engine)
         {
             RemoveFromSpatialHashing(engine);
             base.Update(gameTime, inputState, engine);
+            Rotation += 0.001f;
             AddToSpatialHashing(engine);
         }
 
@@ -28,6 +28,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         {
             base.Draw(engine);
             TextureManager.Instance.DrawGameObject(this);
+            TextureManager.Instance.Draw(ContentRegistry.starLightAlpha.Name, Position, TextureOffset, TextureScale * 2f, Rotation, 3, mStarColor);
         }
     }
 }

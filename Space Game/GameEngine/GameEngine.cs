@@ -16,14 +16,14 @@ namespace CelestialOdyssey.GameEngine
     public class GameEngine
     {
         public float ActiveGameTime { get; private set; } = 0;
-        public SpatialHashing<GameObject> SpatialHashing { get; private set; } = new(1000);
+        public SpatialHashing<GameObject> SpatialHashing { get; private set; } = new(10000);
         public FrustumCuller FrustumCuller { get; private set; } = new();
         public Camera Camera { get; private set; } = new();
         public DebugSystem DebugSystem { get; private set; } = new();
         public Vector2 WorldMousePosition { get; private set; } = Vector2.Zero;
         public Vector2 ViewMousePosition { get; private set; } = Vector2.Zero;
         public Matrix ViewTransformationMatrix { get; private set; }
-        public List<GameObject> ObjectsOnScreen { get; private set; }
+        public HashSet<GameObject> ObjectsOnScreen { get; private set; } = new();
 
         public void UpdateEngine(GameTime time, InputState input, GraphicsDevice graphicsDevice)
         {

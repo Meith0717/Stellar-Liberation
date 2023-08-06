@@ -1,4 +1,5 @@
 ﻿using CelestialOdyssey.Game.Core.Inventory;
+using CelestialOdyssey.Game.Core.MapSystem;
 using CelestialOdyssey.Game.Core.Parallax;
 using CelestialOdyssey.Game.Core.WeaponSystem;
 using CelestialOdyssey.Game.GameObjects.SpaceShips;
@@ -7,11 +8,9 @@ using CelestialOdyssey.GameEngine.InputManagement;
 using CelestialOdyssey.GameEngine.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.Timers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace CelestialOdyssey.Game
 {
@@ -29,12 +28,14 @@ namespace CelestialOdyssey.Game
         [JsonIgnore] private readonly ParllaxManager mParllaxManager;
         [JsonIgnore] private readonly WeaponManager mWeaponManager;
         [JsonIgnore] private readonly List<Pirate> Test = new();
+        [JsonIgnore] private readonly Map map = new();
 
         public GameState(GameEngine.GameEngine gameEngine)
         {
             mGameEngine = gameEngine;
             mMainShip = new();
             mWeaponManager = new();
+            map.Generate();
 
             for (int i = 0; i < 10; i++)
             {
@@ -42,7 +43,7 @@ namespace CelestialOdyssey.Game
                 ItemsManager.SpawnItem(Utility.GetRandomVector2(-5000, 5000, -5000, 5000),
                     Utility.GetRandomElement(types));
             }
-
+            
             for (int i = 0; i < 10; i++)
             {
                 Test.Add(new(Utility.GetRandomVector2(-10000, 10000, -10000, 10000))); 
@@ -59,6 +60,7 @@ namespace CelestialOdyssey.Game
         public void Update(InputState inputState, GameTime gameTime, GraphicsDevice graphicsDevice)
         {
             mGameEngine.UpdateEngine(gameTime, inputState, graphicsDevice);
+            map.Update(gameTime, inputState, mGameEngine);
             mMainShip.Update(gameTime, inputState, mGameEngine, mWeaponManager);
             List<Pirate> list = new List<Pirate>();
             foreach (var item in Test)

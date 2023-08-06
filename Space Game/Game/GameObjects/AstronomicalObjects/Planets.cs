@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
 {
-    internal class Planets
+    public class Planets
     {
     }
 }

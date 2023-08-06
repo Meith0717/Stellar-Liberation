@@ -5,8 +5,6 @@
  *  All rights reserved.
  */
 
-using CelestialOdyssey.Core.GameEngine.Content_Management;
-using MathNet.Numerics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,12 +43,10 @@ namespace CelestialOdyssey.Core.GameEngine.Position_Management
         /// <param name="xCoordinate">The X coordinate.</param>
         /// <param name="yCoordinate">The Y coordinate.</param>
         /// <returns>The hash value for the given coordinates.</returns>
-        private int Hash(int xCoordinate, int yCoordinate)
+        public int Hash(int xCoordinate, int yCoordinate)
         {
             const int shiftingFactor = 10000;
-            int shiftedX = xCoordinate + shiftingFactor / 2;
-            int shiftedY = yCoordinate + shiftingFactor / 2;
-            return shiftedX / mCellSize * shiftingFactor + shiftedY / mCellSize;
+            return xCoordinate / mCellSize * shiftingFactor + yCoordinate / mCellSize;
         }
 
         /// <summary>
@@ -110,17 +106,23 @@ namespace CelestialOdyssey.Core.GameEngine.Position_Management
         /// </summary>
         /// <param name="space">The space represented by a rectangle.</param>
         /// <returns>A list of objects in the specified space.</returns>
-        public List<T> GetObjectsInSpace(Rectangle space)
+        public HashSet<T> GetObjectsInSpace(Rectangle space)
         {
-            List<T> objects = new();
-            for (int x = space.X; x <= space.X + space.Width + mCellSize; x += mCellSize)
+            HashSet<T> objects = new();
+            var screeenMaxX = space.X + space.Width + mCellSize;
+            var screenMaxY = space.Y + space.Height + mCellSize;
+
+            for (int x = space.X - mCellSize; x <= screeenMaxX; x += mCellSize)
             {
-                for (int y = space.Y; y <= space.Y + space.Height + mCellSize; y += mCellSize)
+                for (int y = space.Y - mCellSize; y <= screenMaxY; y += mCellSize)
                 {
                     var objs = GetObjectsInBucket(x, y);
-                    objects.AddRange(objs);
+                    foreach (var obj in objs)
+                    {
+                        objects.Add(obj);
+                    }
                 }
-            }
+            }               
             return objects;
         }
 

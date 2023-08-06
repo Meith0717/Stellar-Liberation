@@ -16,7 +16,7 @@ namespace CelestialOdyssey.GameEngine
             }
         }
 
-        public static void DrawGameObjects<T>(GameEngine engine, List<T> objects) where T : GameObjects.GameObject
+        public static void DrawGameObjects<T>(GameEngine engine, HashSet<T> objects) where T : GameObjects.GameObject
         {
             foreach (T obj in objects)
             {

@@ -14,7 +14,7 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
     public abstract class SpaceShip : GameObject
     {
         public float Velocity { get; internal set; } = 0;
-        internal float mMaxVelocity = 5;
+        internal float mMaxVelocity = 50;
         internal List<GameObject> mTargets = new();
         internal int targetedIndex = 0;
 
@@ -116,7 +116,6 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
         internal bool TargetsInRadius(GameEngine.GameEngine gameEngine, out List<GameObject> targets) 
         {
             targets = gameEngine.ObjectsOnScreen.OfType<GameObject>().ToList();
-            targets.Remove(this);
             if (targets.Count == 0) return false;
             return true;
         }

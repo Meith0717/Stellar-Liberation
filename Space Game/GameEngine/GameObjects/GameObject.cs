@@ -96,8 +96,8 @@ namespace CelestialOdyssey.GameEngine.GameObjects
             TextureId = textureId; 
             TextureScale = textureScale;
             TextureDepth = textureDepth;
-            Width = (int)(TextureManager.Instance.GetTexture(textureId).Width * TextureScale);
-            Height = (int)(TextureManager.Instance.GetTexture(textureId).Height * TextureScale);
+            Width = (int)(TextureManager.Instance.GetTexture(textureId).Width);
+            Height = (int)(TextureManager.Instance.GetTexture(textureId).Height);
             TextureOffset = new(Width/2, Height/2);
             BoundedBox = new CircleF(Position, MathF.Max(Height, Width) / 2 * TextureScale);
         }
