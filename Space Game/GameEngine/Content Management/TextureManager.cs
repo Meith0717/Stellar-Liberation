@@ -27,7 +27,7 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
             } 
         }
 
-        public int MaxLayerDepth = 10000;
+        public float MaxLayerDepth = 10000f;
 
         private readonly Dictionary<string, Texture2D> mTextures = new();
         private readonly Dictionary<string, SpriteFont> mSpriteFonts = new();
@@ -86,28 +86,35 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
             return spriteFont;
         }
 
+        private float GetDepth(int textureDepth)
+        {
+            var depth = textureDepth / MaxLayerDepth;
+            if (depth > 1) throw new Exception();
+            return depth;
+        }
+
         // render Textures ___________________________________________________________________________
 
         public void Draw(string id, Vector2 position, int width, int height)
         {
             SpriteBatch.Draw(GetTexture(id), new Rectangle((int)position.X, (int)position.Y, width, height), Color.White);
         }
-        public void Draw(string id, Vector2 position, Vector2 offset, float sclae, float rotation, float depth, Color color)
+        public void Draw(string id, Vector2 position, Vector2 offset, float sclae, float rotation, int depth, Color color)
         {
-            SpriteBatch.Draw(GetTexture(id), position, null, color, rotation, offset, sclae, SpriteEffects.None, depth / MaxLayerDepth);
+            SpriteBatch.Draw(GetTexture(id), position, null, color, rotation, offset, sclae, SpriteEffects.None, GetDepth(depth));
         }
 
         // render Game Objects ___________________________________________________________________________
         public void DrawGameObject(GameObject obj)
         {
             SpriteBatch.Draw(GetTexture(obj.TextureId), obj.Position, null, obj.TextureColor, obj.Rotation, obj.TextureOffset,
-                obj.TextureScale, SpriteEffects.None, obj.TextureDepth / MaxLayerDepth);
+                obj.TextureScale, SpriteEffects.None, GetDepth(obj.TextureDepth));
         }
         public void DrawGameObject(GameObject obj, bool isHover)
         {
             var color = isHover ? Globals.HoverColor : obj.TextureColor;
             SpriteBatch.Draw(GetTexture(obj.TextureId), obj.Position, null, color, obj.Rotation, obj.TextureOffset,
-                obj.TextureScale, SpriteEffects.None, obj.TextureDepth / MaxLayerDepth);
+                obj.TextureScale, SpriteEffects.None, GetDepth(obj.TextureDepth));
         }
 
         // render String
@@ -119,35 +126,35 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
         // render Circle ___________________________________________________________________________
         public void DrawCircle(Vector2 center, float radius, Color color, float thickness, int depth)
         {
-            SpriteBatch.DrawCircle(center, radius, 90, color, thickness, depth / MaxLayerDepth);
+            SpriteBatch.DrawCircle(center, radius, 90, color, thickness, GetDepth(depth));
         }
 
         public void DrawAdaptiveCircle(Vector2 center, float radius, Color color, float thickness, int depth, float zoom)
         {
-            SpriteBatch.DrawCircle(center, radius, 90, color, thickness / zoom, depth / MaxLayerDepth);
+            SpriteBatch.DrawCircle(center, radius, 90, color, thickness / zoom, GetDepth(depth));
         }
 
         // render Rectangle ___________________________________________________________________________
         public void DrawRectangleF(RectangleF rectangle, Color color, float thickness, int depth)
         {
-            SpriteBatch.DrawRectangle(rectangle, color, thickness, depth / MaxLayerDepth);
+            SpriteBatch.DrawRectangle(rectangle, color, thickness, GetDepth(depth));
         }
 
         public void DrawAdaptiveRectangleF(RectangleF rectangle, Color color, float thickness, int depth, float zoom)
         {
-            SpriteBatch.DrawRectangle(rectangle, color, thickness / zoom, depth / MaxLayerDepth);
+            SpriteBatch.DrawRectangle(rectangle, color, thickness / zoom, GetDepth(depth));
         }
 
 
         // render Line ___________________________________________________________________________
-        public void DrawLine(Vector2 start, Vector2 end, Color color, float thickness, float depth)
+        public void DrawLine(Vector2 start, Vector2 end, Color color, float thickness, int depth)
         {
-            SpriteBatch.DrawLine(start, end, color, thickness, depth / MaxLayerDepth);
+            SpriteBatch.DrawLine(start, end, color, thickness, GetDepth(depth));
         }
 
-        public void DrawAdaptiveLine(Vector2 start, Vector2 end, Color color, float thickness, float depth, float zoom)
+        public void DrawAdaptiveLine(Vector2 start, Vector2 end, Color color, float thickness, int depth, float zoom)
         {
-            SpriteBatch.DrawLine(start, end, color, thickness / zoom, depth / MaxLayerDepth);
+            SpriteBatch.DrawLine(start, end, color, thickness / zoom, GetDepth(depth));
         }
     }
 }

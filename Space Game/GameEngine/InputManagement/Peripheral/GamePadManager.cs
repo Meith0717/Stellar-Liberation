@@ -25,6 +25,8 @@ namespace CelestialOdyssey.GameEngine.InputManagement.Peripheral
             {                
                 { Buttons.RightThumbstickUp, ActionType.CameraZoomIn },
                 { Buttons.RightThumbstickDown, ActionType.CameraZoomOut },
+                { Buttons.RightTrigger, ActionType.FireInitialWeapon },
+                { Buttons.LeftTrigger, ActionType.FireSecondaryWeapon },
             };
         }
 

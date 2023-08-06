@@ -84,7 +84,7 @@ namespace CelestialOdyssey.GameEngine
             List<InteractiveObject> GameObjects = engine.GetObjectsInRadius<InteractiveObject>(engine.WorldMousePosition, radius);
             foreach (InteractiveObject obj in GameObjects)
             {
-                TextureManager.Instance.DrawAdaptiveLine(engine.WorldMousePosition, obj.Position, Color.LightBlue, 2, TextureManager.Instance.MaxLayerDepth,
+                TextureManager.Instance.DrawAdaptiveLine(engine.WorldMousePosition, obj.Position, Color.LightBlue, 2, (int)TextureManager.Instance.MaxLayerDepth,
                 engine.Camera.Zoom);
             }
         }
@@ -93,7 +93,7 @@ namespace CelestialOdyssey.GameEngine
         {
             if (!engine.FrustumCuller.CircleOnWorldView(box)) return;
             if (mDebugLevel < 2) { return; }
-            TextureManager.Instance.DrawAdaptiveCircle(box.Position, box.Radius, Color.Red, 2, TextureManager.Instance.MaxLayerDepth,
+            TextureManager.Instance.DrawAdaptiveCircle(box.Position, box.Radius, Color.Red, 2, (int)TextureManager.Instance.MaxLayerDepth,
                 engine.Camera.Zoom);
         }
     }

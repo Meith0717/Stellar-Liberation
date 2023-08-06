@@ -46,11 +46,17 @@
 /processorParam:Quality=Best
 /build:soundEffects/engineSound.wav
 
-#begin soundEffects/hit.wav
+#begin soundEffects/torpedoFire.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:soundEffects/hit.wav
+/build:soundEffects/torpedoFire.wav
+
+#begin soundEffects/torpedoHit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:soundEffects/torpedoHit.wav
 
 #begin textures/background/gameBackground.png
 /importer:TextureImporter
@@ -687,6 +693,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/gameobjects/items/postyum.png
+
+#begin textures/gameobjects/spacecrafts/pirate.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameobjects/spacecrafts/pirate.png
+
+#begin textures/gameobjects/spacecrafts/ship.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameobjects/spacecrafts/ship.png
 
 #begin textures/gameobjects/spacecrafts/ship.png
 /importer:TextureImporter

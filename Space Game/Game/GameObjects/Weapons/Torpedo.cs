@@ -1,9 +1,11 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Game.Core.WeaponSystem;
+using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using CelestialOdyssey.GameEngine.GameObjects;
 using CelestialOdyssey.GameEngine.InputManagement;
 using CelestialOdyssey.GameEngine.Utility;
 using Microsoft.Xna.Framework;
-
+using System;
 
 namespace CelestialOdyssey.Game.GameObjects.Weapons
 {
@@ -12,28 +14,30 @@ namespace CelestialOdyssey.Game.GameObjects.Weapons
         None
     }
 
-    internal class Torpedo : GameObject
+    internal class Torpedo : Weapon
     {
-        public float LiveTime = 0;
-        private float mVelocity;
+        private float mVelocity = 1f;
         private GameObject mTargetObj;
+        private Vector2 mVariance;
 
-        public Torpedo(Vector2 position, GameObject targetObj, float rotation, ProjectileType type)
-            : base(position, "projectile", 0.2f, 1)
+        public Torpedo(SpaceShip originObj, GameObject targetObj, float rotation, ProjectileType type)
+            : base(Geometry.GetPointOnCircle(originObj.Position, originObj.BoundedBox.Radius + 10, originObj.Rotation - MathF.PI),  "projectile", 0.5f, 1, 10000)
         {
             mTargetObj = targetObj;
             Rotation = rotation;
-            mVelocity = 0.6f;
-            TextureColor = Color.IndianRed;
+            TextureColor = Color.MonoGameOrange;
+
+            var variance = (int)(Math.Min(targetObj.Width, targetObj.Height) * 0.5f);
+            mVariance = Utility.GetRandomVector2(-variance, variance, -variance, variance);
         }
 
         public override void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine engine)
         {
             RemoveFromSpatialHashing(engine);
-            var angleToTarget = Geometry.AngleBetweenVectors(Position, mTargetObj.Position);
+            var angleToTarget = Geometry.AngleBetweenVectors(Position, mTargetObj.Position + mVariance);
             Rotation += Geometry.DegToRad(Geometry.AngleDelta(Geometry.RadToDeg(Rotation), Geometry.RadToDeg(angleToTarget))) * 0.1f;
             Position += Geometry.CalculateDirectionVector(Rotation) * mVelocity * gameTime.ElapsedGameTime.Milliseconds;
-            LiveTime += gameTime.ElapsedGameTime.Milliseconds / 1000f;
+            LiveTime -= gameTime.ElapsedGameTime.Milliseconds;
             base.Update(gameTime, inputState, engine);
             AddToSpatialHashing(engine);
         }

@@ -25,6 +25,8 @@ namespace CelestialOdyssey.GameEngine.InputManagement
         ToggleHeadUpDisplay,
         ToggleSectorGrid,
         MaxAcceleration,
+        FireSecondaryWeapon,
+        FireInitialWeapon,
     }
 
     public enum MouseActionType

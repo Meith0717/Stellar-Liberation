@@ -36,13 +36,13 @@ namespace CelestialOdyssey.GameEngine.GameObjects
         /// Gets or sets the identifier of the texture associated with the game object.
         /// </summary>
         [JsonProperty]
-        public string TextureId { get; set; }
+        public string TextureId { get; private set; }
 
         /// <summary>
         /// Gets or sets the scaling factor applied to the texture.
         /// </summary>
         [JsonProperty]
-        public float TextureScale { get; set; } = 1;
+        public float TextureScale { get; private set; }
 
         /// <summary>
         /// Gets or sets the width of the game object.

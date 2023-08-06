@@ -64,7 +64,8 @@ namespace CelestialOdyssey
                 TextureManager.Instance.LoadTexture(Content, registry.Name, registry.FilePath);
             }
 
-            SoundManager.Instance.LoadSoundEffects(Content, "hit", "SoundEffects/hit");
+            SoundManager.Instance.LoadSoundEffects(Content, "torpedoHit", "SoundEffects/torpedoHit");
+            SoundManager.Instance.LoadSoundEffects(Content, "torpedoFire", "SoundEffects/torpedoFire");
             SoundManager.Instance.LoadSoundEffects(Content, "collect", "SoundEffects/collect");
             SoundManager.Instance.CreateSoundEffectInstances();
             
