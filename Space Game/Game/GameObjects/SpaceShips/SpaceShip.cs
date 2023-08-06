@@ -41,7 +41,7 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
 
         internal void ChechForHit(GameEngine.GameEngine engine)
         {
-            List<Projectile> projectiles = engine.GetObjectsInRadius<Projectile>(Position, 200);
+            List<Torpedo> projectiles = engine.GetObjectsInRadius<Torpedo>(Position, 200);
             foreach (var item in projectiles)
             {
                 if (!BoundedBox.Contains(item.Position)) continue;

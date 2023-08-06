@@ -2,6 +2,7 @@
 using CelestialOdyssey.Game.Core;
 using CelestialOdyssey.Game.Core.Inventory;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
+using CelestialOdyssey.GameEngine.Content_Management;
 using CelestialOdyssey.GameEngine.InputManagement;
 using CelestialOdyssey.GameEngine.Utility;
 using Microsoft.Xna.Framework;
@@ -15,7 +16,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
     {
         [JsonProperty] public CargoHold Inventory { get; private set; }
 
-        public Player() : base(new Vector2(1000, 1000), "ship", 1, 0) { Inventory = new(16); }
+        public Player() : base(new Vector2(1000, 1000), ContentRegistry.ship.Name, 1, 0) { Inventory = new(16); }
 
         public override void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine gameEngine)
         {

@@ -107,8 +107,8 @@ namespace CelestialOdyssey.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mMessageManager.Update(inputState, mEngine.GameTime);
-            mGameTimeText.Text = Utility.ConvertSecondsToGameTimeUnits((int)mEngine.GameTime / 1000);
+            mMessageManager.Update(inputState, mEngine.ActiveGameTime);
+            mGameTimeText.Text = Utility.ConvertSecondsToGameTimeUnits((int)mEngine.ActiveGameTime / 1000);
             mMenueButton.Update(inputState);
             mLevelText.Text = "1";
             mAlloyText.Text = "1/100";

@@ -15,24 +15,15 @@ namespace CelestialOdyssey.GameEngine
 {
     public class GameEngine
     {
-        public Camera Camera { get; private set; } = new();
+        public float ActiveGameTime { get; private set; } = 0;
         public SpatialHashing<GameObject> SpatialHashing { get; private set; } = new(1000);
         public FrustumCuller FrustumCuller { get; private set; } = new();
+        public Camera Camera { get; private set; } = new();
         public DebugSystem DebugSystem { get; private set; } = new();
-
-        public float GameTime { get; private set; } = 0;
         public Vector2 WorldMousePosition { get; private set; } = Vector2.Zero;
         public Vector2 ViewMousePosition { get; private set; } = Vector2.Zero;
-
-        public MyUiMessageManager MessageManager { get; private set; }
-
         public Matrix ViewTransformationMatrix { get; private set; }
         public List<GameObject> ObjectsOnScreen { get; private set; }
-
-        public GameEngine(MyUiMessageManager messageManager)
-        {
-            MessageManager = messageManager;
-        }
 
         public void UpdateEngine(GameTime time, InputState input, GraphicsDevice graphicsDevice)
         {
@@ -41,7 +32,7 @@ namespace CelestialOdyssey.GameEngine
 
             DebugSystem.Update(time, input);
 
-            GameTime += time.ElapsedGameTime.Milliseconds;
+            ActiveGameTime += time.ElapsedGameTime.Milliseconds;
             ViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera.Position, Camera.Zoom, screenWidth, screenHeight);
             ViewMousePosition = input.mMousePosition;
             WorldMousePosition = Transformations.ScreenToWorld(ViewTransformationMatrix, ViewMousePosition);
@@ -49,6 +40,7 @@ namespace CelestialOdyssey.GameEngine
             Camera.Update(time, input, ViewMousePosition, ViewTransformationMatrix);
             FrustumCuller.Update(screenWidth, screenHeight, ViewTransformationMatrix);
             ObjectsOnScreen = SpatialHashing.GetObjectsInSpace(FrustumCuller.WorldFrustum.ToRectangle());
+            System.Diagnostics.Debug.WriteLine(SpatialHashing.ToString());
         }
 
         public void UpdateGameObject<T>(GameTime time, InputState input, T obj) where T : GameObject

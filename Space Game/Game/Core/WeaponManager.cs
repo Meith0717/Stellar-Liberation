@@ -11,7 +11,7 @@ namespace CelestialOdyssey.Game.Core
 {
     public class WeaponManager
     {
-        private List<Projectile> projectiles = new();
+        private List<Torpedo> projectiles = new();
 
         public void AddProjectile(SpaceShip ship, GameObject targetObj, ProjectileType type = ProjectileType.None)
         {
@@ -21,7 +21,7 @@ namespace CelestialOdyssey.Game.Core
 
         public void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine engine)
         {
-            List<Projectile> deleteList = new();
+            List<Torpedo> deleteList = new();
             foreach (var projectile in projectiles)
             {
                 if (projectile.LiveTime > 10)

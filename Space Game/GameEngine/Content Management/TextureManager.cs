@@ -38,16 +38,17 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
             SpriteBatch = spriteBatch;
         }
 
-        public void LoadTexture(ContentManager content, string id, string fileName)
+        public bool LoadTexture(ContentManager content, string id, string fileName)
         {
             try
             {
                 Texture2D texture = content.Load<Texture2D>(fileName);
                 mTextures.Add(id, texture);
+                return true;
             }
-            catch (Exception ex)
+            catch 
             {
-                Console.WriteLine($"Something did'nt work when loading {id} Texture: {ex}");
+                throw new Exception($"Something is wrong with {id}, {fileName}");
             }
         }
 

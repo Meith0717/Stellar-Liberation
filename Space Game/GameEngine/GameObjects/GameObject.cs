@@ -89,6 +89,7 @@ namespace CelestialOdyssey.GameEngine.GameObjects
         [JsonIgnore]
         private bool mWasRemovedFromSpatialHashing = true;
 
+
         internal GameObject(Vector2 position, string textureId, float textureScale, int textureDepth) 
         {
             Position = position;

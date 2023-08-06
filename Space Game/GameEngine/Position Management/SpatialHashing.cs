@@ -62,16 +62,12 @@ namespace CelestialOdyssey.Core.GameEngine.Position_Management
         public void InsertObject(T obj, int x, int y)
         {
             var hash = Hash(x, y);
-            if (!mSpatialGrids.ContainsKey(hash))
+            if (!mSpatialGrids.TryGetValue(hash, out var objectBucket))
             {
-                mSpatialGrids.Add(hash, new());
+                objectBucket = new HashSet<T>();
+                mSpatialGrids[hash] = objectBucket;
             }
-
-            var objectBucket = mSpatialGrids[hash];
-            if (objectBucket == null) return;
-
             objectBucket.Add(obj);
-            mSpatialGrids[hash] = objectBucket;
         }
 
         /// <summary>
@@ -83,13 +79,10 @@ namespace CelestialOdyssey.Core.GameEngine.Position_Management
         public void RemoveObject(T obj, int x, int y)
         {
             var hash = Hash(x, y);
-            if (!mSpatialGrids.ContainsKey(hash)) return;
-
-            var objectBucket = mSpatialGrids[hash];
-            if (objectBucket == null || objectBucket.Count == 0) return;
-
+            if (!mSpatialGrids.TryGetValue(hash, out var objectBucket)) return;
             objectBucket.Remove(obj);
             mSpatialGrids[hash] = objectBucket;
+            if (objectBucket.Count == 0) mSpatialGrids.Remove(hash);
         }
 
         /// <summary>
@@ -129,6 +122,21 @@ namespace CelestialOdyssey.Core.GameEngine.Position_Management
                 }
             }
             return objects;
+        }
+
+        public override string ToString()
+        {
+            string s = "";
+            foreach (var grid in mSpatialGrids)
+            {
+                s += $"{grid.Key}[";
+                foreach (var obj in grid.Value)
+                {
+                    s += $"{obj.GetType().Name},";
+                }
+                s += $"]\n";
+            }
+            return s;
         }
     }
 }

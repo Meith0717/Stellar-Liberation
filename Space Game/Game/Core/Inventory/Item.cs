@@ -1,4 +1,5 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.GameEngine.Content_Management;
 using CelestialOdyssey.GameEngine.GameObjects;
 using CelestialOdyssey.GameEngine.InputManagement;
 using Microsoft.Xna.Framework;
@@ -9,13 +10,13 @@ namespace CelestialOdyssey.Game.Core.Inventory
     [Serializable]
     public class Postyum : Item
     {
-        public Postyum(Vector2 dropPosition) : base(dropPosition, "postyum", 1, 1) { }
+        public Postyum(Vector2 dropPosition) : base(dropPosition, ContentRegistry.postyum.Name, 1, 1) { }
     }
 
     [Serializable]
     public class Odyssyum : Item 
     {
-        public Odyssyum(Vector2 dropPosition) : base(dropPosition, "odyssyum", 1, 1) { }
+        public Odyssyum(Vector2 dropPosition) : base(dropPosition, ContentRegistry.odyssyum.Name, 1, 1) { }
     }
 
     public abstract class Item : GameObject

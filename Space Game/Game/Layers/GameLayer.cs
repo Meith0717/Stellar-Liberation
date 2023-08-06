@@ -16,7 +16,7 @@ namespace CelestialOdyssey.Game.Layers
         public GameLayer(Game1 app) : base(app)
         {
             // Initialize all instances for the main game
-            GameEngine.GameEngine engine = new(new(mGraphicsDevice.Viewport.Width / 2, 50));
+            GameEngine.GameEngine engine = new();
             mGameState = new(engine);
             mHudLayer = new(app, engine, mGameState);
 

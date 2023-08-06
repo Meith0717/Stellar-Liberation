@@ -12,13 +12,13 @@ namespace CelestialOdyssey.Game.GameObjects.Weapons
         None
     }
 
-    internal class Projectile : GameObject
+    internal class Torpedo : GameObject
     {
         public float LiveTime = 0;
         private float mVelocity;
         private GameObject mTargetObj;
 
-        public Projectile(Vector2 position, GameObject targetObj, float rotation, ProjectileType type)
+        public Torpedo(Vector2 position, GameObject targetObj, float rotation, ProjectileType type)
             : base(position, "projectile", 0.2f, 1)
         {
             mTargetObj = targetObj;

@@ -2,6 +2,7 @@
 using CelestialOdyssey.Game.Core.Inventory;
 using CelestialOdyssey.Game.Core.Parallax;
 using CelestialOdyssey.Game.GameObjects.SpaceShips;
+using CelestialOdyssey.GameEngine.Content_Management;
 using CelestialOdyssey.GameEngine.InputManagement;
 using CelestialOdyssey.GameEngine.Utility;
 using Microsoft.Xna.Framework;
@@ -38,11 +39,11 @@ namespace CelestialOdyssey.Game
             }
 
             mParllaxManager = new();
-            mParllaxManager.Add(new("gameBackground", 0.05f));
-            mParllaxManager.Add(new("gameBackgroundParlax1", 0.1f));
-            mParllaxManager.Add(new("gameBackgroundParlax2", 0.15f));
-            mParllaxManager.Add(new("gameBackgroundParlax3", 0.2f));
-            mParllaxManager.Add(new("gameBackgroundParlax4", 0.25f));
+            mParllaxManager.Add(new(ContentRegistry.gameBackground.Name, 0.05f));
+            mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax.Name, 0.1f));
+            mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax1.Name, 0.15f));
+            mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax2.Name, 0.2f));
+            mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax3.Name, 0.25f));
         }
 
         public void Update(InputState inputState, GameTime gameTime, GraphicsDevice graphicsDevice)
