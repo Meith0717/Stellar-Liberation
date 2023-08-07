@@ -8,7 +8,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
 {
     public static class MapGenerator
     {
-        public static void Generate(int seed, int width, int height, int sectorsize, out List<Star> stars, out List<Planets> planets)
+        public static void Generate(int seed, int width, int height, int scaling, out List<Star> stars, out List<Planets> planets)
         {
             stars = new List<Star>();
             planets = new List<Planets>();
@@ -25,13 +25,16 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                 for (int y = 0; y < columns; y++)
                 {
                     if (noiseMap[x, y] == 0) continue;
-                    var variance = (int)(sectorsize * 0.5f);
-                    Vector2 position = (new Vector2(x, y) * sectorsize + 
-                        Utility.GetRandomVector2(-variance, variance, -variance, variance)) + 
-                        new Vector2(sectorsize, sectorsize);
-                    stars.Add(GetStar(position));
+                    stars.Add(GetStar(GenerateStarPosition(x, y, scaling)));
                 }
             }
+        }
+
+        private static Vector2 GenerateStarPosition(int x, int y, int scaling)
+        {
+            var sectorBegin = new Vector2(x, y) * scaling;
+            var sectorEnd = sectorBegin + new Vector2(scaling, scaling);
+            return Utility.GetRandomVector2(sectorBegin, sectorEnd);
         }
 
         private static Star GetStar(Vector2 position)

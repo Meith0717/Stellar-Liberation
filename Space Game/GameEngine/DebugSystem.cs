@@ -81,11 +81,14 @@ namespace CelestialOdyssey.GameEngine
         {
             if (mDebugLevel < 3) { return; }
             var radius = Globals.MouseSpatialHashingRadius;
-            List<InteractiveObject> GameObjects = engine.GetObjectsInRadius<InteractiveObject>(engine.WorldMousePosition, radius);
-            foreach (InteractiveObject obj in GameObjects)
+            var GameObjects = engine.GetSortedObjectsInRadius<GameObject>(engine.WorldMousePosition, radius);
+            Color color = Color.Green;
+            for (int i = 0; i < GameObjects.Count; i++)
             {
-                TextureManager.Instance.DrawAdaptiveLine(engine.WorldMousePosition, obj.Position, Color.LightBlue, 2, (int)TextureManager.Instance.MaxLayerDepth,
-                engine.Camera.Zoom);
+                var obj = GameObjects[i];
+                if (i > 0) color = Color.Blue;
+                TextureManager.Instance.DrawAdaptiveLine(engine.WorldMousePosition, obj.Position, color,
+                    2, (int)TextureManager.Instance.MaxLayerDepth, engine.Camera.Zoom);
             }
         }
 

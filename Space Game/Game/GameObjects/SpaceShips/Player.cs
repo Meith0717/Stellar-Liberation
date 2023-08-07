@@ -1,7 +1,7 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core;
+using CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem;
 using CelestialOdyssey.Game.Core.Inventory;
-using CelestialOdyssey.Game.Core.WeaponSystem;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using CelestialOdyssey.GameEngine.Content_Management;
 using CelestialOdyssey.GameEngine.InputManagement;
@@ -16,20 +16,16 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
     public class Player : SpaceShip
     {
         [JsonProperty] public CargoHold Inventory { get; private set; }
+        [JsonProperty] private Weapon WeaponSlot = new PhotonPhaser();
 
         public Player() : base(new Vector2(1000, 1000), ContentRegistry.ship.Name, 1) { Inventory = new(16); }
 
-        public new void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine gameEngine, WeaponManager weaponManager)
+        public new void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine gameEngine)
         {
             if (inputState.mActionList.Contains(ActionType.FireSecondaryWeapon))
             {
-                FireSecondaryWeapon(weaponManager);
+                if (GetTarget(out var target)) WeaponSlot.Fire(this, target);
             }
-            if (inputState.mActionList.Contains(ActionType.FireInitialWeapon))
-            {
-                FireInitialWeapon(weaponManager);
-            }
-
 
             if (inputState.mGamePadValues.mLeftThumbSticks != Vector2.Zero)
             {
@@ -38,9 +34,10 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
             }
 
             ManageVelocity(inputState);
+            WeaponSlot.Update(gameTime, inputState, gameEngine);
             CollectItems(gameEngine);
 
-            base.Update(gameTime, inputState, gameEngine, weaponManager);
+            base.Update(gameTime, inputState, gameEngine);
             gameEngine.Camera.SetPosition(Position);
         }
 

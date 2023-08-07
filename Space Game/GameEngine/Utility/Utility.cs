@@ -28,6 +28,11 @@ namespace CelestialOdyssey.GameEngine.Utility
         {
             return new Vector2(Random.Next(minX, maxX), Random.Next(minY, maxY));
         }
+        public static Vector2 GetRandomVector2(Vector2 star, Vector2 end)
+        {
+            return new Vector2(Random.Next((int)star.X, (int)end.X), Random.Next((int)star.Y, (int)end.Y));
+        }
+
 
         public static string ConvertSecondsToGameTimeUnits(int seconds)
         {

@@ -718,7 +718,7 @@
 /processorParam:TextureFormat=Color
 /build:textures/gameobjects/spacecrafts/ship.png
 
-#begin textures/gameobjects/spacecrafts/ship.png
+#begin textures/gameobjects/weapons/photonTorpedo.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -728,7 +728,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/spacecrafts/ship.png
+/build:textures/gameobjects/weapons/photonTorpedo.png
 
 #begin textures/gameobjects/weapons/projectile.png
 /importer:TextureImporter

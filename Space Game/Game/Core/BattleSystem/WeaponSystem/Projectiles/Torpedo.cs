@@ -1,35 +1,18 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
-using CelestialOdyssey.Game.Core.WeaponSystem;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
+using CelestialOdyssey.GameEngine.Content_Management;
 using CelestialOdyssey.GameEngine.GameObjects;
 using CelestialOdyssey.GameEngine.InputManagement;
 using CelestialOdyssey.GameEngine.Utility;
 using Microsoft.Xna.Framework;
 using System;
 
-namespace CelestialOdyssey.Game.GameObjects.Weapons
+namespace CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem.Projectiles
 {
-    public enum ProjectileType
+    public class Torpedo : Projectile
     {
-        None
-    }
-
-    internal class Torpedo : Weapon
-    {
-        private float mVelocity = 1f;
-        private GameObject mTargetObj;
-        private Vector2 mVariance;
-
-        public Torpedo(SpaceShip originObj, GameObject targetObj, float rotation, ProjectileType type)
-            : base(Geometry.GetPointOnCircle(originObj.Position, originObj.BoundedBox.Radius + 10, originObj.Rotation - MathF.PI),  "projectile", 0.5f, 1, 10000)
-        {
-            mTargetObj = targetObj;
-            Rotation = rotation;
-            TextureColor = Color.MonoGameOrange;
-
-            var variance = (int)(Math.Min(targetObj.Width, targetObj.Height) * 0.5f);
-            mVariance = Utility.GetRandomVector2(-variance, variance, -variance, variance);
-        }
+        public Torpedo(Vector2 position, SpaceShip targetObj, string texture, int shieldDamage, int hullDamage) 
+            : base(position, targetObj, texture, 0.25f, shieldDamage, hullDamage, 2.5f) { }
 
         public override void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine engine)
         {

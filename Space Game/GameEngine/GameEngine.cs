@@ -82,20 +82,26 @@ namespace CelestialOdyssey.GameEngine
             spriteBatch.End();
         }
 
-        public List<T> GetObjectsInRadius<T>(Vector2 positionVector2, int radius)
+        public List<T> GetObjectsInRadius<T>(Vector2 position, int radius) where T : GameObject
         {
             var objectsInRadius = new List<GameObject>();
             int CellSize = SpatialHashing.mCellSize;
-            var maxRadius = radius + CellSize;
-            for (var i = -radius; i <= maxRadius; i += CellSize)
+
+            // Determine the range of bucket indices that fall within the radius.
+            var startX = (int)Math.Floor((position.X - radius) / CellSize);
+            var endX = (int)Math.Ceiling((position.X + radius) / CellSize);
+            var startY = (int)Math.Floor((position.Y - radius) / CellSize);
+            var endY = (int)Math.Ceiling((position.Y + radius) / CellSize);
+
+            for (var x = startX; x <= endX; x++)
             {
-                for (var j = -radius; j <= maxRadius; j += CellSize)
+                for (var y = startY; y <= endY; y++)
                 {
-                    var objectsInBucket = SpatialHashing.GetObjectsInBucket((int)(positionVector2.X + i), (int)(positionVector2.Y + j));
+                    var objectsInBucket = SpatialHashing.GetObjectsInBucket(x * CellSize, y * CellSize);
                     foreach (var gameObject in objectsInBucket)
                     {
-                        var position = gameObject.Position;
-                        var distance = Vector2.Distance(positionVector2, position);
+                        var objPosition = gameObject.Position;
+                        var distance = Vector2.Distance(position, objPosition);
                         if (distance <= radius)
                         {
                             objectsInRadius.Add(gameObject);
@@ -103,9 +109,16 @@ namespace CelestialOdyssey.GameEngine
                     }
                 }
             }
-            Comparison<GameObject> comparison = (a, b) => Vector2.Distance(a.Position, positionVector2).CompareTo(Vector2.Distance(b.Position, positionVector2));
-            objectsInRadius.Sort(comparison);
             return objectsInRadius.OfType<T>().ToList();
         }
+
+        public List<T> GetSortedObjectsInRadius<T>(Vector2 position, int radius) where T : GameObject
+        {
+            var objectsInRadius = GetObjectsInRadius<T>(position, radius);
+            Comparison<GameObject> comparison = (a, b) => Vector2.Distance(a.Position, position).CompareTo(Vector2.Distance(b.Position, position));
+            objectsInRadius.Sort(comparison);
+            return objectsInRadius;
+        }
+
     }
 }

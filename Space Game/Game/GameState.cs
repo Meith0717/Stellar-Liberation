@@ -1,7 +1,6 @@
 ﻿using CelestialOdyssey.Game.Core.Inventory;
 using CelestialOdyssey.Game.Core.MapSystem;
 using CelestialOdyssey.Game.Core.Parallax;
-using CelestialOdyssey.Game.Core.WeaponSystem;
 using CelestialOdyssey.Game.GameObjects.SpaceShips;
 using CelestialOdyssey.GameEngine.Content_Management;
 using CelestialOdyssey.GameEngine.InputManagement;
@@ -26,7 +25,6 @@ namespace CelestialOdyssey.Game
         // Unsaved Classes
         [JsonIgnore] private readonly GameEngine.GameEngine mGameEngine;
         [JsonIgnore] private readonly ParllaxManager mParllaxManager;
-        [JsonIgnore] private readonly WeaponManager mWeaponManager;
         [JsonIgnore] private readonly List<Pirate> Test = new();
         [JsonIgnore] private readonly Map map = new();
 
@@ -34,7 +32,6 @@ namespace CelestialOdyssey.Game
         {
             mGameEngine = gameEngine;
             mMainShip = new();
-            mWeaponManager = new();
             map.Generate();
 
             for (int i = 0; i < 10; i++)
@@ -61,17 +58,16 @@ namespace CelestialOdyssey.Game
         {
             mGameEngine.UpdateEngine(gameTime, inputState, graphicsDevice);
             map.Update(gameTime, inputState, mGameEngine);
-            mMainShip.Update(gameTime, inputState, mGameEngine, mWeaponManager);
+            mMainShip.Update(gameTime, inputState, mGameEngine);
             List<Pirate> list = new List<Pirate>();
             foreach (var item in Test)
             {
-                item.Update(gameTime, inputState, mGameEngine, mWeaponManager);
+                item.Update(gameTime, inputState, mGameEngine);
                 if (item.mHullForce > 0) continue; 
                 list.Add(item);
                 item.RemoveFromSpatialHashing(mGameEngine);
             }
             foreach (var item in list) { Test.Remove(item); }
-            mWeaponManager.Update(gameTime, inputState, mGameEngine);
             ItemsManager.Update(gameTime, inputState, mGameEngine);
             mParllaxManager.Update(mGameEngine.Camera.Movement, mGameEngine.Camera.Zoom);
         }
@@ -83,6 +79,7 @@ namespace CelestialOdyssey.Game
             spriteBatch.End();
 
             mGameEngine.BeginWorldDrawing(spriteBatch);
+            map.DrawSectores(mGameEngine);
             mGameEngine.RenderWorldObjectsOnScreen();
             mGameEngine.EndWorldDrawing(spriteBatch);
         }
