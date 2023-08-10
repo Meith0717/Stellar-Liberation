@@ -10,23 +10,19 @@ namespace CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem.Projectiles
 {
     public class Phaser : Projectile
     {
-        private SpaceShip mOriginObj;
-
-        internal Phaser(SpaceShip originObj, SpaceShip targetObj, Color color, int shieldDamage, int hullDamage) 
-            : base(originObj.Position, targetObj, ContentRegistry.pixle.Name, 1, shieldDamage, hullDamage, 25f)
+        internal Phaser(Vector2 position, SpaceShip targetObj, Color color, int shieldDamage, int hullDamage) 
+            : base(position, targetObj, ContentRegistry.pixle.Name, 1, shieldDamage, hullDamage, 25f)
         {
-            mOriginObj = originObj;
             TextureColor = color;
             var angleToTarget = Geometry.AngleBetweenVectors(Position, mTargetObj.Position + mVariance);
-            Position = Geometry.GetPointOnCircle(Position, BoundedBox.Radius + 10, angleToTarget);
             Rotation = Geometry.DegToRad(Geometry.AngleDelta(Geometry.RadToDeg(Rotation), Geometry.RadToDeg(angleToTarget)));
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine engine)
+        public override void Update(Vector2 startPosition, GameTime gameTime, InputState inputState, GameEngine.GameEngine engine)
         {
             RemoveFromSpatialHashing(engine);
             Position += Geometry.CalculateDirectionVector(Rotation) * mVelocity * gameTime.ElapsedGameTime.Milliseconds;
-            base.Update(gameTime, inputState, engine);
+            base.Update(startPosition, gameTime, inputState, engine);
             AddToSpatialHashing(engine);
         }
 
@@ -36,7 +32,7 @@ namespace CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem.Projectiles
             Color c = TextureColor;
             for (int i = 1; i <= 6; i++)
             {
-                TextureManager.Instance.DrawLine(mOriginObj.Position, Position, c, 4 * i, 0);
+                TextureManager.Instance.DrawLine(mStartPosition, Position, c, 4 * i, TextureDepth);
                 c = Color.Multiply(c, 0.3f);
             }
         }

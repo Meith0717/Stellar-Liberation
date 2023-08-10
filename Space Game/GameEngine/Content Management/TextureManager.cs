@@ -152,6 +152,12 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
             SpriteBatch.DrawLine(start, end, color, thickness, GetDepth(depth));
         }
 
+        public void DrawLine(Vector2 start, float length, Color color, float thickness, int depth)
+        {
+            SpriteBatch.DrawLine(start, length, 0, color, thickness, GetDepth(depth));
+        }
+
+
         public void DrawAdaptiveLine(Vector2 start, Vector2 end, Color color, float thickness, int depth, float zoom)
         {
             SpriteBatch.DrawLine(start, end, color, thickness / zoom, GetDepth(depth));

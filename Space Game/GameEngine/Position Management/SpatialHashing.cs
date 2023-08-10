@@ -99,32 +99,7 @@ namespace CelestialOdyssey.Core.GameEngine.Position_Management
         {
             var hash = Hash(x, y);
             return mSpatialGrids.TryGetValue(hash, out var objectsInBucket) ? objectsInBucket.ToList() : new List<T>();
-        }
-
-        /// <summary>
-        /// Gets a list of objects in the specified space represented by a rectangle.
-        /// </summary>
-        /// <param name="space">The space represented by a rectangle.</param>
-        /// <returns>A list of objects in the specified space.</returns>
-        public HashSet<T> GetObjectsInSpace(Rectangle space)
-        {
-            HashSet<T> objects = new();
-            var screeenMaxX = space.X + space.Width + mCellSize;
-            var screenMaxY = space.Y + space.Height + mCellSize;
-
-            for (int x = space.X - mCellSize; x <= screeenMaxX; x += mCellSize)
-            {
-                for (int y = space.Y - mCellSize; y <= screenMaxY; y += mCellSize)
-                {
-                    var objs = GetObjectsInBucket(x, y);
-                    foreach (var obj in objs)
-                    {
-                        objects.Add(obj);
-                    }
-                }
-            }               
-            return objects;
-        }
+        }        
 
         public override string ToString()
         {

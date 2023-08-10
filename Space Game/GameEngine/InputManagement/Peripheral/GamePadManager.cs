@@ -18,7 +18,7 @@ namespace CelestialOdyssey.GameEngine.InputManagement.Peripheral
             mActionOnPadPressed = new()
             {
                 { Buttons.Start, ActionType.ESC },
-                { Buttons.LeftStick, ActionType.MaxAcceleration },
+                { Buttons.LeftStick, ActionType.Acceleration },
             };
 
             mActionOnPadHold = new() 
@@ -45,18 +45,18 @@ namespace CelestialOdyssey.GameEngine.InputManagement.Peripheral
                        .ToList();
         }
 
-        public GamePadValues GetGamePadValues() 
-        { 
-            GamePadValues values = new();
-            values.mRightThumbSticks = new(mState.ThumbSticks.Right.X, -mState.ThumbSticks.Right.Y);
-            values.mLeftThumbSticks = new(mState.ThumbSticks.Left.X, -mState.ThumbSticks.Left.Y);
-            values.mRightTrigger = mState.Triggers.Right;
-            values.mLeftTrigger = mState.Triggers.Left;
-            return values;
+        private void GetGamePadValues(out GamePadValues padValues) 
+        {
+            padValues = new();
+            padValues.mRightThumbSticks = new(mState.ThumbSticks.Right.X, -mState.ThumbSticks.Right.Y);
+            padValues.mLeftThumbSticks = new(mState.ThumbSticks.Left.X, -mState.ThumbSticks.Left.Y);
+            padValues.mRightTrigger = mState.Triggers.Right;
+            padValues.mLeftTrigger = mState.Triggers.Left;
         }
 
-        public List<ActionType> GetActions()
+        public List<ActionType> GetActions(out GamePadValues padValues)
         {
+            GetGamePadValues(out padValues);
             List<ActionType> actions = new();
             mPreviousState = mState;
             mState = GamePad.GetState(PlayerIndex.One);

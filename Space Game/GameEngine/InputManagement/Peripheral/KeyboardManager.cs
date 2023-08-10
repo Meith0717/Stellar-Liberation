@@ -17,11 +17,14 @@ namespace CelestialOdyssey.GameEngine.InputManagement.Peripheral
             {
                 { Keys.Escape, ActionType.ESC },
                 { Keys.F11, ActionType.ToggleFullscreen},
-                { Keys.F12, ActionType.ToggleDebugModes },
+                { Keys.F12, ActionType.ToggleDebugModes},
             };
 
             mActionOnKeyboardHold = new()
             {
+                { Keys.LeftShift, ActionType.Acceleration },
+                { Keys.LeftControl, ActionType.Deacceleration },
+                { Keys.Space, ActionType.FireInitialWeapon },
             };
             mKeysKeyEventTypes = new();
         }

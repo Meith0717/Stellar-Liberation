@@ -44,12 +44,11 @@ namespace CelestialOdyssey.GameEngine.InputManagement
         public InputState Update()
         {
             mInputState.mActionList.Clear();
-            mInputState.mMouseActionType = mMouseManager.GetAction();
             mInputState.mMousePosition = mMouseManager.GetPosition();
+            mInputState.mActionList.AddRange(mMouseManager.GetAction(out mInputState.mMouseActionType));
+            mInputState.mActionList.AddRange(mGamePadManager.GetActions(out mInputState.mGamePadValues));
             mInputState.mActionList.AddRange(mKeyboardManager.GetActions());
-            mInputState.mActionList.AddRange(mGamePadManager.GetActions());
             mInputState.mPrevGamePadValues = mInputState.mGamePadValues;
-            mInputState.mGamePadValues = mGamePadManager.GetGamePadValues();
             return mInputState;
         }
     }

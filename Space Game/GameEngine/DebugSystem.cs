@@ -81,7 +81,7 @@ namespace CelestialOdyssey.GameEngine
         {
             if (mDebugLevel < 3) { return; }
             var radius = Globals.MouseSpatialHashingRadius;
-            var GameObjects = engine.GetSortedObjectsInRadius<GameObject>(engine.WorldMousePosition, radius);
+            var GameObjects = engine.SpatialHashing.GetObjectsInBucket((int)engine.WorldMousePosition.X, (int)engine.WorldMousePosition.Y);
             Color color = Color.Green;
             for (int i = 0; i < GameObjects.Count; i++)
             {

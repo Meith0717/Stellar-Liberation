@@ -10,6 +10,7 @@ namespace CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem
     public abstract class Projectile : GameObject
     {
         internal SpaceShip mTargetObj { get; private set; }
+        internal Vector2 mStartPosition { get; private set; }
         internal Vector2 mVariance { get; private set; }
         internal float mVelocity { get; private set; }
 
@@ -17,8 +18,8 @@ namespace CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem
         private int mShieldDamage;
         private int mHullDamage;
 
-        internal Projectile(Vector2 position, SpaceShip targetObj, string textureId, float textureScale, int shieldDamage, int hullDamage, float velocity)
-            : base(position, textureId, textureScale, 1)
+        internal Projectile(Vector2 startPosition, SpaceShip targetObj, string textureId, float textureScale, int shieldDamage, int hullDamage, float velocity)
+            : base(startPosition, textureId, textureScale, 10)
         {
             mVelocity = velocity;
             var variance = (int)(Math.Min(targetObj.Width, targetObj.Height) * 0.5f);
@@ -28,11 +29,18 @@ namespace CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem
             mHullDamage = hullDamage;
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine engine)
+        public virtual void Update(Vector2 startPosition, GameTime gameTime, InputState inputState, GameEngine.GameEngine engine)
         {
             base.Update(gameTime, inputState, engine);
+            mStartPosition = startPosition;
             LiveTime -= gameTime.ElapsedGameTime.Milliseconds;
             CheckForHit();
+        }
+
+        [Obsolete]
+        public override void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine engine)
+        {
+            throw new Exception();
         }
 
         internal void CheckForHit()

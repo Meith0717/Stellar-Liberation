@@ -16,25 +16,33 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
     public class Player : SpaceShip
     {
         [JsonProperty] public CargoHold Inventory { get; private set; }
-        [JsonProperty] private Weapon WeaponSlot = new PhotonPhaser();
+        [JsonProperty] private Weapon WeaponSlot1 = new PhotonPhaser(new(200, 0));
+        [JsonProperty] private Weapon WeaponSlot2 = new PhotonPhaser(new(-200, 0));
+        [JsonProperty] private Weapon WeaponSlot3 = new PhotonTorpedo(new(210, 50));
+        [JsonProperty] private Weapon WeaponSlot4 = new PhotonTorpedo(new(210, -50));
 
-        public Player() : base(new Vector2(1000, 1000), ContentRegistry.ship.Name, 1) { Inventory = new(16); }
+        public Player(Vector2 position) : base(position, ContentRegistry.ship.Name, 1) { Inventory = new(16); }
 
         public new void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine gameEngine)
         {
-            if (inputState.mActionList.Contains(ActionType.FireSecondaryWeapon))
+            if (inputState.mActionList.Contains(ActionType.FireInitialWeapon))
             {
-                if (GetTarget(out var target)) WeaponSlot.Fire(this, target);
+                if (GetTarget(out var target))
+                {
+                    WeaponSlot1.Fire(target);
+                    WeaponSlot2.Fire(target);
+                    WeaponSlot3.Fire(target);
+                    WeaponSlot4.Fire(target);
+                }
             }
-
-            if (inputState.mGamePadValues.mLeftThumbSticks != Vector2.Zero)
-            {
-                var targetAngle = Geometry.AngleBetweenVectors(Vector2.Zero, inputState.mGamePadValues.mLeftThumbSticks);
-                Rotation += MovementController.GetRotationUpdate(Rotation, targetAngle, 0.07f);
-            }
+            var targetAngle = Geometry.AngleBetweenVectors(Position, gameEngine.WorldMousePosition);
+            Rotation += MovementController.GetRotationUpdate(Rotation, targetAngle, 0.07f);
 
             ManageVelocity(inputState);
-            WeaponSlot.Update(gameTime, inputState, gameEngine);
+            WeaponSlot1.Update(this, gameTime, inputState, gameEngine);
+            WeaponSlot2.Update(this, gameTime, inputState, gameEngine);
+            WeaponSlot3.Update(this, gameTime, inputState, gameEngine);
+            WeaponSlot4.Update(this, gameTime, inputState, gameEngine);
             CollectItems(gameEngine);
 
             base.Update(gameTime, inputState, gameEngine);
@@ -47,25 +55,18 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
             TextureManager.Instance.DrawGameObject(this);
         }
 
-        private bool mToggleMaxSpeed;
-
         private void ManageVelocity(InputState inputState)
         {
-            if (inputState.mActionList.Contains(ActionType.MaxAcceleration)) mToggleMaxSpeed = !mToggleMaxSpeed;
-
-            var stickValue = inputState.mGamePadValues.mLeftThumbSticks.Length();
-            var maxSpeed = stickValue * (mToggleMaxSpeed ? mMaxVelocity : 1);
-
-            if (Velocity > maxSpeed)
+            if (inputState.mActionList.Contains(ActionType.Deacceleration))
             {
-                if (mToggleMaxSpeed) return;
-                Velocity = MovementController.GetVelocity(Velocity, -0.05f);
+                Velocity = MovementController.GetVelocity(Velocity, -0.1f);
                 Velocity = (Velocity < 0) ? 0 : Velocity;
-            } 
-            else if (Velocity < maxSpeed)
+            }
+            if (inputState.mActionList.Contains(ActionType.Acceleration))
             {
-                Velocity = MovementController.GetVelocity(Velocity, 0.05f);
-                Velocity = (Velocity > maxSpeed) ? maxSpeed : Velocity;
+                Velocity = (Velocity <= 0) ? 1 : Velocity;
+                Velocity = MovementController.GetVelocity(Velocity, 0.1f);
+                Velocity = (Velocity > mMaxVelocity) ? mMaxVelocity : Velocity;
             }
         }
 

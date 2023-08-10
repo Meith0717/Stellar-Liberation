@@ -96,11 +96,11 @@ namespace CelestialOdyssey.GameEngine.GameObjects
             var zoom = 0f;
             if (inputState.mActionList.Contains(ActionType.CameraZoomIn))
             { 
-                zoom += 5f * inputState.mGamePadValues.mRightThumbSticks.Y; 
+                zoom += 5f * inputState.mGamePadValues.mRightThumbSticks.Y == 0 ? 10 : inputState.mGamePadValues.mRightThumbSticks.Y; 
             }
             if (inputState.mActionList.Contains(ActionType.CameraZoomOut)) 
             {
-                zoom += 5f * inputState.mGamePadValues.mRightThumbSticks.Y;
+                zoom += 5f * inputState.mGamePadValues.mRightThumbSticks.Y == 0 ? -10 : inputState.mGamePadValues.mRightThumbSticks.Y;
             }
 
             if (zoom == 0) return;

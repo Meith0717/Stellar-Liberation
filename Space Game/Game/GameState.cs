@@ -31,19 +31,12 @@ namespace CelestialOdyssey.Game
         public GameState(GameEngine.GameEngine gameEngine)
         {
             mGameEngine = gameEngine;
-            mMainShip = new();
-            map.Generate();
-
-            for (int i = 0; i < 10; i++)
-            {
-                List<ItemType> types = new() { ItemType.odyssyum, ItemType.postyum };
-                ItemsManager.SpawnItem(Utility.GetRandomVector2(-5000, 5000, -5000, 5000),
-                    Utility.GetRandomElement(types));
-            }
+            map.Generate(mGameEngine);
+            mMainShip = new(new(map.Width / 2, map.Height / 2));
             
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 1000; i++)
             {
-                Test.Add(new(Utility.GetRandomVector2(-10000, 10000, -10000, 10000))); 
+                Test.Add(new(Utility.GetRandomVector2(0, map.Width, 0, map.Height))); 
             }
 
             mParllaxManager = new();

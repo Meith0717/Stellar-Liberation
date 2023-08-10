@@ -16,14 +16,13 @@ namespace CelestialOdyssey.GameEngine
     public class GameEngine
     {
         public float ActiveGameTime { get; private set; } = 0;
-        public SpatialHashing<GameObject> SpatialHashing { get; private set; } = new(10000);
+        public SpatialHashing<GameObject> SpatialHashing { get; private set; } = new(1000000);
         public FrustumCuller FrustumCuller { get; private set; } = new();
         public Camera Camera { get; private set; } = new();
         public DebugSystem DebugSystem { get; private set; } = new();
         public Vector2 WorldMousePosition { get; private set; } = Vector2.Zero;
         public Vector2 ViewMousePosition { get; private set; } = Vector2.Zero;
         public Matrix ViewTransformationMatrix { get; private set; }
-        public HashSet<GameObject> ObjectsOnScreen { get; private set; } = new();
 
         public void UpdateEngine(GameTime time, InputState input, GraphicsDevice graphicsDevice)
         {
@@ -39,8 +38,7 @@ namespace CelestialOdyssey.GameEngine
 
             Camera.Update(time, input, ViewMousePosition, ViewTransformationMatrix);
             FrustumCuller.Update(screenWidth, screenHeight, ViewTransformationMatrix);
-            ObjectsOnScreen = SpatialHashing.GetObjectsInSpace(FrustumCuller.WorldFrustum.ToRectangle());
-            System.Diagnostics.Debug.WriteLine(SpatialHashing.ToString());
+            //System.Diagnostics.Debug.WriteLine(SpatialHashing.ToString());
         }
 
         public void UpdateGameObject<T>(GameTime time, InputState input, T obj) where T : GameObject
@@ -69,11 +67,6 @@ namespace CelestialOdyssey.GameEngine
                 transformMatrix: ViewTransformationMatrix,
                 samplerState: SamplerState.PointClamp
             );
-        }
-
-        public void RenderWorldObjectsOnScreen()
-        {
-            Rendering.DrawGameObjects(this, ObjectsOnScreen);
         }
 
         public void EndWorldDrawing(SpriteBatch spriteBatch)
@@ -120,5 +113,24 @@ namespace CelestialOdyssey.GameEngine
             return objectsInRadius;
         }
 
+        public void RenderWorldObjectsOnScreen()
+        {
+            Rectangle space = FrustumCuller.WorldFrustum.ToRectangle();
+            int cellSize = SpatialHashing.mCellSize;
+            var screeenMaxX = space.X + space.Width + cellSize;
+            var screenMaxY = space.Y + space.Height + cellSize;
+
+            for (int x = space.X - cellSize; x <= screeenMaxX; x += cellSize)
+            {
+                for (int y = space.Y - cellSize; y <= screenMaxY; y += cellSize)
+                {
+                    var objs = SpatialHashing.GetObjectsInBucket(x, y);
+                    foreach (var obj in objs)
+                    {
+                        Rendering.DrawGameObject(this, obj);
+                    }
+                }
+            }
+        }
     }
 }

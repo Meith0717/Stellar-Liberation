@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-
+using System.Collections.Generic;
 
 namespace CelestialOdyssey.GameEngine.InputManagement.Peripheral
 {
@@ -8,6 +8,16 @@ namespace CelestialOdyssey.GameEngine.InputManagement.Peripheral
     {
         private MouseState mCurrentMouseState, mPreviousMouseState;
         private int mCurrentMouseWheelValue, mPreviousMouseWheelValue;
+        private readonly Dictionary<MouseActionType, ActionType> mKeyBindingsMouse;
+
+        public MouseManager()
+        {
+            mKeyBindingsMouse = new()
+            {
+                { MouseActionType.MouseWheelBackward, ActionType.CameraZoomOut },
+                { MouseActionType.MouseWheelForward, ActionType.CameraZoomIn },
+            };
+        }
 
         // Return true if mouse was constantly down.
         private bool IsLeftMouseButtonDown()
@@ -34,8 +44,9 @@ namespace CelestialOdyssey.GameEngine.InputManagement.Peripheral
             return Mouse.GetState().Position.ToVector2();
         }
 
-        public MouseActionType GetAction()
+        public List<ActionType> GetAction(out MouseActionType actionType)
         {
+            actionType = MouseActionType.None;
             mPreviousMouseState = mCurrentMouseState;
 
             // Update current and previous MouseWheelValue
@@ -45,19 +56,28 @@ namespace CelestialOdyssey.GameEngine.InputManagement.Peripheral
             mCurrentMouseState = Mouse.GetState();
 
             if (mCurrentMouseState.LeftButton == ButtonState.Pressed)
-                return !IsLeftMouseButtonDown() ? MouseActionType.LeftClick : MouseActionType.LeftClickHold;
+                actionType = !IsLeftMouseButtonDown() ? MouseActionType.LeftClick : MouseActionType.LeftClickHold;
             if (mCurrentMouseState.RightButton == ButtonState.Pressed)
-                return !IsRightMouseButtonDown() ? MouseActionType.RightClick : MouseActionType.RightClickHold;
+                actionType = !IsRightMouseButtonDown() ? MouseActionType.RightClick : MouseActionType.RightClickHold;
             if (IsLeftMouseButtonReleased())
-                return MouseActionType.LeftClickReleased;
+                actionType = MouseActionType.LeftClickReleased;
 
             // Set Mouse Action to MouseWheel
             if (mCurrentMouseWheelValue > mPreviousMouseWheelValue)
-                return MouseActionType.MouseWheelForward;
+                actionType = MouseActionType.MouseWheelForward;
             if (mCurrentMouseWheelValue < mPreviousMouseWheelValue)
-                return MouseActionType.MouseWheelBackward;
+                actionType = MouseActionType.MouseWheelBackward;
 
-            return MouseActionType.None;
+            // Add actions to InputState.mActionList based on MouseAction.
+            List<ActionType> actions = new List<ActionType>();
+            foreach (var key in mKeyBindingsMouse.Keys)
+            {
+                if (key == actionType)
+                {
+                    actions.Add(mKeyBindingsMouse[key]);
+                }
+            }
+            return actions;
         }
     }
 }

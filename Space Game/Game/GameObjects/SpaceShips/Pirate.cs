@@ -19,6 +19,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
         public override void Draw(GameEngine.GameEngine engine)
         {
             base.Draw(engine);
+            DrawLive();
             TextureManager.Instance.DrawGameObject(this);
         }
     }
