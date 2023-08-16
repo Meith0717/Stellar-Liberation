@@ -84,6 +84,7 @@ namespace CelestialOdyssey.GameEngine.Content_Management
 
         private readonly static string textures = @"textures\";
         public readonly static Registry pixle = new(textures, "pixle");
+        public readonly static Registry cursor = new(textures, "cursor");
 
         public readonly static List<Registry> Properties = new()
         {
@@ -92,7 +93,7 @@ namespace CelestialOdyssey.GameEngine.Content_Management
             stone1, stone2, stone3, stone4, stone5, stone6, terrestrial1, terrestrial2, terrestrial3, terrestrial4, 
             terrestrial5, terrestrial6, terrestrial7, terrestrial8, warm1, warm2, warm3, warm4, planetShadow,
             starA, starB, starF, starG, starK, starM, starO, starBH, starLightAlpha,
-            odyssyum, postyum, metall, ship, pirate, photonTorpedo, pixle
+            odyssyum, postyum, metall, ship, pirate, photonTorpedo, pixle, cursor
         };
     }
 }

@@ -1,6 +1,5 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.LayerManagement;
-using CelestialOdyssey.Game.Core.MapSystem;
 using CelestialOdyssey.Game.Layers;
 using CelestialOdyssey.GameEngine.Content_Management;
 using CelestialOdyssey.GameEngine.InputManagement;
@@ -49,7 +48,7 @@ namespace CelestialOdyssey
             mGraphicsManager.ApplyChanges();
             base.Initialize();
             mLayerManager.AddLayer(new GameLayer(this));
-            Mouse.SetCursor(MouseCursor.FromTexture2D(Content.Load<Texture2D>("cursor"), 0, 0));
+            Mouse.SetCursor(MouseCursor.FromTexture2D(Content.Load<Texture2D>("textures/cursor"), 0, 0));
         }
 
         protected override void LoadContent()
@@ -69,21 +68,21 @@ namespace CelestialOdyssey
             SoundManager.Instance.LoadSoundEffects(Content, "collect", "SoundEffects/collect");
             SoundManager.Instance.CreateSoundEffectInstances();
             
-            // Ui
-            TextureManager.Instance.LoadTexture(Content, "Layer", "UserInterface/Layer/layer");
-            TextureManager.Instance.LoadTexture(Content, "Circle", "UserInterface/Layer/circle");
-            TextureManager.Instance.LoadTexture(Content, "buttonExitgame", "UserInterface/PauseLayer/buttonExitgame");
-            TextureManager.Instance.LoadTexture(Content, "buttonContinue", "UserInterface/PauseLayer/buttonContinue");
-            TextureManager.Instance.LoadTexture(Content, "level", "UserInterface/HUDLayer/level");
-            TextureManager.Instance.LoadTexture(Content, "menue", "UserInterface/HUDLayer/menue");
-            TextureManager.Instance.LoadTexture(Content, "alloys", "UserInterface/HUDLayer/Alloys");
-            TextureManager.Instance.LoadTexture(Content, "energy", "UserInterface/HUDLayer/Energy");
-            TextureManager.Instance.LoadTexture(Content, "minerals", "UserInterface/HUDLayer/Minerals");
-            TextureManager.Instance.LoadTexture(Content, "exit", "UserInterface/HUDLayer/exit");
-            TextureManager.Instance.LoadTexture(Content, "info", "UserInterface/HUDLayer/info");
-            TextureManager.Instance.LoadTexture(Content, "deSelect", "UserInterface/HUDLayer/deSelect");
-            TextureManager.Instance.LoadTexture(Content, "target", "UserInterface/HUDLayer/target");
-            TextureManager.Instance.LoadTexture(Content, "stop", "UserInterface/HUDLayer/stop");
+            // // Ui
+            // TextureManager.Instance.LoadTexture(Content, "Layer", "UserInterface/Layer/layer");
+            // TextureManager.Instance.LoadTexture(Content, "Circle", "UserInterface/Layer/circle");
+            // TextureManager.Instance.LoadTexture(Content, "buttonExitgame", "UserInterface/PauseLayer/buttonExitgame");
+            // TextureManager.Instance.LoadTexture(Content, "buttonContinue", "UserInterface/PauseLayer/buttonContinue");
+            // TextureManager.Instance.LoadTexture(Content, "level", "UserInterface/HUDLayer/level");
+            // TextureManager.Instance.LoadTexture(Content, "menue", "UserInterface/HUDLayer/menue");
+            // TextureManager.Instance.LoadTexture(Content, "alloys", "UserInterface/HUDLayer/Alloys");
+            // TextureManager.Instance.LoadTexture(Content, "energy", "UserInterface/HUDLayer/Energy");
+            // TextureManager.Instance.LoadTexture(Content, "minerals", "UserInterface/HUDLayer/Minerals");
+            // TextureManager.Instance.LoadTexture(Content, "exit", "UserInterface/HUDLayer/exit");
+            // TextureManager.Instance.LoadTexture(Content, "info", "UserInterface/HUDLayer/info");
+            // TextureManager.Instance.LoadTexture(Content, "deSelect", "UserInterface/HUDLayer/deSelect");
+            // TextureManager.Instance.LoadTexture(Content, "target", "UserInterface/HUDLayer/target");
+            // TextureManager.Instance.LoadTexture(Content, "stop", "UserInterface/HUDLayer/stop");
             
             // game fonts
             TextureManager.Instance.LoadSpriteTexture(Content, "text", "fonts/text");
