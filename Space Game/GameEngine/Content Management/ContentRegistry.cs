@@ -13,6 +13,11 @@ namespace CelestialOdyssey.GameEngine.Content_Management
             FilePath = Path.Combine(dirPath, fileName);
             Name = fileName;
         }
+
+        public static implicit operator string(Registry registry)
+        {
+            return registry.Name;
+        }
     }
 
     public  class ContentRegistry

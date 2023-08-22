@@ -72,7 +72,6 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
             {
                 throw new Exception($"Error, Texture {id} was not found in TextureManager");
             }
-
             return texture;
         }
         public SpriteFont GetSpriteFont(string id)

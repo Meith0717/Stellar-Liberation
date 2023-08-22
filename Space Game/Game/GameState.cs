@@ -34,7 +34,7 @@ namespace CelestialOdyssey.Game
             map.Generate(mGameEngine);
             mMainShip = new(new(map.Width / 2, map.Height / 2));
             
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 0; i++)
             {
                 Test.Add(new(Utility.GetRandomVector2(0, map.Width, 0, map.Height))); 
             }
@@ -50,7 +50,6 @@ namespace CelestialOdyssey.Game
         public void Update(InputState inputState, GameTime gameTime, GraphicsDevice graphicsDevice)
         {
             mGameEngine.UpdateEngine(gameTime, inputState, graphicsDevice);
-            map.Update(gameTime, inputState, mGameEngine);
             mMainShip.Update(gameTime, inputState, mGameEngine);
             List<Pirate> list = new List<Pirate>();
             foreach (var item in Test)

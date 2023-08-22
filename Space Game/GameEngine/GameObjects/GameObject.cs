@@ -99,6 +99,11 @@ namespace CelestialOdyssey.GameEngine.GameObjects
             Width = (int)(TextureManager.Instance.GetTexture(textureId).Width);
             Height = (int)(TextureManager.Instance.GetTexture(textureId).Height);
             TextureOffset = new(Width/2, Height/2);
+            UpdateBoundBox();
+        }
+
+        internal void UpdateBoundBox()
+        {
             BoundedBox = new CircleF(Position, MathF.Max(Height, Width) / 2 * TextureScale);
         }
 
@@ -112,7 +117,7 @@ namespace CelestialOdyssey.GameEngine.GameObjects
         public virtual void Update(GameTime gameTime, InputState inputState, GameEngine engine)
         {
             engine.DebugSystem.UpdateObjectCount += 1;
-            BoundedBox = new CircleF(Position, MathF.Max(Height, Width) / 2 * TextureScale);
+            UpdateBoundBox();
         }
 
         /// <summary>

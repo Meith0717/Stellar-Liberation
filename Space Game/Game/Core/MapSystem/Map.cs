@@ -12,7 +12,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
     public class Map
     {
         private List<Star> mStars = new();
-        private List<Planets> mPlanets = new();
+        private List<Planet> mPlanets = new();
 
         private int mSectorCountWidth = (int)(50 * 1.7f);
         private int mSectorCountHeight = 50;
@@ -23,16 +23,12 @@ namespace CelestialOdyssey.Game.Core.MapSystem
 
         public void Generate(GameEngine.GameEngine gameEngine)
         {
-            int seed = RandomSeed.Time();
-            MapGenerator.Generate(seed, mSectorCountWidth * 2, mSectorCountHeight * 2, mSectorSize / 2,out mStars,out mPlanets);
-            foreach (Star star in mStars)
-            {
-                star.AddToSpatialHashing(gameEngine);
-            }
-        }
+            NoiseMapGenerator noiseMapGenerator 
+                = new(RandomSeed.Time(), mSectorCountWidth, mSectorCountHeight);
+            var noiseMap = noiseMapGenerator.GenerateBinaryNoiseMap(40, 6, 5, 0.85, 0);
 
-        public void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine gameEngine)
-        {
+            StarGenerator.Generate(noiseMap, mSectorSize, gameEngine, out mStars);
+            PlanetGenerator.Generate(mStars, gameEngine, out mPlanets);
         }
 
         public void DrawSectores(GameEngine.GameEngine gameEngine)
