@@ -1,14 +1,24 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.GameEngine.GameObjects;
-using CelestialOdyssey.GameEngine.InputManagement;
 using CelestialOdyssey.GameEngine.Utility;
-using MathNet.Numerics.Distributions;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
 
 namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
 {
+    public class PlanetConfig
+    {
+        public readonly string TextureId;
+        public readonly float TextureScale;
+
+        public PlanetConfig(string textureId, float textureScale)
+        {
+            TextureId = textureId;
+            TextureScale = textureScale;
+        }
+    }
+
     [Serializable]
     public class Planet : GameObject
     {
@@ -34,6 +44,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         public override void Draw(GameEngine.GameEngine engine)
         {
             base.Draw(engine);
+            TextureManager.Instance.DrawAdaptiveCircle(OrbitCenter, OrbitRadius, new Color(5, 5, 5, 5), 1, TextureDepth - 1, engine.Camera.Zoom);
             TextureManager.Instance.DrawGameObject(this);
         }
     }

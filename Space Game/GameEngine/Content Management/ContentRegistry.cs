@@ -91,7 +91,7 @@ namespace CelestialOdyssey.GameEngine.Content_Management
         public readonly static Registry pixle = new(textures, "pixle");
         public readonly static Registry cursor = new(textures, "cursor");
 
-        public readonly static List<Registry> Properties = new()
+        public static List<Registry> Textures { get; set; } = new()
         {
             gameBackground, gameBackgroundParlax, gameBackgroundParlax1, gameBackgroundParlax2, gameBackgroundParlax3,
             cold1, cold2, cold3, cold4, dry1, dry2, dry3, dry4, dry5, dry6, gas1, gas2, gas3, gas4, 

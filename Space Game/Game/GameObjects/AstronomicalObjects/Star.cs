@@ -3,11 +3,29 @@ using CelestialOdyssey.GameEngine.Content_Management;
 using CelestialOdyssey.GameEngine.GameObjects;
 using CelestialOdyssey.GameEngine.InputManagement;
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
+using System;
 
 namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
 {
+    public class StarConfig
+    {
+        public readonly string TextureId;
+        public readonly float TextureScale;
+        public readonly Color TextureColor;
+
+        public StarConfig(string textureId, float textureScale, Color textureColor) 
+        { 
+            TextureId = textureId;
+            TextureScale = textureScale;
+            TextureColor = textureColor;
+        }
+    }
+
+    [Serializable]
     public class Star : GameObject
     {
+        [JsonProperty]
         private Color mStarColor;
 
         public Star(Vector2 position, string textureId, float textureScale, Color starColor) 

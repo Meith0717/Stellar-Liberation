@@ -1,11 +1,7 @@
 ﻿using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.GameEngine.Content_Management;
-using CelestialOdyssey.GameEngine.Utility;
 using System.Collections.Generic;
-using MathNet.Numerics;
 using MathNet.Numerics.Distributions;
-using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace CelestialOdyssey.Game.Core.MapSystem
 {

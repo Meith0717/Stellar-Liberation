@@ -58,7 +58,7 @@ namespace CelestialOdyssey
 
             // setup texture manager
             TextureManager.Instance.SetSpriteBatch(mSpriteBatch);
-            foreach (Registry registry in ContentRegistry.Properties)
+            foreach (Registry registry in ContentRegistry.Textures)
             {
                 TextureManager.Instance.LoadTexture(Content, registry.Name, registry.FilePath);
             }
