@@ -1,5 +1,6 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.Layers;
 using CelestialOdyssey.GameEngine.Content_Management;
 using CelestialOdyssey.GameEngine.InputManagement;
@@ -8,6 +9,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace CelestialOdyssey

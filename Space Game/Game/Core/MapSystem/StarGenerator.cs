@@ -1,4 +1,5 @@
 ﻿using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
+using CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types;
 using CelestialOdyssey.GameEngine.Content_Management;
 using CelestialOdyssey.GameEngine.Utility;
 using Microsoft.Xna.Framework;
@@ -21,7 +22,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                 for (int y = 0; y < columns; y++)
                 {
                     if (map[x, y] == 0) continue;
-                    Star star = GetStar(GenerateStarPosition(x, y, scaling));
+                    Star star = StarTypes.GenerateRandomStar(GenerateStarPosition(x, y, scaling));
                     star.AddToSpatialHashing(gameEngine);
                     stars.Add(star);
                 }

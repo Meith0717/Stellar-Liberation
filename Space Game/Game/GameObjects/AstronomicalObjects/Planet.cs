@@ -6,19 +6,7 @@ using Newtonsoft.Json;
 using System;
 
 namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
-{
-    public class PlanetConfig
-    {
-        public readonly string TextureId;
-        public readonly float TextureScale;
-
-        public PlanetConfig(string textureId, float textureScale)
-        {
-            TextureId = textureId;
-            TextureScale = textureScale;
-        }
-    }
-
+{ 
     [Serializable]
     public class Planet : GameObject
     {

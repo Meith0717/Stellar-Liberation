@@ -8,20 +8,6 @@ using System;
 
 namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
 {
-    public class StarConfig
-    {
-        public readonly string TextureId;
-        public readonly float TextureScale;
-        public readonly Color TextureColor;
-
-        public StarConfig(string textureId, float textureScale, Color textureColor) 
-        { 
-            TextureId = textureId;
-            TextureScale = textureScale;
-            TextureColor = textureColor;
-        }
-    }
-
     [Serializable]
     public class Star : GameObject
     {
