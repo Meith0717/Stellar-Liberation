@@ -10,13 +10,13 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types
     public static class StarTypes
     {
         // Colors
-        public static Color TypeM = new Color(255, 177, 110);
-        public static Color TypeK = new Color(255, 218, 187);
-        public static Color TypeG = new Color(255, 237, 222);
-        public static Color TypeF = new Color(243, 242, 255);
-        public static Color TypeA = new Color(210, 223, 255);
-        public static Color TypeB = new Color(181, 205, 255);
-        public static Color TypeO = new Color(97, 130, 253);
+        private static Color TypeM = new(255, 177, 110);
+        private static Color TypeK = new(255, 218, 187);
+        private static Color TypeG = new(255, 237, 222);
+        private static Color TypeF = new(243, 242, 255);
+        private static Color TypeA = new(210, 223, 255);
+        private static Color TypeB = new(181, 205, 255);
+        private static Color TypeO = new(97, 130, 253);
 
         // Generate a random star
         public static Star GenerateRandomStar(Vector2 position)
