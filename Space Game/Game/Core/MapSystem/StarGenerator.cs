@@ -35,23 +35,5 @@ namespace CelestialOdyssey.Game.Core.MapSystem
             var sectorEnd = sectorBegin + new Vector2(scaling, scaling);
             return Utility.GetRandomVector2(sectorBegin, sectorEnd);
         }
-
-        private static Star GetStar(Vector2 position)
-        {
-            var rnd = Utility.Random.NextDouble();
-
-            return rnd switch
-            {
-                < 0.01d => new Star(position, ContentRegistry.starBH, Utility.Random.Next(10, 30), Color.Transparent),
-                < 0.1d => new Star(position, ContentRegistry.starF, Utility.Random.Next(35, 40), Color.LightBlue),
-                < 0.15d => new Star(position, ContentRegistry.starA, Utility.Random.Next(30, 35), Color.Blue),
-                < 0.2d => new Star(position, ContentRegistry.starB, Utility.Random.Next(25, 30), Color.Blue),
-                < 0.35d => new Star(position, ContentRegistry.starO, Utility.Random.Next(20, 25), Color.DarkBlue),
-                < 0.5d => new Star(position, ContentRegistry.starM, Utility.Random.Next(10, 15), Color.OrangeRed),
-                < 0.7d => new Star(position, ContentRegistry.starK, Utility.Random.Next(15, 20), Color.Orange),
-                < 1d => new Star(position, ContentRegistry.starG, Utility.Random.Next(20, 25), Color.Orange),
-                _ => null,
-            };
-        }
     }
 }

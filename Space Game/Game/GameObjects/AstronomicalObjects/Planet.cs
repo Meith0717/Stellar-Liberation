@@ -1,4 +1,5 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.GameEngine.Content_Management;
 using CelestialOdyssey.GameEngine.GameObjects;
 using CelestialOdyssey.GameEngine.Utility;
 using Microsoft.Xna.Framework;
@@ -16,6 +17,8 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         public int OrbitRadius { get; private set; }
         [JsonProperty]
         public float OrbitRadians { get; private set; }
+        [JsonIgnore]
+        private float mShadowRotation;
 
 
         public Planet(Vector2 orbitCenter, int orbitRadius, string textureId, float textureScale) 
@@ -26,13 +29,14 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             OrbitRadians = Utility.Random.NextSingle() * MathF.PI * 2;
 
             Position = Geometry.GetPointOnCircle(OrbitCenter, OrbitRadius, OrbitRadians);
+            mShadowRotation = Geometry.AngleBetweenVectors(Position, OrbitCenter) + MathF.PI;
             UpdateBoundBox();
         }
 
         public override void Draw(GameEngine.GameEngine engine)
         {
             base.Draw(engine);
-            TextureManager.Instance.DrawAdaptiveCircle(OrbitCenter, OrbitRadius, new Color(5, 5, 5, 5), 1, TextureDepth - 1, engine.Camera.Zoom);
+            TextureManager.Instance.Draw(ContentRegistry.planetShadow, Position, TextureOffset, TextureScale, mShadowRotation, TextureDepth + 1, Color.White);
             TextureManager.Instance.DrawGameObject(this);
         }
     }

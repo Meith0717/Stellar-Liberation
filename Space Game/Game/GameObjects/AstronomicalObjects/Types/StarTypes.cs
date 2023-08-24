@@ -38,10 +38,10 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types
         }
 
         // Define common star constructor parameters
-        private static readonly float CommonScaleDwarf = 10f;
-        private static readonly float CommonScaleMain = 15f;
-        private static readonly float CommonScaleGiants = 20f;
-        private static readonly float CommonScaleSuperGiants = 25f;
+        private static readonly float CommonScaleDwarf = 20f;
+        private static readonly float CommonScaleMain = 25f;
+        private static readonly float CommonScaleGiants = 30f;
+        private static readonly float CommonScaleSuperGiants = 35f;
 
         // Define nested star classes
         public class Dwarf
