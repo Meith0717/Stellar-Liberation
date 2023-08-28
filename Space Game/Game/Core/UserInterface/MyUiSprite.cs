@@ -1,6 +1,6 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core;
-using CelestialOdyssey.GameEngine.InputManagement;
+using CelestialOdyssey.Game.Core.InputManagement;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;

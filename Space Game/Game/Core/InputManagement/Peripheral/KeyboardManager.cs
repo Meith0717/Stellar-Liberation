@@ -1,9 +1,10 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using CelestialOdyssey.Game.Core.InputManagement;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CelestialOdyssey.GameEngine.InputManagement.Peripheral
+namespace CelestialOdyssey.Game.Core.InputManagement.Peripheral
 {
     public class KeyboardManager
     {
@@ -18,6 +19,8 @@ namespace CelestialOdyssey.GameEngine.InputManagement.Peripheral
                 { Keys.Escape, ActionType.ESC },
                 { Keys.F11, ActionType.ToggleFullscreen},
                 { Keys.F12, ActionType.ToggleDebugModes},
+                { Keys.S, ActionType.Save},
+                { Keys.L, ActionType.Load},
             };
 
             mActionOnKeyboardHold = new()

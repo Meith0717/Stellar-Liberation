@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CelestialOdyssey.Game.Core.InputManagement;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -6,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CelestialOdyssey.GameEngine.InputManagement.Peripheral
+namespace CelestialOdyssey.Game.Core.InputManagement.Peripheral
 {
     internal class GamePadManager
     {
         private readonly Dictionary<Buttons, ActionType> mActionOnPadPressed, mActionOnPadHold;
         private GamePadState mPreviousState, mState;
 
-        public GamePadManager() 
+        public GamePadManager()
         {
             mActionOnPadPressed = new()
             {
@@ -21,8 +22,8 @@ namespace CelestialOdyssey.GameEngine.InputManagement.Peripheral
                 { Buttons.LeftStick, ActionType.Acceleration },
             };
 
-            mActionOnPadHold = new() 
-            {                
+            mActionOnPadHold = new()
+            {
                 { Buttons.RightThumbstickUp, ActionType.CameraZoomIn },
                 { Buttons.RightThumbstickDown, ActionType.CameraZoomOut },
                 { Buttons.RightTrigger, ActionType.FireInitialWeapon },
@@ -45,7 +46,7 @@ namespace CelestialOdyssey.GameEngine.InputManagement.Peripheral
                        .ToList();
         }
 
-        private void GetGamePadValues(out GamePadValues padValues) 
+        private void GetGamePadValues(out GamePadValues padValues)
         {
             padValues = new();
             padValues.mRightThumbSticks = new(mState.ThumbSticks.Right.X, -mState.ThumbSticks.Right.Y);

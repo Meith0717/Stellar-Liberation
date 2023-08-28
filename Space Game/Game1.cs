@@ -1,15 +1,13 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
-using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
+using CelestialOdyssey.Game.Core.Persistance;
 using CelestialOdyssey.Game.Layers;
 using CelestialOdyssey.GameEngine.Content_Management;
-using CelestialOdyssey.GameEngine.InputManagement;
-using CelestialOdyssey.GameEngine.Persistance;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace CelestialOdyssey
@@ -24,6 +22,8 @@ namespace CelestialOdyssey
         private SpriteBatch mSpriteBatch;
         public LayerManager mLayerManager;
         public readonly Serialize mSerialize;
+
+        public MainGameLayer mGameLayer;
 
         // Window attributes
         private int mWidth;
@@ -47,9 +47,10 @@ namespace CelestialOdyssey
         protected override void Initialize()
         {
             mGraphicsManager.ApplyChanges();
-            mLayerManager = new LayerManager(this, GraphicsDevice);
+            mLayerManager = new LayerManager(this, GraphicsDevice, mSerialize);
             base.Initialize();
-            mLayerManager.AddLayer(new GameLayer(new()));
+            mGameLayer = new();
+            mLayerManager.AddLayer(mGameLayer);
             Mouse.SetCursor(MouseCursor.FromTexture2D(Content.Load<Texture2D>("textures/cursor"), 0, 0));
         }
 
@@ -106,6 +107,19 @@ namespace CelestialOdyssey
             InputState inputState = mInputManager.Update();
             if (inputState.mActionList.Contains(ActionType.ToggleFullscreen)) { ToggleFullscreen(); }
             mLayerManager.Update(gameTime, inputState);
+
+            // For Testing
+            if (inputState.mActionList.Contains(ActionType.Save))
+            {
+                mSerialize.SerializeObject(mGameLayer, "test");
+            }
+
+            if (inputState.mActionList.Contains(ActionType.Load))
+            {
+                mGameLayer = (MainGameLayer)mSerialize.PopulateObject(mGameLayer, "test");
+            }           
+            // For Testing
+
             base.Update(gameTime);
         }
 

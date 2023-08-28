@@ -1,11 +1,11 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core;
 using CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem;
+using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.Inventory;
+using CelestialOdyssey.Game.Core.Utility;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using CelestialOdyssey.GameEngine.Content_Management;
-using CelestialOdyssey.GameEngine.InputManagement;
-using CelestialOdyssey.GameEngine.Utility;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
@@ -23,35 +23,35 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 
         public Player(Vector2 position) : base(position, ContentRegistry.ship.Name, 1) { Inventory = new(16); }
 
-        public new void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine gameEngine)
+        public new void Update(GameTime gameTime, InputState inputState)
         {
             if (inputState.mActionList.Contains(ActionType.FireInitialWeapon))
             {
                 if (GetTarget(out var target))
                 {
-                    WeaponSlot1.Fire(target);
-                    WeaponSlot2.Fire(target);
-                    WeaponSlot3.Fire(target);
-                    WeaponSlot4.Fire(target);
+                    WeaponSlot1.Fire(target, GameLayer);
+                    WeaponSlot2.Fire(target, GameLayer);
+                    WeaponSlot3.Fire(target, GameLayer);
+                    WeaponSlot4.Fire(target, GameLayer);
                 }
             }
-            var targetAngle = Geometry.AngleBetweenVectors(Position, gameEngine.WorldMousePosition);
+            var targetAngle = Geometry.AngleBetweenVectors(Position, GameLayer.WorldMousePosition);
             Rotation += MovementController.GetRotationUpdate(Rotation, targetAngle, 0.07f);
 
             ManageVelocity(inputState);
-            WeaponSlot1.Update(this, gameTime, inputState, gameEngine);
-            WeaponSlot2.Update(this, gameTime, inputState, gameEngine);
-            WeaponSlot3.Update(this, gameTime, inputState, gameEngine);
-            WeaponSlot4.Update(this, gameTime, inputState, gameEngine);
-            CollectItems(gameEngine);
+            WeaponSlot1.Update(this, gameTime, inputState);
+            WeaponSlot2.Update(this, gameTime, inputState);
+            WeaponSlot3.Update(this, gameTime, inputState);
+            WeaponSlot4.Update(this, gameTime, inputState);
+            CollectItems();
 
-            base.Update(gameTime, inputState, gameEngine);
-            gameEngine.Camera.SetPosition(Position);
+            base.Update(gameTime, inputState);
+            GameLayer.Camera.SetPosition(Position);
         }
 
-        public override void Draw(GameEngine.GameEngine engine)
+        public override void Draw()
         {
-            base.Draw(engine);
+            base.Draw();
             TextureManager.Instance.DrawGameObject(this);
         }
 
@@ -70,9 +70,9 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
             }
         }
 
-        private void CollectItems(GameEngine.GameEngine engine)
+        private void CollectItems()
         {
-            var objects = engine.GetObjectsInRadius<Item>(Position, 500);
+            var objects = GameLayer.GetObjectsInRadius<Item>(Position, 500);
             foreach (var item in objects)
             {
                 if (!BoundedBox.Contains(item.Position) || !Inventory.AddItem(item)) continue;

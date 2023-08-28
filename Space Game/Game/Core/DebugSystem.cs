@@ -1,14 +1,14 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Core.GameEngine.Position_Management;
-using CelestialOdyssey.Game.Core;
-using CelestialOdyssey.GameEngine.GameObjects;
-using CelestialOdyssey.GameEngine.InputManagement;
+using CelestialOdyssey.Game.Core.GameObjects;
+using CelestialOdyssey.Game.Core.InputManagement;
+using CelestialOdyssey.Game.Core.LayerManagement;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
 
-namespace CelestialOdyssey.GameEngine
+namespace CelestialOdyssey.Game.Core
 {
     public class DebugSystem
     {
@@ -77,27 +77,27 @@ namespace CelestialOdyssey.GameEngine
             UpdateObjectCount = 0;
         }
 
-        public void TestSpatialHashing(GameEngine engine)
+        public void TestSpatialHashing(SpatialHashing<GameObject> spatialHashing, Vector2 worldMousePosition, float camZoom)
         {
             if (mDebugLevel < 3) { return; }
             var radius = Globals.MouseSpatialHashingRadius;
-            var GameObjects = engine.SpatialHashing.GetObjectsInBucket((int)engine.WorldMousePosition.X, (int)engine.WorldMousePosition.Y);
+            var GameObjects = spatialHashing.GetObjectsInBucket((int)worldMousePosition.X, (int)worldMousePosition.Y);
             Color color = Color.Green;
             for (int i = 0; i < GameObjects.Count; i++)
             {
                 var obj = GameObjects[i];
                 if (i > 0) color = Color.Blue;
-                TextureManager.Instance.DrawAdaptiveLine(engine.WorldMousePosition, obj.Position, color,
-                    2, (int)TextureManager.Instance.MaxLayerDepth, engine.Camera.Zoom);
+                TextureManager.Instance.DrawAdaptiveLine(worldMousePosition, obj.Position, color,
+                    2, (int)TextureManager.Instance.MaxLayerDepth, camZoom);
             }
         }
 
-        public void DrawBoundBox(CircleF box, GameEngine engine)
+        public void DrawBoundBox(CircleF box, GameLayer gameLayer)
         {
-            if (!engine.FrustumCuller.CircleOnWorldView(box)) return;
+            if (!gameLayer.FrustumCuller.CircleOnWorldView(box)) return;
             if (mDebugLevel < 2) { return; }
             TextureManager.Instance.DrawAdaptiveCircle(box.Position, box.Radius, Color.Red, 2, (int)TextureManager.Instance.MaxLayerDepth,
-                engine.Camera.Zoom);
+                gameLayer.Camera.Zoom);
         }
     }
 }

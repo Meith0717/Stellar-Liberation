@@ -1,4 +1,5 @@
-using CelestialOdyssey.GameEngine.InputManagement;
+using CelestialOdyssey.Game.Core.InputManagement;
+using CelestialOdyssey.Game.Core.Persistance;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -10,20 +11,22 @@ public class LayerManager
 {
     private readonly Game1 mGame;
     private readonly GraphicsDevice mGraphicsDevice;
+    private readonly Serialize mSerialize;
 
     // layer stack
     private readonly LinkedList<Layer> mLayerStack = new LinkedList<Layer>();
 
-    public LayerManager(Game1 game, GraphicsDevice graphicsDevice)
+    public LayerManager(Game1 game, GraphicsDevice graphicsDevice, Serialize serialize)
     {
         mGame = game;
         mGraphicsDevice = graphicsDevice;
+        mSerialize = serialize;
     }
 
     // add and remove layers from stack
     public void AddLayer(Layer layer)
     {
-        layer.Initialize(this, mGraphicsDevice);
+        layer.Initialize(this, mGraphicsDevice, mSerialize);
         mLayerStack.AddLast(layer);
     }
 

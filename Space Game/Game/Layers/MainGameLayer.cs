@@ -1,30 +1,29 @@
-﻿using CelestialOdyssey.Game.Core.Inventory;
+﻿using CelestialOdyssey.Game.Core.InputManagement;
+using CelestialOdyssey.Game.Core.Inventory;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.MapSystem;
 using CelestialOdyssey.Game.Core.Parallax;
 using CelestialOdyssey.GameEngine.Content_Management;
-using CelestialOdyssey.GameEngine.InputManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
 using Newtonsoft.Json;
 
 namespace CelestialOdyssey.Game.Layers
 {
-    public class GameLayer : Layer
+    public class MainGameLayer : GameLayer
     {
         [JsonProperty] public float GameTime;
 
         [JsonIgnore] public MapItemsManager ItemsManager = new();
 
         // Unsaved Classes
-        [JsonIgnore] private readonly GameEngine.GameEngine mGameEngine;
         [JsonIgnore] private readonly ParllaxManager mParllaxManager;
-        [JsonIgnore] private readonly Map map = new();
+        [JsonProperty] private readonly Map map = new();
 
-        public GameLayer(GameEngine.GameEngine gameEngine) : base(false)
+        public MainGameLayer() : base()
         {
-            mGameEngine = gameEngine;
-            map.Generate(mGameEngine);
+            map.Generate(this);
 
             mParllaxManager = new();
             mParllaxManager.Add(new(ContentRegistry.gameBackground.Name, 0.05f));
@@ -41,23 +40,23 @@ namespace CelestialOdyssey.Game.Layers
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             mParllaxManager.Draw();
             spriteBatch.End();
-
-            mGameEngine.BeginWorldDrawing(spriteBatch);
-            map.DrawSectores(mGameEngine);
-            mGameEngine.RenderWorldObjectsOnScreen();
-            mGameEngine.EndWorldDrawing(spriteBatch);
+            base.Draw(spriteBatch);
+        }
+        public override void DrawOnWorld()
+        {
+            map.DrawSectores(FrustumCuller.WorldFrustum.ToRectangle(), Camera.Zoom);
         }
 
         public override void OnResolutionChanged()
         {
-            mParllaxManager.OnResolutionChanged(mGraphicsDevice);
+            mParllaxManager.OnResolutionChanged(GraphicsDevice);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mGameEngine.UpdateEngine(gameTime, inputState, mGraphicsDevice);
-            ItemsManager.Update(gameTime, inputState, mGameEngine);
-            mParllaxManager.Update(mGameEngine.Camera.Movement, mGameEngine.Camera.Zoom);
+            base.Update(gameTime, inputState);
+            mParllaxManager.Update(Camera.Movement, Camera.Zoom);
         }
+
     }
 }
