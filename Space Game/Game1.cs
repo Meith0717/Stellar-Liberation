@@ -22,7 +22,7 @@ namespace CelestialOdyssey
 
         // Global Classes
         private SpriteBatch mSpriteBatch;
-        public readonly LayerManager mLayerManager;
+        public LayerManager mLayerManager;
         public readonly Serialize mSerialize;
 
         // Window attributes
@@ -40,7 +40,6 @@ namespace CelestialOdyssey
 
             mInputManager = new InputManager();
             mGraphicsManager = new GraphicsDeviceManager(this);
-            mLayerManager = new LayerManager(this);
             mSerialize = new Serialize();
             //ToggleFullscreen();
         }
@@ -48,8 +47,9 @@ namespace CelestialOdyssey
         protected override void Initialize()
         {
             mGraphicsManager.ApplyChanges();
+            mLayerManager = new LayerManager(this, GraphicsDevice);
             base.Initialize();
-            mLayerManager.AddLayer(new GameLayer(this));
+            mLayerManager.AddLayer(new GameLayer(new()));
             Mouse.SetCursor(MouseCursor.FromTexture2D(Content.Load<Texture2D>("textures/cursor"), 0, 0));
         }
 

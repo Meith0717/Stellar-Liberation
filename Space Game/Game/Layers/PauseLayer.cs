@@ -1,5 +1,4 @@
-﻿using CelestialOdyssey.Game;
-using CelestialOdyssey.Game.Core.LayerManagement;
+﻿using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.UserInterface;
 using CelestialOdyssey.GameEngine.InputManagement;
 using Microsoft.Xna.Framework;
@@ -9,19 +8,19 @@ namespace CelestialOdyssey.Game.Layers
 {
     public class PauseLayer : Layer
     {
-        private GameState Game;
+        private GameLayer mGameLayer;
         private MyUiFrame mBackgroundLayer;
         private MyUiFrame mForegroundLayer;
         private MyUiSprite mContinueButton;
         private MyUiSprite mExitButton;
         private MyUiSprite mExitSaveButton;
 
-        public PauseLayer(Game1 app, GameState game)
-            : base(app)
+        public PauseLayer(GameLayer gameLayer)
+            : base(true)
         {
             UpdateBelow = false;
 
-            Game = game;
+            mGameLayer = gameLayer;
             mBackgroundLayer = new(0, 0, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height)
             { Alpha = 0.95f, Color = Color.Black };
             mContinueButton = new(mGraphicsDevice.Viewport.Width / 2 - 256, mGraphicsDevice.Viewport.Height / 2 - 64 - 100,
@@ -83,7 +82,6 @@ namespace CelestialOdyssey.Game.Layers
 
         private void ExitAndSave()
         {
-            mSerialize.SerializeObject(Game, "save");
             mLayerManager.Exit();
         }
 

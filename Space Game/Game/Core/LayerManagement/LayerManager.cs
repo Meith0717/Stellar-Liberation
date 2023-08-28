@@ -9,18 +9,21 @@ namespace CelestialOdyssey.Game.Core.LayerManagement;
 public class LayerManager
 {
     private readonly Game1 mGame;
+    private readonly GraphicsDevice mGraphicsDevice;
 
     // layer stack
     private readonly LinkedList<Layer> mLayerStack = new LinkedList<Layer>();
 
-    public LayerManager(Game1 game)
+    public LayerManager(Game1 game, GraphicsDevice graphicsDevice)
     {
         mGame = game;
+        mGraphicsDevice = graphicsDevice;
     }
 
     // add and remove layers from stack
     public void AddLayer(Layer layer)
     {
+        layer.Initialize(this, mGraphicsDevice);
         mLayerStack.AddLast(layer);
     }
 
