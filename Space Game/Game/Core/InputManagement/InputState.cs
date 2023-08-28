@@ -25,7 +25,8 @@ namespace CelestialOdyssey.Game.Core.InputManagement
         FireSecondaryWeapon,
         FireInitialWeapon,
         Save,
-        Load
+        Load,
+        Map
     }
 
     public enum MouseActionType

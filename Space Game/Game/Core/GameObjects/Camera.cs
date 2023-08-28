@@ -135,6 +135,11 @@ namespace CelestialOdyssey.Game.Core.GameObjects
             Position = mTargetPosition = position;
         }
 
+        public void SetZoom(float zoom)
+        {
+            Zoom = zoom;
+        }
+
         /// <summary>
         /// Updates the camera based on the current game state.
         /// </summary>

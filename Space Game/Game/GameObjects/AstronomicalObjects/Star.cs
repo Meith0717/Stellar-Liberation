@@ -11,20 +11,20 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
     [Serializable]
     public class Star : GameObject
     {
-        [JsonProperty]
-        private Color mStarColor;
+        [JsonProperty] public Color StarColor { get; private set; }
+
 
         public Star(Vector2 position, string textureId, float textureScale, Color starColor) 
             : base(position, textureId, textureScale, 2)
         {
-            mStarColor = starColor;
+            StarColor = starColor;
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
             RemoveFromSpatialHashing();
             base.Update(gameTime, inputState);
-            if (mStarColor != Color.Transparent)
+            if (StarColor != Color.Transparent)
             {
                 Rotation += 0.001f;
             }
@@ -35,7 +35,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         {
             base.Draw();
             TextureManager.Instance.DrawGameObject(this);
-            TextureManager.Instance.Draw(ContentRegistry.starLightAlpha.Name, Position, TextureOffset, TextureScale * 2f, Rotation, 3, mStarColor);
+            TextureManager.Instance.Draw(ContentRegistry.starLightAlpha.Name, Position, TextureOffset, TextureScale * 2f, Rotation, TextureDepth - 1, StarColor);
         }
     }
 }

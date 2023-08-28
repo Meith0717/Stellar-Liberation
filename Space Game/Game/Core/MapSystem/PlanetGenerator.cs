@@ -8,21 +8,19 @@ namespace CelestialOdyssey.Game.Core.MapSystem
 {
     public static class PlanetGenerator
     {
-        public static void Generate(List<Star> stars ,out List<Planet> planets)
+        public static List<Planet> Generate(Star star)
         {
             var triangularDistribution = new Triangular(1, 10, 3);
-            planets = new();
-            foreach (Star star in stars)
+            var planets = new List<Planet>();
+            var maxOrbitNumber = GetMaxOrbitNumber(triangularDistribution);
+            for (int i = 1; i <= maxOrbitNumber; i++)
             {
-                var maxOrbitNumber = GetMaxOrbitNumber(triangularDistribution);
-                for (int i = 1; i <= maxOrbitNumber; i++)
-                {
-                    var oribitRadius = (int)(star.Width * star.TextureScale) + (20000 * i);
-                    Planet planet = GetPlanet(star.Position, oribitRadius, i);
-                    planet.AddToSpatialHashing();
-                    planets.Add(planet);
-                }  
+                var oribitRadius = (int)(star.Width * star.TextureScale) + (20000 * i);
+                Planet planet = GetPlanet(star.Position, oribitRadius, i);
+                planet.AddToSpatialHashing();
+                planets.Add(planet);
             }
+            return planets;
         }
 
         private static int GetMaxOrbitNumber(Triangular triangularDistribution)

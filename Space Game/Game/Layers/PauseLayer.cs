@@ -8,14 +8,14 @@ namespace CelestialOdyssey.Game.Layers
 {
     public class PauseLayer : Layer
     {
-        private MainGameLayer mGameLayer;
+        private MapLayer mGameLayer;
         private MyUiFrame mBackgroundLayer;
         private MyUiFrame mForegroundLayer;
         private MyUiSprite mContinueButton;
         private MyUiSprite mExitButton;
         private MyUiSprite mExitSaveButton;
 
-        public PauseLayer(MainGameLayer gameLayer)
+        public PauseLayer(MapLayer gameLayer)
             : base(true)
         {
             UpdateBelow = false;

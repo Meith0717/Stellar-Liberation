@@ -1,15 +1,18 @@
 ﻿using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.Core.MapSystem
 {
     public static class SystemGenerator
     {
-        public static void Generate(int[,] map, int scaling, GameLayer gameLayer)
+        public static void Generate(int[,] map, int scaling, GameLayer gameLayer, out List<SolarSystem> stars)
         {
             int rows = map.GetLength(0);
             int columns = map.GetLength(1);
+
+            stars = new();
 
             // Separate x and y coordinates
             for (int x = 0; x < rows; x++)
@@ -21,6 +24,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                     star.SetGameLayer(gameLayer);
                     star.AddToSpatialHashing();
                     gameLayer.AddObject(star);
+                    stars.Add(star);
                 }
             }
         }

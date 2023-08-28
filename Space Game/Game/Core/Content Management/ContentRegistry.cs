@@ -91,6 +91,9 @@ namespace CelestialOdyssey.GameEngine.Content_Management
         public readonly static Registry pixle = new(textures, "pixle");
         public readonly static Registry cursor = new(textures, "cursor");
 
+        private readonly static string crosshair = @"textures\crosshair";
+        public readonly static Registry targetCrosshair = new(crosshair, "targetCrosshair");
+
         public static List<Registry> Textures { get; set; } = new()
         {
             gameBackground, gameBackgroundParlax, gameBackgroundParlax1, gameBackgroundParlax2, gameBackgroundParlax3,
@@ -98,7 +101,7 @@ namespace CelestialOdyssey.GameEngine.Content_Management
             stone1, stone2, stone3, stone4, stone5, stone6, terrestrial1, terrestrial2, terrestrial3, terrestrial4, 
             terrestrial5, terrestrial6, terrestrial7, terrestrial8, warm1, warm2, warm3, warm4, planetShadow,
             starA, starB, starF, starG, starK, starM, starO, starBH, starLightAlpha,
-            odyssyum, postyum, metall, ship, pirate, photonTorpedo, pixle, cursor
+            odyssyum, postyum, metall, ship, pirate, photonTorpedo, pixle, cursor, targetCrosshair
         };
     }
 }

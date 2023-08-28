@@ -16,7 +16,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types
         private static Color TypeF = new(243, 242, 255);
         private static Color TypeA = new(210, 223, 255);
         private static Color TypeB = new(181, 205, 255);
-        private static Color TypeO = new(97, 130, 253);
+        private static Color TypeO = new(147, 170, 255);
 
         // Generate a random star
         public static Star GenerateRandomStar(Vector2 position)
@@ -38,10 +38,10 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types
         }
 
         // Define common star constructor parameters
-        private static readonly float CommonScaleDwarf = 20f;
-        private static readonly float CommonScaleMain = 25f;
-        private static readonly float CommonScaleGiants = 30f;
-        private static readonly float CommonScaleSuperGiants = 35f;
+        private static readonly float CommonScaleDwarf = 10f;
+        private static readonly float CommonScaleMain = 15f;
+        private static readonly float CommonScaleGiants = 20f;
+        private static readonly float CommonScaleSuperGiants = 25f;
 
         // Define nested star classes
         public class Dwarf

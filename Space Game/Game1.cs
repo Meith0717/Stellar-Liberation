@@ -23,7 +23,7 @@ namespace CelestialOdyssey
         public LayerManager mLayerManager;
         public readonly Serialize mSerialize;
 
-        public MainGameLayer mGameLayer;
+        public MapLayer mGameLayer;
 
         // Window attributes
         private int mWidth;
@@ -116,7 +116,7 @@ namespace CelestialOdyssey
 
             if (inputState.mActionList.Contains(ActionType.Load))
             {
-                mGameLayer = (MainGameLayer)mSerialize.PopulateObject(mGameLayer, "test");
+                mGameLayer = (MapLayer)mSerialize.PopulateObject(mGameLayer, "test");
             }           
             // For Testing
 

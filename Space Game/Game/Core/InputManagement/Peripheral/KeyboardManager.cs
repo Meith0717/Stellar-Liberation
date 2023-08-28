@@ -21,6 +21,7 @@ namespace CelestialOdyssey.Game.Core.InputManagement.Peripheral
                 { Keys.F12, ActionType.ToggleDebugModes},
                 { Keys.S, ActionType.Save},
                 { Keys.L, ActionType.Load},
+                { Keys.M, ActionType.Map},
             };
 
             mActionOnKeyboardHold = new()

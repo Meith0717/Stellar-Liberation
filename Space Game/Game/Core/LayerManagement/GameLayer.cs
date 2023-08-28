@@ -24,7 +24,7 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
         [JsonIgnore] public readonly FrustumCuller FrustumCuller;
         [JsonProperty] public readonly SpatialHashing<GameObject> SpatialHashing;
 
-        public GameLayer() 
+        internal GameLayer() 
             : base(false)
         {
             GameObjects = new();
@@ -33,6 +33,7 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
             DebugSystem = new();
             FrustumCuller = new();
         }
+
         public override void Update(GameTime gameTime, InputState inputState)
         {
             int screenWidth = GraphicsDevice.Viewport.Width;
