@@ -18,7 +18,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                 {
                     if (map[x, y] == 0) continue;
                     SolarSystem star = new(GenerateStarPosition(x, y, scaling));
-                    star.Initialize(gameLayer);
+                    star.SetGameLayer(gameLayer);
                     star.AddToSpatialHashing();
                     gameLayer.AddObject(star);
                 }

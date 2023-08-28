@@ -17,7 +17,7 @@ namespace CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem
         public override void Fire(SpaceShip target, GameLayer gameLayer)
         {
             var projectile = new Torpedo(mPosition, target, ContentRegistry.photonTorpedo.Name, 2, 5);
-            projectile.Initialize(gameLayer);
+            projectile.SetGameLayer(gameLayer);
             AddProjectile(projectile);
         }
     }
@@ -29,7 +29,7 @@ namespace CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem
         public override void Fire(SpaceShip target, GameLayer gameLayer)
         {
             var projectile = new Phaser(mPosition, target, Color.BlueViolet, 2, 5);
-            projectile.Initialize(gameLayer);
+            projectile.SetGameLayer(gameLayer);
             AddProjectile(projectile);
         }
     }

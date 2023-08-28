@@ -30,6 +30,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
 
         public override void OnPressAction()
         {
+            System.Diagnostics.Debug.WriteLine("PRESSED");
         }
     }
 }

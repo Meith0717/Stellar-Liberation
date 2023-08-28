@@ -106,10 +106,13 @@ namespace CelestialOdyssey.Game.Core.GameObjects
             UpdateBoundBox();
         }
 
-        public void Initialize(GameLayer gameLayer) { GameLayer = gameLayer; }
+        public void SetGameLayer(GameLayer gameLayer) { GameLayer = gameLayer; }
 
         internal void UpdateBoundBox()
         {
+            Width = TextureManager.Instance.GetTexture(TextureId).Width;
+            Height = TextureManager.Instance.GetTexture(TextureId).Height;
+            TextureOffset = new(Width / 2, Height / 2);
             BoundedBox = new CircleF(Position, MathF.Max(Height, Width) / 2 * TextureScale);
         }
 
@@ -122,6 +125,7 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         /// <param name="engine">The game engine instance.</param>
         public virtual void Update(GameTime gameTime, InputState inputState)
         {
+            if (GameLayer is null) { return; }
             GameLayer.DebugSystem.UpdateObjectCount += 1;
             UpdateBoundBox();
         }
@@ -132,6 +136,7 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         /// <param name="engine">The game engine instance.</param>
         internal void AddToSpatialHashing()
         {
+            if (GameLayer is null) return;
             if (!mWasRemovedFromSpatialHashing) return;
             GameLayer.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
             mWasRemovedFromSpatialHashing = false;
@@ -143,6 +148,7 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         /// <param name="engine">The game engine instance.</param>
         internal void RemoveFromSpatialHashing()
         {
+            if (GameLayer is null) return;
             mWasRemovedFromSpatialHashing = true;
             GameLayer.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
         }
@@ -153,6 +159,7 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         /// <param name="engine">The game engine instance.</param>
         public virtual void Draw()
         {
+            if (GameLayer is null) return;
             GameLayer.DebugSystem.DrawnObjectCount += 1;
             GameLayer.DebugSystem.DrawBoundBox(BoundedBox, GameLayer);
         }

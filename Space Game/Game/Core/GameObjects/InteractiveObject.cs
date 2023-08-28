@@ -46,6 +46,7 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         public override void Update(GameTime gameTime, InputState inputState)
         {
             base.Update(gameTime, inputState);
+            if (GameLayer is null) return;
 
             IsHover = BoundedBox.Contains(GameLayer.WorldMousePosition);
             IsPressed = IsHover && inputState.mMouseActionType == MouseActionType.LeftClickReleased;

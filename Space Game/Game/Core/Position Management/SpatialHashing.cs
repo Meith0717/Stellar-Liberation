@@ -6,6 +6,8 @@
  */
 
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,18 +17,19 @@ namespace CelestialOdyssey.Core.GameEngine.Position_Management
     /// Represents a spatial hashing data structure for efficient object retrieval based on their coordinates.
     /// </summary>
     /// <typeparam name="T">The type of objects stored in the spatial hashing structure.</typeparam>
+    [Serializable]
     public class SpatialHashing<T>
-    {
+    {                            
 
         /// <summary>
         /// The size of each cell in the spatial grid.
         /// </summary>
-        public int mCellSize;
+        [JsonProperty] public int mCellSize;
 
         /// <summary>
         /// The spatial grids that store the objects based on their hash values.
         /// </summary>
-        private Dictionary<int, HashSet<T>> mSpatialGrids = new();
+        [JsonProperty] private Dictionary<int, HashSet<T>> mSpatialGrids = new();
 
         /// <summary>
         /// Initializes a new instance of the SpatialHashing class with the specified cell size.

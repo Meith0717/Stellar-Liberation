@@ -19,10 +19,10 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
         
         [JsonIgnore] public Vector2 WorldMousePosition { get; private set; }
         [JsonIgnore] private Matrix ViewTransformationMatrix;
-        [JsonIgnore] public readonly SpatialHashing<GameObject> SpatialHashing;
         [JsonIgnore] public readonly Camera Camera;
         [JsonIgnore] public readonly DebugSystem DebugSystem;
         [JsonIgnore] public readonly FrustumCuller FrustumCuller;
+        [JsonProperty] public readonly SpatialHashing<GameObject> SpatialHashing;
 
         public GameLayer() 
             : base(false)
@@ -45,6 +45,7 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
 
             foreach (GameObject gameObject in GameObjects)
             {
+                gameObject.SetGameLayer(this);
                 gameObject.RemoveFromSpatialHashing();
                 gameObject.Update(gameTime, inputState);
                 gameObject.AddToSpatialHashing();
@@ -79,7 +80,6 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
         }
 
         public abstract void DrawOnWorld();
-
 
         private void RenderWorldObjectsOnScreen()
         {
@@ -142,6 +142,5 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
             objectsInRadius.Sort(comparison);
             return objectsInRadius;
         }
-
     }
 }
