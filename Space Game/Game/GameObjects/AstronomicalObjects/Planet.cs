@@ -37,7 +37,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         public override void Update(GameTime gameTime, InputState inputState)
         {
             base.Update(gameTime, inputState);
-            OrbitRadians += 0.001f;
+            OrbitRadians += 0.0001f;
             Rotation -= 0.005f;
             Position = Geometry.GetPointOnCircle(OrbitCenter, OrbitRadius, OrbitRadians);
             mShadowRotation = Geometry.AngleBetweenVectors(Position, OrbitCenter) + MathF.PI;
@@ -46,7 +46,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         public override void Draw()
         {
             base.Draw();
-            TextureManager.Instance.Draw(ContentRegistry.planetShadow, Position, TextureOffset, TextureScale, mShadowRotation, TextureDepth + 1, Color.White);
+            TextureManager.Instance.Draw(ContentRegistry.planetShadow, Position, TextureScale + 0.5f, mShadowRotation, TextureDepth + 1, Color.White);
             TextureManager.Instance.DrawGameObject(this);
         }
     }

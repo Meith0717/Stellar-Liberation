@@ -19,12 +19,11 @@ namespace CelestialOdyssey.Game.Layers
             Camera.SetPosition(Vector2.Zero);
             Camera.SetZoom(0.005f);
             mParllaxManager = new();
-            mParllaxManager.Add(new(ContentRegistry.gameBackground.Name, 0.05f));
+            mParllaxManager.Add(new(ContentRegistry.gameBackground.Name, 0));
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax.Name, 0.1f));
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax1.Name, 0.15f));
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax2.Name, 0.2f));
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax3.Name, 0.25f));
-
         }
 
         public override void Update(GameTime gameTime, InputState inputState)

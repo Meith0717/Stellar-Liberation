@@ -35,7 +35,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         {
             base.Draw();
             TextureManager.Instance.DrawGameObject(this);
-            TextureManager.Instance.Draw(ContentRegistry.starLightAlpha.Name, Position, TextureOffset, TextureScale * 2f, Rotation, TextureDepth - 1, StarColor);
+            TextureManager.Instance.Draw(ContentRegistry.starLightAlpha.Name, Position, TextureOffset, TextureScale * 1.5f, Rotation, TextureDepth - 1, StarColor);
         }
     }
 }

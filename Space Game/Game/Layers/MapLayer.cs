@@ -2,14 +2,12 @@
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.MapSystem;
 using CelestialOdyssey.Game.Core.Parallax;
-using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.SpaceShips;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using System;
-using System.Linq;
 
 namespace CelestialOdyssey.Game.Layers
 {
@@ -37,25 +35,10 @@ namespace CelestialOdyssey.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            if (inputState.mActionList.Contains(ActionType.Map)) ShowActualSystem();
+
             base.Update(gameTime, inputState);
             mParllaxManager.Update(Camera.Movement, Camera.Zoom);
-            if (inputState.mMouseActionType == MouseActionType.RightClick)
-            {
-                foreach (var starget in GameObjects.OfType<SolarSystem>())
-                {
-                    if (!starget.IsHover) continue;
-                    map.GetActualSystem(out var system);
-                    map.GetPath(system, starget);
-                }
-            }
-            if (inputState.mActionList.Contains(ActionType.Map))
-            {
-                if (map.GetActualSystem(out var system))
-                {
-                    Camera.SetPosition(system.Position);
-                    LayerManager.AddLayer(system.GetLayer());
-                } 
-            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -71,5 +54,11 @@ namespace CelestialOdyssey.Game.Layers
 
         public override void DrawOnWorld() { map.DrawEdges(); }
 
+        private void ShowActualSystem()
+        {
+            if (!map.GetActualSystem(out var system)) return;
+            Camera.SetPosition(system.Position);
+            LayerManager.AddLayer(system.GetLayer());
+        }
     }
 }

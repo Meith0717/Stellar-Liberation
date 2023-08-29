@@ -54,8 +54,8 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
                 gameObject.Update(gameTime, inputState);
                 gameObject.AddToSpatialHashing();
             }
-
             Camera.Update(gameTime, inputState, inputState.mMousePosition, ViewTransformationMatrix);
+
             FrustumCuller.Update(screenWidth, screenHeight, ViewTransformationMatrix);
         }
 

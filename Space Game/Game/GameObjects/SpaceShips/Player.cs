@@ -23,7 +23,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 
         public Player(Vector2 position) : base(position, ContentRegistry.ship.Name, 1) { Inventory = new(16); }
 
-        public new void Update(GameTime gameTime, InputState inputState)
+        public override void Update(GameTime gameTime, InputState inputState)
         {
             if (inputState.mActionList.Contains(ActionType.FireInitialWeapon))
             {
@@ -46,7 +46,6 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
             CollectItems();
 
             base.Update(gameTime, inputState);
-            GameLayer.Camera.SetPosition(Position);
         }
 
         public override void Draw()

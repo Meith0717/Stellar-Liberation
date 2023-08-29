@@ -31,11 +31,10 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         public bool IsPath;
 
         public SolarSystem(Vector2 position) 
-            : base(position, ContentRegistry.pixle, 1, 1, Color.White)
+            : base(position, ContentRegistry.pixle, 0.025f, 1, Color.White)
         {
             mStar = StarTypes.GenerateRandomStar(Vector2.Zero);
             TextureId = mStar.TextureId;
-            TextureScale = mStar.TextureScale * 0.001f;
             UpdateBoundBox();
         }
 
@@ -54,13 +53,15 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             HasPlayer = GetPlayer(out var _); 
         }
 
-        public override void OnPressAction()
+        public override void OnRightPressAction()
         {
             GameLayer.Camera.MoveToTarget(Position);
             if (mSystemLayer is null) return;
             if (!BoundedBox.Contains(GameLayer.Camera.Position)) return;
             GameLayer.LayerManager.AddLayer(GetLayer());
         }
+
+        public override void OnLeftPressAction() { }
 
         public void AddGameObject(GameObject gameObject)
         {
