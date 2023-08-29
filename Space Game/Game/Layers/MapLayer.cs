@@ -1,5 +1,4 @@
 ﻿using CelestialOdyssey.Game.Core.InputManagement;
-using CelestialOdyssey.Game.Core.Inventory;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.MapSystem;
 using CelestialOdyssey.Game.Core.Parallax;
@@ -8,9 +7,9 @@ using CelestialOdyssey.Game.GameObjects.SpaceShips;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
 
 namespace CelestialOdyssey.Game.Layers
 {
@@ -21,12 +20,15 @@ namespace CelestialOdyssey.Game.Layers
         [JsonProperty] private readonly Map map = new();
         [JsonProperty] public Player Player { get; set; } = new(Vector2.Zero);
 
-        public MapLayer() : base()
+        public MapLayer() : base(100)
         {
             map.Generate(this);
 
+            var startSystem = map.GetRandomSystem();
+            Camera.SetPosition(startSystem.Position);
+            startSystem.AddGameObject(Player);
+
             mParllaxManager = new();
-            mParllaxManager.Add(new(ContentRegistry.gameBackground.Name, 0.01f));
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax.Name, 0.1f));
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax1.Name, 0.15f));
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax2.Name, 0.2f));
@@ -37,6 +39,23 @@ namespace CelestialOdyssey.Game.Layers
         {
             base.Update(gameTime, inputState);
             mParllaxManager.Update(Camera.Movement, Camera.Zoom);
+            if (inputState.mMouseActionType == MouseActionType.RightClick)
+            {
+                foreach (var starget in GameObjects.OfType<SolarSystem>())
+                {
+                    if (!starget.IsHover) continue;
+                    map.GetActualSystem(out var system);
+                    map.GetPath(system, starget);
+                }
+            }
+            if (inputState.mActionList.Contains(ActionType.Map))
+            {
+                if (map.GetActualSystem(out var system))
+                {
+                    Camera.SetPosition(system.Position);
+                    LayerManager.AddLayer(system.GetLayer());
+                } 
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -50,8 +69,7 @@ namespace CelestialOdyssey.Game.Layers
 
         public override void Destroy() { }
 
-        public override void DrawOnWorld() { }
-
+        public override void DrawOnWorld() { map.DrawEdges(); }
 
     }
 }

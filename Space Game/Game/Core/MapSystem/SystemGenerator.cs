@@ -7,12 +7,12 @@ namespace CelestialOdyssey.Game.Core.MapSystem
 {
     public static class SystemGenerator
     {
-        public static void Generate(int[,] map, int scaling, GameLayer gameLayer, out List<SolarSystem> stars)
+        public static void Generate(int[,] map, int scaling, GameLayer gameLayer, out List<SolarSystem> systems)
         {
             int rows = map.GetLength(0);
             int columns = map.GetLength(1);
 
-            stars = new();
+            systems = new();
 
             // Separate x and y coordinates
             for (int x = 0; x < rows; x++)
@@ -23,8 +23,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                     SolarSystem star = new(GenerateStarPosition(x, y, scaling));
                     star.SetGameLayer(gameLayer);
                     star.AddToSpatialHashing();
-                    gameLayer.AddObject(star);
-                    stars.Add(star);
+                    systems.Add(star);
                 }
             }
         }

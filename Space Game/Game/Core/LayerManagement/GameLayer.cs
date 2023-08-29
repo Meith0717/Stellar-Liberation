@@ -15,24 +15,27 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
     [Serializable]
     public abstract class GameLayer : Layer
     {
-        [JsonProperty] public HashSet<GameObject> GameObjects { get; private set; }
-        
-        [JsonIgnore] public Vector2 WorldMousePosition { get; private set; }
-        [JsonIgnore] private Matrix ViewTransformationMatrix;
-        [JsonIgnore] public readonly Camera Camera;
-        [JsonIgnore] public readonly DebugSystem DebugSystem;
-        [JsonIgnore] public readonly FrustumCuller FrustumCuller;
+        [JsonProperty] public HashSet<GameObject> GameObjects { get; private set; } = new();
         [JsonProperty] public readonly SpatialHashing<GameObject> SpatialHashing;
 
-        internal GameLayer() 
+        [JsonIgnore] public Vector2 WorldMousePosition { get; private set; }
+        [JsonIgnore] private Matrix ViewTransformationMatrix;
+        [JsonIgnore] public readonly Camera Camera = new();
+        [JsonIgnore] public readonly DebugSystem DebugSystem = new();
+        [JsonIgnore] public readonly FrustumCuller FrustumCuller = new();
+
+        internal GameLayer(int spartialHashingCellSize) 
             : base(false)
         {
-            GameObjects = new();
-            SpatialHashing = new(100000);
-            Camera = new();
-            DebugSystem = new();
-            FrustumCuller = new();
+            SpatialHashing = new(spartialHashingCellSize);
         }
+        internal GameLayer(int spartialHashingCellSize, HashSet<GameObject> gameObjects)
+            : base(false)
+        {
+            GameObjects = gameObjects;
+            SpatialHashing = new(spartialHashingCellSize);
+        }
+
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
