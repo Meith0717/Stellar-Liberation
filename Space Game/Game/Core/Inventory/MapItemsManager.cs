@@ -1,4 +1,4 @@
-﻿using CelestialOdyssey.Game.Core.InputManagement;
+﻿using CelestialOdyssey.GameEngine.InputManagement;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
@@ -13,7 +13,7 @@ namespace CelestialOdyssey.Game.Core.Inventory
     {
         private List<Item> mItemsOnMap = new();
 
-        public void Update(GameTime gameTime, InputState inputState)
+        public void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine engine)
         {
 
             for (int i = 0; i < mItemsOnMap.Count; i++)
@@ -22,11 +22,11 @@ namespace CelestialOdyssey.Game.Core.Inventory
                 if (item == null) continue;
                 if (item.IsOnMap)
                 {
-                    item.Update(gameTime, inputState);
+                    item.Update(gameTime, inputState, engine);
                     continue;
                 }
                 mItemsOnMap.Remove(item);
-                item.RemoveFromSpatialHashing();
+                item.RemoveFromSpatialHashing(engine);
             }
         }
 

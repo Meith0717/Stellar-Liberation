@@ -1,5 +1,5 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
-using CelestialOdyssey.Game.Core.InputManagement;
+using CelestialOdyssey.GameEngine.InputManagement;
 using Microsoft.Xna.Framework;
 
 namespace CelestialOdyssey.Game.Core.UserInterface.Messages

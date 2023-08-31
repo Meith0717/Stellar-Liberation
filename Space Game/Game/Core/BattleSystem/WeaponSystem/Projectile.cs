@@ -1,6 +1,7 @@
-﻿using CelestialOdyssey.Game.Core.GameObjects;
-using CelestialOdyssey.Game.Core.InputManagement;
-using CelestialOdyssey.Game.GameObjects.Spacecrafts;
+﻿using CelestialOdyssey.Game.GameObjects.Spacecrafts;
+using CelestialOdyssey.GameEngine.GameObjects;
+using CelestialOdyssey.GameEngine.InputManagement;
+using CelestialOdyssey.GameEngine.Utility;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -22,22 +23,22 @@ namespace CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem
         {
             mVelocity = velocity;
             var variance = (int)(Math.Min(targetObj.Width, targetObj.Height) * 0.5f);
-            mVariance = Utility.Utility.GetRandomVector2(-variance, variance, -variance, variance);
+            mVariance = Utility.GetRandomVector2(-variance, variance, -variance, variance);
             mTargetObj = targetObj;
             mShieldDamage = shieldDamage;
             mHullDamage = hullDamage;
         }
 
-        public virtual void Update(Vector2 startPosition, GameTime gameTime, InputState inputState)
+        public virtual void Update(Vector2 startPosition, GameTime gameTime, InputState inputState, GameEngine.GameEngine engine)
         {
-            base.Update(gameTime, inputState);
+            base.Update(gameTime, inputState, engine);
             mStartPosition = startPosition;
             LiveTime -= gameTime.ElapsedGameTime.Milliseconds;
             CheckForHit();
         }
 
         [Obsolete]
-        public override void Update(GameTime gameTime, InputState inputState)
+        public override void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine engine)
         {
             throw new Exception();
         }

@@ -1,6 +1,7 @@
-﻿using CelestialOdyssey.Game.Core.InputManagement;
+﻿using CelestialOdyssey.Game;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.UserInterface;
+using CelestialOdyssey.GameEngine.InputManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -8,36 +9,36 @@ namespace CelestialOdyssey.Game.Layers
 {
     public class PauseLayer : Layer
     {
-        private MapLayer mGameLayer;
+        private GameState Game;
         private MyUiFrame mBackgroundLayer;
         private MyUiFrame mForegroundLayer;
         private MyUiSprite mContinueButton;
         private MyUiSprite mExitButton;
         private MyUiSprite mExitSaveButton;
 
-        public PauseLayer(MapLayer gameLayer)
-            : base(true)
+        public PauseLayer(Game1 app, GameState game)
+            : base(app)
         {
             UpdateBelow = false;
 
-            mGameLayer = gameLayer;
-            mBackgroundLayer = new(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height)
+            Game = game;
+            mBackgroundLayer = new(0, 0, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height)
             { Alpha = 0.95f, Color = Color.Black };
-            mContinueButton = new(GraphicsDevice.Viewport.Width / 2 - 256, GraphicsDevice.Viewport.Height / 2 - 64 - 100,
+            mContinueButton = new(mGraphicsDevice.Viewport.Width / 2 - 256, mGraphicsDevice.Viewport.Height / 2 - 64 - 100,
                 "buttonContinue")
             {
-                OnClickAction = LayerManager.PopLayer,
+                OnClickAction = mLayerManager.PopLayer,
                 MouseActionType = MouseActionType.LeftClickReleased,
                 Color = Color.OrangeRed
             };
-            mExitButton = new(GraphicsDevice.Viewport.Width / 2 - 256, GraphicsDevice.Viewport.Height / 2 - 64 + 100,
+            mExitButton = new(mGraphicsDevice.Viewport.Width / 2 - 256, mGraphicsDevice.Viewport.Height / 2 - 64 + 100,
                 "buttonExitgame")
             {
                 OnClickAction = ExitAndSave,
                 MouseActionType = MouseActionType.LeftClickReleased,
                 Color = Color.OrangeRed
             };
-            mExitSaveButton = new(GraphicsDevice.Viewport.Width / 2 - 256, GraphicsDevice.Viewport.Height / 2 - 64 + 200,
+            mExitSaveButton = new(mGraphicsDevice.Viewport.Width / 2 - 256, mGraphicsDevice.Viewport.Height / 2 - 64 + 200,
                 "buttonExitgame")
             {
                 OnClickAction = Exit,
@@ -62,10 +63,10 @@ namespace CelestialOdyssey.Game.Layers
 
         public override void OnResolutionChanged()
         {
-            mBackgroundLayer.OnResolutionChanged(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
-            mContinueButton.OnResolutionChanged(GraphicsDevice.Viewport.Width / 2 - 256, GraphicsDevice.Viewport.Height / 2 - 64 - 100);
-            mExitButton.OnResolutionChanged(GraphicsDevice.Viewport.Width / 2 - 256, GraphicsDevice.Viewport.Height / 2 - 64 + 100);
-            mExitSaveButton.OnResolutionChanged(GraphicsDevice.Viewport.Width / 2 - 256, GraphicsDevice.Viewport.Height / 2 - 64 + 200);
+            mBackgroundLayer.OnResolutionChanged(0, 0, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
+            mContinueButton.OnResolutionChanged(mGraphicsDevice.Viewport.Width / 2 - 256, mGraphicsDevice.Viewport.Height / 2 - 64 - 100);
+            mExitButton.OnResolutionChanged(mGraphicsDevice.Viewport.Width / 2 - 256, mGraphicsDevice.Viewport.Height / 2 - 64 + 100);
+            mExitSaveButton.OnResolutionChanged(mGraphicsDevice.Viewport.Width / 2 - 256, mGraphicsDevice.Viewport.Height / 2 - 64 + 200);
 
         }
 
@@ -76,18 +77,19 @@ namespace CelestialOdyssey.Game.Layers
             mExitSaveButton.Update(inputState);
             if (inputState.mActionList.Contains(ActionType.ESC))
             {
-                LayerManager.PopLayer();
+                mLayerManager.PopLayer();
             }
         }
 
         private void ExitAndSave()
         {
-            LayerManager.Exit();
+            mSerialize.SerializeObject(Game, "save");
+            mLayerManager.Exit();
         }
 
         private void Exit()
         {
-            LayerManager.Exit();
+            mLayerManager.Exit();
         }
     }
 }

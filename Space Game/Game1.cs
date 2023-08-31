@@ -1,13 +1,15 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
-using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
-using CelestialOdyssey.Game.Core.Persistance;
+using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.Layers;
 using CelestialOdyssey.GameEngine.Content_Management;
+using CelestialOdyssey.GameEngine.InputManagement;
+using CelestialOdyssey.GameEngine.Persistance;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace CelestialOdyssey
@@ -20,10 +22,8 @@ namespace CelestialOdyssey
 
         // Global Classes
         private SpriteBatch mSpriteBatch;
-        public LayerManager mLayerManager;
+        public readonly LayerManager mLayerManager;
         public readonly Serialize mSerialize;
-
-        public MapLayer mGameLayer;
 
         // Window attributes
         private int mWidth;
@@ -40,6 +40,7 @@ namespace CelestialOdyssey
 
             mInputManager = new InputManager();
             mGraphicsManager = new GraphicsDeviceManager(this);
+            mLayerManager = new LayerManager(this);
             mSerialize = new Serialize();
             //ToggleFullscreen();
         }
@@ -47,10 +48,8 @@ namespace CelestialOdyssey
         protected override void Initialize()
         {
             mGraphicsManager.ApplyChanges();
-            mLayerManager = new LayerManager(this, GraphicsDevice, mSerialize);
             base.Initialize();
-            mGameLayer = new();
-            mLayerManager.AddLayer(mGameLayer);
+            mLayerManager.AddLayer(new GameLayer(this));
             Mouse.SetCursor(MouseCursor.FromTexture2D(Content.Load<Texture2D>("textures/cursor"), 0, 0));
         }
 
@@ -107,19 +106,6 @@ namespace CelestialOdyssey
             InputState inputState = mInputManager.Update();
             if (inputState.mActionList.Contains(ActionType.ToggleFullscreen)) { ToggleFullscreen(); }
             mLayerManager.Update(gameTime, inputState);
-
-            // For Testing
-            if (inputState.mActionList.Contains(ActionType.Save))
-            {
-                mSerialize.SerializeObject(mGameLayer, "test");
-            }
-
-            if (inputState.mActionList.Contains(ActionType.Load))
-            {
-                mGameLayer = (MapLayer)mSerialize.PopulateObject(mGameLayer, "test");
-            }           
-            // For Testing
-
             base.Update(gameTime);
         }
 

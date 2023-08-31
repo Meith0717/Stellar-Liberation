@@ -1,7 +1,7 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
-using CelestialOdyssey.Game.Core.GameObjects;
-using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.GameEngine.Content_Management;
+using CelestialOdyssey.GameEngine.GameObjects;
+using CelestialOdyssey.GameEngine.InputManagement;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -32,16 +32,16 @@ namespace CelestialOdyssey.Game.Core.Inventory
             Mass = mass;
         }
 
-        public override void Update(GameTime gameTime, InputState inputState)
+        public override void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine engine)
         {
-            RemoveFromSpatialHashing();
-            base.Update(gameTime, inputState);
-            AddToSpatialHashing();
+            RemoveFromSpatialHashing(engine);
+            base.Update(gameTime, inputState, engine);
+            AddToSpatialHashing(engine);
         }
 
-        public override void Draw()
+        public override void Draw(GameEngine.GameEngine engine)
         {
-            base.Draw();
+            base.Draw(engine);
             TextureManager.Instance.DrawGameObject(this);
         }
 
