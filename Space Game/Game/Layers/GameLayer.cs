@@ -22,6 +22,7 @@ namespace CelestialOdyssey.Game.Layers
         {
             map.Generate(this);
             mMainShip = new(new(map.Width / 2, map.Height / 2));
+            Camera.SetPosition(mMainShip.Position);
 
             mParllaxManager = new();
             mParllaxManager.Add(new(ContentRegistry.gameBackground.Name, 0.05f));
