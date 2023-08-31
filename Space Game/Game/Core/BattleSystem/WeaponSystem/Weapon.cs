@@ -1,9 +1,10 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem.Projectiles;
+using CelestialOdyssey.Game.Core.InputManagement;
+using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using CelestialOdyssey.Game.GameObjects.SpaceShips;
 using CelestialOdyssey.GameEngine.Content_Management;
-using CelestialOdyssey.GameEngine.InputManagement;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
@@ -60,7 +61,7 @@ namespace CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem
             SoundManager.Instance.PlaySound(mSound, 1f);
         }
 
-        public void Update(SpaceShip ship, GameTime gameTime, InputState inputState, GameEngine.GameEngine engine)
+        public void Update(SpaceShip ship, GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
         {
             float cosTheta = (float)Math.Cos(ship.Rotation);
             float sinTheta = (float)Math.Sin(ship.Rotation);
@@ -80,12 +81,12 @@ namespace CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem
                     deleteList.Add(projectile);
                     continue;
                 }
-                projectile.Update(mPosition, gameTime, inputState, engine);
+                projectile.Update(mPosition, gameTime, inputState, sceneLayer);
             }
 
             foreach (var projectile in deleteList)
             {
-                projectile.RemoveFromSpatialHashing(engine);
+                projectile.RemoveFromSpatialHashing(sceneLayer);
                 mProjecvtiles.Remove(projectile);
             }
         }

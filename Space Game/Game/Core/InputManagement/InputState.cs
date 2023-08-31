@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
-namespace CelestialOdyssey.GameEngine.InputManagement
+namespace CelestialOdyssey.Game.Core.InputManagement
 {
     public enum ActionType
     {

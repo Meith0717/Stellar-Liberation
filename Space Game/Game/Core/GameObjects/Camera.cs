@@ -5,12 +5,12 @@
  *  All rights reserved.
  */
 
-using CelestialOdyssey.GameEngine.InputManagement;
-using CelestialOdyssey.GameEngine.Utility;
+using CelestialOdyssey.Game.Core.InputManagement;
+using CelestialOdyssey.Game.Core.Utility;
 using Microsoft.Xna.Framework;
 using System;
 
-namespace CelestialOdyssey.GameEngine.GameObjects
+namespace CelestialOdyssey.Game.Core.GameObjects
 {
     /// <summary>
     /// Represents a camera used for viewing and manipulating the game world.
@@ -95,10 +95,10 @@ namespace CelestialOdyssey.GameEngine.GameObjects
         {
             var zoom = 0f;
             if (inputState.mActionList.Contains(ActionType.CameraZoomIn))
-            { 
-                zoom += 5f * inputState.mGamePadValues.mRightThumbSticks.Y == 0 ? 10 : inputState.mGamePadValues.mRightThumbSticks.Y; 
+            {
+                zoom += 5f * inputState.mGamePadValues.mRightThumbSticks.Y == 0 ? 10 : inputState.mGamePadValues.mRightThumbSticks.Y;
             }
-            if (inputState.mActionList.Contains(ActionType.CameraZoomOut)) 
+            if (inputState.mActionList.Contains(ActionType.CameraZoomOut))
             {
                 zoom += 5f * inputState.mGamePadValues.mRightThumbSticks.Y == 0 ? -10 : inputState.mGamePadValues.mRightThumbSticks.Y;
             }
@@ -145,7 +145,7 @@ namespace CelestialOdyssey.GameEngine.GameObjects
         {
             Movement = Vector2.Zero;
             AdjustZoomByMouse(gameTime, inputState);
-            //MoveCameraByMouse(inputState, screenMousePosition, ViewTransformation);
+            MoveCameraByMouse(inputState, screenMousePosition, ViewTransformation);
             MovingAnimation();
             ZoomAnimation();
             Movement = Position - mLastPosition;

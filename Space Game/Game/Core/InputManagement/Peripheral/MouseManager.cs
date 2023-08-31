@@ -1,8 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CelestialOdyssey.Game.Core.InputManagement;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
-namespace CelestialOdyssey.GameEngine.InputManagement.Peripheral
+namespace CelestialOdyssey.Game.Core.InputManagement.Peripheral
 {
     internal class MouseManager
     {

@@ -1,10 +1,10 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.Core.Persistance;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.Layers;
 using CelestialOdyssey.GameEngine.Content_Management;
-using CelestialOdyssey.GameEngine.InputManagement;
-using CelestialOdyssey.GameEngine.Persistance;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -22,7 +22,7 @@ namespace CelestialOdyssey
 
         // Global Classes
         private SpriteBatch mSpriteBatch;
-        public readonly LayerManager mLayerManager;
+        public LayerManager mLayerManager;
         public readonly Serialize mSerialize;
 
         // Window attributes
@@ -40,7 +40,6 @@ namespace CelestialOdyssey
 
             mInputManager = new InputManager();
             mGraphicsManager = new GraphicsDeviceManager(this);
-            mLayerManager = new LayerManager(this);
             mSerialize = new Serialize();
             //ToggleFullscreen();
         }
@@ -49,7 +48,8 @@ namespace CelestialOdyssey
         {
             mGraphicsManager.ApplyChanges();
             base.Initialize();
-            mLayerManager.AddLayer(new GameLayer(this));
+            mLayerManager = new LayerManager(this, GraphicsDevice, mSerialize);
+            mLayerManager.AddLayer(new GameLayer());
             Mouse.SetCursor(MouseCursor.FromTexture2D(Content.Load<Texture2D>("textures/cursor"), 0, 0));
         }
 

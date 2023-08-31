@@ -1,8 +1,9 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Game.Core.InputManagement;
+using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.Core.Utility;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using CelestialOdyssey.GameEngine.Content_Management;
-using CelestialOdyssey.GameEngine.InputManagement;
-using CelestialOdyssey.GameEngine.Utility;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -18,17 +19,17 @@ namespace CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem.Projectiles
             Rotation = Geometry.DegToRad(Geometry.AngleDelta(Geometry.RadToDeg(Rotation), Geometry.RadToDeg(angleToTarget)));
         }
 
-        public override void Update(Vector2 startPosition, GameTime gameTime, InputState inputState, GameEngine.GameEngine engine)
+        public override void Update(Vector2 startPosition, GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
         {
-            RemoveFromSpatialHashing(engine);
+            RemoveFromSpatialHashing(sceneLayer);
             Position += Geometry.CalculateDirectionVector(Rotation) * mVelocity * gameTime.ElapsedGameTime.Milliseconds;
-            base.Update(startPosition, gameTime, inputState, engine);
-            AddToSpatialHashing(engine);
+            base.Update(startPosition, gameTime, inputState, sceneLayer);
+            AddToSpatialHashing(sceneLayer);
         }
 
-        public override void Draw(GameEngine.GameEngine engine)
+        public override void Draw(SceneLayer sceneLayer)
         {
-            base.Draw(engine);
+            base.Draw(sceneLayer);
             Color c = TextureColor;
             for (int i = 1; i <= 6; i++)
             {

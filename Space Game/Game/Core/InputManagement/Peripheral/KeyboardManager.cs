@@ -1,9 +1,10 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using CelestialOdyssey.Game.Core.InputManagement;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CelestialOdyssey.GameEngine.InputManagement.Peripheral
+namespace CelestialOdyssey.Game.Core.InputManagement.Peripheral
 {
     public class KeyboardManager
     {

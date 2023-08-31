@@ -1,13 +1,14 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Game.Core.GameObjects;
+using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.Core.Utility;
 using CelestialOdyssey.GameEngine.Content_Management;
-using CelestialOdyssey.GameEngine.GameObjects;
-using CelestialOdyssey.GameEngine.Utility;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
 
 namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
-{ 
+{
     [Serializable]
     public class Planet : GameObject
     {
@@ -33,9 +34,9 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             UpdateBoundBox();
         }
 
-        public override void Draw(GameEngine.GameEngine engine)
+        public override void Draw(SceneLayer sceneLayer)
         {
-            base.Draw(engine);
+            base.Draw(sceneLayer);
             TextureManager.Instance.Draw(ContentRegistry.planetShadow, Position, TextureOffset, TextureScale, mShadowRotation, TextureDepth + 1, Color.White);
             TextureManager.Instance.DrawGameObject(this);
         }

@@ -1,7 +1,7 @@
 using CelestialOdyssey.Core.GameEngine;
 using CelestialOdyssey.Core.GameEngine.Content_Management;
-using CelestialOdyssey.GameEngine.InputManagement;
-using CelestialOdyssey.GameEngine.Persistance;
+using CelestialOdyssey.Game.Core.InputManagement;
+using CelestialOdyssey.Game.Core.Persistance;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
@@ -12,20 +12,22 @@ namespace CelestialOdyssey.Game.Core.LayerManagement;
 [Serializable]
 public abstract class Layer
 {
-    protected Game1 mApp;
+    protected Game1 mGame1;
     protected LayerManager mLayerManager;
     protected GraphicsDevice mGraphicsDevice;
-    public Serialize mSerialize;
+    protected Serialize mSerialize;
 
     [JsonProperty]
-    public bool UpdateBelow { get; set; }
+    public bool UpdateBelow { get; private set; }
 
-    public Layer(Game1 app)
+    protected Layer(bool updateBelow) { UpdateBelow = updateBelow; }
+
+    public void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
     {
-        mApp = app;
-        mLayerManager = app.mLayerManager;
-        mGraphicsDevice = app.GraphicsDevice;
-        mSerialize = app.mSerialize;
+        mGame1 = game1;
+        mLayerManager = layerManager;
+        mGraphicsDevice = graphicsDevice;
+        mSerialize = serialize;
     }
 
     public abstract void Update(GameTime gameTime, InputState inputState);
@@ -35,4 +37,5 @@ public abstract class Layer
     public abstract void Destroy();
 
     public abstract void OnResolutionChanged();
+
 }

@@ -1,5 +1,5 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
-using CelestialOdyssey.GameEngine.InputManagement;
+using CelestialOdyssey.Game.Core.InputManagement;
 using System.Collections.Generic;
 
 

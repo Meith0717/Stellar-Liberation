@@ -5,12 +5,13 @@
  *  All rights reserved.
  */
 
-using CelestialOdyssey.GameEngine.InputManagement;
+using CelestialOdyssey.Game.Core.InputManagement;
+using CelestialOdyssey.Game.Core.LayerManagement;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
 
-namespace CelestialOdyssey.GameEngine.GameObjects
+namespace CelestialOdyssey.Game.Core.GameObjects
 {
     /// <summary>
     /// Abstract class representing an interactive game object derived from the GameObject class.
@@ -18,7 +19,7 @@ namespace CelestialOdyssey.GameEngine.GameObjects
     [Serializable]
     public abstract class InteractiveObject : GameObject
     {
-        internal InteractiveObject(Vector2 position, string textureId, float textureScale, int textureDepth) 
+        internal InteractiveObject(Vector2 position, string textureId, float textureScale, int textureDepth)
             : base(position, textureId, textureScale, textureDepth) { }
 
         /// <summary>
@@ -42,12 +43,12 @@ namespace CelestialOdyssey.GameEngine.GameObjects
         /// </summary>
         /// <param name="gameTime">The game time information.</param>
         /// <param name="inputState">The input state of the game.</param>
-        /// <param name="gameEngine">The game engine instance.</param>
-        public override void Update(GameTime gameTime, InputState inputState, GameEngine gameEngine)
+        /// <param name="sceneLayer">The game engine instance.</param>
+        public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
         {
-            base.Update(gameTime, inputState, gameEngine);
+            base.Update(gameTime, inputState, sceneLayer);
 
-            IsHover = BoundedBox.Contains(gameEngine.WorldMousePosition);
+            IsHover = BoundedBox.Contains(sceneLayer.WorldMousePosition);
             IsPressed = IsHover && inputState.mMouseActionType == MouseActionType.LeftClickReleased;
 
             if (IsPressed && OnPressAction is not null) OnPressAction();

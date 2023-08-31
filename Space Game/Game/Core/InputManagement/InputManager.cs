@@ -5,11 +5,11 @@
     https://meith0717.itch.io/rache-der-reti
 */
 
-using CelestialOdyssey.GameEngine.InputManagement.Peripheral;
+using CelestialOdyssey.Game.Core.InputManagement.Peripheral;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
-namespace CelestialOdyssey.GameEngine.InputManagement
+namespace CelestialOdyssey.Game.Core.InputManagement
 {
     public class InputManager
     {

@@ -1,11 +1,9 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Game.Core.InputManagement;
+using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.Core.Utility;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
-using CelestialOdyssey.GameEngine.Content_Management;
-using CelestialOdyssey.GameEngine.GameObjects;
-using CelestialOdyssey.GameEngine.InputManagement;
-using CelestialOdyssey.GameEngine.Utility;
 using Microsoft.Xna.Framework;
-using System;
 
 namespace CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem.Projectiles
 {
@@ -14,20 +12,20 @@ namespace CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem.Projectiles
         public Torpedo(Vector2 position, SpaceShip targetObj, string texture, int shieldDamage, int hullDamage) 
             : base(position, targetObj, texture, 0.25f, shieldDamage, hullDamage, 2.5f) { }
 
-        public override void Update(Vector2 startPosition, GameTime gameTime, InputState inputState, GameEngine.GameEngine engine)
+        public override void Update(Vector2 startPosition, GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
         {
-            RemoveFromSpatialHashing(engine);
+            RemoveFromSpatialHashing(sceneLayer);
             var angleToTarget = Geometry.AngleBetweenVectors(Position, mTargetObj.Position + mVariance);
             Rotation += Geometry.DegToRad(Geometry.AngleDelta(Geometry.RadToDeg(Rotation), Geometry.RadToDeg(angleToTarget))) * 0.1f;
             Position += Geometry.CalculateDirectionVector(Rotation) * mVelocity * gameTime.ElapsedGameTime.Milliseconds;
             LiveTime -= gameTime.ElapsedGameTime.Milliseconds;
-            base.Update(startPosition, gameTime, inputState, engine);
-            AddToSpatialHashing(engine);
+            base.Update(startPosition, gameTime, inputState, sceneLayer);
+            AddToSpatialHashing(sceneLayer);
         }
 
-        public override void Draw(GameEngine.GameEngine engine)
+        public override void Draw(SceneLayer sceneLayer)
         {
-            base.Draw(engine);
+            base.Draw(sceneLayer);
             TextureManager.Instance.DrawGameObject(this);
         }
     }

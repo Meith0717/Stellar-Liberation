@@ -1,7 +1,8 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
-using CelestialOdyssey.GameEngine.GameObjects;
-using CelestialOdyssey.GameEngine.InputManagement;
-using CelestialOdyssey.GameEngine.Utility;
+using CelestialOdyssey.Game.Core.GameObjects;
+using CelestialOdyssey.Game.Core.InputManagement;
+using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.Core.Utility;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
             mSecondaryWeaponCoolDown = MaxSecondaryWeaponCoolDown;
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameEngine.GameEngine gameEngine)
+        public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
         {
             mSecondaryWeaponCoolDown = (mSecondaryWeaponCoolDown > MaxSecondaryWeaponCoolDown) ?
                 MaxSecondaryWeaponCoolDown : mSecondaryWeaponCoolDown + gameTime.ElapsedGameTime.Milliseconds;
@@ -46,16 +47,16 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
             mInitialWeaponCoolDown = (mInitialWeaponCoolDown > MaxInitialWeaponCoolDown) ?
                 MaxInitialWeaponCoolDown : mInitialWeaponCoolDown + gameTime.ElapsedGameTime.Milliseconds;
 
-            RemoveFromSpatialHashing(gameEngine);
+            RemoveFromSpatialHashing(sceneLayer);
             Position += Geometry.CalculateDirectionVector(Rotation) * Velocity * gameTime.ElapsedGameTime.Milliseconds;
-            TargetsInRadius(gameEngine, out mTargets);
-            base.Update(gameTime, inputState, gameEngine);
-            AddToSpatialHashing(gameEngine);
+            TargetsInRadius(sceneLayer, out mTargets);
+            base.Update(gameTime, inputState, sceneLayer);
+            AddToSpatialHashing(sceneLayer);
         }
 
-        private bool TargetsInRadius(GameEngine.GameEngine gameEngine, out List<SpaceShip> targets)
+        private bool TargetsInRadius(SceneLayer sceneLayer, out List<SpaceShip> targets)
         {
-            targets = gameEngine.GetSortedObjectsInRadius<SpaceShip>(Position, 10000);
+            targets = sceneLayer.GetSortedObjectsInRadius<SpaceShip>(Position, 10000);
             targets.Remove(this);
             if (targets.Count == 0) return false;
             return true;

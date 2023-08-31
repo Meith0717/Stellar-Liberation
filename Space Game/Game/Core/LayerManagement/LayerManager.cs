@@ -1,4 +1,4 @@
-using CelestialOdyssey.GameEngine.InputManagement;
+using CelestialOdyssey.Game.Core.InputManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -8,19 +8,24 @@ namespace CelestialOdyssey.Game.Core.LayerManagement;
 
 public class LayerManager
 {
-    private readonly Game1 mGame;
+    private readonly Game1 mGame1;
+    private readonly GraphicsDevice mGraphicsDevice;
+    private readonly Persistance.Serialize mSerialize;
 
     // layer stack
     private readonly LinkedList<Layer> mLayerStack = new LinkedList<Layer>();
 
-    public LayerManager(Game1 game)
+    public LayerManager(Game1 game1, GraphicsDevice graphicsDevice, Persistance.Serialize serialize)
     {
-        mGame = game;
+        mGame1 = game1;
+        mGraphicsDevice = graphicsDevice;
+        mSerialize = serialize;
     }
 
     // add and remove layers from stack
     public void AddLayer(Layer layer)
     {
+        layer.Initialize(mGame1, this, mGraphicsDevice, mSerialize);
         mLayerStack.AddLast(layer);
     }
 
@@ -59,7 +64,7 @@ public class LayerManager
         {
             layer.Destroy();
         }
-        mGame.Exit();
+        mGame1.Exit();
     }
 
     // fullscreen stuff

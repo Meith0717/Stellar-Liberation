@@ -1,16 +1,15 @@
 ﻿using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
-using CelestialOdyssey.GameEngine.Content_Management;
 using System.Collections.Generic;
 using MathNet.Numerics.Distributions;
-using CelestialOdyssey.GameEngine.Utility;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types;
 using Microsoft.Xna.Framework;
+using CelestialOdyssey.Game.Core.LayerManagement;
 
 namespace CelestialOdyssey.Game.Core.MapSystem
 {
     public static class PlanetGenerator
     {
-        public static void Generate(List<Star> stars, GameEngine.GameEngine gameEngine ,out List<Planet> planets)
+        public static void Generate(List<Star> stars, SceneLayer sceneLayer ,out List<Planet> planets)
         {
             var triangularDistribution = new Triangular(1, 10, 3);
             planets = new();
@@ -21,7 +20,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                 {
                     var oribitRadius = (int)(star.Width * star.TextureScale) + (20000 * i);
                     Planet planet = GetPlanet(star.Position, oribitRadius, i);
-                    planet.AddToSpatialHashing(gameEngine);
+                    planet.AddToSpatialHashing(sceneLayer);
                     planets.Add(planet);
                 }  
             }
@@ -36,15 +35,15 @@ namespace CelestialOdyssey.Game.Core.MapSystem
         {
             return orbitNumber switch
             {
-                1 => Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Warm(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
-                2 => Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Warm(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
-                3 => Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Tessatial(orbitCenter, oribitRadius), new PlanetTypes.Dry(orbitCenter, oribitRadius) }),
-                4 => Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Dry(orbitCenter, oribitRadius), new PlanetTypes.Tessatial(orbitCenter, oribitRadius) }),
-                5 => Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Tessatial(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
-                6 => Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Stone(orbitCenter, oribitRadius), new PlanetTypes.Gas(orbitCenter, oribitRadius) }),
+                1 => Utility.Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Warm(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
+                2 => Utility.Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Warm(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
+                3 => Utility.Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Tessatial(orbitCenter, oribitRadius), new PlanetTypes.Dry(orbitCenter, oribitRadius) }),
+                4 => Utility.Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Dry(orbitCenter, oribitRadius), new PlanetTypes.Tessatial(orbitCenter, oribitRadius) }),
+                5 => Utility.Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Tessatial(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
+                6 => Utility.Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Stone(orbitCenter, oribitRadius), new PlanetTypes.Gas(orbitCenter, oribitRadius) }),
                 7 => new PlanetTypes.Gas(orbitCenter, oribitRadius),
                 8 => new PlanetTypes.Gas(orbitCenter, oribitRadius),
-                9 => Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Cold(orbitCenter, oribitRadius), new PlanetTypes.Gas(orbitCenter, oribitRadius) }),
+                9 => Utility.Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Cold(orbitCenter, oribitRadius), new PlanetTypes.Gas(orbitCenter, oribitRadius) }),
                 10 => new PlanetTypes.Cold(orbitCenter, oribitRadius),
                 _ => null
             };

@@ -1,9 +1,7 @@
-﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
-using CelestialOdyssey.Core.GameEngine.Position_Management;
-using CelestialOdyssey.Game.Core.UserInterface.Messages;
-using CelestialOdyssey.GameEngine.GameObjects;
-using CelestialOdyssey.GameEngine.InputManagement;
-using CelestialOdyssey.GameEngine.Utility;
+﻿using CelestialOdyssey.Core.GameEngine.Position_Management;
+using CelestialOdyssey.Game.Core.GameObjects;
+using CelestialOdyssey.Game.Core.InputManagement;
+using CelestialOdyssey.Game.Core.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
@@ -11,50 +9,39 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CelestialOdyssey.GameEngine
+namespace CelestialOdyssey.Game.Core.LayerManagement
 {
-    public class GameEngine
+    public abstract class SceneLayer : Layer
     {
-        public float ActiveGameTime { get; private set; } = 0;
-        public SpatialHashing<GameObject> SpatialHashing { get; private set; } = new(1000000);
-        public FrustumCuller FrustumCuller { get; private set; } = new();
-        public Camera Camera { get; private set; } = new();
-        public DebugSystem DebugSystem { get; private set; } = new();
-        public Vector2 WorldMousePosition { get; private set; } = Vector2.Zero;
-        public Vector2 ViewMousePosition { get; private set; } = Vector2.Zero;
-        public Matrix ViewTransformationMatrix { get; private set; }
+        public Vector2 WorldMousePosition { get; private set; }
+        
+        private Matrix mViewTransformationMatrix;
+        public readonly SpatialHashing<GameObject> SpatialHashing;
+        public readonly FrustumCuller FrustumCuller;
+        public readonly Camera Camera;
+        public readonly DebugSystem DebugSystem;
 
-        public void UpdateEngine(GameTime time, InputState input, GraphicsDevice graphicsDevice)
+        public SceneLayer(int spatialHashingCellSize) : base(false) 
         {
-            int screenWidth = graphicsDevice.Viewport.Width;
-            int screenHeight = graphicsDevice.Viewport.Height;
-
-            DebugSystem.Update(time, input);
-
-            ActiveGameTime += time.ElapsedGameTime.Milliseconds;
-            ViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera.Position, Camera.Zoom, screenWidth, screenHeight);
-            ViewMousePosition = input.mMousePosition;
-            WorldMousePosition = Transformations.ScreenToWorld(ViewTransformationMatrix, ViewMousePosition);
-
-            Camera.Update(time, input, ViewMousePosition, ViewTransformationMatrix);
-            FrustumCuller.Update(screenWidth, screenHeight, ViewTransformationMatrix);
-            //System.Diagnostics.Debug.WriteLine(SpatialHashing.ToString());
+            SpatialHashing = new(spatialHashingCellSize);
+            FrustumCuller = new();
+            Camera = new();
+            DebugSystem = new();
         }
 
-        public void UpdateGameObject<T>(GameTime time, InputState input, T obj) where T : GameObject
+        public override void Update(GameTime gameTime, InputState inputState)
         {
-            obj.Update(time, input, this);
+            int screenWidth = mGraphicsDevice.Viewport.Width;
+            int screenHeight = mGraphicsDevice.Viewport.Height;
+
+            DebugSystem.Update(gameTime, inputState);
+            mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera.Position, Camera.Zoom, screenWidth, screenHeight);
+            WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, inputState.mMousePosition);
+            Camera.Update(gameTime, inputState, inputState.mMousePosition, mViewTransformationMatrix);
+            FrustumCuller.Update(screenWidth, screenHeight, mViewTransformationMatrix);
         }
 
-        public void UpdateGameObjects<T>(GameTime time, InputState input, List<T> objects) where T : GameObject
-        {
-            foreach (T obj in objects)
-            {
-                obj.Update(time, input, this);
-            }
-        }
-
-        public void BeginWorldDrawing(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             DebugSystem.UpdateFrameCounting();
 
@@ -62,18 +49,14 @@ namespace CelestialOdyssey.GameEngine
             DebugSystem.ShowRenderInfo(Camera.Zoom, Camera.Position);
             spriteBatch.End();
 
-            spriteBatch.Begin(
-                SpriteSortMode.FrontToBack,
-                transformMatrix: ViewTransformationMatrix,
-                samplerState: SamplerState.PointClamp
-            );
-        }
-
-        public void EndWorldDrawing(SpriteBatch spriteBatch)
-        {
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: mViewTransformationMatrix, samplerState: SamplerState.PointClamp );
             DebugSystem.TestSpatialHashing(this);
+            RenderWorldObjectsOnScreen();
+            DrawOnScene();
             spriteBatch.End();
         }
+
+        public abstract void DrawOnScene();
 
         public List<T> GetObjectsInRadius<T>(Vector2 position, int radius) where T : GameObject
         {
@@ -127,10 +110,18 @@ namespace CelestialOdyssey.GameEngine
                     var objs = SpatialHashing.GetObjectsInBucket(x, y);
                     foreach (var obj in objs)
                     {
-                        Rendering.DrawGameObject(this, obj);
+                        if (obj.BoundedBox.Radius == 0) throw new System.Exception($"BoundedBox Radius is Zero {obj}");
+                        if (this.FrustumCuller.CircleOnWorldView(obj.BoundedBox))
+                        {
+                            obj.Draw(this);
+                        }
                     }
                 }
             }
         }
+
+        public override void Destroy() { }
+
+        public override void OnResolutionChanged() { }
     }
 }

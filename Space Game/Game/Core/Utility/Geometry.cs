@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
 
-namespace CelestialOdyssey.GameEngine.Utility
+namespace CelestialOdyssey.Game.Core.Utility
 {
     /// <summary>
     /// Provides geometric calculations and operations.
@@ -40,7 +40,7 @@ namespace CelestialOdyssey.GameEngine.Utility
             Vector2 directionVector = target - position;
             float rotation = (float)MathF.Acos(Vector2.Dot(new Vector2(1, 0), directionVector) / directionVector.Length());
             if (directionVector.Y < 0) { rotation = 2 * MathF.PI - MathF.Abs(rotation); }
-            return (rotation == float.NaN) ? 0 : rotation;
+            return rotation == float.NaN ? 0 : rotation;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace CelestialOdyssey.GameEngine.Utility
 
         public static float DegToRad(float deg)
         {
-            return deg * ((2 * MathF.PI) / 360);
+            return deg * (2 * MathF.PI / 360);
         }
 
         public static float AngleDelta(float degCurrent, float degTarget)

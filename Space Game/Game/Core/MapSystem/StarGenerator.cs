@@ -1,7 +1,6 @@
-﻿using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
+﻿using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types;
-using CelestialOdyssey.GameEngine.Content_Management;
-using CelestialOdyssey.GameEngine.Utility;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
@@ -9,7 +8,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
 {
     public static class StarGenerator
     {
-        public static void Generate(int[,] map, int scaling, GameEngine.GameEngine gameEngine, out List<Star> stars)
+        public static void Generate(int[,] map, int scaling, SceneLayer sceneLayer, out List<Star> stars)
         {
             stars = new();
 
@@ -23,7 +22,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                 {
                     if (map[x, y] == 0) continue;
                     Star star = StarTypes.GenerateRandomStar(GenerateStarPosition(x, y, scaling));
-                    star.AddToSpatialHashing(gameEngine);
+                    star.AddToSpatialHashing(sceneLayer);
                     stars.Add(star);
                 }
             }
@@ -33,7 +32,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
         {
             var sectorBegin = new Vector2(x, y) * scaling;
             var sectorEnd = sectorBegin + new Vector2(scaling, scaling);
-            return Utility.GetRandomVector2(sectorBegin, sectorEnd);
+            return Utility.Utility.GetRandomVector2(sectorBegin, sectorEnd);
         }
     }
 }

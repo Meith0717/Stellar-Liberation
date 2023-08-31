@@ -1,5 +1,5 @@
-﻿using CelestialOdyssey.GameEngine.Content_Management;
-using CelestialOdyssey.GameEngine.Utility;
+﻿using CelestialOdyssey.Game.Core.Utility;
+using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;

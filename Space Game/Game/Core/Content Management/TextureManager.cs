@@ -6,7 +6,7 @@
  */
 
 using CelestialOdyssey.Game.Core;
-using CelestialOdyssey.GameEngine.GameObjects;
+using CelestialOdyssey.Game.Core.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -111,7 +111,7 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
         }
         public void DrawGameObject(GameObject obj, bool isHover)
         {
-            var color = isHover ? Globals.HoverColor : obj.TextureColor;
+            var color = isHover ? Color.Gray : obj.TextureColor;
             SpriteBatch.Draw(GetTexture(obj.TextureId), obj.Position, null, color, obj.Rotation, obj.TextureOffset,
                 obj.TextureScale, SpriteEffects.None, GetDepth(obj.TextureDepth));
         }

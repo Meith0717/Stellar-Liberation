@@ -1,18 +1,19 @@
-﻿ /*
- *  GameObject.cs
- *
- *  Copyright (c) 2023 Thierry Meiers
- *  All rights reserved.
- */
+﻿/*
+*  GameObject.cs
+*
+*  Copyright (c) 2023 Thierry Meiers
+*  All rights reserved.
+*/
 
 using CelestialOdyssey.Core.GameEngine.Content_Management;
-using CelestialOdyssey.GameEngine.InputManagement;
+using CelestialOdyssey.Game.Core.InputManagement;
+using CelestialOdyssey.Game.Core.LayerManagement;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
 using System;
 
-namespace CelestialOdyssey.GameEngine.GameObjects
+namespace CelestialOdyssey.Game.Core.GameObjects
 {
     /// <summary>
     /// Abstract class representing a game object in the game engine.
@@ -55,7 +56,7 @@ namespace CelestialOdyssey.GameEngine.GameObjects
         /// </summary>
         [JsonProperty]
         public int Height { get; private set; }
-        
+
         /// <summary>
         /// Gets or sets the offset of the texture applied to the game object.
         /// </summary>
@@ -90,15 +91,15 @@ namespace CelestialOdyssey.GameEngine.GameObjects
         private bool mWasRemovedFromSpatialHashing = true;
 
 
-        internal GameObject(Vector2 position, string textureId, float textureScale, int textureDepth) 
+        internal GameObject(Vector2 position, string textureId, float textureScale, int textureDepth)
         {
             Position = position;
-            TextureId = textureId; 
+            TextureId = textureId;
             TextureScale = textureScale;
             TextureDepth = textureDepth;
-            Width = (int)(TextureManager.Instance.GetTexture(textureId).Width);
-            Height = (int)(TextureManager.Instance.GetTexture(textureId).Height);
-            TextureOffset = new(Width/2, Height/2);
+            Width = TextureManager.Instance.GetTexture(textureId).Width;
+            Height = TextureManager.Instance.GetTexture(textureId).Height;
+            TextureOffset = new(Width / 2, Height / 2);
             UpdateBoundBox();
         }
 
@@ -113,42 +114,42 @@ namespace CelestialOdyssey.GameEngine.GameObjects
         /// </summary>
         /// <param name="gameTime">The game time information.</param>
         /// <param name="inputState">The input state of the game.</param>
-        /// <param name="engine">The game engine instance.</param>
-        public virtual void Update(GameTime gameTime, InputState inputState, GameEngine engine)
+        /// <param name="sceneLayer">The game engine instance.</param>
+        public virtual void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
         {
-            engine.DebugSystem.UpdateObjectCount += 1;
+            sceneLayer.DebugSystem.UpdateObjectCount += 1;
             UpdateBoundBox();
         }
 
         /// <summary>
         /// Adds the game object to the spatial hashing system of the game engine if UpdatePosition is set true.
         /// </summary>
-        /// <param name="engine">The game engine instance.</param>
-        internal void AddToSpatialHashing(GameEngine engine)
+        /// <param name="sceneLayer">The game engine instance.</param>
+        internal void AddToSpatialHashing(SceneLayer sceneLayer)
         {
             if (!mWasRemovedFromSpatialHashing) return;
-            engine.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
+            sceneLayer.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
             mWasRemovedFromSpatialHashing = false;
         }
 
         /// <summary>
         /// Removes the game object from the spatial hashing system of the game engine if UpdatePosition is set true.
         /// </summary>
-        /// <param name="engine">The game engine instance.</param>
-        internal void RemoveFromSpatialHashing(GameEngine engine)
+        /// <param name="sceneLayer">The game engine instance.</param>
+        internal void RemoveFromSpatialHashing(SceneLayer sceneLayer)
         {
             mWasRemovedFromSpatialHashing = true;
-            engine.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
+            sceneLayer.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
         }
 
         /// <summary>
         /// DrawnObjectCount is incrememted and the BoundBox is drawed
         /// </summary>
-        /// <param name="engine">The game engine instance.</param>
-        public virtual void Draw(GameEngine engine)
+        /// <param name="sceneLayer">The game engine instance.</param>
+        public virtual void Draw(SceneLayer sceneLayer)
         {
-            engine.DebugSystem.DrawnObjectCount += 1;
-            engine.DebugSystem.DrawBoundBox(BoundedBox, engine);
+            sceneLayer.DebugSystem.DrawnObjectCount += 1;
+            sceneLayer.DebugSystem.DrawBoundBox(BoundedBox, sceneLayer);
         }
     }
 }
