@@ -4,11 +4,13 @@ using CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.Inventory;
 using CelestialOdyssey.Game.Core.Utility;
+using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 {
@@ -20,6 +22,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
         [JsonProperty] private Weapon WeaponSlot2 = new PhotonPhaser(new(-200, 0));
         [JsonProperty] private Weapon WeaponSlot3 = new PhotonTorpedo(new(210, 50));
         [JsonProperty] private Weapon WeaponSlot4 = new PhotonTorpedo(new(210, -50));
+        [JsonProperty] private List<SolarSystem> Targets;
 
         public Player(Vector2 position) : base(position, ContentRegistry.ship.Name, 1) { Inventory = new(16); }
 

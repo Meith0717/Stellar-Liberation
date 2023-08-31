@@ -16,7 +16,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
     {
         [JsonProperty] private int mSectorCountWidth = 20;
         [JsonProperty] private int mSectorCountHeight = 20;
-        [JsonProperty] private int mSectorSize = 150;
+        [JsonProperty] private int mSectorSize = 200;
 
         [JsonProperty] public UndirectedGraph<SolarSystem> mGraphMap = new();
 

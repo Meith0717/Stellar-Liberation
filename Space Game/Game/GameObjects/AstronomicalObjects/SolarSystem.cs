@@ -44,7 +44,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             TextureManager.Instance.DrawGameObject(this, IsHover);
             TextureManager.Instance.Draw(ContentRegistry.starLightAlpha, Position, TextureOffset, TextureScale * 2f, Rotation, TextureDepth - 1, mStar.StarColor);
             var color = IsHover ? Color.MonoGameOrange : (HasPlayer ? Color.Blue : IsPath ? Color.Red : (mSystemLayer is null ? Color.Gray : Color.Green));
-            TextureManager.Instance.Draw(ContentRegistry.targetCrosshair, Position, TextureScale * 2f, Rotation, TextureDepth - 1, color);
+            TextureManager.Instance.Draw(ContentRegistry.targetCrosshair, Position, TextureScale * 1.5f, Rotation, TextureDepth - 1, color);
         }
 
         public override void Update(GameTime gameTime, InputState inputState) 

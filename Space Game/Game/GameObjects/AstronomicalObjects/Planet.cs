@@ -37,8 +37,8 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         public override void Update(GameTime gameTime, InputState inputState)
         {
             base.Update(gameTime, inputState);
-            OrbitRadians += 0.0001f;
-            Rotation -= 0.005f;
+            OrbitRadians -= 0.00001f;
+            Rotation -= 0.0001f;
             Position = Geometry.GetPointOnCircle(OrbitCenter, OrbitRadius, OrbitRadians);
             mShadowRotation = Geometry.AngleBetweenVectors(Position, OrbitCenter) + MathF.PI;
         }
