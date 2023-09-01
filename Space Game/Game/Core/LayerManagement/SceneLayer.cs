@@ -2,21 +2,24 @@
 using CelestialOdyssey.Game.Core.GameObjects;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.Utility;
+using CelestialOdyssey.Game.GameObjects.SpaceShips;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace CelestialOdyssey.Game.Core.LayerManagement
 {
+    [Serializable]
     public abstract class SceneLayer : Layer
     {
         public Vector2 WorldMousePosition { get; private set; }
-        
+
+        [JsonProperty] public readonly SpatialHashing<GameObject> SpatialHashing;
         private Matrix mViewTransformationMatrix;
-        public readonly SpatialHashing<GameObject> SpatialHashing;
         public readonly FrustumCuller FrustumCuller;
         public readonly Camera Camera;
         public readonly DebugSystem DebugSystem;

@@ -4,7 +4,6 @@ using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.Utility;
 using CelestialOdyssey.Game.GameObjects.SpaceShips;
-using CelestialOdyssey.Game.Layers;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
@@ -47,9 +46,13 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         public override void Draw(SceneLayer sceneLayer)
         {
             base.Draw(sceneLayer);
-            TextureManager.Instance.DrawGameObject(this);
+            TextureManager.Instance.DrawGameObject(this, IsHover);
             TextureManager.Instance.Draw(ContentRegistry.starLightAlpha, Position, TextureOffset, TextureScale * 2f, Rotation, 0, TextureColor);
             TextureManager.Instance.Draw(ContentRegistry.mapCrosshair, Position, TextureScale * 2, Rotation, 1, mCrosshairColor);
         }
+
+        public override void LeftPressAction() { ; }
+
+        public override void RightPressAction() { ; }
     }
 }

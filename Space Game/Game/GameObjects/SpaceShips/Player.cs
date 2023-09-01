@@ -1,10 +1,11 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
-using CelestialOdyssey.Game.Core;
-using CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.Inventory;
 using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.Core.ShipSystems.MovementSystems;
+using CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem;
 using CelestialOdyssey.Game.Core.Utility;
+using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
@@ -22,9 +23,9 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
         [JsonProperty] private Weapon WeaponSlot3 = new PhotonTorpedo(new(210, 50));
         [JsonProperty] private Weapon WeaponSlot4 = new PhotonTorpedo(new(210, -50));
 
-        public Player(Vector2 position) : base(position, ContentRegistry.ship.Name, 1) { Inventory = new(16); }
+        public Player(Vector2 position) : base(position, ContentRegistry.ship.Name, 10) { Inventory = new(16); }
 
-        public new void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
+        public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
         {
             if (inputState.mActionList.Contains(ActionType.FireInitialWeapon))
             {
@@ -50,6 +51,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
             sceneLayer.Camera.SetPosition(Position);
         }
 
+
         public override void Draw(SceneLayer sceneLayer)
         {
             base.Draw(sceneLayer);
@@ -58,16 +60,18 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 
         private void ManageVelocity(InputState inputState)
         {
+            var sublightVelocity = 10;
+
             if (inputState.mActionList.Contains(ActionType.Deacceleration))
             {
-                Velocity = MovementController.GetVelocity(Velocity, -0.1f);
+                Velocity = MovementController.GetVelocity(Velocity, -0.2f);
                 Velocity = (Velocity < 0) ? 0 : Velocity;
             }
             if (inputState.mActionList.Contains(ActionType.Acceleration))
             {
                 Velocity = (Velocity <= 0) ? 1 : Velocity;
-                Velocity = MovementController.GetVelocity(Velocity, 0.1f);
-                Velocity = (Velocity > mMaxVelocity) ? mMaxVelocity : Velocity;
+                Velocity = MovementController.GetVelocity(Velocity, 0.2f);
+                Velocity = (Velocity > sublightVelocity) ? sublightVelocity : Velocity;
             }
         }
 

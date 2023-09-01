@@ -1,16 +1,14 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
-using CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem.Projectiles;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem.Projectiles;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
-using CelestialOdyssey.Game.GameObjects.SpaceShips;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
 
-namespace CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem
+namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
 {
     public class PhotonTorpedo : Weapon
     {

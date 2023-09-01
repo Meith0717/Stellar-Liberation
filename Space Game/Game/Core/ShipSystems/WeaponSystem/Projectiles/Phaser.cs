@@ -7,7 +7,7 @@ using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using System;
 
-namespace CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem.Projectiles
+namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem.Projectiles
 {
     public class Phaser : Projectile
     {

@@ -1,83 +1,51 @@
 ﻿
 using System;
+using static CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types.PlanetTypes;
 
 namespace CelestialOdyssey.Game.Core.MapSystem
 {
     public class NoiseMapGenerator
     {
-        private PerlinNoise perlinNoise;
-        private Random rnd;
         private int width;
         private int height;
 
         public NoiseMapGenerator(int seed, int width, int height)
         {
-            perlinNoise = new PerlinNoise(seed);
             this.width = width;
             this.height = height;
-            rnd = new Random(seed);
         }
 
-        public int[,] GenerateBinaryNoiseMap(double scale, int octaves, double lacunarity, double persistence, double threshold)
+        public int[,] GenerateBinaryNoiseMap()
         {
-            int[,] noiseMap = new int[width, height];
+            int[,] matrix = new int[width, height];
 
-            for (int y = 0; y < height; y++)
+            // Mittelpunkt des Kreises
+            int centerX = height / 2;
+            int centerY = width / 2;
+
+            // Radius des Kreises (angepasst an die Matrixgröße)
+            double radius = Math.Min(width, height) / 3.0;
+
+            for (int i = 0; i < width; i++)
             {
-                for (int x = 0; x < width; x++)
+                for (int j = 0; j < height; j++)
                 {
-                    double sampleX = x / scale;
-                    double sampleY = y / scale;
-                    double noiseValue = perlinNoise.FractalNoise(sampleX, sampleY, octaves, lacunarity, persistence);
+                    // Berechnung der Entfernung zum Mittelpunkt
+                    double distanceToCenter = Math.Sqrt(Math.Pow(i - centerY, 2) + Math.Pow(j - centerX, 2));
 
+                    // Je geringer die Entfernung zum Mittelpunkt, desto wahrscheinlicher ist eine 1
+                    double maxProbability = 0.9; // Max Wahrscheinlichkeit in der Mitte
+                    double minProbability = 0.1; // Min Wahrscheinlichkeit an den Rändern
 
-                    // Thresholding
-                    if (noiseValue >= threshold)
-                        noiseMap[x, y] = 1;
-                    else
-                        noiseMap[x, y] = 0;
+                    // Wahrscheinlichkeit basierend auf der Entfernung
+                    double probability = minProbability + (maxProbability - minProbability) * (1 - (distanceToCenter / radius));
+
+                    // Zufällige Entscheidung basierend auf der Wahrscheinlichkeit
+                    matrix[i, j] = (new Random().NextDouble() < probability) ? 1 : 0;
                 }
             }
 
-            return noiseMap;
-        }
-
-        public int[,] GenerateNoiseMap(double scale, int octaves, double lacunarity, double persistence, double threshold)
-        {
-            int[,] noiseMap = new int[width, height];
-
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    double sampleX = x / scale;
-                    double sampleY = y / scale;
-                    double noiseValue = perlinNoise.FractalNoise(sampleX, sampleY, octaves, lacunarity, persistence);
-
-                    // Map the noise value to the desired range
-                    int mappedValue = HashValue(noiseValue);
-
-                    // Thresholding
-                    if (mappedValue >= threshold)
-                        noiseMap[x, y] = mappedValue;
-                    else
-                        noiseMap[x, y] = 0;
-                }
-            }
-
-            // Post-processing to ensure pixels with value 1 do not have neighbors with value 1 (optional)
-
-            return noiseMap;
-        }
-
-        // Helper function to map a noise value to the desired range
-        private int HashValue(double value)
-        {
-            int numValues = 8;
-            double range = 1.0 / numValues;
-
-            int hash = (int)Math.Floor(value / range) + 1;
-            return Math.Min(hash, numValues);
+            return matrix;
         }
     }
 }

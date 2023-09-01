@@ -5,7 +5,7 @@ using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using Microsoft.Xna.Framework;
 using System;
 
-namespace CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem
+namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
 {
     public abstract class Projectile : GameObject
     {

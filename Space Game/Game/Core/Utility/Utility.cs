@@ -32,6 +32,13 @@ namespace CelestialOdyssey.Game.Core.Utility
         {
             return new Vector2(Random.Next((int)star.X, (int)end.X), Random.Next((int)star.Y, (int)end.Y));
         }
+        public static Vector2 GetRandomVector2(CircleF circle)
+        {
+            RectangleF rectangle = circle.ToRectangle();
+            Vector2 v = GetRandomVector2(rectangle.TopLeft, rectangle.BottomRight);
+            if (!circle.Contains(v)) return GetRandomVector2(circle);
+            return v;
+        }
 
 
         public static string ConvertSecondsToGameTimeUnits(int seconds)

@@ -61,10 +61,19 @@ namespace CelestialOdyssey.Game.Core.InputManagement
         internal GamePadValues mGamePadValues;
         internal GamePadValues mPrevGamePadValues;
 
-        // Constructor.
         public InputState()
         {
             mActionList = new List<ActionType>();
+        }
+
+        public bool HasAction(ActionType action)
+        {
+            return mActionList.Contains(action);
+        }
+
+        public void DoAction(ActionType action, Action funktion)
+        {
+            if (HasAction(action)) funktion(); 
         }
     }
 }

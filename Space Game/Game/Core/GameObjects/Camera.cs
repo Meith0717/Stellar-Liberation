@@ -18,7 +18,7 @@ namespace CelestialOdyssey.Game.Core.GameObjects
     /// </summary>
     public class Camera
     {
-        private const int CameraGlide = 2;
+        private const int CameraGlide = 10;
         private float mMaxZoom;
         private float mMinZoom;
         private bool mAllowMovingWithMouse;
@@ -26,7 +26,7 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         /// <summary>
         /// Current zoom level of the camera.
         /// </summary>
-        public float Zoom { get; private set; } = 1f;
+        public float Zoom { get; private set; }
 
         /// <summary>
         /// Current position of the camera.
@@ -56,6 +56,7 @@ namespace CelestialOdyssey.Game.Core.GameObjects
             mMaxZoom = maxZoom;
             mMinZoom = minZoom;
             mAllowMovingWithMouse = allowMovingWithMouse;
+            Zoom = mMinZoom;
         }
 
         private void MovingAnimation()

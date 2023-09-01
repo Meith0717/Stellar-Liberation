@@ -23,7 +23,7 @@ namespace CelestialOdyssey.Game.Layers
         [JsonProperty] public readonly Player Player;
         [JsonProperty] public PlanetSystem ActualPlanetSystem;
 
-        public GameLayer() : base(1000000, false, 0.001f, 1, false)
+        public GameLayer() : base(1000000, false, 0.001f, 0.01f, false)
         {
             Map.Generate(this);
             ActualPlanetSystem = Map.GetRandomSystem();
@@ -38,14 +38,17 @@ namespace CelestialOdyssey.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            // Update Stuff
             base.Update(gameTime, inputState);
-
             Player.Update(gameTime, inputState, this);
             mParllaxManager.Update(Camera.Movement, Camera.Zoom);
 
-            ActualPlanetSystem = Map.GetActualPlanetSystem(Player);
+            // Get Inputs
+            inputState.DoAction(ActionType.ToggleMap, ToggleMapView);
 
-            if (inputState.mActionList.Contains(ActionType.ToggleMap)) ToggleMapView();
+            // Some other stuff
+            ActualPlanetSystem = Map.GetActualPlanetSystem(Player);
+            if (ActualPlanetSystem is null) ShowExitingSystemWarning();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -79,5 +82,7 @@ namespace CelestialOdyssey.Game.Layers
 
             mLayerManager.AddLayer(mMapLayer);
         }
+    
+        private void ShowExitingSystemWarning() { throw new NotImplementedException(); }
     }
 }

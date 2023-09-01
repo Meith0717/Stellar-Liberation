@@ -1,11 +1,6 @@
 ﻿using CelestialOdyssey.Game.Core.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CelestialOdyssey.Game.Core
+namespace CelestialOdyssey.Game.Core.ShipSystems.MovementSystems
 {
     public static class MovementController
     {

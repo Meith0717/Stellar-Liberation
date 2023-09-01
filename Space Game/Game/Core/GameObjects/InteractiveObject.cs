@@ -29,10 +29,16 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         public bool IsHover { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating whether the interactive object is currently being pressed by the mouse cursor.
+        /// Gets a value indicating whether the interactive object is currently being pressed by the Right mouse cursor.
         /// </summary>
         [JsonIgnore]
-        public bool IsPressed { get; private set; }
+        public bool RightPressed { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the interactive object is currently being pressed by the Left mouse cursor.
+        /// </summary>
+        [JsonIgnore]
+        public bool LeftPressed { get; private set; }
 
         [JsonIgnore]
         public Action OnPressAction { get; set; }
@@ -49,9 +55,14 @@ namespace CelestialOdyssey.Game.Core.GameObjects
             base.Update(gameTime, inputState, sceneLayer);
 
             IsHover = BoundedBox.Contains(sceneLayer.WorldMousePosition);
-            IsPressed = IsHover && inputState.mMouseActionType == MouseActionType.LeftClickReleased;
+            LeftPressed = IsHover && inputState.mMouseActionType == MouseActionType.LeftClickReleased;
+            RightPressed = IsHover && inputState.mMouseActionType == MouseActionType.RightClick;
 
-            if (IsPressed && OnPressAction is not null) OnPressAction();
+            if (LeftPressed) LeftPressAction();
+            if (RightPressed) LeftPressAction();
         }
+
+        public abstract void LeftPressAction();
+        public abstract void RightPressAction();
     }
 }

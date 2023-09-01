@@ -1,4 +1,5 @@
-﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+﻿
+using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types;
@@ -20,9 +21,9 @@ namespace CelestialOdyssey.Game.Core.MapSystem
         [JsonProperty] private List<Planet> mPlanets = new();
         [JsonProperty] private List<Star> mStars = new();
 
-        [JsonProperty] private int mSectorCountWidth = 50;
-        [JsonProperty] private int mSectorCountHeight = 50;
-        [JsonProperty] private int mSectorSclae = 1000000;
+        [JsonProperty] private int mSectorCountWidth = 100;
+        [JsonProperty] private int mSectorCountHeight = 100;
+        [JsonProperty] private int mSectorSclae = 5000000;
         [JsonProperty] private int mMapScale = 100;
 
         public int Height { get { return mSectorCountHeight * mSectorSclae; } }
@@ -32,7 +33,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
         {
             var triangularDistribution = new Triangular(1, 10, 3);
             var noiseMapGenerator = new NoiseMapGenerator(RandomSeed.Time(), mSectorCountWidth, mSectorCountHeight);
-            var noiseMap = noiseMapGenerator.GenerateBinaryNoiseMap(40, 6, 5, 0.85, 0);
+            var noiseMap = noiseMapGenerator.GenerateBinaryNoiseMap();
 
             int rows = noiseMap.GetLength(0);
             int columns = noiseMap.GetLength(1);
@@ -54,14 +55,14 @@ namespace CelestialOdyssey.Game.Core.MapSystem
 
                     for (int i = 1; i <= orbitsAmount; i++)
                     {
-                        orbitRadius += 20000;
+                        orbitRadius += 50000;
                         Planet planet = GetPlanet(star.Position, orbitRadius, i);
                         planet.AddToSpatialHashing(gameLayer);
                         mPlanets.Add(planet);
                     }
 
                     // Generate Planet System
-                    PlanetSystem planetSystem = new(GetMapPosition(star.Position), star.Position, orbitRadius, star.TextureId, star.LightColor);
+                    PlanetSystem planetSystem = new(GetMapPosition(star.Position), star.Position, orbitRadius + 100000, star.TextureId, star.LightColor);
                     mPlanetSystems.Add(planetSystem);
                 }
             }
@@ -69,8 +70,8 @@ namespace CelestialOdyssey.Game.Core.MapSystem
 
         private static Vector2 GenerateStarPosition(int x, int y, int scaling)
         {
-            var sectorBegin = new Vector2(x, y) * scaling;
-            var sectorEnd = sectorBegin + new Vector2(scaling, scaling);
+            var sectorBegin = (new Vector2(x, y) * scaling) + (new Vector2(scaling, scaling) * 0.2f);
+            var sectorEnd = sectorBegin + new Vector2(scaling, scaling) * 0.6f;
             return Utility.Utility.GetRandomVector2(sectorBegin, sectorEnd);
         }
 

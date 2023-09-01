@@ -5,7 +5,7 @@ using CelestialOdyssey.Game.Core.Utility;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using Microsoft.Xna.Framework;
 
-namespace CelestialOdyssey.Game.Core.BattleSystem.WeaponSystem.Projectiles
+namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem.Projectiles
 {
     public class Torpedo : Projectile
     {
