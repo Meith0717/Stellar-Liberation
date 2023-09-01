@@ -19,6 +19,7 @@ namespace CelestialOdyssey.Game.Core.InputManagement.Peripheral
                 { Keys.Escape, ActionType.ESC },
                 { Keys.F11, ActionType.ToggleFullscreen},
                 { Keys.F12, ActionType.ToggleDebugModes},
+                { Keys.M, ActionType.ToggleMap},
             };
 
             mActionOnKeyboardHold = new()

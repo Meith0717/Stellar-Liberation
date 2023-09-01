@@ -24,6 +24,7 @@ namespace CelestialOdyssey.Game.Core.InputManagement
         Deacceleration,
         FireSecondaryWeapon,
         FireInitialWeapon,
+        ToggleMap,
     }
 
     public enum MouseActionType

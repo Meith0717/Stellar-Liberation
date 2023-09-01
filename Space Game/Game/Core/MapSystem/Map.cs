@@ -1,51 +1,131 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
+using CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types;
+using CelestialOdyssey.Game.GameObjects.SpaceShips;
+using CelestialOdyssey.Game.Layers;
+using MathNet.Numerics.Distributions;
 using MathNet.Numerics.Random;
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.Core.MapSystem
 {
+    [Serializable]
     public class Map
     {
-        private List<Star> mStars = new();
-        private List<Planet> mPlanets = new();
+        [JsonProperty] public List<PlanetSystem> mPlanetSystems { get; private set; } = new();
+        [JsonProperty] private List<Planet> mPlanets = new();
+        [JsonProperty] private List<Star> mStars = new();
 
-        private int mSectorCountWidth = 20;
-        private int mSectorCountHeight = 20;
-        private int mSectorSize = 1000000;
+        [JsonProperty] private int mSectorCountWidth = 50;
+        [JsonProperty] private int mSectorCountHeight = 50;
+        [JsonProperty] private int mSectorSclae = 1000000;
+        [JsonProperty] private int mMapScale = 100;
 
-        public int Height { get { return mSectorCountHeight * mSectorSize; } }
-        public int Width { get { return mSectorCountWidth * mSectorSize; } }
+        public int Height { get { return mSectorCountHeight * mSectorSclae; } }
+        public int Width { get { return mSectorCountWidth * mSectorSclae; } }
 
-        public void Generate(SceneLayer sceneLayer)
+        public void Generate(GameLayer gameLayer)
         {
-            NoiseMapGenerator noiseMapGenerator 
-                = new(RandomSeed.Time(), mSectorCountWidth, mSectorCountHeight);
+            var triangularDistribution = new Triangular(1, 10, 3);
+            var noiseMapGenerator = new NoiseMapGenerator(RandomSeed.Time(), mSectorCountWidth, mSectorCountHeight);
             var noiseMap = noiseMapGenerator.GenerateBinaryNoiseMap(40, 6, 5, 0.85, 0);
 
-            StarGenerator.Generate(noiseMap, mSectorSize, sceneLayer, out mStars);
-            PlanetGenerator.Generate(mStars, sceneLayer, out mPlanets);
+            int rows = noiseMap.GetLength(0);
+            int columns = noiseMap.GetLength(1);
+
+            for (int x = 0; x < rows; x++)
+            {
+                for (int y = 0; y < columns; y++)
+                {
+                    if (noiseMap[x, y] == 0) continue;
+
+                    // Generate Star
+                    Star star = StarTypes.GenerateRandomStar(GenerateStarPosition(x, y, mSectorSclae));
+                    star.AddToSpatialHashing(gameLayer);
+                    mStars.Add(star);
+
+                    // Generate Planets of Star
+                    var orbitsAmount = (int)triangularDistribution.Sample();
+                    var orbitRadius = (int)(star.Width * star.TextureScale);
+
+                    for (int i = 1; i <= orbitsAmount; i++)
+                    {
+                        orbitRadius += 20000;
+                        Planet planet = GetPlanet(star.Position, orbitRadius, i);
+                        planet.AddToSpatialHashing(gameLayer);
+                        mPlanets.Add(planet);
+                    }
+
+                    // Generate Planet System
+                    PlanetSystem planetSystem = new(GetMapPosition(star.Position), star.Position, orbitRadius, star.TextureId, star.LightColor);
+                    mPlanetSystems.Add(planetSystem);
+                }
+            }
         }
+
+        private static Vector2 GenerateStarPosition(int x, int y, int scaling)
+        {
+            var sectorBegin = new Vector2(x, y) * scaling;
+            var sectorEnd = sectorBegin + new Vector2(scaling, scaling);
+            return Utility.Utility.GetRandomVector2(sectorBegin, sectorEnd);
+        }
+
+        private static Planet GetPlanet(Vector2 orbitCenter, int oribitRadius, int orbitNumber)
+        {
+            return orbitNumber switch
+            {
+                1 => Utility.Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Warm(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
+                2 => Utility.Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Warm(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
+                3 => Utility.Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Tessatial(orbitCenter, oribitRadius), new PlanetTypes.Dry(orbitCenter, oribitRadius) }),
+                4 => Utility.Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Dry(orbitCenter, oribitRadius), new PlanetTypes.Tessatial(orbitCenter, oribitRadius) }),
+                5 => Utility.Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Tessatial(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
+                6 => Utility.Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Stone(orbitCenter, oribitRadius), new PlanetTypes.Gas(orbitCenter, oribitRadius) }),
+                7 => new PlanetTypes.Gas(orbitCenter, oribitRadius),
+                8 => new PlanetTypes.Gas(orbitCenter, oribitRadius),
+                9 => Utility.Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Cold(orbitCenter, oribitRadius), new PlanetTypes.Gas(orbitCenter, oribitRadius) }),
+                10 => new PlanetTypes.Cold(orbitCenter, oribitRadius),
+                _ => null
+            };
+        }
+
+        public Vector2 GetMapPosition(Vector2 sectorPosition) { return sectorPosition / mSectorSclae * mMapScale; }
+        public Vector2 GetSectorPosition(Vector2 mapPosition) { return mapPosition / mMapScale * mSectorSclae; }
+        public PlanetSystem GetRandomSystem() { return Utility.Utility.GetRandomElement(mPlanetSystems); }
 
         public void DrawSectores(SceneLayer sceneLayer)
         {
             var screen = sceneLayer.FrustumCuller.WorldFrustum;
 
-            var mapWidth = (mSectorCountWidth * mSectorSize) + mSectorSize;
-            var mapHeight = (mSectorCountHeight * mSectorSize) + mSectorSize;
+            var mapWidth = (mSectorCountWidth * mMapScale) + mMapScale;
+            var mapHeight = (mSectorCountHeight * mMapScale) + mMapScale;
 
-            for (int x = 0; x < mapWidth; x += mSectorSize)
+            for (int x = 0; x < mapWidth; x += mMapScale)
             {
                 if (x < screen.X && x > screen.X + screen.Width) continue;
-                TextureManager.Instance.DrawAdaptiveLine(new(x, 0), new(x, mapHeight), new Color(10, 10, 10, 10), 1, 0, sceneLayer.Camera.Zoom);
+                TextureManager.Instance.DrawAdaptiveLine(new(x, -mMapScale), new(x, mapHeight), new Color(10, 10, 10, 10), 1, 0, sceneLayer.Camera.Zoom);
             }
-            for (int y = 0; y < mapHeight; y += mSectorSize)
+            for (int y = 0; y < mapHeight; y += mMapScale)
             {
                 if (y < screen.Y && y > screen.Y + screen.Height) continue;
-                TextureManager.Instance.DrawAdaptiveLine(new(0, y), new(mapWidth, y), new Color(10, 10, 10, 10), 1, 0, sceneLayer.Camera.Zoom);
+                TextureManager.Instance.DrawAdaptiveLine(new(-mMapScale, y), new(mapWidth, y), new Color(10, 10, 10, 10), 1, 0, sceneLayer.Camera.Zoom);
             }
         }
+
+        public PlanetSystem GetActualPlanetSystem(Player player)
+        {
+            foreach (var item in mPlanetSystems)
+            {
+                if (!item.CheckIfHasPlayer(player)) continue;
+                return item;
+                
+            }
+            return null;
+        }
+
+
     }
 }

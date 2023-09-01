@@ -21,11 +21,11 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
         public readonly Camera Camera;
         public readonly DebugSystem DebugSystem;
 
-        public SceneLayer(int spatialHashingCellSize) : base(false) 
+        public SceneLayer(int spatialHashingCellSize, bool updateBelow, float minCamZoom, float maxCamZoom, bool moveCamByMouse) : base(updateBelow) 
         {
             SpatialHashing = new(spatialHashingCellSize);
             FrustumCuller = new();
-            Camera = new();
+            Camera = new(minCamZoom, maxCamZoom, moveCamByMouse);
             DebugSystem = new();
         }
 
@@ -119,9 +119,5 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
                 }
             }
         }
-
-        public override void Destroy() { }
-
-        public override void OnResolutionChanged() { }
     }
 }

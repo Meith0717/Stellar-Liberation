@@ -1,3 +1,4 @@
+
 /*
  *  Camera.cs
  *
@@ -18,8 +19,9 @@ namespace CelestialOdyssey.Game.Core.GameObjects
     public class Camera
     {
         private const int CameraGlide = 2;
-        private const float MaxZoom = 0.001f;
-        private const float MimZoom = 1f;
+        private float mMaxZoom;
+        private float mMinZoom;
+        private bool mAllowMovingWithMouse;
 
         /// <summary>
         /// Current zoom level of the camera.
@@ -48,9 +50,12 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         private bool mMoveAnimation;
         private Vector2 mLastScreenMousePosition;
 
-        public Camera()
+        public Camera(float minZoom, float maxZoom, bool allowMovingWithMouse)
         {
             Position = Vector2.Zero;
+            mMaxZoom = maxZoom;
+            mMinZoom = minZoom;
+            mAllowMovingWithMouse = allowMovingWithMouse;
         }
 
         private void MovingAnimation()
@@ -94,11 +99,11 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         private void AdjustZoomByMouse(GameTime gameTime, InputState inputState)
         {
             var zoom = 0f;
-            if (inputState.mActionList.Contains(ActionType.CameraZoomIn))
+            if (inputState.mActionList.Contains(ActionType.CameraZoomIn) && Zoom < mMaxZoom)
             {
                 zoom += 5f * inputState.mGamePadValues.mRightThumbSticks.Y == 0 ? 10 : inputState.mGamePadValues.mRightThumbSticks.Y;
             }
-            if (inputState.mActionList.Contains(ActionType.CameraZoomOut))
+            if (inputState.mActionList.Contains(ActionType.CameraZoomOut) && Zoom > mMinZoom)
             {
                 zoom += 5f * inputState.mGamePadValues.mRightThumbSticks.Y == 0 ? -10 : inputState.mGamePadValues.mRightThumbSticks.Y;
             }
@@ -145,7 +150,7 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         {
             Movement = Vector2.Zero;
             AdjustZoomByMouse(gameTime, inputState);
-            MoveCameraByMouse(inputState, screenMousePosition, ViewTransformation);
+            if (mAllowMovingWithMouse) MoveCameraByMouse(inputState, screenMousePosition, ViewTransformation);
             MovingAnimation();
             ZoomAnimation();
             Movement = Position - mLastPosition;

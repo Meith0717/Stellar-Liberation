@@ -47,6 +47,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
             CollectItems(sceneLayer);
 
             base.Update(gameTime, inputState, sceneLayer);
+            sceneLayer.Camera.SetPosition(Position);
         }
 
         public override void Draw(SceneLayer sceneLayer)

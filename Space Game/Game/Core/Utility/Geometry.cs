@@ -30,6 +30,17 @@ namespace CelestialOdyssey.Game.Core.Utility
         }
 
         /// <summary>
+        /// Calculates the position of a point on a circle and angle in radians.
+        /// </summary>
+        /// <param name="circle">The circle.</param>
+        /// <param name="angleRad">The angle in radians.</param>
+        /// <returns>The position of the point on the circle.</returns>
+        public static Vector2 GetPointOnCircle(CircleF circle, float angleRad)
+        {
+            return circle.BoundaryPointAt(angleRad);
+        }
+
+        /// <summary>
         /// Calculates the angle in radians between two vectors.
         /// </summary>
         /// <param name="position">The starting position of the vector.</param>

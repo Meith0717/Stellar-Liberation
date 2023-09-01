@@ -2,6 +2,7 @@
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.MapSystem;
 using CelestialOdyssey.Game.Core.Parallax;
+using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.SpaceShips;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
@@ -12,20 +13,23 @@ using System;
 namespace CelestialOdyssey.Game.Layers
 {
     [Serializable]
-    internal class GameLayer : SceneLayer
+    public class GameLayer : SceneLayer
     {
-        [JsonIgnore] private readonly ParllaxManager mParllaxManager;
-        [JsonIgnore] private readonly Map map = new();
-        [JsonProperty] public Player mMainShip;
+        [JsonIgnore] private readonly ParllaxManager mParllaxManager = new();
+        [JsonIgnore] private MapLayer mMapLayer;
+        [JsonIgnore] private bool mShowMap;
 
-        public GameLayer() : base(1000000)
+        [JsonProperty] public readonly Map Map = new();
+        [JsonProperty] public readonly Player Player;
+        [JsonProperty] public PlanetSystem ActualPlanetSystem;
+
+        public GameLayer() : base(1000000, false, 0.001f, 1, false)
         {
-            map.Generate(this);
-            mMainShip = new(new(map.Width / 2, map.Height / 2));
-            Camera.SetPosition(mMainShip.Position);
+            Map.Generate(this);
+            ActualPlanetSystem = Map.GetRandomSystem();
+            Player = new(Map.GetSectorPosition(ActualPlanetSystem.Position));
+            Camera.SetPosition(Player.Position);
 
-            mParllaxManager = new();
-            mParllaxManager.Add(new(ContentRegistry.gameBackground.Name, 0.05f));
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax.Name, 0.1f));
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax1.Name, 0.15f));
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax2.Name, 0.2f));
@@ -35,8 +39,13 @@ namespace CelestialOdyssey.Game.Layers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             base.Update(gameTime, inputState);
-            mMainShip.Update(gameTime, inputState, this);
+
+            Player.Update(gameTime, inputState, this);
             mParllaxManager.Update(Camera.Movement, Camera.Zoom);
+
+            ActualPlanetSystem = Map.GetActualPlanetSystem(Player);
+
+            if (inputState.mActionList.Contains(ActionType.ToggleMap)) ToggleMapView();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -48,13 +57,27 @@ namespace CelestialOdyssey.Game.Layers
             base.Draw(spriteBatch);
         }
 
-        public override void DrawOnScene() { map.DrawSectores(this); }
-
+        public override void DrawOnScene() { ; }
         public override void Destroy() { ; }
-        public override void OnResolutionChanged()
-        {
-            mParllaxManager.OnResolutionChanged(mGraphicsDevice);
-        }
+        public override void OnResolutionChanged() { mParllaxManager.OnResolutionChanged(mGraphicsDevice); }
 
+        private void ToggleMapView()
+        {
+            mShowMap = !mShowMap;
+            if (!mShowMap) return;
+            mMapLayer ??= new(this);
+
+            switch (ActualPlanetSystem)
+            {
+                case null:
+                    mMapLayer.Camera.SetPosition(Map.GetMapPosition(Player.Position));
+                    break;
+                case not null:
+                    mMapLayer.Camera.SetPosition(ActualPlanetSystem.Position);
+                    break;
+            }
+
+            mLayerManager.AddLayer(mMapLayer);
+        }
     }
 }

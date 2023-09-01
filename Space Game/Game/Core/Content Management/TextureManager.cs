@@ -102,6 +102,12 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
         {
             SpriteBatch.Draw(GetTexture(id), position, null, color, rotation, offset, sclae, SpriteEffects.None, GetDepth(depth));
         }
+        public void Draw(string id, Vector2 position, float sclae, float rotation, int depth, Color color)
+        {
+            Texture2D texture = GetTexture(id);
+            Vector2 offset = new(texture.Width / 2, texture.Height / 2);
+            SpriteBatch.Draw(GetTexture(id), position, null, color, rotation, offset, sclae, SpriteEffects.None, GetDepth(depth));
+        }
 
         // render Game Objects ___________________________________________________________________________
         public void DrawGameObject(GameObject obj)
