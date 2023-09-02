@@ -9,7 +9,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
     public class Pirate : SpaceShip
     {
         public Pirate(Vector2 position) 
-            : base(position, ContentRegistry.pirate.Name, 1) { }
+            : base(position, ContentRegistry.pirate.Name, 10) { }
 
         public override void Draw(SceneLayer sceneLayer)
         {

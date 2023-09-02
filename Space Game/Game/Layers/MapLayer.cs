@@ -1,6 +1,7 @@
 ﻿using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.Parallax;
+using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -39,15 +40,15 @@ namespace CelestialOdyssey.Game.Layers
                 if (!FrustumCuller.CircleOnWorldView(planetSystems.BoundedBox)) continue;
                 planetSystems.CheckIfHasPlayer(mGameLayer.Player);
                 planetSystems.Update(gameTime, inputState, this);
-                if (planetSystems.LeftPressed) SetPlayerTarget();
+                if (planetSystems.LeftPressed) SetPlayerTarget(planetSystems);
             }
             mParllaxManager.Update(Camera.Movement, Camera.Zoom);
             inputState.DoAction(ActionType.ToggleMap, CloseMap);
         }
 
-        private void SetPlayerTarget() 
-        { 
-            throw new NotImplementedException(); 
+        private void SetPlayerTarget(PlanetSystem planetSystem) 
+        {
+            mGameLayer.Player.SetTarget(planetSystem);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

@@ -2,6 +2,7 @@
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.MapSystem;
 using CelestialOdyssey.Game.Core.Parallax;
+using CelestialOdyssey.Game.Core.Utility;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.SpaceShips;
 using CelestialOdyssey.GameEngine.Content_Management;
@@ -23,11 +24,14 @@ namespace CelestialOdyssey.Game.Layers
         [JsonProperty] public readonly Player Player;
         [JsonProperty] public PlanetSystem ActualPlanetSystem;
 
+        [JsonIgnore] private Pirate pirate;
+
         public GameLayer() : base(1000000, false, 0.001f, 0.01f, false)
         {
             Map.Generate(this);
             ActualPlanetSystem = Map.GetRandomSystem();
             Player = new(Map.GetSectorPosition(ActualPlanetSystem.Position));
+            pirate = new(Utility.GetRandomVector2(Map.GetSectorPosition(ActualPlanetSystem.Position), 1000000));
             Camera.SetPosition(Player.Position);
 
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax.Name, 0.1f));
@@ -39,8 +43,9 @@ namespace CelestialOdyssey.Game.Layers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             // Update Stuff
-            base.Update(gameTime, inputState);
             Player.Update(gameTime, inputState, this);
+            pirate.Update(gameTime, inputState, this);
+            base.Update(gameTime, inputState);
             mParllaxManager.Update(Camera.Movement, Camera.Zoom);
 
             // Get Inputs
@@ -83,6 +88,6 @@ namespace CelestialOdyssey.Game.Layers
             mLayerManager.AddLayer(mMapLayer);
         }
     
-        private void ShowExitingSystemWarning() { throw new NotImplementedException(); }
+        private void ShowExitingSystemWarning() { }
     }
 }

@@ -56,7 +56,7 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
 
         private bool TargetsInRadius(SceneLayer sceneLayer, out List<SpaceShip> targets)
         {
-            targets = sceneLayer.GetSortedObjectsInRadius<SpaceShip>(Position, 10000);
+            targets = sceneLayer.GetSortedObjectsInRadius<SpaceShip>(Position, 1000000);
             targets.Remove(this);
             if (targets.Count == 0) return false;
             return true;

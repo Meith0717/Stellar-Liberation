@@ -12,7 +12,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem.Projectiles
     public class Phaser : Projectile
     {
         internal Phaser(Vector2 position, SpaceShip targetObj, Color color, int shieldDamage, int hullDamage) 
-            : base(position, targetObj, ContentRegistry.pixle.Name, 1, shieldDamage, hullDamage, 25f)
+            : base(position, targetObj, ContentRegistry.pixle.Name, 1, shieldDamage, hullDamage, 500f)
         {
             TextureColor = color;
             var angleToTarget = Geometry.AngleBetweenVectors(Position, mTargetObj.Position + mVariance);
@@ -33,7 +33,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem.Projectiles
             Color c = TextureColor;
             for (int i = 1; i <= 6; i++)
             {
-                TextureManager.Instance.DrawLine(mStartPosition, Position, c, 4 * i, TextureDepth);
+                TextureManager.Instance.DrawLine(mStartPosition, Position, c, 50 * i, TextureDepth);
                 c = Color.Multiply(c, 0.3f);
             }
         }

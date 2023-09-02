@@ -1,6 +1,6 @@
 ﻿using CelestialOdyssey.Game.Core.Utility;
 
-namespace CelestialOdyssey.Game.Core.ShipSystems.MovementSystems
+namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
 {
     public static class MovementController
     {

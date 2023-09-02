@@ -19,7 +19,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
         private int mHullDamage;
 
         internal Projectile(Vector2 startPosition, SpaceShip targetObj, string textureId, float textureScale, int shieldDamage, int hullDamage, float velocity)
-            : base(startPosition, textureId, textureScale, 10)
+            : base(startPosition, textureId, textureScale, 1)
         {
             mVelocity = velocity;
             var variance = (int)(Math.Min(targetObj.Width, targetObj.Height) * 0.5f);
