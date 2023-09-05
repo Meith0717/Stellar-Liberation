@@ -21,8 +21,8 @@ namespace CelestialOdyssey.Game.Core.MapSystem
         [JsonProperty] private List<Planet> mPlanets = new();
         [JsonProperty] private List<Star> mStars = new();
 
-        [JsonProperty] private int mSectorCountWidth = 100;
-        [JsonProperty] private int mSectorCountHeight = 100;
+        [JsonProperty] private int mSectorCountWidth = 40;
+        [JsonProperty] private int mSectorCountHeight = 40;
         [JsonProperty] private int mSectorSclae = 5000000;
         [JsonProperty] private int mMapScale = 100;
 

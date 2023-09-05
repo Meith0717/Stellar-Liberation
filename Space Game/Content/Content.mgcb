@@ -40,29 +40,11 @@
 /processorParam:Quality=Best
 /build:SoundEffects/bgMusicGame.wav
 
-#begin SoundEffects/bgMusicGame.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SoundEffects/bgMusicGame.wav
-
-#begin soundEffects/collect.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:soundEffects/collect.wav
-
 #begin SoundEffects/collect.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:SoundEffects/collect.wav
-
-#begin soundEffects/engineSound.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:soundEffects/engineSound.wav
 
 #begin SoundEffects/engineSound.wav
 /importer:WavImporter
@@ -70,23 +52,11 @@
 /processorParam:Quality=Best
 /build:SoundEffects/engineSound.wav
 
-#begin soundEffects/torpedoFire.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:soundEffects/torpedoFire.wav
-
 #begin SoundEffects/torpedoFire.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:SoundEffects/torpedoFire.wav
-
-#begin soundEffects/torpedoHit.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:soundEffects/torpedoHit.wav
 
 #begin SoundEffects/torpedoHit.wav
 /importer:WavImporter
@@ -201,6 +171,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/cursor.png
+
+#begin textures/cursor.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/cursor.png
+
+#begin textures/cursor1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/cursor1.png
 
 #begin textures/gameobjects/astronomicalbodys/planets/cold1.png
 /importer:TextureImporter
@@ -789,6 +783,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/gameobjects/weapons/projectile.png
+
+#begin textures/pixle.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/pixle.png
 
 #begin textures/pixle.png
 /importer:TextureImporter

@@ -2,14 +2,12 @@
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.Persistance;
-using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.Layers;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace CelestialOdyssey
@@ -50,7 +48,6 @@ namespace CelestialOdyssey
             base.Initialize();
             mLayerManager = new LayerManager(this, GraphicsDevice, mSerialize);
             mLayerManager.AddLayer(new GameLayer());
-            Mouse.SetCursor(MouseCursor.FromTexture2D(Content.Load<Texture2D>("textures/cursor"), 0, 0));
         }
 
         protected override void LoadContent()
@@ -66,8 +63,8 @@ namespace CelestialOdyssey
                 SoundManager.Instance.LoadSoundEffects(Content, registry.Name, registry.FilePath);
             }
             SoundManager.Instance.CreateSoundEffectInstances();
+            SetCursor(ContentRegistry.cursor);
 
-                        
             // game fonts
             TextureManager.Instance.LoadSpriteTexture(Content, "text", "fonts/text");
             TextureManager.Instance.LoadSpriteTexture(Content, "title", "fonts/title");
@@ -116,6 +113,11 @@ namespace CelestialOdyssey
             mGraphicsManager.PreferredBackBufferWidth = mWidth;
             mGraphicsManager.PreferredBackBufferHeight = mHeight;
             mGraphicsManager.IsFullScreen = false;
+        }
+
+        public void SetCursor(Registry registry)
+        {
+            Mouse.SetCursor(MouseCursor.FromTexture2D(Content.Load<Texture2D>(registry.FilePath), 0, 0));
         }
     }
 }

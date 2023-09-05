@@ -62,7 +62,11 @@ namespace CelestialOdyssey.Game.Layers
             base.Draw(spriteBatch);
         }
 
-        private void CloseMap() { mLayerManager.PopLayer(); } 
+        private void CloseMap() 
+        { 
+            mLayerManager.PopLayer();
+            mGame1.SetCursor(ContentRegistry.cursor1);
+        }
 
         public override void Destroy() { ; }
 

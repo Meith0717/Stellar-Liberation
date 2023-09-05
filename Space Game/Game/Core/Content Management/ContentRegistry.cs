@@ -92,6 +92,7 @@ namespace CelestialOdyssey.GameEngine.Content_Management
         private readonly static string textures = @"textures\";
         public readonly static Registry pixle = new(textures, "pixle");
         public readonly static Registry cursor = new(textures, "cursor");
+        public readonly static Registry cursor1 = new(textures, "cursor1");
 
         private readonly static string crosshair = @"textures\crosshair";
         public readonly static Registry mapCrosshair = new(crosshair, "selectCrosshait");

@@ -3,6 +3,7 @@ using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.MapSystem;
 using CelestialOdyssey.Game.Core.Parallax;
+using CelestialOdyssey.Game.Core.Persistance;
 using CelestialOdyssey.Game.Core.Utility;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.SpaceShips;
@@ -42,6 +43,12 @@ namespace CelestialOdyssey.Game.Layers
             SoundManager.Instance.PlaySound(ContentRegistry.bgMusicGame, 1f, false, true, true);
         }
 
+        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
+        {
+            base.Initialize(game1, layerManager, graphicsDevice, serialize);
+            mGame1.SetCursor(ContentRegistry.cursor1);
+        }
+
         public override void Update(GameTime gameTime, InputState inputState)
         {
             // Update Stuff
@@ -74,7 +81,7 @@ namespace CelestialOdyssey.Game.Layers
         public void ToggleMapView()
         {
             mMapLayer ??= new(this);
-
+            mGame1.SetCursor(ContentRegistry.cursor);
             switch (ActualPlanetSystem)
             {
                 case null:
