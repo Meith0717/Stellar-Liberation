@@ -84,9 +84,9 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         private void MoveCameraByMouse(InputState inputState, Vector2 screenMousePosition, Matrix ViewTransformation)
         {
             MovedByUser = false;
-            if (Vector2.Distance(mLastScreenMousePosition, screenMousePosition) > 1)
-            {
-                if (inputState.HasMouseAction(MouseActionType.LeftClickHold))
+            if (inputState.HasMouseAction(MouseActionType.LeftClickHold))
+            { 
+                if (Vector2.Distance(mLastScreenMousePosition, screenMousePosition) > 1)
                 {
                     MovedByUser = true;
                     var lastWorldMousePosition = Transformations.ScreenToWorld(ViewTransformation, mLastScreenMousePosition);
