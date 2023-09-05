@@ -60,32 +60,14 @@ namespace CelestialOdyssey
 
             // setup texture manager
             TextureManager.Instance.SetSpriteBatch(mSpriteBatch);
-            foreach (Registry registry in ContentRegistry.Textures)
+            foreach (Registry registry in ContentRegistry.IterateThroughRegistries())
             {
-                TextureManager.Instance.LoadTexture(Content, registry.Name, registry.FilePath);
+                if (TextureManager.Instance.LoadTexture(Content, registry.Name, registry.FilePath)) continue;
+                SoundManager.Instance.LoadSoundEffects(Content, registry.Name, registry.FilePath);
             }
-
-            SoundManager.Instance.LoadSoundEffects(Content, "torpedoHit", "SoundEffects/torpedoHit");
-            SoundManager.Instance.LoadSoundEffects(Content, "torpedoFire", "SoundEffects/torpedoFire");
-            SoundManager.Instance.LoadSoundEffects(Content, "collect", "SoundEffects/collect");
             SoundManager.Instance.CreateSoundEffectInstances();
-            
-            // // Ui
-            // TextureManager.Instance.LoadTexture(Content, "Layer", "UserInterface/Layer/layer");
-            // TextureManager.Instance.LoadTexture(Content, "Circle", "UserInterface/Layer/circle");
-            // TextureManager.Instance.LoadTexture(Content, "buttonExitgame", "UserInterface/PauseLayer/buttonExitgame");
-            // TextureManager.Instance.LoadTexture(Content, "buttonContinue", "UserInterface/PauseLayer/buttonContinue");
-            // TextureManager.Instance.LoadTexture(Content, "level", "UserInterface/HUDLayer/level");
-            // TextureManager.Instance.LoadTexture(Content, "menue", "UserInterface/HUDLayer/menue");
-            // TextureManager.Instance.LoadTexture(Content, "alloys", "UserInterface/HUDLayer/Alloys");
-            // TextureManager.Instance.LoadTexture(Content, "energy", "UserInterface/HUDLayer/Energy");
-            // TextureManager.Instance.LoadTexture(Content, "minerals", "UserInterface/HUDLayer/Minerals");
-            // TextureManager.Instance.LoadTexture(Content, "exit", "UserInterface/HUDLayer/exit");
-            // TextureManager.Instance.LoadTexture(Content, "info", "UserInterface/HUDLayer/info");
-            // TextureManager.Instance.LoadTexture(Content, "deSelect", "UserInterface/HUDLayer/deSelect");
-            // TextureManager.Instance.LoadTexture(Content, "target", "UserInterface/HUDLayer/target");
-            // TextureManager.Instance.LoadTexture(Content, "stop", "UserInterface/HUDLayer/stop");
-            
+
+                        
             // game fonts
             TextureManager.Instance.LoadSpriteTexture(Content, "text", "fonts/text");
             TextureManager.Instance.LoadSpriteTexture(Content, "title", "fonts/title");
@@ -94,17 +76,11 @@ namespace CelestialOdyssey
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-            {
-                Exit();
-            }
-            // handle window resize
-            if (mResulutionWasResized)
-            {
-                mLayerManager.OnResolutionChanged();
-            }
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) Exit();
+            if (mResulutionWasResized) mLayerManager.OnResolutionChanged();
+
             InputState inputState = mInputManager.Update();
-            if (inputState.mActionList.Contains(ActionType.ToggleFullscreen)) { ToggleFullscreen(); }
+            inputState.DoAction(ActionType.ToggleFullscreen, ToggleFullscreen);
             mLayerManager.Update(gameTime, inputState);
             base.Update(gameTime);
         }

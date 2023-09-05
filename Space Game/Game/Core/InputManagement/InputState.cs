@@ -25,6 +25,11 @@ namespace CelestialOdyssey.Game.Core.InputManagement
         FireSecondaryWeapon,
         FireInitialWeapon,
         ToggleMap,
+        LeftClick,
+        RightClick,
+        LeftClickHold,
+        RightClickHold,
+        LeftClickReleased,
     }
 
     public enum MouseActionType
@@ -66,9 +71,21 @@ namespace CelestialOdyssey.Game.Core.InputManagement
             mActionList = new List<ActionType>();
         }
 
+        public bool HasMouseAction(MouseActionType mouseActionType)
+        {
+            if (mMouseActionType != mouseActionType) return false;
+            mMouseActionType = MouseActionType.None;
+            return true;
+        }
+
+        public void DoMouseAction(MouseActionType mouseActionType, Action funktion)
+        {
+            if (HasMouseAction(mouseActionType)) funktion();
+        }
+
         public bool HasAction(ActionType action)
         {
-            return mActionList.Contains(action);
+            return mActionList.Remove(action);
         }
 
         public void DoAction(ActionType action, Action funktion)

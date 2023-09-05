@@ -22,7 +22,7 @@ public abstract class Layer
 
     protected Layer(bool updateBelow) { UpdateBelow = updateBelow; }
 
-    public void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
+    public virtual void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
     {
         mGame1 = game1;
         mLayerManager = layerManager;

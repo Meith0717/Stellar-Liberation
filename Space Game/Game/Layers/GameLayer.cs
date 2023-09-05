@@ -1,4 +1,5 @@
-﻿using CelestialOdyssey.Game.Core.InputManagement;
+﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.MapSystem;
 using CelestialOdyssey.Game.Core.Parallax;
@@ -18,7 +19,6 @@ namespace CelestialOdyssey.Game.Layers
     {
         [JsonIgnore] private readonly ParllaxManager mParllaxManager = new();
         [JsonIgnore] private MapLayer mMapLayer;
-        [JsonIgnore] private bool mShowMap;
 
         [JsonProperty] public readonly Map Map = new();
         [JsonProperty] public readonly Player Player;
@@ -29,7 +29,7 @@ namespace CelestialOdyssey.Game.Layers
         public GameLayer() : base(1000000, false, 0.001f, 0.01f, false)
         {
             Map.Generate(this);
-            ActualPlanetSystem = Map.GetRandomSystem();
+            ActualPlanetSystem = Map.mPlanetSystems[0];
             Player = new(Map.GetSectorPosition(ActualPlanetSystem.Position));
             pirate = new(Utility.GetRandomVector2(Map.GetSectorPosition(ActualPlanetSystem.Position), 1000000));
             Camera.SetPosition(Player.Position);
@@ -38,6 +38,8 @@ namespace CelestialOdyssey.Game.Layers
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax1.Name, 0.15f));
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax2.Name, 0.2f));
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax3.Name, 0.25f));
+
+            SoundManager.Instance.PlaySound(ContentRegistry.bgMusicGame, 1f, false, true, true);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
@@ -50,6 +52,7 @@ namespace CelestialOdyssey.Game.Layers
 
             // Get Inputs
             inputState.DoAction(ActionType.ToggleMap, ToggleMapView);
+            inputState.DoAction(ActionType.ESC, Pause);
 
             // Some other stuff
             ActualPlanetSystem = Map.GetActualPlanetSystem(Player);
@@ -68,11 +71,8 @@ namespace CelestialOdyssey.Game.Layers
         public override void DrawOnScene() { ; }
         public override void Destroy() { ; }
         public override void OnResolutionChanged() { mParllaxManager.OnResolutionChanged(mGraphicsDevice); }
-
-        private void ToggleMapView()
+        public void ToggleMapView()
         {
-            mShowMap = !mShowMap;
-            if (!mShowMap) return;
             mMapLayer ??= new(this);
 
             switch (ActualPlanetSystem)
@@ -87,7 +87,10 @@ namespace CelestialOdyssey.Game.Layers
 
             mLayerManager.AddLayer(mMapLayer);
         }
-    
+        private void Pause()
+        {
+            mLayerManager.AddLayer(new PauseLayer());
+        }
         private void ShowExitingSystemWarning() { }
     }
 }

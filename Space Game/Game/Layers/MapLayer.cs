@@ -1,4 +1,5 @@
-﻿using CelestialOdyssey.Game.Core.InputManagement;
+﻿
+using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.Parallax;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
@@ -9,7 +10,7 @@ using System;
 
 namespace CelestialOdyssey.Game.Layers
 {
-    internal class MapLayer : SceneLayer
+    public class MapLayer : SceneLayer
     {
         private readonly ParllaxManager mParllaxManager = new();
         private readonly GameLayer mGameLayer;
@@ -49,6 +50,7 @@ namespace CelestialOdyssey.Game.Layers
         private void SetPlayerTarget(PlanetSystem planetSystem) 
         {
             mGameLayer.Player.SetTarget(planetSystem);
+            mLayerManager.PopLayer();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -64,7 +66,10 @@ namespace CelestialOdyssey.Game.Layers
 
         public override void Destroy() { ; }
 
-        public override void DrawOnScene() { mGameLayer.Map.DrawSectores(this); }
+        public override void DrawOnScene() 
+        { 
+            mGameLayer.Player.DrawPath(mGameLayer, this);
+        }
 
         public override void OnResolutionChanged() { mParllaxManager.OnResolutionChanged(mGraphicsDevice); }
     }

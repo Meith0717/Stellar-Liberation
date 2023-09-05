@@ -24,8 +24,7 @@ namespace CelestialOdyssey.Game.Core.InputManagement.Peripheral
 
             mActionOnKeyboardHold = new()
             {
-                { Keys.LeftShift, ActionType.Acceleration },
-                { Keys.LeftControl, ActionType.Deacceleration },
+                { Keys.W, ActionType.Acceleration },
                 { Keys.Space, ActionType.FireInitialWeapon },
             };
             mKeysKeyEventTypes = new();

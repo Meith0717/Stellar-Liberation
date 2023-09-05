@@ -49,6 +49,7 @@ namespace CelestialOdyssey.Game.Core.InputManagement
             mInputState.mActionList.AddRange(mGamePadManager.GetActions(out mInputState.mGamePadValues));
             mInputState.mActionList.AddRange(mKeyboardManager.GetActions());
             mInputState.mPrevGamePadValues = mInputState.mGamePadValues;
+
             return mInputState;
         }
     }

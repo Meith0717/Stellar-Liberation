@@ -1,4 +1,5 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 
@@ -26,7 +27,7 @@ namespace CelestialOdyssey.Game.Core.UserInterface
         public void Draw()
         {
             Color c = new((int)(Color.R * Alpha), (int)(Color.G * Alpha), (int)(Color.B * Alpha), (int)(Color.A * Alpha));
-            TextureManager.Instance.SpriteBatch.Draw(TextureManager.Instance.GetTexture("Layer"), Frame.ToRectangle(), c);
+            TextureManager.Instance.SpriteBatch.Draw(TextureManager.Instance.GetTexture(ContentRegistry.layer), Frame.ToRectangle(), c);
         }
     }
 }

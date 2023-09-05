@@ -29,10 +29,7 @@ namespace CelestialOdyssey.Game.Core
 
         public void Update(GameTime gameTime, InputState inputState)
         {
-            if (inputState.mActionList.Contains(ActionType.ToggleDebugModes))
-            {
-                ChangeMode();
-            }
+            inputState.DoAction(ActionType.ToggleDebugModes, ChangeMode);
             mGameTime = gameTime;
         }
 

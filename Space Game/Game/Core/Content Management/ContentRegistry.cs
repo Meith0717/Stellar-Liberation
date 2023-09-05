@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 
 namespace CelestialOdyssey.GameEngine.Content_Management
 {
@@ -93,15 +95,36 @@ namespace CelestialOdyssey.GameEngine.Content_Management
 
         private readonly static string crosshair = @"textures\crosshair";
         public readonly static Registry mapCrosshair = new(crosshair, "selectCrosshait");
+        public readonly static Registry dot = new(crosshair, "dot");
 
-        public static List<Registry> Textures { get; set; } = new()
+        private readonly static string layer1 = @"textures\UserInterface\Layer";
+        public readonly static Registry layer = new(layer1, "layer");
+        public readonly static Registry circle = new(layer1, "circle");
+
+        private readonly static string pauseLayer = @"textures\UserInterface\PauseLayer";
+        public readonly static Registry buttonExitgame = new(pauseLayer, "buttonExitgame");
+        public readonly static Registry buttonContinue = new(pauseLayer, "buttonContinue");
+
+        private readonly static string soundEffects = @"SoundEffects\";
+        public readonly static Registry torpedoHit = new(soundEffects, "torpedoHit");
+        public readonly static Registry torpedoFire = new(soundEffects, "torpedoFire");
+        public readonly static Registry collect = new(soundEffects, "collect");
+        public readonly static Registry bgMusicGame = new(soundEffects, "bgMusicGame");
+
+        public static List<Registry> IterateThroughRegistries()
         {
-            gameBackground, gameBackgroundParlax, gameBackgroundParlax1, gameBackgroundParlax2, gameBackgroundParlax3,
-            cold1, cold2, cold3, cold4, dry1, dry2, dry3, dry4, dry5, dry6, gas1, gas2, gas3, gas4, 
-            stone1, stone2, stone3, stone4, stone5, stone6, terrestrial1, terrestrial2, terrestrial3, terrestrial4, 
-            terrestrial5, terrestrial6, terrestrial7, terrestrial8, warm1, warm2, warm3, warm4, planetShadow,
-            starA, starB, starF, starG, starK, starM, starO, starBH, starLightAlpha,
-            odyssyum, postyum, metall, ship, pirate, photonTorpedo, pixle, cursor, mapCrosshair
-        };
+            FieldInfo[] fields = typeof(ContentRegistry).GetFields(BindingFlags.Public | BindingFlags.Static);
+            List<Registry> registrys = new();
+
+            foreach (FieldInfo field in fields)
+            {
+                if (field.FieldType == typeof(Registry))
+                {
+                    Registry registry = (Registry)field.GetValue(null);
+                    registrys.Add(registry);
+                }
+            }
+            return registrys;
+        }
     }
 }

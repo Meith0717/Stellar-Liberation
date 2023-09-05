@@ -55,8 +55,8 @@ namespace CelestialOdyssey.Game.Core.GameObjects
             base.Update(gameTime, inputState, sceneLayer);
 
             IsHover = BoundedBox.Contains(sceneLayer.WorldMousePosition);
-            LeftPressed = IsHover && inputState.mMouseActionType == MouseActionType.LeftClickReleased;
-            RightPressed = IsHover && inputState.mMouseActionType == MouseActionType.RightClick;
+            LeftPressed = IsHover && inputState.HasMouseAction(MouseActionType.LeftClickReleased);
+            RightPressed = IsHover && inputState.HasMouseAction(MouseActionType.RightClick);
 
             if (LeftPressed) LeftPressAction();
             if (RightPressed) LeftPressAction();

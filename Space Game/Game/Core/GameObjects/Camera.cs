@@ -86,7 +86,7 @@ namespace CelestialOdyssey.Game.Core.GameObjects
             MovedByUser = false;
             if (Vector2.Distance(mLastScreenMousePosition, screenMousePosition) > 1)
             {
-                if (inputState.mMouseActionType is MouseActionType.LeftClickHold)
+                if (inputState.HasMouseAction(MouseActionType.LeftClickHold))
                 {
                     MovedByUser = true;
                     var lastWorldMousePosition = Transformations.ScreenToWorld(ViewTransformation, mLastScreenMousePosition);
@@ -100,11 +100,11 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         private void AdjustZoomByMouse(GameTime gameTime, InputState inputState)
         {
             var zoom = 0f;
-            if (inputState.mActionList.Contains(ActionType.CameraZoomIn) && Zoom < mMaxZoom)
+            if (inputState.HasAction(ActionType.CameraZoomIn) && Zoom < mMaxZoom)
             {
                 zoom += 5f * inputState.mGamePadValues.mRightThumbSticks.Y == 0 ? 10 : inputState.mGamePadValues.mRightThumbSticks.Y;
             }
-            if (inputState.mActionList.Contains(ActionType.CameraZoomOut) && Zoom > mMinZoom)
+            if (inputState.HasAction(ActionType.CameraZoomOut) && Zoom > mMinZoom)
             {
                 zoom += 5f * inputState.mGamePadValues.mRightThumbSticks.Y == 0 ? -10 : inputState.mGamePadValues.mRightThumbSticks.Y;
             }

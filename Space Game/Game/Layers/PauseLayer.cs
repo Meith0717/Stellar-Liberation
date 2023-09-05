@@ -1,7 +1,8 @@
-﻿using CelestialOdyssey.Game;
-using CelestialOdyssey.Game.Core.InputManagement;
+﻿using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.Core.Persistance;
 using CelestialOdyssey.Game.Core.UserInterface;
+using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -10,26 +11,26 @@ namespace CelestialOdyssey.Game.Layers
     public class PauseLayer : Layer
     {
         private MyUiFrame mBackgroundLayer;
-        private MyUiFrame mForegroundLayer;
         private MyUiSprite mContinueButton;
         private MyUiSprite mExitButton;
-        private MyUiSprite mExitSaveButton;
 
         public PauseLayer()
-            : base(false)
-        {
+            : base(false) { }
 
+        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
+        {
+            base.Initialize(game1, layerManager, graphicsDevice, serialize);
             mBackgroundLayer = new(0, 0, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height)
             { Alpha = 0.95f, Color = Color.Black };
             mContinueButton = new(mGraphicsDevice.Viewport.Width / 2 - 256, mGraphicsDevice.Viewport.Height / 2 - 64 - 100,
-                "buttonContinue")
+                ContentRegistry.buttonContinue)
             {
                 OnClickAction = mLayerManager.PopLayer,
                 MouseActionType = MouseActionType.LeftClickReleased,
                 Color = Color.OrangeRed
             };
             mExitButton = new(mGraphicsDevice.Viewport.Width / 2 - 256, mGraphicsDevice.Viewport.Height / 2 - 64 + 100,
-                "buttonExitgame")
+                ContentRegistry.buttonExitgame)
             {
                 OnClickAction = Exit,
                 MouseActionType = MouseActionType.LeftClickReleased,
@@ -47,7 +48,6 @@ namespace CelestialOdyssey.Game.Layers
             mBackgroundLayer.Draw();
             mContinueButton.Draw();
             mExitButton.Draw();
-            mExitSaveButton.Draw();
             spriteBatch.End();
         }
 
@@ -56,19 +56,13 @@ namespace CelestialOdyssey.Game.Layers
             mBackgroundLayer.OnResolutionChanged(0, 0, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
             mContinueButton.OnResolutionChanged(mGraphicsDevice.Viewport.Width / 2 - 256, mGraphicsDevice.Viewport.Height / 2 - 64 - 100);
             mExitButton.OnResolutionChanged(mGraphicsDevice.Viewport.Width / 2 - 256, mGraphicsDevice.Viewport.Height / 2 - 64 + 100);
-            mExitSaveButton.OnResolutionChanged(mGraphicsDevice.Viewport.Width / 2 - 256, mGraphicsDevice.Viewport.Height / 2 - 64 + 200);
-
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
             mContinueButton.Update(inputState);
             mExitButton.Update(inputState);
-            mExitSaveButton.Update(inputState);
-            if (inputState.mActionList.Contains(ActionType.ESC))
-            {
-                mLayerManager.PopLayer();
-            }
+            inputState.DoAction(ActionType.ESC, mLayerManager.PopLayer);
         }
 
         private void Exit()

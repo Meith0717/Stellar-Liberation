@@ -48,7 +48,7 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
             }
             catch 
             {
-                throw new Exception($"Something is wrong with {id}, {fileName}");
+                return false;
             }
         }
 

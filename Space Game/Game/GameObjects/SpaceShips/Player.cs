@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
+using CelestialOdyssey.Game.Layers;
 
 namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 {
@@ -33,7 +34,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 
         public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
         {
-            if (inputState.mActionList.Contains(ActionType.FireInitialWeapon))
+            if (inputState.HasAction(ActionType.FireInitialWeapon))
             {
                 if (GetTarget(out var target))
                 {
@@ -67,6 +68,16 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
         {
             base.Draw(sceneLayer);
             TextureManager.Instance.DrawGameObject(this);
+        }
+
+        public void DrawPath(GameLayer gameLayer, MapLayer mapLayer)
+        {
+            var color = Color.LightGreen;
+            var position = gameLayer.Map.GetMapPosition(Position);
+            if (gameLayer.ActualPlanetSystem is null) TextureManager.Instance.Draw(ContentRegistry.dot, position, 0.005f, 0, 1, color);
+            if (mHyperdrive.TargetPosition is null) return;
+            var target = gameLayer.Map.GetMapPosition((Vector2)mHyperdrive.TargetPosition);
+            TextureManager.Instance.DrawAdaptiveLine(position, target, color, 1, 0, mapLayer.Camera.Zoom);
         }
 
         private void CollectItems(SceneLayer sceneLayer)
