@@ -19,7 +19,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
         private int mHullDamage;
 
         internal Projectile(Vector2 startPosition, float rotation, int shieldDamage, int hullDamage, float velocity)
-            : base(startPosition, ContentRegistry.projectile, 30, 1)
+            : base(startPosition, ContentRegistry.projectile, 10, 20)
         {
             mDirection = Geometry.CalculateDirectionVector(rotation);
             Rotation = rotation;

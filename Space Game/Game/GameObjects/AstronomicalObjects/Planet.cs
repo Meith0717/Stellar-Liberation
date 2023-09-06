@@ -21,13 +21,12 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         [JsonIgnore]
         private float mShadowRotation;
 
-
         public Planet(Vector2 orbitCenter, int orbitRadius, string textureId, float textureScale) 
-            : base(Vector2.Zero, textureId, textureScale, 2)
+            : base(Vector2.Zero, textureId, textureScale, 1)
         {
             OrbitCenter = orbitCenter;
             OrbitRadius = orbitRadius;
-            OrbitRadians = Utility.Random.NextSingle() * MathF.PI * 2;
+            OrbitRadians = Utility.Random.NextSingle() * (MathF.PI * 2);
 
             Position = Geometry.GetPointOnCircle(OrbitCenter, OrbitRadius, OrbitRadians);
             mShadowRotation = Geometry.AngleBetweenVectors(Position, OrbitCenter) + MathF.PI;

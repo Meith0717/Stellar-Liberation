@@ -17,7 +17,6 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
 
         public HyperDrive(float maxVelocity, float chargintTime)
         {
-
             mMaxVelocity = maxVelocity;
             mChargintTime = chargintTime;
         }

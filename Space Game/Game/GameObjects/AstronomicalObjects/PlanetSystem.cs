@@ -9,21 +9,30 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
 {
     [Serializable]
     public class PlanetSystem : InteractiveObject
     {
+        [JsonProperty] public Star Star { get; private set; }
+        [JsonProperty] public List<Planet> Planets { get; private set; }
+        [JsonProperty] private CircleF mSectorBounding;
         [JsonIgnore] public bool HasPlayer { get; private set; }
         [JsonIgnore] private Color mCrosshairColor;
-        [JsonProperty] private CircleF mSectorBounding;
 
         public PlanetSystem(Vector2 mapPosition, Vector2 sectorPosition, int boundaryRadius, string textureId, Color color) 
             : base(mapPosition, textureId, 0.01f, 1)
         {
             TextureColor = color;
             mSectorBounding = new(sectorPosition, boundaryRadius);
+        }
+
+        public void SetAstronomicalObjects(Star star, List<Planet> planets)
+        {
+            Planets = planets;
+            Star = star;
         }
 
         public bool CheckIfHasPlayer(Player player) 

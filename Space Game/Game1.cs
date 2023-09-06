@@ -39,12 +39,10 @@ namespace CelestialOdyssey
             mInputManager = new InputManager();
             mGraphicsManager = new GraphicsDeviceManager(this);
             mSerialize = new Serialize();
-            //ToggleFullscreen();
         }
 
         protected override void Initialize()
         {
-            mGraphicsManager.ApplyChanges();
             base.Initialize();
             mLayerManager = new LayerManager(this, GraphicsDevice, mSerialize);
             mLayerManager.AddLayer(new GameLayer());

@@ -1,5 +1,4 @@
-﻿
-using CelestialOdyssey.Core.GameEngine.Content_Management;
+﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types;
@@ -18,12 +17,10 @@ namespace CelestialOdyssey.Game.Core.MapSystem
     public class Map
     {
         [JsonProperty] public List<PlanetSystem> mPlanetSystems { get; private set; } = new();
-        [JsonProperty] private List<Planet> mPlanets = new();
-        [JsonProperty] private List<Star> mStars = new();
 
         [JsonProperty] private int mSectorCountWidth = 40;
         [JsonProperty] private int mSectorCountHeight = 40;
-        [JsonProperty] private int mSectorSclae = 5000000;
+        [JsonProperty] private int mSectorSclae = 20000000;
         [JsonProperty] private int mMapScale = 100;
 
         public int Height { get { return mSectorCountHeight * mSectorSclae; } }
@@ -31,7 +28,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
 
         public void Generate(GameLayer gameLayer)
         {
-            var triangularDistribution = new Triangular(1, 10, 3);
+            var triangularDistribution = new Triangular(1, 10, 6);
             var noiseMapGenerator = new NoiseMapGenerator(RandomSeed.Time(), mSectorCountWidth, mSectorCountHeight);
             var noiseMap = noiseMapGenerator.GenerateBinaryNoiseMap();
 
@@ -43,26 +40,27 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                 for (int y = 0; y < columns; y++)
                 {
                     if (noiseMap[x, y] == 0) continue;
+                    var planets = new List<Planet>();
 
                     // Generate Star
                     Star star = StarTypes.GenerateRandomStar(GenerateStarPosition(x, y, mSectorSclae));
                     star.AddToSpatialHashing(gameLayer);
-                    mStars.Add(star);
 
                     // Generate Planets of Star
                     var orbitsAmount = (int)triangularDistribution.Sample();
-                    var orbitRadius = (int)(star.Width * star.TextureScale);
+                    var orbitRadius = (int)(star.Width * star.TextureScale * 0.5f);
 
                     for (int i = 1; i <= orbitsAmount; i++)
                     {
-                        orbitRadius += 50000;
+                        orbitRadius += 300000;
                         Planet planet = GetPlanet(star.Position, orbitRadius, i);
                         planet.AddToSpatialHashing(gameLayer);
-                        mPlanets.Add(planet);
+                        planets.Add(planet);
                     }
 
                     // Generate Planet System
-                    PlanetSystem planetSystem = new(GetMapPosition(star.Position), star.Position, orbitRadius + 100000, star.TextureId, star.LightColor);
+                    PlanetSystem planetSystem = new(GetMapPosition(star.Position), star.Position, orbitRadius / 2, star.TextureId, star.LightColor);
+                    planetSystem.SetAstronomicalObjects(star, planets);
                     mPlanetSystems.Add(planetSystem);
                 }
             }

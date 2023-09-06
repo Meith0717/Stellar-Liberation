@@ -31,7 +31,7 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
 
 
         public SpaceShip(Vector2 position, string textureId, float textureScale)
-            : base(position, textureId, textureScale, 2)
+            : base(position, textureId, textureScale, 10)
         {
             mShieldForce = mMaxHullForce;
             mHullForce = mMaxHullForce;
