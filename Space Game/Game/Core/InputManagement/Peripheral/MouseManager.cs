@@ -1,5 +1,4 @@
-﻿using CelestialOdyssey.Game.Core.InputManagement;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
@@ -45,9 +44,9 @@ namespace CelestialOdyssey.Game.Core.InputManagement.Peripheral
             return Mouse.GetState().Position.ToVector2();
         }
 
-        public List<ActionType> GetAction(out MouseActionType actionType)
+        public List<ActionType> GetAction(out List<MouseActionType> actionTypes)
         {
-            actionType = MouseActionType.None;
+            actionTypes = new List<MouseActionType>();
             mPreviousMouseState = mCurrentMouseState;
 
             // Update current and previous MouseWheelValue
@@ -57,23 +56,23 @@ namespace CelestialOdyssey.Game.Core.InputManagement.Peripheral
             mCurrentMouseState = Mouse.GetState();
 
             if (mCurrentMouseState.LeftButton == ButtonState.Pressed)
-                actionType = !IsLeftMouseButtonDown() ? MouseActionType.LeftClick : MouseActionType.LeftClickHold;
+                actionTypes.Add(!IsLeftMouseButtonDown() ? MouseActionType.LeftClick : MouseActionType.LeftClickHold);
             if (mCurrentMouseState.RightButton == ButtonState.Pressed)
-                actionType = !IsRightMouseButtonDown() ? MouseActionType.RightClick : MouseActionType.RightClickHold;
+                actionTypes.Add(!IsRightMouseButtonDown() ? MouseActionType.RightClick : MouseActionType.RightClickHold);
             if (IsLeftMouseButtonReleased())
-                actionType = MouseActionType.LeftClickReleased;
+                actionTypes.Add(MouseActionType.LeftClickReleased);
 
             // Set Mouse Action to MouseWheel
             if (mCurrentMouseWheelValue > mPreviousMouseWheelValue)
-                actionType = MouseActionType.MouseWheelForward;
+                actionTypes.Add(MouseActionType.MouseWheelForward);
             if (mCurrentMouseWheelValue < mPreviousMouseWheelValue)
-                actionType = MouseActionType.MouseWheelBackward;
+                actionTypes.Add(MouseActionType.MouseWheelBackward);
 
             // Add actions to InputState.mActionList based on MouseAction.
             List<ActionType> actions = new List<ActionType>();
             foreach (var key in mKeyBindingsMouse.Keys)
             {
-                if (key == actionType)
+                if (actionTypes.Contains(key))
                 {
                     actions.Add(mKeyBindingsMouse[key]);
                 }

@@ -1,54 +1,59 @@
-﻿using CelestialOdyssey.Game.Core.GameObjects;
+﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Game.Core.GameObjects;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.Core.Utility;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
+using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using System;
 
 namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
 {
-    public abstract class Projectile : GameObject
+    public class Projectile : GameObject
     {
-        internal SpaceShip mTargetObj { get; private set; }
-        internal Vector2 mStartPosition { get; private set; }
-        internal Vector2 mVariance { get; private set; }
-        internal float mVelocity { get; private set; }
-
-        public float LiveTime = 60000;
+        public float LiveTime = 5000;
+        private Vector2 mDirection;
+        private float mVelocity;
         private int mShieldDamage;
         private int mHullDamage;
 
-        internal Projectile(Vector2 startPosition, SpaceShip targetObj, string textureId, float textureScale, int shieldDamage, int hullDamage, float velocity)
-            : base(startPosition, textureId, textureScale, 1)
+        internal Projectile(Vector2 startPosition, float rotation, int shieldDamage, int hullDamage, float velocity)
+            : base(startPosition, ContentRegistry.projectile, 30, 1)
         {
+            mDirection = Geometry.CalculateDirectionVector(rotation);
+            Rotation = rotation;
             mVelocity = velocity;
-            var variance = (int)(Math.Min(targetObj.Width, targetObj.Height) * 0.5f);
-            mVariance = Utility.Utility.GetRandomVector2(-variance, variance, -variance, variance);
-            mTargetObj = targetObj;
-            mShieldDamage = shieldDamage;
             mHullDamage = hullDamage;
+            mShieldDamage = shieldDamage;
         }
 
-        public virtual void Update(Vector2 startPosition, GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
+        public void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer, SpaceShip origin)
         {
             base.Update(gameTime, inputState, sceneLayer);
-            mStartPosition = startPosition;
             LiveTime -= gameTime.ElapsedGameTime.Milliseconds;
-            CheckForHit();
+            RemoveFromSpatialHashing(sceneLayer);
+            Position += mDirection * mVelocity * gameTime.ElapsedGameTime.Milliseconds;
+            AddToSpatialHashing(sceneLayer);
+            CheckForHit(origin, sceneLayer);
         }
 
-        [Obsolete]
-        public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
+        private void CheckForHit(SpaceShip origin, SceneLayer sceneLayer)
         {
-            throw new Exception();
+            var items = sceneLayer.GetSortedObjectsInRadius<SpaceShip>(Position, 10000);
+            items.Remove(origin);
+            foreach (var item in items)
+            {
+                if (!item.BoundedBox.Intersects(BoundedBox)) return;
+                item.DoDamage(mShieldDamage, mHullDamage);
+                LiveTime = 0;
+            }
         }
 
-        internal void CheckForHit()
+        public override void Draw(SceneLayer sceneLayer)
         {
-            if (mTargetObj == null) return;
-            if (!mTargetObj.BoundedBox.Contains(Position)) return;
-            mTargetObj.DoDamage(mShieldDamage, mHullDamage);
-            LiveTime = 0;
+            base.Draw(sceneLayer);
+            TextureManager.Instance.DrawGameObject(this);
         }
     }
 }

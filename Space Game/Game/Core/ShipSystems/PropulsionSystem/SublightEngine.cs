@@ -17,9 +17,9 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
         public void Update(InputState inputState, Player player, Vector2 worldMousePosition)
         {
 
-            if (inputState.HasMouseAction(MouseActionType.LeftClickHold))
+            player.Rotation += MovementController.GetRotationUpdate(player.Rotation, Geometry.AngleBetweenVectors(player.Position, worldMousePosition), .1f);
+            if (inputState.HasMouseAction(MouseActionType.RightClickHold))
             {
-                player.Rotation += MovementController.GetRotationUpdate(player.Rotation, Geometry.AngleBetweenVectors(player.Position, worldMousePosition), .1f);
                 if (player.Velocity <= 0) player.Velocity = 1;
                 player.Velocity = MovementController.GetVelocity(player.Velocity, mMaxVelocity / 50);
                 if (player.Velocity > mMaxVelocity) player.Velocity = mMaxVelocity;

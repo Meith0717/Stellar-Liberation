@@ -35,7 +35,7 @@ namespace CelestialOdyssey.Game.Core.UserInterface
             var rect = new RectangleF(mX, mY, texture.Width * Scale, texture.Height * Scale);
             mHover = rect.Contains(inputState.mMousePosition);
             if (mHover &&
-                inputState.mMouseActionType == MouseActionType &&
+                inputState.HasMouseAction(MouseActionType) &&
                 OnClickAction != null)
             {
                 OnClickAction();

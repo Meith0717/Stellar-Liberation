@@ -29,7 +29,7 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
         // config to sound good
         private readonly float mBackgroundMusicVolume = 0.7f;
 
-        internal SoundManager(int maxSoundEffectInstances = 5)
+        internal SoundManager(int maxSoundEffectInstances = 20)
         {
             SoundEffects = new Hashtable();
             SoundEffectInstances = new Hashtable();

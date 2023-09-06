@@ -60,22 +60,20 @@ namespace CelestialOdyssey.Game.Core.InputManagement
 
     public class InputState
     {
-        internal readonly List<ActionType> mActionList;
-        internal MouseActionType mMouseActionType;
+        internal List<ActionType> mActions;
+        internal List<MouseActionType> mMouseActions;
         internal Vector2 mMousePosition;
         internal GamePadValues mGamePadValues;
         internal GamePadValues mPrevGamePadValues;
 
         public InputState()
         {
-            mActionList = new List<ActionType>();
+            mActions = new List<ActionType>();
         }
 
         public bool HasMouseAction(MouseActionType mouseActionType)
         {
-            if (mMouseActionType != mouseActionType) return false;
-            mMouseActionType = MouseActionType.None;
-            return true;
+            return mMouseActions.Remove(mouseActionType);
         }
 
         public void DoMouseAction(MouseActionType mouseActionType, Action funktion)
@@ -85,7 +83,7 @@ namespace CelestialOdyssey.Game.Core.InputManagement
 
         public bool HasAction(ActionType action)
         {
-            return mActionList.Remove(action);
+            return mActions.Remove(action);
         }
 
         public void DoAction(ActionType action, Action funktion)

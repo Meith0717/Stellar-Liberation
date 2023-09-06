@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -87,7 +88,7 @@ namespace CelestialOdyssey.GameEngine.Content_Management
         public readonly static Registry pirate = new(spacecrafts, "pirate");
 
         private readonly static string weapons = @"textures\gameobjects\weapons";
-        public readonly static Registry photonTorpedo = new(weapons, "photonTorpedo");
+        public readonly static Registry projectile = new(weapons, "projectile");
 
         private readonly static string textures = @"textures\";
         public readonly static Registry pixle = new(textures, "pixle");

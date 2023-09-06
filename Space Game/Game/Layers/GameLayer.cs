@@ -40,7 +40,7 @@ namespace CelestialOdyssey.Game.Layers
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax2.Name, 0.2f));
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax3.Name, 0.25f));
 
-            SoundManager.Instance.PlaySound(ContentRegistry.bgMusicGame, 1f, false, true, true);
+            SoundManager.Instance.PlaySound(ContentRegistry.bgMusicGame, 1.2f, false, true, true);
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)

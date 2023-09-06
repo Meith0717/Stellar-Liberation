@@ -18,10 +18,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
     public class Player : SpaceShip
     {
         [JsonProperty] public CargoHold Inventory { get; private set; }
-        [JsonProperty] private Weapon WeaponSlot1 = new PhotonPhaser(new(2000, 0));
-        [JsonProperty] private Weapon WeaponSlot2 = new PhotonPhaser(new(-2000, 0));
-        [JsonProperty] private Weapon WeaponSlot3 = new PhotonTorpedo(new(2000, 500));
-        [JsonProperty] private Weapon WeaponSlot4 = new PhotonTorpedo(new(2000, -500));
+        [JsonProperty] private Weapon mWeapon = new Weapon(new(2000, 0));
         [JsonIgnore] private SublightEngine mSublightEngine;
         [JsonIgnore] private HyperDrive mHyperdrive;
 
@@ -34,24 +31,18 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 
         public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
         {
-            if (inputState.HasAction(ActionType.FireInitialWeapon))
+            if (inputState.HasMouseAction(MouseActionType.LeftClickHold))
             {
-                if (GetTarget(out var target))
+                if (!mHyperdrive.IsActive)
                 {
-                    WeaponSlot1.Fire(target);
-                    WeaponSlot2.Fire(target);
-                    WeaponSlot3.Fire(target);
-                    WeaponSlot4.Fire(target);
+                    mWeapon.Fire(this);
                 }
             }
 
             mHyperdrive.Update(gameTime, this);
             if (!mHyperdrive.IsActive) mSublightEngine.Update(inputState, this, sceneLayer.WorldMousePosition);
 
-            WeaponSlot1.Update(this, gameTime, inputState, sceneLayer);
-            WeaponSlot2.Update(this, gameTime, inputState, sceneLayer);
-            WeaponSlot3.Update(this, gameTime, inputState, sceneLayer);
-            WeaponSlot4.Update(this, gameTime, inputState, sceneLayer);
+            mWeapon.Update(gameTime, inputState, sceneLayer, this);
             CollectItems(sceneLayer);
 
             base.Update(gameTime, inputState, sceneLayer);

@@ -1,7 +1,6 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
-using CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem.Projectiles;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
@@ -10,83 +9,61 @@ using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
 {
-    public class PhotonTorpedo : Weapon
+    public class Weapon
     {
-        public PhotonTorpedo(Vector2 relativePosition) : base(relativePosition, 5000, "torpedoFire") { }
-
-        public override void Fire(SpaceShip target)
-        {
-            var projectile = new Torpedo(mPosition, target, ContentRegistry.photonTorpedo.Name, 2, 5);
-            AddProjectile(projectile);
-        }
-    }
-
-    public class PhotonPhaser : Weapon
-    {
-        public PhotonPhaser(Vector2 relativePosition) : base(relativePosition, 2000, "") { }
-
-        public override void Fire(SpaceShip target)
-        {
-            var projectile = new Phaser(mPosition, target, Color.BlueViolet, 2, 5);
-            AddProjectile(projectile);
-        }
-    }
-
-    public abstract class Weapon
-    {
-        private List<Projectile> mProjecvtiles = new();
+        private List<Projectile> mProjectiles;
         private int mMaxCoolDown;
         private int mCooldown;
-        private string? mSound;
         private Vector2 mRelativePosition;
-        internal Vector2 mPosition;
 
-        internal Weapon(Vector2 relativePosition, int coolDownMs, string sound)
+        public Weapon(Vector2 relativePosition)
         {
-            mCooldown = mMaxCoolDown = coolDownMs;
             mRelativePosition = relativePosition;
-            mSound = sound;
+            mProjectiles = new List<Projectile>();
+            mMaxCoolDown = 100;
         }
 
-        public abstract void Fire(SpaceShip target);
-
-        internal virtual void AddProjectile(Projectile projectile)
+        public virtual void Fire(SpaceShip spaceShip)
         { 
-            if (mCooldown < mMaxCoolDown) return; 
-            mProjecvtiles.Add(projectile);
+            if (mCooldown < mMaxCoolDown) return;
+            var position = GetPosition(spaceShip.Position, mRelativePosition, spaceShip.Rotation);
+            mProjectiles.Add(new Projectile(position, spaceShip.Rotation, 100, 100, 200));
             mCooldown = 0;
-            if (mSound == null) return;
-            SoundManager.Instance.PlaySound(mSound, 1f);
+            SoundManager.Instance.PlaySound(ContentRegistry.torpedoFire, 1f);
         }
 
-        public void Update(SpaceShip ship, GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
+        public void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer, SpaceShip origin)
         {
-            float cosTheta = (float)Math.Cos(ship.Rotation);
-            float sinTheta = (float)Math.Sin(ship.Rotation);
-            Vector2 rotatedVector = new Vector2(
-                mRelativePosition.X * cosTheta - mRelativePosition.Y * sinTheta,
-                mRelativePosition.X * sinTheta + mRelativePosition.Y * cosTheta
-            );
-            mPosition = rotatedVector + ship.Position;
             mCooldown += gameTime.ElapsedGameTime.Milliseconds;
                 
-            if (mProjecvtiles.Count == 0) return;
+            if (mProjectiles.Count == 0) return;
             List<Projectile> deleteList = new();
-            foreach (var projectile in mProjecvtiles)
+            foreach (var projectile in mProjectiles)
             {
                 if (projectile.LiveTime <= 0)
                 {
                     deleteList.Add(projectile);
                     continue;
                 }
-                projectile.Update(mPosition, gameTime, inputState, sceneLayer);
+                projectile.Update(gameTime, inputState, sceneLayer, origin);
             }
 
             foreach (var projectile in deleteList)
             {
                 projectile.RemoveFromSpatialHashing(sceneLayer);
-                mProjecvtiles.Remove(projectile);
+                mProjectiles.Remove(projectile);
             }
+        }
+
+        private static Vector2 GetPosition(Vector2 origin, Vector2 relativePosition, float rotation)
+        {
+            float cosTheta = (float)Math.Cos(rotation);
+            float sinTheta = (float)Math.Sin(rotation);
+            Vector2 rotatedVector = new Vector2(
+                relativePosition.X * cosTheta - relativePosition.Y * sinTheta,
+                relativePosition.X * sinTheta + relativePosition.Y * cosTheta
+            );
+            return rotatedVector + origin;
         }
     }
 }

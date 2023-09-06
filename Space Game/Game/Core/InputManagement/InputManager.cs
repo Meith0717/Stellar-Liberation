@@ -6,8 +6,6 @@
 */
 
 using CelestialOdyssey.Game.Core.InputManagement.Peripheral;
-using Microsoft.Xna.Framework.Input;
-using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.Core.InputManagement
 {
@@ -17,39 +15,16 @@ namespace CelestialOdyssey.Game.Core.InputManagement
         private MouseManager mMouseManager = new();
         private GamePadManager mGamePadManager = new();
 
-        private readonly Dictionary<Buttons, ActionType> mKeyBindingsButtonPressed, mKeyBindingsButtonHold;
+        private readonly InputState mInputState = new();
 
-        // Attributes keyboard. new.
-        private Buttons[] mCurrentButtonPressed, mPreviousButtonPressed;
-
-
-        // InputState contains all the actions made by the player and mouse position.
-        private readonly InputState mInputState;
-
-        // Constructor.
-        public InputManager()
-        {
-            // Dictionary for keyboard keys that have been pressed and corresponding actions.
-            mKeyBindingsButtonPressed = new()
-            {
-                {Buttons.Start, ActionType.ESC },
-            };
-
-            mKeyBindingsButtonHold = new() { };
-
-            mInputState = new InputState();
-        }
-
-        // Updates all the inputs and returns actions and mouse position in InputState.
         public InputState Update()
         {
-            mInputState.mActionList.Clear();
+            mInputState.mActions.Clear();
             mInputState.mMousePosition = mMouseManager.GetPosition();
-            mInputState.mActionList.AddRange(mMouseManager.GetAction(out mInputState.mMouseActionType));
-            mInputState.mActionList.AddRange(mGamePadManager.GetActions(out mInputState.mGamePadValues));
-            mInputState.mActionList.AddRange(mKeyboardManager.GetActions());
+            mInputState.mActions.AddRange(mMouseManager.GetAction(out mInputState.mMouseActions));
+            mInputState.mActions.AddRange(mGamePadManager.GetActions(out mInputState.mGamePadValues));
+            mInputState.mActions.AddRange(mKeyboardManager.GetActions());
             mInputState.mPrevGamePadValues = mInputState.mGamePadValues;
-
             return mInputState;
         }
     }
