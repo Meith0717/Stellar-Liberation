@@ -112,6 +112,7 @@ namespace CelestialOdyssey.GameEngine.Content_Management
         public readonly static Registry torpedoFire = new(soundEffects, "torpedoFire");
         public readonly static Registry collect = new(soundEffects, "collect");
         public readonly static Registry bgMusicGame = new(soundEffects, "bgMusicGame");
+        public readonly static Registry CourseSet = new(soundEffects, "CourseSet");
 
         public static List<Registry> IterateThroughRegistries()
         {

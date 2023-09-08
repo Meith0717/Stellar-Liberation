@@ -6,7 +6,6 @@ using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace CelestialOdyssey.Game.Layers
 {
@@ -49,8 +48,7 @@ namespace CelestialOdyssey.Game.Layers
 
         private void SetPlayerTarget(PlanetSystem planetSystem) 
         {
-            mGameLayer.Player.SetTarget(planetSystem);
-            mLayerManager.PopLayer();
+            mGameLayer.Player.SetTarget(planetSystem, this);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -62,7 +60,7 @@ namespace CelestialOdyssey.Game.Layers
             base.Draw(spriteBatch);
         }
 
-        private void CloseMap() 
+        public void CloseMap() 
         { 
             mLayerManager.PopLayer();
             mGame1.SetCursor(ContentRegistry.cursor1);

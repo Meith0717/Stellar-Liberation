@@ -25,12 +25,15 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
         public Player(Vector2 position) : base(position, ContentRegistry.ship.Name, 10) 
         { 
             Inventory = new(16);
-            mHyperdrive = new(2500, 2000);
+            mHyperdrive = new(2500, 30000);
             mSublightEngine = new(50);
         }
 
         public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
         {
+
+            System.Diagnostics.Debug.WriteLine(mHyperdrive.ActualCharging);
+
             if (inputState.HasMouseAction(MouseActionType.RightClickHold))
             {
                 if (!mHyperdrive.IsActive)
@@ -49,9 +52,9 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
             sceneLayer.Camera.SetPosition(Position);
         }
 
-        public void SetTarget(PlanetSystem planetSystem)
+        public void SetTarget(PlanetSystem planetSystem, MapLayer mapLayer)
         {
-            mHyperdrive.SetTarget(planetSystem, this);
+            mHyperdrive.SetTarget(planetSystem, this, mapLayer);
         }
 
 
