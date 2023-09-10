@@ -19,7 +19,6 @@ namespace CelestialOdyssey.Game.Core.InputManagement.Peripheral
             mActionOnPadPressed = new()
             {
                 { Buttons.Start, ActionType.ESC },
-                { Buttons.LeftStick, ActionType.Acceleration },
             };
 
             mActionOnPadHold = new()

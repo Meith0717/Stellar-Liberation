@@ -18,6 +18,8 @@ namespace CelestialOdyssey
         private readonly GraphicsDeviceManager mGraphicsManager;
         private readonly InputManager mInputManager;
 
+        private GameLayer mGameLayer;
+
         // Global Classes
         private SpriteBatch mSpriteBatch;
         public LayerManager mLayerManager;
@@ -45,7 +47,8 @@ namespace CelestialOdyssey
         {
             base.Initialize();
             mLayerManager = new LayerManager(this, GraphicsDevice, mSerialize);
-            mLayerManager.AddLayer(new GameLayer());
+            mGameLayer = new GameLayer();
+            mLayerManager.AddLayer(mGameLayer);
         }
 
         protected override void LoadContent()
@@ -77,8 +80,15 @@ namespace CelestialOdyssey
             InputState inputState = mInputManager.Update();
             inputState.DoAction(ActionType.ToggleFullscreen, ToggleFullscreen);
             mLayerManager.Update(gameTime, inputState);
+
+            inputState.DoAction(ActionType.Save, Save);
+            inputState.DoAction(ActionType.Load, Load);
+
             base.Update(gameTime);
         }
+
+        private void Save() { mSerialize.SerializeObject(mGameLayer, "test"); }
+        private void Load() { mGameLayer = (GameLayer)mSerialize.PopulateObject(mGameLayer, "test"); }
 
         protected override void Draw(GameTime gameTime)
         {

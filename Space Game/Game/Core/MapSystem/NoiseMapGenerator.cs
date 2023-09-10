@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Numerics;
 using static CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types.PlanetTypes;
 
 namespace CelestialOdyssey.Game.Core.MapSystem
@@ -9,7 +10,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
         private int width;
         private int height;
 
-        public NoiseMapGenerator(int seed, int width, int height)
+        public NoiseMapGenerator(int width, int height)
         {
             this.width = width;
             this.height = height;
@@ -24,7 +25,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
             int centerY = width / 2;
 
             // Radius des Kreises (angepasst an die Matrixgröße)
-            double radius = Math.Min(width, height) / 3.0;
+            double radius = Math.Min(width, height) / 2.0; 
 
             for (int i = 0; i < width; i++)
             {

@@ -1,4 +1,5 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types;
@@ -20,16 +21,16 @@ namespace CelestialOdyssey.Game.Core.MapSystem
 
         [JsonProperty] private int mSectorCountWidth = 40;
         [JsonProperty] private int mSectorCountHeight = 40;
-        [JsonProperty] private int mSectorSclae = 20000000;
-        [JsonProperty] private int mMapScale = 100;
+        [JsonProperty] public readonly int SectorSclae = 20000000;
+        [JsonProperty] public readonly int MapScale = 100;
 
-        public int Height { get { return mSectorCountHeight * mSectorSclae; } }
-        public int Width { get { return mSectorCountWidth * mSectorSclae; } }
+        public int Height { get { return mSectorCountHeight * SectorSclae; } }
+        public int Width { get { return mSectorCountWidth * SectorSclae; } }
 
         public void Generate(GameLayer gameLayer)
         {
             var triangularDistribution = new Triangular(1, 10, 6);
-            var noiseMapGenerator = new NoiseMapGenerator(RandomSeed.Time(), mSectorCountWidth, mSectorCountHeight);
+            var noiseMapGenerator = new NoiseMapGenerator(mSectorCountWidth, mSectorCountHeight);
             var noiseMap = noiseMapGenerator.GenerateBinaryNoiseMap();
 
             int rows = noiseMap.GetLength(0);
@@ -43,7 +44,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                     var planets = new List<Planet>();
 
                     // Generate Star
-                    Star star = StarTypes.GenerateRandomStar(GenerateStarPosition(x, y, mSectorSclae));
+                    Star star = StarTypes.GenerateRandomStar(GenerateStarPosition(x, y, SectorSclae));
                     star.AddToSpatialHashing(gameLayer);
 
                     // Generate Planets of Star
@@ -59,11 +60,49 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                     }
 
                     // Generate Planet System
-                    PlanetSystem planetSystem = new(GetMapPosition(star.Position), star.Position, orbitRadius / 2, star.TextureId, star.LightColor);
-                    planetSystem.SetAstronomicalObjects(star, planets);
+                    var danger = GetDanger(x, y);
+                    PlanetSystem planetSystem = new(GetMapPosition(star.Position), star.Position, orbitRadius, star.TextureId, star.LightColor, danger);
                     mPlanetSystems.Add(planetSystem);
+
+                    // Generate Pirates 
+                    var pirates = new List<Pirate>();
+                    var pirateAmount = GetPirateAmount(danger);
+                    for (int i = 0; i < pirateAmount; i++)
+                    {
+                        Pirate pirate = new(Utility.Utility.GetRandomVector2(planetSystem.SystemBounding));
+                        pirates.Add(pirate);
+                        pirate.AddToSpatialHashing(gameLayer);
+                    }
+
+                    planetSystem.SetObjects(star, planets, pirates);
                 }
             }
+        }
+
+        private int GetPirateAmount(Danger danger) => danger switch
+        {
+            Danger.None => 0,
+            Danger.Moderate => Utility.Utility.Random.Next(0, 10),
+            Danger.Medium => Utility.Utility.Random.Next(10, 20),
+            Danger.High => Utility.Utility.Random.Next(20, 30),
+            _ => throw new NotImplementedException()
+        };
+
+        private Danger GetDanger(int x, int y) => Hash(x, y) switch
+        {
+            > 0.8 => Danger.None,
+            > 0.6 => Danger.Moderate,
+            > 0.4 => Danger.Medium,
+            _ => Danger.High
+        }; 
+
+        private double Hash(int x, int y)
+        {
+            var centerX = mSectorCountWidth / 2;
+            var centerY = mSectorCountHeight / 2;
+            var center = new Vector2(centerX, centerY);
+            var distance = Vector2.Distance(center, new(x, y));
+            return distance / Math.Min(centerX, centerY);
         }
 
         private static Vector2 GenerateStarPosition(int x, int y, int scaling)
@@ -91,26 +130,33 @@ namespace CelestialOdyssey.Game.Core.MapSystem
             };
         }
 
-        public Vector2 GetMapPosition(Vector2 sectorPosition) { return sectorPosition / mSectorSclae * mMapScale; }
-        public Vector2 GetSectorPosition(Vector2 mapPosition) { return mapPosition / mMapScale * mSectorSclae; }
+        public Vector2 GetMapPosition(Vector2 sectorPosition) { return sectorPosition / SectorSclae * MapScale; }
+        
+        public Vector2 GetSectorPosition(Vector2 mapPosition) { return mapPosition / MapScale * SectorSclae; }
+        
         public PlanetSystem GetRandomSystem() { return Utility.Utility.GetRandomElement(mPlanetSystems); }
+        
+        public void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer)
+        {
+            foreach (var system in mPlanetSystems) { system.Update(gameTime, inputState, gameLayer); }
+        }
 
         public void DrawSectores(SceneLayer sceneLayer)
         {
             var screen = sceneLayer.FrustumCuller.WorldFrustum;
 
-            var mapWidth = (mSectorCountWidth * mMapScale) + mMapScale;
-            var mapHeight = (mSectorCountHeight * mMapScale) + mMapScale;
+            var mapWidth = (mSectorCountWidth * MapScale) + MapScale;
+            var mapHeight = (mSectorCountHeight * MapScale) + MapScale;
 
-            for (int x = 0; x < mapWidth; x += mMapScale)
+            for (int x = 0; x < mapWidth; x += MapScale)
             {
                 if (x < screen.X && x > screen.X + screen.Width) continue;
-                TextureManager.Instance.DrawAdaptiveLine(new(x, -mMapScale), new(x, mapHeight), new Color(10, 10, 10, 10), 1, 0, sceneLayer.Camera.Zoom);
+                TextureManager.Instance.DrawAdaptiveLine(new(x, -MapScale), new(x, mapHeight), new Color(10, 10, 10, 10), 1, 0, sceneLayer.Camera.Zoom);
             }
-            for (int y = 0; y < mapHeight; y += mMapScale)
+            for (int y = 0; y < mapHeight; y += MapScale)
             {
                 if (y < screen.Y && y > screen.Y + screen.Height) continue;
-                TextureManager.Instance.DrawAdaptiveLine(new(-mMapScale, y), new(mapWidth, y), new Color(10, 10, 10, 10), 1, 0, sceneLayer.Camera.Zoom);
+                TextureManager.Instance.DrawAdaptiveLine(new(-MapScale, y), new(mapWidth, y), new Color(10, 10, 10, 10), 1, 0, sceneLayer.Camera.Zoom);
             }
         }
 

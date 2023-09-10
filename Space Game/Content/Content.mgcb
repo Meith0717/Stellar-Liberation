@@ -40,11 +40,23 @@
 /processorParam:Quality=Best
 /build:SoundEffects/bgMusicGame.wav
 
+#begin SoundEffects/chargeHyperdrive.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SoundEffects/chargeHyperdrive.wav
+
 #begin SoundEffects/collect.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:SoundEffects/collect.wav
+
+#begin SoundEffects/coolHyperdrive.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SoundEffects/coolHyperdrive.wav
 
 #begin SoundEffects/CourseSet.wav
 /importer:WavImporter

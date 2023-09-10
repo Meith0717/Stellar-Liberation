@@ -3,58 +3,56 @@ using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.MapSystem;
 using CelestialOdyssey.Game.Core.Parallax;
-using CelestialOdyssey.Game.Core.Persistance;
-using CelestialOdyssey.Game.Core.Utility;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.SpaceShips;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
 
 namespace CelestialOdyssey.Game.Layers
 {
     [Serializable]
     public class GameLayer : SceneLayer
     {
-        [JsonIgnore] private readonly ParllaxManager mParllaxManager = new();
-        [JsonIgnore] private MapLayer mMapLayer;
-
-        [JsonProperty] public readonly Map Map = new();
+        [JsonIgnore] private readonly ParllaxManager mParllaxManager;
+        [JsonIgnore] public PlanetSystem ActualPlanetSystem;
+        [JsonProperty] public readonly Map Map;
         [JsonProperty] public readonly Player Player;
-        [JsonProperty] public PlanetSystem ActualPlanetSystem;
-
-        [JsonIgnore] private Pirate pirate;
 
         public GameLayer() : base(1000000, false, 0.001f, 0.01f, false)
         {
+            // Build and generate map
+            Map = new();
             Map.Generate(this);
-            ActualPlanetSystem = Map.mPlanetSystems[0];
+
+            // Set start planetsystem
+            ActualPlanetSystem = Map.mPlanetSystems.First();
+
+            // Build and place player to startsystem
             Player = new(Map.GetSectorPosition(ActualPlanetSystem.Position));
-            pirate = new(Utility.GetRandomVector2(Map.GetSectorPosition(ActualPlanetSystem.Position), 1000000));
             Camera.SetPosition(Player.Position);
 
+            // Build and set parllax manager
+            mParllaxManager = new();
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax.Name, 0.1f));
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax1.Name, 0.15f));
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax2.Name, 0.2f));
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax3.Name, 0.25f));
 
+            // Play bg music
             SoundManager.Instance.PlaySound(ContentRegistry.bgMusicGame, 1.2f, false, true, true);
-        }
-
-        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
-        {
-            base.Initialize(game1, layerManager, graphicsDevice, serialize);
-            mGame1.SetCursor(ContentRegistry.cursor1);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            if (!FrustumCuller.VectorOnScreenView(inputState.mMousePosition)) Pause();
+
             // Update Stuff
             Player.Update(gameTime, inputState, this);
-            pirate.Update(gameTime, inputState, this);
             base.Update(gameTime, inputState);
+            Map.Update(gameTime, inputState, this);
             mParllaxManager.Update(Camera.Movement, Camera.Zoom);
 
             // Get Inputs
@@ -66,38 +64,37 @@ namespace CelestialOdyssey.Game.Layers
             if (ActualPlanetSystem is null) ShowExitingSystemWarning();
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            mParllaxManager.Draw();
-            spriteBatch.End();
+        public override void DrawOnWorld() { ; }
 
-            base.Draw(spriteBatch);
-        }
+        public override void DrawOnScreen() { mParllaxManager.Draw(); }
 
-        public override void DrawOnScene() { ; }
         public override void Destroy() { ; }
+
         public override void OnResolutionChanged() { mParllaxManager.OnResolutionChanged(mGraphicsDevice); }
+
+        // Other Stuff
         public void ToggleMapView()
         {
-            mMapLayer ??= new(this);
+            var mapLayer = new MapLayer(this);
             mGame1.SetCursor(ContentRegistry.cursor);
             switch (ActualPlanetSystem)
             {
                 case null:
-                    mMapLayer.Camera.SetPosition(Map.GetMapPosition(Player.Position));
+                    mapLayer.Camera.SetPosition(Map.GetMapPosition(Player.Position));
                     break;
                 case not null:
-                    mMapLayer.Camera.SetPosition(ActualPlanetSystem.Position);
+                    mapLayer.Camera.SetPosition(ActualPlanetSystem.Position);
                     break;
             }
 
-            mLayerManager.AddLayer(mMapLayer);
+            mLayerManager.AddLayer(mapLayer);
         }
+
         private void Pause()
         {
             mLayerManager.AddLayer(new PauseLayer());
-        }
+        }        
+
         private void ShowExitingSystemWarning() { }
     }
 }

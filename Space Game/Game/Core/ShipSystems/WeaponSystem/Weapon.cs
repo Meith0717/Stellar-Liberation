@@ -27,7 +27,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
         { 
             if (mCooldown < mMaxCoolDown) return;
             var position = GetPosition(spaceShip.Position, mRelativePosition, spaceShip.Rotation);
-            mProjectiles.Add(new Projectile(position, spaceShip.Rotation, 100, 100, 100));
+            mProjectiles.Add(new Projectile(position, spaceShip.Rotation, 5, 5, 100));
             mCooldown = 0;
             SoundManager.Instance.PlaySound(ContentRegistry.torpedoFire, 1f);
         }

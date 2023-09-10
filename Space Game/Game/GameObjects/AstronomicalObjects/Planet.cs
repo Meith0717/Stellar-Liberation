@@ -1,5 +1,6 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.GameObjects;
+using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.Utility;
 using CelestialOdyssey.GameEngine.Content_Management;
@@ -31,6 +32,17 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             Position = Geometry.GetPointOnCircle(OrbitCenter, OrbitRadius, OrbitRadians);
             mShadowRotation = Geometry.AngleBetweenVectors(Position, OrbitCenter) + MathF.PI;
             UpdateBoundBox();
+        }
+
+        public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
+        {
+            base.Update(gameTime, inputState, sceneLayer);
+            RemoveFromSpatialHashing(sceneLayer);
+            OrbitRadians -= 0.001f;
+            Position = Geometry.GetPointOnCircle(OrbitCenter, OrbitRadius, OrbitRadians);
+            mShadowRotation = Geometry.AngleBetweenVectors(Position, OrbitCenter) + MathF.PI;
+            Rotation -= 0.001f;
+            AddToSpatialHashing(sceneLayer);
         }
 
         public override void Draw(SceneLayer sceneLayer)

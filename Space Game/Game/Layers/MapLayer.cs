@@ -5,7 +5,6 @@ using CelestialOdyssey.Game.Core.Parallax;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace CelestialOdyssey.Game.Layers
 {
@@ -39,7 +38,7 @@ namespace CelestialOdyssey.Game.Layers
             {
                 if (!FrustumCuller.CircleOnWorldView(planetSystems.BoundedBox)) continue;
                 planetSystems.CheckIfHasPlayer(mGameLayer.Player);
-                planetSystems.Update(gameTime, inputState, this);
+                planetSystems.UpdateOnMap(gameTime, inputState, this);
                 if (planetSystems.LeftPressed) SetPlayerTarget(planetSystems);
             }
             mParllaxManager.Update(Camera.Movement, Camera.Zoom);
@@ -51,27 +50,21 @@ namespace CelestialOdyssey.Game.Layers
             mGameLayer.Player.SetTarget(planetSystem, this);
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            mParllaxManager.Draw();
-            spriteBatch.End();
+        public override void DrawOnScreen() { mParllaxManager.Draw(); }
 
-            base.Draw(spriteBatch);
-        }
+        public override void DrawOnWorld() { mGameLayer.Player.DrawPath(mGameLayer, this); mGameLayer.Map.DrawSectores(this); }
 
         public void CloseMap() 
         { 
             mLayerManager.PopLayer();
             mGame1.SetCursor(ContentRegistry.cursor1);
+            foreach (var planetSystems in mGameLayer.Map.mPlanetSystems)
+            {
+                planetSystems.RemoveFromSpatialHashing(this);
+            }
         }
 
         public override void Destroy() { ; }
-
-        public override void DrawOnScene() 
-        { 
-            mGameLayer.Player.DrawPath(mGameLayer, this);
-        }
 
         public override void OnResolutionChanged() { mParllaxManager.OnResolutionChanged(mGraphicsDevice); }
     }

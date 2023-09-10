@@ -2,7 +2,6 @@
 using CelestialOdyssey.Game.Core.GameObjects;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.Utility;
-using CelestialOdyssey.Game.GameObjects.SpaceShips;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
@@ -49,17 +48,22 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
             DebugSystem.UpdateFrameCounting();
 
             spriteBatch.Begin();
-            DebugSystem.ShowRenderInfo(Camera.Zoom, Camera.Position);
+            DrawOnScreen();
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: mViewTransformationMatrix, samplerState: SamplerState.PointClamp );
             DebugSystem.TestSpatialHashing(this);
             RenderWorldObjectsOnScreen();
-            DrawOnScene();
+            DrawOnWorld();
+            spriteBatch.End();
+
+            spriteBatch.Begin();
+            DebugSystem.ShowRenderInfo(Camera.Zoom, Camera.Position);
             spriteBatch.End();
         }
 
-        public abstract void DrawOnScene();
+        public abstract void DrawOnScreen();
+        public abstract void DrawOnWorld();
 
         public List<T> GetObjectsInRadius<T>(Vector2 position, int radius) where T : GameObject
         {

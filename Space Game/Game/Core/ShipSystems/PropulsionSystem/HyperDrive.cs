@@ -23,7 +23,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
         {
             mMaxVelocity = maxVelocity;
             mEngineCoolDownTime = mActualEngineCoolDownTime = engineCoolDownTime;
-            mChargingTime = 5000;
+            mChargingTime = 6000;
         }
 
         public double ActualCharging {  
@@ -35,10 +35,12 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
         public void SetTarget(PlanetSystem planetSystem, Player player, MapLayer mapLayer) 
         {
             if (mEngineCoolDownTime > mActualEngineCoolDownTime) return;
+            SoundManager.Instance.PlaySound(ContentRegistry.ChargeHyperdrive, 1);
             mapLayer.CloseMap();
+            player.Velocity = 50;
             IsActive = true;
             mActualChargingTime = 0;
-            TargetPosition = planetSystem.GetEntryPosition(player);
+            TargetPosition = planetSystem.Star.Position;
             mLastDistanceToTarget = Vector2.Distance(player.Position, (Vector2)TargetPosition);
         }
 
@@ -61,16 +63,17 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
             {
                 case null:
                     if (!IsActive) return;
-                    if (player.Velocity > 0) player.Velocity = MovementController.GetVelocity(player.Velocity, -mMaxVelocity / 10);
+                    if (player.Velocity > 0) player.Velocity = MovementController.GetVelocity(player.Velocity, -mMaxVelocity / 5);
                     if (player.Velocity <= 0)
                     {
+                        SoundManager.Instance.PlaySound(ContentRegistry.CoolHyperdrive, 1);
                         player.Velocity = 0;
                         mActualEngineCoolDownTime = 0;
                         IsActive = false;
                     }
                     break;
                 case not null:
-                    if (player.Velocity < mMaxVelocity) player.Velocity = MovementController.GetVelocity(player.Velocity, mMaxVelocity / 10);
+                    if (player.Velocity < mMaxVelocity) player.Velocity = MovementController.GetVelocity(player.Velocity, mMaxVelocity / 5);
                     break;
             }
         }
