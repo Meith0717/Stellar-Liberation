@@ -21,7 +21,7 @@ namespace CelestialOdyssey.Game.Layers
         [JsonProperty] public readonly Map Map;
         [JsonProperty] public readonly Player Player;
 
-        public GameLayer() : base(1000000, false, 0.001f, 0.01f, false)
+        public GameLayer() : base(1000000, false, 0.001f, 1f, false)
         {
             // Build and generate map
             Map = new();
@@ -47,7 +47,7 @@ namespace CelestialOdyssey.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            if (!FrustumCuller.VectorOnScreenView(inputState.mMousePosition)) Pause();
+            if (!FrustumCuller.VectorOnScreenView(inputState.mMousePosition) && inputState.mMouseActions.Count > 0) Pause();
 
             // Update Stuff
             Player.Update(gameTime, inputState, this);

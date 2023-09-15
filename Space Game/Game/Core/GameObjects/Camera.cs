@@ -1,4 +1,6 @@
 
+
+
 /*
  *  Camera.cs
  *
@@ -18,7 +20,7 @@ namespace CelestialOdyssey.Game.Core.GameObjects
     /// </summary>
     public class Camera
     {
-        private const int CameraGlide = 10;
+        private const int CameraGlide = 4;
         private float mMaxZoom;
         private float mMinZoom;
         private bool mAllowMovingWithMouse;

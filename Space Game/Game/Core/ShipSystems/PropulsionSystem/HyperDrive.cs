@@ -51,8 +51,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
 
             GetVelocity(player);
             if (TargetPosition is null) return;
-            var rotationToTarget = Geometry.AngleBetweenVectors(player.Position, (Vector2)TargetPosition);
-            player.Rotation += MovementController.GetRotationUpdate(player.Rotation, rotationToTarget, 0.05f);
+            player.Rotation += MovementController.GetRotationUpdate(player.Rotation, player.Position, (Vector2)TargetPosition, 0.05f);
             ManageDistance(player, gameTime);
         }
 

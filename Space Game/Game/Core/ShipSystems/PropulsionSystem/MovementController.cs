@@ -1,4 +1,5 @@
 ﻿using CelestialOdyssey.Game.Core.Utility;
+using Microsoft.Xna.Framework;
 
 namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
 {
@@ -16,8 +17,9 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
         /// The rotation update value, scaled by the provided smoothing factor for better control over the transition.
         /// If the input angles are NaN (Not a Number), the function returns 0 to prevent undesired behavior.
         /// </returns>
-        public static float GetRotationUpdate(float currentRotation, float targetRotation, float rotationSmoothingFactor)
+        public static float GetRotationUpdate(float currentRotation, Vector2 currentPosition, Vector2 targetPosition, float rotationSmoothingFactor)
         {
+            var targetRotation = Geometry.AngleBetweenVectors(currentPosition, targetPosition);
             float delta = Geometry.AngleDelta(Geometry.RadToDeg(currentRotation), Geometry.RadToDeg(targetRotation));
             delta = Geometry.DegToRad(delta);
             return delta switch

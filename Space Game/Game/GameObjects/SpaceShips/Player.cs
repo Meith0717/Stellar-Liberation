@@ -32,8 +32,8 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
             mWeapon1 = new(new(10000, -2200));
             mWeapon2 = new(new(2000, 5000));
             mWeapon3 = new(new(2000, -5000));
-            mHyperdrive = new(2500, 100);
-            mSublightEngine = new(50);
+            mHyperdrive = new(6000, 100);
+            mSublightEngine = new(200);
         }
 
         public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)

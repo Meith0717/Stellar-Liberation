@@ -38,10 +38,9 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         {
             base.Update(gameTime, inputState, sceneLayer);
             RemoveFromSpatialHashing(sceneLayer);
-            OrbitRadians -= 0.001f;
             Position = Geometry.GetPointOnCircle(OrbitCenter, OrbitRadius, OrbitRadians);
             mShadowRotation = Geometry.AngleBetweenVectors(Position, OrbitCenter) + MathF.PI;
-            Rotation -= 0.001f;
+            Rotation -= 0.005f;
             AddToSpatialHashing(sceneLayer);
         }
 
