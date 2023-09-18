@@ -1,11 +1,10 @@
 ﻿using CelestialOdyssey.Game.Core.InputManagement;
-using CelestialOdyssey.Game.Core.Utility;
-using CelestialOdyssey.Game.GameObjects.SpaceShips;
+using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using Microsoft.Xna.Framework;
 
 namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
 {
-    internal class SublightEngine
+    public class SublightEngine
     {
         private float mMaxVelocity;
 
@@ -14,19 +13,18 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
             mMaxVelocity = maxVelocity;
         }
 
-        public void Update(InputState inputState, Player player, Vector2 worldMousePosition)
+        public void FollowMouse(InputState inputState, SpaceShip spaceShip, Vector2 worldMousePosition)
         {
-
-            player.Rotation += MovementController.GetRotationUpdate(player.Rotation, player.Position, worldMousePosition, .1f);
+            spaceShip.Rotation += MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, worldMousePosition, .1f);
             if (inputState.HasMouseAction(MouseActionType.RightClickHold))
             {
-                if (player.Velocity <= 0) player.Velocity = 1;
-                player.Velocity = MovementController.GetVelocity(player.Velocity, mMaxVelocity / 50);
-                if (player.Velocity > mMaxVelocity) player.Velocity = mMaxVelocity;
+                if (spaceShip.Velocity <= 0) spaceShip.Velocity = 1;
+                spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, mMaxVelocity / 50);
+                if (spaceShip.Velocity > mMaxVelocity) spaceShip.Velocity = mMaxVelocity;
                 return;
             }
-            player.Velocity = MovementController.GetVelocity(player.Velocity, -mMaxVelocity / 50);
-            if (player.Velocity < 0) player.Velocity = 0;
+            spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, -mMaxVelocity / 50);
+            if (spaceShip.Velocity < 0) spaceShip.Velocity = 0;
         }
     }
 }

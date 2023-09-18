@@ -74,7 +74,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             var deleteList = new List<Pirate>();
             foreach (var item in mPirates)
             {
-                if (item.HullLevel <= 0) deleteList.Add(item);
+                if (item.DefenseSystem.HullLevel <= 0) deleteList.Add(item);
                 item.Update(gameTime, inputState, gameLayer);
             }
             foreach (var item in deleteList) 

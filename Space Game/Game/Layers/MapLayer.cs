@@ -23,11 +23,8 @@ namespace CelestialOdyssey.Game.Layers
                 planetSystems.AddToSpatialHashing(this);
             }
 
-            mParllaxManager.Add(new(ContentRegistry.gameBackground.Name, 0));
-            mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax.Name, 0.1f));
-            mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax1.Name, 0.15f));
-            mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax2.Name, 0.2f));
-            mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax3.Name, 0.25f));
+            mParllaxManager.Add(new(ContentRegistry.gameBackground, 0));
+            mParllaxManager.Add(new(ContentRegistry.mapBackground, 0));
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
@@ -41,13 +38,13 @@ namespace CelestialOdyssey.Game.Layers
                 planetSystems.UpdateOnMap(gameTime, inputState, this);
                 if (planetSystems.LeftPressed) SetPlayerTarget(planetSystems);
             }
-            mParllaxManager.Update(Camera.Movement, Camera.Zoom);
+            mParllaxManager.Update(Camera.Movement);
             inputState.DoAction(ActionType.ToggleMap, CloseMap);
         }
 
         private void SetPlayerTarget(PlanetSystem planetSystem) 
         {
-            mGameLayer.Player.SetTarget(planetSystem, this);
+            mGameLayer.Player.HyperDrive.SetTarget(planetSystem, this);
         }
 
         public override void DrawOnScreen() { mParllaxManager.Draw(); }

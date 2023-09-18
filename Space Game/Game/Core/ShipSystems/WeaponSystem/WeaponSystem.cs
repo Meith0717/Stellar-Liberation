@@ -9,16 +9,16 @@ using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
 {
-    public class Weapon
+    public class WeaponSystem
     {
+        private List<Vector2> mRelativePositions;
         private List<Projectile> mProjectiles;
         private int mMaxCoolDown;
         private int mCooldown;
-        private Vector2 mRelativePosition;
 
-        public Weapon(Vector2 relativePosition)
+        public WeaponSystem(List<Vector2> relativePositions)
         {
-            mRelativePosition = relativePosition;
+            mRelativePositions = relativePositions;
             mProjectiles = new List<Projectile>();
             mMaxCoolDown = 100;
         }
@@ -26,8 +26,11 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
         public virtual void Fire(SpaceShip spaceShip)
         { 
             if (mCooldown < mMaxCoolDown) return;
-            var position = GetPosition(spaceShip.Position, mRelativePosition, spaceShip.Rotation);
-            mProjectiles.Add(new Projectile(position, spaceShip.Rotation, 5, 5, 100));
+            foreach (var relPos in mRelativePositions)
+            {                
+                var position = GetPosition(spaceShip.Position, relPos, spaceShip.Rotation);
+                mProjectiles.Add(new Projectile(position, spaceShip.Rotation, 5, 5, 100));
+            }
             mCooldown = 0;
             SoundManager.Instance.PlaySound(ContentRegistry.torpedoFire, 1f);
         }
@@ -35,8 +38,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
         public void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer, SpaceShip origin)
         {
             mCooldown += gameTime.ElapsedGameTime.Milliseconds;
-                
-            if (mProjectiles.Count == 0) return;
+
             List<Projectile> deleteList = new();
             foreach (var projectile in mProjectiles)
             {

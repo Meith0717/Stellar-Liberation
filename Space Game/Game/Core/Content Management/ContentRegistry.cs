@@ -27,6 +27,7 @@ namespace CelestialOdyssey.GameEngine.Content_Management
     {
         private readonly static string background = @"textures\background";
         public readonly static Registry gameBackground = new(background, "gameBackground");
+        public readonly static Registry mapBackground = new(background, "mapBackground");
         public readonly static Registry gameBackgroundParlax = new(background, "gameBackgroundParlax");
         public readonly static Registry gameBackgroundParlax1 = new(background, "gameBackgroundParlax2");
         public readonly static Registry gameBackgroundParlax2 = new(background, "gameBackgroundParlax3");

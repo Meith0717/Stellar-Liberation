@@ -45,7 +45,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
             foreach (var item in items)
             {
                 if (!item.BoundedBox.Intersects(BoundedBox)) return;
-                item.DoDamage(mShieldDamage, mHullDamage);
+                item.DefenseSystem.GetDamage(mShieldDamage, mHullDamage);
                 LiveTime = 0;
             }
         }

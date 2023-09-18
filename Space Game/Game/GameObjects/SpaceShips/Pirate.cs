@@ -13,7 +13,10 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
         private patrolBehavior patrolBehavior = new();
 
         public Pirate(Vector2 position) 
-            : base(position, ContentRegistry.pirate.Name, 10) { Velocity = 50; }
+            : base(position, ContentRegistry.pirate.Name, 10) 
+        { 
+            Velocity = 50;
+        }
 
         public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
         {
@@ -24,7 +27,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
         public override void Draw(SceneLayer sceneLayer)
         {
             base.Draw(sceneLayer);
-            DrawLive();
+            DefenseSystem.DrawLive(this);
             TextureManager.Instance.DrawGameObject(this);
         }
     }

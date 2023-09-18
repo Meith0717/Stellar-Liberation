@@ -36,10 +36,10 @@ namespace CelestialOdyssey.Game.Layers
 
             // Build and set parllax manager
             mParllaxManager = new();
-            mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax.Name, 0.1f));
-            mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax1.Name, 0.15f));
-            mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax2.Name, 0.2f));
-            mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax3.Name, 0.25f));
+            mParllaxManager.Add(new(ContentRegistry.gameBackground.Name, 0.05f));
+            mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax, 0.1f));
+            mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax1, 0.15f));
+            mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax2, 0.2f));
 
             // Play bg music
             SoundManager.Instance.PlaySound(ContentRegistry.bgMusicGame, 1.2f, false, true, true);
@@ -53,7 +53,7 @@ namespace CelestialOdyssey.Game.Layers
             Player.Update(gameTime, inputState, this);
             base.Update(gameTime, inputState);
             Map.Update(gameTime, inputState, this);
-            mParllaxManager.Update(Camera.Movement, Camera.Zoom);
+            mParllaxManager.Update(Camera.Movement);
 
             // Get Inputs
             inputState.DoAction(ActionType.ToggleMap, ToggleMapView);
