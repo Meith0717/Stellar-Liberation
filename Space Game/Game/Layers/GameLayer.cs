@@ -21,7 +21,7 @@ namespace CelestialOdyssey.Game.Layers
         [JsonProperty] public readonly Map Map;
         [JsonProperty] public readonly Player Player;
 
-        public GameLayer() : base(1000000, false, 0.001f, 1f, false)
+        public GameLayer() : base(1000000, false, 0.00001f, 1f, false)
         {
             // Build and generate map
             Map = new();
@@ -37,7 +37,6 @@ namespace CelestialOdyssey.Game.Layers
             // Build and set parllax manager
             mParllaxManager = new();
             mParllaxManager.Add(new(ContentRegistry.gameBackground.Name, 0.05f));
-            mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax, 0.1f));
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax1, 0.15f));
             mParllaxManager.Add(new(ContentRegistry.gameBackgroundParlax2, 0.2f));
 

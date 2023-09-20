@@ -54,7 +54,6 @@ namespace CelestialOdyssey
         protected override void LoadContent()
         {
             mSpriteBatch = new SpriteBatch(GraphicsDevice);
-            System.Diagnostics.Debug.WriteLine(Path.GetFullPath("/Content"));
 
             // setup texture manager
             TextureManager.Instance.SetSpriteBatch(mSpriteBatch);

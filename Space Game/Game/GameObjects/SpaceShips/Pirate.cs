@@ -1,5 +1,6 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
-using CelestialOdyssey.Game.Core.AI.EnemyAi;
+using CelestialOdyssey.Game.Core.AI;
+using CelestialOdyssey.Game.Core.AI.EnemyBehavior;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
@@ -10,18 +11,20 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 {
     public class Pirate : SpaceShip
     {
-        private patrolBehavior patrolBehavior = new();
+        private BehaviorBasedAI mAi = new();
 
         public Pirate(Vector2 position) 
             : base(position, ContentRegistry.pirate.Name, 10) 
-        { 
-            Velocity = 50;
+        {
+            WeaponSystem = new(new() { new(0, 0) }, 800);
+            mAi.AddBehavior(new PartolBehavior());
+            mAi.AddBehavior(new AttacBehavior());
         }
 
         public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
         {
             base.Update(gameTime, inputState, sceneLayer);
-            patrolBehavior.Update(this, sceneLayer);
+            mAi.Update(gameTime, SensorArray.SortedObjectsInRange, this);
         }
 
         public override void Draw(SceneLayer sceneLayer)

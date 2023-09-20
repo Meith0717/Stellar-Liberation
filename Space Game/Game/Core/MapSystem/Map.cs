@@ -81,7 +81,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
 
         private int GetPirateAmount(Danger danger) => danger switch
         {
-            Danger.None => 20,
+            Danger.None => 1,
             Danger.Moderate => Utility.Utility.Random.Next(0, 10),
             Danger.Medium => Utility.Utility.Random.Next(10, 20),
             Danger.High => Utility.Utility.Random.Next(20, 30),

@@ -2,21 +2,33 @@
 using CelestialOdyssey.Game.Core.LayerManagement;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CelestialOdyssey.Game.Core.ShipSystems
 {
     public class SensorArray
     {
 
-        public List<GameObject> ObjectsInRange = new();
+        public List<GameObject> SortedObjectsInRange = new();
         private int mScanRadius;
 
-        public SensorArray(int scanRadius) { mScanRadius = scanRadius; }
+        private float mActualCounter;
+        private float mMaxCounter = 1000;
 
-        public void Update(Vector2 Position, SceneLayer sceneLayer)
-        {
-            ObjectsInRange = sceneLayer.GetSortedObjectsInRadius<GameObject>(Position, mScanRadius);
+        public SensorArray(int scanRadius, int scanCoolDown) 
+        { 
+            mScanRadius = scanRadius;
+            mMaxCounter = scanCoolDown;
+            mActualCounter = Utility.Utility.Random.Next(1000);
         }
 
+        public void Update(GameTime gameTime, Vector2 Position, SceneLayer sceneLayer)
+        {
+            mActualCounter += gameTime.TotalGameTime.Milliseconds;
+            if (mActualCounter < mMaxCounter) return;
+            mActualCounter = 0;
+            SortedObjectsInRange = sceneLayer.GetSortedObjectsInRadius<GameObject>(Position, mScanRadius);
+            SortedObjectsInRange.Remove(SortedObjectsInRange.First());
+        }
     }
 }

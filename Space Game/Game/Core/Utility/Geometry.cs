@@ -74,9 +74,14 @@ namespace CelestialOdyssey.Game.Core.Utility
             return deg * (2 * MathF.PI / 360);
         }
 
-        public static float AngleDelta(float degCurrent, float degTarget)
+        public static float AngleDegDelta(float degCurrent, float degTarget)
         {
             return (degTarget - degCurrent + 540) % 360 - 180;
+        }
+
+        public static float AngleRadDelta(float radCurrent, float radTarget)
+        {
+            return (RadToDeg(radTarget) - RadToDeg(radCurrent) + 540) % 360 - 180;
         }
     }
 }

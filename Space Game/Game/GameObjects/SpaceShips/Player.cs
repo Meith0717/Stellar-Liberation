@@ -16,22 +16,19 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
     [Serializable]
     public class Player : SpaceShip
     {
-        [JsonIgnore] private readonly WeaponSystem mWeaponSystem;
 
         public Player(Vector2 position) : base(position, ContentRegistry.ship.Name, 50) 
         {
-            mWeaponSystem = new(new(){ new(10000, 2200), new(10000, -2200), new(2000, 5000), new(2000, -5000)} );
+            WeaponSystem = new(new(){ new(10000, 2200), new(10000, -2200), new(2000, 5000), new(2000, -5000)}, 500 );
         }
 
         public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
         {
             if (!HyperDrive.IsActive)
             {
-                if (inputState.HasMouseAction(MouseActionType.LeftClickHold)) mWeaponSystem.Fire(this);
+                if (inputState.HasMouseAction(MouseActionType.LeftClickHold)) WeaponSystem.Fire(this);
                 SublightEngine.FollowMouse(inputState, this, sceneLayer.WorldMousePosition);
             }
-
-            mWeaponSystem.Update(gameTime, inputState, sceneLayer, this);
 
             base.Update(gameTime, inputState, sceneLayer);
             sceneLayer.Camera.SetPosition(Position);

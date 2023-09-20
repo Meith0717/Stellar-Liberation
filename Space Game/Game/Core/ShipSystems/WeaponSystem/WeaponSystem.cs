@@ -16,11 +16,11 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
         private int mMaxCoolDown;
         private int mCooldown;
 
-        public WeaponSystem(List<Vector2> relativePositions)
+        public WeaponSystem(List<Vector2> relativePositions, int coolDown)
         {
             mRelativePositions = relativePositions;
             mProjectiles = new List<Projectile>();
-            mMaxCoolDown = 100;
+            mMaxCoolDown = coolDown;
         }
 
         public virtual void Fire(SpaceShip spaceShip)
@@ -29,32 +29,10 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
             foreach (var relPos in mRelativePositions)
             {                
                 var position = GetPosition(spaceShip.Position, relPos, spaceShip.Rotation);
-                mProjectiles.Add(new Projectile(position, spaceShip.Rotation, 5, 5, 100));
+                mProjectiles.Add(new Projectile(spaceShip, position, spaceShip.Rotation, 5, 5, 200));
             }
             mCooldown = 0;
             SoundManager.Instance.PlaySound(ContentRegistry.torpedoFire, 1f);
-        }
-
-        public void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer, SpaceShip origin)
-        {
-            mCooldown += gameTime.ElapsedGameTime.Milliseconds;
-
-            List<Projectile> deleteList = new();
-            foreach (var projectile in mProjectiles)
-            {
-                if (projectile.LiveTime <= 0)
-                {
-                    deleteList.Add(projectile);
-                    continue;
-                }
-                projectile.Update(gameTime, inputState, sceneLayer, origin);
-            }
-
-            foreach (var projectile in deleteList)
-            {
-                projectile.RemoveFromSpatialHashing(sceneLayer);
-                mProjectiles.Remove(projectile);
-            }
         }
 
         private static Vector2 GetPosition(Vector2 origin, Vector2 relativePosition, float rotation)
@@ -67,5 +45,28 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
             );
             return rotatedVector + origin;
         }
+
+        public void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
+        {
+            mCooldown += gameTime.ElapsedGameTime.Milliseconds;
+
+            List<Projectile> deleteList = new();
+            foreach (var projectile in mProjectiles)
+            {
+                if (projectile.LiveTime <= 0)
+                {
+                    deleteList.Add(projectile);
+                    continue;
+                }
+                projectile.Update(gameTime, inputState, sceneLayer);
+            }
+
+            foreach (var projectile in deleteList)
+            {
+                projectile.RemoveFromSpatialHashing(sceneLayer);
+                mProjectiles.Remove(projectile);
+            }
+        }
+
     }
 }

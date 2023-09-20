@@ -31,7 +31,6 @@ namespace CelestialOdyssey.Game.Core.ShipSystems
                     gameTime.ElapsedGameTime.Milliseconds;
             if (mActualHullForce + mHullRegeneration < mMaxHullForce) mActualHullForce += mHullRegeneration /
                     gameTime.ElapsedGameTime.Milliseconds;
-           
         }
 
         public void GetDamage(int shieldDamage, int hullDamage)

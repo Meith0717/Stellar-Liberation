@@ -20,7 +20,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
         public static float GetRotationUpdate(float currentRotation, Vector2 currentPosition, Vector2 targetPosition, float rotationSmoothingFactor)
         {
             var targetRotation = Geometry.AngleBetweenVectors(currentPosition, targetPosition);
-            float delta = Geometry.AngleDelta(Geometry.RadToDeg(currentRotation), Geometry.RadToDeg(targetRotation));
+            float delta = Geometry.AngleDegDelta(Geometry.RadToDeg(currentRotation), Geometry.RadToDeg(targetRotation));
             delta = Geometry.DegToRad(delta);
             return delta switch
             {

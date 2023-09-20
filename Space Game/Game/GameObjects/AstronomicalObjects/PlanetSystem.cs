@@ -18,6 +18,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
     [Serializable]
     public class PlanetSystem : InteractiveObject
     {
+        [JsonIgnore] public List<GameObject> ObjectsInSystem { get; private set; }
         [JsonProperty] public Star Star { get; private set; }
         [JsonProperty] public List<Planet> Planets { get; private set; }
         [JsonIgnore] private List<Pirate> mPirates;

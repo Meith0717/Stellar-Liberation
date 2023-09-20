@@ -28,10 +28,8 @@ namespace CelestialOdyssey.GameEngine.Content_Management
         private readonly static string background = @"textures\background";
         public readonly static Registry gameBackground = new(background, "gameBackground");
         public readonly static Registry mapBackground = new(background, "mapBackground");
-        public readonly static Registry gameBackgroundParlax = new(background, "gameBackgroundParlax");
-        public readonly static Registry gameBackgroundParlax1 = new(background, "gameBackgroundParlax2");
-        public readonly static Registry gameBackgroundParlax2 = new(background, "gameBackgroundParlax3");
-        public readonly static Registry gameBackgroundParlax3 = new(background, "gameBackgroundParlax4");
+        public readonly static Registry gameBackgroundParlax1 = new(background, "gameBackgroundParlax");
+        public readonly static Registry gameBackgroundParlax2 = new(background, "gameBackgroundParlax2");
 
         private readonly static string planets = @"textures\gameobjects\astronomicalbodys\planets";
         public readonly static Registry cold1 = new(planets, "cold1");
