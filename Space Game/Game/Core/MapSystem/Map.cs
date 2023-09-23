@@ -65,11 +65,11 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                     mPlanetSystems.Add(planetSystem);
 
                     // Generate Pirates 
-                    var pirates = new List<Pirate>();
+                    var pirates = new List<Enemy>();
                     var pirateAmount = GetPirateAmount(danger);
                     for (int i = 0; i < pirateAmount; i++)
                     {
-                        Pirate pirate = new(Utility.Utility.GetRandomVector2(planetSystem.SystemBounding));
+                        Enemy pirate = new(Utility.Utility.GetRandomVector2(planetSystem.SystemBounding));
                         pirates.Add(pirate);
                         pirate.AddToSpatialHashing(gameLayer);
                     }

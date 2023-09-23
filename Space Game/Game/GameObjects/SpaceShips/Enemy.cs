@@ -9,16 +9,19 @@ using Microsoft.Xna.Framework;
 
 namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 {
-    public class Pirate : SpaceShip
+    public class Enemy : SpaceShip
     {
-        private BehaviorBasedAI mAi = new();
+        private BehaviorBasedAI mAi;
 
-        public Pirate(Vector2 position) 
+        public Enemy(Vector2 position) 
             : base(position, ContentRegistry.pirate.Name, 10) 
         {
-            WeaponSystem = new(new() { new(0, 0) }, 800);
+            WeaponSystem = new(new(){ new(0, 0) }, 300);
+            mAi = new();
             mAi.AddBehavior(new PartolBehavior());
-            mAi.AddBehavior(new AttacBehavior());
+            mAi.AddBehavior(new FollowBehavior());
+            mAi.AddBehavior(new FleeBehavior());
+            mAi.AddBehavior(new AttacBehavior(100, 250000));
         }
 
         public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)

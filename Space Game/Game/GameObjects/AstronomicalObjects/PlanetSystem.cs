@@ -21,7 +21,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         [JsonIgnore] public List<GameObject> ObjectsInSystem { get; private set; }
         [JsonProperty] public Star Star { get; private set; }
         [JsonProperty] public List<Planet> Planets { get; private set; }
-        [JsonIgnore] private List<Pirate> mPirates;
+        [JsonIgnore] private List<Enemy> mPirates;
         [JsonProperty] public bool HasPlayer { get; private set; }
         [JsonProperty] public Danger Danger { get; private set; }
         [JsonProperty] public CircleF SystemBounding { get; private set; }
@@ -34,7 +34,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             SystemBounding = new(sectorPosition, boundaryRadius);
         }
 
-        public void SetObjects(Star star, List<Planet> planets, List<Pirate> pirates)
+        public void SetObjects(Star star, List<Planet> planets, List<Enemy> pirates)
         {
             Planets = planets;
             Star = star;
@@ -72,7 +72,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             {
                 item.Update(gameTime, inputState, gameLayer);
             }
-            var deleteList = new List<Pirate>();
+            var deleteList = new List<Enemy>();
             foreach (var item in mPirates)
             {
                 if (item.DefenseSystem.HullLevel <= 0) deleteList.Add(item);

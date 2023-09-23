@@ -19,7 +19,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 
         public Player(Vector2 position) : base(position, ContentRegistry.ship.Name, 50) 
         {
-            WeaponSystem = new(new(){ new(10000, 2200), new(10000, -2200), new(2000, 5000), new(2000, -5000)}, 500 );
+            WeaponSystem = new(new(){ new(10000, 2200), new(10000, -2200), new(2000, 5000), new(2000, -5000)}, 100 );
         }
 
         public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)

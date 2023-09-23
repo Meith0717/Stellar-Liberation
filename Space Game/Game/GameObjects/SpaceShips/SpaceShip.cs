@@ -1,5 +1,4 @@
-﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
-using CelestialOdyssey.Game.Core.GameObjects;
+﻿using CelestialOdyssey.Game.Core.GameObjects;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.ShipSystems;
@@ -16,12 +15,21 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
     [Serializable]
     public abstract class SpaceShip : GameObject
     {
+        [JsonIgnore] 
         public float Velocity { get; set; } = 0;
-        [JsonIgnore] public SensorArray SensorArray { get; protected set; } = new(2000000, 1000);
-        [JsonIgnore] public SublightEngine SublightEngine { get; protected set; } = new(50);
-        [JsonIgnore] public HyperDrive HyperDrive { get; protected set; } = new(6000, 100);
-        [JsonIgnore] public WeaponSystem WeaponSystem { get; protected set; }
-        [JsonProperty] public DefenseSystem DefenseSystem { get; protected set; } = new(100, 100, 1, 1);
+        [JsonIgnore] 
+        public SpaceShip Target { get; set; }
+
+        [JsonIgnore]
+        public SensorArray SensorArray { get; protected set; } = new(2000000, 1000);
+        [JsonIgnore] 
+        public SublightEngine SublightEngine { get; protected set; } = new(50);
+        [JsonIgnore] 
+        public HyperDrive HyperDrive { get; protected set; } = new(6000, 100);
+        [JsonIgnore] 
+        public WeaponSystem WeaponSystem { get; protected set; }
+        [JsonProperty] 
+        public DefenseSystem DefenseSystem { get; protected set; } = new(100, 100, 0, 1);
 
 
         public SpaceShip(Vector2 position, string textureId, float textureScale)
@@ -50,6 +58,7 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
                 if (!projectile.BoundedBox.Intersects(BoundedBox) || this == projectile.Origin) continue;
                 projectile.HasHit = true;
                 DefenseSystem.GetDamage(projectile.ShieldDamage, projectile.HullDamage);
+
             }
         }
     }

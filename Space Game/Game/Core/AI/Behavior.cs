@@ -8,6 +8,6 @@ namespace CelestialOdyssey.Game.Core.AI
     public abstract class Behavior
     {
         public abstract double GetPriority(List<GameObject> environment, SpaceShip spaceShip);
-        public abstract void Execute(SpaceShip spaceShip);
+        public abstract void Execute(List<GameObject> environment, SpaceShip spaceShip);
     }
 }

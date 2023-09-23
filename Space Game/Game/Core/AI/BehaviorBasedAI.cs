@@ -22,7 +22,7 @@ namespace CelestialOdyssey.Game.Core.AI
             mCurrentBehavior = SelectBehavior(environment, spaceShip);
 
             // Ausführung des ausgewählten Verhaltens
-            if (mCurrentBehavior is not null) mCurrentBehavior.Execute(spaceShip);
+            if (mCurrentBehavior is not null) mCurrentBehavior.Execute(environment, spaceShip);
         }
 
         private Behavior SelectBehavior(List<GameObject> environment, SpaceShip spaceShip)

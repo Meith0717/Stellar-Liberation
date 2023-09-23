@@ -1,70 +1,54 @@
-﻿using CelestialOdyssey.Game.Core.GameObjects;
-using CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem;
-using CelestialOdyssey.Game.Core.Utility;
+﻿using CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
+using CelestialOdyssey.Game.Core.GameObjects;
+using CelestialOdyssey.Game.Core.Utility;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
 {
     public class AttacBehavior : Behavior
     {
-        private SpaceShip mTarget = null;
+        private readonly float mVelocity;
+        private readonly float mAttacDistance;
+
         private float mDistanceToTarget;
-        private float mAttacVelocity;
-        private float mReorientVelocity;
         private bool mReorienting;
 
-        public AttacBehavior() 
+        public AttacBehavior(int velocity, int attacDistance) 
         { 
-            mAttacVelocity = Utility.Utility.Random.Next(30, 40);
-            mReorientVelocity = Utility.Utility.Random.Next(50, 60);
-            mReorienting = false;
+            mVelocity = Utility.Utility.Random.Next(velocity - 5, velocity + 5);
+            mAttacDistance = attacDistance;
         }
 
         public override double GetPriority(List<GameObject> environment, SpaceShip spaceShip)
         {
-            GetTarget(environment);
-            if (mTarget is null) return 0;
-            mDistanceToTarget = Vector2.Distance(mTarget.Position, spaceShip.Position);
-
-            return mDistanceToTarget switch
-            {
-                < 250000 => (mReorienting ? 0.5 : 0.7),
-                _ => 0
-            };
+            if (spaceShip.Target is null) return 0;
+            mDistanceToTarget = Vector2.Distance(spaceShip.Target.Position, spaceShip.Position);
+            if (mDistanceToTarget > mAttacDistance) return 0;
+            return 0.5;
         }
 
-        private void GetTarget(List<GameObject> environment)
-        {
-            var targets = environment.OfType<SpaceShip>().ToList();
-            if (targets.Count <= 0) { return; }
-            mTarget = targets.First();
-        }
-
-
-        public override void Execute(SpaceShip spaceShip)
+        public override void Execute(List<GameObject> environment, SpaceShip spaceShip)
         {
 
+            spaceShip.Velocity = mVelocity;
             switch (mReorienting)
             {
                 case true:
-                    spaceShip.Velocity = mReorientVelocity;
-                    mReorienting = mDistanceToTarget < 200000;
-                    spaceShip.Rotation += MovementController.GetRotationUpdate(spaceShip.Rotation, mTarget.Position, spaceShip.Position, 0.05f);
+                    mReorienting = mDistanceToTarget < mAttacDistance * 0.9f;
+                    spaceShip.Rotation += MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Target.Position, spaceShip.Position, 0.1f);
                     break;
                 case false:
-                    spaceShip.Velocity = mAttacVelocity;
                     mReorienting = mDistanceToTarget < 25000;
-                    spaceShip.Rotation += MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, mTarget.Position, 0.05f);
+                    spaceShip.Rotation += MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, spaceShip.Target.Position, 0.1f);
                     break;
             }
 
-            var angleBetweenTarget = Geometry.AngleBetweenVectors(spaceShip.Position, mTarget.Position);
+            var angleBetweenTarget = Geometry.AngleBetweenVectors(spaceShip.Position, spaceShip.Target.Position);
             var angleToTarget = MathF.Abs(Geometry.AngleRadDelta(spaceShip.Rotation, angleBetweenTarget));
-            if (angleToTarget < 10) spaceShip.WeaponSystem.Fire(spaceShip);
+            if (angleToTarget < 5) spaceShip.WeaponSystem.Fire(spaceShip);
         }
 
     }
