@@ -5,6 +5,7 @@ using CelestialOdyssey.Game.Core.Utility;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using System;
+using CelestialOdyssey.Game.Core.PositionController;
 
 namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
 {

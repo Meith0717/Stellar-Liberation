@@ -1,22 +1,24 @@
 ﻿using CelestialOdyssey.Game.Core.GameObjects;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using System.Collections.Generic;
-using System;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem;
+using CelestialOdyssey.Game.Core.PositionController;
 
 namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
 {
     internal class FleeBehavior : Behavior
     {
-        private double mMinHullLevel;
+        private readonly double mMinHullLevel;
+        private readonly float mVelocity;
         private Vector2? mFleeTarget;
 
-        public FleeBehavior()
+        public FleeBehavior(float velocity)
         {
             mMinHullLevel = 0.5; //Utility.Utility.Random.NextDouble() * 0.5;
+            mVelocity = velocity;
         }
 
         public override double GetPriority(List<GameObject> environment, SpaceShip spaceShip)
@@ -36,7 +38,7 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
 
         public override void Execute(List<GameObject> environment, SpaceShip spaceShip)
         {
-            spaceShip.Velocity = 60;
+            spaceShip.Velocity = mVelocity;
             spaceShip.Rotation += MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, (Vector2)mFleeTarget, 0.1f);
         }
     }

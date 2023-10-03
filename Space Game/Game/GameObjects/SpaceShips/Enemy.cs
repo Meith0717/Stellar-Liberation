@@ -1,4 +1,5 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Game.Core;
 using CelestialOdyssey.Game.Core.AI;
 using CelestialOdyssey.Game.Core.AI.EnemyBehavior;
 using CelestialOdyssey.Game.Core.InputManagement;
@@ -11,17 +12,21 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 {
     public class Enemy : SpaceShip
     {
-        private BehaviorBasedAI mAi;
+        private readonly BehaviorBasedAI mAi;
 
         public Enemy(Vector2 position) 
             : base(position, ContentRegistry.pirate.Name, 10) 
         {
+            SensorArray = new(Configs.Enemy.ScanDistance, Configs.SensorArrayCoolDown);
             WeaponSystem = new(new(){ new(0, 0) }, 300);
-            mAi = new();
-            mAi.AddBehavior(new PartolBehavior());
-            mAi.AddBehavior(new FollowBehavior());
-            mAi.AddBehavior(new FleeBehavior());
-            mAi.AddBehavior(new AttacBehavior(100, 250000));
+            SublightEngine = new(50);
+            mAi = new(new()
+            {
+               new PartolBehavior(Configs.Enemy.PatrollVelocity),
+               new FollowBehavior(Configs.Enemy.FollowVelocity),
+               new FleeBehavior(Configs.Enemy.FleeVelovity),
+               new AttacBehavior(Configs.Enemy.AttacVelocity, Configs.Enemy.AttackDistance)
+            });        
         }
 
         public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)

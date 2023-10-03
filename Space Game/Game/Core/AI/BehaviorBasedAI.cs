@@ -9,7 +9,12 @@ namespace CelestialOdyssey.Game.Core.AI
     public class BehaviorBasedAI
     {
         private Behavior mCurrentBehavior;
-        private HashSet<Behavior> mBehaviors = new();
+        private HashSet<Behavior> mBehaviors;
+
+        public BehaviorBasedAI(HashSet<Behavior> behaviors)
+        {
+            mBehaviors = behaviors;
+        }
 
         public void AddBehavior(Behavior behavior)
         {
