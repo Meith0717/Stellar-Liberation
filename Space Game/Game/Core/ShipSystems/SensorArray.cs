@@ -24,11 +24,17 @@ namespace CelestialOdyssey.Game.Core.ShipSystems
 
         public void Update(GameTime gameTime, Vector2 Position, SceneLayer sceneLayer)
         {
-            mActualCounter += gameTime.TotalGameTime.Milliseconds;
-            if (mActualCounter < mMaxCounter) return;
-            mActualCounter = 0;
-            SortedObjectsInRange = sceneLayer.GetSortedObjectsInRadius<GameObject>(Position, mScanRadius);
-            SortedObjectsInRange.Remove(SortedObjectsInRange.First());
+            var planetSystem = spaceShip.ActualSystem;
+            var position = spaceShip.Position;
+
+            SortedObjectsInRange.Clear(); 
+            if (planetSystem is null) return;
+            SortedObjectsInRange.Add(planetSystem.Star);
+            SortedObjectsInRange.AddRange(planetSystem.Planets);
+            SortedObjectsInRange.AddRange(planetSystem.Pirates);
+            Comparison<GameObject> comparison = (a, b) => Vector2.Distance(a.Position, position).CompareTo(Vector2.Distance(b.Position, position));
+            SortedObjectsInRange.Remove(spaceShip);
+            SortedObjectsInRange.Sort(comparison);
         }
     }
 }
