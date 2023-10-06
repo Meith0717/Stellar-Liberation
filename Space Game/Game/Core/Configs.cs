@@ -8,7 +8,7 @@ namespace CelestialOdyssey.Game.Core
 {
     public static class Configs
     {
-        public const int SensorArrayCoolDown = 100;
+        public const int SensorArrayCoolDown = 1000;
         public static class Enemy
         {
             public const int PatrollVelocity = 50;

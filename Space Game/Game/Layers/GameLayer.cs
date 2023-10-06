@@ -51,7 +51,7 @@ namespace CelestialOdyssey.Game.Layers
             // Update Stuff
             Player.Update(gameTime, inputState, this);
             base.Update(gameTime, inputState);
-            Map.Update(gameTime, inputState, this);
+            Map.UpdateSystems(gameTime, inputState, this);
             mParllaxManager.Update(Camera.Movement);
 
             // Get Inputs

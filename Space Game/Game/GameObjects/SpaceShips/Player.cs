@@ -6,9 +6,7 @@ using CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
-using Newtonsoft.Json;
 using System;
-using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.Layers;
 
 namespace CelestialOdyssey.Game.GameObjects.SpaceShips
@@ -17,16 +15,16 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
     public class Player : SpaceShip
     {
 
-        public Player(Vector2 position) : base(position, ContentRegistry.ship.Name, 50) 
+        public Player(Vector2 position) : base(position, ContentRegistry.player.Name, 40) 
         {
-            WeaponSystem = new(new(){ new(10000, 2200), new(10000, -2200), new(2000, 5000), new(2000, -5000)}, 100 );
+            WeaponSystem = new(new(){ new(1000, 5500), new(1000, -5500)}, 100 );
         }
 
         public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
         {
             if (!HyperDrive.IsActive)
             {
-                if (inputState.HasMouseAction(MouseActionType.LeftClickHold)) WeaponSystem.Fire(this);
+                if (inputState.HasMouseAction(MouseActionType.LeftClickHold)) WeaponSystem.Fire(this, sceneLayer.WorldMousePosition);
                 SublightEngine.FollowMouse(inputState, this, sceneLayer.WorldMousePosition);
             }
 

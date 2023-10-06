@@ -1,6 +1,11 @@
-﻿using CelestialOdyssey.Game.Core.GameObjects;
+﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Game.Core.GameObjects;
 using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.GameObjects.Spacecrafts;
+using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
+using MonoGame.Extended.Timers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,17 +29,11 @@ namespace CelestialOdyssey.Game.Core.ShipSystems
 
         public void Update(GameTime gameTime, Vector2 Position, SceneLayer sceneLayer)
         {
-            var planetSystem = spaceShip.ActualSystem;
-            var position = spaceShip.Position;
-
-            SortedObjectsInRange.Clear(); 
-            if (planetSystem is null) return;
-            SortedObjectsInRange.Add(planetSystem.Star);
-            SortedObjectsInRange.AddRange(planetSystem.Planets);
-            SortedObjectsInRange.AddRange(planetSystem.Pirates);
-            Comparison<GameObject> comparison = (a, b) => Vector2.Distance(a.Position, position).CompareTo(Vector2.Distance(b.Position, position));
-            SortedObjectsInRange.Remove(spaceShip);
-            SortedObjectsInRange.Sort(comparison);
+            mActualCounter += gameTime.TotalGameTime.Milliseconds;
+            if (mActualCounter < mMaxCounter) return;
+            mActualCounter = 0;
+            SortedObjectsInRange = sceneLayer.GetSortedObjectsInRadius<GameObject>(Position, mScanRadius);
+            SortedObjectsInRange.Remove(SortedObjectsInRange.First());
         }
     }
 }

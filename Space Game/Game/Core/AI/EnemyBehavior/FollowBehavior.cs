@@ -1,5 +1,4 @@
 ﻿using CelestialOdyssey.Game.Core.GameObjects;
-using CelestialOdyssey.Game.Core.PositionController;
 using CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using System.Collections.Generic;

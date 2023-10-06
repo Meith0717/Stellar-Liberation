@@ -13,6 +13,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems
         private float mActualHullForce;
         private float mShieldRegeneration;
         private float mHullRegeneration;
+        private float mShieldAlpha;
 
         public double ShildLevel { get { return mActualShieldForce / mMaxShieldForce; } }
         public double HullLevel { get { return mActualHullForce / mMaxHullForce; } }
@@ -27,6 +28,9 @@ namespace CelestialOdyssey.Game.Core.ShipSystems
 
         public void Update(GameTime gameTime)
         {
+            mShieldAlpha -= 0.1f;
+            mShieldAlpha = (mShieldAlpha < 0) ? 0 : mShieldAlpha;
+
             if (mActualShieldForce + mShieldRegeneration < mMaxShieldForce) mActualShieldForce += mShieldRegeneration / 
                     gameTime.ElapsedGameTime.Milliseconds;
             if (mActualHullForce + mHullRegeneration < mMaxHullForce) mActualHullForce += mHullRegeneration /
@@ -38,12 +42,12 @@ namespace CelestialOdyssey.Game.Core.ShipSystems
             SoundManager.Instance.PlaySound("torpedoHit", Utility.Utility.Random.Next(5, 8) / 10f);
             if (mActualShieldForce > 0)
             {
+                mShieldAlpha = 1;
                 mActualShieldForce -= shieldDamage;
                 return;
             }
             mActualHullForce -= mActualHullForce > 0 ? hullDamage : 0;
         }
-
 
         public void DrawLive(SpaceShip spaceShip)
         {
@@ -59,6 +63,13 @@ namespace CelestialOdyssey.Game.Core.ShipSystems
             TextureManager.Instance.DrawLine(start, length * (float)level, color, 300, textureDepth + 2);
         }
 
-
+        public void DrawShields(SpaceShip spaceShip)
+        {
+            var alpha = mShieldAlpha;
+            var color = new Color(87, 191, 255);
+            TextureManager.Instance.Draw($"{spaceShip.TextureId}Shield", spaceShip.Position,
+                spaceShip.TextureScale + 1, spaceShip.Rotation, spaceShip.TextureDepth + 1,
+                new Color((int)(color.R * alpha), (int)(color.G * alpha), (int)(color.B * alpha), (int)(255 * alpha)));
+        }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using System.Reflection;
 using System.Linq;
 using System;
+using CelestialOdyssey.Game.Core.Utility;
 
 namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types
 {
@@ -25,8 +26,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types
                 .Where(type => typeof(Star).IsAssignableFrom(type) && type != typeof(Star))
                 .ToList();
 
-            int randomIndex = new Random().Next(0, starTypes.Count);
-            Type selectedStarType = starTypes[randomIndex];
+            var selectedStarType = Utility.GetRandomElement(starTypes);
             ConstructorInfo constructor = selectedStarType.GetConstructor(new Type[] { typeof(Vector2) });
 
             if (constructor != null)

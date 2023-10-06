@@ -5,7 +5,6 @@ using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem;
-using CelestialOdyssey.Game.Core.PositionController;
 
 namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
 {

@@ -15,7 +15,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
         private readonly BehaviorBasedAI mAi;
 
         public Enemy(Vector2 position) 
-            : base(position, ContentRegistry.pirate.Name, 10) 
+            : base(position, ContentRegistry.enemyCorvette, 30) 
         {
             SensorArray = new(Configs.Enemy.ScanDistance, Configs.SensorArrayCoolDown);
             WeaponSystem = new(new(){ new(0, 0) }, 300);

@@ -5,7 +5,6 @@ using CelestialOdyssey.Game.Core.Utility;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using System;
-using CelestialOdyssey.Game.Core.PositionController;
 
 namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
 {
@@ -49,7 +48,7 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
 
             var angleBetweenTarget = Geometry.AngleBetweenVectors(spaceShip.Position, spaceShip.Target.Position);
             var angleToTarget = MathF.Abs(Geometry.AngleRadDelta(spaceShip.Rotation, angleBetweenTarget));
-            if (angleToTarget < 5) spaceShip.WeaponSystem.Fire(spaceShip);
+            if (angleToTarget < 5) spaceShip.WeaponSystem.Fire(spaceShip, spaceShip.Target.Position);
         }
 
     }

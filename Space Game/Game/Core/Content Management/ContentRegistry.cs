@@ -83,8 +83,14 @@ namespace CelestialOdyssey.GameEngine.Content_Management
         public readonly static Registry metall = new(items, "metall");
 
         private readonly static string spacecrafts = @"textures\gameobjects\spacecrafts";
-        public readonly static Registry ship = new(spacecrafts, "ship");
-        public readonly static Registry pirate = new(spacecrafts, "pirate");
+        public readonly static Registry player = new(spacecrafts, "player");
+        public readonly static Registry playerShield = new(spacecrafts, "playerShield");
+        public readonly static Registry enemyFighter = new(spacecrafts, "enemyFighter");
+        public readonly static Registry enemyFighterShield = new(spacecrafts, "enemyFighterShield");
+        public readonly static Registry enemyCorvette = new(spacecrafts, "enemyCorvette");
+        public readonly static Registry enemyCorvetteShield = new(spacecrafts, "enemyCorvetteShield");
+        public readonly static Registry enemyBattleShip = new(spacecrafts, "enemyBattleShip");
+        public readonly static Registry enemyBattleShipShield = new(spacecrafts, "enemyBattleShipShield");
 
         private readonly static string weapons = @"textures\gameobjects\weapons";
         public readonly static Registry projectile = new(weapons, "projectile");

@@ -1,8 +1,10 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.Core.Utility;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using CelestialOdyssey.GameEngine.Content_Management;
+using MathNet.Numerics.Distributions;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -23,13 +25,14 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
             mMaxCoolDown = coolDown;
         }
 
-        public virtual void Fire(SpaceShip spaceShip)
+        public virtual void Fire(SpaceShip spaceShip, Vector2 target)
         { 
             if (mCooldown < mMaxCoolDown) return;
             foreach (var relPos in mRelativePositions)
             {                
                 var position = GetPosition(spaceShip.Position, relPos, spaceShip.Rotation);
-                mProjectiles.Add(new Projectile(spaceShip, position, spaceShip.Rotation, 5, 5, 200));
+                var fireRotation = Geometry.AngleBetweenVectors(position, target);
+                mProjectiles.Add(new Projectile(spaceShip, position, fireRotation, 5, 1, 200));
             }
             mCooldown = 0;
             SoundManager.Instance.PlaySound(ContentRegistry.torpedoFire, 1f);

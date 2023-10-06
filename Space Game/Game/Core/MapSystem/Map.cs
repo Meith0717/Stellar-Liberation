@@ -70,6 +70,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                     for (int i = 0; i < pirateAmount; i++)
                     {
                         Enemy pirate = new(Utility.Utility.GetRandomVector2(planetSystem.SystemBounding));
+                        pirate.SetActualSystem(planetSystem);
                         pirates.Add(pirate);
                         pirate.AddToSpatialHashing(gameLayer);
                     }
@@ -136,7 +137,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
         
         public PlanetSystem GetRandomSystem() { return Utility.Utility.GetRandomElement(mPlanetSystems); }
         
-        public void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer)
+        public void UpdateSystems(GameTime gameTime, InputState inputState, GameLayer gameLayer)
         {
             foreach (var system in mPlanetSystems) { system.Update(gameTime, inputState, gameLayer); }
         }

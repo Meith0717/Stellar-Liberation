@@ -18,10 +18,9 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
     [Serializable]
     public class PlanetSystem : InteractiveObject
     {
-        [JsonIgnore] public List<GameObject> ObjectsInSystem { get; private set; }
         [JsonProperty] public Star Star { get; private set; }
         [JsonProperty] public List<Planet> Planets { get; private set; }
-        [JsonIgnore] private List<Enemy> mPirates;
+        [JsonProperty] public List<Enemy> Pirates { get; private set; }
         [JsonProperty] public bool HasPlayer { get; private set; }
         [JsonProperty] public Danger Danger { get; private set; }
         [JsonProperty] public CircleF SystemBounding { get; private set; }
@@ -38,7 +37,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         {
             Planets = planets;
             Star = star;
-            mPirates = pirates;
+            Pirates = pirates;
         }
 
         public bool CheckIfHasPlayer(Player player)
@@ -73,14 +72,14 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
                 item.Update(gameTime, inputState, gameLayer);
             }
             var deleteList = new List<Enemy>();
-            foreach (var item in mPirates)
+            foreach (var item in Pirates)
             {
                 if (item.DefenseSystem.HullLevel <= 0) deleteList.Add(item);
                 item.Update(gameTime, inputState, gameLayer);
             }
             foreach (var item in deleteList) 
             { 
-                mPirates.Remove(item);
+                Pirates.Remove(item);
                 item.RemoveFromSpatialHashing(gameLayer);
             }
         }
