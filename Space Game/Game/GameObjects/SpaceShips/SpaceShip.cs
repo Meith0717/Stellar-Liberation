@@ -5,7 +5,6 @@ using CelestialOdyssey.Game.Core.ShipSystems;
 using CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem;
 using CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem;
 using CelestialOdyssey.Game.Core.Utility;
-using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
@@ -20,9 +19,6 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
         public float Velocity { get; set; } = 0;
         [JsonIgnore] 
         public SpaceShip Target { get; set; }
-        [JsonProperty]
-        public PlanetSystem ActualSystem { get; private set; }
-
         [JsonIgnore]
         public SensorArray SensorArray { get; protected set; } = new(2000000, 1000);
         [JsonIgnore] 
@@ -38,23 +34,18 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
         public SpaceShip(Vector2 position, string textureId, float textureScale)
             : base(position, textureId, textureScale, 10) { }
 
-        public void SetActualSystem(PlanetSystem planetSystem)
+        public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            ActualSystem = planetSystem;
-        }
-
-        public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
-        {
-            RemoveFromSpatialHashing(sceneLayer);
+            RemoveFromSpatialHashing(scene);
             Position += Geometry.CalculateDirectionVector(Rotation) * Velocity * gameTime.ElapsedGameTime.Milliseconds;
-            AddToSpatialHashing(sceneLayer);
+            AddToSpatialHashing(scene);
 
             HyperDrive.Update(gameTime, this);
-            WeaponSystem.Update(gameTime, inputState, sceneLayer);
+            WeaponSystem.Update(gameTime, inputState, sceneManagerLayer, scene);
             DefenseSystem.Update(gameTime);
-            SensorArray.Update(gameTime, Position, sceneLayer);
+            SensorArray.Update(gameTime, Position, scene);
             CheckForHit();
-            base.Update(gameTime, inputState, sceneLayer);
+            base.Update(gameTime, inputState, sceneManagerLayer , scene);
         }
 
         private void CheckForHit()
@@ -69,9 +60,9 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
             }
         }
 
-        public override void Draw(SceneLayer sceneLayer)
+        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            base.Draw(sceneLayer);
+            base.Draw(sceneManagerLayer, scene);
             DefenseSystem.DrawShields(this);
         }
     }

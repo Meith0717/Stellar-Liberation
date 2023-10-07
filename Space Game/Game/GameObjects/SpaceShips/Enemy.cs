@@ -29,15 +29,15 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
             });        
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
+        public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            base.Update(gameTime, inputState, sceneLayer);
+            base.Update(gameTime, inputState, sceneManagerLayer, scene);
             mAi.Update(gameTime, SensorArray.SortedObjectsInRange, this);
         }
 
-        public override void Draw(SceneLayer sceneLayer)
+        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            base.Draw(sceneLayer);
+            base.Draw(sceneManagerLayer, scene);
             DefenseSystem.DrawLive(this);
             TextureManager.Instance.DrawGameObject(this);
         }

@@ -31,18 +31,18 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
             LiveTime = 5000;
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
+        public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            base.Update(gameTime, inputState, sceneLayer);
+            base.Update(gameTime, inputState, sceneManagerLayer, scene);
             LiveTime -= HasHit ? double.PositiveInfinity : gameTime.ElapsedGameTime.Milliseconds;
-            RemoveFromSpatialHashing(sceneLayer);
+            RemoveFromSpatialHashing(scene);
             Position += mDirection * mVelocity * gameTime.ElapsedGameTime.Milliseconds;
-            AddToSpatialHashing(sceneLayer);
+            AddToSpatialHashing(scene);
         }
 
-        public override void Draw(SceneLayer sceneLayer)
+        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            base.Draw(sceneLayer);
+            base.Draw(sceneManagerLayer, scene);
             TextureManager.Instance.DrawGameObject(this);
         }
     }

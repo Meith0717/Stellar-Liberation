@@ -7,7 +7,6 @@ using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using System;
-using CelestialOdyssey.Game.Layers;
 
 namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 {
@@ -15,37 +14,27 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
     public class Player : SpaceShip
     {
 
-        public Player(Vector2 position) : base(position, ContentRegistry.player.Name, 40) 
+        public Player() : base(Vector2.Zero, ContentRegistry.player.Name, 40) 
         {
             WeaponSystem = new(new(){ new(1000, 5500), new(1000, -5500)}, 100 );
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
+        public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
             if (!HyperDrive.IsActive)
             {
-                if (inputState.HasMouseAction(MouseActionType.LeftClickHold)) WeaponSystem.Fire(this, sceneLayer.WorldMousePosition);
-                SublightEngine.FollowMouse(inputState, this, sceneLayer.WorldMousePosition);
+                if (inputState.HasMouseAction(MouseActionType.LeftClickHold)) WeaponSystem.Fire(this, scene.WorldMousePosition);
+                SublightEngine.FollowMouse(inputState, this, scene.WorldMousePosition);
             }
 
-            base.Update(gameTime, inputState, sceneLayer);
-            sceneLayer.Camera.SetPosition(Position);
+            base.Update(gameTime, inputState, sceneManagerLayer, scene);
+            scene.Camera.SetPosition(Position);
         }
 
-        public override void Draw(SceneLayer sceneLayer)
+        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            base.Draw(sceneLayer);
+            base.Draw(sceneManagerLayer, scene);
             TextureManager.Instance.DrawGameObject(this);
-        }
-
-        public void DrawPath(GameLayer gameLayer, MapLayer mapLayer)
-        {
-            var color = Color.LightGreen;
-            var position = gameLayer.Map.GetMapPosition(Position);
-            if (gameLayer.ActualPlanetSystem is null) TextureManager.Instance.Draw(ContentRegistry.dot, position, 0.005f, 0, 1, color);
-            if (HyperDrive.TargetPosition is null) return;
-            var target = gameLayer.Map.GetMapPosition((Vector2)HyperDrive.TargetPosition);
-            TextureManager.Instance.DrawAdaptiveLine(position, target, color, 1, 0, mapLayer.Camera.Zoom);
         }
     }
 }

@@ -21,20 +21,20 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             LightColor = starColor;
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
+        public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            RemoveFromSpatialHashing(sceneLayer);
-            base.Update(gameTime, inputState, sceneLayer);
+            RemoveFromSpatialHashing(scene);
+            base.Update(gameTime, inputState, sceneManagerLayer, scene);
             if (LightColor != Color.Transparent)
             {
                 Rotation += 0.001f;
             }
-            AddToSpatialHashing(sceneLayer);
+            AddToSpatialHashing(scene);
         }
 
-        public override void Draw(SceneLayer sceneLayer)
+        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            base.Draw(sceneLayer);
+            base.Draw(sceneManagerLayer, scene);
             TextureManager.Instance.DrawGameObject(this);
             TextureManager.Instance.Draw(ContentRegistry.starLightAlpha.Name, Position, TextureOffset, TextureScale * 2f, Rotation, 3, LightColor);
         }

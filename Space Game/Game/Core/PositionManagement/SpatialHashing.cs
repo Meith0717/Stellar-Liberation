@@ -23,7 +23,7 @@ namespace CelestialOdyssey.Core.GameEngine.Position_Management
         /// <summary>
         /// The size of each cell in the spatial grid.
         /// </summary>
-        [JsonProperty] public int mCellSize;
+        [JsonProperty] public int CellSize;
 
         /// <summary>
         /// The spatial grids that store the objects based on their hash values.
@@ -36,7 +36,7 @@ namespace CelestialOdyssey.Core.GameEngine.Position_Management
         /// <param name="cellSize">The size of each cell in the spatial grid.</param>
         public SpatialHashing(int cellSize)
         {
-            mCellSize = cellSize;
+            CellSize = cellSize;
         }
 
         /// <summary>
@@ -48,8 +48,22 @@ namespace CelestialOdyssey.Core.GameEngine.Position_Management
         public int Hash(int xCoordinate, int yCoordinate)
         {
             const int shiftingFactor = 10000;
-            return xCoordinate / mCellSize * shiftingFactor + yCoordinate / mCellSize;
+
+            var WorldWidth = 100000000;
+            var WorldHeight = 100000000;
+
+            // Adjust coordinates relative to the center of the world
+            int adjustedX = xCoordinate + WorldWidth / 2;
+            int adjustedY = yCoordinate + WorldHeight / 2;
+
+            // Ensure that adjustedX and adjustedY are non-negative
+            if (adjustedX < 0) adjustedX += WorldWidth;
+            if (adjustedY < 0) adjustedY += WorldHeight;
+
+            return (adjustedX / CellSize) * shiftingFactor + (adjustedY / CellSize);
         }
+
+
 
         /// <summary>
         /// Inserts an object into the spatial hashing structure at the specified coordinates.

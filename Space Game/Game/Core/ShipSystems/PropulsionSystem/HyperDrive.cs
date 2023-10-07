@@ -32,11 +32,10 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
             } 
         }
 
-        public void SetTarget(PlanetSystem planetSystem, MapLayer mapLayer) 
+        public void SetTarget(PlanetSystem planetSystem) 
         {
             if (mEngineCoolDownTime > mActualEngineCoolDownTime) return;
             SoundManager.Instance.PlaySound(ContentRegistry.ChargeHyperdrive, 1);
-            mapLayer.CloseMap();
             IsActive = true;
             mActualChargingTime = 0;
             TargetPosition = planetSystem.Star.Position;

@@ -34,19 +34,19 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             UpdateBoundBox();
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
+        public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            base.Update(gameTime, inputState, sceneLayer);
-            RemoveFromSpatialHashing(sceneLayer);
+            base.Update(gameTime, inputState, sceneManagerLayer, scene);
+            RemoveFromSpatialHashing(scene);
             Position = Geometry.GetPointOnCircle(OrbitCenter, OrbitRadius, OrbitRadians);
             mShadowRotation = Geometry.AngleBetweenVectors(Position, OrbitCenter) + MathF.PI;
             Rotation -= 0.005f;
-            AddToSpatialHashing(sceneLayer);
+            AddToSpatialHashing(scene);
         }
 
-        public override void Draw(SceneLayer sceneLayer)
+        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            base.Draw(sceneLayer);
+            base.Draw(sceneManagerLayer, scene);
             TextureManager.Instance.Draw(ContentRegistry.planetShadow, Position, TextureOffset, TextureScale + 2.5f, mShadowRotation, TextureDepth + 1, Color.White);
             TextureManager.Instance.DrawGameObject(this);
         }

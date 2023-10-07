@@ -5,70 +5,63 @@ using CelestialOdyssey.Game.Core.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace CelestialOdyssey.Game.Core.LayerManagement
 {
-    [Serializable]
-    public abstract class SceneLayer : Layer
+    public abstract class Scene
     {
+        protected SceneManagerLayer mSceneManagerLayer { get; private set; }
         public Vector2 WorldMousePosition { get; private set; }
-
-        [JsonProperty] public readonly SpatialHashing<GameObject> SpatialHashing;
-        private Matrix mViewTransformationMatrix;
+        public readonly SpatialHashing<GameObject> SpatialHashing;
         public readonly FrustumCuller FrustumCuller;
         public readonly Camera Camera;
-        public readonly DebugSystem DebugSystem;
+        private Matrix mViewTransformationMatrix;
 
-        public SceneLayer(int spatialHashingCellSize, bool updateBelow, float minCamZoom, float maxCamZoom, bool moveCamByMouse) : base(updateBelow) 
+        public Scene(int spatialHashingCellSize, float minCamZoom, float maxCamZoom, bool moveCamByMouse)
         {
             SpatialHashing = new(spatialHashingCellSize);
             FrustumCuller = new();
             Camera = new(minCamZoom, maxCamZoom, moveCamByMouse);
-            DebugSystem = new();
         }
 
-        public override void Update(GameTime gameTime, InputState inputState)
+        public void Initialize(SceneManagerLayer sceneManagerLayer)
         {
-            int screenWidth = mGraphicsDevice.Viewport.Width;
-            int screenHeight = mGraphicsDevice.Viewport.Height;
+            mSceneManagerLayer = sceneManagerLayer;
+        }
 
-            DebugSystem.Update(gameTime, inputState);
+        public virtual void Update(GameTime gameTime, InputState inputState, int screenWidth, int screenHeight)
+        {
             mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera.Position, Camera.Zoom, screenWidth, screenHeight);
             WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, inputState.mMousePosition);
             Camera.Update(gameTime, inputState, inputState.mMousePosition, mViewTransformationMatrix);
             FrustumCuller.Update(screenWidth, screenHeight, mViewTransformationMatrix);
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
-            DebugSystem.UpdateFrameCounting();
-
             spriteBatch.Begin();
             DrawOnScreen();
             spriteBatch.End();
 
-            spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: mViewTransformationMatrix, samplerState: SamplerState.PointClamp );
-            DebugSystem.TestSpatialHashing(this);
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: mViewTransformationMatrix, samplerState: SamplerState.PointClamp);
             RenderWorldObjectsOnScreen();
             DrawOnWorld();
-            spriteBatch.End();
-
-            spriteBatch.Begin();
-            DebugSystem.ShowRenderInfo(Camera.Zoom, Camera.Position);
+            mSceneManagerLayer.DebugSystem.DrawOnScene(this);
             spriteBatch.End();
         }
 
         public abstract void DrawOnScreen();
         public abstract void DrawOnWorld();
 
+        public abstract void OnResolutionChanged();
+
         public List<T> GetObjectsInRadius<T>(Vector2 position, int radius) where T : GameObject
         {
             var objectsInRadius = new List<GameObject>();
-            int CellSize = SpatialHashing.mCellSize;
+            int CellSize = SpatialHashing.CellSize;
 
             // Determine the range of bucket indices that fall within the radius.
             var startX = (int)Math.Floor((position.X - radius) / CellSize);
@@ -106,7 +99,7 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
         public void RenderWorldObjectsOnScreen()
         {
             Rectangle space = FrustumCuller.WorldFrustum.ToRectangle();
-            int cellSize = SpatialHashing.mCellSize;
+            int cellSize = SpatialHashing.CellSize;
             var screeenMaxX = space.X + space.Width + cellSize;
             var screenMaxY = space.Y + space.Height + cellSize;
 
@@ -120,11 +113,12 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
                         if (obj.BoundedBox.Radius == 0) throw new System.Exception($"BoundedBox Radius is Zero {obj}");
                         if (this.FrustumCuller.CircleOnWorldView(obj.BoundedBox))
                         {
-                            obj.Draw(this);
+                            obj.Draw(mSceneManagerLayer, this);
                         }
                     }
                 }
             }
         }
     }
+
 }

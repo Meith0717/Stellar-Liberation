@@ -49,7 +49,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
             return rotatedVector + origin;
         }
 
-        public void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
+        public void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
             mCooldown += gameTime.ElapsedGameTime.Milliseconds;
 
@@ -61,12 +61,12 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
                     deleteList.Add(projectile);
                     continue;
                 }
-                projectile.Update(gameTime, inputState, sceneLayer);
+                projectile.Update(gameTime, inputState, sceneManagerLayer, scene);
             }
 
             foreach (var projectile in deleteList)
             {
-                projectile.RemoveFromSpatialHashing(sceneLayer);
+                projectile.RemoveFromSpatialHashing(scene);
                 mProjectiles.Remove(projectile);
             }
         }

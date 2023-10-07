@@ -90,7 +90,6 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         [JsonIgnore]
         private bool mWasRemovedFromSpatialHashing = true;
 
-
         internal GameObject(Vector2 position, string textureId, float textureScale, int textureDepth)
         {
             Position = position;
@@ -115,9 +114,9 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         /// <param name="gameTime">The game time information.</param>
         /// <param name="inputState">The input state of the game.</param>
         /// <param name="sceneLayer">The game engine instance.</param>
-        public virtual void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
+        public virtual void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            sceneLayer.DebugSystem.UpdateObjectCount += 1;
+            sceneManagerLayer.DebugSystem.UpdateObjectCount += 1;
             UpdateBoundBox();
         }
 
@@ -125,31 +124,31 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         /// Adds the game object to the spatial hashing system of the game engine if UpdatePosition is set true.
         /// </summary>
         /// <param name="sceneLayer">The game engine instance.</param>
-        internal void AddToSpatialHashing(SceneLayer sceneLayer)
+        internal void AddToSpatialHashing(Scene scene)
         {
             if (!mWasRemovedFromSpatialHashing) return;
-            sceneLayer.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
+            scene.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
             mWasRemovedFromSpatialHashing = false;
         }
 
         /// <summary>
         /// Removes the game object from the spatial hashing system of the game engine if UpdatePosition is set true.
         /// </summary>
-        /// <param name="sceneLayer">The game engine instance.</param>
-        internal void RemoveFromSpatialHashing(SceneLayer sceneLayer)
+        /// <param name="scene">The game engine instance.</param>
+        internal void RemoveFromSpatialHashing(Scene scene)
         {
             mWasRemovedFromSpatialHashing = true;
-            sceneLayer.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
+            scene.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
         }
 
         /// <summary>
         /// DrawnObjectCount is incrememted and the BoundBox is drawed
         /// </summary>
         /// <param name="sceneLayer">The game engine instance.</param>
-        public virtual void Draw(SceneLayer sceneLayer)
+        public virtual void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            sceneLayer.DebugSystem.DrawnObjectCount += 1;
-            sceneLayer.DebugSystem.DrawBoundBox(BoundedBox, sceneLayer);
+            sceneManagerLayer.DebugSystem.DrawnObjectCount += 1;
+            sceneManagerLayer.DebugSystem.DrawBoundBox(BoundedBox, scene);
         }
     }
 }

@@ -27,12 +27,12 @@ namespace CelestialOdyssey.Game.Core.ShipSystems
             mActualCounter = Utility.Utility.Random.Next(1000);
         }
 
-        public void Update(GameTime gameTime, Vector2 Position, SceneLayer sceneLayer)
+        public void Update(GameTime gameTime, Vector2 Position, Scene scene)
         {
             mActualCounter += gameTime.TotalGameTime.Milliseconds;
             if (mActualCounter < mMaxCounter) return;
             mActualCounter = 0;
-            SortedObjectsInRange = sceneLayer.GetSortedObjectsInRadius<GameObject>(Position, mScanRadius);
+            SortedObjectsInRange = scene.GetSortedObjectsInRadius<GameObject>(Position, mScanRadius);
             SortedObjectsInRange.Remove(SortedObjectsInRange.First());
         }
     }

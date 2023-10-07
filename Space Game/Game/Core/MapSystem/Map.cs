@@ -1,12 +1,9 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
-using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types;
 using CelestialOdyssey.Game.GameObjects.SpaceShips;
-using CelestialOdyssey.Game.Layers;
 using MathNet.Numerics.Distributions;
-using MathNet.Numerics.Random;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
@@ -17,18 +14,14 @@ namespace CelestialOdyssey.Game.Core.MapSystem
     [Serializable]
     public class Map
     {
-        [JsonProperty] public List<PlanetSystem> mPlanetSystems { get; private set; } = new();
-
         [JsonProperty] private int mSectorCountWidth = 40;
         [JsonProperty] private int mSectorCountHeight = 40;
-        [JsonProperty] public readonly int SectorSclae = 20000000;
         [JsonProperty] public readonly int MapScale = 100;
 
-        public int Height { get { return mSectorCountHeight * SectorSclae; } }
-        public int Width { get { return mSectorCountWidth * SectorSclae; } }
-
-        public void Generate(GameLayer gameLayer)
+        public void Generate(out HashSet<PlanetSystem> planetSystems)
         {
+            planetSystems = new();
+
             var triangularDistribution = new Triangular(2, 10, 6);
             var noiseMapGenerator = new NoiseMapGenerator(mSectorCountWidth, mSectorCountHeight);
             var noiseMap = noiseMapGenerator.GenerateBinaryNoiseMap();
@@ -44,8 +37,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                     var planets = new List<Planet>();
 
                     // Generate Star
-                    Star star = StarTypes.GenerateRandomStar(GenerateStarPosition(x, y, SectorSclae));
-                    star.AddToSpatialHashing(gameLayer);
+                    Star star = StarTypes.GenerateRandomStar(Vector2.Zero);
 
                     // Generate Planets of Star
                     var orbitsAmount = (int)triangularDistribution.Sample();
@@ -55,14 +47,13 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                     {
                         orbitRadius += 250000;
                         Planet planet = GetPlanet(star.Position, orbitRadius, i);
-                        planet.AddToSpatialHashing(gameLayer);
                         planets.Add(planet);
                     }
 
                     // Generate Planet System
                     var danger = GetDanger(x, y);
-                    PlanetSystem planetSystem = new(GetMapPosition(star.Position), star.Position, orbitRadius, star.TextureId, star.LightColor, danger);
-                    mPlanetSystems.Add(planetSystem);
+                    PlanetSystem planetSystem = new(GenerateStarPosition(x, y, MapScale), star.Position, orbitRadius, star.TextureId, star.LightColor, danger);
+                    planetSystems.Add(planetSystem);
 
                     // Generate Pirates 
                     var pirates = new List<Enemy>();
@@ -70,9 +61,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                     for (int i = 0; i < pirateAmount; i++)
                     {
                         Enemy pirate = new(Utility.Utility.GetRandomVector2(planetSystem.SystemBounding));
-                        pirate.SetActualSystem(planetSystem);
                         pirates.Add(pirate);
-                        pirate.AddToSpatialHashing(gameLayer);
                     }
 
                     planetSystem.SetObjects(star, planets, pirates);
@@ -129,22 +118,11 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                 10 => new PlanetTypes.Cold(orbitCenter, oribitRadius),
                 _ => null
             };
-        }
+        }                
 
-        public Vector2 GetMapPosition(Vector2 sectorPosition) { return sectorPosition / SectorSclae * MapScale; }
-        
-        public Vector2 GetSectorPosition(Vector2 mapPosition) { return mapPosition / MapScale * SectorSclae; }
-        
-        public PlanetSystem GetRandomSystem() { return Utility.Utility.GetRandomElement(mPlanetSystems); }
-        
-        public void UpdateSystems(GameTime gameTime, InputState inputState, GameLayer gameLayer)
+        public void DrawSectores(Scene scene)
         {
-            foreach (var system in mPlanetSystems) { system.Update(gameTime, inputState, gameLayer); }
-        }
-
-        public void DrawSectores(SceneLayer sceneLayer)
-        {
-            var screen = sceneLayer.FrustumCuller.WorldFrustum;
+            var screen = scene.FrustumCuller.WorldFrustum;
 
             var mapWidth = (mSectorCountWidth * MapScale) + MapScale;
             var mapHeight = (mSectorCountHeight * MapScale) + MapScale;
@@ -152,26 +130,14 @@ namespace CelestialOdyssey.Game.Core.MapSystem
             for (int x = 0; x < mapWidth; x += MapScale)
             {
                 if (x < screen.X && x > screen.X + screen.Width) continue;
-                TextureManager.Instance.DrawAdaptiveLine(new(x, -MapScale), new(x, mapHeight), new Color(10, 10, 10, 10), 1, 0, sceneLayer.Camera.Zoom);
+                TextureManager.Instance.DrawAdaptiveLine(new(x, -MapScale), new(x, mapHeight), new Color(10, 10, 10, 10), 1, 0, scene.Camera.Zoom);
             }
             for (int y = 0; y < mapHeight; y += MapScale)
             {
                 if (y < screen.Y && y > screen.Y + screen.Height) continue;
-                TextureManager.Instance.DrawAdaptiveLine(new(-MapScale, y), new(mapWidth, y), new Color(10, 10, 10, 10), 1, 0, sceneLayer.Camera.Zoom);
+                TextureManager.Instance.DrawAdaptiveLine(new(-MapScale, y), new(mapWidth, y), new Color(10, 10, 10, 10), 1, 0, scene.Camera.Zoom);
             }
         }
-
-        public PlanetSystem GetActualPlanetSystem(Player player)
-        {
-            foreach (var item in mPlanetSystems)
-            {
-                if (!item.CheckIfHasPlayer(player)) continue;
-                return item;
-                
-            }
-            return null;
-        }
-
 
     }
 }

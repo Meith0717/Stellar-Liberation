@@ -48,9 +48,9 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
 
         [JsonIgnore] private Color mCrosshairColor;
 
-        public void UpdateOnMap(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
+        public void UpdateOnMap(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            base.Update(gameTime, inputState, sceneLayer);
+            base.Update(gameTime, inputState, sceneManagerLayer, scene);
             mCrosshairColor = IsHover ? Color.MonoGameOrange : (HasPlayer ? Color.Green : GetColor());
         }
 
@@ -63,30 +63,30 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             _ => throw new NotImplementedException()
         };
 
-        public void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer)
+        public void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            if (!gameLayer.FrustumCuller.CircleOnWorldView(SystemBounding)) return;
-            Star.Update(gameTime, inputState, gameLayer);
+            if (!scene.FrustumCuller.CircleOnWorldView(SystemBounding)) return;
+            Star.Update(gameTime, inputState, sceneManagerLayer, scene);
             foreach (var item in Planets)
             {
-                item.Update(gameTime, inputState, gameLayer);
+                item.Update(gameTime, inputState, sceneManagerLayer, scene);
             }
             var deleteList = new List<Enemy>();
             foreach (var item in Pirates)
             {
                 if (item.DefenseSystem.HullLevel <= 0) deleteList.Add(item);
-                item.Update(gameTime, inputState, gameLayer);
+                item.Update(gameTime, inputState, sceneManagerLayer, scene);
             }
             foreach (var item in deleteList) 
             { 
                 Pirates.Remove(item);
-                item.RemoveFromSpatialHashing(gameLayer);
+                item.RemoveFromSpatialHashing(scene);
             }
         }
 
-        public override void Draw(SceneLayer sceneLayer)
+        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            base.Draw(sceneLayer);
+            base.Draw(sceneManagerLayer, scene);
             TextureManager.Instance.DrawGameObject(this, IsHover);
             TextureManager.Instance.Draw(ContentRegistry.starLightAlpha, Position, TextureOffset, TextureScale * 2f, Rotation, 0, TextureColor);
             TextureManager.Instance.Draw(ContentRegistry.mapCrosshair, Position, TextureScale * 2, Rotation, 1, mCrosshairColor);

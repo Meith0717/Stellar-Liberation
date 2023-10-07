@@ -49,12 +49,12 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         /// </summary>
         /// <param name="gameTime">The game time information.</param>
         /// <param name="inputState">The input state of the game.</param>
-        /// <param name="sceneLayer">The game engine instance.</param>
-        public override void Update(GameTime gameTime, InputState inputState, SceneLayer sceneLayer)
+        /// <param name="sceneManagerLayer">The game engine instance.</param>
+        public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            base.Update(gameTime, inputState, sceneLayer);
+            base.Update(gameTime, inputState, sceneManagerLayer, scene);
 
-            IsHover = BoundedBox.Contains(sceneLayer.WorldMousePosition);
+            IsHover = BoundedBox.Contains(scene.WorldMousePosition);
             LeftPressed = IsHover && inputState.HasMouseAction(MouseActionType.LeftClickReleased);
             RightPressed = IsHover && inputState.HasMouseAction(MouseActionType.RightClick);
 
