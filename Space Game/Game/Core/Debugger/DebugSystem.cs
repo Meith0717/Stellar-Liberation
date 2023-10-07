@@ -2,6 +2,8 @@
 using CelestialOdyssey.Game.Core.DebugSystem;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
+using CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
@@ -18,10 +20,13 @@ namespace CelestialOdyssey.Game.Core.Debugger
         public float DrawnObjectCount;
         public float UpdateObjectCount;
 
-        private bool IsDebug;
+        private bool IsDebug = true;
         private bool DrawBuckets;
         private bool ShowObjectsInBucket;
         private bool ShowHitBoxes;
+        private bool SpawnFighter;
+        private bool SpawnCorvette;
+        private bool SpawnBattleShip;
 
         private float mCurrentFramesPerSecond;
         private float mFrameDuration;
@@ -34,10 +39,25 @@ namespace CelestialOdyssey.Game.Core.Debugger
             mGameTime = gameTime;
             DrawnObjectCount = 0;
             UpdateObjectCount = 0;
-            if (!IsDebug) return;
+            if (!IsDebug) 
+            {
+                DrawBuckets = ShowObjectsInBucket = ShowHitBoxes = false;
+                return;
+            }
             inputState.DoAction(ActionType.F1, () => DrawBuckets = !DrawBuckets);
             inputState.DoAction(ActionType.F2, () => ShowObjectsInBucket = !ShowObjectsInBucket);
             inputState.DoAction(ActionType.F3, () => ShowHitBoxes = !ShowHitBoxes);
+            inputState.DoAction(ActionType.F4, () => SpawnFighter = true);
+            inputState.DoAction(ActionType.F5, () => SpawnCorvette = true);
+            inputState.DoAction(ActionType.F6, () => SpawnBattleShip = true);
+        }
+
+        public void CheckForSpawn(PlanetSystem planetSystem)
+        {
+            if (SpawnBattleShip) planetSystem.SpaceShips.Add(new EnemyBattleShip(Vector2.Zero));
+            if (SpawnCorvette) planetSystem.SpaceShips.Add(new EnemyCorvette(Vector2.Zero));
+            if (SpawnFighter) planetSystem.SpaceShips.Add(new EnemyFighter(Vector2.Zero));
+            SpawnFighter = SpawnBattleShip = SpawnCorvette = false;
         }
 
         public void UpdateFrameCounting()
@@ -69,16 +89,16 @@ namespace CelestialOdyssey.Game.Core.Debugger
 
         private void ShowInfo(Vector2 position)
         {
-            TextureManager.Instance.DrawString("smal", position + new Vector2(0, 0), "F1 - Draw Spatial Hashing Grid", 1, DrawBuckets ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString("smal", position + new Vector2(0, 20), "F2 - Draw Objects in Bucket", 1, ShowObjectsInBucket ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString("smal", position + new Vector2(0, 40), "F3 - Show Hit Box", 1, ShowHitBoxes ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString("smal", position + new Vector2(0, 60), "F4 - none", 1, false ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString("smal", position + new Vector2(0, 80), "F5 - none", 1, false ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString("smal", position + new Vector2(0, 100), "F6 - none", 1, false ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString("smal", position + new Vector2(0, 120), "F7 - none", 1, false ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString("smal", position + new Vector2(0, 140), "F8 - none", 1, false ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString("smal", position + new Vector2(0, 160), "F9 - none", 1, false ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString("smal", position + new Vector2(0, 180), "F10 - none", 1, false ? Color.GreenYellow : Color.White);
+            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 0), "F1 - Draw Spatial Hashing Grid", 1, DrawBuckets ? Color.GreenYellow : Color.White);
+            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 25), "F2 - Draw Objects in Bucket", 1, ShowObjectsInBucket ? Color.GreenYellow : Color.White);
+            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 50), "F3 - Show Hit Box", 1, ShowHitBoxes ? Color.GreenYellow : Color.White);
+            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 75), "F4 - Spawn Fighter", 1, Color.White);
+            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 100), "F5 - Spawn Corvette", 1, Color.White);
+            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 125), "F6 - Spawn Battle Ship", 1, Color.White);
+            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 150), "F7 - none", 1, Color.White);
+            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 175), "F8 - none", 1, false ? Color.GreenYellow : Color.White);
+            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 200), "F9 - none", 1, false ? Color.GreenYellow : Color.White);
+            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 225), "F10 - none", 1, false ? Color.GreenYellow : Color.White);
 
             List<string> debug = new() {
                 $"FPS - {Math.Round(mCurrentFramesPerSecond)}", $"Render Latency - {mFrameDuration} ms",
@@ -87,7 +107,7 @@ namespace CelestialOdyssey.Game.Core.Debugger
 
             for (int i = 0; i < debug.Count; i++)
             {
-                TextureManager.Instance.DrawString("smal", position + new Vector2(210, i * 20), debug[i], 1, Color.White);
+                TextureManager.Instance.DrawString("debug", position + new Vector2(250, i * 25), debug[i], 1, Color.White);
             }
         }
 

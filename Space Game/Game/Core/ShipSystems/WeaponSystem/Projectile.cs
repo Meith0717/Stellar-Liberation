@@ -11,24 +11,24 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
 {
     public class Projectile : GameObject
     {
-        private Vector2 mDirection;
-        private float mVelocity;
         public double LiveTime { get; private set; }
+        public SpaceShip Origine { get; private set; }
+
+        private Vector2 mDirection;
         public readonly int ShieldDamage;
         public readonly int HullDamage;
-        public readonly SpaceShip Origin;
         public bool HasHit;
 
-        public Projectile(SpaceShip origin, Vector2 startPosition, float rotation, int shieldDamage, int hullDamage, float velocity)
-            : base(startPosition, ContentRegistry.projectile, 10, 20)
+        public Projectile( Vector2 weaponPosition, float rotation, Color color, int shieldDamage, int hullDamage, SpaceShip origine)
+            : base(weaponPosition, ContentRegistry.projectile, 20, 20)
         {
-            Origin = origin;
             mDirection = Geometry.CalculateDirectionVector(rotation);
             Rotation = rotation;
-            mVelocity = velocity;
             HullDamage = hullDamage;
             ShieldDamage = shieldDamage;
-            LiveTime = 5000;
+            TextureColor = color;
+            LiveTime = Configs.Projectile.LiveTime;
+            Origine = origine;
         }
 
         public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
@@ -36,7 +36,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
             base.Update(gameTime, inputState, sceneManagerLayer, scene);
             LiveTime -= HasHit ? double.PositiveInfinity : gameTime.ElapsedGameTime.Milliseconds;
             RemoveFromSpatialHashing(scene);
-            Position += mDirection * mVelocity * gameTime.ElapsedGameTime.Milliseconds;
+            Position += mDirection * Configs.Projectile.Velocity * gameTime.ElapsedGameTime.Milliseconds;
             AddToSpatialHashing(scene);
         }
 

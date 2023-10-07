@@ -94,6 +94,7 @@ namespace CelestialOdyssey.GameEngine.Content_Management
 
         private readonly static string weapons = @"textures\gameobjects\weapons";
         public readonly static Registry projectile = new(weapons, "projectile");
+        public readonly static Registry turette = new(weapons, "turette");
 
         private readonly static string textures = @"textures\";
         public readonly static Registry pixle = new(textures, "pixle");

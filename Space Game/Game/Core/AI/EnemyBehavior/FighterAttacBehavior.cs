@@ -1,24 +1,23 @@
-﻿using CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem;
-using CelestialOdyssey.Game.GameObjects.Spacecrafts;
+﻿using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using CelestialOdyssey.Game.Core.GameObjects;
 using CelestialOdyssey.Game.Core.Utility;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using System;
 
 namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
 {
-    public class AttacBehavior : Behavior
+    public class FighterAttacBehavior : Behavior
     {
-        private readonly float mVelocity;
         private readonly float mAttacDistance;
 
         private float mDistanceToTarget;
         private bool mReorienting;
+        private Vector2? mReorientingPosition;
 
-        public AttacBehavior(int velocity, int attacDistance) 
+        public FighterAttacBehavior(int attacDistance) 
         { 
-            mVelocity = Utility.Utility.Random.Next(velocity - 5, velocity + 5);
             mAttacDistance = attacDistance;
         }
 
@@ -33,16 +32,20 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
         public override void Execute(List<GameObject> environment, SpaceShip spaceShip)
         {
 
-            spaceShip.Velocity = mVelocity;
             switch (mReorienting)
             {
                 case true:
                     mReorienting = mDistanceToTarget < mAttacDistance * 0.9f;
-                    spaceShip.Rotation += MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Target.Position, spaceShip.Position, 0.1f);
+
+                    if (mReorientingPosition is not null) break;
+                    Utility.Utility.Random.NextUnitVector(out var vector);
+                    mReorientingPosition = vector * mAttacDistance * 2;
+                    spaceShip.SublightEngine.SetTarget(mReorientingPosition);
                     break;
                 case false:
+                    mReorientingPosition = null;
                     mReorienting = mDistanceToTarget < 25000;
-                    spaceShip.Rotation += MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, spaceShip.Target.Position, 0.1f);
+                    spaceShip.SublightEngine.SetTarget(spaceShip.Target.Position); ;
                     break;
             }
 

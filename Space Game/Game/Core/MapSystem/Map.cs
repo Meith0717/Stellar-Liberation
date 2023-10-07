@@ -2,7 +2,8 @@
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types;
-using CelestialOdyssey.Game.GameObjects.SpaceShips;
+using CelestialOdyssey.Game.GameObjects.Spacecrafts;
+using CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy;
 using MathNet.Numerics.Distributions;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
@@ -56,13 +57,13 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                     planetSystems.Add(planetSystem);
 
                     // Generate Pirates 
-                    var pirates = new List<Enemy>();
+                    var pirates = new List<SpaceShip>();
                     var pirateAmount = GetPirateAmount(danger);
-                    for (int i = 0; i < pirateAmount; i++)
-                    {
-                        Enemy pirate = new(Utility.Utility.GetRandomVector2(planetSystem.SystemBounding));
-                        pirates.Add(pirate);
-                    }
+                    // for (int i = 0; i < pirateAmount; i++)
+                    // {
+                    //     SpaceShip pirate = new(Utility.Utility.GetRandomVector2(planetSystem.SystemBounding));
+                    //     pirates.Add(pirate);
+                    // }
 
                     planetSystem.SetObjects(star, planets, pirates);
                 }

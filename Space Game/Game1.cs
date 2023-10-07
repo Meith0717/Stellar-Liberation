@@ -66,7 +66,7 @@ namespace CelestialOdyssey
             SetCursor(ContentRegistry.cursor);
 
             // game fonts
-            TextureManager.Instance.LoadSpriteTexture(Content, "text", "fonts/text");
+            TextureManager.Instance.LoadSpriteTexture(Content, "debug", "fonts/debug");
             TextureManager.Instance.LoadSpriteTexture(Content, "title", "fonts/title");
             TextureManager.Instance.LoadSpriteTexture(Content, "smal", "fonts/smal");
         }

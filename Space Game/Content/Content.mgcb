@@ -13,12 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin fonts/smal.spritefont
+#begin fonts/debug.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:fonts/smal.spritefont
+/build:fonts/debug.spritefont
 
 #begin fonts/text.spritefont
 /importer:FontDescriptionImporter
@@ -26,6 +26,20 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:fonts/text.spritefont
+
+#begin fonts/text.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:fonts/text.spritefont
+
+#begin fonts/title.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:fonts/title.spritefont
 
 #begin fonts/title.spritefont
 /importer:FontDescriptionImporter
@@ -826,18 +840,6 @@
 /processorParam:TextureFormat=Color
 /build:textures/gameobjects/spacecrafts/playerShield.png
 
-#begin textures/gameobjects/weapons/photonTorpedo.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/gameobjects/weapons/photonTorpedo.png
-
 #begin textures/gameobjects/weapons/projectile.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -849,6 +851,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/gameobjects/weapons/projectile.png
+
+#begin textures/gameobjects/weapons/turette.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameobjects/weapons/turette.png
 
 #begin textures/pixle.png
 /importer:TextureImporter

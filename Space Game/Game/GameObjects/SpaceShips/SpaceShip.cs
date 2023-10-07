@@ -26,9 +26,9 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
         [JsonIgnore] 
         public HyperDrive HyperDrive { get; protected set; } = new(6000, 100);
         [JsonIgnore] 
-        public WeaponSystem WeaponSystem { get; protected set; }
+        public Weapons WeaponSystem { get; protected set; }
         [JsonProperty] 
-        public DefenseSystem DefenseSystem { get; protected set; } = new(1000, 1000, 0, 1);
+        public DefenseSystem DefenseSystem { get; protected set; } = new(100, 100, 0, 1);
 
 
         public SpaceShip(Vector2 position, string textureId, float textureScale)
@@ -41,7 +41,8 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
             AddToSpatialHashing(scene);
 
             HyperDrive.Update(gameTime, this);
-            WeaponSystem.Update(gameTime, inputState, sceneManagerLayer, scene);
+            SublightEngine.Update(this);
+            WeaponSystem.Update(gameTime, inputState, this, sceneManagerLayer, scene);
             DefenseSystem.Update(gameTime);
             SensorArray.Update(gameTime, Position, scene);
             CheckForHit();
@@ -54,7 +55,7 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
             if (!projectileInRange.Any()) return;
             foreach (var projectile in projectileInRange)
             {
-                if (!projectile.BoundedBox.Intersects(BoundedBox) || this == projectile.Origin) continue;
+                if (!projectile.BoundedBox.Intersects(BoundedBox) || this == projectile.Origine) continue;
                 projectile.HasHit = true;
                 DefenseSystem.GetDamage(projectile.ShieldDamage, projectile.HullDamage);
             }
@@ -64,6 +65,7 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
         {
             base.Draw(sceneManagerLayer, scene);
             DefenseSystem.DrawShields(this);
+            WeaponSystem.Draw(sceneManagerLayer, scene);
         }
     }
 }

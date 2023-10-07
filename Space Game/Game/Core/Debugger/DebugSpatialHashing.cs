@@ -43,7 +43,7 @@ namespace CelestialOdyssey.Game.Core.DebugSystem
             }
 
             var hash = scene.SpatialHashing.Hash((int)mousePosition.X, (int)mousePosition.Y);
-            TextureManager.Instance.DrawString("text", mousePosition + (new Vector2(1, -5) * 5 / scene.Camera.Zoom), hash.ToString(), 1 / scene.Camera.Zoom, Color.White);
+            TextureManager.Instance.DrawString("debug", mousePosition + (new Vector2(1, -5) * 5 / scene.Camera.Zoom), hash.ToString(), 1 / scene.Camera.Zoom, Color.White);
         }
     }
 }

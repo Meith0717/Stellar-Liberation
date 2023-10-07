@@ -1,12 +1,12 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
-using CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem;
 using CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using System;
+using CelestialOdyssey.Game.Core;
 
 namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 {
@@ -16,14 +16,20 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 
         public Player() : base(Vector2.Zero, ContentRegistry.player.Name, 40) 
         {
-            WeaponSystem = new(new(){ new(1000, 5500), new(1000, -5500)}, 100 );
+
+            WeaponSystem = new(Configs.Player.WeaponColor, Configs.Player.InitialShieldDamage, Configs.Player.InitialShieldDamage, Configs.Player.InitialCoolDown);
+            WeaponSystem.SetWeapon(new(-2900, 6600));
+            WeaponSystem.SetWeapon(new(-2900, -6600));
+            WeaponSystem.SetWeapon(new(-2300, 700));
+            WeaponSystem.SetWeapon(new(-2300, -700));
+
         }
 
         public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
             if (!HyperDrive.IsActive)
             {
-                if (inputState.HasMouseAction(MouseActionType.LeftClickHold)) WeaponSystem.Fire(this, scene.WorldMousePosition);
+                inputState.DoMouseAction(MouseActionType.LeftClickHold, () => WeaponSystem.Fire(this, scene.WorldMousePosition));
                 SublightEngine.FollowMouse(inputState, this, scene.WorldMousePosition);
             }
 
@@ -35,6 +41,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
         {
             base.Draw(sceneManagerLayer, scene);
             TextureManager.Instance.DrawGameObject(this);
+            DefenseSystem.DrawLive(this);
         }
     }
 }

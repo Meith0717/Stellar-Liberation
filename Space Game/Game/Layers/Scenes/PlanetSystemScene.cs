@@ -11,7 +11,7 @@ namespace CelestialOdyssey.Game.Layers.Scenes
         private PlanetSystem mPlanetSystem;
         private Player mPlayer;
 
-        public PlanetSystemScene(PlanetSystem planetSystem, Player player) : base(500000, 0.00009f, 1, false)
+        public PlanetSystemScene(PlanetSystem planetSystem, Player player) : base(300000, 0.00009f, 1, false)
         {
             mPlanetSystem = planetSystem;
             mPlayer = player;
@@ -20,6 +20,7 @@ namespace CelestialOdyssey.Game.Layers.Scenes
         public override void Update(GameTime gameTime, InputState inputState, int screenWidth, int screenHeight)
         {
             base.Update(gameTime, inputState, screenWidth, screenHeight);
+            mSceneManagerLayer.DebugSystem.CheckForSpawn(mPlanetSystem);
             mPlanetSystem.Update(gameTime, inputState, mSceneManagerLayer, this);
             mPlayer.Update(gameTime, inputState, mSceneManagerLayer, this);
         }

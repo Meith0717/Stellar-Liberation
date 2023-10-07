@@ -11,9 +11,12 @@ namespace CelestialOdyssey.Game.Core.AI
         private Behavior mCurrentBehavior;
         private HashSet<Behavior> mBehaviors;
 
+        private int mCoolDown;
+
         public BehaviorBasedAI(HashSet<Behavior> behaviors)
         {
             mBehaviors = behaviors;
+            mCoolDown = Utility.Utility.Random.Next(100);
         }
 
         public void AddBehavior(Behavior behavior)
@@ -23,11 +26,15 @@ namespace CelestialOdyssey.Game.Core.AI
 
         public void Update(GameTime gameTime, List<GameObject> environment, SpaceShip spaceShip)
         {
+            mCoolDown -= gameTime.ElapsedGameTime.Milliseconds;
+            if (mCoolDown > 0) return;
+            mCoolDown = 500;
+
             // Auswahl des Verhaltens basierend auf Prioritäten und Spielsituation
             mCurrentBehavior = SelectBehavior(environment, spaceShip);
 
             // Ausführung des ausgewählten Verhaltens
-            if (mCurrentBehavior is not null) mCurrentBehavior.Execute(environment, spaceShip);
+            mCurrentBehavior?.Execute(environment, spaceShip);
         }
 
         private Behavior SelectBehavior(List<GameObject> environment, SpaceShip spaceShip)

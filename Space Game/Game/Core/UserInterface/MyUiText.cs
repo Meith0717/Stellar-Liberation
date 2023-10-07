@@ -11,7 +11,7 @@ namespace CelestialOdyssey.Game.Core.UserInterface
         public string Text;
         public Color Color = Color.White;
 
-        public MyUiText(float x, float y, string text, string font = "text")
+        public MyUiText(float x, float y, string text, string font = "debug")
         {
             mX = x;
             mY = y;

@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
 using System;
+using CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy;
+using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 
 namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
 {
@@ -20,7 +22,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
     {
         [JsonProperty] public Star Star { get; private set; }
         [JsonProperty] public List<Planet> Planets { get; private set; }
-        [JsonProperty] public List<Enemy> Pirates { get; private set; }
+        [JsonProperty] public List<SpaceShip> SpaceShips { get; private set; }
         [JsonProperty] public bool HasPlayer { get; private set; }
         [JsonProperty] public Danger Danger { get; private set; }
         [JsonProperty] public CircleF SystemBounding { get; private set; }
@@ -32,12 +34,11 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             Danger = danger;
             SystemBounding = new(sectorPosition, boundaryRadius);
         }
-
-        public void SetObjects(Star star, List<Planet> planets, List<Enemy> pirates)
+        public void SetObjects(Star star, List<Planet> planets, List<SpaceShip> pirates)
         {
             Planets = planets;
             Star = star;
-            Pirates = pirates;
+            SpaceShips = pirates;
         }
 
         public bool CheckIfHasPlayer(Player player)
@@ -63,23 +64,22 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             _ => throw new NotImplementedException()
         };
 
-        public void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            if (!scene.FrustumCuller.CircleOnWorldView(SystemBounding)) return;
             Star.Update(gameTime, inputState, sceneManagerLayer, scene);
             foreach (var item in Planets)
             {
                 item.Update(gameTime, inputState, sceneManagerLayer, scene);
             }
-            var deleteList = new List<Enemy>();
-            foreach (var item in Pirates)
+            var deleteList = new List<SpaceShip>();
+            foreach (var item in SpaceShips)
             {
                 if (item.DefenseSystem.HullLevel <= 0) deleteList.Add(item);
                 item.Update(gameTime, inputState, sceneManagerLayer, scene);
             }
             foreach (var item in deleteList) 
             { 
-                Pirates.Remove(item);
+                SpaceShips.Remove(item);
                 item.RemoveFromSpatialHashing(scene);
             }
         }
