@@ -5,6 +5,7 @@ using CelestialOdyssey.Game.Core.ShipSystems;
 using CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem;
 using CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem;
 using CelestialOdyssey.Game.Core.Utility;
+using CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
@@ -55,7 +56,11 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
             if (!projectileInRange.Any()) return;
             foreach (var projectile in projectileInRange)
             {
-                if (!projectile.BoundedBox.Intersects(BoundedBox) || this == projectile.Origine) continue;
+                if (!BoundedBox.Intersects(projectile.BoundedBox) || this == projectile.Origine) continue;
+
+                if (projectile.Origine is Enemy && this is Enemy) continue;  
+
+
                 projectile.HasHit = true;
                 DefenseSystem.GetDamage(projectile.ShieldDamage, projectile.HullDamage);
             }

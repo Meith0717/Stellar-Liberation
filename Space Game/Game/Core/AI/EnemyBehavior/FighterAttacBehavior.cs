@@ -10,7 +10,7 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
 {
     public class FighterAttacBehavior : Behavior
     {
-        private readonly float mAttacDistance;
+        private readonly int mAttacDistance;
 
         private float mDistanceToTarget;
         private bool mReorienting;
@@ -38,8 +38,9 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
                     mReorienting = mDistanceToTarget < mAttacDistance * 0.9f;
 
                     if (mReorientingPosition is not null) break;
-                    Utility.Utility.Random.NextUnitVector(out var vector);
-                    mReorientingPosition = vector * mAttacDistance * 2;
+                    Utility.Utility.Random.NextUnitVector(out var unitVector);
+                    var attacDistance = Utility.Utility.Random.Next(mAttacDistance / 2, mAttacDistance);
+                    mReorientingPosition = spaceShip.Position + (unitVector * attacDistance * 2);
                     spaceShip.SublightEngine.SetTarget(mReorientingPosition);
                     break;
                 case false:

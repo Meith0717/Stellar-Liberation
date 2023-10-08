@@ -47,9 +47,6 @@ namespace CelestialOdyssey.Game.Core.InputManagement.Peripheral
                 { Keys.F1, ActionType.F1 },
                 { Keys.F2, ActionType.F2 },
                 { Keys.F3, ActionType.F3 },
-                { Keys.F4, ActionType.F4 },
-                { Keys.F5, ActionType.F5 },
-                { Keys.F6, ActionType.F6 },
                 { Keys.F7, ActionType.F7 },
                 { Keys.F8, ActionType.F8 },
                 { Keys.F9, ActionType.F9 },
@@ -60,6 +57,9 @@ namespace CelestialOdyssey.Game.Core.InputManagement.Peripheral
 
             mActionOnKeyboardHold = new()
             {
+                { Keys.F4, ActionType.F4 },
+                { Keys.F5, ActionType.F5 },
+                { Keys.F6, ActionType.F6 },
                 { Keys.Space, ActionType.FireInitialWeapon },
             };
             mKeysKeyEventTypes = new();

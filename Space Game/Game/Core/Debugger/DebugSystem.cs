@@ -107,7 +107,7 @@ namespace CelestialOdyssey.Game.Core.Debugger
 
             for (int i = 0; i < debug.Count; i++)
             {
-                TextureManager.Instance.DrawString("debug", position + new Vector2(250, i * 25), debug[i], 1, Color.White);
+                TextureManager.Instance.DrawString("debug", position + new Vector2(300, i * 25), debug[i], 1, Color.White);
             }
         }
 

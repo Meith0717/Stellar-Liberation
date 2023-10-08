@@ -11,7 +11,7 @@ namespace CelestialOdyssey.Game.Layers.Scenes
         private PlanetSystem mPlanetSystem;
         private Player mPlayer;
 
-        public PlanetSystemScene(PlanetSystem planetSystem, Player player) : base(300000, 0.00009f, 1, false)
+        public PlanetSystemScene(PlanetSystem planetSystem, Player player) : base(250000, 0.00009f, 1, false)
         {
             mPlanetSystem = planetSystem;
             mPlayer = player;

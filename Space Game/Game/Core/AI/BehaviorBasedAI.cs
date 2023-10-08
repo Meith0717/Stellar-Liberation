@@ -16,7 +16,7 @@ namespace CelestialOdyssey.Game.Core.AI
         public BehaviorBasedAI(HashSet<Behavior> behaviors)
         {
             mBehaviors = behaviors;
-            mCoolDown = Utility.Utility.Random.Next(100);
+            mCoolDown = Utility.Utility.Random.Next(650);
         }
 
         public void AddBehavior(Behavior behavior)
@@ -28,7 +28,7 @@ namespace CelestialOdyssey.Game.Core.AI
         {
             mCoolDown -= gameTime.ElapsedGameTime.Milliseconds;
             if (mCoolDown > 0) return;
-            mCoolDown = 500;
+            mCoolDown = 650;
 
             // Auswahl des Verhaltens basierend auf Prioritäten und Spielsituation
             mCurrentBehavior = SelectBehavior(environment, spaceShip);
