@@ -3,7 +3,6 @@ using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
-using CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy;
 using MathNet.Numerics.Distributions;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
@@ -46,7 +45,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
 
                     for (int i = 1; i <= orbitsAmount; i++)
                     {
-                        orbitRadius += 250000;
+                        orbitRadius += 1000000;
                         Planet planet = GetPlanet(star.Position, orbitRadius, i);
                         planets.Add(planet);
                     }
