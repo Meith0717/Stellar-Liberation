@@ -25,10 +25,6 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         {
             RemoveFromSpatialHashing(scene);
             base.Update(gameTime, inputState, sceneManagerLayer, scene);
-            if (LightColor != Color.Transparent)
-            {
-                Rotation += 0.001f;
-            }
             AddToSpatialHashing(scene);
         }
 

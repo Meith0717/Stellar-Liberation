@@ -17,28 +17,24 @@ namespace CelestialOdyssey.Game.Layers
     [Serializable]
     public class GameLayer : SceneManagerLayer
     {
-        [JsonIgnore] public PlanetSystem ActualPlanetSystem;
         [JsonProperty] public readonly HashSet<PlanetSystem> PlanetSystems;
         [JsonProperty] public readonly Map Map;
         [JsonProperty] public readonly Player Player;
 
         public GameLayer() : base()
         {
-            // Build and generate map
-            Map = new();
-            Map.Generate(out PlanetSystems);
-
-            // Set start planetsystem
-            ActualPlanetSystem = PlanetSystems.First();
-
             // Build and place player to startsystem
             Player = new();
+
+            // Build and generate map
+            Map = new();
+            Map.Generate(Player, out PlanetSystems);
 
             // Play bg music
             SoundManager.Instance.PlaySound(ContentRegistry.bgMusicGame, 1.2f, false, true, true);
 
             // Add Main Scene
-            AddScene(new PlanetSystemScene(ActualPlanetSystem, Player));
+            AddScene(new PlanetSystemScene(PlanetSystems.First()));
         }
 
         public override void Update(GameTime gameTime, InputState inputState)

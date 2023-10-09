@@ -1,5 +1,6 @@
 ﻿
 using CelestialOdyssey.Game.Core.GameObjects;
+using CelestialOdyssey.Game.Core.ShipSystems;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace CelestialOdyssey.Game.Core.AI
             mBehaviors.Add(behavior);
         }
 
-        public void Update(GameTime gameTime, List<GameObject> environment, SpaceShip spaceShip)
+        public void Update(GameTime gameTime, SensorArray environment, SpaceShip spaceShip)
         {
             mCoolDown -= gameTime.ElapsedGameTime.Milliseconds;
             if (mCoolDown > 0) return;
@@ -37,7 +38,7 @@ namespace CelestialOdyssey.Game.Core.AI
             mCurrentBehavior?.Execute(environment, spaceShip);
         }
 
-        private Behavior SelectBehavior(List<GameObject> environment, SpaceShip spaceShip)
+        private Behavior SelectBehavior(SensorArray environment, SpaceShip spaceShip)
         {
             PriorityQueue<Behavior, double> behaviors = new();
             foreach (var item in mBehaviors)

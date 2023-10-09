@@ -9,11 +9,11 @@ namespace CelestialOdyssey.Game.Core.Parallax
     {
         private readonly List<ParllaxBackground> mBackdrounds = new();
 
-        public void Update(Vector2 cameraMovement)
+        public void Update(Vector2 cameraMovement, float cameraZoom)
         {
             foreach (ParllaxBackground backdround in mBackdrounds)
             {
-                backdround.Update(cameraMovement * 0.0035f);
+                backdround.Update(cameraMovement * cameraZoom) ;
             }
         }
 

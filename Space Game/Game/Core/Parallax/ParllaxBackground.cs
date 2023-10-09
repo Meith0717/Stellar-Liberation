@@ -7,8 +7,8 @@ namespace CelestialOdyssey.Game.Core.Parallax
     internal class ParllaxBackground
     {
         private readonly string mTextureId;
-        private int mTextureWidth;
-        private int mTextureHeight;
+        private float mTextureWidth;
+        private float mTextureHeight;
 
         private Vector2 mPosition1;
         private Vector2 mPosition2;
@@ -36,11 +36,11 @@ namespace CelestialOdyssey.Game.Core.Parallax
 
         public void Draw()
         {
-            TextureManager.Instance.Draw(mTextureId, mPosition1, mTextureWidth, mTextureHeight);
-            TextureManager.Instance.Draw(mTextureId, mPosition2, mTextureWidth, mTextureHeight);
-            TextureManager.Instance.Draw(mTextureId, mPosition3, mTextureWidth, mTextureHeight);
-            TextureManager.Instance.Draw(mTextureId, mPosition4, mTextureWidth, mTextureHeight);
-            TextureManager.Instance.Draw(mTextureId, mPosition5, mTextureWidth, mTextureHeight);
+            TextureManager.Instance.Draw(mTextureId, mPosition1, Vector2.Zero, 1, 0, 0, Color.White);
+            TextureManager.Instance.Draw(mTextureId, mPosition2, Vector2.Zero, 1, 0, 0, Color.White);
+            TextureManager.Instance.Draw(mTextureId, mPosition3, Vector2.Zero, 1, 0, 0, Color.White);
+            TextureManager.Instance.Draw(mTextureId, mPosition4, Vector2.Zero, 1, 0, 0, Color.White);
+            TextureManager.Instance.Draw(mTextureId, mPosition5, Vector2.Zero, 1, 0, 0, Color.White);
         }
 
         public void OnResolutionChanged(GraphicsDevice graphicsDevice)

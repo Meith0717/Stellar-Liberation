@@ -1,4 +1,5 @@
 ﻿using CelestialOdyssey.Game.Core.GameObjects;
+using CelestialOdyssey.Game.Core.ShipSystems;
 using CelestialOdyssey.Game.Core.Utility;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
@@ -13,12 +14,12 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
     {
         private Vector2? mPatrolTarget;
 
-        public override double GetPriority(List<GameObject> environment, SpaceShip spaceShip) 
+        public override double GetPriority(SensorArray environment, SpaceShip spaceShip) 
             => (spaceShip.Target is null) ? 1 : 0.1;
 
-        public override void Execute(List<GameObject> environment, SpaceShip spaceShip)
+        public override void Execute(SensorArray environment, SpaceShip spaceShip)
         {
-            var targets = environment.OfType<Player>();
+            var targets = environment.SortedSpaceShips.OfType<Player>();
             if (targets.Any()) spaceShip.Target = targets.First();
 
             switch (mPatrolTarget)
@@ -27,7 +28,7 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
                     if (Utility.Utility.Random.NextDouble() > 1) break;
 
                     // Get Planets in Radius
-                    var patrolTargets = environment.OfType<Planet>().ToList();
+                    var patrolTargets = environment.AstronomicalObjects.OfType<Planet>().ToList();
                     if (!patrolTargets.Any()) break;
 
                     // Get Random Target
@@ -36,7 +37,7 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
                     mPatrolTarget = Geometry.GetPointOnCircle(randomPlanet.BoundedBox, angleBetweenTargetAndShip);
 
                     // Send Ship to Target
-                    spaceShip.SublightEngine.SetTarget(mPatrolTarget);
+                    spaceShip.SublightEngine.SetTarget(spaceShip, mPatrolTarget);
                     break;
                 case not null:
 

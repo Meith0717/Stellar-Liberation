@@ -148,7 +148,7 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         public virtual void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
         {
             sceneManagerLayer.DebugSystem.DrawnObjectCount += 1;
-            sceneManagerLayer.DebugSystem.DrawBoundBox(BoundedBox, scene);
+            sceneManagerLayer.DebugSystem.DrawHitbox(BoundedBox, scene);
         }
     }
 }

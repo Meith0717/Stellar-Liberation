@@ -3,6 +3,7 @@ using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
+using CelestialOdyssey.Game.GameObjects.SpaceShips;
 using MathNet.Numerics.Distributions;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
@@ -18,7 +19,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
         [JsonProperty] private int mSectorCountHeight = 40;
         [JsonProperty] public readonly int MapScale = 100;
 
-        public void Generate(out HashSet<PlanetSystem> planetSystems)
+        public void Generate(Player player, out HashSet<PlanetSystem> planetSystems)
         {
             planetSystems = new();
 
@@ -45,7 +46,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
 
                     for (int i = 1; i <= orbitsAmount; i++)
                     {
-                        orbitRadius += 1000000;
+                        orbitRadius += 1500000;
                         Planet planet = GetPlanet(star.Position, orbitRadius, i);
                         planets.Add(planet);
                     }
@@ -64,7 +65,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                     //     pirates.Add(pirate);
                     // }
 
-                    planetSystem.SetObjects(star, planets, pirates);
+                    planetSystem.SetObjects(star, planets, player, pirates);
                 }
             }
         }

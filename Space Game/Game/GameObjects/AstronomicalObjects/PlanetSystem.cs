@@ -4,14 +4,13 @@ using CelestialOdyssey.Game.GameObjects.SpaceShips;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.GameObjects;
-using CelestialOdyssey.Game.Layers;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
 using System;
-using CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
+using CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem;
 
 namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
 {
@@ -20,10 +19,14 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
     [Serializable]
     public class PlanetSystem : InteractiveObject
     {
+        // Game Objects
+        [JsonIgnore] public Player Player { get; private set; }
         [JsonProperty] public Star Star { get; private set; }
         [JsonProperty] public List<Planet> Planets { get; private set; }
         [JsonProperty] public List<SpaceShip> SpaceShips { get; private set; }
-        [JsonProperty] public bool HasPlayer { get; private set; }
+
+        // Other Stuff
+        [JsonIgnore] public readonly ProjectileManager ProjectileManager = new();
         [JsonProperty] public Danger Danger { get; private set; }
         [JsonProperty] public CircleF SystemBounding { get; private set; }
 
@@ -34,25 +37,21 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             Danger = danger;
             SystemBounding = new(sectorPosition, boundaryRadius);
         }
-        public void SetObjects(Star star, List<Planet> planets, List<SpaceShip> pirates)
+
+        public void SetObjects(Star star, List<Planet> planets, Player player, List<SpaceShip> spaceShips)
         {
             Planets = planets;
             Star = star;
-            SpaceShips = pirates;
-        }
-
-        public bool CheckIfHasPlayer(Player player)
-        { 
-            HasPlayer = SystemBounding.Contains(player.Position);
-            return HasPlayer;
+            SpaceShips = spaceShips;
+            Player = player;
         }
 
         [JsonIgnore] private Color mCrosshairColor;
 
-        public void UpdateOnMap(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
             base.Update(gameTime, inputState, sceneManagerLayer, scene);
-            mCrosshairColor = IsHover ? Color.MonoGameOrange : (HasPlayer ? Color.Green : GetColor());
+            mCrosshairColor = IsHover ? Color.MonoGameOrange : GetColor();
         }
 
         private Color GetColor() => Danger switch
@@ -64,9 +63,11 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             _ => throw new NotImplementedException()
         };
 
-        public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
+        public void UpdateObjects(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
+            ProjectileManager.Update(gameTime, inputState, sceneManagerLayer, scene);
             Star.Update(gameTime, inputState, sceneManagerLayer, scene);
+            Player.Update(gameTime, inputState, sceneManagerLayer, scene);
             foreach (var item in Planets)
             {
                 item.Update(gameTime, inputState, sceneManagerLayer, scene);
@@ -83,6 +84,14 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
                 item.RemoveFromSpatialHashing(scene);
             }
         }
+
+        public void DrawOrbits(Scene scene)
+        {
+            foreach (var item in Planets)
+            {
+                TextureManager.Instance.DrawAdaptiveCircle(Star.Position, item.OrbitRadius, new(20, 20, 20, 20), 1, item.TextureDepth - 1, scene.Camera.Zoom);
+            }
+        } 
 
         public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
         {

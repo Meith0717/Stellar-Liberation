@@ -2,6 +2,9 @@
 using CelestialOdyssey.Game.Core.AI.EnemyBehavior;
 using CelestialOdyssey.Game.Core;
 using Microsoft.Xna.Framework;
+using System.Security.Cryptography.X509Certificates;
+using CelestialOdyssey.Game.Core.LayerManagement;
+using System.Diagnostics;
 
 namespace CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy
 {
@@ -32,6 +35,11 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy
                new PartolBehavior(),
                new BattleShipAttacBehavior(300000)
             });
+        }
+        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
+        {
+            base.Draw(sceneManagerLayer, scene);
+            sceneManagerLayer.DebugSystem.DrawSensorRadius(Position, 2000000, scene);
         }
     }
 }

@@ -26,22 +26,37 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
                     spaceShip.Rotation += MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, (Vector2)mTarget, 0.1f);
                     spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 1f);
                     if (spaceShip.Velocity > mMaxVelocity) spaceShip.Velocity = mMaxVelocity;
-                    if (Vector2.Distance((Vector2)mTarget, spaceShip.Position) < 10000) mTarget = null;
+                    SetTarget(spaceShip, mTarget);
                     break;
             }
         }
 
-        public void SetTarget(Vector2? target) => mTarget = target;
+        public bool IsTargetReached(SpaceShip spaceShip, Vector2? target)
+        {
+            if (target is null) return true;
+            return Vector2.Distance((Vector2)target, spaceShip.Position) < 10000;
+        }
+
+        public bool SetTarget(SpaceShip spaceShip, Vector2? target)
+        {
+            if (IsTargetReached(spaceShip, target))
+            {
+                mTarget = null;
+                return false;
+            }
+            mTarget = target;
+            return true;
+        }
 
         public void FollowMouse(InputState inputState, SpaceShip spaceShip, Vector2 worldMousePosition)
         {
             spaceShip.Rotation += MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, worldMousePosition, .1f);
             if (inputState.HasMouseAction(MouseActionType.RightClickHold))
             {
-                SetTarget(worldMousePosition);
+                SetTarget(spaceShip, worldMousePosition);
                 return;
             }
-            SetTarget(null);
+            SetTarget(spaceShip, null);
         }
     }
 }

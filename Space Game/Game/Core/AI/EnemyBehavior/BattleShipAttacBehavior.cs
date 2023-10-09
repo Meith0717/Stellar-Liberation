@@ -1,7 +1,6 @@
 ﻿using CelestialOdyssey.Game.GameObjects.Spacecrafts;
-using CelestialOdyssey.Game.Core.GameObjects;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using CelestialOdyssey.Game.Core.ShipSystems;
 
 namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
 {
@@ -14,7 +13,7 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
             mAttacDistance = attacDistance;
         }
 
-        public override double GetPriority(List<GameObject> environment, SpaceShip spaceShip)
+        public override double GetPriority(SensorArray environment, SpaceShip spaceShip)
         {
             if (spaceShip.Target is null) return 0;
             var distanceToTarget = Vector2.Distance(spaceShip.Target.Position, spaceShip.Position);
@@ -22,9 +21,9 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
             return 0.5;
         }
 
-        public override void Execute(List<GameObject> environment, SpaceShip spaceShip)
+        public override void Execute(SensorArray environment, SpaceShip spaceShip)
         {
-            spaceShip.WeaponSystem.Fire(spaceShip, spaceShip.Target.Position);
+            spaceShip.WeaponSystem.Fire(spaceShip.ActualPlanetSystem.ProjectileManager, spaceShip, spaceShip.Target.Position);
         }
 
     }

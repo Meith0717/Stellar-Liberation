@@ -16,20 +16,18 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 
         public Player() : base(Vector2.Zero, ContentRegistry.player.Name, 40) 
         {
-
             WeaponSystem = new(Configs.Player.WeaponColor, Configs.Player.InitialShieldDamage, Configs.Player.InitialShieldDamage, Configs.Player.InitialCoolDown);
             WeaponSystem.SetWeapon(new(-2900, 6600));
             WeaponSystem.SetWeapon(new(-2900, -6600));
             WeaponSystem.SetWeapon(new(-2300, 700));
             WeaponSystem.SetWeapon(new(-2300, -700));
-
         }
 
         public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
             if (!HyperDrive.IsActive)
             {
-                inputState.DoMouseAction(MouseActionType.LeftClickHold, () => WeaponSystem.Fire(this, scene.WorldMousePosition));
+                inputState.DoMouseAction(MouseActionType.LeftClickHold, () => WeaponSystem.Fire(ActualPlanetSystem.ProjectileManager, this, scene.WorldMousePosition));
                 SublightEngine.FollowMouse(inputState, this, scene.WorldMousePosition);
             }
 
@@ -42,6 +40,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
             base.Draw(sceneManagerLayer, scene);
             TextureManager.Instance.DrawGameObject(this);
             DefenseSystem.DrawLive(this);
+            sceneManagerLayer.DebugSystem.DrawSensorRadius(Position, 2000000, scene);
         }
     }
 }

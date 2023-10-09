@@ -10,7 +10,6 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
 {
     public class Weapons
     {
-        private readonly List<Projectile> mProjectiles = new();
         private readonly List<Weapon> mWeapons = new();
         private readonly Color mWeaponColor;
 
@@ -32,7 +31,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
         public void SetWeapon(Vector2 position) => 
             mWeapons.Add(new(position, 20, 100, mWeaponColor, mShieldDamage, mHullDamage));
 
-        public virtual void Fire(SpaceShip spaceShip, Vector2 target)
+        public virtual void Fire(ProjectileManager projectileManager, SpaceShip spaceShip, Vector2 target)
         { 
             if (mCooldown < mMaxCoolDown) return;
             mCooldown = 0;
@@ -41,7 +40,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
 
             foreach (var weapon in mWeapons)
             {
-                mProjectiles.Add(weapon.Fire(spaceShip, target));
+                projectileManager.AddProjectiel(weapon.Fire(spaceShip, target));
             }
         }
 
@@ -52,23 +51,6 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
             foreach (var weapon in mWeapons)
             {
                 weapon.Update(gameTime, inputState, sceneManagerLayer, scene, origin.Rotation, origin.Position);
-            }
-
-            List<Projectile> deleteList = new();
-            foreach (var projectile in mProjectiles)
-            {
-                if (projectile.LiveTime <= 0)
-                {
-                    deleteList.Add(projectile);
-                    continue;
-                }
-                projectile.Update(gameTime, inputState, sceneManagerLayer, scene);
-            }
-
-            foreach (var projectile in deleteList)
-            {
-                projectile.RemoveFromSpatialHashing(scene);
-                mProjectiles.Remove(projectile);
             }
         }
 

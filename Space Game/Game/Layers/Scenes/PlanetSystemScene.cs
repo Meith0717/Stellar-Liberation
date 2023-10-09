@@ -2,7 +2,6 @@
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.Parallax;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
-using CelestialOdyssey.Game.GameObjects.SpaceShips;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 
@@ -12,26 +11,24 @@ namespace CelestialOdyssey.Game.Layers.Scenes
     {
         private PlanetSystem mPlanetSystem;
         private ParllaxManager mParlaxManager;
-        private Player mPlayer;
 
-        public PlanetSystemScene(PlanetSystem planetSystem, Player player) : base(500000, 0.00009f, 1, false)
+        public PlanetSystemScene(PlanetSystem planetSystem) : base(500000, 0.00009f, 1, false)
         {
             mPlanetSystem = planetSystem;
-            mPlayer = player;
+            mPlanetSystem.Player.ActualPlanetSystem = mPlanetSystem;
 
             mParlaxManager = new();
-            mParlaxManager.Add(new(ContentRegistry.gameBackgroundParlax1, .001f));
+            mParlaxManager.Add(new(ContentRegistry.gameBackgroundParlax1, .1f));
         }
 
         public override void Update(GameTime gameTime, InputState inputState, int screenWidth, int screenHeight)
         {
             base.Update(gameTime, inputState, screenWidth, screenHeight);
 
-            mParlaxManager.Update(Camera.Movement);
+            mParlaxManager.Update(Camera.Movement, Camera.Zoom);
 
             mSceneManagerLayer.DebugSystem.CheckForSpawn(mPlanetSystem);
-            mPlanetSystem.Update(gameTime, inputState, mSceneManagerLayer, this);
-            mPlayer.Update(gameTime, inputState, mSceneManagerLayer, this);
+            mPlanetSystem.UpdateObjects(gameTime, inputState, mSceneManagerLayer, this);
         }
 
         public override void DrawOnScreen() 
@@ -39,7 +36,7 @@ namespace CelestialOdyssey.Game.Layers.Scenes
             mParlaxManager.Draw();
         }
 
-        public override void DrawOnWorld() { }
+        public override void DrawOnWorld() => mPlanetSystem.DrawOrbits(this);
 
         public override void OnResolutionChanged() { }
     }

@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
+using MonoGame.Extended.Sprites;
 using System;
 using System.Collections.Generic;
 
@@ -95,10 +96,11 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
 
         // render Textures ___________________________________________________________________________
 
-        public void Draw(string id, Vector2 position, int width, int height)
+        public void Draw(string id, Vector2 position, float width, float height)
         {
-            SpriteBatch.Draw(GetTexture(id), new Rectangle((int)position.X, (int)position.Y, width, height), Color.White);
+            SpriteBatch.Draw(GetTexture(id), new RectangleF(position.X, position.Y, width, height).ToRectangle(), Color.White);
         }
+
         public void Draw(string id, Vector2 position, Vector2 offset, float sclae, float rotation, int depth, Color color)
         {
             SpriteBatch.Draw(GetTexture(id), position, null, color, rotation, offset, sclae, SpriteEffects.None, GetDepth(depth));

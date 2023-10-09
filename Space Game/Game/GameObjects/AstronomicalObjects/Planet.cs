@@ -38,16 +38,17 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         {
             base.Update(gameTime, inputState, sceneManagerLayer, scene);
             RemoveFromSpatialHashing(scene);
+            OrbitRadians -= 0.00001f;
             Position = Geometry.GetPointOnCircle(OrbitCenter, OrbitRadius, OrbitRadians);
             mShadowRotation = Geometry.AngleBetweenVectors(Position, OrbitCenter) + MathF.PI;
-            Rotation -= 0.005f;
+            Rotation -= 0.0001f;
             AddToSpatialHashing(scene);
         }
 
         public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
         {
             base.Draw(sceneManagerLayer, scene);
-            TextureManager.Instance.Draw(ContentRegistry.planetShadow, Position, TextureOffset, TextureScale + 2.5f, mShadowRotation, TextureDepth + 1, Color.White);
+            TextureManager.Instance.Draw(ContentRegistry.planetShadow, Position, TextureOffset, TextureScale + 20f, mShadowRotation, TextureDepth + 1, Color.White);
             TextureManager.Instance.DrawGameObject(this);
         }
     }

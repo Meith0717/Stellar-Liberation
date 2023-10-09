@@ -1,20 +1,18 @@
-﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
-using CelestialOdyssey.Game.Core.GameObjects;
+﻿using CelestialOdyssey.Game.Core.GameObjects;
 using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
-using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended.Timers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CelestialOdyssey.Game.Core.ShipSystems
 {
     public class SensorArray
     {
 
-        public List<GameObject> SortedObjectsInRange = new();
+        public List<GameObject> AstronomicalObjects { get; private set; } = new();
+        public List<SpaceShip> SortedSpaceShips { get; private set; } = new();
         private int mScanRadius;
 
         private float mActualCounter;
@@ -27,13 +25,15 @@ namespace CelestialOdyssey.Game.Core.ShipSystems
             mActualCounter = Utility.Utility.Random.Next(1000);
         }
 
-        public void Update(GameTime gameTime, Vector2 Position, Scene scene)
+        public void Update(GameTime gameTime, Vector2 position, PlanetSystem planetSystem, Scene scene)
         {
             mActualCounter += gameTime.TotalGameTime.Milliseconds;
             if (mActualCounter < mMaxCounter) return;
             mActualCounter = 0;
-            SortedObjectsInRange = scene.GetSortedObjectsInRadius<GameObject>(Position, mScanRadius);
-            SortedObjectsInRange.Remove(SortedObjectsInRange.First());
+            AstronomicalObjects.Clear();
+            AstronomicalObjects.Add(planetSystem.Star);
+            AstronomicalObjects.AddRange(planetSystem.Planets);
+            SortedSpaceShips = scene.GetObjectsInRadius<SpaceShip>(position, mScanRadius);
         }
     }
 }

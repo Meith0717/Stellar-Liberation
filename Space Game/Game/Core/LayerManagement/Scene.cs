@@ -61,8 +61,8 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
 
         public List<T> GetObjectsInRadius<T>(Vector2 position, int radius) where T : GameObject
         {
-            var objectsInRadius = new List<GameObject>();
             int CellSize = SpatialHashing.CellSize;
+            int radiusSquared = radius * radius;
 
             // Determine the range of bucket indices that fall within the radius.
             var startX = (int)Math.Floor((position.X - radius) / CellSize);
@@ -70,30 +70,33 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
             var startY = (int)Math.Floor((position.Y - radius) / CellSize);
             var endY = (int)Math.Ceiling((position.Y + radius) / CellSize);
 
-            for (var x = startX; x <= endX; x++)
+            List<T> objectsInRadius = new List<T>();
+
+            foreach (var x in Enumerable.Range(startX, endX - startX + 1))
             {
-                for (var y = startY; y <= endY; y++)
+                foreach (var y in Enumerable.Range(startY, endY - startY + 1))
                 {
                     var objectsInBucket = SpatialHashing.GetObjectsInBucket(x * CellSize, y * CellSize);
-                    foreach (var gameObject in objectsInBucket)
+                    foreach (var gameObject in objectsInBucket.OfType<T>())
                     {
                         var objPosition = gameObject.Position;
-                        var distance = Vector2.Distance(position, objPosition);
-                        if (distance <= radius)
+                        var distanceSquared = Vector2.DistanceSquared(position, objPosition);
+                        if (distanceSquared <= radiusSquared)
                         {
                             objectsInRadius.Add(gameObject);
                         }
                     }
                 }
             }
-            return objectsInRadius.OfType<T>().ToList();
-        }
 
-        public List<T> GetSortedObjectsInRadius<T>(Vector2 position, int radius) where T : GameObject
-        {
-            var objectsInRadius = GetObjectsInRadius<T>(position, radius);
-            Comparison<GameObject> comparison = (a, b) => Vector2.Distance(a.Position, position).CompareTo(Vector2.Distance(b.Position, position));
-            objectsInRadius.Sort(comparison);
+            // Sort the objects by distance to the specified position
+            objectsInRadius.Sort((obj1, obj2) =>
+            {
+                var distance1 = Vector2.DistanceSquared(position, obj1.Position);
+                var distance2 = Vector2.DistanceSquared(position, obj2.Position);
+                return distance1.CompareTo(distance2);
+            });
+
             return objectsInRadius;
         }
 
