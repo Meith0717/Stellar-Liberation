@@ -1,6 +1,4 @@
-﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
-
-namespace CelestialOdyssey.Game.Core.UserInterface
+﻿namespace CelestialOdyssey.Game.Core.UserInterface
 {
     internal abstract class MyUiElement
     {

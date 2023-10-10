@@ -31,7 +31,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
             mMaxCoolDown = coolDown;
         }
 
-        public void SetWeapon(Vector2 position) => 
+        public void SetWeapon(Vector2 position) =>
             mWeapons.Add(new(position, 1f, 100, mWeaponColor, mShieldDamage, mHullDamage));
 
         public virtual void Fire(ProjectileManager projectileManager, SpaceShip spaceShip)
@@ -56,7 +56,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
 
             foreach (var weapon in mWeapons)
             {
-                switch (Target) 
+                switch (Target)
                 {
                     case null:
                         weapon.ForgetTarget();
@@ -76,7 +76,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
 
         public void Draw(SceneManagerLayer sceneManagerLayer, Scene sceme)
         {
-            foreach(var weapon in mWeapons)
+            foreach (var weapon in mWeapons)
             {
                 weapon.Draw(sceneManagerLayer, sceme);
             }

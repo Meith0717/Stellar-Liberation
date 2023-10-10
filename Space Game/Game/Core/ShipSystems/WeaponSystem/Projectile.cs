@@ -9,39 +9,27 @@ using Microsoft.Xna.Framework;
 
 namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
 {
-    public class Projectile : GameObject
+    public class Projectile : MovingObject
     {
-        public double LiveTime { get; private set; }
         public SpaceShip Origine { get; private set; }
 
-        private Vector2 mDirection;
         public readonly int ShieldDamage;
         public readonly int HullDamage;
-
-        private bool mHasHit;
-        public void Hit() => mHasHit = true;
 
         public Projectile(Vector2 weaponPosition, float rotation, Color color, int shieldDamage, int hullDamage, SpaceShip origine)
             : base(weaponPosition, ContentRegistry.projectile, 0.5f, 20)
         {
-            mDirection = Geometry.CalculateDirectionVector(rotation);
+            Direction = Geometry.CalculateDirectionVector(rotation);
             Rotation = rotation;
             HullDamage = hullDamage;
             ShieldDamage = shieldDamage;
             TextureColor = color;
-            LiveTime = 5000;
             Origine = origine;
+            Velocity = 15;
         }
 
         public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            LiveTime -= mHasHit ? double.PositiveInfinity : gameTime.ElapsedGameTime.Milliseconds;
-
-            // Update Position
-            RemoveFromSpatialHashing(scene);
-            Position += mDirection * (float)(15f * gameTime.ElapsedGameTime.Milliseconds);
-            AddToSpatialHashing(scene);
-
             base.Update(gameTime, inputState, sceneManagerLayer, scene);
         }
 
@@ -50,5 +38,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
             base.Draw(sceneManagerLayer, scene);
             TextureManager.Instance.DrawGameObject(this);
         }
+
+        public override void HasCollide() => LiveTime16 = double.PositiveInfinity;
     }
 }

@@ -36,6 +36,11 @@
     <Folder Include="Content\GameObjects\Stars\" />
     <Folder Include="Content\configs\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="Content\animations\explosion.sf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />
     <Exec Command="dotnet tool restore" />

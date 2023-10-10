@@ -15,7 +15,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         [JsonProperty]
         public Color LightColor { get; private set; }
 
-        public Star(Vector2 position, string textureId, float textureScale, Color starColor) 
+        public Star(Vector2 position, string textureId, float textureScale, Color starColor)
             : base(position, textureId, textureScale, 1)
         {
             LightColor = starColor;

@@ -81,11 +81,8 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         [JsonProperty]
         public CircleF BoundedBox { get; set; }
 
-        /// <summary>
-        /// Gets or sets whether the game object should only be updated when it's on-screen.
-        /// </summary>
-        [JsonProperty]
-        public bool UpdateOnlyOnScreen { get; set; } = false;
+        [JsonIgnore]
+        public double LiveTime16 { get; set; }
 
         [JsonIgnore]
         private bool mWasRemovedFromSpatialHashing = true;
@@ -116,6 +113,8 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         /// <param name="sceneLayer">The game engine instance.</param>
         public virtual void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
+            LiveTime16 += gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (LiveTime16 > (65536)) LiveTime16 = 0;
             sceneManagerLayer.DebugSystem.UpdateObjectCount += 1;
             UpdateBoundBox();
         }

@@ -1,8 +1,5 @@
-﻿
-using CelestialOdyssey.Game.Core.GameObjects;
-using CelestialOdyssey.Game.Core.ShipSystems;
+﻿using CelestialOdyssey.Game.Core.ShipSystems;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
-using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.Core.AI
 {

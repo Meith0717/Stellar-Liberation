@@ -1,6 +1,5 @@
-﻿using CelestialOdyssey.GameEngine.Content_Management;
-using CelestialOdyssey.Game.Core.AI.EnemyBehavior;
-using CelestialOdyssey.Game.Core;
+﻿using CelestialOdyssey.Game.Core.AI.EnemyBehavior;
+using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 
 namespace CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy
@@ -32,6 +31,11 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy
                new PartolBehavior(),
                new BattleShipAttacBehavior(300000)
             });
+        }
+
+        public override void HasCollide()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

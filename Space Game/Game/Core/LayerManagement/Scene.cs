@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 
 namespace CelestialOdyssey.Game.Core.LayerManagement
@@ -108,7 +107,7 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
             var screenMaxY = space.Y + space.Height + cellSize;
 
             for (int x = space.X - cellSize; x <= screeenMaxX + cellSize; x += cellSize)
-            { 
+            {
                 for (int y = space.Y - cellSize; y <= screenMaxY + cellSize; y += cellSize)
                 {
                     var objs = SpatialHashing.GetObjectsInBucket(x, y);

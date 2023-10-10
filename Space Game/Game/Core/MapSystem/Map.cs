@@ -85,7 +85,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
             > 0.6 => Danger.Moderate,
             > 0.4 => Danger.Medium,
             _ => Danger.High
-        }; 
+        };
 
         private double Hash(int x, int y)
         {
@@ -119,7 +119,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                 10 => new PlanetTypes.Cold(orbitCenter, oribitRadius),
                 _ => null
             };
-        }                
+        }
 
         public void DrawSectores(Scene scene)
         {

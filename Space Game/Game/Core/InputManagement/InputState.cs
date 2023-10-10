@@ -6,8 +6,6 @@
 */
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -90,7 +88,7 @@ namespace CelestialOdyssey.Game.Core.InputManagement
 
         public void DoAction(ActionType action, Action funktion)
         {
-            if (HasAction(action)) funktion(); 
+            if (HasAction(action)) funktion();
         }
     }
 }

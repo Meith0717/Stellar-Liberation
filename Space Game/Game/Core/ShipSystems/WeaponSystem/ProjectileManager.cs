@@ -1,13 +1,7 @@
 ﻿using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
-using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended.Screens;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
 {
@@ -25,7 +19,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
             List<Projectile> deleteList = new();
             foreach (var projectile in Projectiles)
             {
-                if (projectile.LiveTime <= 0)
+                if (projectile.LiveTime16 > 1000)
                 {
                     deleteList.Add(projectile);
                     continue;

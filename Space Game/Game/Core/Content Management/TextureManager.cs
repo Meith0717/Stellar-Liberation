@@ -5,16 +5,18 @@
  *  All rights reserved.
  */
 
-using CelestialOdyssey.Game.Core;
 using CelestialOdyssey.Game.Core.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
+using MonoGame.Extended.Content;
+using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection.Metadata;
 
 namespace CelestialOdyssey.Core.GameEngine.Content_Management
 {
@@ -22,16 +24,19 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
     {
         private static TextureManager mInstance;
 
-        public static TextureManager Instance { 
-            get { 
+        public static TextureManager Instance
+        {
+            get
+            {
                 if (mInstance == null) { mInstance = new TextureManager(); }
                 return mInstance;
-            } 
+            }
         }
 
         public float MaxLayerDepth = 10000f;
 
         private readonly Dictionary<string, Texture2D> mTextures = new();
+        private readonly Dictionary<string, SpriteSheet> mSprites = new();
         private readonly Dictionary<string, SpriteFont> mSpriteFonts = new();
         public SpriteBatch SpriteBatch { get; private set; }
 
@@ -42,30 +47,26 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
 
         public bool LoadTexture(ContentManager content, string id, string fileName)
         {
-            try
-            {
-                Texture2D texture = content.Load<Texture2D>(fileName);
-                mTextures.Add(id, texture);
-                return true;
-            }
-            catch 
-            {
-                return false;
-            }
+            Texture2D texture = content.Load<Texture2D>(fileName);
+            mTextures.Add(id, texture);
+            return true;
         }
 
-        public void LoadSpriteTexture(ContentManager content, string id, string fileName)
+        public bool LoadFont(ContentManager content, string id, string fileName)
         {
-            try
-            {
-                SpriteFont spriteFont = content.Load<SpriteFont>(fileName);
-                mSpriteFonts.Add(id, spriteFont);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Something did'nt work when loading {id} Sprite: {ex}");
-            }
+            SpriteFont spriteFont = content.Load<SpriteFont>(fileName);
+            mSpriteFonts.Add(id, spriteFont);
+            return true;
         }
+
+        public bool LoadSprite(ContentManager content, string id, string fileName)
+        {
+             SpriteSheet spriteSheet = content.Load<SpriteSheet>($"{fileName}.sf", new JsonContentLoader());
+            mSprites.Add(id, spriteSheet);
+            return true;
+        }
+
+
 
         public Texture2D GetTexture(string id)
         {
@@ -76,15 +77,25 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
             }
             return texture;
         }
-        public SpriteFont GetSpriteFont(string id)
+        public SpriteFont GetFont(string id)
         {
             SpriteFont spriteFont = mSpriteFonts[id];
             if (spriteFont == null)
             {
-                throw new Exception("Error, Texture was not found in TextureManager");
+                throw new Exception($"Error, Font {id} was not found in TextureManager");
             }
 
             return spriteFont;
+        }
+        public SpriteSheet GetSprite(string id)
+        {
+            SpriteSheet spriteSheet = mSprites[id];
+            if (spriteSheet == null)
+            {
+                throw new Exception($"Error, Font {id} was not found in TextureManager");
+            }
+
+            return spriteSheet;
         }
 
         private float GetDepth(int textureDepth)
@@ -128,7 +139,7 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
         // render String
         public void DrawString(string id, Vector2 position, string text, float scale, Color color)
         {
-            SpriteBatch.DrawString(GetSpriteFont(id), text, position, color, 0, Vector2.Zero, scale, SpriteEffects.None, 1);
+            SpriteBatch.DrawString(GetFont(id), text, position, color, 0, Vector2.Zero, scale, SpriteEffects.None, 1);
         }
 
         // render Circle ___________________________________________________________________________

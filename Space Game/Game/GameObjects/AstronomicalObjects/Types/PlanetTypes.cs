@@ -1,7 +1,6 @@
 ﻿using CelestialOdyssey.Game.Core.Utility;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended;
 using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types
@@ -19,8 +18,8 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types
         private static List<Registry> DryTextures = new() { ContentRegistry.dry1, ContentRegistry.dry2, ContentRegistry.dry3, ContentRegistry.dry4, ContentRegistry.dry5, ContentRegistry.dry6 };
         private static List<Registry> StoneTextures = new() { ContentRegistry.stone1, ContentRegistry.stone2, ContentRegistry.stone3, ContentRegistry.stone4, ContentRegistry.stone5, ContentRegistry.stone6 };
         private static List<Registry> GasTextures = new() { ContentRegistry.gas1, ContentRegistry.gas2, ContentRegistry.gas3, ContentRegistry.gas4 };
-        private static List<Registry> WarmTextures = new() { ContentRegistry.warm1, ContentRegistry.warm2, ContentRegistry.warm3, ContentRegistry.warm4};
-        private static List<Registry> TerrTextures = new() { ContentRegistry.terrestrial1, ContentRegistry.terrestrial2, ContentRegistry.terrestrial3, ContentRegistry.terrestrial4, 
+        private static List<Registry> WarmTextures = new() { ContentRegistry.warm1, ContentRegistry.warm2, ContentRegistry.warm3, ContentRegistry.warm4 };
+        private static List<Registry> TerrTextures = new() { ContentRegistry.terrestrial1, ContentRegistry.terrestrial2, ContentRegistry.terrestrial3, ContentRegistry.terrestrial4,
             ContentRegistry.terrestrial5, ContentRegistry.terrestrial6, ContentRegistry.terrestrial7, ContentRegistry.terrestrial8 };
 
         public class Cold

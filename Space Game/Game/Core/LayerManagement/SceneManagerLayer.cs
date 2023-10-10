@@ -28,8 +28,8 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-           DebugSystem.Update(gameTime, inputState);
-            if (Scenes.Any())  Scenes.Last().Update(gameTime, inputState, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
+            DebugSystem.Update(gameTime, inputState);
+            if (Scenes.Any()) Scenes.Last().Update(gameTime, inputState, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

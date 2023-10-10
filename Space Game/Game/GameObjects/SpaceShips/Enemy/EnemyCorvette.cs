@@ -1,8 +1,6 @@
-﻿using CelestialOdyssey.GameEngine.Content_Management;
-using CelestialOdyssey.Game.Core.AI.EnemyBehavior;
-using CelestialOdyssey.Game.Core;
+﻿using CelestialOdyssey.Game.Core.AI.EnemyBehavior;
+using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
-using CelestialOdyssey.Game.Core.LayerManagement;
 
 namespace CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy
 {
@@ -11,7 +9,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy
         public EnemyCorvette(Vector2 position)
             : base(position, ContentRegistry.enemyCorvette, 5f)
         {
-            SensorArray = new(2000000, 1000);
+            SensorArray = new(10000, 1000);
 
             WeaponSystem = new(Color.Red, 1, 1, 500);
             WeaponSystem.SetWeapon(new(0, 0));
@@ -22,8 +20,13 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy
             {
                new PartolBehavior(),
                new FollowBehavior(),
-               new FighterAttacBehavior(250000)
-            }) ;
+               new FighterAttacBehavior(8000)
+            });
+        }
+
+        public override void HasCollide()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

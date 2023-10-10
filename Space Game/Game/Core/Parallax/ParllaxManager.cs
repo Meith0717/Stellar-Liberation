@@ -1,5 +1,4 @@
-﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
@@ -13,7 +12,7 @@ namespace CelestialOdyssey.Game.Core.Parallax
         {
             foreach (ParllaxBackground backdround in mBackdrounds)
             {
-                backdround.Update(cameraMovement * cameraZoom) ;
+                backdround.Update(cameraMovement * cameraZoom);
             }
         }
 

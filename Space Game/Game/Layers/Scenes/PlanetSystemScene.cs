@@ -31,7 +31,7 @@ namespace CelestialOdyssey.Game.Layers.Scenes
             mPlanetSystem.UpdateObjects(gameTime, inputState, mSceneManagerLayer, this);
         }
 
-        public override void DrawOnScreen() 
+        public override void DrawOnScreen()
         {
             mParlaxManager.Draw();
         }

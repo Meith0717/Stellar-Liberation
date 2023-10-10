@@ -31,7 +31,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems
             mShieldAlpha -= 0.1f;
             mShieldAlpha = (mShieldAlpha < 0) ? 0 : mShieldAlpha;
 
-            if (mActualShieldForce + mShieldRegeneration < mMaxShieldForce) mActualShieldForce += mShieldRegeneration / 
+            if (mActualShieldForce + mShieldRegeneration < mMaxShieldForce) mActualShieldForce += mShieldRegeneration /
                     gameTime.ElapsedGameTime.Milliseconds;
             if (mActualHullForce + mHullRegeneration < mMaxHullForce) mActualHullForce += mHullRegeneration /
                     gameTime.ElapsedGameTime.Milliseconds;

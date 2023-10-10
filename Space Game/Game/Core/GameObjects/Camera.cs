@@ -87,7 +87,7 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         {
             MovedByUser = false;
             if (inputState.HasMouseAction(MouseActionType.LeftClickHold))
-            { 
+            {
                 if (Vector2.Distance(mLastScreenMousePosition, screenMousePosition) > 1)
                 {
                     MovedByUser = true;

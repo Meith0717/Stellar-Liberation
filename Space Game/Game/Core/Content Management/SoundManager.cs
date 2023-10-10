@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,15 +37,17 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
             MaxSoundEffectInstances = maxSoundEffectInstances;
         }
 
-        public void LoadSoundEffects(ContentManager content, string id, string fileName)
+        public bool LoadSoundEffects(ContentManager content, string id, string fileName)
         {
-            if (SoundEffects[fileName] != null)
-            {
-                SoundEffects.Remove(fileName);
-            }
+            if (SoundEffects[fileName] != null) SoundEffects.Remove(fileName);
 
-            var soundEffect = content.Load<SoundEffect>(fileName);
-            SoundEffects.Add(id, soundEffect);
+            try
+            {
+                var soundEffect = content.Load<SoundEffect>(fileName);
+                SoundEffects.Add(id, soundEffect);
+                return true;
+            }
+            catch { throw new Exception(id); }
         }
 
         public void CreateSoundEffectInstances()

@@ -21,7 +21,7 @@ namespace CelestialOdyssey.Game.Core.UserInterface.Messages
         {
             mMessage = messgae;
             CreationTime = creationTime;
-            Vector2 dim = TextureManager.Instance.GetSpriteFont(Font).MeasureString(mMessage);
+            Vector2 dim = TextureManager.Instance.GetFont(Font).MeasureString(mMessage);
             mWidth = dim.X;
             mHeight = dim.Y;
             mX = centerX - mWidth / 2;
@@ -30,7 +30,7 @@ namespace CelestialOdyssey.Game.Core.UserInterface.Messages
 
         public void Update(InputState inputState, float centerX, float centerY)
         {
-            Vector2 dim = TextureManager.Instance.GetSpriteFont(Font).MeasureString(mMessage);
+            Vector2 dim = TextureManager.Instance.GetFont(Font).MeasureString(mMessage);
             mX = centerX - dim.X / 2;
             mY = centerY - dim.Y / 2;
             mRect.X = (int)mX - 5;

@@ -22,7 +22,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         [JsonIgnore]
         private float mShadowRotation;
 
-        public Planet(Vector2 orbitCenter, int orbitRadius, string textureId, float textureScale) 
+        public Planet(Vector2 orbitCenter, int orbitRadius, string textureId, float textureScale)
             : base(Vector2.Zero, textureId, textureScale, 1)
         {
             OrbitCenter = orbitCenter;
@@ -48,7 +48,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
         {
             base.Draw(sceneManagerLayer, scene);
-            TextureManager.Instance.Draw(ContentRegistry.planetShadow, Position, TextureOffset, TextureScale * 1.05f , mShadowRotation, TextureDepth + 1, Color.White);
+            TextureManager.Instance.Draw(ContentRegistry.planetShadow, Position, TextureOffset, TextureScale * 1.05f, mShadowRotation, TextureDepth + 1, Color.White);
             TextureManager.Instance.DrawGameObject(this);
         }
     }

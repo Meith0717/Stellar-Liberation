@@ -1,6 +1,4 @@
-﻿
-using CelestialOdyssey.Game.Core.GameObjects;
-using CelestialOdyssey.Game.Core.ShipSystems;
+﻿using CelestialOdyssey.Game.Core.ShipSystems;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -43,7 +41,7 @@ namespace CelestialOdyssey.Game.Core.AI
             PriorityQueue<Behavior, double> behaviors = new();
             foreach (var item in mBehaviors)
             {
-                behaviors.Enqueue(item, - item.GetPriority(environment, spaceShip));
+                behaviors.Enqueue(item, -item.GetPriority(environment, spaceShip));
             }
             if (!behaviors.TryPeek(out var behavior, out var priority)) return null;
             if (priority == 0) return null;

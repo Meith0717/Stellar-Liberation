@@ -6,12 +6,9 @@ using CelestialOdyssey.Game.Core.Persistance;
 using CelestialOdyssey.Game.Layers;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.IO;
-using System.Threading;
 
 namespace CelestialOdyssey
 {
@@ -62,16 +59,28 @@ namespace CelestialOdyssey
             TextureManager.Instance.SetSpriteBatch(mSpriteBatch);
             foreach (Registry registry in ContentRegistry.IterateThroughRegistries())
             {
-                if (TextureManager.Instance.LoadTexture(Content, registry.Name, registry.FilePath)) continue;
-                SoundManager.Instance.LoadSoundEffects(Content, registry.Name, registry.FilePath);
+                switch (registry.RegistryType)
+                {
+                    case RegistryType.Texture:
+                        TextureManager.Instance.LoadTexture(Content, registry.Name, registry.FilePath);
+                        break;
+                    case RegistryType.Font:
+                        TextureManager.Instance.LoadFont(Content, registry.Name, registry.FilePath);
+                        break;
+                    case RegistryType.Sound:
+                        SoundManager.Instance.LoadSoundEffects(Content, registry.Name, registry.FilePath);
+                        break;
+                    case RegistryType.Animation:
+                        TextureManager.Instance.LoadSprite(Content, registry.Name, registry.FilePath);
+                        break;
+                }
             }
             SoundManager.Instance.CreateSoundEffectInstances();
             SetCursor(ContentRegistry.cursor);
 
             // game fonts
-            TextureManager.Instance.LoadSpriteTexture(Content, "debug", "fonts/debug");
-            TextureManager.Instance.LoadSpriteTexture(Content, "title", "fonts/title");
-            TextureManager.Instance.LoadSpriteTexture(Content, "smal", "fonts/smal");
+            TextureManager.Instance.LoadFont(Content, "debug", "fonts/debug");
+            TextureManager.Instance.LoadFont(Content, "title", "fonts/title");
 
             Configs.Load(Content);
         }
@@ -89,7 +98,7 @@ namespace CelestialOdyssey
             inputState.DoAction(ActionType.Load, Load);
 
             base.Update(gameTime);
-            
+
         }
 
         private void Save() { mSerialize.SerializeObject(mGameLayer, "test"); }

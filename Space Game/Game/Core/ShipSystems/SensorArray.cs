@@ -3,7 +3,6 @@ using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.Core.ShipSystems
@@ -18,8 +17,8 @@ namespace CelestialOdyssey.Game.Core.ShipSystems
         private float mActualCounter;
         private float mMaxCounter = 1000;
 
-        public SensorArray(int scanRadius, int scanCoolDown) 
-        { 
+        public SensorArray(int scanRadius, int scanCoolDown)
+        {
             ScanRadius = scanRadius;
             mMaxCounter = scanCoolDown;
             mActualCounter = Utility.Utility.Random.Next(1000);

@@ -1,6 +1,6 @@
-﻿using CelestialOdyssey.Game.GameObjects.Spacecrafts;
+﻿using CelestialOdyssey.Game.Core.ShipSystems;
+using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using Microsoft.Xna.Framework;
-using CelestialOdyssey.Game.Core.ShipSystems;
 
 namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
 {
@@ -8,8 +8,8 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
     {
         private readonly float mAttacDistance;
 
-        public BattleShipAttacBehavior(int attacDistance) 
-        { 
+        public BattleShipAttacBehavior(int attacDistance)
+        {
             mAttacDistance = attacDistance;
         }
 

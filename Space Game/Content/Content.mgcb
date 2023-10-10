@@ -35,53 +35,53 @@
 /processorParam:TextureFormat=Compressed
 /build:fonts/title.spritefont
 
-#begin SoundEffects/bgMusicGame.wav
+#begin soundEffects/bgMusicGame.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SoundEffects/bgMusicGame.wav
+/build:soundEffects/bgMusicGame.wav
 
-#begin SoundEffects/chargeHyperdrive.wav
+#begin soundEffects/chargeHyperdrive.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SoundEffects/chargeHyperdrive.wav
+/build:soundEffects/chargeHyperdrive.wav
 
-#begin SoundEffects/collect.wav
+#begin soundEffects/collect.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SoundEffects/collect.wav
+/build:soundEffects/collect.wav
 
-#begin SoundEffects/coolHyperdrive.wav
+#begin soundEffects/coolHyperdrive.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SoundEffects/coolHyperdrive.wav
+/build:soundEffects/coolHyperdrive.wav
 
-#begin SoundEffects/CourseSet.wav
+#begin soundEffects/CourseSet.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SoundEffects/CourseSet.wav
+/build:soundEffects/CourseSet.wav
 
-#begin SoundEffects/engineSound.wav
+#begin soundEffects/engineSound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SoundEffects/engineSound.wav
+/build:soundEffects/engineSound.wav
 
-#begin SoundEffects/torpedoFire.wav
+#begin soundEffects/torpedoFire.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SoundEffects/torpedoFire.wav
+/build:soundEffects/torpedoFire.wav
 
-#begin SoundEffects/torpedoHit.wav
+#begin soundEffects/torpedoHit.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SoundEffects/torpedoHit.wav
+/build:soundEffects/torpedoHit.wav
 
 #begin textures/background/gameBackground.png
 /importer:TextureImporter
@@ -190,6 +190,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/cursor1.png
+
+#begin textures/explosion.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/explosion.png
 
 #begin textures/gameobjects/astronomicalbodys/planets/cold1.png
 /importer:TextureImporter

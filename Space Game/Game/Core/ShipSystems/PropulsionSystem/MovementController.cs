@@ -48,7 +48,9 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
         /// <returns>The new velocity after applying the given acceleration.</returns>
         public static float GetVelocity(float currentVelocity, float acceleration)
         {
-            return currentVelocity + acceleration;
+            var newVelocity = currentVelocity + acceleration;
+            if (newVelocity < 0) return 0;
+            return newVelocity;
         }
     }
 }

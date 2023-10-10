@@ -1,10 +1,10 @@
-﻿using CelestialOdyssey.GameEngine.Content_Management;
-using System.Collections.Generic;
+﻿using CelestialOdyssey.Game.Core.Utility;
+using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
-using System.Reflection;
-using System.Linq;
 using System;
-using CelestialOdyssey.Game.Core.Utility;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types
 {

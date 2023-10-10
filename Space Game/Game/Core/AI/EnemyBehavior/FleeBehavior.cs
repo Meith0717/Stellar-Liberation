@@ -1,16 +1,14 @@
-﻿using CelestialOdyssey.Game.Core.GameObjects;
+﻿using CelestialOdyssey.Game.Core.ShipSystems;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
-using CelestialOdyssey.Game.Core.ShipSystems;
 
 namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
 {
     internal class FleeBehavior : Behavior
     {
         private readonly double mMinHullLevel;
-        private readonly int mFleeDistance; 
+        private readonly int mFleeDistance;
         private Vector2? mFleeTarget;
 
         public FleeBehavior(int fleeDistance)
@@ -20,7 +18,7 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
         }
 
         public override double GetPriority(SensorArray environment, SpaceShip spaceShip) =>
-            (spaceShip.DefenseSystem.HullLevel > mMinHullLevel) ? 0 : 1;            
+            (spaceShip.DefenseSystem.HullLevel > mMinHullLevel) ? 0 : 1;
 
         public override void Execute(SensorArray environment, SpaceShip spaceShip)
         {

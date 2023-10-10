@@ -2,13 +2,11 @@
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem;
+using CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using System;
-using CelestialOdyssey.Game.Core;
-using MonoGame.Extended;
-using CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem;
 
 namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 {
@@ -16,9 +14,9 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
     public class Player : SpaceShip
     {
 
-        public Player() : base(Vector2.Zero, ContentRegistry.player.Name, 1) 
+        public Player() : base(Vector2.Zero, ContentRegistry.player.Name, 1)
         {
-            WeaponSystem = new(Color.LightBlue, 100, 100, 500);
+            WeaponSystem = new(Color.LightBlue, 50, 50, 500);
             WeaponSystem.SetWeapon(new(110, 35));
             WeaponSystem.SetWeapon(new(110, -35));
             WeaponSystem.SetWeapon(new(-130, 100));
@@ -45,6 +43,11 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
             TextureManager.Instance.DrawGameObject(this);
             //DefenseSystem.DrawLive(this);
             sceneManagerLayer.DebugSystem.DrawSensorRadius(Position, 2000000, scene);
+        }
+
+        public override void HasCollide()
+        {
+            throw new NotImplementedException();
         }
     }
 }

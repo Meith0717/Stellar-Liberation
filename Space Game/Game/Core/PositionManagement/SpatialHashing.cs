@@ -115,7 +115,7 @@ namespace CelestialOdyssey.Core.GameEngine.Position_Management
         {
             var hash = Hash(x, y);
             return mSpatialGrids.TryGetValue(hash, out var objectsInBucket) ? objectsInBucket.ToList() : new List<T>();
-        }        
+        }
 
         public override string ToString()
         {

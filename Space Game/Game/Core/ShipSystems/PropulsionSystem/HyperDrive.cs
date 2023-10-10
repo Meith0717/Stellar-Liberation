@@ -1,8 +1,6 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
-using CelestialOdyssey.Game.GameObjects.SpaceShips;
-using CelestialOdyssey.Game.Layers;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 
@@ -26,13 +24,15 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
             mChargingTime = 6000;
         }
 
-        public double ActualCharging {  
-            get { 
-                return mActualEngineCoolDownTime/mEngineCoolDownTime;
-            } 
+        public double ActualCharging
+        {
+            get
+            {
+                return mActualEngineCoolDownTime / mEngineCoolDownTime;
+            }
         }
 
-        public void SetTarget(PlanetSystem planetSystem) 
+        public void SetTarget(PlanetSystem planetSystem)
         {
             if (mEngineCoolDownTime > mActualEngineCoolDownTime) return;
             SoundManager.Instance.PlaySound(ContentRegistry.ChargeHyperdrive, 1);
@@ -41,9 +41,9 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
             TargetPosition = planetSystem.Star.Position;
         }
 
-        public void Update(GameTime gameTime, SpaceShip spaceShip) 
+        public void Update(GameTime gameTime, SpaceShip spaceShip)
         {
-            mActualEngineCoolDownTime +=  gameTime.ElapsedGameTime.Milliseconds;
+            mActualEngineCoolDownTime += gameTime.ElapsedGameTime.Milliseconds;
             mActualChargingTime += gameTime.ElapsedGameTime.Milliseconds;
 
             GetVelocity(spaceShip);

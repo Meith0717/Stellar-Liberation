@@ -1,16 +1,16 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
-using CelestialOdyssey.GameEngine.Content_Management;
-using CelestialOdyssey.Game.GameObjects.SpaceShips;
+using CelestialOdyssey.Game.Core.GameObjects;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
-using CelestialOdyssey.Game.Core.GameObjects;
-using System.Collections.Generic;
+using CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem;
+using CelestialOdyssey.Game.GameObjects.Spacecrafts;
+using CelestialOdyssey.Game.GameObjects.SpaceShips;
+using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
 using System;
-using CelestialOdyssey.Game.GameObjects.Spacecrafts;
-using CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem;
+using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
 {
@@ -65,24 +65,18 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
 
         public void UpdateObjects(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            ProjectileManager.Update(gameTime, inputState, sceneManagerLayer, scene);
             Star.Update(gameTime, inputState, sceneManagerLayer, scene);
             Player.Update(gameTime, inputState, sceneManagerLayer, scene);
             foreach (var item in Planets)
             {
                 item.Update(gameTime, inputState, sceneManagerLayer, scene);
             }
-            var deleteList = new List<SpaceShip>();
             foreach (var item in SpaceShips)
             {
-                if (item.DefenseSystem.HullLevel <= 0) deleteList.Add(item);
                 item.Update(gameTime, inputState, sceneManagerLayer, scene);
             }
-            foreach (var item in deleteList) 
-            { 
-                SpaceShips.Remove(item);
-                item.RemoveFromSpatialHashing(scene);
-            }
+
+            ProjectileManager.Update(gameTime, inputState, sceneManagerLayer, scene);
         }
 
         public void DrawOrbits(Scene scene)
@@ -91,7 +85,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             {
                 TextureManager.Instance.DrawAdaptiveCircle(Star.Position, item.OrbitRadius, new(10, 10, 10, 10), 1, item.TextureDepth - 1, scene.Camera.Zoom);
             }
-        } 
+        }
 
         public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
         {
@@ -101,8 +95,8 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             TextureManager.Instance.Draw(ContentRegistry.mapCrosshair, Position, TextureScale * 2, Rotation, 1, mCrosshairColor);
         }
 
-        public override void LeftPressAction() { ; }
+        public override void LeftPressAction() {; }
 
-        public override void RightPressAction() { ; }
+        public override void RightPressAction() {; }
     }
 }

@@ -1,7 +1,7 @@
-﻿using CelestialOdyssey.Game.GameObjects.Spacecrafts;
-using MonoGame.Extended;
-using CelestialOdyssey.Game.Core.ShipSystems;
+﻿using CelestialOdyssey.Game.Core.ShipSystems;
+using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 
 namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
 {
@@ -13,8 +13,8 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
         private bool mReorienting;
         private Vector2? mReorientingPosition;
 
-        public FighterAttacBehavior(int attacDistance) 
-        { 
+        public FighterAttacBehavior(int attacDistance)
+        {
             mAttacDistance = attacDistance;
         }
 
@@ -62,7 +62,7 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
                     }
 
                     // Set course to attac target
-                    spaceShip.SublightEngine.SetTarget(spaceShip, spaceShip.WeaponSystem.Target.Position);
+                    spaceShip.SublightEngine.SetTarget(spaceShip, spaceShip.WeaponSystem.Target.FuturePosition);
                     spaceShip.WeaponSystem.Fire(spaceShip.ActualPlanetSystem.ProjectileManager, spaceShip);
                     break;
             }
