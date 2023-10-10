@@ -19,12 +19,12 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
             switch (mTarget)
             {
                 case null:
-                    spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, -1f);
+                    spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, -.1f);
                     if (spaceShip.Velocity < 0) spaceShip.Velocity = 0;
                     break;
                 case not null:
                     spaceShip.Rotation += MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, (Vector2)mTarget, 0.1f);
-                    spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 1f);
+                    spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, .1f);
                     if (spaceShip.Velocity > mMaxVelocity) spaceShip.Velocity = mMaxVelocity;
                     SetTarget(spaceShip, mTarget);
                     break;
@@ -34,7 +34,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
         public bool IsTargetReached(SpaceShip spaceShip, Vector2? target)
         {
             if (target is null) return true;
-            return Vector2.Distance((Vector2)target, spaceShip.Position) < 10000;
+            return Vector2.Distance((Vector2)target, spaceShip.Position) < 10;
         }
 
         public bool SetTarget(SpaceShip spaceShip, Vector2? target)

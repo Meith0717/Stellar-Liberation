@@ -6,6 +6,7 @@
  */
 
 using Microsoft.Xna.Framework;
+using System;
 
 namespace CelestialOdyssey.Game.Core.Utility
 {
@@ -50,6 +51,17 @@ namespace CelestialOdyssey.Game.Core.Utility
         public static Vector2 WorldToScreen(Matrix ViewTransformationMatrix, Vector2 position)
         {
             return Vector2.Transform(position, ViewTransformationMatrix);
+        }
+
+        public static Vector2 Rotation(Vector2 rotationCenter, Vector2 rotatetVector, float angleRad)
+        {
+            float cosTheta = (float)Math.Cos(angleRad);
+            float sinTheta = (float)Math.Sin(angleRad);
+            Vector2 rotatedVector = new Vector2(
+                rotatetVector.X * cosTheta - rotatetVector.Y * sinTheta,
+                rotatetVector.X * sinTheta + rotatetVector.Y * cosTheta
+            );
+            return rotatedVector + rotationCenter;
         }
     }
 }

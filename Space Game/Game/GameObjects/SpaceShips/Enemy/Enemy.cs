@@ -25,7 +25,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy
         public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
         {
             base.Draw(sceneManagerLayer, scene);
-            DefenseSystem.DrawLive(this);
+            //DefenseSystem.DrawLive(this);
             TextureManager.Instance.DrawGameObject(this);
         }
     }

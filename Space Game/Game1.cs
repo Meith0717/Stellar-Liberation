@@ -1,14 +1,17 @@
 ﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Game.Core.ConfigReader;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.Persistance;
 using CelestialOdyssey.Game.Layers;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.IO;
+using System.Threading;
 
 namespace CelestialOdyssey
 {
@@ -35,7 +38,7 @@ namespace CelestialOdyssey
         {
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            Window.AllowUserResizing = true;
+            Window.AllowUserResizing = false;
             Window.ClientSizeChanged += delegate { mResulutionWasResized = true; };
 
             mInputManager = new InputManager();
@@ -69,6 +72,8 @@ namespace CelestialOdyssey
             TextureManager.Instance.LoadSpriteTexture(Content, "debug", "fonts/debug");
             TextureManager.Instance.LoadSpriteTexture(Content, "title", "fonts/title");
             TextureManager.Instance.LoadSpriteTexture(Content, "smal", "fonts/smal");
+
+            Configs.Load(Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -84,6 +89,7 @@ namespace CelestialOdyssey
             inputState.DoAction(ActionType.Load, Load);
 
             base.Update(gameTime);
+            
         }
 
         private void Save() { mSerialize.SerializeObject(mGameLayer, "test"); }

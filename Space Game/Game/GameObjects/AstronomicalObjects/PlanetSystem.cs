@@ -89,7 +89,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         {
             foreach (var item in Planets)
             {
-                TextureManager.Instance.DrawAdaptiveCircle(Star.Position, item.OrbitRadius, new(20, 20, 20, 20), 1, item.TextureDepth - 1, scene.Camera.Zoom);
+                TextureManager.Instance.DrawAdaptiveCircle(Star.Position, item.OrbitRadius, new(10, 10, 10, 10), 1, item.TextureDepth - 1, scene.Camera.Zoom);
             }
         } 
 

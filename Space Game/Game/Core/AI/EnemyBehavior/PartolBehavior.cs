@@ -15,12 +15,12 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
         private Vector2? mPatrolTarget;
 
         public override double GetPriority(SensorArray environment, SpaceShip spaceShip) 
-            => (spaceShip.Target is null) ? 1 : 0.1;
+            => (spaceShip.WeaponSystem.Target is null) ? 1 : 0.1;
 
         public override void Execute(SensorArray environment, SpaceShip spaceShip)
         {
             var targets = environment.SortedSpaceShips.OfType<Player>();
-            if (targets.Any()) spaceShip.Target = targets.First();
+            if (targets.Any()) spaceShip.WeaponSystem.Target = targets.First();
 
             switch (mPatrolTarget)
             {

@@ -48,7 +48,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
         {
             base.Draw(sceneManagerLayer, scene);
-            TextureManager.Instance.Draw(ContentRegistry.planetShadow, Position, TextureOffset, TextureScale + 20f, mShadowRotation, TextureDepth + 1, Color.White);
+            TextureManager.Instance.Draw(ContentRegistry.planetShadow, Position, TextureOffset, TextureScale * 1.05f , mShadowRotation, TextureDepth + 1, Color.White);
             TextureManager.Instance.DrawGameObject(this);
         }
     }

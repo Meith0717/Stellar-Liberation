@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Xna.Framework.Content;
+using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Reflection.Metadata;
 
 namespace CelestialOdyssey.Game.Core.Persistance
 {
@@ -66,7 +68,7 @@ namespace CelestialOdyssey.Game.Core.Persistance
 
         public object PopulateObject(object obj, string fileName)
         {
-            var filePath = Path.Combine(mSaveFilePath, fileName + ".json");
+            var filePath = fileName; // Path.Combine(mSaveFilePath, fileName + ".json");
             if (!File.Exists(filePath))
             {
                 return null;
@@ -95,6 +97,12 @@ namespace CelestialOdyssey.Game.Core.Persistance
             JsonSerializer serializer = new JsonSerializer();
             var loadedObject = serializer.Deserialize(file, objectType);
             return loadedObject;
+        }
+
+        public T LoadJsonContent<T>(ContentManager content, object obj, string fileName)
+        {
+            var filePath = Path.Combine(Path.GetFullPath(content.RootDirectory), fileName);
+            return (T)PopulateObject(obj, filePath);
         }
     }
 }

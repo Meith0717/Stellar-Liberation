@@ -2,18 +2,18 @@
 using CelestialOdyssey.Game.Core.GameObjects;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem;
 using CelestialOdyssey.Game.Core.Utility;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using System;
-using System.Net;
-using static CelestialOdyssey.Game.Core.Configs;
 
 namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
 {
     internal class Weapon : GameObject
     {
+        private Vector2? mTarget;
         private Vector2 mRelativePosition;
         private Color mWeaponColor;
         private int mShieldDamage;
@@ -28,34 +28,38 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
             mRelativePosition = relativePosition;
         }
 
-        public Projectile Fire(SpaceShip origin, Vector2 target)
+        public void SetTarget(Vector2 target) => mTarget = target;
+        public void ForgetTarget() => mTarget = null;
+
+        public bool Fire(SpaceShip origin, out Projectile projectile)
         {
-            Rotation = Geometry.AngleBetweenVectors(Position, target);
-            var projectile = new Projectile(Position, Rotation, mWeaponColor, mShieldDamage, mHullDamage, origin);
-            return projectile;
+            projectile = null;
+            if (mTarget is not null)
+            {
+                Vector2 target = (Vector2)mTarget;
+                var angleBetweenTarget = Geometry.AngleBetweenVectors(Position, target);
+                var angleToTarget = MathF.Abs(Geometry.AngleRadDelta(Rotation, angleBetweenTarget));
+                if (angleToTarget > 5) return false;
+            }
+            projectile = new Projectile(Position, Rotation, mWeaponColor, mShieldDamage, mHullDamage, origin);
+            return true;
         }
 
-        public void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene, float shipRotation, Vector2 position)
+        public void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene, float shipRotation, Vector2 shipPosition)
         {
+            Position = Transformations.Rotation(shipPosition, mRelativePosition, shipRotation);
+            Rotation += mTarget switch
+            {
+                null => MovementController.GetRotationUpdate(Rotation, shipRotation, 1),
+                not null => MovementController.GetRotationUpdate(Rotation, Position, (Vector2)mTarget, 0.1f),
+            };
             base.Update(gameTime, inputState, sceneManagerLayer, scene);
-            Position = GetPosition(position, mRelativePosition, shipRotation); ;
-            UpdateBoundBox();
         }
 
         public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
         {
             base.Draw(sceneManagerLayer, scene);
             TextureManager.Instance.DrawGameObject(this);
-        }
-        private static Vector2 GetPosition(Vector2 origin, Vector2 relativePosition, float rotation)
-        {
-            float cosTheta = (float)Math.Cos(rotation);
-            float sinTheta = (float)Math.Sin(rotation);
-            Vector2 rotatedVector = new Vector2(
-                relativePosition.X * cosTheta - relativePosition.Y * sinTheta,
-                relativePosition.X * sinTheta + relativePosition.Y * cosTheta
-            );
-            return rotatedVector + origin;
         }
     }
 }

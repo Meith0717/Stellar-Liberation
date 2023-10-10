@@ -29,6 +29,17 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
             };
         }
 
+        public static float GetRotationUpdate(float currentRotation, float targetRotation, float rotationSmoothingFactor)
+        {
+            float delta = Geometry.AngleDegDelta(Geometry.RadToDeg(currentRotation), Geometry.RadToDeg(targetRotation));
+            delta = Geometry.DegToRad(delta);
+            return delta switch
+            {
+                float.NaN => 0,
+                _ => delta * rotationSmoothingFactor,
+            };
+        }
+
         /// <summary>
         /// Calculates the new velocity based on the current velocity and acceleration applied.
         /// </summary>

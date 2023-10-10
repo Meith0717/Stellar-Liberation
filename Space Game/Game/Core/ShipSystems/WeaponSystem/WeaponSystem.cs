@@ -8,10 +8,13 @@ using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
 {
-    public class Weapons
+    public class WeaponSystem
     {
         private readonly List<Weapon> mWeapons = new();
         private readonly Color mWeaponColor;
+
+        public SpaceShip Target;
+        public Vector2? TargetPosition;
 
         private int mShieldDamage;
         private int mHullDamage;
@@ -20,7 +23,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
         private int mMaxCoolDown;
         private int mCooldown;
 
-        public Weapons(Color color, int shieldDamage, int hullDamage, int coolDown)
+        public WeaponSystem(Color color, int shieldDamage, int hullDamage, int coolDown)
         {
             mWeaponColor = color;
             mShieldDamage = shieldDamage;
@@ -29,19 +32,22 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
         }
 
         public void SetWeapon(Vector2 position) => 
-            mWeapons.Add(new(position, 20, 100, mWeaponColor, mShieldDamage, mHullDamage));
+            mWeapons.Add(new(position, 1f, 100, mWeaponColor, mShieldDamage, mHullDamage));
 
-        public virtual void Fire(ProjectileManager projectileManager, SpaceShip spaceShip, Vector2 target)
-        { 
+        public virtual void Fire(ProjectileManager projectileManager, SpaceShip spaceShip)
+        {
             if (mCooldown < mMaxCoolDown) return;
             mCooldown = 0;
-
-            SoundManager.Instance.PlaySound(ContentRegistry.torpedoFire, 1f);
+            bool fire = false;
 
             foreach (var weapon in mWeapons)
             {
-                projectileManager.AddProjectiel(weapon.Fire(spaceShip, target));
+                if (!weapon.Fire(spaceShip, out var projectile)) continue;
+                projectileManager.AddProjectiel(projectile);
+                fire = true;
             }
+
+            if (fire) SoundManager.Instance.PlaySound(ContentRegistry.torpedoFire, 1f);
         }
 
         public void Update(GameTime gameTime, InputState inputState, SpaceShip origin, SceneManagerLayer sceneManagerLayer, Scene scene)
@@ -50,6 +56,20 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
 
             foreach (var weapon in mWeapons)
             {
+                switch (Target) 
+                {
+                    case null:
+                        weapon.ForgetTarget();
+                        break;
+                    case not null:
+                        weapon.SetTarget(Target.Position);
+                        break;
+                }
+
+                if (TargetPosition is not null)
+                {
+                    weapon.SetTarget((Vector2)TargetPosition);
+                }
                 weapon.Update(gameTime, inputState, sceneManagerLayer, scene, origin.Rotation, origin.Position);
             }
         }

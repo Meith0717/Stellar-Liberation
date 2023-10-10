@@ -68,7 +68,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems
             var alpha = mShieldAlpha;
             var color = new Color(87, 191, 255);
             TextureManager.Instance.Draw($"{spaceShip.TextureId}Shield", spaceShip.Position,
-                spaceShip.TextureScale + 1, spaceShip.Rotation, spaceShip.TextureDepth + 1,
+                spaceShip.TextureScale, spaceShip.Rotation, spaceShip.TextureDepth + 1,
                 new Color((int)(color.R * alpha), (int)(color.G * alpha), (int)(color.B * alpha), (int)(255 * alpha)));
         }
     }

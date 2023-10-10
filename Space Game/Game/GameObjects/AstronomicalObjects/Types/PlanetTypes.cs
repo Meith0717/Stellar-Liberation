@@ -1,18 +1,19 @@
 ﻿using CelestialOdyssey.Game.Core.Utility;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types
 {
     internal static class PlanetTypes
     {
-        private static float ColdScale { get { return 50 * Utility.Random.Next(8, 11); } }
-        private static float DryScale { get { return 50 * Utility.Random.Next(10, 15); } }
-        private static float GasScale { get { return 50 * Utility.Random.Next(20, 25); } }
-        private static float StoneScale { get { return 50 * Utility.Random.Next(8, 11); } }
-        private static float TerrScale { get { return 50 * Utility.Random.Next(10, 15); } }
-        private static float WarmScale { get { return 50 * Utility.Random.Next(10, 15); } }
+        private static float ColdScale { get { return Utility.Random.Next(2, 3); } }
+        private static float DryScale { get { return Utility.Random.Next(3, 6); } }
+        private static float GasScale { get { return Utility.Random.Next(7, 10); } }
+        private static float StoneScale { get { return Utility.Random.Next(2, 3); } }
+        private static float TerrScale { get { return Utility.Random.Next(3, 4); } }
+        private static float WarmScale { get { return Utility.Random.Next(3, 4); } }
 
         private static List<Registry> ColdTextures = new() { ContentRegistry.cold1, ContentRegistry.cold2, ContentRegistry.cold3, ContentRegistry.cold4 };
         private static List<Registry> DryTextures = new() { ContentRegistry.dry1, ContentRegistry.dry2, ContentRegistry.dry3, ContentRegistry.dry4, ContentRegistry.dry5, ContentRegistry.dry6 };

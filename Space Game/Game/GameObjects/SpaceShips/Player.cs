@@ -7,6 +7,8 @@ using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using System;
 using CelestialOdyssey.Game.Core;
+using MonoGame.Extended;
+using CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem;
 
 namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 {
@@ -14,20 +16,22 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
     public class Player : SpaceShip
     {
 
-        public Player() : base(Vector2.Zero, ContentRegistry.player.Name, 40) 
+        public Player() : base(Vector2.Zero, ContentRegistry.player.Name, 1) 
         {
-            WeaponSystem = new(Configs.Player.WeaponColor, Configs.Player.InitialShieldDamage, Configs.Player.InitialShieldDamage, Configs.Player.InitialCoolDown);
-            WeaponSystem.SetWeapon(new(-2900, 6600));
-            WeaponSystem.SetWeapon(new(-2900, -6600));
-            WeaponSystem.SetWeapon(new(-2300, 700));
-            WeaponSystem.SetWeapon(new(-2300, -700));
+            WeaponSystem = new(Color.LightBlue, 100, 100, 500);
+            WeaponSystem.SetWeapon(new(110, 35));
+            WeaponSystem.SetWeapon(new(110, -35));
+            WeaponSystem.SetWeapon(new(-130, 100));
+            WeaponSystem.SetWeapon(new(-130, -100));
+            WeaponSystem.SetWeapon(new(-150, 0));
         }
 
         public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
             if (!HyperDrive.IsActive)
             {
-                inputState.DoMouseAction(MouseActionType.LeftClickHold, () => WeaponSystem.Fire(ActualPlanetSystem.ProjectileManager, this, scene.WorldMousePosition));
+                WeaponSystem.TargetPosition = scene.WorldMousePosition;
+                inputState.DoMouseAction(MouseActionType.LeftClickHold, () => WeaponSystem.Fire(ActualPlanetSystem.ProjectileManager, this));
                 SublightEngine.FollowMouse(inputState, this, scene.WorldMousePosition);
             }
 
@@ -39,7 +43,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
         {
             base.Draw(sceneManagerLayer, scene);
             TextureManager.Instance.DrawGameObject(this);
-            DefenseSystem.DrawLive(this);
+            //DefenseSystem.DrawLive(this);
             sceneManagerLayer.DebugSystem.DrawSensorRadius(Position, 2000000, scene);
         }
     }

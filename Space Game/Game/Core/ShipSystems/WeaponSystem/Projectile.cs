@@ -17,27 +17,32 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
         private Vector2 mDirection;
         public readonly int ShieldDamage;
         public readonly int HullDamage;
-        public bool HasHit;
 
-        public Projectile( Vector2 weaponPosition, float rotation, Color color, int shieldDamage, int hullDamage, SpaceShip origine)
-            : base(weaponPosition, ContentRegistry.projectile, 20, 20)
+        private bool mHasHit;
+        public void Hit() => mHasHit = true;
+
+        public Projectile(Vector2 weaponPosition, float rotation, Color color, int shieldDamage, int hullDamage, SpaceShip origine)
+            : base(weaponPosition, ContentRegistry.projectile, 0.5f, 20)
         {
             mDirection = Geometry.CalculateDirectionVector(rotation);
             Rotation = rotation;
             HullDamage = hullDamage;
             ShieldDamage = shieldDamage;
             TextureColor = color;
-            LiveTime = Configs.Projectile.LiveTime;
+            LiveTime = 5000;
             Origine = origine;
         }
 
         public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            base.Update(gameTime, inputState, sceneManagerLayer, scene);
-            LiveTime -= HasHit ? double.PositiveInfinity : gameTime.ElapsedGameTime.Milliseconds;
+            LiveTime -= mHasHit ? double.PositiveInfinity : gameTime.ElapsedGameTime.Milliseconds;
+
+            // Update Position
             RemoveFromSpatialHashing(scene);
-            Position += mDirection * Configs.Projectile.Velocity * gameTime.ElapsedGameTime.Milliseconds;
+            Position += mDirection * (float)(15f * gameTime.ElapsedGameTime.Milliseconds);
             AddToSpatialHashing(scene);
+
+            base.Update(gameTime, inputState, sceneManagerLayer, scene);
         }
 
         public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)

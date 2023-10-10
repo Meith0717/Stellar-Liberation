@@ -9,14 +9,14 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy
     public class EnemyCorvette : Enemy
     {
         public EnemyCorvette(Vector2 position)
-            : base(position, ContentRegistry.enemyCorvette, 75)
+            : base(position, ContentRegistry.enemyCorvette, 5f)
         {
-            SensorArray = new(2000000, Configs.SensorArrayCoolDown);
+            SensorArray = new(2000000, 1000);
 
             WeaponSystem = new(Color.Red, 1, 1, 500);
             WeaponSystem.SetWeapon(new(0, 0));
 
-            SublightEngine = new(50);
+            SublightEngine = new(5);
 
             mAi = new(new()
             {
@@ -24,12 +24,6 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy
                new FollowBehavior(),
                new FighterAttacBehavior(250000)
             }) ;
-        }
-
-        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
-        {
-            base.Draw(sceneManagerLayer, scene);
-            sceneManagerLayer.DebugSystem.DrawSensorRadius(Position, 2000000, scene);
         }
     }
 }
