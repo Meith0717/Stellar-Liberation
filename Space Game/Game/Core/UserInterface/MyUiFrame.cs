@@ -1,4 +1,8 @@
-﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+﻿// MyUiFrame.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;

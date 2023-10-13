@@ -1,4 +1,8 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿// Configs.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using Microsoft.Xna.Framework.Content;
 
 namespace CelestialOdyssey.Game.Core.ConfigReader
 {

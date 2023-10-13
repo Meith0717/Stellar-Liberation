@@ -1,4 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿// MouseManager.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 

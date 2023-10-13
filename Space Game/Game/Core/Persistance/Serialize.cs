@@ -1,4 +1,8 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿// Serialize.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using Microsoft.Xna.Framework.Content;
 using Newtonsoft.Json;
 using System;
 using System.IO;

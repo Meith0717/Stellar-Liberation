@@ -1,4 +1,8 @@
-﻿using CelestialOdyssey.Game.Core.GameObjects;
+﻿// Particle.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using CelestialOdyssey.Game.Core.GameObjects;
 using Microsoft.Xna.Framework;
 
 namespace CelestialOdyssey.Game.Core.ParticleSystem

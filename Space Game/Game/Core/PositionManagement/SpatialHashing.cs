@@ -1,4 +1,8 @@
-﻿/*
+﻿// SpatialHashing.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+/*
  *  SpatialHashing.cs
  *
  *  Copyright (c) 2023 Thierry Meiers

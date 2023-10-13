@@ -1,4 +1,8 @@
-﻿using CelestialOdyssey.Game.Core.InputManagement;
+﻿// SublightEngine.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using Microsoft.Xna.Framework;
 

@@ -1,4 +1,8 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿// KeyboardManager.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,8 @@
-﻿using CelestialOdyssey.Game.Core.ShipSystems;
+﻿// FleeBehavior.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using CelestialOdyssey.Game.Core.ShipSystems;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;

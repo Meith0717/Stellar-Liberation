@@ -1,4 +1,8 @@
-﻿using CelestialOdyssey.Game.Core.Utility;
+﻿// PlanetTypes.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using CelestialOdyssey.Game.Core.Utility;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;

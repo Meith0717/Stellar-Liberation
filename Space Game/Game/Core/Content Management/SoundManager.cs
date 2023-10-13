@@ -1,4 +1,8 @@
-﻿using Microsoft.Xna.Framework.Audio;
+﻿// SoundManager.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using System;
 using System.Collections;

@@ -1,4 +1,8 @@
-﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+﻿// SpaceShip.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.Animations;
 using CelestialOdyssey.Game.Core.Collision_Detection;
 using CelestialOdyssey.Game.Core.GameObjects;

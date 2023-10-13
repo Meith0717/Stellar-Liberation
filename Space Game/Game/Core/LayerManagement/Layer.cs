@@ -1,3 +1,7 @@
+// Layer.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.Persistance;
 using Microsoft.Xna.Framework;

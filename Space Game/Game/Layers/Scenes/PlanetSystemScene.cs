@@ -1,4 +1,8 @@
-﻿using CelestialOdyssey.Game.Core.InputManagement;
+﻿// PlanetSystemScene.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.Parallax;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;

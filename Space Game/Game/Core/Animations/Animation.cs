@@ -1,3 +1,7 @@
+// Animation.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
 using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.Animations;
 using Microsoft.Xna.Framework;

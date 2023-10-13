@@ -1,4 +1,8 @@
-﻿using CelestialOdyssey.Game.Core.AI.EnemyBehavior;
+﻿// EnemyBattleShip.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using CelestialOdyssey.Game.Core.AI.EnemyBehavior;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 

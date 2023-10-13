@@ -1,4 +1,7 @@
-﻿
+﻿// NoiseMapGenerator.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
 using System;
 
 namespace CelestialOdyssey.Game.Core.MapSystem

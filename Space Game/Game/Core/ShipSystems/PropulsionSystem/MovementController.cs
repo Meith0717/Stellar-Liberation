@@ -1,4 +1,8 @@
-﻿using CelestialOdyssey.Game.Core.Utility;
+﻿// MovementController.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using CelestialOdyssey.Game.Core.Utility;
 using Microsoft.Xna.Framework;
 
 namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem

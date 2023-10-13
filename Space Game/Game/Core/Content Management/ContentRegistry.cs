@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// ContentRegistry.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 

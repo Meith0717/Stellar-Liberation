@@ -1,4 +1,8 @@
-﻿using CelestialOdyssey.Game.Core.ShipSystems;
+﻿// FollowBehavior.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using CelestialOdyssey.Game.Core.ShipSystems;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 
 namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior

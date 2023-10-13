@@ -1,4 +1,8 @@
-﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+﻿// HyperDrive.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using CelestialOdyssey.GameEngine.Content_Management;

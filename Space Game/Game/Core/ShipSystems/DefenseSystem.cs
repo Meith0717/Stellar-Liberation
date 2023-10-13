@@ -1,4 +1,8 @@
-﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+﻿// DefenseSystem.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using Microsoft.Xna.Framework;
 using System;

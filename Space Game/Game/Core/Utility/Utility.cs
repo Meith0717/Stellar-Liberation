@@ -1,4 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿// Utility.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
 using System.Collections.Generic;

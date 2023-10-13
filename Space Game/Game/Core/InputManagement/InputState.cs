@@ -1,4 +1,8 @@
-﻿/*
+﻿// InputState.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+/*
     Copyright 2023 Thierry Meiers
 
     Code from the "Rache der RETI" project.

@@ -1,4 +1,8 @@
-﻿using CelestialOdyssey.Game.Core.InputManagement;
+﻿// SceneManagerLayer.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using CelestialOdyssey.Game.Core.InputManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;

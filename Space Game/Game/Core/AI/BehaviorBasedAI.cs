@@ -1,4 +1,8 @@
-﻿using CelestialOdyssey.Game.Core.ShipSystems;
+﻿// BehaviorBasedAI.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using CelestialOdyssey.Game.Core.ShipSystems;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;

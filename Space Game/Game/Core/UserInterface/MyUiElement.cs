@@ -1,4 +1,8 @@
-﻿namespace CelestialOdyssey.Game.Core.UserInterface
+﻿// MyUiElement.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+namespace CelestialOdyssey.Game.Core.UserInterface
 {
     internal abstract class MyUiElement
     {

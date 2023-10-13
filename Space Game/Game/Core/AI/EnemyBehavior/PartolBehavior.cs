@@ -1,4 +1,8 @@
-﻿using CelestialOdyssey.Game.Core.ShipSystems;
+﻿// PartolBehavior.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using CelestialOdyssey.Game.Core.ShipSystems;
 using CelestialOdyssey.Game.Core.Utility;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.Spacecrafts;

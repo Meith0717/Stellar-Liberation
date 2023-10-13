@@ -1,4 +1,8 @@
-﻿/*
+﻿// InteractiveObject.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+/*
  *  InteractiveObject.cs
  *
  *  Copyright (c) 2023 Thierry Meiers

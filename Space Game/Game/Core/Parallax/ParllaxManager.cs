@@ -1,4 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿// ParllaxManager.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
