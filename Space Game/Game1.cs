@@ -70,9 +70,6 @@ namespace CelestialOdyssey
                     case RegistryType.Sound:
                         SoundManager.Instance.LoadSoundEffects(Content, registry.Name, registry.FilePath);
                         break;
-                    case RegistryType.Animation:
-                        TextureManager.Instance.LoadSprite(Content, registry.Name, registry.FilePath);
-                        break;
                 }
             }
             SoundManager.Instance.CreateSoundEffectInstances();

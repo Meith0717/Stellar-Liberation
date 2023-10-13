@@ -19,7 +19,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
             List<Projectile> deleteList = new();
             foreach (var projectile in Projectiles)
             {
-                if (projectile.LiveTime16 > 1000)
+                if (projectile.LiveTime16 > projectile.DeleteTime)
                 {
                     deleteList.Add(projectile);
                     continue;

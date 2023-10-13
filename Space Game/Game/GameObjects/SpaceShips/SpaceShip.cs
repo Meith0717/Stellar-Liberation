@@ -1,4 +1,6 @@
-﻿using CelestialOdyssey.Game.Core.Collision_Detection;
+﻿using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Game.Core.Animations;
+using CelestialOdyssey.Game.Core.Collision_Detection;
 using CelestialOdyssey.Game.Core.GameObjects;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
@@ -8,10 +10,12 @@ using CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem;
 using CelestialOdyssey.Game.Core.Utility;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy;
+using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended.Sprites;
 using Newtonsoft.Json;
+using rache_der_reti.Core.Animation;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
@@ -26,38 +30,43 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
         [JsonIgnore] public WeaponSystem WeaponSystem { get; protected set; }
         [JsonProperty] public DefenseSystem DefenseSystem { get; protected set; } = new(100, 100, 0, 1);
         [JsonIgnore] public PlanetSystem ActualPlanetSystem { get; set; }
+        [JsonIgnore] protected SpriteSheet ExplosionSheet;
 
 
         public SpaceShip(Vector2 position, string textureId, float textureScale)
-            : base(position, textureId, textureScale, 10) { }
+            : base(position, textureId, textureScale, 10)
+        {
+            List<int> f = Enumerable.Range(0, 8 * 8 - 1).ToList();
+            f.Add(0);
+
+            ExplosionSheet = new(ContentRegistry.explosion, 64, 3, TextureScale * 10);
+            ExplosionSheet.Animate("destroy", new(60, Animation.GetRowList(1, 64), false));
+        }
+
 
         public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            IsDestroyed = DefenseSystem.HullLevel <= 0;
-            HasProjectileHit(scene);
             Direction = Geometry.CalculateDirectionVector(Rotation);
+            base.Update(gameTime, inputState, sceneManagerLayer, scene);
 
-            switch (IsDestroyed)
-            {
-                case true:
-                    Velocity = MovementController.GetVelocity(Velocity, -0.01f);
-                    base.Update(gameTime, inputState, sceneManagerLayer, scene);
-                    break;
-                case false:
-                    base.Update(gameTime, inputState, sceneManagerLayer, scene);
-                    HyperDrive.Update(gameTime, this);
-                    DefenseSystem.Update(gameTime);
-                    SensorArray.Update(gameTime, Position, ActualPlanetSystem, scene);
-                    SublightEngine.Update(this);
-                    WeaponSystem.Update(gameTime, inputState, this, sceneManagerLayer, scene);
-                    break;
-            }
+            ExplosionSheet.Update(gameTime, Position);
+            SublightEngine.Update(this);
+
+            if (DefenseSystem.HullLevel <= 0 && !IsDestroyed) Explode();
+            if (IsDestroyed) return;
+
+            HasProjectileHit(scene);
+            HyperDrive.Update(gameTime, this);
+            DefenseSystem.Update(gameTime);
+            SensorArray.Update(gameTime, Position, ActualPlanetSystem, scene);
+            WeaponSystem.Update(gameTime, inputState, this, sceneManagerLayer, scene);
         }
 
         private void HasProjectileHit(Scene scene)
         {
             var projectileInRange = scene.GetObjectsInRadius<Projectile>(Position, (int)BoundedBox.Radius);
             if (!projectileInRange.Any()) return;
+            var gotDamage = false;
             foreach (var projectile in projectileInRange)
             {
                 if (projectile.Origine is Enemy && this is Enemy) continue;
@@ -66,22 +75,29 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
 
                 projectile.HasCollide();
                 DefenseSystem.GetDamage(projectile.ShieldDamage, projectile.HullDamage);
+                gotDamage = true;
             }
+            if (gotDamage) SoundManager.Instance.PlaySound("torpedoHit", Utility.Random.Next(5, 8) / 10f);
         }
 
         public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
         {
             base.Draw(sceneManagerLayer, scene);
+            ExplosionSheet.Draw(TextureDepth + 1);
+
+            if (IsDestroyed) return;
             sceneManagerLayer.DebugSystem.DrawSensorRadius(Position, SensorArray.ScanRadius, scene);
-            switch (IsDestroyed)
-            {
-                case true:
-                    break;
-                case false:
-                    DefenseSystem.DrawShields(this);
-                    WeaponSystem.Draw(sceneManagerLayer, scene);
-                    break;
-            }
+            TextureManager.Instance.DrawGameObject(this);
+            DefenseSystem.DrawShields(this);
+            WeaponSystem.Draw(sceneManagerLayer, scene);
+        }
+
+        public void Explode()
+        {
+            ExplosionSheet.Play("destroy");
+            IsDestroyed = true;
+            SublightEngine.SetTarget(this, null);
+            return;
         }
     }
 }

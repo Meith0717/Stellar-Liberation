@@ -31,7 +31,7 @@ namespace CelestialOdyssey.Game.Layers
             Map.Generate(Player, out PlanetSystems);
 
             // Play bg music
-            SoundManager.Instance.PlaySound(ContentRegistry.bgMusicGame, 1.2f, false, true, true);
+            // SoundManager.Instance.PlaySound(ContentRegistry.bgMusicGame, 1.2f, false, true, true);
 
             // Add Main Scene
             AddScene(new PlanetSystemScene(PlanetSystems.First()));

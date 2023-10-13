@@ -51,7 +51,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
             Rotation += mTarget switch
             {
                 null => MovementController.GetRotationUpdate(Rotation, shipRotation, 1),
-                not null => MovementController.GetRotationUpdate(Rotation, Position, (Vector2)mTarget, 0.1f),
+                not null => MovementController.GetRotationUpdate(Rotation, Position, (Vector2)mTarget, 0.5f),
             };
             base.Update(gameTime, inputState, sceneManagerLayer, scene);
         }

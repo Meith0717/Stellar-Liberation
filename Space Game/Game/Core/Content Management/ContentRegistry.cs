@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace CelestialOdyssey.GameEngine.Content_Management
 {
-    public enum RegistryType { Animation, Texture, Font, Sound}
+    public enum RegistryType { Texture, Font, Sound}
 
     public class Registry
     {
@@ -102,7 +102,6 @@ namespace CelestialOdyssey.GameEngine.Content_Management
         public readonly static Registry pixle = new(textures, "pixle", RegistryType.Texture);
         public readonly static Registry cursor = new(textures, "cursor", RegistryType.Texture);
         public readonly static Registry cursor1 = new(textures, "cursor1", RegistryType.Texture);
-        public readonly static Registry explosion = new(textures, "explosion", RegistryType.Texture);
 
 
         private readonly static string crosshair = @"textures\crosshair";
@@ -125,8 +124,8 @@ namespace CelestialOdyssey.GameEngine.Content_Management
         public readonly static Registry ChargeHyperdrive = new(soundEffects, "chargeHyperdrive", RegistryType.Sound);
         public readonly static Registry CoolHyperdrive = new(soundEffects, "coolHyperdrive", RegistryType.Sound);
 
-        private readonly static string animations = @"animations\";
-        //public readonly static Registry explosion = new(animations, "explosion", RegistryType.Texture);
+        private readonly static string animations = @"textures\animations\";
+        public readonly static Registry explosion = new(animations, "explosion", RegistryType.Texture);
 
         public static List<Registry> IterateThroughRegistries()
         {

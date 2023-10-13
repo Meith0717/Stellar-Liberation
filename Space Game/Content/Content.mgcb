@@ -83,6 +83,18 @@
 /processorParam:Quality=Best
 /build:soundEffects/torpedoHit.wav
 
+#begin textures/animations/explosion.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/animations/explosion.png
+
 #begin textures/background/gameBackground.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -190,18 +202,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/cursor1.png
-
-#begin textures/explosion.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/explosion.png
 
 #begin textures/gameobjects/astronomicalbodys/planets/cold1.png
 /importer:TextureImporter

@@ -5,18 +5,14 @@
  *  All rights reserved.
  */
 
+using CelestialOdyssey.Game.Core.Animations;
 using CelestialOdyssey.Game.Core.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using MonoGame.Extended.Content;
-using MonoGame.Extended.Serialization;
-using MonoGame.Extended.Sprites;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection.Metadata;
 
 namespace CelestialOdyssey.Core.GameEngine.Content_Management
 {
@@ -36,7 +32,6 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
         public float MaxLayerDepth = 10000f;
 
         private readonly Dictionary<string, Texture2D> mTextures = new();
-        private readonly Dictionary<string, SpriteSheet> mSprites = new();
         private readonly Dictionary<string, SpriteFont> mSpriteFonts = new();
         public SpriteBatch SpriteBatch { get; private set; }
 
@@ -59,15 +54,6 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
             return true;
         }
 
-        public bool LoadSprite(ContentManager content, string id, string fileName)
-        {
-             SpriteSheet spriteSheet = content.Load<SpriteSheet>($"{fileName}.sf", new JsonContentLoader());
-            mSprites.Add(id, spriteSheet);
-            return true;
-        }
-
-
-
         public Texture2D GetTexture(string id)
         {
             Texture2D texture = mTextures[id];
@@ -86,16 +72,6 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
             }
 
             return spriteFont;
-        }
-        public SpriteSheet GetSprite(string id)
-        {
-            SpriteSheet spriteSheet = mSprites[id];
-            if (spriteSheet == null)
-            {
-                throw new Exception($"Error, Font {id} was not found in TextureManager");
-            }
-
-            return spriteSheet;
         }
 
         private float GetDepth(int textureDepth)
@@ -180,6 +156,22 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
         public void DrawAdaptiveLine(Vector2 start, Vector2 end, Color color, float thickness, int depth, float zoom)
         {
             SpriteBatch.DrawLine(start, end, color, thickness / zoom, GetDepth(depth));
+        }
+
+        public void DrawSpriteSheetFrame(SpriteSheet spriteSheet, Vector2 position, Point spritePosition, int depth)
+        {
+            var row = spritePosition.X;
+            var collumn = spritePosition.Y;
+
+            if (row > spriteSheet.CountWidth - 1 || row < 0) throw new Exception();
+            if (collumn > spriteSheet.CountHeight - 1 || collumn < 0) throw new Exception();
+
+            var texture = spriteSheet.Texture;
+            var sheet = new RectangleF(position.X, position.Y, spriteSheet.SpriteWidth * spriteSheet.Scale, spriteSheet.SpriteHeight * spriteSheet.Scale);
+            var frame = new RectangleF(row * spriteSheet.SpriteWidth, collumn * spriteSheet.SpriteHeight, spriteSheet.SpriteWidth, spriteSheet.SpriteHeight);
+            var origin = new Vector2(spriteSheet.SpriteWidth / 2, spriteSheet.SpriteHeight / 2);
+
+            SpriteBatch.Draw(texture, sheet.ToRectangle(), frame.ToRectangle(), Color.White, 0, origin, SpriteEffects.None, GetDepth(depth));
         }
     }
 }

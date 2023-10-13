@@ -39,7 +39,6 @@ namespace CelestialOdyssey.Game.Core.ShipSystems
 
         public void GetDamage(int shieldDamage, int hullDamage)
         {
-            SoundManager.Instance.PlaySound("torpedoHit", Utility.Utility.Random.Next(5, 8) / 10f);
             if (mActualShieldForce > 0)
             {
                 mShieldAlpha = 1;

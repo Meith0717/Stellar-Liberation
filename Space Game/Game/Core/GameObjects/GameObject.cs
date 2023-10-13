@@ -85,6 +85,10 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         public double LiveTime16 { get; set; }
 
         [JsonIgnore]
+        public double DeleteTime { get; set; }
+
+
+        [JsonIgnore]
         private bool mWasRemovedFromSpatialHashing = true;
 
         internal GameObject(Vector2 position, string textureId, float textureScale, int textureDepth)

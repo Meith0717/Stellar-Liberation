@@ -12,7 +12,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy
             SensorArray = new(10000, 1000);
 
             WeaponSystem = new(Color.Red, 1, 1, 100);
-            WeaponSystem.SetWeapon(new(0, 50));
+            WeaponSystem.SetWeapon(new(0, 0));
 
             SublightEngine = new(1);
 

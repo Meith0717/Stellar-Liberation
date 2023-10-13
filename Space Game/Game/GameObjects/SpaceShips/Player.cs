@@ -16,7 +16,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 
         public Player() : base(Vector2.Zero, ContentRegistry.player.Name, 1)
         {
-            WeaponSystem = new(Color.LightBlue, 50, 50, 500);
+            WeaponSystem = new(Color.LightBlue, 50, 50, 100);
             WeaponSystem.SetWeapon(new(110, 35));
             WeaponSystem.SetWeapon(new(110, -35));
             WeaponSystem.SetWeapon(new(-130, 100));
@@ -35,14 +35,6 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 
             base.Update(gameTime, inputState, sceneManagerLayer, scene);
             scene.Camera.SetPosition(Position);
-        }
-
-        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
-        {
-            base.Draw(sceneManagerLayer, scene);
-            TextureManager.Instance.DrawGameObject(this);
-            //DefenseSystem.DrawLive(this);
-            sceneManagerLayer.DebugSystem.DrawSensorRadius(Position, 2000000, scene);
         }
 
         public override void HasCollide()
