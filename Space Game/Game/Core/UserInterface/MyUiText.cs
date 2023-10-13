@@ -9,7 +9,7 @@ namespace CelestialOdyssey.Game.Core.UserInterface
 {
     internal class MyUiText
     {
-        float mX;
+        private float mX;
         private float mY;
         private string mFont;
         public string Text;

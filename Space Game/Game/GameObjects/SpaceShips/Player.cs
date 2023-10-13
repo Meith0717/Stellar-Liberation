@@ -2,12 +2,9 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
-using CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem;
-using CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem;
-using CelestialOdyssey.Game.GameObjects.Spacecrafts;
+using CelestialOdyssey.Game.Core.SpaceShipManagement;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using System;
@@ -33,7 +30,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
             if (!HyperDrive.IsActive)
             {
                 WeaponSystem.TargetPosition = scene.WorldMousePosition;
-                inputState.DoMouseAction(MouseActionType.LeftClickHold, () => WeaponSystem.Fire(ActualPlanetSystem.ProjectileManager, this));
+                inputState.DoMouseAction(MouseActionType.RightClickHold, () => WeaponSystem.Fire(ActualPlanetSystem.ProjectileManager, this));
                 SublightEngine.FollowMouse(inputState, this, scene.WorldMousePosition);
             }
 

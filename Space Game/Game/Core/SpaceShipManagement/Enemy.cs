@@ -2,7 +2,6 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.AI;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
@@ -10,10 +9,10 @@ using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
 
-namespace CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy
+namespace CelestialOdyssey.Game.Core.SpaceShipManagement
 {
     [Serializable]
-    public abstract class Enemy : Spacecrafts.SpaceShip
+    public abstract class Enemy : SpaceShip
     {
         [JsonIgnore] protected BehaviorBasedAI mAi;
 

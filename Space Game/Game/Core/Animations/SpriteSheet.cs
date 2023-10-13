@@ -22,11 +22,11 @@ namespace CelestialOdyssey.Game.Core.Animations
         private List<string> mActiveAnimation = new();
         private Dictionary<string, Animation> mAnimations = new();
 
-        public SpriteSheet(string textureId, int spriteCountWidth, int spriteCountHeight, float scale) 
+        public SpriteSheet(string textureId, int spriteCountWidth, int spriteCountHeight, float scale)
         {
             Texture = TextureManager.Instance.GetTexture(textureId);
             CountHeight = spriteCountHeight;
-            CountWidth = spriteCountWidth; 
+            CountWidth = spriteCountWidth;
             SpriteWidth = Texture.Width / spriteCountWidth;
             SpriteHeight = Texture.Height / spriteCountHeight;
             Scale = scale;
@@ -47,6 +47,8 @@ namespace CelestialOdyssey.Game.Core.Animations
             if (!mAnimations.ContainsKey(id)) return false;
             return mActiveAnimation.Remove(id);
         }
+
+        public bool IsActive(string id) => mActiveAnimation.Contains(id);
 
         public void Update(GameTime gameTime, Vector2 position)
         {

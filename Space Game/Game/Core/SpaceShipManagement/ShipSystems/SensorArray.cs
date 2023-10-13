@@ -2,14 +2,13 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using CelestialOdyssey.Game.Core.GameObjects;
+using CelestialOdyssey.Game.Core.GameObjectManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
-using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
-namespace CelestialOdyssey.Game.Core.ShipSystems
+namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems
 {
     public class SensorArray
     {

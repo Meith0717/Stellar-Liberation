@@ -15,7 +15,7 @@ using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
 
-namespace CelestialOdyssey.Game.Core.GameObjects
+namespace CelestialOdyssey.Game.Core.GameObjectManagement
 {
     /// <summary>
     /// Abstract class representing an interactive game object derived from the GameObject class.

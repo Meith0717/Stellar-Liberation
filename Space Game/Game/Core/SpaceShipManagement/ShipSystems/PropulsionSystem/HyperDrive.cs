@@ -4,11 +4,10 @@
 
 using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
-using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 
-namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
+namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionSystem
 {
     public class HyperDrive
     {
@@ -87,7 +86,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
         private float GetDistanceToTarget(SpaceShip spaceShip, GameTime gameTime)
         {
             return Vector2.Distance(spaceShip.Position, (Vector2)TargetPosition)
-                - (mMaxVelocity * gameTime.ElapsedGameTime.Milliseconds);
+                - mMaxVelocity * gameTime.ElapsedGameTime.Milliseconds;
         }
 
         private void ManageDistance(SpaceShip spaceShip, GameTime gameTime)

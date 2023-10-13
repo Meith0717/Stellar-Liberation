@@ -3,10 +3,11 @@
 // All rights reserved.
 
 using CelestialOdyssey.Game.Core.AI.EnemyBehavior;
+using CelestialOdyssey.Game.Core.SpaceShipManagement;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 
-namespace CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy
+namespace CelestialOdyssey.Game.GameObjects.SpaceShips
 {
     public class EnemyFighter : Enemy
     {

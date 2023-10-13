@@ -2,14 +2,13 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Core.GameEngine.Position_Management;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.MapSystem;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.SpaceShips;
 using CelestialOdyssey.Game.Layers.Scenes;
-using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
@@ -24,9 +23,12 @@ namespace CelestialOdyssey.Game.Layers
         [JsonProperty] public readonly HashSet<PlanetSystem> PlanetSystems;
         [JsonProperty] public readonly Map Map;
         [JsonProperty] public readonly Player Player;
+        [JsonIgnore] private readonly FrustumCuller mFrustumCuller;
 
         public GameLayer() : base()
         {
+            mFrustumCuller = new();
+
             // Build and place player to startsystem
             Player = new();
 
@@ -43,10 +45,10 @@ namespace CelestialOdyssey.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            base.Update(gameTime, inputState);
-
-            // ESC for Pause
+            mFrustumCuller.Update(mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height, Matrix.Identity);
             inputState.DoAction(ActionType.Back, () => mLayerManager.AddLayer(new PauseLayer()));
+            if (!mFrustumCuller.VectorOnScreenView(inputState.mMousePosition) && (inputState.HasMouseAction(MouseActionType.LeftClick) || inputState.HasMouseAction(MouseActionType.RightClick))) mLayerManager.AddLayer(new PauseLayer());
+            base.Update(gameTime, inputState);
         }
 
         public override void Destroy() { }

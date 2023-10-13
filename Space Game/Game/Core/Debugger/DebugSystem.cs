@@ -7,7 +7,6 @@ using CelestialOdyssey.Game.Core.DebugSystem;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
-using CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
@@ -18,7 +17,7 @@ namespace CelestialOdyssey.Game.Core.Debugger
     public class DebugSystem
     {
         // Constants
-        const float UpdateTimeInSeconds = 1;
+        private const float UpdateTimeInSeconds = 1;
 
         // Some Stuff
         public float DrawnObjectCount;
@@ -60,9 +59,9 @@ namespace CelestialOdyssey.Game.Core.Debugger
 
         public void CheckForSpawn(PlanetSystem planetSystem)
         {
-            if (SpawnBattleShip) planetSystem.SpaceShips.Add(new EnemyBattleShip(Vector2.Zero) { ActualPlanetSystem = planetSystem });
-            if (SpawnCorvette) planetSystem.SpaceShips.Add(new EnemyCorvette(Vector2.Zero) { ActualPlanetSystem = planetSystem });
-            if (SpawnFighter) planetSystem.SpaceShips.Add(new EnemyFighter(Vector2.Zero) { ActualPlanetSystem = planetSystem });
+            if (SpawnBattleShip) planetSystem.SpaceShipManager.Spawn(planetSystem, SpaceShipManagement.ShipType.EnemyBattleShip);
+            if (SpawnCorvette) planetSystem.SpaceShipManager.Spawn(planetSystem, SpaceShipManagement.ShipType.EnemyCorvette);
+            if (SpawnFighter) planetSystem.SpaceShipManager.Spawn(planetSystem, SpaceShipManagement.ShipType.EnemyFighter);
             SpawnFighter = SpawnBattleShip = SpawnCorvette = false;
         }
 

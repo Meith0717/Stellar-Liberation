@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
 
-namespace CelestialOdyssey.Game.Core.GameObjects
+namespace CelestialOdyssey.Game.Core.GameObjectManagement
 {
     [Serializable]
     public abstract class MovingObject : GameObject

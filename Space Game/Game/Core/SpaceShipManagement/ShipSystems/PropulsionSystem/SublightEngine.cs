@@ -3,10 +3,9 @@
 // All rights reserved.
 
 using CelestialOdyssey.Game.Core.InputManagement;
-using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using Microsoft.Xna.Framework;
 
-namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
+namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionSystem
 {
     public class SublightEngine
     {
@@ -55,7 +54,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
         public void FollowMouse(InputState inputState, SpaceShip spaceShip, Vector2 worldMousePosition)
         {
             spaceShip.Rotation += MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, worldMousePosition, .1f);
-            if (inputState.HasMouseAction(MouseActionType.RightClickHold))
+            if (inputState.HasMouseAction(MouseActionType.LeftClickHold))
             {
                 SetTarget(spaceShip, worldMousePosition);
                 return;

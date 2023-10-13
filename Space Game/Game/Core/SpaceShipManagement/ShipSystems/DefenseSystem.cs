@@ -3,11 +3,10 @@
 // All rights reserved.
 
 using CelestialOdyssey.Core.GameEngine.Content_Management;
-using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using Microsoft.Xna.Framework;
 using System;
 
-namespace CelestialOdyssey.Game.Core.ShipSystems
+namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems
 {
     public class DefenseSystem
     {
@@ -33,7 +32,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems
         public void Update(GameTime gameTime)
         {
             mShieldAlpha -= 0.1f;
-            mShieldAlpha = (mShieldAlpha < 0) ? 0 : mShieldAlpha;
+            mShieldAlpha = mShieldAlpha < 0 ? 0 : mShieldAlpha;
 
             if (mActualShieldForce + mShieldRegeneration < mMaxShieldForce) mActualShieldForce += mShieldRegeneration /
                     gameTime.ElapsedGameTime.Milliseconds;
@@ -61,7 +60,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems
 
         private void DrawLevel(int length, Vector2 position, double level, Color color, int textureDepth)
         {
-            var start = new Vector2(position.X - (length / 2), position.Y);
+            var start = new Vector2(position.X - length / 2, position.Y);
             TextureManager.Instance.DrawLine(start, length, new Color(39, 39, 39), 300, textureDepth + 1);
             TextureManager.Instance.DrawLine(start, length * (float)level, color, 300, textureDepth + 2);
         }

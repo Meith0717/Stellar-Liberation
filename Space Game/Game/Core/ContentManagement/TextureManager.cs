@@ -10,7 +10,7 @@
  */
 
 using CelestialOdyssey.Game.Core.Animations;
-using CelestialOdyssey.Game.Core.GameObjects;
+using CelestialOdyssey.Game.Core.GameObjectManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;

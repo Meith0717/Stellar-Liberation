@@ -5,15 +5,15 @@
 using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.Animations;
 using CelestialOdyssey.Game.Core.Collision_Detection;
-using CelestialOdyssey.Game.Core.GameObjects;
+using CelestialOdyssey.Game.Core.GameObjectManagement;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
-using CelestialOdyssey.Game.Core.ShipSystems;
-using CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem;
-using CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem;
+using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems;
+using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionSystem;
+using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
 using CelestialOdyssey.Game.Core.Utility;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
-using CelestialOdyssey.Game.GameObjects.SpaceShips.Enemy;
+using CelestialOdyssey.Game.GameObjects.Items;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
@@ -22,7 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
+namespace CelestialOdyssey.Game.Core.SpaceShipManagement
 {
     [Serializable]
     public abstract class SpaceShip : MovingObject
@@ -57,13 +57,16 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
             SublightEngine.Update(this);
 
             if (DefenseSystem.HullLevel <= 0 && !IsDestroyed) Explode();
-            if (IsDestroyed) return;
 
             HasProjectileHit(scene);
             HyperDrive.Update(gameTime, this);
             DefenseSystem.Update(gameTime);
             SensorArray.Update(gameTime, Position, ActualPlanetSystem, scene);
             WeaponSystem.Update(gameTime, inputState, this, sceneManagerLayer, scene);
+
+            if (!IsDestroyed) return;
+            if (ExplosionSheet.IsActive("destroy")) return;
+            Dispose = true;
         }
 
         private void HasProjectileHit(Scene scene)
@@ -81,7 +84,7 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
                 DefenseSystem.GetDamage(projectile.ShieldDamage, projectile.HullDamage);
                 gotDamage = true;
             }
-            if (gotDamage) SoundManager.Instance.PlaySound("torpedoHit", Utility.Random.Next(5, 8) / 10f);
+            if (gotDamage) SoundManager.Instance.PlaySound("torpedoHit", Utility.Utility.Random.Next(5, 8) / 10f);
         }
 
         public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
@@ -92,8 +95,8 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
             if (IsDestroyed) return;
             sceneManagerLayer.DebugSystem.DrawSensorRadius(Position, SensorArray.ScanRadius, scene);
             TextureManager.Instance.DrawGameObject(this);
-            DefenseSystem.DrawShields(this);
             WeaponSystem.Draw(sceneManagerLayer, scene);
+            DefenseSystem.DrawShields(this);
         }
 
         public void Explode()
@@ -101,6 +104,9 @@ namespace CelestialOdyssey.Game.GameObjects.Spacecrafts
             ExplosionSheet.Play("destroy");
             IsDestroyed = true;
             SublightEngine.SetTarget(this, null);
+
+            for (int i = 0; i < 5; i++) ActualPlanetSystem.ItemManager.PopItem(Direction, Position, new Metall());
+
             return;
         }
     }

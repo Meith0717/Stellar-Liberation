@@ -5,7 +5,7 @@
 using CelestialOdyssey.Game.Core.Utility;
 using Microsoft.Xna.Framework;
 
-namespace CelestialOdyssey.Game.Core.ShipSystems.PropulsionSystem
+namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionSystem
 {
     public static class MovementController
     {

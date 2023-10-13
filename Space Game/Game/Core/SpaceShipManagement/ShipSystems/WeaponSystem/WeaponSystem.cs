@@ -5,12 +5,11 @@
 using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
-using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
-namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
+namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem
 {
     public class WeaponSystem
     {

@@ -11,7 +11,7 @@ namespace CelestialOdyssey.Game.Core.UserInterface.Messages
 {
     public class MyUiMessageManager
     {
-        const float LiveTime = 7;
+        private const float LiveTime = 7;
         private TextureManager mTextureManager;
         private List<MyUiMessage> mMessageList = new();
         private float mCenterX;

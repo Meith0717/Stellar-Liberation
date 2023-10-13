@@ -43,8 +43,8 @@ namespace rache_der_reti.Core.Animation
 
         public void Reset() => mFrameFloat = mFrameIndex = 0;
 
-        public void Draw(SpriteSheet spriteSheet, int depth) => TextureManager.Instance.DrawSpriteSheetFrame(spriteSheet, mPosition, mFrames[mFrameIndex], depth);   
-        
+        public void Draw(SpriteSheet spriteSheet, int depth) => TextureManager.Instance.DrawSpriteSheetFrame(spriteSheet, mPosition, mFrames[mFrameIndex], depth);
+
         public static List<Point> GetRowList(int row, int colLength)
         {
             var lst = new List<Point>();

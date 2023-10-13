@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace CelestialOdyssey.GameEngine.Content_Management
 {
-    public enum RegistryType { Texture, Font, Sound}
+    public enum RegistryType { Texture, Font, Sound }
 
     public class Registry
     {

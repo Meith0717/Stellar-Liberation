@@ -17,7 +17,7 @@ using MonoGame.Extended;
 using Newtonsoft.Json;
 using System;
 
-namespace CelestialOdyssey.Game.Core.GameObjects
+namespace CelestialOdyssey.Game.Core.GameObjectManagement
 {
     /// <summary>
     /// Abstract class representing a game object in the game engine.
@@ -86,17 +86,21 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         public CircleF BoundedBox { get; set; }
 
         [JsonIgnore]
-        public double LiveTime16 { get; set; }
+        private double LiveTime32 { get; set; }
 
         [JsonIgnore]
-        public double DeleteTime { get; set; }
+        public double DisposeTime { get; set; }
+
+        [JsonIgnore]
+        public bool Dispose { get; protected set; }
 
 
         [JsonIgnore]
         private bool mWasRemovedFromSpatialHashing = true;
 
-        internal GameObject(Vector2 position, string textureId, float textureScale, int textureDepth)
+        internal GameObject(Vector2 position, string textureId, float textureScale, int textureDepth, double disposeTime = double.PositiveInfinity)
         {
+            DisposeTime = disposeTime;
             Position = position;
             TextureId = textureId;
             TextureScale = textureScale;
@@ -121,8 +125,9 @@ namespace CelestialOdyssey.Game.Core.GameObjects
         /// <param name="sceneLayer">The game engine instance.</param>
         public virtual void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            LiveTime16 += gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (LiveTime16 > (65536)) LiveTime16 = 0;
+            LiveTime32 += gameTime.ElapsedGameTime.TotalMilliseconds;
+            Dispose = (LiveTime32 > DisposeTime) || Dispose;
+            if (LiveTime32 > (4294967296)) LiveTime32 = 0;
             sceneManagerLayer.DebugSystem.UpdateObjectCount += 1;
             UpdateBoundBox();
         }

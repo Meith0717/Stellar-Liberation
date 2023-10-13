@@ -15,7 +15,7 @@ using CelestialOdyssey.Game.Core.Utility;
 using Microsoft.Xna.Framework;
 using System;
 
-namespace CelestialOdyssey.Game.Core.GameObjects
+namespace CelestialOdyssey.Game.Core.GameObjectManagement
 {
     /// <summary>
     /// Represents a camera used for viewing and manipulating the game world.

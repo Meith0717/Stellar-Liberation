@@ -2,8 +2,8 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using CelestialOdyssey.Game.Core.ShipSystems;
-using CelestialOdyssey.Game.GameObjects.Spacecrafts;
+using CelestialOdyssey.Game.Core.SpaceShipManagement;
+using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 

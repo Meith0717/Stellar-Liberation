@@ -10,7 +10,7 @@ namespace CelestialOdyssey.Game.Core.UserInterface.Messages
 {
     public class MyUiMessage
     {
-        const string Font = "debug";
+        private const string Font = "debug";
         public float CreationTime;
         public bool Clicked = false;
         private Rectangle mRect = Rectangle.Empty;

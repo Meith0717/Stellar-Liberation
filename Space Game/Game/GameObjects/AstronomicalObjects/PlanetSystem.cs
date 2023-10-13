@@ -3,11 +3,12 @@
 // All rights reserved.
 
 using CelestialOdyssey.Core.GameEngine.Content_Management;
-using CelestialOdyssey.Game.Core.GameObjects;
+using CelestialOdyssey.Game.Core.GameObjectManagement;
 using CelestialOdyssey.Game.Core.InputManagement;
+using CelestialOdyssey.Game.Core.ItemManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
-using CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem;
-using CelestialOdyssey.Game.GameObjects.Spacecrafts;
+using CelestialOdyssey.Game.Core.SpaceShipManagement;
+using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
 using CelestialOdyssey.Game.GameObjects.SpaceShips;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
@@ -27,10 +28,13 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         [JsonIgnore] public Player Player { get; private set; }
         [JsonProperty] public Star Star { get; private set; }
         [JsonProperty] public List<Planet> Planets { get; private set; }
-        [JsonProperty] public List<SpaceShip> SpaceShips { get; private set; }
 
         // Other Stuff
+        [JsonProperty] public readonly SpaceShipManager SpaceShipManager = new();
         [JsonIgnore] public readonly ProjectileManager ProjectileManager = new();
+        [JsonIgnore] public readonly ItemManager ItemManager = new();
+
+        // Atributes
         [JsonProperty] public Danger Danger { get; private set; }
         [JsonProperty] public CircleF SystemBounding { get; private set; }
 
@@ -46,8 +50,8 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         {
             Planets = planets;
             Star = star;
-            SpaceShips = spaceShips;
             Player = player;
+            SpaceShipManager.AddRange(spaceShips);
         }
 
         [JsonIgnore] private Color mCrosshairColor;
@@ -71,15 +75,9 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         {
             Star.Update(gameTime, inputState, sceneManagerLayer, scene);
             Player.Update(gameTime, inputState, sceneManagerLayer, scene);
-            foreach (var item in Planets)
-            {
-                item.Update(gameTime, inputState, sceneManagerLayer, scene);
-            }
-            foreach (var item in SpaceShips)
-            {
-                item.Update(gameTime, inputState, sceneManagerLayer, scene);
-            }
-
+            foreach (var item in Planets) item.Update(gameTime, inputState, sceneManagerLayer, scene);
+            SpaceShipManager.Update(gameTime, inputState, sceneManagerLayer, scene);
+            ItemManager.Update(gameTime, inputState, sceneManagerLayer, scene);
             ProjectileManager.Update(gameTime, inputState, sceneManagerLayer, scene);
         }
 

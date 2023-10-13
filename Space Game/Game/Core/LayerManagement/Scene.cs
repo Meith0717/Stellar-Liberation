@@ -3,7 +3,7 @@
 // All rights reserved.
 
 using CelestialOdyssey.Core.GameEngine.Position_Management;
-using CelestialOdyssey.Game.Core.GameObjects;
+using CelestialOdyssey.Game.Core.GameObjectManagement;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.Utility;
 using Microsoft.Xna.Framework;
@@ -118,7 +118,7 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
                     foreach (var obj in objs)
                     {
                         if (obj.BoundedBox.Radius == 0) throw new System.Exception($"BoundedBox Radius is Zero {obj}");
-                        if (this.FrustumCuller.CircleOnWorldView(obj.BoundedBox))
+                        if (FrustumCuller.CircleOnWorldView(obj.BoundedBox))
                         {
                             obj.Draw(mSceneManagerLayer, this);
                         }

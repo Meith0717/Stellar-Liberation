@@ -4,16 +4,15 @@
 
 using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.Animations;
-using CelestialOdyssey.Game.Core.GameObjects;
+using CelestialOdyssey.Game.Core.GameObjectManagement;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.Utility;
-using CelestialOdyssey.Game.GameObjects.Spacecrafts;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using rache_der_reti.Core.Animation;
 
-namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
+namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem
 {
     public class Projectile : MovingObject
     {
@@ -35,7 +34,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
             TextureColor = color;
             Origine = origine;
             Velocity = 15;
-            DeleteTime = 5000;
+            DisposeTime = 5000;
             mExplosionSheet = new(ContentRegistry.explosion, 64, 3, TextureScale * 2);
             mExplosionSheet.Animate("hit", new(60, Animation.GetRowList(0, 64), false));
         }
@@ -55,7 +54,7 @@ namespace CelestialOdyssey.Game.Core.ShipSystems.WeaponSystem
 
         public override void HasCollide()
         {
-            LiveTime16 = 5000 - ((1000 / 60) * 64);
+            Dispose = true;
             Velocity = 0;
             mHit = true;
             mExplosionSheet.Play("hit");

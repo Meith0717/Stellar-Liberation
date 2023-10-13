@@ -1,4 +1,4 @@
-﻿// Star.cs 
+﻿// Item.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
@@ -6,37 +6,39 @@ using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.GameObjectManagement;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
-using CelestialOdyssey.GameEngine.Content_Management;
+using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionSystem;
 using Microsoft.Xna.Framework;
-using Newtonsoft.Json;
+using MonoGame.Extended;
 using System;
 
-namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
+namespace CelestialOdyssey.Game.Core.ItemManagement
 {
     [Serializable]
-    public class Star : GameObject
+    public abstract class Item : MovingObject
     {
-        [JsonProperty]
-        public Color LightColor { get; private set; }
+        public readonly bool Collectable;
 
-        public Star(Vector2 position, string textureId, float textureScale, Color starColor)
-            : base(position, textureId, textureScale, 1)
-        {
-            LightColor = starColor;
-        }
+        protected Item(string textureId, float textureScale, int textureDepth)
+            : base(Vector2.Zero, textureId, textureScale, 30) { }
 
         public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            RemoveFromSpatialHashing(scene);
             base.Update(gameTime, inputState, sceneManagerLayer, scene);
-            AddToSpatialHashing(scene);
+            Velocity = MovementController.GetVelocity(Velocity, -0.009f);
+        }
+
+        public void Throw(Vector2 momentum, Vector2 position)
+        {
+            Position = position;
+            Utility.Utility.Random.NextUnitVector(out var direction);
+            Direction = momentum + direction;
+            Velocity = 1;
         }
 
         public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
         {
             base.Draw(sceneManagerLayer, scene);
             TextureManager.Instance.DrawGameObject(this);
-            TextureManager.Instance.Draw(ContentRegistry.starLightAlpha.Name, Position, TextureOffset, TextureScale * 2f, Rotation, 3, LightColor);
         }
     }
 }
