@@ -12,7 +12,7 @@ namespace CelestialOdyssey.Game.GameObjects.SpaceShips
     public class EnemyCorvette : Enemy
     {
         public EnemyCorvette(Vector2 position)
-            : base(position, ContentRegistry.enemyCorvette, 5f)
+            : base(position, ContentRegistry.enemyBomber, 5f)
         {
             SensorArray = new(10000, 1000);
 

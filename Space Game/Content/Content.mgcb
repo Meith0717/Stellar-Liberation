@@ -743,6 +743,18 @@
 /processorParam:TextureFormat=Color
 /build:textures/gameobjects/items/postyum.png
 
+#begin textures/gameobjects/spacecrafts/enemyBattleShip.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameobjects/spacecrafts/enemyBattleShip.png
+
 #begin textures/gameobjects/spacecrafts/EnemyBattleShip.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -767,7 +779,7 @@
 /processorParam:TextureFormat=Color
 /build:textures/gameobjects/spacecrafts/enemyBattleShipShield.png
 
-#begin textures/gameobjects/spacecrafts/enemyCorvette.png
+#begin textures/gameobjects/spacecrafts/enemyBattleShipShield.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -777,9 +789,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/spacecrafts/enemyCorvette.png
+/build:textures/gameobjects/spacecrafts/enemyBattleShipShield.png
 
-#begin textures/gameobjects/spacecrafts/enemyCorvetteShield.png
+#begin textures/gameobjects/spacecrafts/enemyBomber.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -789,7 +801,31 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/spacecrafts/enemyCorvetteShield.png
+/build:textures/gameobjects/spacecrafts/enemyBomber.png
+
+#begin textures/gameobjects/spacecrafts/enemyBomberShield.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameobjects/spacecrafts/enemyBomberShield.png
+
+#begin textures/gameobjects/spacecrafts/enemyFighter.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameobjects/spacecrafts/enemyFighter.png
 
 #begin textures/gameobjects/spacecrafts/enemyFighter.png
 /importer:TextureImporter
@@ -815,6 +851,18 @@
 /processorParam:TextureFormat=Color
 /build:textures/gameobjects/spacecrafts/enemyFighterShield.png
 
+#begin textures/gameobjects/spacecrafts/enemyFighterShield.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameobjects/spacecrafts/enemyFighterShield.png
+
 #begin textures/gameobjects/spacecrafts/player.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -826,6 +874,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/gameobjects/spacecrafts/player.png
+
+#begin textures/gameobjects/spacecrafts/player.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameobjects/spacecrafts/player.png
+
+#begin textures/gameobjects/spacecrafts/playerShield.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameobjects/spacecrafts/playerShield.png
 
 #begin textures/gameobjects/spacecrafts/playerShield.png
 /importer:TextureImporter

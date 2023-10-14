@@ -12,8 +12,8 @@ using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems;
 using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionSystem;
 using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
 using CelestialOdyssey.Game.Core.Utility;
+using CelestialOdyssey.Game.GameObjects;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
-using CelestialOdyssey.Game.GameObjects.Items;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
@@ -105,7 +105,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
             IsDestroyed = true;
             SublightEngine.SetTarget(this, null);
 
-            for (int i = 0; i < 5; i++) ActualPlanetSystem.ItemManager.PopItem(Direction, Position, new Metall());
+            for (int i = 0; i < 5; i++) ActualPlanetSystem.ItemManager.PopItem(Direction, Position, new Items.Metall());
 
             return;
         }

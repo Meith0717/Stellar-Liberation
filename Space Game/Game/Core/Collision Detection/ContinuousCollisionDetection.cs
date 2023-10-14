@@ -15,13 +15,15 @@ namespace CelestialOdyssey.Game.Core.Collision_Detection
 
             var step = 50;
             var frameDistance = Vector2.Distance(checkingObj.Position, checkingObj.FuturePosition);
-            var checkingBoundBox = checkingObj.BoundedBox;
+            var predictBoundBox = checkingObj.BoundedBox;
+
+            if (predictBoundBox.Intersects(collidingObj.BoundedBox)) return true;
 
             for (float frameStep = step; frameStep < frameDistance; frameStep += step)
             {
-                collidingPosition = checkingBoundBox.Position;
-                if (checkingBoundBox.Intersects(collidingObj.BoundedBox)) return true;
-                checkingBoundBox.Position = checkingObj.Position + (checkingObj.Direction * frameStep);
+                predictBoundBox.Position = checkingObj.Position + (checkingObj.Direction * frameStep);
+                collidingPosition = predictBoundBox.Position;
+                if (predictBoundBox.Intersects(collidingObj.BoundedBox)) return true;
             }
 
             return false;

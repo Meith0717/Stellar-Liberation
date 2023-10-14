@@ -24,6 +24,10 @@ namespace CelestialOdyssey.Game.Core.ItemManagement
             base.Update(gameTime, inputState, sceneManagerLayer, scene);
         }
 
-        public void CollectItem(Item item) => RemobeObj(item);
+        public void RemoveItem(Scene scene, Item item)
+        {
+            item.RemoveFromSpatialHashing(scene);
+            RemobeObj(item);
+        } 
     }
 }

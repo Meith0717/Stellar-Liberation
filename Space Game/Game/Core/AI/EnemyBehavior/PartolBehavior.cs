@@ -5,8 +5,8 @@
 using CelestialOdyssey.Game.Core.SpaceShipManagement;
 using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems;
 using CelestialOdyssey.Game.Core.Utility;
+using CelestialOdyssey.Game.GameObjects;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
-using CelestialOdyssey.Game.GameObjects.SpaceShips;
 using Microsoft.Xna.Framework;
 using System.Linq;
 

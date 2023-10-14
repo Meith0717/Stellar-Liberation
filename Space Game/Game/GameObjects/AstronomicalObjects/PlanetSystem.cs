@@ -9,7 +9,6 @@ using CelestialOdyssey.Game.Core.ItemManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.SpaceShipManagement;
 using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
-using CelestialOdyssey.Game.GameObjects.SpaceShips;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;

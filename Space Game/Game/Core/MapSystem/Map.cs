@@ -5,9 +5,9 @@
 using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.SpaceShipManagement;
+using CelestialOdyssey.Game.GameObjects;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types;
-using CelestialOdyssey.Game.GameObjects.SpaceShips;
 using MathNet.Numerics.Distributions;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;

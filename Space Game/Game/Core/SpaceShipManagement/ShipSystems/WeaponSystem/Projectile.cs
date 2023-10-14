@@ -36,7 +36,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyste
             Velocity = 15;
             DisposeTime = 5000;
             mExplosionSheet = new(ContentRegistry.explosion, 64, 3, TextureScale * 2);
-            mExplosionSheet.Animate("hit", new(60, Animation.GetRowList(0, 64), false));
+            mExplosionSheet.Animate("hit", new(45, Animation.GetRowList(0, 64), false));
         }
 
         public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
