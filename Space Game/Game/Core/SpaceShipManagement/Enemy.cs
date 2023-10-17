@@ -5,6 +5,9 @@
 using CelestialOdyssey.Game.Core.AI;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionSystem;
+using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
+using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
@@ -14,18 +17,9 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
     [Serializable]
     public abstract class Enemy : SpaceShip
     {
-        [JsonIgnore] protected BehaviorBasedAI mAi;
 
-        protected Enemy(Vector2 position, string textureId, float textureScale)
-            : base(position, textureId, textureScale)
+        protected Enemy(Vector2 position, string textureId, float textureScale, SensorArray sensorArray, SublightEngine sublightEngine, HyperDrive hyperDrive, WeaponSystem weaponSystem, DefenseSystem defenseSystem)
+            : base(position, textureId, textureScale, sensorArray, sublightEngine, hyperDrive, weaponSystem, defenseSystem)
         { }
-
-        public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
-        {
-            base.Update(gameTime, inputState, sceneManagerLayer, scene);
-
-            if (IsDestroyed) return;
-            mAi.Update(gameTime, SensorArray, this);
-        }
     }
 }

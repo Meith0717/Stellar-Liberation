@@ -50,7 +50,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
 
                     for (int i = 1; i <= orbitsAmount; i++)
                     {
-                        orbitRadius += Utility.Utility.Random.Next(8000, 13000);
+                        orbitRadius += Utility.Utility.Random.Next(25000, 40000);
                         Planet planet = GetPlanet(star.Position, orbitRadius, i);
                         planets.Add(planet);
                     }

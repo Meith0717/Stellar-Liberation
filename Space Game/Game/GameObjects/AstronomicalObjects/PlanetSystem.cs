@@ -12,6 +12,7 @@ using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
+using MonoGame.Extended.Screens;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -94,12 +95,19 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             ProjectileManager.Update(gameTime, inputState, sceneManagerLayer, scene);
         }
 
-        public void DrawOrbits(Scene scene)
+        public void DrawObjects(SceneManagerLayer sceneManagerLayer, Scene scene)
         {
             foreach (var item in Planets)
             {
-                TextureManager.Instance.DrawAdaptiveCircle(Star.Position, item.OrbitRadius, new(20, 20, 20, 20), 1, item.TextureDepth - 1, scene.Camera.Zoom);
+                TextureManager.Instance.DrawAdaptiveCircle(Star.Position, item.OrbitRadius, new(10, 10, 10, 10), 4, item.TextureDepth - 1, scene.Camera.Zoom);
             }
+            Star.Draw(sceneManagerLayer, scene);
+            Player.Draw(sceneManagerLayer, scene);
+            foreach (var item in Planets) item.Draw(sceneManagerLayer, scene);
+
+            SpaceShipManager.Draw(sceneManagerLayer, scene);
+            ItemManager.Draw(sceneManagerLayer, scene);
+            ProjectileManager.Draw(sceneManagerLayer, scene);
         }
         //--------------------------------------------------------------------------------------//
     }

@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
 {
-    public class PartolBehavior : Behavior
+    public class SearchBehavior : Behavior
     {
         private Vector2? mPatrolTarget;
 

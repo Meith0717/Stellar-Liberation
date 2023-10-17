@@ -44,14 +44,13 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
             FrustumCuller.Update(screenWidth, screenHeight, mViewTransformationMatrix);
         }
 
-        public virtual void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
             DrawOnScreen();
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: mViewTransformationMatrix, samplerState: SamplerState.PointClamp);
-            RenderWorldObjectsOnScreen();
             DrawOnWorld();
             mSceneManagerLayer.DebugSystem.DrawOnScene(this);
             spriteBatch.End();
@@ -102,30 +101,5 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
 
             return objectsInRadius;
         }
-
-        public void RenderWorldObjectsOnScreen()
-        {
-            Rectangle space = FrustumCuller.WorldFrustum.ToRectangle();
-            int cellSize = SpatialHashing.CellSize;
-            var screeenMaxX = space.X + space.Width + cellSize;
-            var screenMaxY = space.Y + space.Height + cellSize;
-
-            for (int x = space.X - cellSize; x <= screeenMaxX + cellSize; x += cellSize)
-            {
-                for (int y = space.Y - cellSize; y <= screenMaxY + cellSize; y += cellSize)
-                {
-                    var objs = SpatialHashing.GetObjectsInBucket(x, y);
-                    foreach (var obj in objs)
-                    {
-                        if (obj.BoundedBox.Radius == 0) throw new System.Exception($"BoundedBox Radius is Zero {obj}");
-                        if (FrustumCuller.CircleOnWorldView(obj.BoundedBox))
-                        {
-                            obj.Draw(mSceneManagerLayer, this);
-                        }
-                    }
-                }
-            }
-        }
     }
-
 }

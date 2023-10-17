@@ -2,6 +2,7 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using CelestialOdyssey.Game.Core.AI.EnemyBehavior;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.ItemManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
@@ -18,26 +19,26 @@ namespace CelestialOdyssey.Game.GameObjects
 
         private Inventory mInventory;
 
-        public Player() : base(Vector2.Zero, ContentRegistry.player.Name, 1)
+        public Player() : base(Vector2.Zero, ContentRegistry.player.Name, 1, new(10000, 10000), new(0.5f, 0.01f), new(1, 1), new(Color.BlueViolet, 10, 5, 50, 5000), new(100000, 100000, 1, 1))
         {
             mInventory = new();
-            WeaponSystem = new(Color.LightBlue, 50, 50, 100);
             WeaponSystem.SetWeapon(new(110, 35));
             WeaponSystem.SetWeapon(new(110, -35));
             WeaponSystem.SetWeapon(new(-130, 100));
             WeaponSystem.SetWeapon(new(-130, -100));
             WeaponSystem.SetWeapon(new(-150, 0));
+
+            mAi = new(new() {
+               new SearchBehavior(),
+               new FleeBehavior(50000),
+               new AttacBehavior1()});
         }
 
         public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
-            if (!HyperDrive.IsActive)
-            {
-                WeaponSystem.TargetPosition = scene.WorldMousePosition;
-                inputState.DoMouseAction(MouseActionType.RightClickHold, () => WeaponSystem.Fire(ActualPlanetSystem.ProjectileManager, this));
-                SublightEngine.FollowMouse(inputState, this, scene.WorldMousePosition);
-                mInventory.Update(this, scene);
-            }
+            inputState.DoMouseAction(MouseActionType.RightClickHold, () => WeaponSystem.Fire());
+            inputState.DoMouseAction(MouseActionType.LeftClick, () => SublightEngine.SetTarget(this, scene.WorldMousePosition));
+            mInventory.Update(this, scene);
 
             base.Update(gameTime, inputState, sceneManagerLayer, scene);
             scene.Camera.SetPosition(Position);

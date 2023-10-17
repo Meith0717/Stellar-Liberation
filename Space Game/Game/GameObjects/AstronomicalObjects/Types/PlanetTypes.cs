@@ -11,12 +11,12 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types
 {
     internal static class PlanetTypes
     {
-        private static float ColdScale { get { return Utility.Random.Next(2, 3); } }
-        private static float DryScale { get { return Utility.Random.Next(3, 6); } }
-        private static float GasScale { get { return Utility.Random.Next(7, 10); } }
-        private static float StoneScale { get { return Utility.Random.Next(2, 3); } }
-        private static float TerrScale { get { return Utility.Random.Next(3, 4); } }
-        private static float WarmScale { get { return Utility.Random.Next(3, 4); } }
+        private static float ColdScale { get { return 5 * Utility.Random.Next(2, 3); } }
+        private static float DryScale { get { return 5 * Utility.Random.Next(3, 4); } }
+        private static float GasScale { get { return 5 * Utility.Random.Next(5, 7); } }
+        private static float StoneScale { get { return 5 * Utility.Random.Next(2, 3); } }
+        private static float TerrScale { get { return 5 * Utility.Random.Next(3, 4); } }
+        private static float WarmScale { get { return 5 * Utility.Random.Next(3, 4); } }
 
         private static List<Registry> ColdTextures = new() { ContentRegistry.cold1, ContentRegistry.cold2, ContentRegistry.cold3, ContentRegistry.cold4 };
         private static List<Registry> DryTextures = new() { ContentRegistry.dry1, ContentRegistry.dry2, ContentRegistry.dry3, ContentRegistry.dry4, ContentRegistry.dry5, ContentRegistry.dry6 };

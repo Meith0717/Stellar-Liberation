@@ -16,7 +16,7 @@ namespace CelestialOdyssey.Game.Layers.Scenes
         private PlanetSystem mPlanetSystem;
         private ParllaxManager mParlaxManager;
 
-        public PlanetSystemScene(PlanetSystem planetSystem) : base(10000, 0.01f, 1, false)
+        public PlanetSystemScene(PlanetSystem planetSystem) : base(10000, 0.001f, 1, false)
         {
             mPlanetSystem = planetSystem;
             mPlanetSystem.Player.ActualPlanetSystem = mPlanetSystem;
@@ -40,7 +40,7 @@ namespace CelestialOdyssey.Game.Layers.Scenes
             mParlaxManager.Draw();
         }
 
-        public override void DrawOnWorld() => mPlanetSystem.DrawOrbits(this);
+        public override void DrawOnWorld() => mPlanetSystem.DrawObjects(mSceneManagerLayer, this);
 
         public override void OnResolutionChanged() { }
     }

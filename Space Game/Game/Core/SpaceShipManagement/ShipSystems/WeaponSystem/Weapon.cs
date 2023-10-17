@@ -16,7 +16,6 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyste
 {
     internal class Weapon : GameObject
     {
-        private Vector2? mTarget;
         private Vector2 mRelativePosition;
         private Color mWeaponColor;
         private int mShieldDamage;
@@ -31,30 +30,15 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyste
             mRelativePosition = relativePosition;
         }
 
-        public void SetTarget(Vector2 target) => mTarget = target;
-        public void ForgetTarget() => mTarget = null;
+        public Projectile Fire(SpaceShip origin) => new(Position, Rotation, mWeaponColor, mShieldDamage, mHullDamage, origin);
 
-        public bool Fire(SpaceShip origin, out Projectile projectile)
-        {
-            projectile = null;
-            if (mTarget is not null)
-            {
-                Vector2 target = (Vector2)mTarget;
-                var angleBetweenTarget = Geometry.AngleBetweenVectors(Position, target);
-                var angleToTarget = MathF.Abs(Geometry.AngleRadDelta(Rotation, angleBetweenTarget));
-                if (angleToTarget > 5) return false;
-            }
-            projectile = new Projectile(Position, Rotation, mWeaponColor, mShieldDamage, mHullDamage, origin);
-            return true;
-        }
-
-        public void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene, float shipRotation, Vector2 shipPosition)
+        public void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene, float shipRotation, Vector2 shipPosition, Vector2? target)
         {
             Position = Transformations.Rotation(shipPosition, mRelativePosition, shipRotation);
-            Rotation += mTarget switch
+            Rotation += target switch
             {
                 null => MovementController.GetRotationUpdate(Rotation, shipRotation, 1),
-                not null => MovementController.GetRotationUpdate(Rotation, Position, (Vector2)mTarget, 0.5f),
+                not null => MovementController.GetRotationUpdate(Rotation, Position, (Vector2)target, 0.5f),
             };
             base.Update(gameTime, inputState, sceneManagerLayer, scene);
         }

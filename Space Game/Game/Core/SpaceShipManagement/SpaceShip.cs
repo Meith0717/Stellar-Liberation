@@ -3,6 +3,7 @@
 // All rights reserved.
 
 using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Game.Core.AI;
 using CelestialOdyssey.Game.Core.Animations;
 using CelestialOdyssey.Game.Core.Collision_Detection;
 using CelestialOdyssey.Game.Core.GameObjectManagement;
@@ -27,26 +28,29 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
     [Serializable]
     public abstract class SpaceShip : MovingObject
     {
-        [JsonProperty] public bool IsDestroyed { get; protected set; }
-        [JsonIgnore] public SensorArray SensorArray { get; protected set; } = new(10000, 1000);
-        [JsonIgnore] public SublightEngine SublightEngine { get; protected set; } = new(2.5f);
-        [JsonIgnore] public HyperDrive HyperDrive { get; protected set; } = new(6000, 100);
-        [JsonIgnore] public WeaponSystem WeaponSystem { get; protected set; }
-        [JsonProperty] public DefenseSystem DefenseSystem { get; protected set; } = new(100, 100, 0, 1);
-        [JsonIgnore] public PlanetSystem ActualPlanetSystem { get; set; }
         [JsonIgnore] protected SpriteSheet ExplosionSheet;
+        [JsonIgnore] protected BehaviorBasedAI mAi;
+        [JsonProperty] protected bool IsDestroyed { get; private set; }
+        [JsonIgnore] public SensorArray SensorArray { get; private set; }
+        [JsonIgnore] public SublightEngine SublightEngine { get; private set; }
+        [JsonIgnore] public HyperDrive HyperDrive { get; private set; }
+        [JsonIgnore] public WeaponSystem WeaponSystem { get; private set; }
+        [JsonProperty] public DefenseSystem DefenseSystem { get; private set; }
+        [JsonIgnore] public PlanetSystem ActualPlanetSystem { get; set; }
 
 
-        public SpaceShip(Vector2 position, string textureId, float textureScale)
+        public SpaceShip(Vector2 position, string textureId, float textureScale, SensorArray sensorArray, SublightEngine sublightEngine, HyperDrive hyperDrive, WeaponSystem weaponSystem, DefenseSystem defenseSystem)
             : base(position, textureId, textureScale, 10)
         {
-            List<int> f = Enumerable.Range(0, 8 * 8 - 1).ToList();
-            f.Add(0);
+            this.SensorArray = sensorArray;
+            this.SublightEngine = sublightEngine;
+            this.HyperDrive = hyperDrive;
+            this.WeaponSystem = weaponSystem;
+            this.DefenseSystem = defenseSystem;
 
             ExplosionSheet = new(ContentRegistry.explosion, 64, 3, TextureScale * 10);
             ExplosionSheet.Animate("destroy", new(60, Animation.GetRowList(1, 64), false));
         }
-
 
         public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
@@ -62,7 +66,8 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
             HyperDrive.Update(gameTime, this);
             DefenseSystem.Update(gameTime);
             SensorArray.Update(gameTime, Position, ActualPlanetSystem, scene);
-            WeaponSystem.Update(gameTime, inputState, this, sceneManagerLayer, scene);
+            WeaponSystem.Update(gameTime, inputState, this, sceneManagerLayer, scene, ActualPlanetSystem.ProjectileManager);
+            mAi.Update(gameTime, SensorArray, this);
 
             if (!IsDestroyed) return;
             if (ExplosionSheet.IsActive("destroy")) return;
@@ -97,6 +102,8 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
             TextureManager.Instance.DrawGameObject(this);
             WeaponSystem.Draw(sceneManagerLayer, scene);
             DefenseSystem.DrawShields(this);
+            DefenseSystem.DrawLive(this);
+            SublightEngine.Draw(this, scene);
         }
 
         public void Explode()

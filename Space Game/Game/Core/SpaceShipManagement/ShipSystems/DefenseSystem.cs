@@ -55,14 +55,14 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems
         {
             var large = (int)(Math.Max(spaceShip.Width, spaceShip.Height) * spaceShip.TextureScale);
             DrawLevel(large, spaceShip.Position + new Vector2(0, -large / 2), HullLevel, new Color(210, 105, 30), spaceShip.TextureDepth);
-            DrawLevel(large, spaceShip.Position + new Vector2(0, -large / 2 - 500), ShildLevel, new Color(135, 206, 235), spaceShip.TextureDepth);
+            DrawLevel(large, spaceShip.Position + new Vector2(0, -large / 2 - 100), ShildLevel, new Color(135, 206, 235), spaceShip.TextureDepth);
         }
 
         private void DrawLevel(int length, Vector2 position, double level, Color color, int textureDepth)
         {
             var start = new Vector2(position.X - length / 2, position.Y);
-            TextureManager.Instance.DrawLine(start, length, new Color(39, 39, 39), 300, textureDepth + 1);
-            TextureManager.Instance.DrawLine(start, length * (float)level, color, 300, textureDepth + 2);
+            TextureManager.Instance.DrawLine(start, length, new Color(39, 39, 39), 30, textureDepth + 1);
+            TextureManager.Instance.DrawLine(start, length * (float)level, color, 30, textureDepth + 2);
         }
 
         public void DrawShields(SpaceShip spaceShip)

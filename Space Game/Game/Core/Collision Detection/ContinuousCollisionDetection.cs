@@ -13,7 +13,7 @@ namespace CelestialOdyssey.Game.Core.Collision_Detection
         {
             collidingPosition = Vector2.Zero;
 
-            var step = 50;
+            var step = 25;
             var frameDistance = Vector2.Distance(checkingObj.Position, checkingObj.FuturePosition);
             var predictBoundBox = checkingObj.BoundedBox;
 

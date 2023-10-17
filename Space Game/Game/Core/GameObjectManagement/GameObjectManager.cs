@@ -47,5 +47,15 @@ namespace CelestialOdyssey.Game.Core.GameObjectManagement
                 item.RemoveFromSpatialHashing(scene);
             }
         }
+
+        public void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
+        {
+            foreach (var obj in mObjects)
+            {
+                if (!scene.FrustumCuller.CircleOnWorldView(obj.BoundedBox)) continue;
+                obj.Draw(sceneManagerLayer, scene);
+            }
+        }
+
     }
 }
