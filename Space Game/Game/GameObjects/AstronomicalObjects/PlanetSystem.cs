@@ -23,17 +23,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
     [Serializable]
     public class PlanetSystem : InteractiveObject
     {
-        // Game Objects
-        [JsonIgnore] public Player Player { get; private set; }
-        [JsonProperty] public Star Star { get; private set; }
-        [JsonProperty] public List<Planet> Planets { get; private set; }
-
-        // Other Stuff
-        [JsonProperty] public readonly SpaceShipManager SpaceShipManager = new();
-        [JsonIgnore] public readonly ProjectileManager ProjectileManager = new();
-        [JsonIgnore] public readonly ItemManager ItemManager = new();
-
-        // Atributes
+        //--game object associated--------------------------------------------------------------//
         [JsonProperty] public Danger Danger { get; private set; }
         [JsonProperty] public CircleF SystemBounding { get; private set; }
 
@@ -45,20 +35,19 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             SystemBounding = new(sectorPosition, boundaryRadius);
         }
 
-        public void SetObjects(Star star, List<Planet> planets, Player player, List<SpaceShip> spaceShips)
-        {
-            Planets = planets;
-            Star = star;
-            Player = player;
-            SpaceShipManager.AddRange(spaceShips);
-        }
-
-        [JsonIgnore] private Color mCrosshairColor;
-
         public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
             base.Update(gameTime, inputState, sceneManagerLayer, scene);
             mCrosshairColor = IsHover ? Color.MonoGameOrange : GetColor();
+        }
+
+        [JsonIgnore] private Color mCrosshairColor;
+        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
+        {
+            base.Draw(sceneManagerLayer, scene);
+            TextureManager.Instance.DrawGameObject(this, IsHover);
+            TextureManager.Instance.Draw(ContentRegistry.starLightAlpha, Position, TextureOffset, TextureScale * 2f, Rotation, 0, TextureColor);
+            TextureManager.Instance.Draw(ContentRegistry.mapCrosshair, Position, TextureScale * 2, Rotation, 1, mCrosshairColor);
         }
 
         private Color GetColor() => Danger switch
@@ -69,6 +58,31 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             Danger.High => Color.Red,
             _ => throw new NotImplementedException()
         };
+
+        public override void LeftPressAction() {; }
+
+        public override void RightPressAction() {; }
+        //--------------------------------------------------------------------------------------//
+
+        //--planetsystem scene associated-------------------------------------------------------//
+        [JsonIgnore] public Player Player { get; private set; }
+        [JsonProperty] public Star Star { get; private set; }
+        [JsonProperty] public List<Planet> Planets { get; private set; }
+
+        [JsonProperty] public readonly SpaceShipManager SpaceShipManager = new();
+        [JsonIgnore] public readonly ProjectileManager ProjectileManager = new();
+        [JsonIgnore] public readonly ItemManager ItemManager = new();
+
+        //--generation associated--//
+        public void SetObjects(Star star, List<Planet> planets, Player player, List<SpaceShip> spaceShips)
+        {
+            Planets = planets;  
+            Star = star;
+            Player = player;
+            SpaceShipManager.AddRange(spaceShips);
+        }
+        //------------------------//
+
 
         public void UpdateObjects(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
         {
@@ -84,20 +98,9 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         {
             foreach (var item in Planets)
             {
-                TextureManager.Instance.DrawAdaptiveCircle(Star.Position, item.OrbitRadius, new(10, 10, 10, 10), 1, item.TextureDepth - 1, scene.Camera.Zoom);
+                TextureManager.Instance.DrawAdaptiveCircle(Star.Position, item.OrbitRadius, new(20, 20, 20, 20), 1, item.TextureDepth - 1, scene.Camera.Zoom);
             }
         }
-
-        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
-        {
-            base.Draw(sceneManagerLayer, scene);
-            TextureManager.Instance.DrawGameObject(this, IsHover);
-            TextureManager.Instance.Draw(ContentRegistry.starLightAlpha, Position, TextureOffset, TextureScale * 2f, Rotation, 0, TextureColor);
-            TextureManager.Instance.Draw(ContentRegistry.mapCrosshair, Position, TextureScale * 2, Rotation, 1, mCrosshairColor);
-        }
-
-        public override void LeftPressAction() {; }
-
-        public override void RightPressAction() {; }
+        //--------------------------------------------------------------------------------------//
     }
 }

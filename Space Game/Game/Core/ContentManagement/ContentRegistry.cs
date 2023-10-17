@@ -83,6 +83,23 @@ namespace CelestialOdyssey.GameEngine.Content_Management
         public readonly static Registry starBH = new(stars, "BH", RegistryType.Texture);
         public readonly static Registry starLightAlpha = new(stars, "StarLightAlpha", RegistryType.Texture);
 
+        private readonly static string asteroids = @"textures\gameobjects\astronomicalbodys\asteroids";
+        public readonly static Registry asteroid1 = new(asteroids, "asteroid1", RegistryType.Texture);
+        public readonly static Registry asteroid2 = new(asteroids, "asteroid2", RegistryType.Texture);
+        public readonly static Registry asteroid3 = new(asteroids, "asteroid3", RegistryType.Texture);
+        public readonly static Registry asteroid4 = new(asteroids, "asteroid4", RegistryType.Texture);
+        public readonly static Registry asteroid5 = new(asteroids, "asteroid5", RegistryType.Texture);
+        public readonly static Registry asteroid6 = new(asteroids, "asteroid6", RegistryType.Texture);
+        public readonly static Registry asteroid7 = new(asteroids, "asteroid7", RegistryType.Texture);
+        public readonly static Registry asteroid8 = new(asteroids, "asteroid8", RegistryType.Texture);
+        public readonly static Registry asteroid9 = new(asteroids, "asteroid9", RegistryType.Texture);
+        public readonly static Registry asteroid10 = new(asteroids, "asteroid10", RegistryType.Texture);
+        public readonly static Registry asteroid11 = new(asteroids, "asteroid11", RegistryType.Texture);
+        public readonly static Registry asteroid12 = new(asteroids, "asteroid12", RegistryType.Texture);
+        public readonly static Registry asteroid13 = new(asteroids, "asteroid13", RegistryType.Texture);
+        public readonly static Registry asteroid14 = new(asteroids, "asteroid14", RegistryType.Texture);
+        public readonly static Registry asteroid15 = new(asteroids, "asteroid15", RegistryType.Texture);
+
         private readonly static string items = @"textures\gameobjects\items";
         public readonly static Registry odyssyum = new(items, "odyssyum", RegistryType.Texture);
         public readonly static Registry postyum = new(items, "postyum", RegistryType.Texture);
