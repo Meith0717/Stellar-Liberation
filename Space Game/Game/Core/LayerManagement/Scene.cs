@@ -23,6 +23,7 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
         public readonly FrustumCuller FrustumCuller;
         public readonly Camera Camera;
         private Matrix mViewTransformationMatrix;
+        private HashSet<GameObject> mVisibleObjects = new();
 
         public Scene(int spatialHashingCellSize, float minCamZoom, float maxCamZoom, bool moveCamByMouse)
         {
@@ -36,13 +37,17 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
             mSceneManagerLayer = sceneManagerLayer;
         }
 
-        public virtual void Update(GameTime gameTime, InputState inputState, int screenWidth, int screenHeight)
+        public void Update(GameTime gameTime, InputState inputState, int screenWidth, int screenHeight)
         {
             mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera.Position, Camera.Zoom, screenWidth, screenHeight);
             WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, inputState.mMousePosition);
             Camera.Update(gameTime, inputState, inputState.mMousePosition, mViewTransformationMatrix);
             FrustumCuller.Update(screenWidth, screenHeight, mViewTransformationMatrix);
+            UpdateObj(gameTime, inputState);
+            GetObjectsOnScreen();
         }
+
+        public abstract void UpdateObj(GameTime gameTime, InputState inputState);
 
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -51,6 +56,7 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: mViewTransformationMatrix, samplerState: SamplerState.PointClamp);
+            foreach (var obj in mVisibleObjects) obj.Draw(mSceneManagerLayer, this);
             DrawOnWorld();
             mSceneManagerLayer.DebugSystem.DrawOnScene(this);
             spriteBatch.End();
@@ -100,6 +106,22 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
             });
 
             return objectsInRadius;
+        }
+
+        public void GetObjectsOnScreen()
+        {
+            mVisibleObjects.Clear();
+            Rectangle space = FrustumCuller.WorldFrustum.ToRectangle();
+            int cellSize = SpatialHashing.CellSize;
+
+            for (int x = space.X - cellSize; x <= space.Right + cellSize; x += cellSize)
+            {
+                for (int y = space.Y - cellSize; y <= space.Bottom + cellSize; y += cellSize)
+                {
+                    var objs = SpatialHashing.GetObjectsInBucket(x, y);
+                    foreach (var obj in objs) mVisibleObjects.Add(obj);
+                }
+            }
         }
     }
 }

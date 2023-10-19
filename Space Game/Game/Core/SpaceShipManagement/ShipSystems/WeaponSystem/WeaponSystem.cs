@@ -17,7 +17,8 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyste
         private readonly List<Weapon> mWeapons = new();
         private readonly Color mWeaponColor;
 
-        public SpaceShip Target;
+        public SpaceShip SpaceshipTarget;
+        public Vector2? VectorTarget;
 
         private int mShieldDamage;
         private int mHullDamage;
@@ -52,13 +53,13 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyste
             bool hasFired = false;
             foreach (var weapon in mWeapons)
             {
-                switch (Target)
+                switch (SpaceshipTarget)
                 {
                     case null:
-                        weapon.Update(gameTime, inputState, sceneManagerLayer, scene, origin.Rotation, origin.Position,  null);
+                        weapon.Update(gameTime, inputState, sceneManagerLayer, scene, origin.Rotation, origin.Position,  VectorTarget);
                         break;
                     case not null:
-                        weapon.Update(gameTime, inputState, sceneManagerLayer, scene, origin.Rotation, origin.Position, Target.Position);
+                        weapon.Update(gameTime, inputState, sceneManagerLayer, scene, origin.Rotation, origin.Position, SpaceshipTarget.Position);
                         break;
                 }
 

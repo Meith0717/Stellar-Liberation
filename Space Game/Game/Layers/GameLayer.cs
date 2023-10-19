@@ -40,14 +40,19 @@ namespace CelestialOdyssey.Game.Layers
             // SoundManager.Instance.PlaySound(ContentRegistry.bgMusicGame, 1.2f, false, true, true);
 
             // Add Main Scene
-            AddScene(new PlanetSystemScene(PlanetSystems.First()));
+            AddScene(new PlanetSystemScene(PlanetSystems.First(), PlanetSystems.ToList()));
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            // Check if pause is pressed
+            inputState.DoAction(ActionType.ESC, () => mLayerManager.AddLayer(new PauseLayer()));
+
+            // Check if mouse clicks outside window
             mFrustumCuller.Update(mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height, Matrix.Identity);
-            inputState.DoAction(ActionType.Back, () => mLayerManager.AddLayer(new PauseLayer()));
             if (!mFrustumCuller.VectorOnScreenView(inputState.mMousePosition) && (inputState.HasMouseAction(MouseActionType.LeftClick) || inputState.HasMouseAction(MouseActionType.RightClick))) mLayerManager.AddLayer(new PauseLayer());
+
+            // Update Top Scene
             base.Update(gameTime, inputState);
         }
 

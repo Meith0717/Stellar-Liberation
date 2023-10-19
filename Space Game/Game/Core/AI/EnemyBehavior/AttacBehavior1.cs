@@ -27,7 +27,7 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
         {
             spaceShip.WeaponSystem.Fire();
             var target = mTargets.First();
-            spaceShip.WeaponSystem.Target = target;
+            spaceShip.WeaponSystem.SpaceshipTarget = target;
             if (!spaceShip.SublightEngine.IsTargetReached(spaceShip, mPosition)) return;
             mPosition = Utility.Utility.GetRandomVector2(new(target.Position, Utility.Utility.Random.Next(0, spaceShip.SensorArray.ScanRadius)));
             spaceShip.SublightEngine.SetTarget(spaceShip, mPosition);

@@ -66,7 +66,7 @@ namespace CelestialOdyssey.Game.Layers
         {
             mContinueButton.Update(inputState);
             mExitButton.Update(inputState);
-            inputState.DoAction(ActionType.Back, mLayerManager.PopLayer);
+            inputState.DoAction(ActionType.ESC, mLayerManager.PopLayer);
         }
 
         private void Exit()

@@ -1,4 +1,4 @@
-﻿// PlanetSystemScene.cs 
+﻿// MapScene.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
@@ -12,40 +12,41 @@ using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.Layers.Scenes
 {
-    internal class PlanetSystemScene : Scene
+    internal class MapScene : Scene
     {
+
         private List<PlanetSystem> mPlanetSystems;
-        private PlanetSystem mPlanetSystem;
         private ParllaxManager mParlaxManager;
 
-        public PlanetSystemScene(PlanetSystem planetSystem, List<PlanetSystem> planetSystems) : base(50000, 0.001f, 1, false)
+        public MapScene(List<PlanetSystem> planetSystems, Vector2 mapPosition) 
+            : base(100, 0.1f, 1, true)
         {
+            Camera.SetPosition(mapPosition);
             mPlanetSystems = planetSystems;
-
-            mPlanetSystem = planetSystem;
-            mPlanetSystem.Player.ActualPlanetSystem = mPlanetSystem;
-            mPlanetSystem.Player.SpawnInNewPlanetSystem(Vector2.Zero);
-
+            foreach (var system in mPlanetSystems) SpatialHashing.InsertObject(system, (int)system.Position.X, (int)system.Position.Y);
             mParlaxManager = new();
             mParlaxManager.Add(new(ContentRegistry.gameBackgroundParlax1, .1f));
         }
 
         public override void UpdateObj(GameTime gameTime, InputState inputState)
         {
-            inputState.DoAction(ActionType.ToggleMap, OpenMap);
-
+            inputState.DoAction(ActionType.ToggleMap, () => mSceneManagerLayer.PopScene());
             mParlaxManager.Update(Camera.Movement, Camera.Zoom);
 
-            mSceneManagerLayer.DebugSystem.CheckForSpawn(mPlanetSystem);
-            mPlanetSystem.UpdateObjects(gameTime, inputState, mSceneManagerLayer, this);
+            foreach (var item in mPlanetSystems)
+            {
+                item.Update(gameTime, inputState, mSceneManagerLayer, this);
+                if (!item.LeftPressed) continue;
+                mSceneManagerLayer.PopScene();
+                mSceneManagerLayer.PopScene();
+                mSceneManagerLayer.AddScene(new PlanetSystemScene(item, mPlanetSystems)); 
+            }
         }
 
         public override void DrawOnScreen() => mParlaxManager.Draw();
 
         public override void DrawOnWorld() {; }
 
-        public override void OnResolutionChanged() { }
-
-        public void OpenMap() => mSceneManagerLayer.AddScene(new MapScene(mPlanetSystems, mPlanetSystem.Position));
+        public override void OnResolutionChanged() {; }
     }
 }

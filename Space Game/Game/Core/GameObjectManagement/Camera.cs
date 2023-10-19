@@ -13,7 +13,10 @@
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.Utility;
 using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CelestialOdyssey.Game.Core.GameObjectManagement
 {
@@ -54,6 +57,9 @@ namespace CelestialOdyssey.Game.Core.GameObjectManagement
         private bool mMoveAnimation;
         private Vector2 mLastScreenMousePosition;
 
+        private bool mShake;
+        private float mShakeAmount;
+
         public Camera(float minZoom, float maxZoom, bool allowMovingWithMouse)
         {
             Position = Vector2.Zero;
@@ -61,6 +67,12 @@ namespace CelestialOdyssey.Game.Core.GameObjectManagement
             mMinZoom = minZoom;
             mAllowMovingWithMouse = allowMovingWithMouse;
             Zoom = mMinZoom;
+        }
+
+        public void Shake(int amount)
+        {
+            mShake = true;
+            mShakeAmount += amount;
         }
 
         private void MovingAnimation()
@@ -160,6 +172,14 @@ namespace CelestialOdyssey.Game.Core.GameObjectManagement
             ZoomAnimation();
             Movement = Position - mLastPosition;
             mLastPosition = Position;
+
+            if (!mShake) return;
+            Utility.Utility.Random.NextUnitVector(out var vec);
+            Position += vec * mShakeAmount;
+            mShakeAmount *= 0.9f;
+            if (mShakeAmount > 0.1f) return;
+            mShake = false;
+            mShakeAmount = 0;
         }
     }
 }

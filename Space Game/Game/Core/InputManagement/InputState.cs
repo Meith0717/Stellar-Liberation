@@ -18,7 +18,7 @@ namespace CelestialOdyssey.Game.Core.InputManagement
     public enum ActionType
     {
         None,
-        Back,
+        ESC,
         CameraZoomIn,
         CameraZoomOut,
         ToggleFullscreen,

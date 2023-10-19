@@ -20,7 +20,6 @@ using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using rache_der_reti.Core.Animation;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace CelestialOdyssey.Game.Core.SpaceShipManagement
@@ -60,7 +59,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
             ExplosionSheet.Update(gameTime, Position);
             SublightEngine.Update(this);
 
-            if (DefenseSystem.HullLevel <= 0 && !IsDestroyed) Explode();
+            if (DefenseSystem.HullLevel <= 0 && !IsDestroyed) Explode(scene);
 
             HasProjectileHit(scene);
             HyperDrive.Update(gameTime, this);
@@ -78,7 +77,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
         {
             var projectileInRange = scene.GetObjectsInRadius<Projectile>(Position, (int)BoundedBox.Radius);
             if (!projectileInRange.Any()) return;
-            var gotDamage = false;
+            var hits = 0;
             foreach (var projectile in projectileInRange)
             {
                 if (projectile.Origine is Enemy && this is Enemy) continue;
@@ -87,9 +86,10 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
 
                 projectile.HasCollide();
                 DefenseSystem.GetDamage(projectile.ShieldDamage, projectile.HullDamage);
-                gotDamage = true;
+                hits++;
             }
-            if (gotDamage) SoundManager.Instance.PlaySound("torpedoHit", Utility.Utility.Random.Next(5, 8) / 10f);
+            if (hits == 0) return;
+            SoundManager.Instance.PlaySound("torpedoHit", Utility.Utility.Random.Next(5, 8) / 10f);
         }
 
         public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
@@ -106,11 +106,15 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
             SublightEngine.Draw(this, scene);
         }
 
-        public void Explode()
+        public void Explode(Scene scene)
         {
             ExplosionSheet.Play("destroy");
             IsDestroyed = true;
             SublightEngine.SetTarget(this, null);
+
+            var shakeamount = (500000 - Vector2.Distance(scene.Camera.Position, Position)) / 500000;
+            if (shakeamount < 0) shakeamount = 0;
+            scene.Camera.Shake((int)(shakeamount * 100));
 
             for (int i = 0; i < 5; i++) ActualPlanetSystem.ItemManager.PopItem(Direction, Position, new Items.Metall());
 

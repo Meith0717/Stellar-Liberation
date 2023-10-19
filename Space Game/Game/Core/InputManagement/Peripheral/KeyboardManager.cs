@@ -1,4 +1,5 @@
-﻿// KeyboardManager.cs 
+﻿
+// KeyboardManager.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
@@ -31,7 +32,7 @@ namespace CelestialOdyssey.Game.Core.InputManagement.Peripheral
                 { Keys.J, ActionType.None },
                 { Keys.K, ActionType.None },
                 { Keys.L, ActionType.Load },
-                { Keys.M, ActionType.None },
+                { Keys.M, ActionType.ToggleMap },
                 { Keys.N, ActionType.None },
                 { Keys.O, ActionType.None },
                 { Keys.P, ActionType.None },
@@ -46,7 +47,7 @@ namespace CelestialOdyssey.Game.Core.InputManagement.Peripheral
                 { Keys.Y, ActionType.None },
                 { Keys.Z, ActionType.None },
 
-                { Keys.Escape, ActionType.Back },
+                { Keys.Escape, ActionType.ESC },
                 { Keys.F1, ActionType.F1 },
                 { Keys.F2, ActionType.F2 },
                 { Keys.F3, ActionType.F3 },
