@@ -1055,6 +1055,18 @@
 /processorParam:TextureFormat=Color
 /build:textures/pixle.png
 
+#begin textures/placeHolder.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/placeHolder.png
+
 #begin textures/userInterface/Layer/circle.png
 /importer:TextureImporter
 /processor:TextureProcessor

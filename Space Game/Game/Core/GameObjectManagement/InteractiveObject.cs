@@ -45,7 +45,10 @@ namespace CelestialOdyssey.Game.Core.GameObjectManagement
         public bool LeftPressed { get; private set; }
 
         [JsonIgnore]
-        public Action OnPressAction { get; set; }
+        public Action LeftPressAction { get; set; }
+
+        [JsonIgnore]
+        public Action RightPressAction { get; set; }
 
         /// <summary>
         /// Updates the logic of the interactive object, including hover, press and track states.
@@ -62,11 +65,9 @@ namespace CelestialOdyssey.Game.Core.GameObjectManagement
             LeftPressed = IsHover && inputState.HasMouseAction(MouseActionType.LeftClickReleased);
             RightPressed = IsHover && inputState.HasMouseAction(MouseActionType.RightClick);
 
-            if (LeftPressed) LeftPressAction();
-            if (RightPressed) LeftPressAction();
+            if (LeftPressed && LeftPressAction is not null) LeftPressAction();
+            if (RightPressed && RightPressAction is not null) LeftPressAction();
         }
 
-        public abstract void LeftPressAction();
-        public abstract void RightPressAction();
     }
 }
