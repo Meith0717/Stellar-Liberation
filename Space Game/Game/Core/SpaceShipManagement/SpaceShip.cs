@@ -66,7 +66,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
             HyperDrive.Update(gameTime, this);
             DefenseSystem.Update(gameTime);
             SensorArray.Update(gameTime, Position, ActualPlanetSystem, scene);
-            WeaponSystem.Update(gameTime, inputState, this, gameLayer, scene, ActualPlanetSystem.ProjectileManager);
+            if (!IsDestroyed) WeaponSystem.Update(gameTime, inputState, this, gameLayer, scene, ActualPlanetSystem.ProjectileManager);
             mAi.Update(gameTime, SensorArray, this);
 
             if (!IsDestroyed) return;

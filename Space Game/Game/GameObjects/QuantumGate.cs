@@ -12,22 +12,15 @@ using Microsoft.Xna.Framework;
 
 namespace CelestialOdyssey.Game.GameObjects
 {
-    public class QuantumGate : InteractiveObject
+    public class QuantumGate : GameObject
     {
 
-        private Vector2 mPlanetSystemPosition;
-
-        public QuantumGate(Vector2 position, Vector2 planetSystemPosition)
+        public QuantumGate(Vector2 position)
             : base(position, ContentRegistry.placeHolder, 10, 50) 
-        {
-            mPlanetSystemPosition = planetSystemPosition;
-        }
+        { }
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {
-            LeftPressAction = () => { 
-                gameLayer.LoadMap(mPlanetSystemPosition);
-            };
             RemoveFromSpatialHashing(scene);
             base.Update(gameTime, inputState, gameLayer, scene);
             AddToSpatialHashing(scene);
@@ -36,7 +29,7 @@ namespace CelestialOdyssey.Game.GameObjects
         public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
         {
             base.Draw(sceneManagerLayer, scene);
-            TextureManager.Instance.DrawGameObject(this, IsHover);
+            TextureManager.Instance.DrawGameObject(this);
         }
     }
 }

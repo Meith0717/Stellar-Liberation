@@ -15,7 +15,7 @@ namespace CelestialOdyssey.Game.GameObjects
         public class BattleShip : Enemy
         {
             public BattleShip(Vector2 position)
-                : base(position, ContentRegistry.enemyBattleShip, 1, new(10000, 10000), new(0.5f, 0.01f), new(1, 1), new(Color.BlueViolet, 10, 10, 100, 1000), new(100, 100, 1, 1))
+                : base(position, ContentRegistry.enemyBattleShip, 1, new(10000, 10000), new(0.5f, 0.01f), new(1, 1), new(Color.BlueViolet, 10, 10, 100, 1000), new(1000, 1000, 1, 1))
             {
                 WeaponSystem.SetWeapon(new(110, 35));
                 WeaponSystem.SetWeapon(new(110, -35));

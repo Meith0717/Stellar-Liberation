@@ -70,7 +70,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                     //     pirates.Add(pirate);
                     // }
 
-                    var quantumGate = new QuantumGate(ExtendetRandom.NextVectorOnBorder(planetSystem.SystemBounding), planetSystem.Position);
+                    var quantumGate = new QuantumGate(ExtendetRandom.NextVectorOnBorder(planetSystem.SystemBounding));
 
                     planetSystem.SetObjects(star, planets, player, pirates, quantumGate);
                 }
