@@ -12,6 +12,7 @@
 using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.Layers;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
@@ -123,12 +124,12 @@ namespace CelestialOdyssey.Game.Core.GameObjectManagement
         /// <param name="gameTime">The game time information.</param>
         /// <param name="inputState">The input state of the game.</param>
         /// <param name="sceneLayer">The game engine instance.</param>
-        public virtual void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
+        public virtual void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {
             LiveTime32 += gameTime.ElapsedGameTime.TotalMilliseconds;
             Dispose = (LiveTime32 > DisposeTime) || Dispose;
             if (LiveTime32 > (4294967296)) LiveTime32 = 0;
-            sceneManagerLayer.DebugSystem.UpdateObjectCount += 1;
+            gameLayer.DebugSystem.UpdateObjectCount += 1;
             UpdateBoundBox();
         }
 

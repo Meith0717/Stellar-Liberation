@@ -7,6 +7,7 @@ using CelestialOdyssey.Game.Core.GameObjectManagement;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.Utility;
+using CelestialOdyssey.Game.Layers;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
@@ -38,9 +39,9 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             UpdateBoundBox();
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {
-            base.Update(gameTime, inputState, sceneManagerLayer, scene);
+            base.Update(gameTime, inputState, gameLayer, scene);
             RemoveFromSpatialHashing(scene);
             OrbitRadians -= 0.00001f;
             Position = Geometry.GetPointOnCircle(OrbitCenter, OrbitRadius, OrbitRadians);

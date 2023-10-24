@@ -11,6 +11,7 @@
 
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.Layers;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
@@ -45,10 +46,10 @@ namespace CelestialOdyssey.Game.Core.GameObjectManagement
         public bool LeftPressed { get; private set; }
 
         [JsonIgnore]
-        public Action LeftPressAction { get; set; }
+        protected Action LeftPressAction { get; set; }
 
         [JsonIgnore]
-        public Action RightPressAction { get; set; }
+        protected Action RightPressAction { get; set; }
 
         /// <summary>
         /// Updates the logic of the interactive object, including hover, press and track states.
@@ -56,10 +57,10 @@ namespace CelestialOdyssey.Game.Core.GameObjectManagement
         /// </summary>
         /// <param name="gameTime">The game time information.</param>
         /// <param name="inputState">The input state of the game.</param>
-        /// <param name="sceneManagerLayer">The game engine instance.</param>
-        public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
+        /// <param name="gameLayer">The game engine instance.</param>
+        public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {
-            base.Update(gameTime, inputState, sceneManagerLayer, scene);
+            base.Update(gameTime, inputState, gameLayer, scene);
 
             IsHover = BoundedBox.Contains(scene.WorldMousePosition);
             LeftPressed = IsHover && inputState.HasMouseAction(MouseActionType.LeftClickReleased);

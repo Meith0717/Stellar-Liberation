@@ -5,6 +5,7 @@
 using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.Layers;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using System;
@@ -45,7 +46,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyste
 
         public virtual void Fire() => mFire = true;
 
-        public void Update(GameTime gameTime, InputState inputState, SpaceShip origin, SceneManagerLayer sceneManagerLayer, Scene scene, ProjectileManager projectileManager)
+        public void Update(GameTime gameTime, InputState inputState, SpaceShip origin, GameLayer gameLayer, Scene scene, ProjectileManager projectileManager)
         {
             mChargeCoolDown += gameTime.ElapsedGameTime.Milliseconds;
             mFireCoolDown += gameTime.ElapsedGameTime.Milliseconds;
@@ -56,10 +57,10 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyste
                 switch (SpaceshipTarget)
                 {
                     case null:
-                        weapon.Update(gameTime, inputState, sceneManagerLayer, scene, origin.Rotation, origin.Position,  VectorTarget);
+                        weapon.Update(gameTime, inputState, gameLayer, scene, origin.Rotation, origin.Position,  VectorTarget);
                         break;
                     case not null:
-                        weapon.Update(gameTime, inputState, sceneManagerLayer, scene, origin.Rotation, origin.Position, SpaceshipTarget.Position);
+                        weapon.Update(gameTime, inputState, gameLayer, scene, origin.Rotation, origin.Position, SpaceshipTarget.Position);
                         break;
                 }
 

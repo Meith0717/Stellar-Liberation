@@ -5,6 +5,7 @@
 using CelestialOdyssey.Game.Core.GameObjectManagement;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.Layers;
 using Microsoft.Xna.Framework;
 
 namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem
@@ -16,9 +17,9 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyste
             AddObj(projectile);
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {
-            base.Update(gameTime, inputState, sceneManagerLayer, scene);
+            base.Update(gameTime, inputState, gameLayer, scene);
         }
     }
 }

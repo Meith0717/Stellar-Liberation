@@ -9,10 +9,10 @@ using CelestialOdyssey.Game.Core.ItemManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.SpaceShipManagement;
 using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
+using CelestialOdyssey.Game.Layers;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
-using MonoGame.Extended.Screens;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -34,11 +34,18 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             TextureColor = color;
             Danger = danger;
             SystemBounding = new(sectorPosition, boundaryRadius);
+            LeftPressAction = () => { };
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {
-            base.Update(gameTime, inputState, sceneManagerLayer, scene);
+            LeftPressAction = () => {
+                gameLayer.PopScene();
+                gameLayer.PopScene();
+                gameLayer.LoadPlanetSystem(this);
+            };
+
+            base.Update(gameTime, inputState, gameLayer, scene);
             mCrosshairColor = IsHover ? Color.MonoGameOrange : GetColor();
         }
 
@@ -60,9 +67,6 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             _ => throw new NotImplementedException()
         };
 
-        public override void LeftPressAction() {; }
-
-        public override void RightPressAction() {; }
         //--------------------------------------------------------------------------------------//
 
         //--planetsystem scene associated-------------------------------------------------------//
@@ -85,14 +89,14 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         //------------------------//
 
 
-        public void UpdateObjects(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
+        public void UpdateObjects(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {
-            Star.Update(gameTime, inputState, sceneManagerLayer, scene);
-            Player.Update(gameTime, inputState, sceneManagerLayer, scene);
-            foreach (var item in Planets) item.Update(gameTime, inputState, sceneManagerLayer, scene);
-            SpaceShipManager.Update(gameTime, inputState, sceneManagerLayer, scene);
-            ItemManager.Update(gameTime, inputState, sceneManagerLayer, scene);
-            ProjectileManager.Update(gameTime, inputState, sceneManagerLayer, scene);
+            Star.Update(gameTime, inputState, gameLayer, scene);
+            Player.Update(gameTime, inputState, gameLayer, scene);
+            foreach (var item in Planets) item.Update(gameTime, inputState, gameLayer, scene);
+            SpaceShipManager.Update(gameTime, inputState, gameLayer, scene);
+            ItemManager.Update(gameTime, inputState, gameLayer, scene);
+            ProjectileManager.Update(gameTime, inputState, gameLayer, scene);
         }
 
         public void DrawObjects(SceneManagerLayer sceneManagerLayer, Scene scene)

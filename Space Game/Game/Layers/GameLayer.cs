@@ -40,7 +40,7 @@ namespace CelestialOdyssey.Game.Layers
             // SoundManager.Instance.PlaySound(ContentRegistry.bgMusicGame, 1.2f, false, true, true);
 
             // Add Main Scene
-            AddScene(new PlanetSystemScene(PlanetSystems.First(), PlanetSystems.ToList()));
+            LoadPlanetSystem(PlanetSystems.First());
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
@@ -59,5 +59,8 @@ namespace CelestialOdyssey.Game.Layers
         public override void Destroy() { }
 
         public override void OnResolutionChanged() { }
+
+        public void LoadPlanetSystem(PlanetSystem planetSystem) => AddScene(new PlanetSystemScene(this, planetSystem));
+        public void LoadMap(Vector2 cameraPosition) => AddScene(new MapScene(this, PlanetSystems.ToList(), cameraPosition));
     }
 }

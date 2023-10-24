@@ -6,6 +6,7 @@ using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.ItemManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.SpaceShipManagement;
+using CelestialOdyssey.Game.Layers;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using System;
@@ -36,7 +37,7 @@ namespace CelestialOdyssey.Game.GameObjects
             SublightEngine.SetTarget(this, null);
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {
 
             WeaponSystem.VectorTarget = scene.WorldMousePosition;
@@ -44,7 +45,7 @@ namespace CelestialOdyssey.Game.GameObjects
             inputState.DoMouseAction(MouseActionType.LeftClick, () => SublightEngine.SetTarget(this, scene.WorldMousePosition));
             mInventory.Update(this, scene);
 
-            base.Update(gameTime, inputState, sceneManagerLayer, scene);
+            base.Update(gameTime, inputState, gameLayer, scene);
             scene.Camera.MoveToTarget(Position);
         }
 

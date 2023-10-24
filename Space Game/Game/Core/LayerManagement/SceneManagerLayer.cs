@@ -21,7 +21,6 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
 
         public void AddScene(Scene scene)
         {
-            scene.Initialize(this);
             Scenes.AddLast(scene);
         }
 
@@ -40,7 +39,7 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
         {
             DebugSystem.UpdateFrameCounting();
 
-            if (Scenes.Any()) Scenes.Last().Draw(spriteBatch);
+            if (Scenes.Any()) Scenes.Last().Draw(this, spriteBatch);
 
             spriteBatch.Begin();
             DebugSystem.DrawOnScreen();

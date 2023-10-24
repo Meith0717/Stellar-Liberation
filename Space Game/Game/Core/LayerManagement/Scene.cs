@@ -17,7 +17,6 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
 {
     public abstract class Scene
     {
-        protected SceneManagerLayer mSceneManagerLayer { get; private set; }
         public Vector2 WorldMousePosition { get; private set; }
         public readonly SpatialHashing<GameObject> SpatialHashing;
         public readonly FrustumCuller FrustumCuller;
@@ -32,11 +31,6 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
             Camera = new(minCamZoom, maxCamZoom, moveCamByMouse);
         }
 
-        public void Initialize(SceneManagerLayer sceneManagerLayer)
-        {
-            mSceneManagerLayer = sceneManagerLayer;
-        }
-
         public void Update(GameTime gameTime, InputState inputState, int screenWidth, int screenHeight)
         {
             mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera.Position, Camera.Zoom, screenWidth, screenHeight);
@@ -49,16 +43,16 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
 
         public abstract void UpdateObj(GameTime gameTime, InputState inputState);
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
             DrawOnScreen();
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: mViewTransformationMatrix, samplerState: SamplerState.PointClamp);
-            foreach (var obj in mVisibleObjects) obj.Draw(mSceneManagerLayer, this);
+            foreach (var obj in mVisibleObjects) obj.Draw(sceneManagerLayer, this);
             DrawOnWorld();
-            mSceneManagerLayer.DebugSystem.DrawOnScene(this);
+            sceneManagerLayer.DebugSystem.DrawOnScene(this);
             spriteBatch.End();
         }
 

@@ -17,10 +17,12 @@ namespace CelestialOdyssey.Game.Layers.Scenes
 
         private List<PlanetSystem> mPlanetSystems;
         private ParllaxManager mParlaxManager;
+        private GameLayer mGameLayer;
 
-        public MapScene(List<PlanetSystem> planetSystems, Vector2 mapPosition) 
+        public MapScene(GameLayer gameLayer, List<PlanetSystem> planetSystems, Vector2 mapPosition) 
             : base(100, 0.1f, 1, true)
         {
+            mGameLayer = gameLayer;
             Camera.SetPosition(mapPosition);
             mPlanetSystems = planetSystems;
             foreach (var system in mPlanetSystems) SpatialHashing.InsertObject(system, (int)system.Position.X, (int)system.Position.Y);
@@ -30,17 +32,10 @@ namespace CelestialOdyssey.Game.Layers.Scenes
 
         public override void UpdateObj(GameTime gameTime, InputState inputState)
         {
-            inputState.DoAction(ActionType.ToggleMap, () => mSceneManagerLayer.PopScene());
+            inputState.DoAction(ActionType.ToggleMap, () => mGameLayer.PopScene());
             mParlaxManager.Update(Camera.Movement, Camera.Zoom);
 
-            foreach (var item in mPlanetSystems)
-            {
-                item.Update(gameTime, inputState, mSceneManagerLayer, this);
-                if (!item.LeftPressed) continue;
-                mSceneManagerLayer.PopScene();
-                mSceneManagerLayer.PopScene();
-                mSceneManagerLayer.AddScene(new PlanetSystemScene(item, mPlanetSystems)); 
-            }
+            foreach (var item in mPlanetSystems) item.Update(gameTime, inputState, mGameLayer, this);
         }
 
         public override void DrawOnScreen() => mParlaxManager.Draw();

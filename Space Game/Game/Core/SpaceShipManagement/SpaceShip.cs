@@ -15,6 +15,7 @@ using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
 using CelestialOdyssey.Game.Core.Utility;
 using CelestialOdyssey.Game.GameObjects;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
+using CelestialOdyssey.Game.Layers;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
@@ -51,10 +52,10 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
             ExplosionSheet.Animate("destroy", new(60, Animation.GetRowList(1, 64), false));
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {
             Direction = Geometry.CalculateDirectionVector(Rotation);
-            base.Update(gameTime, inputState, sceneManagerLayer, scene);
+            base.Update(gameTime, inputState, gameLayer, scene);
 
             ExplosionSheet.Update(gameTime, Position);
             SublightEngine.Update(this);
@@ -65,7 +66,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
             HyperDrive.Update(gameTime, this);
             DefenseSystem.Update(gameTime);
             SensorArray.Update(gameTime, Position, ActualPlanetSystem, scene);
-            WeaponSystem.Update(gameTime, inputState, this, sceneManagerLayer, scene, ActualPlanetSystem.ProjectileManager);
+            WeaponSystem.Update(gameTime, inputState, this, gameLayer, scene, ActualPlanetSystem.ProjectileManager);
             mAi.Update(gameTime, SensorArray, this);
 
             if (!IsDestroyed) return;

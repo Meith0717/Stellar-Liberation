@@ -8,20 +8,18 @@ using CelestialOdyssey.Game.Core.Parallax;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.Layers.Scenes
 {
     internal class PlanetSystemScene : Scene
     {
-        private List<PlanetSystem> mPlanetSystems;
         private PlanetSystem mPlanetSystem;
         private ParllaxManager mParlaxManager;
+        private GameLayer mGameLayer;
 
-        public PlanetSystemScene(PlanetSystem planetSystem, List<PlanetSystem> planetSystems) : base(50000, 0.001f, 1, false)
+        public PlanetSystemScene(GameLayer gameLayer, PlanetSystem planetSystem) : base(50000, 0.001f, 1, false)
         {
-            mPlanetSystems = planetSystems;
-
+            mGameLayer = gameLayer;
             mPlanetSystem = planetSystem;
             mPlanetSystem.Player.ActualPlanetSystem = mPlanetSystem;
             mPlanetSystem.Player.SpawnInNewPlanetSystem(Vector2.Zero);
@@ -32,12 +30,12 @@ namespace CelestialOdyssey.Game.Layers.Scenes
 
         public override void UpdateObj(GameTime gameTime, InputState inputState)
         {
-            inputState.DoAction(ActionType.ToggleMap, OpenMap);
+            inputState.DoAction(ActionType.ToggleMap, () => mGameLayer.LoadMap(mPlanetSystem.Position));
 
             mParlaxManager.Update(Camera.Movement, Camera.Zoom);
 
-            mSceneManagerLayer.DebugSystem.CheckForSpawn(mPlanetSystem);
-            mPlanetSystem.UpdateObjects(gameTime, inputState, mSceneManagerLayer, this);
+            mGameLayer.DebugSystem.CheckForSpawn(mPlanetSystem);
+            mPlanetSystem.UpdateObjects(gameTime, inputState, mGameLayer, this);
         }
 
         public override void DrawOnScreen() => mParlaxManager.Draw();
@@ -45,7 +43,5 @@ namespace CelestialOdyssey.Game.Layers.Scenes
         public override void DrawOnWorld() {; }
 
         public override void OnResolutionChanged() { }
-
-        public void OpenMap() => mSceneManagerLayer.AddScene(new MapScene(mPlanetSystems, mPlanetSystem.Position));
     }
 }

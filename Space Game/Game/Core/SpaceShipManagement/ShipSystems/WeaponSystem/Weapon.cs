@@ -8,6 +8,7 @@ using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionSystem;
 using CelestialOdyssey.Game.Core.Utility;
+using CelestialOdyssey.Game.Layers;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using System;
@@ -32,7 +33,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyste
 
         public Projectile Fire(SpaceShip origin) => new(Position, Rotation, mWeaponColor, mShieldDamage, mHullDamage, origin);
 
-        public void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene, float shipRotation, Vector2 shipPosition, Vector2? target)
+        public void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene, float shipRotation, Vector2 shipPosition, Vector2? target)
         {
             Position = Transformations.Rotation(shipPosition, mRelativePosition, shipRotation);
             Rotation += target switch
@@ -40,7 +41,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyste
                 null => MovementController.GetRotationUpdate(Rotation, shipRotation, 1),
                 not null => MovementController.GetRotationUpdate(Rotation, Position, (Vector2)target, 0.5f),
             };
-            base.Update(gameTime, inputState, sceneManagerLayer, scene);
+            base.Update(gameTime, inputState, gameLayer, scene);
         }
 
         public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)

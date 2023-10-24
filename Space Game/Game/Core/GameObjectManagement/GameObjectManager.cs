@@ -4,6 +4,7 @@
 
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.Layers;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
@@ -25,14 +26,14 @@ namespace CelestialOdyssey.Game.Core.GameObjectManagement
 
         protected virtual bool RemobeObj(GameObject onj) => mObjects.Remove(onj);
 
-        public virtual void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
+        public virtual void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {
             var lst = new List<GameObject>();
 
             // Update all obj in Objects
             foreach (var obj in mObjects)
             {
-                obj.Update(gameTime, inputState, sceneManagerLayer, scene);
+                obj.Update(gameTime, inputState, gameLayer, scene);
 
                 // Check if obj is Disposed
                 if (obj.Dispose) lst.Add(obj);

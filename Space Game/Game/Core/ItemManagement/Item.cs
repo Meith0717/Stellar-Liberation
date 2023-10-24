@@ -8,6 +8,7 @@ using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionSystem;
 using CelestialOdyssey.Game.Core.Utility;
+using CelestialOdyssey.Game.Layers;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
@@ -22,9 +23,9 @@ namespace CelestialOdyssey.Game.Core.ItemManagement
         protected Item(string textureId, float textureScale, bool collectable)
             : base(Vector2.Zero, textureId, textureScale, 30) { Collectable = collectable; }
 
-        public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {
-            base.Update(gameTime, inputState, sceneManagerLayer, scene);
+            base.Update(gameTime, inputState, gameLayer, scene);
             Velocity = MovementController.GetVelocity(Velocity, - Utility.Utility.Random.Next(5, 10) / 1000f);
         }
 

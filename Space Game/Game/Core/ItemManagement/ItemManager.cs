@@ -5,6 +5,7 @@
 using CelestialOdyssey.Game.Core.GameObjectManagement;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.Layers;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -19,9 +20,9 @@ namespace CelestialOdyssey.Game.Core.ItemManagement
             AddObj(item);
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, SceneManagerLayer sceneManagerLayer, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {
-            base.Update(gameTime, inputState, sceneManagerLayer, scene);
+            base.Update(gameTime, inputState, gameLayer, scene);
         }
 
         public void RemoveItem(Scene scene, Item item)
