@@ -6,7 +6,7 @@ using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.GameObjectManagement;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
-using CelestialOdyssey.Game.Core.Utility;
+using CelestialOdyssey.Game.Core.Utilitys;
 using CelestialOdyssey.Game.Layers;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
@@ -32,7 +32,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         {
             OrbitCenter = orbitCenter;
             OrbitRadius = orbitRadius;
-            OrbitRadians = Utility.Random.NextSingle() * (MathF.PI * 2);
+            OrbitRadians = ExtendetRandom.Random.NextSingle() * (MathF.PI * 2);
 
             Position = Geometry.GetPointOnCircle(OrbitCenter, OrbitRadius, OrbitRadians);
             mShadowRotation = Geometry.AngleBetweenVectors(Position, OrbitCenter) + MathF.PI;

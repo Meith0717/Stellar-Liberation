@@ -2,7 +2,7 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using CelestialOdyssey.Game.Core.Utility;
+using CelestialOdyssey.Game.Core.Utilitys;
 using Microsoft.Xna.Framework;
 
 namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionSystem

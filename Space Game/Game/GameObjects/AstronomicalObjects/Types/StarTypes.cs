@@ -2,7 +2,7 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using CelestialOdyssey.Game.Core.Utility;
+using CelestialOdyssey.Game.Core.Utilitys;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using System;
@@ -30,7 +30,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types
                 .Where(type => typeof(Star).IsAssignableFrom(type) && type != typeof(Star))
                 .ToList();
 
-            var selectedStarType = Utility.GetRandomElement(starTypes);
+            var selectedStarType = ExtendetRandom.GetRandomElement(starTypes);
             ConstructorInfo constructor = selectedStarType.GetConstructor(new Type[] { typeof(Vector2) });
 
             if (constructor != null)

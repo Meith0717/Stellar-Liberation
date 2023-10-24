@@ -12,7 +12,7 @@
 using Microsoft.Xna.Framework;
 using System;
 
-namespace CelestialOdyssey.Game.Core.Utility
+namespace CelestialOdyssey.Game.Core.Utilitys
 {
     /// <summary>
     /// Provides methods for transforming positions between screen space and world space using a view transformation matrix.

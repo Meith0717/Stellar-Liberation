@@ -12,7 +12,7 @@ using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems;
 using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionSystem;
 using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
-using CelestialOdyssey.Game.Core.Utility;
+using CelestialOdyssey.Game.Core.Utilitys;
 using CelestialOdyssey.Game.GameObjects;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.Layers;
@@ -90,7 +90,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
                 hits++;
             }
             if (hits == 0) return;
-            SoundManager.Instance.PlaySound("torpedoHit", Utility.Utility.Random.Next(5, 8) / 10f);
+            SoundManager.Instance.PlaySound("torpedoHit", ExtendetRandom.Random.Next(5, 8) / 10f);
         }
 
         public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)

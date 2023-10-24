@@ -4,7 +4,7 @@
 
 using CelestialOdyssey.Game.Core.SpaceShipManagement;
 using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems;
-using CelestialOdyssey.Game.GameObjects;
+using CelestialOdyssey.Game.Core.Utilitys;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +29,7 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
             var target = mTargets.First();
             spaceShip.WeaponSystem.SpaceshipTarget = target;
             if (!spaceShip.SublightEngine.IsTargetReached(spaceShip, mPosition)) return;
-            mPosition = Utility.Utility.GetRandomVector2(new(target.Position, Utility.Utility.Random.Next(0, spaceShip.SensorArray.ScanRadius)));
+            mPosition = ExtendetRandom.NextVectorInCircle(new(target.Position, ExtendetRandom.Random.Next(0, spaceShip.SensorArray.ScanRadius)));
             spaceShip.SublightEngine.SetTarget(spaceShip, mPosition);
         }
 

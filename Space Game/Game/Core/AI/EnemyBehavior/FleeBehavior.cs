@@ -4,6 +4,7 @@
 
 using CelestialOdyssey.Game.Core.SpaceShipManagement;
 using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems;
+using CelestialOdyssey.Game.Core.Utilitys;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 
@@ -17,7 +18,7 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
 
         public FleeBehavior(int fleeDistance)
         {
-            mMinHullLevel = Utility.Utility.Random.NextDouble() * 0.62;
+            mMinHullLevel = ExtendetRandom.Random.NextDouble() * 0.62;
             mFleeDistance = fleeDistance;
         }
 
@@ -27,7 +28,7 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
         public override void Execute(SensorArray environment, SpaceShip spaceShip)
         {
             if (mFleeTarget is not null) return;
-            Utility.Utility.Random.NextUnitVector(out var vector);
+            ExtendetRandom.Random.NextUnitVector(out var vector);
             mFleeTarget = vector * mFleeDistance * 2;
             spaceShip.SublightEngine.SetTarget(spaceShip, mFleeTarget);
         }

@@ -20,7 +20,7 @@ namespace CelestialOdyssey.Game.Layers.Scenes
         private GameLayer mGameLayer;
 
         public MapScene(GameLayer gameLayer, List<PlanetSystem> planetSystems, Vector2 mapPosition) 
-            : base(100, 0.1f, 1, true)
+            : base(100, 0.1f, 1, false)
         {
             mGameLayer = gameLayer;
             Camera.SetPosition(mapPosition);

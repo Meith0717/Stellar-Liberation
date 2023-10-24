@@ -71,6 +71,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
 
         //--planetsystem scene associated-------------------------------------------------------//
         [JsonIgnore] public Player Player { get; private set; }
+        [JsonProperty] public QuantumGate QuantumGate { get; private set; }
         [JsonProperty] public Star Star { get; private set; }
         [JsonProperty] public List<Planet> Planets { get; private set; }
 
@@ -79,8 +80,9 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         [JsonIgnore] public readonly ItemManager ItemManager = new();
 
         //--generation associated--//
-        public void SetObjects(Star star, List<Planet> planets, Player player, List<SpaceShip> spaceShips)
+        public void SetObjects(Star star, List<Planet> planets, Player player, List<SpaceShip> spaceShips, QuantumGate quantumGate)
         {
+            QuantumGate = quantumGate;
             Planets = planets;  
             Star = star;
             Player = player;
@@ -91,6 +93,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
 
         public void UpdateObjects(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {
+            QuantumGate.Update(gameTime, inputState, gameLayer, scene);
             Star.Update(gameTime, inputState, gameLayer, scene);
             Player.Update(gameTime, inputState, gameLayer, scene);
             foreach (var item in Planets) item.Update(gameTime, inputState, gameLayer, scene);
@@ -99,20 +102,6 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             ProjectileManager.Update(gameTime, inputState, gameLayer, scene);
         }
 
-        public void DrawObjects(SceneManagerLayer sceneManagerLayer, Scene scene)
-        {
-            foreach (var item in Planets)
-            {
-                TextureManager.Instance.DrawAdaptiveCircle(Star.Position, item.OrbitRadius, new(10, 10, 10, 10), 4, item.TextureDepth - 1, scene.Camera.Zoom);
-            }
-            Star.Draw(sceneManagerLayer, scene);
-            Player.Draw(sceneManagerLayer, scene);
-            foreach (var item in Planets) item.Draw(sceneManagerLayer, scene);
-
-            SpaceShipManager.Draw(sceneManagerLayer, scene);
-            ItemManager.Draw(sceneManagerLayer, scene);
-            ProjectileManager.Draw(sceneManagerLayer, scene);
-        }
         //--------------------------------------------------------------------------------------//
     }
 }

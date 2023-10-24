@@ -5,6 +5,7 @@
 using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.SpaceShipManagement;
+using CelestialOdyssey.Game.Core.Utilitys;
 using CelestialOdyssey.Game.GameObjects;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types;
@@ -50,7 +51,7 @@ namespace CelestialOdyssey.Game.Core.MapSystem
 
                     for (int i = 1; i <= orbitsAmount; i++)
                     {
-                        orbitRadius += Utility.Utility.Random.Next(25000, 40000);
+                        orbitRadius += ExtendetRandom.Random.Next(25000, 40000);
                         Planet planet = GetPlanet(star.Position, orbitRadius, i);
                         planets.Add(planet);
                     }
@@ -69,7 +70,9 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                     //     pirates.Add(pirate);
                     // }
 
-                    planetSystem.SetObjects(star, planets, player, pirates);
+                    var quantumGate = new QuantumGate(ExtendetRandom.NextVectorOnBorder(planetSystem.SystemBounding), planetSystem.Position);
+
+                    planetSystem.SetObjects(star, planets, player, pirates, quantumGate);
                 }
             }
         }
@@ -77,9 +80,9 @@ namespace CelestialOdyssey.Game.Core.MapSystem
         private int GetPirateAmount(Danger danger) => danger switch
         {
             Danger.None => 1,
-            Danger.Moderate => Utility.Utility.Random.Next(0, 10),
-            Danger.Medium => Utility.Utility.Random.Next(10, 20),
-            Danger.High => Utility.Utility.Random.Next(20, 30),
+            Danger.Moderate => ExtendetRandom.Random.Next(0, 10),
+            Danger.Medium => ExtendetRandom.Random.Next(10, 20),
+            Danger.High => ExtendetRandom.Random.Next(20, 30),
             _ => throw new NotImplementedException()
         };
 
@@ -104,22 +107,22 @@ namespace CelestialOdyssey.Game.Core.MapSystem
         {
             var sectorBegin = (new Vector2(x, y) * scaling) + (new Vector2(scaling, scaling) * 0.2f);
             var sectorEnd = sectorBegin + new Vector2(scaling, scaling) * 0.6f;
-            return Utility.Utility.GetRandomVector2(sectorBegin, sectorEnd);
+            return ExtendetRandom.GetRandomVector2(sectorBegin, sectorEnd);
         }
 
         private static Planet GetPlanet(Vector2 orbitCenter, int oribitRadius, int orbitNumber)
         {
             return orbitNumber switch
             {
-                1 => Utility.Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Warm(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
-                2 => Utility.Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Warm(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
-                3 => Utility.Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Tessatial(orbitCenter, oribitRadius), new PlanetTypes.Dry(orbitCenter, oribitRadius) }),
-                4 => Utility.Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Dry(orbitCenter, oribitRadius), new PlanetTypes.Tessatial(orbitCenter, oribitRadius) }),
-                5 => Utility.Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Tessatial(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
-                6 => Utility.Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Stone(orbitCenter, oribitRadius), new PlanetTypes.Gas(orbitCenter, oribitRadius) }),
+                1 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Warm(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
+                2 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Warm(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
+                3 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Tessatial(orbitCenter, oribitRadius), new PlanetTypes.Dry(orbitCenter, oribitRadius) }),
+                4 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Dry(orbitCenter, oribitRadius), new PlanetTypes.Tessatial(orbitCenter, oribitRadius) }),
+                5 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Tessatial(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
+                6 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Stone(orbitCenter, oribitRadius), new PlanetTypes.Gas(orbitCenter, oribitRadius) }),
                 7 => new PlanetTypes.Gas(orbitCenter, oribitRadius),
                 8 => new PlanetTypes.Gas(orbitCenter, oribitRadius),
-                9 => Utility.Utility.GetRandomElement<Planet>(new() { new PlanetTypes.Cold(orbitCenter, oribitRadius), new PlanetTypes.Gas(orbitCenter, oribitRadius) }),
+                9 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Cold(orbitCenter, oribitRadius), new PlanetTypes.Gas(orbitCenter, oribitRadius) }),
                 10 => new PlanetTypes.Cold(orbitCenter, oribitRadius),
                 _ => null
             };

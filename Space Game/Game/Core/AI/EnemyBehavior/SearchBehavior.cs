@@ -4,7 +4,7 @@
 
 using CelestialOdyssey.Game.Core.SpaceShipManagement;
 using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems;
-using CelestialOdyssey.Game.Core.Utility;
+using CelestialOdyssey.Game.Core.Utilitys;
 using CelestialOdyssey.Game.GameObjects;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using Microsoft.Xna.Framework;
@@ -27,14 +27,14 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
             switch (mPatrolTarget)
             {
                 case null:
-                    if (Utility.Utility.Random.NextDouble() > 1) break;
+                    if (ExtendetRandom.Random.NextDouble() > 1) break;
 
                     // Get Planets in Radius
                     var patrolTargets = environment.AstronomicalObjects.OfType<Planet>().ToList();
                     if (!patrolTargets.Any()) break;
 
                     // Get Random Target
-                    var randomPlanet = Utility.Utility.GetRandomElement(patrolTargets);
+                    var randomPlanet = ExtendetRandom.GetRandomElement(patrolTargets);
                     var angleBetweenTargetAndShip = Geometry.AngleBetweenVectors(randomPlanet.Position, spaceShip.Position);
                     mPatrolTarget = Geometry.GetPointOnCircle(randomPlanet.BoundedBox, angleBetweenTargetAndShip);
 

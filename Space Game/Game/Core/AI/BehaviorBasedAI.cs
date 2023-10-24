@@ -4,6 +4,7 @@
 
 using CelestialOdyssey.Game.Core.SpaceShipManagement;
 using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems;
+using CelestialOdyssey.Game.Core.Utilitys;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
@@ -19,7 +20,7 @@ namespace CelestialOdyssey.Game.Core.AI
         public BehaviorBasedAI(HashSet<Behavior> behaviors)
         {
             mBehaviors = behaviors;
-            mCoolDown = Utility.Utility.Random.Next(1000);
+            mCoolDown = ExtendetRandom.Random.Next(1000);
         }
 
         public void AddBehavior(Behavior behavior)

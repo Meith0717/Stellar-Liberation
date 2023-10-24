@@ -8,7 +8,7 @@ using CelestialOdyssey.Game.Core.GameObjectManagement;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
-using CelestialOdyssey.Game.Core.Utility;
+using CelestialOdyssey.Game.Core.Utilitys;
 using CelestialOdyssey.Game.Layers;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
@@ -19,10 +19,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
     public class Asteroid : GameObject
     {
         public Asteroid(Vector2 position) 
-            : base(position, ContentRegistry.asteroid1, 0.1f, 50)
-        {
-
-        }
+            : base(position, ContentRegistry.asteroid1, 0.1f, 50) {; }
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {
@@ -42,7 +39,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
                 projectile.HasCollide();
                 gotHit = true;
             }
-            if (gotHit) SoundManager.Instance.PlaySound("torpedoHit", Utility.Random.Next(5, 8) / 10f);
+            if (gotHit) SoundManager.Instance.PlaySound("torpedoHit", ExtendetRandom.Random.Next(5, 8) / 10f);
         }
 
         public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)

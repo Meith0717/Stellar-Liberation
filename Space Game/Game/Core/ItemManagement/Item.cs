@@ -7,7 +7,7 @@ using CelestialOdyssey.Game.Core.GameObjectManagement;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionSystem;
-using CelestialOdyssey.Game.Core.Utility;
+using CelestialOdyssey.Game.Core.Utilitys;
 using CelestialOdyssey.Game.Layers;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
@@ -26,22 +26,22 @@ namespace CelestialOdyssey.Game.Core.ItemManagement
         public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {
             base.Update(gameTime, inputState, gameLayer, scene);
-            Velocity = MovementController.GetVelocity(Velocity, - Utility.Utility.Random.Next(5, 10) / 1000f);
+            Velocity = MovementController.GetVelocity(Velocity, - ExtendetRandom.Random.Next(5, 10) / 1000f);
         }
 
         public void Pull(Vector2 position)
         {
-            var angleToPosition = Utility.Geometry.AngleBetweenVectors(Position, position);
-            Direction = Utility.Geometry.CalculateDirectionVector(angleToPosition);
+            var angleToPosition = Geometry.AngleBetweenVectors(Position, position);
+            Direction = Geometry.CalculateDirectionVector(angleToPosition);
             Velocity = MovementController.GetVelocity(Velocity, 0.015f);
         }
 
         public void Throw(Vector2 momentum, Vector2 position)
         {
             Position = position;
-            Utility.Utility.Random.NextUnitVector(out var direction);
+            ExtendetRandom.Random.NextUnitVector(out var direction);
             Direction = momentum + direction;
-            Velocity = Utility.Utility.Random.Next(5, 15) / 10f;
+            Velocity = ExtendetRandom.Random.Next(5, 15) / 10f;
         }
 
         public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)

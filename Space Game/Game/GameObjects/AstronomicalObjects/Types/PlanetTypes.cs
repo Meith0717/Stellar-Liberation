@@ -2,7 +2,7 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using CelestialOdyssey.Game.Core.Utility;
+using CelestialOdyssey.Game.Core.Utilitys;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -11,12 +11,12 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types
 {
     internal static class PlanetTypes
     {
-        private static float ColdScale { get { return 5 * Utility.Random.Next(2, 3); } }
-        private static float DryScale { get { return 5 * Utility.Random.Next(3, 4); } }
-        private static float GasScale { get { return 5 * Utility.Random.Next(5, 7); } }
-        private static float StoneScale { get { return 5 * Utility.Random.Next(2, 3); } }
-        private static float TerrScale { get { return 5 * Utility.Random.Next(3, 4); } }
-        private static float WarmScale { get { return 5 * Utility.Random.Next(3, 4); } }
+        private static float ColdScale { get { return 5 * ExtendetRandom.Random.Next(2, 3); } }
+        private static float DryScale { get { return 5 * ExtendetRandom.Random.Next(3, 4); } }
+        private static float GasScale { get { return 5 * ExtendetRandom.Random.Next(5, 7); } }
+        private static float StoneScale { get { return 5 * ExtendetRandom.Random.Next(2, 3); } }
+        private static float TerrScale { get { return 5 * ExtendetRandom.Random.Next(3, 4); } }
+        private static float WarmScale { get { return 5 * ExtendetRandom.Random.Next(3, 4); } }
 
         private static List<Registry> ColdTextures = new() { ContentRegistry.cold1, ContentRegistry.cold2, ContentRegistry.cold3, ContentRegistry.cold4 };
         private static List<Registry> DryTextures = new() { ContentRegistry.dry1, ContentRegistry.dry2, ContentRegistry.dry3, ContentRegistry.dry4, ContentRegistry.dry5, ContentRegistry.dry6 };
@@ -30,7 +30,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types
         {
             private Planet mPlanet;
 
-            public Cold(Vector2 orbitCenter, int orbitRadius) { mPlanet = new(orbitCenter, orbitRadius, Utility.GetRandomElement(ColdTextures), ColdScale); }
+            public Cold(Vector2 orbitCenter, int orbitRadius) { mPlanet = new(orbitCenter, orbitRadius, ExtendetRandom.GetRandomElement(ColdTextures), ColdScale); }
 
             public static implicit operator Planet(Cold c) { return c.mPlanet; }
         }
@@ -39,7 +39,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types
         {
             private Planet mPlanet;
 
-            public Dry(Vector2 orbitCenter, int orbitRadius) { mPlanet = new(orbitCenter, orbitRadius, Utility.GetRandomElement(DryTextures), DryScale); }
+            public Dry(Vector2 orbitCenter, int orbitRadius) { mPlanet = new(orbitCenter, orbitRadius, ExtendetRandom.GetRandomElement(DryTextures), DryScale); }
 
             public static implicit operator Planet(Dry c) { return c.mPlanet; }
         }
@@ -48,7 +48,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types
         {
             private Planet mPlanet;
 
-            public Gas(Vector2 orbitCenter, int orbitRadius) { mPlanet = new(orbitCenter, orbitRadius, Utility.GetRandomElement(GasTextures), GasScale); }
+            public Gas(Vector2 orbitCenter, int orbitRadius) { mPlanet = new(orbitCenter, orbitRadius, ExtendetRandom.GetRandomElement(GasTextures), GasScale); }
 
             public static implicit operator Planet(Gas c) { return c.mPlanet; }
         }
@@ -57,7 +57,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types
         {
             private Planet mPlanet;
 
-            public Stone(Vector2 orbitCenter, int orbitRadius) { mPlanet = new(orbitCenter, orbitRadius, Utility.GetRandomElement(StoneTextures), StoneScale); }
+            public Stone(Vector2 orbitCenter, int orbitRadius) { mPlanet = new(orbitCenter, orbitRadius, ExtendetRandom.GetRandomElement(StoneTextures), StoneScale); }
 
             public static implicit operator Planet(Stone c) { return c.mPlanet; }
         }
@@ -66,7 +66,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types
         {
             private Planet mPlanet;
 
-            public Tessatial(Vector2 orbitCenter, int orbitRadius) { mPlanet = new(orbitCenter, orbitRadius, Utility.GetRandomElement(TerrTextures), TerrScale); }
+            public Tessatial(Vector2 orbitCenter, int orbitRadius) { mPlanet = new(orbitCenter, orbitRadius, ExtendetRandom.GetRandomElement(TerrTextures), TerrScale); }
 
             public static implicit operator Planet(Tessatial c) { return c.mPlanet; }
         }
@@ -75,7 +75,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects.Types
         {
             private Planet mPlanet;
 
-            public Warm(Vector2 orbitCenter, int orbitRadius) { mPlanet = new(orbitCenter, orbitRadius, Utility.GetRandomElement(WarmTextures), WarmScale); }
+            public Warm(Vector2 orbitCenter, int orbitRadius) { mPlanet = new(orbitCenter, orbitRadius, ExtendetRandom.GetRandomElement(WarmTextures), WarmScale); }
 
             public static implicit operator Planet(Warm c) { return c.mPlanet; }
         }

@@ -4,7 +4,7 @@
 
 using System;
 
-namespace CelestialOdyssey.Game.Core.Utility
+namespace CelestialOdyssey.Game.Core.Utilitys
 {
     internal class RandomSingleton
     {

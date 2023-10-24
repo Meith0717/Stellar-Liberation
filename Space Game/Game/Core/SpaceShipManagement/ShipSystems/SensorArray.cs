@@ -4,6 +4,7 @@
 
 using CelestialOdyssey.Game.Core.GameObjectManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.Core.Utilitys;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems
         {
             ScanRadius = scanRadius;
             mMaxCounter = scanCoolDown;
-            mActualCounter = Utility.Utility.Random.Next(1000);
+            mActualCounter = ExtendetRandom.Random.Next(1000);
         }
 
         public void Update(GameTime gameTime, Vector2 position, PlanetSystem planetSystem, Scene scene)

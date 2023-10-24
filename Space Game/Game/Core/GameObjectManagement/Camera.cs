@@ -11,12 +11,10 @@
  */
 
 using CelestialOdyssey.Game.Core.InputManagement;
-using CelestialOdyssey.Game.Core.Utility;
+using CelestialOdyssey.Game.Core.Utilitys;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace CelestialOdyssey.Game.Core.GameObjectManagement
 {
@@ -174,7 +172,7 @@ namespace CelestialOdyssey.Game.Core.GameObjectManagement
             mLastPosition = Position;
 
             if (!mShake) return;
-            Utility.Utility.Random.NextUnitVector(out var vec);
+            ExtendetRandom.Random.NextUnitVector(out var vec);
             Position += vec * mShakeAmount;
             mShakeAmount *= 0.9f;
             if (mShakeAmount > 0.1f) return;
