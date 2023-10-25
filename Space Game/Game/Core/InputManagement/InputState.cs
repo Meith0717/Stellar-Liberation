@@ -27,7 +27,7 @@ namespace CelestialOdyssey.Game.Core.InputManagement
         Save,
         FireSecondaryWeapon,
         FireInitialWeapon,
-        ToggleMap,
+        ToggleHyperMap,
         LeftClick,
         RightClick,
         LeftClickHold,

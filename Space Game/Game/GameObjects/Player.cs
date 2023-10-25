@@ -19,7 +19,7 @@ namespace CelestialOdyssey.Game.GameObjects
 
         private Inventory mInventory;
 
-        public Player() : base(Vector2.Zero, ContentRegistry.player.Name, 1, new(10000, 10000), new(0.5f, 0.01f), new(1, 1), new(Color.BlueViolet, 15, 15, 50, 5000), new(100000, 100000, 1, 1))
+        public Player() : base(Vector2.Zero, ContentRegistry.player.Name, 1, new(10000, 10000), new(0.5f, 0.01f), new(Color.BlueViolet, 15, 15, 50, 5000), new(100000, 100000, 1, 1))
         {
             mInventory = new();
             WeaponSystem.SetWeapon(new(110, 35));

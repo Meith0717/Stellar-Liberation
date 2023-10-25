@@ -32,7 +32,7 @@ namespace CelestialOdyssey.Game.Layers.Scenes
 
         public override void UpdateObj(GameTime gameTime, InputState inputState)
         {
-            inputState.DoAction(ActionType.ToggleMap, () => mGameLayer.PopScene());
+            inputState.DoAction(ActionType.ToggleHyperMap, () => mGameLayer.PopScene());
             mParlaxManager.Update(Camera.Movement, Camera.Zoom);
 
             foreach (var item in mPlanetSystems) item.Update(gameTime, inputState, mGameLayer, this);

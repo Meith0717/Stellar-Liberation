@@ -39,12 +39,12 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
         [JsonIgnore] public PlanetSystem ActualPlanetSystem { get; set; }
 
 
-        public SpaceShip(Vector2 position, string textureId, float textureScale, SensorArray sensorArray, SublightEngine sublightEngine, HyperDrive hyperDrive, WeaponSystem weaponSystem, DefenseSystem defenseSystem)
+        public SpaceShip(Vector2 position, string textureId, float textureScale, SensorArray sensorArray, SublightEngine sublightEngine, WeaponSystem weaponSystem, DefenseSystem defenseSystem)
             : base(position, textureId, textureScale, 10)
         {
             this.SensorArray = sensorArray;
             this.SublightEngine = sublightEngine;
-            this.HyperDrive = hyperDrive;
+            this.HyperDrive = new();
             this.WeaponSystem = weaponSystem;
             this.DefenseSystem = defenseSystem;
 
@@ -63,7 +63,6 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
             if (DefenseSystem.HullLevel <= 0 && !IsDestroyed) Explode(scene);
 
             HasProjectileHit(scene);
-            HyperDrive.Update(gameTime, this);
             DefenseSystem.Update(gameTime);
             SensorArray.Update(gameTime, Position, ActualPlanetSystem, scene);
             if (!IsDestroyed) WeaponSystem.Update(gameTime, inputState, this, gameLayer, scene, ActualPlanetSystem.ProjectileManager);
