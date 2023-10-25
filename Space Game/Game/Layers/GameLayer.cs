@@ -24,6 +24,7 @@ namespace CelestialOdyssey.Game.Layers
         [JsonProperty] public readonly Map Map;
         [JsonProperty] public readonly Player Player;
         [JsonIgnore] private readonly FrustumCuller mFrustumCuller;
+        [JsonIgnore] public PlanetSystem CurrentSystem { get; private set; }
 
         public GameLayer() : base()
         {
@@ -40,7 +41,8 @@ namespace CelestialOdyssey.Game.Layers
             // SoundManager.Instance.PlaySound(ContentRegistry.bgMusicGame, 1.2f, false, true, true);
 
             // Add Main Scene
-            LoadPlanetSystem(PlanetSystems.First());
+            CurrentSystem = PlanetSystems.First();
+            AddScene(new PlanetSystemScene(this, CurrentSystem));
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
@@ -60,7 +62,13 @@ namespace CelestialOdyssey.Game.Layers
 
         public override void OnResolutionChanged() { }
 
-        public void LoadPlanetSystem(PlanetSystem planetSystem) => AddScene(new PlanetSystemScene(this, planetSystem));
-        public void LoadMap(Vector2 cameraPosition) => AddScene(new MapScene(this, PlanetSystems.ToList(), cameraPosition));
+        public void SwitchCurrentPlanetSystemScene(PlanetSystem planetSystem)
+        {
+            PopScene();
+            CurrentSystem = planetSystem;
+            AddScene(new PlanetSystemScene(this, planetSystem));
+        }
+
+        public void LoadMap() => AddScene(new MapScene(this, PlanetSystems.ToList(), CurrentSystem));
     }
 }

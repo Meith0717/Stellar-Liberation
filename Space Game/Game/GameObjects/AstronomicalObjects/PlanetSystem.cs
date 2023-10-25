@@ -2,20 +2,20 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
 using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.GameObjectManagement;
+using CelestialOdyssey.Game.Core.SpaceShipManagement;
+using CelestialOdyssey.GameEngine.Content_Management;
+using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.ItemManagement;
-using CelestialOdyssey.Game.Core.LayerManagement;
-using CelestialOdyssey.Game.Core.SpaceShipManagement;
-using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
 using CelestialOdyssey.Game.Layers;
-using CelestialOdyssey.GameEngine.Content_Management;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
 {
@@ -53,7 +53,6 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             base.Draw(sceneManagerLayer, scene);
             TextureManager.Instance.DrawGameObject(this, IsHover);
             TextureManager.Instance.Draw(ContentRegistry.starLightAlpha, Position, TextureOffset, TextureScale * 2f, Rotation, 0, TextureColor);
-            TextureManager.Instance.Draw(ContentRegistry.mapCrosshair, Position, TextureScale * 2, Rotation, 1, mCrosshairColor);
         }
 
         private Color GetColor() => Danger switch

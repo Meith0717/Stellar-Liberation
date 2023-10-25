@@ -31,7 +31,7 @@ namespace CelestialOdyssey.Game.Layers.Scenes
 
         public override void UpdateObj(GameTime gameTime, InputState inputState)
         {
-            inputState.DoAction(ActionType.ToggleHyperMap, () => mGameLayer.LoadMap(mPlanetSystem.Position));
+            inputState.DoAction(ActionType.ToggleHyperMap, () => mGameLayer.LoadMap());
 
             mParlaxManager.Update(Camera.Movement, Camera.Zoom);
 

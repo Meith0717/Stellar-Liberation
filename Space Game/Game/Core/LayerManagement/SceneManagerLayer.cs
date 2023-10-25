@@ -26,6 +26,7 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
 
         public void PopScene()
         {
+            if (!Scenes.Any()) return;
             Scenes.RemoveLast();
         }
 

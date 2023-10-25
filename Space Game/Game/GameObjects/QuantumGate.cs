@@ -29,8 +29,7 @@ namespace CelestialOdyssey.Game.GameObjects
             var players = scene.GetObjectsInRadius<Player>(Position, (int)BoundedBox.Diameter);
             if (!players.Any()) return;
             if (players.First().HyperDrive.TargetPlanetSystem is null) return;
-            gameLayer.PopScene();
-            gameLayer.LoadPlanetSystem(players.First().HyperDrive.TargetPlanetSystem);
+            gameLayer.SwitchCurrentPlanetSystemScene(players.First().HyperDrive.TargetPlanetSystem);
             players.First().HyperDrive.TargetPlanetSystem = null;
         }
 

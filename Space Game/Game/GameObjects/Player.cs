@@ -46,7 +46,7 @@ namespace CelestialOdyssey.Game.GameObjects
             mInventory.Update(this, scene);
 
             base.Update(gameTime, inputState, gameLayer, scene);
-            scene.Camera.MoveToTarget(Position);
+            scene.Camera.SetPosition(Position);
         }
 
         public override void HasCollide()

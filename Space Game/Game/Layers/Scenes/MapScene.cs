@@ -2,6 +2,7 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.Parallax;
@@ -18,12 +19,14 @@ namespace CelestialOdyssey.Game.Layers.Scenes
         private List<PlanetSystem> mPlanetSystems;
         private ParllaxManager mParlaxManager;
         private GameLayer mGameLayer;
+        private PlanetSystem mCurrentSystem;
 
-        public MapScene(GameLayer gameLayer, List<PlanetSystem> planetSystems, Vector2 mapPosition) 
-            : base(100, 0.1f, 1, false)
+        public MapScene(GameLayer gameLayer, List<PlanetSystem> planetSystems, PlanetSystem currentSystem) 
+            : base(100, 1f, 3, false)
         {
+            mCurrentSystem = currentSystem;
             mGameLayer = gameLayer;
-            Camera.SetPosition(mapPosition);
+            Camera.SetPosition(mCurrentSystem.Position);
             mPlanetSystems = planetSystems;
             foreach (var system in mPlanetSystems) SpatialHashing.InsertObject(system, (int)system.Position.X, (int)system.Position.Y);
             mParlaxManager = new();
@@ -40,7 +43,13 @@ namespace CelestialOdyssey.Game.Layers.Scenes
 
         public override void DrawOnScreen() => mParlaxManager.Draw();
 
-        public override void DrawOnWorld() {; }
+        public override void DrawOnWorld() 
+        {
+            TextureManager.Instance.Draw(ContentRegistry.mapCrosshair, mCurrentSystem.Position, 0.02f, 0, 1, Color.YellowGreen);
+            var targetSystem = mCurrentSystem.Player.HyperDrive.TargetPlanetSystem;
+            if (targetSystem is null) return;
+            TextureManager.Instance.Draw(ContentRegistry.mapCrosshair, targetSystem.Position, 0.02f, 0, 1, Color.LightBlue);
+        }
 
         public override void OnResolutionChanged() {; }
     }
