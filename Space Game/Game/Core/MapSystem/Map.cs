@@ -47,18 +47,20 @@ namespace CelestialOdyssey.Game.Core.MapSystem
 
                     // Generate Planets of Star
                     var orbitsAmount = (int)triangularDistribution.Sample();
-                    var orbitRadius = (int)(star.Width * star.TextureScale * 0.5f);
+                    var orbitRadius = star.Width * star.TextureScale * 0.5f;
 
                     for (int i = 1; i <= orbitsAmount; i++)
                     {
                         orbitRadius += ExtendetRandom.Random.Next(25000, 40000);
-                        Planet planet = GetPlanet(star.Position, orbitRadius, i);
+                        Planet planet = GetPlanet(star.Position, (int)orbitRadius, i);
                         planets.Add(planet);
                     }
 
+                    orbitRadius *= 1.5f;
+
                     // Generate Planet System
                     var danger = GetDanger(x, y);
-                    PlanetSystem planetSystem = new(GenerateStarPosition(x, y, MapScale), star.Position, orbitRadius, star.TextureId, star.LightColor, danger);
+                    PlanetSystem planetSystem = new(GenerateStarPosition(x, y, MapScale), star.Position, (int)orbitRadius, star.TextureId, star.LightColor, danger);
                     planetSystems.Add(planetSystem);
 
                     // Generate Pirates 

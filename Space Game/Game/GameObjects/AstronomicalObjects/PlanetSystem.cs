@@ -34,15 +34,13 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             TextureColor = color;
             Danger = danger;
             SystemBounding = new(sectorPosition, boundaryRadius);
-            LeftPressAction = () => { };
         }
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {
             LeftPressAction = () => {
                 gameLayer.PopScene();
-                gameLayer.PopScene();
-                gameLayer.LoadPlanetSystem(this);
+                Player.HyperDrive.TargetPlanetSystem = this;
             };
 
             base.Update(gameTime, inputState, gameLayer, scene);
@@ -90,6 +88,10 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
         }
         //------------------------//
 
+        public void SpawnShip()
+        {
+            Player.Position = QuantumGate.Position;
+        }
 
         public void UpdateObjects(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {

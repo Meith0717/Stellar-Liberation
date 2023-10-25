@@ -26,6 +26,7 @@ namespace CelestialOdyssey.Game.Layers.Scenes
 
             mParlaxManager = new();
             mParlaxManager.Add(new(ContentRegistry.gameBackgroundParlax1, .1f));
+            mPlanetSystem.SpawnShip();
         }
 
         public override void UpdateObj(GameTime gameTime, InputState inputState)
