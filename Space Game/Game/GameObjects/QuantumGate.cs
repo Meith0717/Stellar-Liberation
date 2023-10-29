@@ -26,7 +26,7 @@ namespace CelestialOdyssey.Game.GameObjects
             base.Update(gameTime, inputState, gameLayer, scene);
             AddToSpatialHashing(scene);
 
-            var players = scene.GetObjectsInRadius<Player>(Position, (int)BoundedBox.Diameter);
+            var players = scene.GetObjectsInRadius<Player>(Position, (int)BoundedBox.Radius);
             if (!players.Any()) return;
             if (players.First().HyperDrive.TargetPlanetSystem is null) return;
             gameLayer.SwitchCurrentPlanetSystemScene(players.First().HyperDrive.TargetPlanetSystem);

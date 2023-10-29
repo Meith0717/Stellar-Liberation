@@ -62,19 +62,11 @@ namespace CelestialOdyssey.Game.Core.MapSystem
                     var danger = GetDanger(x, y);
                     PlanetSystem planetSystem = new(GenerateStarPosition(x, y, MapScale), star.Position, (int)orbitRadius, star.TextureId, star.LightColor, danger);
                     planetSystems.Add(planetSystem);
-
-                    // Generate Pirates 
-                    var pirates = new List<SpaceShip>();
-                    var pirateAmount = GetPirateAmount(danger);
-                    // for (int i = 0; i < pirateAmount; i++)
-                    // {
-                    //     SpaceShip pirate = new(Utility.Utility.GetRandomVector2(planetSystem.SystemBounding));
-                    //     pirates.Add(pirate);
-                    // }
-
+                     
+                    // Generate Quantum Gate
                     var quantumGate = new QuantumGate(ExtendetRandom.NextVectorOnBorder(planetSystem.SystemBounding));
 
-                    planetSystem.SetObjects(star, planets, player, pirates, quantumGate);
+                    planetSystem.SetObjects(star, planets, player, null, quantumGate);
                 }
             }
         }

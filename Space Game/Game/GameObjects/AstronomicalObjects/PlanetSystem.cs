@@ -16,6 +16,7 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
 using System;
+using CelestialOdyssey.Game.Core.Utilitys;
 
 namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
 {
@@ -83,7 +84,14 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             Planets = planets;  
             Star = star;
             Player = player;
-            SpaceShipManager.AddRange(spaceShips);
+            var lst = new List<SpaceShip>();
+            for (int i = 0; i < 20; i++)
+            {
+                var enemy = new Enemys.Fighter(ExtendetRandom.NextVectorInCircle(SystemBounding));
+                enemy.ActualPlanetSystem = this;
+                lst.Add(enemy);
+            }
+            SpaceShipManager.AddRange(lst);
         }
         //------------------------//
 

@@ -23,7 +23,7 @@ namespace CelestialOdyssey.Game.Layers
             mBackgroundLayer.AddChild(buttonlayer);
 
             buttonlayer.AddChild(new UiButton(ContentRegistry.buttonContinue) { FillScale = FillScale.X, Anchor = Anchor.N, OnClickAction = () => mLayerManager.PopLayer() });
-            buttonlayer.AddChild(new UiButton(ContentRegistry.buttonSave) { FillScale = FillScale.X, Anchor = Anchor.Center });
+            buttonlayer.AddChild(new UiButton(ContentRegistry.buttonSave) { FillScale = FillScale.X, Anchor = Anchor.Center, IsDisabled = true });
             buttonlayer.AddChild(new UiButton(ContentRegistry.buttonExitgame) { FillScale = FillScale.X, Anchor = Anchor.S, OnClickAction = () => { mLayerManager.PopLayer(); mLayerManager.PopLayer(); } });
         }
 

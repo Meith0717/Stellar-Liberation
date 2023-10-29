@@ -26,12 +26,12 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionS
             switch (mTarget)
             {
                 case null:
-                    spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, -.01f);
+                    spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, -.05f);
                     if (spaceShip.Velocity < 0) spaceShip.Velocity = 0;
                     break;
                 case not null:
                     spaceShip.Rotation += MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, (Vector2)mTarget, mManeuverability);
-                    spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, .01f);
+                    spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, .05f);
                     if (spaceShip.Velocity > mMaxVelocity) spaceShip.Velocity = mMaxVelocity;
                     SetTarget(spaceShip, mTarget);
                     break;
@@ -53,6 +53,17 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionS
             }
             mTarget = target;
             return true;
+        }
+
+        public void FollowMouse(InputState inputState, SpaceShip spaceShip, Vector2 worldMousePosition)
+        {
+            spaceShip.Rotation += MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, worldMousePosition, .1f);
+            if (inputState.HasMouseAction(MouseActionType.LeftClickHold))
+            {
+                SetTarget(spaceShip, worldMousePosition);
+                return;
+            }
+            SetTarget(spaceShip, null);
         }
 
         public void Draw(SpaceShip spaceShip, Scene scene)

@@ -42,7 +42,7 @@ namespace CelestialOdyssey.Game.GameObjects
 
             WeaponSystem.VectorTarget = scene.WorldMousePosition;
             inputState.DoMouseAction(MouseActionType.RightClickHold, () => WeaponSystem.Fire());
-            inputState.DoMouseAction(MouseActionType.LeftClick, () => SublightEngine.SetTarget(this, scene.WorldMousePosition));
+            SublightEngine.FollowMouse(inputState, this, scene.WorldMousePosition);
             mInventory.Update(this, scene);
 
             base.Update(gameTime, inputState, gameLayer, scene);
