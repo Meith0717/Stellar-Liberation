@@ -91,6 +91,10 @@ namespace CelestialOdyssey.Core.GameEngine.Content_Management
         {
             SpriteBatch.Draw(GetTexture(id), new RectangleF(position.X, position.Y, width, height).ToRectangle(), Color.White);
         }
+        public void Draw(string id, Vector2 position, float width, float height, Color color)
+        {
+            SpriteBatch.Draw(GetTexture(id), new RectangleF(position.X, position.Y, width, height).ToRectangle(), color);
+        }
 
         public void Draw(string id, Vector2 position, Vector2 offset, float sclae, float rotation, int depth, Color color)
         {

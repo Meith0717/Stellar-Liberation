@@ -1091,7 +1091,7 @@
 /processorParam:TextureFormat=Color
 /build:textures/userInterface/Layer/layer.png
 
-#begin textures/userInterface/PauseLayer/buttonContinue.png
+#begin textures/userInterface/MenueButtons/buttonContinue.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1101,9 +1101,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/PauseLayer/buttonContinue.png
+/build:textures/userInterface/MenueButtons/buttonContinue.png
 
-#begin textures/userInterface/PauseLayer/buttonExitgame.png
+#begin textures/userInterface/MenueButtons/buttonCredits.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1113,5 +1113,65 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/PauseLayer/buttonExitgame.png
+/build:textures/userInterface/MenueButtons/buttonCredits.png
+
+#begin textures/userInterface/MenueButtons/buttonExitgame.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/userInterface/MenueButtons/buttonExitgame.png
+
+#begin textures/userInterface/MenueButtons/buttonNewGame.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/userInterface/MenueButtons/buttonNewGame.png
+
+#begin textures/userInterface/MenueButtons/buttonQuit.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/userInterface/MenueButtons/buttonQuit.png
+
+#begin textures/userInterface/MenueButtons/buttonSave.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/userInterface/MenueButtons/buttonSave.png
+
+#begin textures/userInterface/MenueButtons/buttonSettings.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/userInterface/MenueButtons/buttonSettings.png
 

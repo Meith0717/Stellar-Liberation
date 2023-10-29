@@ -133,9 +133,14 @@ namespace CelestialOdyssey.GameEngine.Content_Management
         public readonly static Registry layer = new(layer1, "layer", RegistryType.Texture);
         public readonly static Registry circle = new(layer1, "circle", RegistryType.Texture);
 
-        private readonly static string pauseLayer = @"textures\UserInterface\PauseLayer";
-        public readonly static Registry buttonExitgame = new(pauseLayer, "buttonExitgame", RegistryType.Texture);
-        public readonly static Registry buttonContinue = new(pauseLayer, "buttonContinue", RegistryType.Texture);
+        private readonly static string menueButtons = @"textures\UserInterface\MenueButtons";
+        public readonly static Registry buttonContinue = new(menueButtons, "buttonContinue", RegistryType.Texture);
+        public readonly static Registry buttonCredits = new(menueButtons, "buttonCredits", RegistryType.Texture);
+        public readonly static Registry buttonExitgame = new(menueButtons, "buttonExitgame", RegistryType.Texture);
+        public readonly static Registry buttonNewGame = new(menueButtons, "buttonNewGame", RegistryType.Texture);
+        public readonly static Registry buttonQuit = new(menueButtons, "buttonQuit", RegistryType.Texture);
+        public readonly static Registry buttonSave = new(menueButtons, "buttonSave", RegistryType.Texture);
+        public readonly static Registry buttonSettings = new(menueButtons, "buttonSettings", RegistryType.Texture);
 
         private readonly static string soundEffects = @"SoundEffects\";
         public readonly static Registry torpedoHit = new(soundEffects, "torpedoHit", RegistryType.Sound);

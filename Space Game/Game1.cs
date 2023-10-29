@@ -7,12 +7,11 @@ using CelestialOdyssey.Game.Core.ConfigReader;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.Persistance;
-using CelestialOdyssey.Game.Layers;
+using CelestialOdyssey.Game.Layers.Scenes;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 
 namespace CelestialOdyssey
 {
@@ -22,37 +21,34 @@ namespace CelestialOdyssey
         private readonly GraphicsDeviceManager mGraphicsManager;
         private readonly InputManager mInputManager;
 
-        private GameLayer mGameLayer;
-
         // Global Classes
         private SpriteBatch mSpriteBatch;
         public LayerManager mLayerManager;
         public readonly Serialize mSerialize;
 
         // Window attributes
-        private int mWidth;
-        private int mHeight;
-        private bool mIsFullScreen;
         private bool mResulutionWasResized;
 
         public Game1()
         {
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            Window.AllowUserResizing = false;
+            Window.AllowUserResizing = true;
             Window.ClientSizeChanged += delegate { mResulutionWasResized = true; };
 
             mInputManager = new InputManager();
             mGraphicsManager = new GraphicsDeviceManager(this);
             mSerialize = new Serialize();
+
+            mGraphicsManager.PreferredBackBufferWidth = (int)(900 * 1.77777777778f);
+            mGraphicsManager.PreferredBackBufferHeight = 900;
         }
 
         protected override void Initialize()
         {
             base.Initialize();
             mLayerManager = new LayerManager(this, GraphicsDevice, mSerialize);
-            mGameLayer = new GameLayer();
-            mLayerManager.AddLayer(mGameLayer);
+            mLayerManager.AddLayer(new MainMenueLayer());
         }
 
         protected override void LoadContent()
@@ -95,15 +91,8 @@ namespace CelestialOdyssey
             inputState.DoAction(ActionType.ToggleFullscreen, ToggleFullscreen);
             mLayerManager.Update(gameTime, inputState);
 
-            inputState.DoAction(ActionType.Save, Save);
-            inputState.DoAction(ActionType.Load, Load);
-
             base.Update(gameTime);
-
         }
-
-        private void Save() { mSerialize.SerializeObject(mGameLayer, "test"); }
-        private void Load() { mGameLayer = (GameLayer)mSerialize.PopulateObject(mGameLayer, "test"); }
 
         protected override void Draw(GameTime gameTime)
         {
@@ -113,30 +102,8 @@ namespace CelestialOdyssey
         }
 
         // Some Stuff
-        private void ToggleFullscreen()
-        {
-            Action action = mIsFullScreen ? UnSetFullscreen : SetFullscreen;
-            mIsFullScreen = !mIsFullScreen;
-            action();
-            mGraphicsManager.ApplyChanges();
-        }
+        private void ToggleFullscreen() =>  mGraphicsManager.ToggleFullScreen();
 
-        private void SetFullscreen()
-        {
-            mWidth = Window.ClientBounds.Width;
-            mHeight = Window.ClientBounds.Height;
-
-            mGraphicsManager.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            mGraphicsManager.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            mGraphicsManager.IsFullScreen = true;
-        }
-
-        private void UnSetFullscreen()
-        {
-            mGraphicsManager.PreferredBackBufferWidth = mWidth;
-            mGraphicsManager.PreferredBackBufferHeight = mHeight;
-            mGraphicsManager.IsFullScreen = false;
-        }
 
         public void SetCursor(Registry registry)
         {
