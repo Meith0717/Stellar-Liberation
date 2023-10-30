@@ -10,14 +10,15 @@ using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.Core.AI
 {
-    public class BehaviorBasedAI
+    public class UtilityAi
     {
         private Behavior mCurrentBehavior;
+        private Behavior mLastBehavior;
         private HashSet<Behavior> mBehaviors;
 
         private int mCoolDown;
 
-        public BehaviorBasedAI(HashSet<Behavior> behaviors)
+        public UtilityAi(HashSet<Behavior> behaviors)
         {
             mBehaviors = behaviors;
             mCoolDown = ExtendetRandom.Random.Next(1000);
@@ -37,19 +38,18 @@ namespace CelestialOdyssey.Game.Core.AI
             // Auswahl des Verhaltens basierend auf Prioritäten und Spielsituation
             mCurrentBehavior = SelectBehavior(environment, spaceShip);
 
+            if (mCurrentBehavior != mLastBehavior) mLastBehavior?.Reset();
+
             // Ausführung des ausgewählten Verhaltens
             mCurrentBehavior?.Execute(environment, spaceShip);
+            mLastBehavior = mCurrentBehavior;
         }
 
         private Behavior SelectBehavior(SensorArray environment, SpaceShip spaceShip)
         {
             PriorityQueue<Behavior, double> behaviors = new();
-            foreach (var item in mBehaviors)
-            {
-                behaviors.Enqueue(item, -item.GetPriority(environment, spaceShip));
-            }
+            foreach (var item in mBehaviors) behaviors.Enqueue(item, -item.GetPriority(environment, spaceShip));
             if (!behaviors.TryPeek(out var behavior, out var priority)) return null;
-            if (priority == 0) return null;
             return behavior;
         }
     }

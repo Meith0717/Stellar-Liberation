@@ -17,7 +17,12 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
         private Vector2? mPatrolTarget;
 
         public override double GetPriority(SensorArray environment, SpaceShip spaceShip)
-            => (spaceShip.WeaponSystem.SpaceshipTarget is null) ? 1 : 0.1;
+        {
+            var shieldLevel = spaceShip.DefenseSystem.ShildLevel;
+            var hullLevel = spaceShip.DefenseSystem.HullLevel;
+            var hasNoTarget = spaceShip.WeaponSystem.SpaceshipTarget is null ? 1 : 0;
+            return (shieldLevel + hullLevel) * hasNoTarget * 100;
+        }
 
         public override void Execute(SensorArray environment, SpaceShip spaceShip)
         {
@@ -27,16 +32,21 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
             switch (mPatrolTarget)
             {
                 case null:
-                    if (ExtendetRandom.Random.NextDouble() > 1) break;
+                    if (ExtendetRandom.Random.NextDouble() < 0.2)
+                    {
+                        mPatrolTarget = ExtendetRandom.NextVectorOnBorder(new(spaceShip.Position, environment.ScanRadius));
+                    }
+                    else
+                    {
+                        // Get Planets in Radius
+                        var patrolTargets = environment.AstronomicalObjects.OfType<Planet>().ToList();
+                        if (!patrolTargets.Any()) break;
 
-                    // Get Planets in Radius
-                    var patrolTargets = environment.AstronomicalObjects.OfType<Planet>().ToList();
-                    if (!patrolTargets.Any()) break;
-
-                    // Get Random Target
-                    var randomPlanet = ExtendetRandom.GetRandomElement(patrolTargets);
-                    var angleBetweenTargetAndShip = Geometry.AngleBetweenVectors(randomPlanet.Position, spaceShip.Position);
-                    mPatrolTarget = Geometry.GetPointOnCircle(randomPlanet.BoundedBox, angleBetweenTargetAndShip);
+                        // Get Random Target
+                        var randomPlanet = ExtendetRandom.GetRandomElement(patrolTargets);
+                        var angleBetweenTargetAndShip = Geometry.AngleBetweenVectors(randomPlanet.Position, spaceShip.Position);
+                        mPatrolTarget = Geometry.GetPointOnCircle(randomPlanet.BoundedBox, angleBetweenTargetAndShip);
+                    }
 
                     // Send Ship to Target
                     spaceShip.SublightEngine.SetTarget(spaceShip, mPatrolTarget);
@@ -48,5 +58,7 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
                     break;
             }
         }
+
+        public override void Reset() => mPatrolTarget = null;
     }
 }

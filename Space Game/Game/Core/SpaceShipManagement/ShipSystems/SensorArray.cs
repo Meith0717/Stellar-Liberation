@@ -13,26 +13,22 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems
 {
     public class SensorArray
     {
-
         public List<GameObject> AstronomicalObjects { get; private set; } = new();
         public List<SpaceShip> SortedSpaceShips { get; private set; } = new();
+
         public int ScanRadius { get; private set; }
 
         private float mActualCounter;
-        private float mMaxCounter = 1000;
+        private float mMaxCounter = 500;
 
-        public SensorArray(int scanRadius, int scanCoolDown)
+        public SensorArray(int scanRadius)
         {
             ScanRadius = scanRadius;
-            mMaxCounter = scanCoolDown;
-            mActualCounter = ExtendetRandom.Random.Next(1000);
+            mActualCounter = ExtendetRandom.Random.Next((int)mMaxCounter);
         }
 
         public void Update(GameTime gameTime, Vector2 position, PlanetSystem planetSystem, Scene scene)
         {
-            mActualCounter += gameTime.TotalGameTime.Milliseconds;
-            if (mActualCounter < mMaxCounter) return;
-            mActualCounter = 0;
             AstronomicalObjects.Clear();
             AstronomicalObjects.Add(planetSystem.Star);
             AstronomicalObjects.AddRange(planetSystem.Planets);

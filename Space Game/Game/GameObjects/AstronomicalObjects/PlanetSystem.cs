@@ -85,19 +85,13 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             Star = star;
             Player = player;
             var lst = new List<SpaceShip>();
-            for (int i = 0; i < 20; i++)
-            {
-                var enemy = new Enemys.Fighter(ExtendetRandom.NextVectorInCircle(SystemBounding));
-                enemy.ActualPlanetSystem = this;
-                lst.Add(enemy);
-            }
-            SpaceShipManager.AddRange(lst);
-        }
+            for (int i = 0; i < 20; i++) SpaceShipManager.Spawn(this, ExtendetRandom.NextVectorInCircle(SystemBounding), ShipType.Carrior);
+         }
         //------------------------//
 
         public void SpawnShip()
         {
-            Player.Position = QuantumGate.Position;
+            Player.Position = Vector2.Zero;
         }
 
         public void UpdateObjects(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)

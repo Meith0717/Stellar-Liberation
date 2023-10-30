@@ -11,6 +11,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionS
 {
     public class SublightEngine
     {
+        public bool IsMoving { get; private set; }
         private float mMaxVelocity;
         private float mManeuverability;
         private Vector2? mTarget;
@@ -28,12 +29,14 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionS
                 case null:
                     spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, -.05f);
                     if (spaceShip.Velocity < 0) spaceShip.Velocity = 0;
+                    IsMoving = false;
                     break;
                 case not null:
                     spaceShip.Rotation += MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, (Vector2)mTarget, mManeuverability);
                     spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, .05f);
                     if (spaceShip.Velocity > mMaxVelocity) spaceShip.Velocity = mMaxVelocity;
                     SetTarget(spaceShip, mTarget);
+                    IsMoving = true;
                     break;
             }
         }
@@ -41,7 +44,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionS
         public bool IsTargetReached(SpaceShip spaceShip, Vector2? target)
         {
             if (target is null) return true;
-            return Vector2.Distance((Vector2)target, spaceShip.Position) < 500;
+            return Vector2.Distance((Vector2)target, spaceShip.Position) < 1000;
         }
 
         public bool SetTarget(SpaceShip spaceShip, Vector2? target)

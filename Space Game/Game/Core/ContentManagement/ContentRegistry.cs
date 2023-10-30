@@ -114,6 +114,8 @@ namespace CelestialOdyssey.GameEngine.Content_Management
         public readonly static Registry enemyBomberShield = new(spacecrafts, "enemyBomberShield", RegistryType.Texture);
         public readonly static Registry enemyBattleShip = new(spacecrafts, "enemyBattleShip", RegistryType.Texture);
         public readonly static Registry enemyBattleShipShield = new(spacecrafts, "enemyBattleShipShield", RegistryType.Texture);
+        public readonly static Registry enemyCarrior = new(spacecrafts, "enemyCarrior", RegistryType.Texture);
+        public readonly static Registry enemyCarriorShield = new(spacecrafts, "enemyCarriorShield", RegistryType.Texture);
 
         private readonly static string weapons = @"textures\gameobjects\weapons";
         public readonly static Registry projectile = new(weapons, "projectile", RegistryType.Texture);

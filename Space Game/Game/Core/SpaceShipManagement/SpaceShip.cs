@@ -29,7 +29,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
     public abstract class SpaceShip : MovingObject
     {
         [JsonIgnore] protected SpriteSheet ExplosionSheet;
-        [JsonIgnore] protected BehaviorBasedAI mAi;
+        [JsonIgnore] protected UtilityAi mAi;
         [JsonProperty] protected bool IsDestroyed { get; private set; }
         [JsonIgnore] public SensorArray SensorArray { get; private set; }
         [JsonIgnore] public SublightEngine SublightEngine { get; private set; }

@@ -28,7 +28,7 @@ namespace CelestialOdyssey.Game.Core.Utilitys
 
         public static Vector2 NextVectorOnBorder(CircleF circle)
         {
-            var angle = MathF.PI * 1 * (float)Random.NextDouble();
+            var angle = MathF.PI * 2 * (float)Random.NextDouble();
             return Geometry.GetPointOnCircle(circle, angle);
         }
 

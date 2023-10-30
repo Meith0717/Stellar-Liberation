@@ -5,29 +5,32 @@
 using CelestialOdyssey.Game.Core.GameObjectManagement;
 using CelestialOdyssey.Game.GameObjects;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using System.Numerics;
 
 namespace CelestialOdyssey.Game.Core.SpaceShipManagement
 {
-    public enum ShipType { EnemyBattleShip, EnemyCorvette, EnemyFighter }
+    public enum ShipType { EnemyBattleShip, EnemyCorvette, EnemyFighter, Carrior }
 
     public class SpaceShipManager : GameObjectManager
     {
         public void AddRange(List<SpaceShip> spaceShips) => base.AddRange(spaceShips);
 
-        public void Spawn(PlanetSystem planetSystem, ShipType type)
+        public void Spawn(PlanetSystem planetSystem, Vector2 position, ShipType type)
         {
             switch (type)
             {
                 case ShipType.EnemyBattleShip:
-                    AddObj(new Enemys.BattleShip(Vector2.Zero) { ActualPlanetSystem = planetSystem });
+                    AddObj(new Enemys.BattleShip(position) { ActualPlanetSystem = planetSystem });
                     break;
                 case ShipType.EnemyCorvette:
-                    AddObj(new Enemys.Bomber(Vector2.Zero) { ActualPlanetSystem = planetSystem });
+                    AddObj(new Enemys.Bomber(position) { ActualPlanetSystem = planetSystem });
                     break;
                 case ShipType.EnemyFighter:
-                    AddObj(new Enemys.Fighter(Vector2.Zero) { ActualPlanetSystem = planetSystem });
+                    AddObj(new Enemys.Fighter(position) { ActualPlanetSystem = planetSystem });
+                    break;
+                case ShipType.Carrior:
+                    AddObj(new Enemys.Carrior(position) { ActualPlanetSystem = planetSystem });
                     break;
             }
         }

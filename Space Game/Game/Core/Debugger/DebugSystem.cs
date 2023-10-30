@@ -31,6 +31,7 @@ namespace CelestialOdyssey.Game.Core.Debugger
         private bool SpawnFighter;
         private bool SpawnCorvette;
         private bool SpawnBattleShip;
+        private bool SpawnCarrior;
 
         private float mCurrentFramesPerSecond;
         private float mFrameDuration;
@@ -55,14 +56,16 @@ namespace CelestialOdyssey.Game.Core.Debugger
             inputState.DoAction(ActionType.F5, () => SpawnFighter = true);
             inputState.DoAction(ActionType.F6, () => SpawnCorvette = true);
             inputState.DoAction(ActionType.F7, () => SpawnBattleShip = true);
+            inputState.DoAction(ActionType.F8, () => SpawnCarrior = true);
         }
 
         public void CheckForSpawn(PlanetSystem planetSystem)
         {
-            if (SpawnBattleShip) planetSystem.SpaceShipManager.Spawn(planetSystem, SpaceShipManagement.ShipType.EnemyBattleShip);
-            if (SpawnCorvette) planetSystem.SpaceShipManager.Spawn(planetSystem, SpaceShipManagement.ShipType.EnemyCorvette);
-            if (SpawnFighter) planetSystem.SpaceShipManager.Spawn(planetSystem, SpaceShipManagement.ShipType.EnemyFighter);
-            SpawnFighter = SpawnBattleShip = SpawnCorvette = false;
+            if (SpawnBattleShip) planetSystem.SpaceShipManager.Spawn(planetSystem, Vector2.Zero, SpaceShipManagement.ShipType.EnemyBattleShip);
+            if (SpawnCorvette) planetSystem.SpaceShipManager.Spawn(planetSystem, Vector2.Zero, SpaceShipManagement.ShipType.EnemyCorvette);
+            if (SpawnFighter) planetSystem.SpaceShipManager.Spawn(planetSystem, Vector2.Zero, SpaceShipManagement.ShipType.EnemyFighter);
+            if (SpawnCarrior) planetSystem.SpaceShipManager.Spawn(planetSystem, Vector2.Zero, SpaceShipManagement.ShipType.Carrior);
+            SpawnFighter = SpawnBattleShip = SpawnCorvette = SpawnCarrior = false;
         }
 
         public void UpdateFrameCounting()
@@ -97,11 +100,11 @@ namespace CelestialOdyssey.Game.Core.Debugger
             TextureManager.Instance.DrawString("debug", position + new Vector2(0, 0), "F1 - Draw Spatial Hashing Grid", 1, DrawBuckets ? Color.GreenYellow : Color.White);
             TextureManager.Instance.DrawString("debug", position + new Vector2(0, 25), "F2 - Draw Objects in Bucket", 1, ShowObjectsInBucket ? Color.GreenYellow : Color.White);
             TextureManager.Instance.DrawString("debug", position + new Vector2(0, 50), "F3 - Show Hit Box", 1, ShowHitBoxes ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 150), "F4 - Show Sensor Radius", 1, ShowSensorRadius ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 75), "F5 - Spawn Fighter", 1, Color.White);
-            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 100), "F6 - Spawn Corvette", 1, Color.White);
-            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 125), "F7 - Spawn Battle Ship", 1, Color.White);
-            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 175), "F8 - none", 1, false ? Color.GreenYellow : Color.White);
+            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 75), "F4 - Show Sensor Radius", 1, ShowSensorRadius ? Color.GreenYellow : Color.White);
+            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 100), "F5 - Spawn Fighter", 1, Color.White);
+            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 125), "F6 - Spawn Corvette", 1, Color.White);
+            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 150), "F7 - Spawn Battle Ship", 1, Color.White);
+            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 175), "F8 - Spawn Carrior", 1, Color.White);
             TextureManager.Instance.DrawString("debug", position + new Vector2(0, 200), "F9 - none", 1, false ? Color.GreenYellow : Color.White);
             TextureManager.Instance.DrawString("debug", position + new Vector2(0, 225), "F10 - none", 1, false ? Color.GreenYellow : Color.White);
 

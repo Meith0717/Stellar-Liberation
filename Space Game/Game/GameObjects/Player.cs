@@ -2,6 +2,7 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using CelestialOdyssey.Game.Core.AI.EnemyBehavior;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.ItemManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
@@ -19,7 +20,7 @@ namespace CelestialOdyssey.Game.GameObjects
 
         private Inventory mInventory;
 
-        public Player() : base(Vector2.Zero, ContentRegistry.player.Name, 1, new(10000, 10000), new(5f, 0.01f), new(Color.BlueViolet, 15, 15, 50, 5000), new(100000, 100000, 1, 1))
+        public Player() : base(Vector2.Zero, ContentRegistry.player.Name, 1, new(50000), new(5f, 0.01f), new(Color.BlueViolet, 2, 2 , 200, 200), new(100000, 100000, 1, 1))
         {
             mInventory = new();
             WeaponSystem.SetWeapon(new(110, 35));
@@ -28,7 +29,7 @@ namespace CelestialOdyssey.Game.GameObjects
             WeaponSystem.SetWeapon(new(-130, -100));
             WeaponSystem.SetWeapon(new(-150, 0));
 
-            mAi = new(new());
+            mAi = new(new(){});
         }
 
         public void SpawnInNewPlanetSystem(Vector2 position)

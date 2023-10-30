@@ -64,7 +64,6 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
         public List<T> GetObjectsInRadius<T>(Vector2 position, int radius) where T : GameObject
         {
             int CellSize = SpatialHashing.CellSize;
-            int radiusSquared = radius * radius;
 
             // Determine the range of bucket indices that fall within the radius.
             var startX = (int)Math.Floor((position.X - radius) / CellSize);
@@ -82,11 +81,8 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
                     foreach (var gameObject in objectsInBucket.OfType<T>())
                     {
                         var objPosition = gameObject.Position;
-                        var distanceSquared = Vector2.DistanceSquared(position, objPosition);
-                        if (distanceSquared <= radiusSquared)
-                        {
-                            objectsInRadius.Add(gameObject);
-                        }
+                        var distance = Vector2.Distance(position, objPosition);
+                        if (distance <= radius) objectsInRadius.Add(gameObject);
                     }
                 }
             }
