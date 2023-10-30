@@ -38,7 +38,7 @@ namespace CelestialOdyssey.Game.Core.AI
             // Auswahl des Verhaltens basierend auf Prioritäten und Spielsituation
             mCurrentBehavior = SelectBehavior(environment, spaceShip);
 
-            if (mCurrentBehavior != mLastBehavior) mLastBehavior?.Reset();
+            if (mCurrentBehavior != mLastBehavior) mLastBehavior?.Reset(spaceShip);
 
             // Ausführung des ausgewählten Verhaltens
             mCurrentBehavior?.Execute(environment, spaceShip);

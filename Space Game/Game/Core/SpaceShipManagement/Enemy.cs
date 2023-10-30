@@ -14,8 +14,8 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
     public abstract class Enemy : SpaceShip
     {
 
-        protected Enemy(Vector2 position, string textureId, float textureScale, SensorArray sensorArray, SublightEngine sublightEngine, WeaponSystem weaponSystem, DefenseSystem defenseSystem)
-            : base(position, textureId, textureScale, sensorArray, sublightEngine, weaponSystem, defenseSystem)
+        protected Enemy(Vector2 position, string textureId, float textureScale, SensorArray sensorArray, SublightEngine sublightEngine, TurretBattery weaponSystem, DefenseSystem defenseSystem)
+            : base(position, textureId, textureScale, sensorArray, sublightEngine, weaponSystem, defenseSystem, Factions.Allies)
         { }
     }
 }

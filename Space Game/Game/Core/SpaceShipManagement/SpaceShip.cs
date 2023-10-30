@@ -21,10 +21,13 @@ using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using rache_der_reti.Core.Animation;
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace CelestialOdyssey.Game.Core.SpaceShipManagement
 {
+    public enum Factions { Enemys, Allies }
+
     [Serializable]
     public abstract class SpaceShip : MovingObject
     {
@@ -34,12 +37,13 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
         [JsonIgnore] public SensorArray SensorArray { get; private set; }
         [JsonIgnore] public SublightEngine SublightEngine { get; private set; }
         [JsonIgnore] public HyperDrive HyperDrive { get; private set; }
-        [JsonIgnore] public WeaponSystem WeaponSystem { get; private set; }
+        [JsonIgnore] public TurretBattery WeaponSystem { get; private set; }
         [JsonProperty] public DefenseSystem DefenseSystem { get; private set; }
         [JsonIgnore] public PlanetSystem ActualPlanetSystem { get; set; }
+        [JsonIgnore] protected Factions mOpponent;
 
 
-        public SpaceShip(Vector2 position, string textureId, float textureScale, SensorArray sensorArray, SublightEngine sublightEngine, WeaponSystem weaponSystem, DefenseSystem defenseSystem)
+        public SpaceShip(Vector2 position, string textureId, float textureScale, SensorArray sensorArray, SublightEngine sublightEngine, TurretBattery weaponSystem, DefenseSystem defenseSystem, Factions opponent)
             : base(position, textureId, textureScale, 10)
         {
             this.SensorArray = sensorArray;
@@ -47,6 +51,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
             this.HyperDrive = new();
             this.WeaponSystem = weaponSystem;
             this.DefenseSystem = defenseSystem;
+            mOpponent = opponent;
 
             ExplosionSheet = new(ContentRegistry.explosion, 64, 3, TextureScale * 10);
             ExplosionSheet.Animate("destroy", new(60, Animation.GetRowList(1, 64), false));
@@ -64,8 +69,8 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
 
             HasProjectileHit(scene);
             DefenseSystem.Update(gameTime);
-            SensorArray.Update(gameTime, Position, ActualPlanetSystem, scene);
-            if (!IsDestroyed) WeaponSystem.Update(gameTime, inputState, this, gameLayer, scene, ActualPlanetSystem.ProjectileManager);
+            SensorArray.Update(gameTime, Position, ActualPlanetSystem, scene, mOpponent);
+            if (!IsDestroyed) WeaponSystem.Update(gameTime, this, ActualPlanetSystem.ProjectileManager, SensorArray.AimingShip);
             mAi.Update(gameTime, SensorArray, this);
 
             if (!IsDestroyed) return;

@@ -2,7 +2,6 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using CelestialOdyssey.Game.Core.AI.EnemyBehavior;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.ItemManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
@@ -20,14 +19,15 @@ namespace CelestialOdyssey.Game.GameObjects
 
         private Inventory mInventory;
 
-        public Player() : base(Vector2.Zero, ContentRegistry.player.Name, 1, new(50000), new(5f, 0.01f), new(Color.BlueViolet, 2, 2 , 200, 200), new(100000, 100000, 1, 1))
+        public Player() : base(Vector2.Zero, ContentRegistry.player.Name, 1, new(50000), new(5f, 0.01f), new(200, Color.BlueViolet, 2, 2), new(100000, 100000, 1, 1), Factions.Enemys)
         {
             mInventory = new();
-            WeaponSystem.SetWeapon(new(110, 35));
-            WeaponSystem.SetWeapon(new(110, -35));
-            WeaponSystem.SetWeapon(new(-130, 100));
-            WeaponSystem.SetWeapon(new(-130, -100));
-            WeaponSystem.SetWeapon(new(-150, 0));
+
+            WeaponSystem.PlaceTurret(new(new(110, 35), 1, TextureDepth + 1));
+            WeaponSystem.PlaceTurret(new(new(110, -35), 1, TextureDepth + 1));
+            WeaponSystem.PlaceTurret(new(new(-130, 100), 1, TextureDepth + 1));
+            WeaponSystem.PlaceTurret(new(new(-130, -100), 1, TextureDepth + 1));
+            WeaponSystem.PlaceTurret(new(new(-150, 0), 1, TextureDepth + 1));
 
             mAi = new(new(){});
         }
@@ -40,8 +40,7 @@ namespace CelestialOdyssey.Game.GameObjects
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {
-
-            WeaponSystem.VectorTarget = scene.WorldMousePosition;
+            WeaponSystem.StopFire();
             inputState.DoMouseAction(MouseActionType.RightClickHold, () => WeaponSystem.Fire());
             SublightEngine.FollowMouse(inputState, this, scene.WorldMousePosition);
             mInventory.Update(this, scene);

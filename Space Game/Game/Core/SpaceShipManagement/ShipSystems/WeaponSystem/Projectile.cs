@@ -25,8 +25,8 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyste
         private readonly SpriteSheet mExplosionSheet;
         private bool mHit;
 
-        public Projectile(Vector2 weaponPosition, float rotation, Color color, int shieldDamage, int hullDamage, SpaceShip origine)
-            : base(weaponPosition, ContentRegistry.projectile, 0.5f, 15)
+        public Projectile(Vector2 startPosition, float rotation, Color color, int shieldDamage, int hullDamage, SpaceShip origine)
+            : base(startPosition, ContentRegistry.projectile, 0.5f, 15)
         {
             Direction = Geometry.CalculateDirectionVector(rotation);
             Rotation = rotation;
@@ -34,7 +34,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyste
             ShieldDamage = shieldDamage;
             TextureColor = color;
             Origine = origine;
-            Velocity = 30;
+            Velocity = ExtendetRandom.Random.Next(20, 25);
             DisposeTime = 5000;
             mExplosionSheet = new(ContentRegistry.explosion, 64, 3, TextureScale * 2);
             mExplosionSheet.Animate("hit", new(45, Animation.GetRowList(0, 64), false));
