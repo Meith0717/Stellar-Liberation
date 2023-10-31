@@ -38,15 +38,18 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyste
         public void Update(GameTime gameTime, SpaceShip origin, ProjectileManager projectileManager, SpaceShip aimingShip)
         {
             mFireCoolDown += gameTime.ElapsedGameTime.Milliseconds;
+            var hasFired = false;
             foreach (var turret in mTurrets) 
             {
                 turret.GetPosition(origin.Position, origin.Rotation);
                 turret.RotateToTArget(origin.Rotation, aimingShip?.Position);
                 if (!mFire || mFireCoolDown < mMaxFireCoolDown) continue;
                 turret.Fire(projectileManager, origin, mParticleColor, mShielDamage, mHullDamage);
+                hasFired = true;
             }
             
-            if (mFire) SoundManager.Instance.PlaySound(ContentRegistry.torpedoFire, 1f);
+            if (hasFired) SoundManager.Instance.PlaySound(ContentRegistry.torpedoFire, 1f);
+            if (hasFired) mFireCoolDown = 0;
         }
 
         public void Draw(SceneManagerLayer sceneManagerLayer, Scene sceme) { foreach (var weapon in mTurrets) weapon.Draw(sceneManagerLayer, sceme); }

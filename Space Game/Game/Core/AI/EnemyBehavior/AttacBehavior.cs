@@ -4,13 +4,15 @@
 
 using CelestialOdyssey.Game.Core.SpaceShipManagement;
 using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems;
+using CelestialOdyssey.Game.Core.Utilitys;
 using Microsoft.Xna.Framework;
 
 namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
 {
     public class AttacBehavior : Behavior
     {
-        private Vector2? mPosition;
+        private bool mReorienting;
+        private Vector2? mReorientingPosition;
 
         public override double GetPriority(SensorArray environment, SpaceShip spaceShip)
         {
@@ -28,21 +30,62 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
 
         public override void Execute(SensorArray environment, SpaceShip spaceShip)
         {
-            spaceShip.WeaponSystem.Fire();
-            switch (mPosition)
+            var distanceToTarget = Vector2.Distance(spaceShip.Position, environment.AimingShip.Position);
+            var aimingShip = spaceShip.SensorArray.AimingShip; 
+
+            switch (mReorienting)
             {
-                case null:
-                    spaceShip.SublightEngine.SetTarget(spaceShip, mPosition);
+                case true:
+                    spaceShip.WeaponSystem.StopFire();
+
+                    // Check for breaking reorientation
+                    if (!spaceShip.SublightEngine.IsMoving)
+                    {
+                        mReorienting = false;
+                        // Set course to attac target
+                        spaceShip.SublightEngine.SetTarget(spaceShip, aimingShip.Position);
+                        break;
+                    }
+
+                    // Check if reorientation Position has been reached 
+                    if (!spaceShip.SublightEngine.IsTargetReached(spaceShip, mReorientingPosition)) break;
+                    // Get new reorientation Position
+                    GetReorientingPosition(environment, spaceShip);
+                    // Set course to new reorientation Position
+                    spaceShip.SublightEngine.SetTarget(spaceShip, mReorientingPosition);
                     break;
-                case not null:
-                    if (!spaceShip.SublightEngine.IsMoving) mPosition = null;
+
+                case false:
+                    mReorientingPosition = null;
+
+                    // Check if a reorientation is needet 
+                    if (distanceToTarget < 1000)
+                    {
+                        mReorienting = true;
+                        // Get reorientation Position
+                        GetReorientingPosition(environment, spaceShip);
+                        // Set course to reorientation Position
+                        spaceShip.SublightEngine.SetTarget(spaceShip, mReorientingPosition);
+                        break;
+                    }
+
+                    // Set course to attac target
+                    spaceShip.SublightEngine.SetTarget(spaceShip, environment.AimingShip.Position);
+                    spaceShip.WeaponSystem.Fire();
                     break;
             }
         }
 
+        private void GetReorientingPosition(SensorArray environment, SpaceShip spaceShip)
+        {
+            var targetPos = environment.AimingShip.Position;
+            mReorientingPosition = ExtendetRandom.NextVectorOnBorder(new(targetPos, 5000));
+        }
+
         public override void Reset(SpaceShip spaceShip)
         {
-            mPosition = null;
+            mReorienting = false;
+            mReorientingPosition = null;
             spaceShip.WeaponSystem.StopFire();
         }
     }

@@ -13,28 +13,21 @@ namespace CelestialOdyssey.Game.Core.Utilitys
     {
         public static Random Random { get { return RandomSingleton.Instance; } }
 
-        public static T GetRandomElement<T>(List<T> lst)
+        public static T GetRandomElement<T>(List<T> lst) => lst[Random.Next(lst.Count)];
+
+        public static float GetRandomRadiant() => (float)Random.NextDouble() * 2 * MathF.PI; 
+
+        public static Vector2 NextVectorInCircle(CircleF circle) => Geometry.GetPointOnCircle(circle.Position, Random.Next(0, (int)circle.Radius), GetRandomRadiant());
+
+        public static Vector2 NextVectorOnBorder(CircleF circle) => Geometry.GetPointOnCircle(circle, GetRandomRadiant());
+
+        public static Vector2 NextVectorOnBorder(CircleF circle, Vector2 trend) 
         {
-            return lst[Random.Next(lst.Count)];
+            var dir = Geometry.CalculateDirectionVector(GetRandomRadiant()) + trend;
+            dir.Normalize();
+            return Geometry.GetPointInDirection(circle.Position, dir, circle.Radius);
         }
 
-        public static Vector2 NextVectorInCircle(CircleF circle)
-        {
-            RectangleF rectangle = circle.ToRectangle();
-            Vector2 v = GetRandomVector2(rectangle.TopLeft, rectangle.BottomRight);
-            if (!circle.Contains(v)) return NextVectorInCircle(circle);
-            return v;
-        }
-
-        public static Vector2 NextVectorOnBorder(CircleF circle)
-        {
-            var angle = MathF.PI * 2 * (float)Random.NextDouble();
-            return Geometry.GetPointOnCircle(circle, angle);
-        }
-
-        public static Vector2 GetRandomVector2(Vector2 star, Vector2 end)
-        {
-            return new Vector2(Random.Next((int)star.X, (int)end.X), Random.Next((int)star.Y, (int)end.Y));
-        }
+        public static Vector2 GetRandomVector2(Vector2 star, Vector2 end) =>  new Vector2(Random.Next((int)star.X, (int)end.X), Random.Next((int)star.Y, (int)end.Y));
     }
 }

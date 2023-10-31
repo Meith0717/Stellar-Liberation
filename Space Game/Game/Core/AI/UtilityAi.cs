@@ -21,7 +21,7 @@ namespace CelestialOdyssey.Game.Core.AI
         public UtilityAi(HashSet<Behavior> behaviors)
         {
             mBehaviors = behaviors;
-            mCoolDown = ExtendetRandom.Random.Next(1000);
+            mCoolDown = ExtendetRandom.Random.Next(600);
         }
 
         public void AddBehavior(Behavior behavior)

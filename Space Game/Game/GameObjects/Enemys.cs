@@ -82,7 +82,7 @@ namespace CelestialOdyssey.Game.GameObjects
         public class Fighter : Enemy
         {
             public Fighter(Vector2 position)
-                : base(position, ContentRegistry.enemyBattleShip, 0.3f, new(10000), new(0.7f, 0.1f), new(300, Color.IndianRed, 10, 10), new(1000, 1000, 1, 1))
+                : base(position, ContentRegistry.enemyBattleShip, 0.2f, new(10000), new(1.5f, 1f), new(500, Color.IndianRed, 10, 10), new(1000, 1000, 1, 1))
             {
                 WeaponSystem.PlaceTurret(new(new(0, 0), 1, TextureDepth + 1));
 
