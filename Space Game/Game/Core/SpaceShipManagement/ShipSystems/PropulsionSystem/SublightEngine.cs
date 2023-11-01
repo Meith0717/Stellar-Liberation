@@ -3,7 +3,6 @@
 // All rights reserved.
 
 using CelestialOdyssey.Core.GameEngine.Content_Management;
-using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using Microsoft.Xna.Framework;
 
@@ -12,9 +11,14 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionS
     public class SublightEngine
     {
         public bool IsMoving { get; private set; }
+
+        // Atributes
         private float mMaxVelocity;
         private float mManeuverability;
-        private Vector2? mTarget;
+
+        // Targets
+        private Vector2? mVector2Target;
+        private SpaceShip mShipTarget;
 
         public SublightEngine(float maxVelocity, float maneuverability)
         {
@@ -22,9 +26,11 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionS
             mManeuverability = maneuverability;
         }
 
-        public void Update(SpaceShip spaceShip)
+        public void Update(GameTime gameTime, SpaceShip spaceShip)
         {
-            switch (mTarget)
+            mVector2Target ??= mShipTarget?.Position;
+
+            switch (mVector2Target)
             {
                 case null:
                     spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, -.05f);
@@ -32,47 +38,37 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionS
                     IsMoving = false;
                     break;
                 case not null:
-                    spaceShip.Rotation += MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, (Vector2)mTarget, mManeuverability);
+                    spaceShip.Rotation += MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, (Vector2)mVector2Target, mManeuverability);
                     spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, .05f);
                     if (spaceShip.Velocity > mMaxVelocity) spaceShip.Velocity = mMaxVelocity;
-                    SetTarget(spaceShip, mTarget);
                     IsMoving = true;
+                    if (spaceShip.BoundedBox.Contains((Vector2)mVector2Target)) ClearTarget();
                     break;
             }
         }
 
-        public bool IsTargetReached(SpaceShip spaceShip, Vector2? target)
+        public void MoveToPosition(Vector2 position) 
         {
-            if (target is null) return true;
-            return Vector2.Distance((Vector2)target, spaceShip.Position) < 1000;
-        }
+            mShipTarget = null;
+            mVector2Target = position;
+        } 
 
-        public bool SetTarget(SpaceShip spaceShip, Vector2? target)
+        public void FollowSpaceShip(SpaceShip spaceShip) 
         {
-            if (IsTargetReached(spaceShip, target))
-            {
-                mTarget = null;
-                return false;
-            }
-            mTarget = target;
-            return true;
-        }
+            mVector2Target = null;
+            mShipTarget = spaceShip;
+        }  
 
-        public void FollowMouse(InputState inputState, SpaceShip spaceShip, Vector2 worldMousePosition)
+        public void ClearTarget()
         {
-            spaceShip.Rotation += MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, worldMousePosition, .1f);
-            if (inputState.HasMouseAction(MouseActionType.LeftClickHold))
-            {
-                SetTarget(spaceShip, worldMousePosition);
-                return;
-            }
-            SetTarget(spaceShip, null);
+            mShipTarget = null;
+            mVector2Target = null;
         }
 
         public void Draw(SpaceShip spaceShip, Scene scene)
         {
-            if (mTarget is null) return;
-            TextureManager.Instance.DrawAdaptiveLine(spaceShip.Position, (Vector2)mTarget, new Color(20, 20, 20, 20), 1, spaceShip.TextureDepth -1, scene.Camera.Zoom);
+            if (mVector2Target is null) return;
+            TextureManager.Instance.DrawAdaptiveLine(spaceShip.Position, (Vector2)mVector2Target, Color.Black, 1, spaceShip.TextureDepth -1, scene.Camera.Zoom);
         }
     }
 }

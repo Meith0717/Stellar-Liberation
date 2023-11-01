@@ -45,10 +45,8 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             };
 
             base.Update(gameTime, inputState, gameLayer, scene);
-            mCrosshairColor = IsHover ? Color.MonoGameOrange : GetColor();
         }
 
-        [JsonIgnore] private Color mCrosshairColor;
         public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
         {
             base.Draw(sceneManagerLayer, scene);
@@ -85,7 +83,7 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             Star = star;
             Player = player;
             var lst = new List<SpaceShip>();
-            for (int i = 0; i < 20; i++) SpaceShipManager.Spawn(this, ExtendetRandom.NextVectorInCircle(SystemBounding), ShipType.Carrior);
+            for (int i = 0; i < 0; i++) SpaceShipManager.Spawn(this, ExtendetRandom.NextVectorInCircle(SystemBounding), ShipType.EnemyFighter);
          }
         //------------------------//
 

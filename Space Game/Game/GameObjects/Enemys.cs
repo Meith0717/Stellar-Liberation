@@ -2,7 +2,8 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using CelestialOdyssey.Game.Core.AI.EnemyBehavior;
+using CelestialOdyssey.Game.Core.AI.Behaviors;
+using CelestialOdyssey.Game.Core.AI.Behaviors.Combat;
 using CelestialOdyssey.Game.Core.SpaceShipManagement;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
@@ -82,13 +83,14 @@ namespace CelestialOdyssey.Game.GameObjects
         public class Fighter : Enemy
         {
             public Fighter(Vector2 position)
-                : base(position, ContentRegistry.enemyBattleShip, 0.2f, new(10000), new(1.5f, 1f), new(500, Color.IndianRed, 10, 10), new(1000, 1000, 1, 1))
+                : base(position, ContentRegistry.enemyBattleShip, 0.2f, new(10000), new(1.5f, 1f), new(500, Color.IndianRed, 10, 10), new(10, 10, 0.05f, 0.05f))
             {
                 WeaponSystem.PlaceTurret(new(new(0, 0), 1, TextureDepth + 1));
 
                 mAi = new(new() {
                     new SearchBehavior(),
-                    new AttacBehavior()
+                    new CloseCombatBehavior(10000),
+                    new FleeBehavior(),
                 });
             }
 

@@ -63,7 +63,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
             base.Update(gameTime, inputState, gameLayer, scene);
 
             ExplosionSheet.Update(gameTime, Position);
-            SublightEngine.Update(this);
+            SublightEngine.Update(gameTime, this);
 
             if (DefenseSystem.HullLevel <= 0 && !IsDestroyed) Explode(scene);
 
@@ -103,7 +103,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
             ExplosionSheet.Draw(TextureDepth + 1);
 
             if (IsDestroyed) return;
-            sceneManagerLayer.DebugSystem.DrawSensorRadius(Position, SensorArray.ScanRadius, scene);
+            sceneManagerLayer.DebugSystem.DrawSensorRadius(Position, SensorArray.ShortRangeScanDistance, scene);
             TextureManager.Instance.DrawGameObject(this);
             WeaponSystem.Draw(sceneManagerLayer, scene);
             DefenseSystem.DrawShields(this);
@@ -115,7 +115,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
         {
             ExplosionSheet.Play("destroy");
             IsDestroyed = true;
-            SublightEngine.SetTarget(this, null);
+            Velocity = 0;
 
             var shakeamount = (500000 - Vector2.Distance(scene.Camera.Position, Position)) / 500000;
             if (shakeamount < 0) shakeamount = 0;

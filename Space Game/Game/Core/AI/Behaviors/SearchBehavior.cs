@@ -9,18 +9,21 @@ using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using Microsoft.Xna.Framework;
 using System.Linq;
 
-namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
+namespace CelestialOdyssey.Game.Core.AI.Behaviors
 {
     public class SearchBehavior : Behavior
     {
         private Vector2? mPatrolTarget;
 
-        public override double GetPriority(SensorArray environment, SpaceShip spaceShip)
+        public override double GetScore(SensorArray environment, SpaceShip spaceShip)
         {
             var shieldLevel = spaceShip.DefenseSystem.ShildLevel;
             var hullLevel = spaceShip.DefenseSystem.HullLevel;
             var hasNoTarget = environment.AimingShip is null ? 1 : 0;
-            return (shieldLevel + hullLevel) * hasNoTarget * 100;
+
+            var score = (shieldLevel + hullLevel) * hasNoTarget * 100;
+            System.Diagnostics.Debug.WriteLine($"SearchBehavior: {score}");
+            return score;
         }
 
         public override void Execute(SensorArray environment, SpaceShip spaceShip)
@@ -35,10 +38,11 @@ namespace CelestialOdyssey.Game.Core.AI.EnemyBehavior
                     // Get Random Target
                     var randomPlanet = ExtendetRandom.GetRandomElement(patrolTargets);
                     var angleBetweenTargetAndShip = Geometry.AngleBetweenVectors(randomPlanet.Position, spaceShip.Position);
-                    mPatrolTarget = Geometry.GetPointOnCircle(randomPlanet.BoundedBox, angleBetweenTargetAndShip);
+                    var target = Geometry.GetPointOnCircle(randomPlanet.BoundedBox, angleBetweenTargetAndShip);
+                    mPatrolTarget = target;
 
                     // Send Ship to Target
-                    spaceShip.SublightEngine.SetTarget(spaceShip, mPatrolTarget);
+                    spaceShip.SublightEngine.MoveToPosition(target);
                     break;
                 case not null:
                     // Check if Target is Reached
