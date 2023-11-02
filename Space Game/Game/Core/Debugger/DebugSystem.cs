@@ -6,6 +6,7 @@ using CelestialOdyssey.Core.GameEngine.Content_Management;
 using CelestialOdyssey.Game.Core.DebugSystem;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
+using CelestialOdyssey.Game.Core.SpaceShipManagement;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
@@ -28,6 +29,8 @@ namespace CelestialOdyssey.Game.Core.Debugger
         private bool ShowObjectsInBucket;
         private bool ShowHitBoxes;
         private bool ShowSensorRadius;
+        private bool ShowPaths;
+
         private bool SpawnFighter;
         private bool SpawnCorvette;
         private bool SpawnBattleShip;
@@ -46,17 +49,18 @@ namespace CelestialOdyssey.Game.Core.Debugger
             UpdateObjectCount = 0;
             if (!IsDebug)
             {
-                DrawBuckets = ShowObjectsInBucket = ShowHitBoxes = false;
+                DrawBuckets = ShowObjectsInBucket = ShowHitBoxes = ShowSensorRadius = ShowPaths = false;
                 return;
             }
             inputState.DoAction(ActionType.F1, () => DrawBuckets = !DrawBuckets);
             inputState.DoAction(ActionType.F2, () => ShowObjectsInBucket = !ShowObjectsInBucket);
             inputState.DoAction(ActionType.F3, () => ShowHitBoxes = !ShowHitBoxes);
             inputState.DoAction(ActionType.F4, () => ShowSensorRadius = !ShowSensorRadius);
-            inputState.DoAction(ActionType.F5, () => SpawnFighter = true);
-            inputState.DoAction(ActionType.F6, () => SpawnCorvette = true);
-            inputState.DoAction(ActionType.F7, () => SpawnBattleShip = true);
-            inputState.DoAction(ActionType.F8, () => SpawnCarrior = true);
+            inputState.DoAction(ActionType.F5, () => ShowPaths = !ShowPaths);
+            inputState.DoAction(ActionType.F6, () => SpawnFighter = true);
+            inputState.DoAction(ActionType.F7, () => SpawnCorvette = true);
+            inputState.DoAction(ActionType.F8, () => SpawnBattleShip = true);
+            inputState.DoAction(ActionType.F9, () => SpawnCarrior = true);
         }
 
         public void CheckForSpawn(PlanetSystem planetSystem)
@@ -101,11 +105,11 @@ namespace CelestialOdyssey.Game.Core.Debugger
             TextureManager.Instance.DrawString("debug", position + new Vector2(0, 25), "F2 - Draw Objects in Bucket", 1, ShowObjectsInBucket ? Color.GreenYellow : Color.White);
             TextureManager.Instance.DrawString("debug", position + new Vector2(0, 50), "F3 - Show Hit Box", 1, ShowHitBoxes ? Color.GreenYellow : Color.White);
             TextureManager.Instance.DrawString("debug", position + new Vector2(0, 75), "F4 - Show Sensor Radius", 1, ShowSensorRadius ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 100), "F5 - Spawn Fighter", 1, Color.White);
-            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 125), "F6 - Spawn Corvette", 1, Color.White);
-            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 150), "F7 - Spawn Battle Ship", 1, Color.White);
-            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 175), "F8 - Spawn Carrior", 1, Color.White);
-            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 200), "F9 - none", 1, false ? Color.GreenYellow : Color.White);
+            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 200), "F5 - Show Paths", 1, ShowPaths ? Color.GreenYellow : Color.White);
+            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 100), "F6 - Spawn Fighter", 1, Color.White);
+            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 125), "F7 - Spawn Corvette", 1, Color.White);
+            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 150), "F8 - Spawn Battle Ship", 1, Color.White);
+            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 175), "F9 - Spawn Carrior", 1, Color.White);
             TextureManager.Instance.DrawString("debug", position + new Vector2(0, 225), "F10 - none", 1, false ? Color.GreenYellow : Color.White);
 
             List<string> debug = new() {
@@ -124,6 +128,12 @@ namespace CelestialOdyssey.Game.Core.Debugger
             if (!ShowHitBoxes) { return; }
             TextureManager.Instance.DrawAdaptiveCircle(box.Position, box.Radius, Color.Red, 2, (int)TextureManager.Instance.MaxLayerDepth,
                 scene.Camera.Zoom);
+        }
+
+        public void DrawPath(Vector2? target, SpaceShip spaceShip, Scene scene)
+        {
+            if (target is null | !ShowPaths) return;
+            TextureManager.Instance.DrawAdaptiveLine(spaceShip.Position, (Vector2)target, Color.LightBlue, 1, spaceShip.TextureDepth -1, scene.Camera.Zoom);
         }
 
         public void DrawSensorRadius(Vector2 center, float radius, Scene scene)

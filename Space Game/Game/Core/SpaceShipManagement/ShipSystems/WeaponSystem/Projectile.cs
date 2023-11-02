@@ -34,7 +34,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyste
             ShieldDamage = shieldDamage;
             TextureColor = color;
             Origine = origine;
-            Velocity = ExtendetRandom.Random.Next(20, 25);
+            Velocity = 20;
             DisposeTime = 5000;
             mExplosionSheet = new(ContentRegistry.explosion, 64, 3, TextureScale * 2);
             mExplosionSheet.Animate("hit", new(45, Animation.GetRowList(0, 64), false));

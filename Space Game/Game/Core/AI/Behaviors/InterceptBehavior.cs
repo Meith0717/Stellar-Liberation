@@ -2,6 +2,7 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using CelestialOdyssey.Game.Core.Collision_Detection;
 using CelestialOdyssey.Game.Core.SpaceShipManagement;
 using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems;
 
@@ -15,7 +16,7 @@ namespace CelestialOdyssey.Game.Core.AI.Behaviors
 
             var distanceToAimingShip = float.IsPositiveInfinity(environment.DistanceToAimingShip)? 0 : environment.DistanceToAimingShip;
 
-            var score = shielHhullScore * (distanceToAimingShip * 50 / environment.ShortRangeScanDistance);
+            var score = shielHhullScore * (distanceToAimingShip * 4 / environment.ShortRangeScanDistance);
             return score;
         }
 

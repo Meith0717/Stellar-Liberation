@@ -3,9 +3,12 @@
 // All rights reserved.
 
 using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Game.Core.Collision_Detection;
+using CelestialOdyssey.Game.Core.GameObjectManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem
@@ -41,8 +44,9 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyste
             var hasFired = false;
             foreach (var turret in mTurrets) 
             {
+                var position = CollisionPredictor.PredictPosition(gameTime, origin.Position, 20f, aimingShip);
                 turret.GetPosition(origin.Position, origin.Rotation);
-                turret.RotateToTArget(origin.Rotation, aimingShip?.Position);
+                turret.RotateToTArget(origin.Rotation, position);
                 if (!mFire || mFireCoolDown < mMaxFireCoolDown) continue;
                 turret.Fire(projectileManager, origin, mParticleColor, mShielDamage, mHullDamage);
                 hasFired = true;

@@ -6,6 +6,7 @@ using CelestialOdyssey.Game.Core.SpaceShipManagement;
 using CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems;
 using CelestialOdyssey.Game.Core.Utilitys;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.Core.AI
@@ -44,7 +45,6 @@ namespace CelestialOdyssey.Game.Core.AI
             // Ausführung des ausgewählten Verhaltens
             mCurrentBehavior?.Execute(environment, spaceShip);
             mLastBehavior = mCurrentBehavior;
-            System.Diagnostics.Debug.WriteLine("");
         }
 
         private Behavior SelectBehavior(SensorArray environment, SpaceShip spaceShip)
@@ -53,7 +53,7 @@ namespace CelestialOdyssey.Game.Core.AI
             foreach (var item in mBehaviors)
             {
                 var score = item.GetScore(environment, spaceShip);
-                System.Diagnostics.Debug.WriteLineIf(Debug, $"{item.GetType().Name}: {score}");
+                System.Diagnostics.Debug.WriteLineIf(Debug, $"{item.GetType().Name}: {Math.Round(score, 5)}");
                 behaviors.Enqueue(item, -score);
             }
             if (!behaviors.TryPeek(out var behavior, out var priority)) return null;

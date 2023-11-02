@@ -2,9 +2,11 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using CelestialOdyssey.Core.GameEngine.Content_Management;
+using CelestialOdyssey.Game.Core.Collision_Detection;
+using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionSystem
 {
@@ -13,7 +15,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionS
         public bool IsMoving { get; private set; }
 
         // Atributes
-        private float mMaxVelocity;
+        public float MaxVelocity { get; private set; }
         private float mManeuverability;
 
         // Targets
@@ -22,13 +24,14 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionS
 
         public SublightEngine(float maxVelocity, float maneuverability)
         {
-            mMaxVelocity = maxVelocity;
+            MaxVelocity = maxVelocity;
             mManeuverability = maneuverability;
         }
 
         public void Update(GameTime gameTime, SpaceShip spaceShip)
         {
-            mVector2Target ??= mShipTarget?.Position;
+            var position = CollisionPredictor.PredictPosition(gameTime, spaceShip.Position, spaceShip.SublightEngine.MaxVelocity, mShipTarget);
+            mVector2Target ??= position;
 
             switch (mVector2Target)
             {
@@ -38,9 +41,18 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionS
                     IsMoving = false;
                     break;
                 case not null:
-                    spaceShip.Rotation += MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, (Vector2)mVector2Target, mManeuverability);
-                    spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, .05f);
-                    if (spaceShip.Velocity > mMaxVelocity) spaceShip.Velocity = mMaxVelocity;
+                    var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, (Vector2)mVector2Target, mManeuverability);
+                    switch (MathF.Abs(rotationUpdate))
+                    {
+                        case > 0.1f:
+                            spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, -.05f);
+                            break;
+                        case <= 0.1f:
+                            spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, .05f);
+                            break;
+                    }
+                    spaceShip.Rotation += rotationUpdate;
+                    if (spaceShip.Velocity > MaxVelocity) spaceShip.Velocity = MaxVelocity;
                     IsMoving = true;
                     if (spaceShip.BoundedBox.Contains((Vector2)mVector2Target)) ClearTarget();
                     break;
@@ -65,10 +77,17 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionS
             mVector2Target = null;
         }
 
-        public void Draw(SpaceShip spaceShip, Scene scene)
+        public void FollowMouse(InputState inputState, SpaceShip spaceShip, Vector2 worldMousePosition)
         {
-            if (mVector2Target is null) return;
-            TextureManager.Instance.DrawAdaptiveLine(spaceShip.Position, (Vector2)mVector2Target, Color.Black, 1, spaceShip.TextureDepth -1, scene.Camera.Zoom);
+            spaceShip.Rotation += MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, worldMousePosition, mManeuverability);
+            if (inputState.HasMouseAction(MouseActionType.LeftClickHold))
+            {
+                MoveToPosition(worldMousePosition);
+                return;
+            }
+            ClearTarget();
         }
+
+        public void Draw(Debugger.DebugSystem debugSystem, SpaceShip spaceShip, Scene scene) => debugSystem.DrawPath(mVector2Target, spaceShip, scene);
     }
 }

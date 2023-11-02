@@ -108,7 +108,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
             WeaponSystem.Draw(sceneManagerLayer, scene);
             DefenseSystem.DrawShields(this);
             DefenseSystem.DrawLive(this);
-            SublightEngine.Draw(this, scene);
+            SublightEngine.Draw(sceneManagerLayer.DebugSystem, this, scene);
         }
 
         public void Explode(Scene scene)

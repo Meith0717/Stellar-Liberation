@@ -23,7 +23,6 @@ namespace CelestialOdyssey.Game.Core.AI.Behaviors.Combat
             switch (mReorienting)
             {
                 case true:
-                    spaceShip.WeaponSystem.StopFire();
                     // Check for breaking reorientation
                     if (!spaceShip.SublightEngine.IsMoving) mReorienting = false;
                     break;

@@ -7,7 +7,9 @@ using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.Utilitys;
 using CelestialOdyssey.Game.GameObjects;
 using CelestialOdyssey.Game.GameObjects.AstronomicalObjects;
+using Microsoft.VisualBasic;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -45,23 +47,40 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems
             AstronomicalObjects.AddRange(planetSystem.Planets);
             SortedSpaceShips = scene.GetObjectsInRadius<SpaceShip>(position, ShortRangeScanDistance);
 
+            var opponents = new List<SpaceShip>(); 
+
             switch (opponent)
             {
                 case Factions.Enemys:
-                    var enemys = SortedSpaceShips.OfType<Enemy>();
-                    if (!enemys.Any()) { AimingShip = null; break; }
-                    // if (!enemys.Contains(AimingShip)) 
-                    AimingShip = enemys.ToList()[0];
+                    var enemis = (IEnumerable<SpaceShip>)SortedSpaceShips.OfType<Enemy>();
+                    opponents = enemis.ToList();
                     break;
                 case Factions.Allies:
-                    var allies = SortedSpaceShips.OfType<Player>();
-                    if (!allies.Any()) { AimingShip = null; break; }
-                    // if (!allies.Contains(AimingShip))
-                    AimingShip = allies.ToList()[0];
+                    var allies = (IEnumerable<SpaceShip>)SortedSpaceShips.OfType<Player>();
+                    opponents = allies.ToList();
                     break;
             }
 
+             AimingShip =  GetAimingShip(position, opponents);
+
             DistanceToAimingShip = AimingShip is null ? float.PositiveInfinity : Vector2.Distance(position, AimingShip.Position);
         }
+
+        private SpaceShip GetAimingShip(Vector2 position, List<SpaceShip> opponents)
+        {
+            PriorityQueue<SpaceShip, double> q = new();
+            foreach (var opponent in opponents) q.Enqueue(opponent, -GetAimingScore(position, opponent));
+            q.TryDequeue(out var spaceShip, out var _);
+            return spaceShip;
+        }
+
+        private double GetAimingScore(Vector2 position, SpaceShip opponent)
+        {
+            var opponentShielHhullScore = opponent.DefenseSystem.ShildLevel * 0.5 + opponent.DefenseSystem.HullLevel * 0.5;
+            var distanceScore = Vector2.Distance(position, opponent.Position) / ShortRangeScanDistance;
+
+            return  (1 - opponentShielHhullScore) * 0.25 + (1 - distanceScore) * 0.75;
+        }
+
     }
 }

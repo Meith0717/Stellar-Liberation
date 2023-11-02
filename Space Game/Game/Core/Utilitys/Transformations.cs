@@ -27,12 +27,15 @@ namespace CelestialOdyssey.Game.Core.Utilitys
         /// <param name="screenWidth">The width of the screen.</param>
         /// <param name="screenHeight">The height of the screen.</param>
         /// <returns>The view transformation matrix.</returns>
-        public static Matrix CreateViewTransformationMatrix(Vector2 cameraPosition, float cameraZoom,
-            int screenWidth, int screenHeight)
+        public static Matrix CreateViewTransformationMatrix(Vector2 cameraPosition, float cameraZoom, float cameraRotation,
+                int screenWidth, int screenHeight)
         {
-            return Matrix.CreateTranslation(new Vector3(-cameraPosition.X, -cameraPosition.Y, 0))
-                * Matrix.CreateScale(cameraZoom, cameraZoom, 1)
-                * Matrix.CreateTranslation(new Vector3(screenWidth / 2f, screenHeight / 2f, 0));
+            Matrix translationMatrix = Matrix.CreateTranslation(new Vector3(-cameraPosition.X, -cameraPosition.Y, 0));
+            Matrix scaleMatrix = Matrix.CreateScale(cameraZoom, cameraZoom, 1);
+            Matrix rotationMatrix = Matrix.CreateRotationZ(cameraRotation);
+            Matrix screenCenterMatrix = Matrix.CreateTranslation(new Vector3(screenWidth / 2f, screenHeight / 2f, 0));
+
+            return translationMatrix * scaleMatrix * rotationMatrix * screenCenterMatrix;
         }
 
         /// <summary>

@@ -33,7 +33,7 @@ namespace CelestialOdyssey.Game.Core.LayerManagement
 
         public void Update(GameTime gameTime, InputState inputState, int screenWidth, int screenHeight)
         {
-            mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera.Position, Camera.Zoom, screenWidth, screenHeight);
+            mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera.Position, Camera.Zoom, 0, screenWidth, screenHeight);
             WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, inputState.mMousePosition);
             Camera.Update(gameTime, inputState, inputState.mMousePosition, mViewTransformationMatrix);
             FrustumCuller.Update(screenWidth, screenHeight, mViewTransformationMatrix);

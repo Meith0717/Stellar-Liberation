@@ -18,7 +18,7 @@ namespace CelestialOdyssey.Game.Core.AI.Behaviors.Combat
             spaceShip.SublightEngine.ClearTarget();
             spaceShip.WeaponSystem.StopFire();
             spaceShip.WeaponSystem.StopFire();
-            if (mDistance < mAttackDistance) spaceShip.WeaponSystem.Fire();
+            if (mDistance <= mAttackDistance) spaceShip.WeaponSystem.Fire();
         }
 
         public override void Reset(SpaceShip spaceShip) => spaceShip.WeaponSystem.StopFire();

@@ -12,7 +12,6 @@ using CelestialOdyssey.Game.Layers;
 using CelestialOdyssey.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using System;
-using System.Security.Cryptography.X509Certificates;
 
 namespace CelestialOdyssey.Game.GameObjects
 {
@@ -22,7 +21,7 @@ namespace CelestialOdyssey.Game.GameObjects
 
         private Inventory mInventory;
 
-        public Player() : base(Vector2.Zero, ContentRegistry.player.Name, 1, new(50000), new(1f, 0.1f), new(200, Color.BlueViolet, 2, 2), new(10000000, 10000000, 1, 1), Factions.Enemys)
+        public Player() : base(Vector2.Zero, ContentRegistry.player.Name, 1, new(15000), new(1f, 0.01f), new(200, Color.BlueViolet, 2, 2), new(10000000, 10000000, 1, 1), Factions.Enemys)
         {
             mInventory = new();
 
@@ -35,9 +34,9 @@ namespace CelestialOdyssey.Game.GameObjects
             mAi = new(new()
             {
                 new PatrollBehavior(),
-                new FarCombatBehavior(50000),
+                new CloseCombatBehavior(10000),
                 new FleeBehavior(),
-                new InterceptBehavior(),
+                // new InterceptBehavior(),
             })
             { Debug = true };
         }
