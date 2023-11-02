@@ -1,4 +1,4 @@
-﻿// FighterAttacBehavior.cs 
+﻿// CombatBehavior.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
@@ -17,22 +17,19 @@ namespace CelestialOdyssey.Game.Core.AI.Behaviors.Combat
 
         public override double GetScore(SensorArray environment, SpaceShip spaceShip)
         {
-            var shieldScore = spaceShip.DefenseSystem.ShildLevel * 0.4;
-            var hullScore = spaceShip.DefenseSystem.HullLevel * 0.6;
+            var shielHhullScore = spaceShip.DefenseSystem.ShildLevel * 0.4 + spaceShip.DefenseSystem.HullLevel * 0.6;
+
             var target = environment.AimingShip;
             if (target is null)
             {
-                System.Diagnostics.Debug.WriteLine($"AttacScore: {0}");
                 return 0;
             }
-            var targetShieldScore = target.DefenseSystem.ShildLevel * 0.1;
-            var targetHullScore = target.DefenseSystem.HullLevel * 0.9;
+            var targetShielHhullScore = target.DefenseSystem.ShildLevel * 0.1 + target.DefenseSystem.HullLevel * 0.9;
 
             mDistance = Vector2.Distance(spaceShip.Position, target.Position);
-            var inDistance = mDistance < mAttackDistance ? 1 : 0;
+            var inAttacDistance = mDistance < mAttackDistance ? 1 : 0;
 
-            var score = inDistance * (shieldScore + hullScore + (1 - (targetShieldScore + targetHullScore)) * 10);
-            System.Diagnostics.Debug.WriteLine($"AttacScore: {score}");
+            var score = inAttacDistance * shielHhullScore * (1 - targetShielHhullScore);
             return score;
         }
     }

@@ -16,19 +16,17 @@ namespace CelestialOdyssey.Game.Core.AI.Behaviors
 
         public override double GetScore(SensorArray environment, SpaceShip spaceShip)
         {
-            var shieldScore = spaceShip.DefenseSystem.ShildLevel * 0.01;
-            var hullScore = spaceShip.DefenseSystem.HullLevel * 0.99;
+            var shielHhullScore = spaceShip.DefenseSystem.ShildLevel * 0.01 + spaceShip.DefenseSystem.HullLevel * 0.99;
+
             var target = environment.AimingShip;
             if (target is null) 
             {
-                System.Diagnostics.Debug.WriteLine($"FleeScore: {0}");
+                // System.Diagnostics.Debug.WriteLine($"FleeScore: {0}");
                 return 0; 
             }
-            var targetShieldScore = target.DefenseSystem.ShildLevel * 0.1;
-            var targetHullScore = target.DefenseSystem.HullLevel * 0.9;
+            var targetShielHhullScore = target.DefenseSystem.ShildLevel * 0.1 + target.DefenseSystem.HullLevel * 0.9;
 
-            var score = ((targetShieldScore + targetHullScore) * 0.5) + ((1 - (shieldScore + hullScore)));
-            System.Diagnostics.Debug.WriteLine($"FleeScore: {score}");
+            var score = targetShielHhullScore * 0.25 + (1 - shielHhullScore) * 0.75;
             return score;
         }
 

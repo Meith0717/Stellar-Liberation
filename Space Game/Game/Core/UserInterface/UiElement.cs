@@ -1,4 +1,4 @@
-﻿// MyUiElement.cs 
+﻿// UiElement.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 

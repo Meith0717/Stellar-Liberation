@@ -34,11 +34,12 @@ namespace CelestialOdyssey.Game.GameObjects
 
             mAi = new(new()
             {
-                new SearchBehavior(),
+                new PatrollBehavior(),
                 new FarCombatBehavior(50000),
                 new FleeBehavior(),
-                new FollowBehavior(),
-            });
+                new InterceptBehavior(),
+            })
+            { Debug = true };
         }
 
         public void SpawnInNewPlanetSystem(Vector2 position)

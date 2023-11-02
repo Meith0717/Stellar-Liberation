@@ -1,4 +1,4 @@
-﻿// BehaviorBasedAI.cs 
+﻿// UtilityAi.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
@@ -15,6 +15,7 @@ namespace CelestialOdyssey.Game.Core.AI
         private Behavior mCurrentBehavior;
         private Behavior mLastBehavior;
         private readonly  HashSet<Behavior> mBehaviors;
+        public bool Debug = false;
 
         private int mCoolDown;
 
@@ -49,8 +50,14 @@ namespace CelestialOdyssey.Game.Core.AI
         private Behavior SelectBehavior(SensorArray environment, SpaceShip spaceShip)
         {
             PriorityQueue<Behavior, double> behaviors = new();
-            foreach (var item in mBehaviors) behaviors.Enqueue(item, -item.GetScore(environment, spaceShip));
+            foreach (var item in mBehaviors)
+            {
+                var score = item.GetScore(environment, spaceShip);
+                System.Diagnostics.Debug.WriteLineIf(Debug, $"{item.GetType().Name}: {score}");
+                behaviors.Enqueue(item, -score);
+            }
             if (!behaviors.TryPeek(out var behavior, out var priority)) return null;
+            System.Diagnostics.Debug.WriteLineIf(Debug, $"_____________");
             return behavior;
         }
     }

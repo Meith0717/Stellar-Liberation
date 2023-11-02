@@ -1,4 +1,4 @@
-﻿// PartolBehavior.cs 
+﻿// PatrollBehavior.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
@@ -11,18 +11,16 @@ using System.Linq;
 
 namespace CelestialOdyssey.Game.Core.AI.Behaviors
 {
-    public class SearchBehavior : Behavior
+    public class PatrollBehavior : Behavior
     {
         private Vector2? mPatrolTarget;
 
         public override double GetScore(SensorArray environment, SpaceShip spaceShip)
         {
-            var shieldLevel = spaceShip.DefenseSystem.ShildLevel;
-            var hullLevel = spaceShip.DefenseSystem.HullLevel;
-            var hasNoTarget = environment.AimingShip is null ? 1 : 0;
+            var shielHhullScore = spaceShip.DefenseSystem.ShildLevel * 0.5 + spaceShip.DefenseSystem.HullLevel * 0.5;
+            var hasNoAimingShip = environment.AimingShip is null ? 1 : 0;
 
-            var score = (shieldLevel + hullLevel) * hasNoTarget * 100;
-            System.Diagnostics.Debug.WriteLine($"SearchBehavior: {score}");
+            var score = shielHhullScore * hasNoAimingShip;
             return score;
         }
 

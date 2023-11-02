@@ -23,6 +23,7 @@ namespace CelestialOdyssey.Game.Core.AI.Behaviors.Combat
             switch (mReorienting)
             {
                 case true:
+                    spaceShip.WeaponSystem.StopFire();
                     // Check for breaking reorientation
                     if (!spaceShip.SublightEngine.IsMoving) mReorienting = false;
                     break;
@@ -38,6 +39,7 @@ namespace CelestialOdyssey.Game.Core.AI.Behaviors.Combat
                     }
 
                     // Set course to attac target
+                    if (mDistance < mAttackDistance) spaceShip.WeaponSystem.Fire();
                     spaceShip.SublightEngine.FollowSpaceShip(environment.AimingShip);
                     break;
             }

@@ -88,7 +88,7 @@ namespace CelestialOdyssey.Game.GameObjects
                 WeaponSystem.PlaceTurret(new(new(0, 0), 1, TextureDepth + 1));
 
                 mAi = new(new() {
-                    new SearchBehavior(),
+                    new PatrollBehavior(),
                     new CloseCombatBehavior(10000),
                     new FleeBehavior(),
                 });

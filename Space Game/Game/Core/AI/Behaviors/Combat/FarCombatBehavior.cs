@@ -1,4 +1,4 @@
-﻿// NearCombatBehavior.cs 
+﻿// FarCombatBehavior.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
@@ -18,7 +18,7 @@ namespace CelestialOdyssey.Game.Core.AI.Behaviors.Combat
             spaceShip.SublightEngine.ClearTarget();
             spaceShip.WeaponSystem.StopFire();
             spaceShip.WeaponSystem.StopFire();
-            if (mDistance < 3000) spaceShip.WeaponSystem.Fire();
+            if (mDistance < mAttackDistance) spaceShip.WeaponSystem.Fire();
         }
 
         public override void Reset(SpaceShip spaceShip) => spaceShip.WeaponSystem.StopFire();
