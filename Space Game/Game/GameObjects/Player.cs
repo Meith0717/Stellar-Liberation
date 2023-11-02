@@ -37,8 +37,7 @@ namespace CelestialOdyssey.Game.GameObjects
                 new CloseCombatBehavior(10000),
                 new FleeBehavior(),
                 // new InterceptBehavior(),
-            })
-            { Debug = true };
+            });
         }
 
         public void SpawnInNewPlanetSystem(Vector2 position)

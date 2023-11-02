@@ -44,10 +44,10 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionS
                     var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, (Vector2)mVector2Target, mManeuverability);
                     switch (MathF.Abs(rotationUpdate))
                     {
-                        case > 0.1f:
-                            spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, -.05f);
+                        case > 0.012f:
+                            spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, -.003f);
                             break;
-                        case <= 0.1f:
+                        case <= 0.012f:
                             spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, .05f);
                             break;
                     }
