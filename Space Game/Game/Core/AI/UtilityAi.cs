@@ -14,7 +14,7 @@ namespace CelestialOdyssey.Game.Core.AI
     {
         private Behavior mCurrentBehavior;
         private Behavior mLastBehavior;
-        private HashSet<Behavior> mBehaviors;
+        private readonly  HashSet<Behavior> mBehaviors;
 
         private int mCoolDown;
 
@@ -55,3 +55,4 @@ namespace CelestialOdyssey.Game.Core.AI
         }
     }
 }
+
