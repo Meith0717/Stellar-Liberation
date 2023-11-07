@@ -27,7 +27,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyste
         public void RotateToTArget(float originRotation, Vector2? targetPosition) => Rotation += targetPosition switch
         {
             null => MovementController.GetRotationUpdate(Rotation, originRotation, 1),
-            not null => MovementController.GetRotationUpdate(Rotation, Position, (Vector2)targetPosition, 0.5f),
+            not null => MovementController.GetRotationUpdate(Rotation, Position, (Vector2)targetPosition) * 0.1f,
         };
 
 

@@ -28,7 +28,7 @@ namespace CelestialOdyssey.Game.Core.AI.Behaviors
 
         public override void Reset(SpaceShip spaceShip)
         {
-            spaceShip.SublightEngine.ClearTarget();
+            spaceShip.SublightEngine.Standstill();
         }
     }
 }

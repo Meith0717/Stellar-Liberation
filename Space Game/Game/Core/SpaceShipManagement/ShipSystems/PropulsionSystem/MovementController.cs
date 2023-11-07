@@ -4,33 +4,21 @@
 
 using CelestialOdyssey.Game.Core.Utilitys;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionSystem
 {
     public static class MovementController
     {
-        /// <summary>
-        /// Calculates the rotation update needed to smoothly transition from the current rotation
-        /// to the target rotation, applying a scaling factor for finer control over the update rate.
-        /// </summary>
-        /// <param name="currentRotation">The current rotation angle in radians.</param>
-        /// <param name="targetRotation">The target rotation angle in radians.</param>
-        /// <param name="rotationSmoothingFactor">A factor that controls the rate of rotation update.
-        /// Higher values result in faster updates, while lower values produce smoother transitions.</param>
-        /// <returns>
-        /// The rotation update value, scaled by the provided smoothing factor for better control over the transition.
-        /// If the input angles are NaN (Not a Number), the function returns 0 to prevent undesired behavior.
-        /// </returns>
-        public static float GetRotationUpdate(float currentRotation, Vector2 currentPosition, Vector2 targetPosition, float rotationSmoothingFactor)
+
+        public static float GetRotationUpdate(float currentRotation, Vector2 currentPosition, Vector2 targetPosition)
         {
             var targetRotation = Geometry.AngleBetweenVectors(currentPosition, targetPosition);
             float delta = Geometry.AngleDegDelta(Geometry.RadToDeg(currentRotation), Geometry.RadToDeg(targetRotation));
             delta = Geometry.DegToRad(delta);
-            return delta switch
-            {
-                float.NaN => 0,
-                _ => delta * rotationSmoothingFactor,
-            };
+            return delta switch { 
+                float.NaN => 0, 
+                _ => delta };
         }
 
         public static float GetRotationUpdate(float currentRotation, float targetRotation, float rotationSmoothingFactor)
@@ -44,17 +32,19 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionS
             };
         }
 
-        /// <summary>
-        /// Calculates the new velocity based on the current velocity and acceleration applied.
-        /// </summary>
-        /// <param name="currentVelocity">The current velocity of the object.</param>
-        /// <param name="acceleration">The acceleration applied to the object.</param>
-        /// <returns>The new velocity after applying the given acceleration.</returns>
-        public static float GetVelocity(float currentVelocity, float acceleration)
+        public static float GetVelocity(float currentVelocity, float targetVelocity, float acceleration)
         {
-            var newVelocity = currentVelocity + acceleration;
-            if (newVelocity < 0) return 0;
-            return newVelocity;
+            var a = MathF.Abs(acceleration);
+            if (targetVelocity < currentVelocity) a = -acceleration;
+
+            var newVelocity = currentVelocity + a;
+
+            return a switch
+            {
+                < 0 => MathF.Max(0, newVelocity),
+                > 0 => MathF.Min(newVelocity, targetVelocity),
+                _ => currentVelocity
+            };
         }
     }
 }

@@ -26,14 +26,14 @@ namespace CelestialOdyssey.Game.Core.ItemManagement
         public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {
             base.Update(gameTime, inputState, gameLayer, scene);
-            Velocity = MovementController.GetVelocity(Velocity, - ExtendetRandom.Random.Next(5, 10) / 1000f);
+            Velocity = MovementController.GetVelocity(Velocity, float.PositiveInfinity, - ExtendetRandom.Random.Next(5, 10) / 1000f);
         }
 
         public void Pull(Vector2 position)
         {
             var angleToPosition = Geometry.AngleBetweenVectors(Position, position);
             Direction = Geometry.CalculateDirectionVector(angleToPosition);
-            Velocity = MovementController.GetVelocity(Velocity, 0.015f);
+            Velocity = MovementController.GetVelocity(Velocity, float.PositiveInfinity, 0.015f);
         }
 
         public void Throw(Vector2 momentum, Vector2 position)

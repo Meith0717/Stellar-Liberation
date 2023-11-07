@@ -15,7 +15,7 @@ namespace CelestialOdyssey.Game.Core.AI.Behaviors.Combat
 
         public override void Execute(SensorArray environment, SpaceShip spaceShip)
         {
-            spaceShip.SublightEngine.ClearTarget();
+            spaceShip.SublightEngine.Standstill();
             spaceShip.WeaponSystem.StopFire();
             spaceShip.WeaponSystem.StopFire();
             if (mDistance <= mAttackDistance) spaceShip.WeaponSystem.Fire();

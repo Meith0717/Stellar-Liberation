@@ -33,9 +33,9 @@ namespace CelestialOdyssey.Game.GameObjects
 
             mAi = new(new()
             {
-                new PatrollBehavior(),
-                new CloseCombatBehavior(10000),
-                new FleeBehavior(),
+                // new PatrollBehavior(),
+                // new CloseCombatBehavior(10000),
+                // new FleeBehavior(),
                 // new InterceptBehavior(),
             });
         }
@@ -48,9 +48,10 @@ namespace CelestialOdyssey.Game.GameObjects
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {
-            // WeaponSystem.StopFire();
-            // inputState.DoMouseAction(MouseActionType.RightClickHold, () => WeaponSystem.Fire());
-            // SublightEngine.FollowMouse(inputState, this, scene.WorldMousePosition);
+            WeaponSystem.StopFire();
+            inputState.DoMouseAction(MouseActionType.RightClickHold, () => WeaponSystem.Fire());
+            inputState.DoMouseAction(MouseActionType.LeftClick, () => SublightEngine.MoveToPosition(scene.WorldMousePosition));
+            // SublightEngine.FollowMouse(inputState, scene.WorldMousePosition);
             mInventory.Update(this, scene);
 
             base.Update(gameTime, inputState, gameLayer, scene);
