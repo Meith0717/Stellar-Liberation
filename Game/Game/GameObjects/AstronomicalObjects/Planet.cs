@@ -1,0 +1,60 @@
+﻿// Planet.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using StellarLiberation.Core.GameEngine.Content_Management;
+using StellarLiberation.Game.Core.GameObjectManagement;
+using StellarLiberation.Game.Core.InputManagement;
+using StellarLiberation.Game.Core.LayerManagement;
+using StellarLiberation.Game.Core.Utilitys;
+using StellarLiberation.Game.Layers;
+using StellarLiberation.GameEngine.Content_Management;
+using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
+using System;
+
+namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
+{
+    [Serializable]
+    public class Planet : GameObject
+    {
+        [JsonProperty]
+        public Vector2 OrbitCenter { get; private set; }
+        [JsonProperty]
+        public int OrbitRadius { get; private set; }
+        [JsonProperty]
+        public float OrbitRadians { get; private set; }
+        [JsonIgnore]
+        private float mShadowRotation;
+
+        public Planet(Vector2 orbitCenter, int orbitRadius, string textureId, float textureScale)
+            : base(Vector2.Zero, textureId, textureScale, 1)
+        {
+            OrbitCenter = orbitCenter;
+            OrbitRadius = orbitRadius;
+            OrbitRadians = ExtendetRandom.Random.NextSingle() * (MathF.PI * 2);
+
+            Position = Geometry.GetPointOnCircle(OrbitCenter, OrbitRadius, OrbitRadians);
+            mShadowRotation = Geometry.AngleBetweenVectors(Position, OrbitCenter) + MathF.PI;
+            UpdateBoundBox();
+        }
+
+        public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
+        {
+            base.Update(gameTime, inputState, gameLayer, scene);
+            RemoveFromSpatialHashing(scene);
+            OrbitRadians -= 0.00001f;
+            Position = Geometry.GetPointOnCircle(OrbitCenter, OrbitRadius, OrbitRadians);
+            mShadowRotation = Geometry.AngleBetweenVectors(Position, OrbitCenter) + MathF.PI;
+            Rotation -= 0.0001f;
+            AddToSpatialHashing(scene);
+        }
+
+        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
+        {
+            base.Draw(sceneManagerLayer, scene);
+            TextureManager.Instance.Draw(ContentRegistry.planetShadow, Position, TextureOffset, TextureScale * 1.05f, mShadowRotation, TextureDepth + 1, Color.White);
+            TextureManager.Instance.DrawGameObject(this);
+        }
+    }
+}
