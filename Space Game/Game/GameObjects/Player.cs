@@ -23,7 +23,7 @@ namespace CelestialOdyssey.Game.GameObjects
 
         public Player() : base(Vector2.Zero, ContentRegistry.player.Name, 1, new(20000), new(1f, 0.01f), new(1000, Color.BlueViolet, 2, 2), new(100, int.MaxValue, 0, 0), Factions.Enemys)
         {
-            mInventory = new();
+            mInventory = new(2000);
 
             WeaponSystem.PlaceTurret(new(new(110, 35), 1, TextureDepth + 1));
             WeaponSystem.PlaceTurret(new(new(110, -35), 1, TextureDepth + 1));
@@ -33,12 +33,11 @@ namespace CelestialOdyssey.Game.GameObjects
 
             mAi = new(new()
             {
-                new PatrollBehavior(),
-                new InterceptBehavior(),
-                new FarCombatBehavior(10000),
-                new FleeBehavior()
-            })
-            { Debug = true };
+                // new PatrollBehavior(),
+                // new InterceptBehavior(),
+                // new FarCombatBehavior(10000),
+                // new FleeBehavior()
+            });
         }
 
         public void SpawnInNewPlanetSystem(Vector2 position)
@@ -49,9 +48,9 @@ namespace CelestialOdyssey.Game.GameObjects
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {
-            // WeaponSystem.StopFire();
-            // inputState.DoMouseAction(MouseActionType.RightClickHold, () => WeaponSystem.Fire());
-            // SublightEngine.FollowMouse(inputState, scene.WorldMousePosition);
+            WeaponSystem.StopFire();
+            inputState.DoMouseAction(MouseActionType.RightClickHold, () => WeaponSystem.Fire());
+            SublightEngine.FollowMouse(inputState, scene.WorldMousePosition);
             mInventory.Update(this, scene);
 
             base.Update(gameTime, inputState, gameLayer, scene);
@@ -61,6 +60,12 @@ namespace CelestialOdyssey.Game.GameObjects
         public override void HasCollide()
         {
             throw new NotImplementedException();
+        }
+
+        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
+        {
+            base.Draw(sceneManagerLayer, scene);
+            mInventory.Draw(this);
         }
     }
 }

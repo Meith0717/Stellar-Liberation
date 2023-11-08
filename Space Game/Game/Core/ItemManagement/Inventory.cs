@@ -7,6 +7,7 @@ using CelestialOdyssey.Game.Core.Collision_Detection;
 using CelestialOdyssey.Game.Core.LayerManagement;
 using CelestialOdyssey.Game.Core.SpaceShipManagement;
 using CelestialOdyssey.GameEngine.Content_Management;
+using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,16 +15,20 @@ using System.Collections.Generic;
 namespace CelestialOdyssey.Game.Core.ItemManagement
 {
     [Serializable]
-    public class Inventory
-    {
+    public class Inventory { 
+
+        [JsonProperty] private int mPullRadius;
         [JsonProperty] private readonly Dictionary<Type, int> mItems = new();
+        [JsonIgnore] private List<Item> mItemsInRange;
+
+        public Inventory(int PullRadius) { mPullRadius = PullRadius; }
 
         public void Update(SpaceShip spaceShip, Scene scene)
         {
             var position = spaceShip.Position;
-            var itemsInRange = scene.GetObjectsInRadius<Item>(position, 1000);
+            mItemsInRange = scene.GetObjectsInRadius<Item>(position, mPullRadius);
             var collected = false;
-            foreach (var item in itemsInRange)
+            foreach (var item in mItemsInRange)
             {
                 item.Pull(position);
                 if (!ContinuousCollisionDetection.HasCollide(item, spaceShip, out _)) continue;
@@ -46,6 +51,11 @@ namespace CelestialOdyssey.Game.Core.ItemManagement
             mItems[item.GetType()]--;
             if (mItems[item.GetType()] == 0) mItems.Remove(item.GetType());
             return true;
+        }
+
+        public void Draw(SpaceShip space)
+        {
+            foreach (var item in mItemsInRange) TextureManager.Instance.DrawLine(space.Position, item.Position, Color.Purple, 4, space.TextureDepth - 1);
         }
     }
 }

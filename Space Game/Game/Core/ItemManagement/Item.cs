@@ -26,7 +26,7 @@ namespace CelestialOdyssey.Game.Core.ItemManagement
         public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {
             base.Update(gameTime, inputState, gameLayer, scene);
-            Velocity = MovementController.GetVelocity(Velocity, 0, - ExtendetRandom.Random.Next(5, 10) / 1000f);
+            Velocity = MovementController.GetVelocity(Velocity, 0, ExtendetRandom.Random.Next(5, 10) / 1000f);
         }
 
         public void Pull(Vector2 position)
@@ -41,7 +41,7 @@ namespace CelestialOdyssey.Game.Core.ItemManagement
             Position = position;
             ExtendetRandom.Random.NextUnitVector(out var direction);
             Direction = momentum + direction;
-            Velocity = ExtendetRandom.Random.Next(5, 15) / 10f;
+            Velocity = ExtendetRandom.Random.Next(10, 25) / 10;
         }
 
         public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
