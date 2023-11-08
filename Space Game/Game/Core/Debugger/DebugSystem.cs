@@ -68,7 +68,7 @@ namespace CelestialOdyssey.Game.Core.Debugger
             if (SpawnBattleShip) planetSystem.SpaceShipManager.Spawn(planetSystem, Vector2.Zero, SpaceShipManagement.ShipType.EnemyBattleShip);
             if (SpawnCorvette) planetSystem.SpaceShipManager.Spawn(planetSystem, Vector2.Zero, SpaceShipManagement.ShipType.EnemyCorvette);
             if (SpawnFighter) planetSystem.SpaceShipManager.Spawn(planetSystem, Vector2.Zero, SpaceShipManagement.ShipType.EnemyFighter);
-            if (SpawnCarrior) planetSystem.SpaceShipManager.Spawn(planetSystem, Vector2.Zero, SpaceShipManagement.ShipType.Carrior);
+            if (SpawnCarrior) planetSystem.SpaceShipManager.Spawn(planetSystem, Vector2.Zero, SpaceShipManagement.ShipType.EnemyCarrior);
             SpawnFighter = SpawnBattleShip = SpawnCorvette = SpawnCarrior = false;
         }
 

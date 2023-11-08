@@ -17,7 +17,6 @@ namespace CelestialOdyssey.Game.Core.AI.Behaviors.Combat
         {
             spaceShip.SublightEngine.Standstill();
             spaceShip.WeaponSystem.StopFire();
-            spaceShip.WeaponSystem.StopFire();
             if (mDistance <= mAttackDistance) spaceShip.WeaponSystem.Fire();
         }
 

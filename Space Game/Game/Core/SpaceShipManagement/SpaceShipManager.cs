@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace CelestialOdyssey.Game.Core.SpaceShipManagement
 {
-    public enum ShipType { EnemyBattleShip, EnemyCorvette, EnemyFighter, Carrior }
+    public enum ShipType { EnemyBattleShip, EnemyCorvette, EnemyFighter, EnemyCarrior }
 
     public class SpaceShipManager : GameObjectManager
     {
@@ -29,7 +29,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement
                 case ShipType.EnemyFighter:
                     AddObj(new Enemys.Fighter(position) { ActualPlanetSystem = planetSystem });
                     break;
-                case ShipType.Carrior:
+                case ShipType.EnemyCarrior:
                     AddObj(new Enemys.Carrior(position) { ActualPlanetSystem = planetSystem });
                     break;
             }

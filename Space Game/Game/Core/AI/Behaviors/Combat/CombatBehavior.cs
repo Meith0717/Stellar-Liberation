@@ -27,7 +27,7 @@ namespace CelestialOdyssey.Game.Core.AI.Behaviors.Combat
             var targetShielHhullScore = target.DefenseSystem.ShildLevel * 0.1 + target.DefenseSystem.HullLevel * 0.9;
 
             mDistance = Vector2.Distance(spaceShip.Position, target.Position);
-            var inAttacDistance = 1;// mDistance < mAttackDistance ? 1 : 0;
+            var inAttacDistance = mDistance < mAttackDistance ? 1 : 0;
 
             var score = inAttacDistance * (shielHhullScore * 0.5 + (1 - targetShielHhullScore) * 0.5);
             return score;

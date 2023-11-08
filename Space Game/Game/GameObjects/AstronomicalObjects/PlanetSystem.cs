@@ -82,9 +82,11 @@ namespace CelestialOdyssey.Game.GameObjects.AstronomicalObjects
             Planets = planets;  
             Star = star;
             Player = player;
-            var lst = new List<SpaceShip>();
-            for (int i = 0; i < 0; i++) SpaceShipManager.Spawn(this, ExtendetRandom.NextVectorInCircle(SystemBounding), ShipType.EnemyFighter);
-         }
+            for (int i = 0; i < 10; i++) SpaceShipManager.Spawn(this, ExtendetRandom.NextVectorInCircle(SystemBounding), ShipType.EnemyBattleShip);
+            for (int i = 0; i < 20; i++) SpaceShipManager.Spawn(this, ExtendetRandom.NextVectorInCircle(SystemBounding), ShipType.EnemyCorvette);
+            for (int i = 0; i < 30; i++) SpaceShipManager.Spawn(this, ExtendetRandom.NextVectorInCircle(SystemBounding), ShipType.EnemyCarrior);
+
+        }
         //------------------------//
 
         public void SpawnShip()

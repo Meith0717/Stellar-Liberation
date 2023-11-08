@@ -26,7 +26,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyste
         private bool mHit;
 
         public Projectile(Vector2 startPosition, float rotation, Color color, int shieldDamage, int hullDamage, SpaceShip origine)
-            : base(startPosition, ContentRegistry.projectile, 0.5f, 15)
+            : base(startPosition, ContentRegistry.projectile, 1f, 15)
         {
             Direction = Geometry.CalculateDirectionVector(rotation);
             Rotation = rotation;
