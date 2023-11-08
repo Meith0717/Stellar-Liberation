@@ -2,8 +2,6 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using CelestialOdyssey.Game.Core.AI.Behaviors;
-using CelestialOdyssey.Game.Core.AI.Behaviors.Combat;
 using CelestialOdyssey.Game.Core.InputManagement;
 using CelestialOdyssey.Game.Core.ItemManagement;
 using CelestialOdyssey.Game.Core.LayerManagement;
@@ -31,13 +29,7 @@ namespace CelestialOdyssey.Game.GameObjects
             WeaponSystem.PlaceTurret(new(new(-130, -100), 1, TextureDepth + 1));
             WeaponSystem.PlaceTurret(new(new(-150, 0), 1, TextureDepth + 1));
 
-            mAi = new(new()
-            {
-                // new PatrollBehavior(),
-                // new CloseCombatBehavior(10000),
-                // new FleeBehavior(),
-                // new InterceptBehavior(),
-            });
+            mAi = new(new());
         }
 
         public void SpawnInNewPlanetSystem(Vector2 position)
@@ -50,8 +42,7 @@ namespace CelestialOdyssey.Game.GameObjects
         {
             WeaponSystem.StopFire();
             inputState.DoMouseAction(MouseActionType.RightClickHold, () => WeaponSystem.Fire());
-            inputState.DoMouseAction(MouseActionType.LeftClick, () => SublightEngine.MoveToPosition(scene.WorldMousePosition));
-            // SublightEngine.FollowMouse(inputState, scene.WorldMousePosition);
+            SublightEngine.FollowMouse(inputState, scene.WorldMousePosition);
             mInventory.Update(this, scene);
 
             base.Update(gameTime, inputState, gameLayer, scene);

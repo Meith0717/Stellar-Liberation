@@ -31,25 +31,34 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionS
 
             mVector2Target ??= position;
 
-            IsMoving = mVector2Target.HasValue;
-
             UpdateRotation(spaceShip);
             UpdateVelocity(spaceShip);
         }
 
         private void UpdateVelocity(SpaceShip spaceShip)
         {
-            if (mVector2Target == null)
+            if (!IsMoving)
             {
                 spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, .005f);
+                return;
             }
-            else
-            {
-                var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, mVector2Target.Value);
-                var rotationScore = 1 - (MathF.Abs(rotationUpdate) / MathF.PI);
 
-                spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, MaxVelocity * rotationScore, .005f);
-            }
+            if (mVector2Target is null) return;
+
+            var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, mVector2Target.Value);
+
+            var relRotation = 1 - (MathF.Abs(rotationUpdate) / MathF.PI);
+            var rotationScore = MathF.Abs(0.5f - (MathF.Abs(rotationUpdate) / MathF.PI));
+
+            var targetVelocity = relRotation switch
+            {
+                < 0.7f => MaxVelocity * rotationScore,
+                >= 0.7f => MaxVelocity * relRotation,
+                float.NaN => 0
+            };
+            spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, targetVelocity, .005f);
+            if (spaceShip.BoundedBox.Contains((Vector2)mVector2Target)) 
+                 Standstill();
         }
 
         private void UpdateRotation(SpaceShip spaceShip)
@@ -58,9 +67,7 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionS
             {
                 var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, mVector2Target.Value);
 
-               var rotationDirection = (rotationUpdate < 0) ? -1 : 1;
-
-                spaceShip.Rotation += rotationDirection * Maneuverability;
+                spaceShip.Rotation += rotationUpdate * Maneuverability;
             }
         }
 
@@ -68,18 +75,21 @@ namespace CelestialOdyssey.Game.Core.SpaceShipManagement.ShipSystems.PropulsionS
         {
             mShipTarget = null;
             mVector2Target = position;
+            IsMoving = true;
         }
 
         public void FollowSpaceShip(SpaceShip spaceShip)
         {
             mVector2Target = null;
             mShipTarget = spaceShip;
+            IsMoving = true;
         }
 
         public void Standstill()
         {
             mShipTarget = null;
             mVector2Target = null;
+            IsMoving = false;
         }
 
         public void FollowMouse(InputState inputState, Vector2 worldMousePosition)
