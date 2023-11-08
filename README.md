@@ -1,6 +1,6 @@
-# Celestial Odyssey
+# Stellar Liberation
 
-Celestial Odyssey is a 2D top-down space game that takes you on a thrilling journey through a vast and perilous galaxy. While still in beta, the game offers a tantalizing blend of exploration and intense battles. 
+Stellar Liberation is a 2D top-down space game that takes you on a thrilling journey through a vast and perilous galaxy. While still in beta, the game offers a tantalizing blend of exploration and intense battles. 
 
 **Key Features:**
 - Explore a galaxy teeming with planets and planet systems, each with its own unique challenges and opportunities.
@@ -19,14 +19,14 @@ Celestial Odyssey is a 2D top-down space game that takes you on a thrilling jour
 - Recruit companion ships to aid your cause.
 
 **Game Type:**
-Celestial Odyssey can be categorized as an action-packed, 2D top-down space exploration and combat game.
+Stellar Liberation can be categorized as an action-packed, 2D top-down space exploration and combat game.
 
 **Platform:**
 Currently available on Windows.
 
-*Please note that Celestial Odyssey is in the beta stage, and more exciting content and features are yet to come.*
+*Please note that Stellar Liberation is in the beta stage, and more exciting content and features are yet to come.*
 
-Your epic odyssey awaits! Embark on a journey through the stars, and help humanity reclaim its place in the galaxy. Will you rise to the challenge and restore order in the Celestial Odyssey?
+Your epic odyssey awaits! Embark on a journey through the stars, and help humanity reclaim its place in the galaxy. Will you rise to the challenge and restore order in the Stellar Liberation?
 
 ---
 
