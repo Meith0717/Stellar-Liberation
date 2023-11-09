@@ -40,8 +40,8 @@ namespace StellarLiberation
             mGraphicsManager = new GraphicsDeviceManager(this);
             mSerialize = new Serialize();
 
-            mGraphicsManager.PreferredBackBufferWidth = (int)(900 * 1.77777777f);
-            mGraphicsManager.PreferredBackBufferHeight = 900;
+            mGraphicsManager.PreferredBackBufferWidth = 1920;
+            mGraphicsManager.PreferredBackBufferHeight = 1080;
         }
 
         protected override void Initialize()

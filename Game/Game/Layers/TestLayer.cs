@@ -22,7 +22,7 @@ namespace StellarLiberation.Game.Layers
             mFrame = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
             mFrame.AddChild(new UiSprite(ContentRegistry.menueBackground) { FillScale = FillScale.X });
 
-            mFrame.AddChild(new UiButton(ContentRegistry.button, "< Back") { Anchor = Anchor.SW, OnClickAction = () => mLayerManager.PopLayer()});
+            mFrame.AddChild(new UiButton(ContentRegistry.button, "< Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => mLayerManager.PopLayer()});
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
@@ -31,8 +31,7 @@ namespace StellarLiberation.Game.Layers
             mFrame.Initialize(mGraphicsDevice.Viewport.Bounds);
         }
 
-        public override void Destroy()
-        { }
+        public override void Destroy() { }
 
         public override void Draw(SpriteBatch spriteBatch)
         {

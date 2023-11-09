@@ -9,6 +9,7 @@ using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using StellarLiberation.Core.GameEngine.Content_Management;
 
 namespace StellarLiberation.Game.Layers
 {
@@ -22,7 +23,15 @@ namespace StellarLiberation.Game.Layers
 
             mBackgroundLayer.AddChild(new UiButton(ContentRegistry.button, "Continue") {HSpace = 20, RelY = .4f, OnClickAction = () => mLayerManager.PopLayer() });
             mBackgroundLayer.AddChild(new UiButton(ContentRegistry.button, "Save") { HSpace = 20, RelY = .5f, OnClickAction = null });
-            mBackgroundLayer.AddChild(new UiButton(ContentRegistry.button, "Menue") { HSpace = 20, RelY = .6f, OnClickAction = () => { mLayerManager.PopLayer(); mLayerManager.PopLayer(); } });
+            mBackgroundLayer.AddChild(new UiButton(ContentRegistry.button, "Menue")
+            {
+                HSpace = 20,
+                RelY = .6f,
+                OnClickAction = () =>
+                {
+                    mLayerManager.PopLayer(); mLayerManager.PopLayer(); SoundManager.Instance.PlaySound(ContentRegistry.bgMusicMenue, 1, isLooped: true, isBackroungMusic: true);
+                }
+            });
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
