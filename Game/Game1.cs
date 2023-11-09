@@ -2,16 +2,16 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using StellarLiberation.Core.GameEngine.Content_Management;
 using StellarLiberation.Game.Core.ConfigReader;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.Persistance;
-using StellarLiberation.Game.Layers.Scenes;
+using StellarLiberation.Game.Layers;
 using StellarLiberation.GameEngine.Content_Management;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace StellarLiberation
 {

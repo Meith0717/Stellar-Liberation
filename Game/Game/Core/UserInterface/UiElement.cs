@@ -39,16 +39,6 @@ namespace StellarLiberation.Game.Core.UserInterface
 
             var aspectRatio = (float)width / height;
 
-            switch (FillScale)
-            {
-                case FillScale.X:
-                    width = root.Width; height = (int)(width / aspectRatio); 
-                    break;
-                case FillScale.Y:
-                    height = root.Height; width = (int)(height * aspectRatio);
-                    break;
-            }
-
             var SpaceBottom = root.Bottom - (height + y);
             if (SpaceBottom < VSpace)
             {
@@ -61,6 +51,16 @@ namespace StellarLiberation.Game.Core.UserInterface
             {
                 width = (root.Right - root.Left) - HSpace * 2;
                 height = (int)(width / aspectRatio);
+            }
+
+            switch (FillScale)
+            {
+                case FillScale.X:
+                    width = root.Width; height = (int)(width / aspectRatio);
+                    break;
+                case FillScale.Y:
+                    height = root.Height; width = (int)(height * aspectRatio);
+                    break;
             }
 
             switch (Anchor)

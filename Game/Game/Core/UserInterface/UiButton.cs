@@ -2,9 +2,9 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using Microsoft.Xna.Framework;
 using StellarLiberation.Core.GameEngine.Content_Management;
 using StellarLiberation.Game.Core.InputManagement;
-using Microsoft.Xna.Framework;
 using System;
 
 namespace StellarLiberation.Game.Core.UserInterface
@@ -24,7 +24,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             Height = texture.Height;
         }
 
-        public override void Draw() => TextureManager.Instance.Draw(mSpriteId, Frame.Location.ToVector2(), Frame.Width, Frame.Height, IsDisabled ? Color.DarkGray : IsHover ? Color.CadetBlue : Color.LightBlue);
+        public override void Draw() => TextureManager.Instance.Draw(mSpriteId, Frame.Location.ToVector2(), Frame.Width, Frame.Height, IsDisabled ? new Color(52, 73, 94) : IsHover ? Color.MonoGameOrange : Color.White);
 
         public override void Update(InputState inputState, Rectangle root) 
         {

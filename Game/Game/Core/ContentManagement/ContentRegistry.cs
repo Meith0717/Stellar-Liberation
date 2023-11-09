@@ -126,6 +126,8 @@ namespace StellarLiberation.GameEngine.Content_Management
         public readonly static Registry cursor = new(textures, "cursor", RegistryType.Texture);
         public readonly static Registry cursor1 = new(textures, "cursor1", RegistryType.Texture);
         public readonly static Registry placeHolder = new(textures, "placeHolder", RegistryType.Texture);
+        public readonly static Registry title = new(textures, "title", RegistryType.Texture);
+        public readonly static Registry menueBackground = new(textures, "menueBackground", RegistryType.Texture);
 
         private readonly static string crosshair = @"textures\crosshair";
         public readonly static Registry mapCrosshair = new(crosshair, "selectCrosshait", RegistryType.Texture);
