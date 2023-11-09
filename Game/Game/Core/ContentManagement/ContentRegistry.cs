@@ -124,7 +124,6 @@ namespace StellarLiberation.GameEngine.Content_Management
         private readonly static string textures = @"textures\";
         public readonly static Registry pixle = new(textures, "pixle", RegistryType.Texture);
         public readonly static Registry cursor = new(textures, "cursor", RegistryType.Texture);
-        public readonly static Registry cursor1 = new(textures, "cursor1", RegistryType.Texture);
         public readonly static Registry placeHolder = new(textures, "placeHolder", RegistryType.Texture);
         public readonly static Registry title = new(textures, "title", RegistryType.Texture);
         public readonly static Registry menueBackground = new(textures, "menueBackground", RegistryType.Texture);
@@ -138,19 +137,14 @@ namespace StellarLiberation.GameEngine.Content_Management
         public readonly static Registry circle = new(layer1, "circle", RegistryType.Texture);
 
         private readonly static string menueButtons = @"textures\UserInterface\MenueButtons";
-        public readonly static Registry buttonContinue = new(menueButtons, "buttonContinue", RegistryType.Texture);
-        public readonly static Registry buttonCredits = new(menueButtons, "buttonCredits", RegistryType.Texture);
-        public readonly static Registry buttonExitgame = new(menueButtons, "buttonExitgame", RegistryType.Texture);
-        public readonly static Registry buttonNewGame = new(menueButtons, "buttonNewGame", RegistryType.Texture);
-        public readonly static Registry buttonQuit = new(menueButtons, "buttonQuit", RegistryType.Texture);
-        public readonly static Registry buttonSave = new(menueButtons, "buttonSave", RegistryType.Texture);
-        public readonly static Registry buttonSettings = new(menueButtons, "buttonSettings", RegistryType.Texture);
+        public readonly static Registry button = new(menueButtons, "button", RegistryType.Texture);
 
         private readonly static string soundEffects = @"SoundEffects\";
         public readonly static Registry torpedoHit = new(soundEffects, "torpedoHit", RegistryType.Sound);
         public readonly static Registry torpedoFire = new(soundEffects, "torpedoFire", RegistryType.Sound);
         public readonly static Registry collect = new(soundEffects, "collect", RegistryType.Sound);
         public readonly static Registry bgMusicGame = new(soundEffects, "bgMusicGame", RegistryType.Sound);
+        public readonly static Registry bgMusicMenue = new(soundEffects, "bgMusicMenue", RegistryType.Sound);
         public readonly static Registry ChargeHyperdrive = new(soundEffects, "chargeHyperdrive", RegistryType.Sound);
         public readonly static Registry CoolHyperdrive = new(soundEffects, "coolHyperdrive", RegistryType.Sound);
 

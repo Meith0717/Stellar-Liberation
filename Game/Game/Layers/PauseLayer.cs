@@ -19,12 +19,10 @@ namespace StellarLiberation.Game.Layers
             : base(false) 
         {
             mBackgroundLayer = new() {RelHeight = 1, RelWidth = 1, Color = Color.Black, Alpha = .8f};
-            var buttonlayer = new UiLayer() { RelHeight = .4f, RelWidth = .3f, Color = Color.Transparent, Anchor = Anchor.Center };
-            mBackgroundLayer.AddChild(buttonlayer);
 
-            buttonlayer.AddChild(new UiButton(ContentRegistry.buttonContinue) { FillScale = FillScale.X, Anchor = Anchor.N, OnClickAction = () => mLayerManager.PopLayer() });
-            buttonlayer.AddChild(new UiButton(ContentRegistry.buttonSave) { FillScale = FillScale.X, Anchor = Anchor.Center, IsDisabled = true });
-            buttonlayer.AddChild(new UiButton(ContentRegistry.buttonExitgame) { FillScale = FillScale.X, Anchor = Anchor.S, OnClickAction = () => { mLayerManager.PopLayer(); mLayerManager.PopLayer(); } });
+            mBackgroundLayer.AddChild(new UiButton(ContentRegistry.button, "Continue") {HSpace = 20, RelY = .4f, OnClickAction = () => mLayerManager.PopLayer() });
+            mBackgroundLayer.AddChild(new UiButton(ContentRegistry.button, "Save") { HSpace = 20, RelY = .5f, OnClickAction = null });
+            mBackgroundLayer.AddChild(new UiButton(ContentRegistry.button, "Menue") { HSpace = 20, RelY = .6f, OnClickAction = () => { mLayerManager.PopLayer(); mLayerManager.PopLayer(); } });
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)

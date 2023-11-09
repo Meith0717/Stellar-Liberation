@@ -14,6 +14,13 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin fonts/button.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:fonts/button.spritefont
+
 #begin fonts/debug.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -28,60 +35,59 @@
 /processorParam:TextureFormat=Compressed
 /build:fonts/text.spritefont
 
-#begin fonts/title.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:fonts/title.spritefont
-
-#begin soundEffects/bgMusicGame.wav
+#begin SoundEffects/bgMusicGame.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:soundEffects/bgMusicGame.wav
+/build:SoundEffects/bgMusicGame.wav
 
-#begin soundEffects/chargeHyperdrive.wav
+#begin SoundEffects/bgMusicMenue.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:soundEffects/chargeHyperdrive.wav
+/build:SoundEffects/bgMusicMenue.wav
 
-#begin soundEffects/collect.wav
+#begin SoundEffects/chargeHyperdrive.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:soundEffects/collect.wav
+/build:SoundEffects/chargeHyperdrive.wav
 
-#begin soundEffects/coolHyperdrive.wav
+#begin SoundEffects/collect.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:soundEffects/coolHyperdrive.wav
+/build:SoundEffects/collect.wav
 
-#begin soundEffects/CourseSet.wav
+#begin SoundEffects/coolHyperdrive.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:soundEffects/CourseSet.wav
+/build:SoundEffects/coolHyperdrive.wav
 
-#begin soundEffects/engineSound.wav
+#begin SoundEffects/CourseSet.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:soundEffects/engineSound.wav
+/build:SoundEffects/CourseSet.wav
 
-#begin soundEffects/torpedoFire.wav
+#begin SoundEffects/engineSound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:soundEffects/torpedoFire.wav
+/build:SoundEffects/engineSound.wav
 
-#begin soundEffects/torpedoHit.wav
+#begin SoundEffects/torpedoFire.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:soundEffects/torpedoHit.wav
+/build:SoundEffects/torpedoFire.wav
+
+#begin SoundEffects/torpedoHit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SoundEffects/torpedoHit.wav
 
 #begin textures/animations/explosion.png
 /importer:TextureImporter
@@ -190,18 +196,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/cursor.png
-
-#begin textures/cursor1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/cursor1.png
 
 #begin textures/gameobjects/astronomicalbodys/asteroids/asteroid1.png
 /importer:TextureImporter
@@ -1139,7 +1133,7 @@
 /processorParam:TextureFormat=Color
 /build:textures/userInterface/Layer/layer.png
 
-#begin textures/userInterface/MenueButtons/buttonContinue.png
+#begin textures/userInterface/MenueButtons/button.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1149,77 +1143,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/MenueButtons/buttonContinue.png
-
-#begin textures/userInterface/MenueButtons/buttonCredits.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/userInterface/MenueButtons/buttonCredits.png
-
-#begin textures/userInterface/MenueButtons/buttonExitgame.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/userInterface/MenueButtons/buttonExitgame.png
-
-#begin textures/userInterface/MenueButtons/buttonNewGame.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/userInterface/MenueButtons/buttonNewGame.png
-
-#begin textures/userInterface/MenueButtons/buttonQuit.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/userInterface/MenueButtons/buttonQuit.png
-
-#begin textures/userInterface/MenueButtons/buttonSave.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/userInterface/MenueButtons/buttonSave.png
-
-#begin textures/userInterface/MenueButtons/buttonSettings.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/userInterface/MenueButtons/buttonSettings.png
+/build:textures/userInterface/MenueButtons/button.png
 

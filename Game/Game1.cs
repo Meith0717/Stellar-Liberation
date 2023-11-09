@@ -40,8 +40,8 @@ namespace StellarLiberation
             mGraphicsManager = new GraphicsDeviceManager(this);
             mSerialize = new Serialize();
 
-            mGraphicsManager.PreferredBackBufferWidth = 1920;
-            mGraphicsManager.PreferredBackBufferHeight = 1080;
+            mGraphicsManager.PreferredBackBufferWidth = (int)(900 * 1.77777777f);
+            mGraphicsManager.PreferredBackBufferHeight = 900;
         }
 
         protected override void Initialize()
@@ -77,7 +77,7 @@ namespace StellarLiberation
 
             // game fonts
             TextureManager.Instance.LoadFont(Content, "debug", "fonts/debug");
-            TextureManager.Instance.LoadFont(Content, "title", "fonts/title");
+            TextureManager.Instance.LoadFont(Content, "button", "fonts/button");
 
             Configs.Load(Content);
         }

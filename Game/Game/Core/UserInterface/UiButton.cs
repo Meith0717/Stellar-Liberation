@@ -12,26 +12,36 @@ namespace StellarLiberation.Game.Core.UserInterface
     internal class UiButton : UiElement
     {
         public bool IsHover;
-        public bool IsDisabled;
         public Action OnClickAction;
         protected string mSpriteId;
+        private string mText;
+        private float mTextScale;
+        private bool mIsDisabled;
 
-        public UiButton(string SpriteId)
+        public UiButton(string SpriteId, string text, float textScale = 1)
         {
+            mTextScale = textScale;
+            mText = text;
             mSpriteId = SpriteId;
             var texture = TextureManager.Instance.GetTexture(mSpriteId);
             Width = texture.Width;
             Height = texture.Height;
         }
 
-        public override void Draw() => TextureManager.Instance.Draw(mSpriteId, Frame.Location.ToVector2(), Frame.Width, Frame.Height, IsDisabled ? new Color(52, 73, 94) : IsHover ? Color.MonoGameOrange : Color.White);
+        public override void Draw() 
+        {
+            var color = IsHover ? Color.MonoGameOrange : Color.White;
+            var position = new Vector2(Frame.Location.X + 5, Frame.Location.Y + 10);
+            TextureManager.Instance.Draw(mSpriteId, Frame.Location.ToVector2(), Frame.Width, Frame.Height, color);
+            TextureManager.Instance.DrawString("button", position, mText, mTextScale, color);
+        } 
 
         public override void Update(InputState inputState, Rectangle root) 
         {
-            if (IsDisabled) return;
+            mIsDisabled = OnClickAction is null;
+            if (mIsDisabled) return;
             IsHover = Frame.Contains(inputState.mMousePosition);
             if (IsHover && OnClickAction is not null) inputState.DoMouseAction(MouseActionType.LeftClick, OnClickAction);
         }
-
     }
 }
