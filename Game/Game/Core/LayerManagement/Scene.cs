@@ -35,9 +35,9 @@ namespace StellarLiberation.Game.Core.LayerManagement
         {
             mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera.Position, Camera.Zoom, 0, screenWidth, screenHeight);
             WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, inputState.mMousePosition);
+            UpdateObj(gameTime, inputState);
             Camera.Update(gameTime, inputState, inputState.mMousePosition, mViewTransformationMatrix);
             FrustumCuller.Update(screenWidth, screenHeight, mViewTransformationMatrix);
-            UpdateObj(gameTime, inputState);
             GetObjectsOnScreen();
         }
 
