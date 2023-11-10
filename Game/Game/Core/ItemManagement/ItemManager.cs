@@ -20,11 +20,6 @@ namespace StellarLiberation.Game.Core.ItemManagement
             AddObj(item);
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
-        {
-            base.Update(gameTime, inputState, gameLayer, scene);
-        }
-
         public void RemoveItem(Scene scene, Item item)
         {
             item.RemoveFromSpatialHashing(scene);

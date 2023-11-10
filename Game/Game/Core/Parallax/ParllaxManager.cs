@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.Parallax
 {
-    internal class ParllaxManager
+    internal class ParallaxController
     {
         private readonly List<ParllaxBackground> mBackdrounds = new();
 

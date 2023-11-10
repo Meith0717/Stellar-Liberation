@@ -124,7 +124,7 @@ namespace StellarLiberation.Game.Core.MapSystem
 
         public void DrawSectores(Scene scene)
         {
-            var screen = scene.FrustumCuller.WorldFrustum;
+            var screen = scene.ViewFrustumFilter.WorldFrustum;
 
             var mapWidth = (mSectorCountWidth * MapScale) + MapScale;
             var mapHeight = (mSectorCountHeight * MapScale) + MapScale;
@@ -132,12 +132,12 @@ namespace StellarLiberation.Game.Core.MapSystem
             for (int x = 0; x < mapWidth; x += MapScale)
             {
                 if (x < screen.X && x > screen.X + screen.Width) continue;
-                TextureManager.Instance.DrawAdaptiveLine(new(x, -MapScale), new(x, mapHeight), new Color(10, 10, 10, 10), 1, 0, scene.Camera.Zoom);
+                TextureManager.Instance.DrawAdaptiveLine(new(x, -MapScale), new(x, mapHeight), new Color(10, 10, 10, 10), 1, 0, scene.Camera2D.Zoom);
             }
             for (int y = 0; y < mapHeight; y += MapScale)
             {
                 if (y < screen.Y && y > screen.Y + screen.Height) continue;
-                TextureManager.Instance.DrawAdaptiveLine(new(-MapScale, y), new(mapWidth, y), new Color(10, 10, 10, 10), 1, 0, scene.Camera.Zoom);
+                TextureManager.Instance.DrawAdaptiveLine(new(-MapScale, y), new(mapWidth, y), new Color(10, 10, 10, 10), 1, 0, scene.Camera2D.Zoom);
             }
         }
 

@@ -4,7 +4,7 @@
 
 namespace StellarLiberation.Game.Core.ContentManagement.ContentRegistry
 {
-    public class MusicRegistries
+    public class MusicRegistries : Registries
     {
         private readonly static string soundEffects = @"music\";
         public readonly static Registry bgMusicGame = new(soundEffects, "bgMusicGame");

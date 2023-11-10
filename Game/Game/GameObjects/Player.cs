@@ -44,15 +44,15 @@ namespace StellarLiberation.Game.GameObjects
             Velocity = 0;
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
             WeaponSystem.StopFire();
             inputState.DoMouseAction(MouseActionType.RightClickHold, () => WeaponSystem.Fire());
             SublightEngine.FollowMouse(inputState, scene.WorldMousePosition);
             mInventory.Update(this, scene);
 
-            base.Update(gameTime, inputState, gameLayer, scene);
-            scene.Camera.SetPosition(Position);
+            base.Update(gameTime, inputState, scene);
+            scene.Camera2D.SetPosition(Position);
         }
 
         public override void HasCollide()
@@ -60,9 +60,9 @@ namespace StellarLiberation.Game.GameObjects
             throw new NotImplementedException();
         }
 
-        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
+        public override void Draw( Scene scene)
         {
-            base.Draw(sceneManagerLayer, scene);
+            base.Draw(scene);
             mInventory.Draw(this);
         }
     }

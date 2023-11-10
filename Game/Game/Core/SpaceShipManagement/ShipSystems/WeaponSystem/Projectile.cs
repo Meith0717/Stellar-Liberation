@@ -40,15 +40,15 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyst
             mExplosionSheet.Animate("hit", new(45, Animation.GetRowList(0, 64), false));
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
-            base.Update(gameTime, inputState, gameLayer, scene);
+            base.Update(gameTime, inputState, scene);
             mExplosionSheet.Update(gameTime, Position);
         }
 
-        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
+        public override void Draw(Scene scene)
         {
-            base.Draw(sceneManagerLayer, scene);
+            base.Draw(scene);
             mExplosionSheet.Draw(TextureDepth + 1);
             if (!mHit) TextureManager.Instance.DrawGameObject(this);
         }

@@ -45,21 +45,21 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
         public SpaceShip(Vector2 position, string textureId, float textureScale, SensorArray sensorArray, SublightEngine sublightEngine, TurretBattery weaponSystem, DefenseSystem defenseSystem, Factions opponent)
             : base(position, textureId, textureScale, 10)
         {
-            this.SensorArray = sensorArray;
-            this.SublightEngine = sublightEngine;
-            this.HyperDrive = new();
-            this.WeaponSystem = weaponSystem;
-            this.DefenseSystem = defenseSystem;
+            SensorArray = sensorArray;
+            SublightEngine = sublightEngine;
+            HyperDrive = new();
+            WeaponSystem = weaponSystem;
+            DefenseSystem = defenseSystem;
             mOpponent = opponent;
 
             ExplosionSheet = new(TextureRegistries.explosion, 64, 3, TextureScale * 10);
             ExplosionSheet.Animate("destroy", new(60, Animation.GetRowList(1, 64), false));
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
             Direction = Geometry.CalculateDirectionVector(Rotation);
-            base.Update(gameTime, inputState, gameLayer, scene);
+            base.Update(gameTime, inputState, scene);
 
             ExplosionSheet.Update(gameTime, Position);
             SublightEngine.Update(gameTime, this);
@@ -96,18 +96,18 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
             SoundManager.Instance.PlaySound("torpedoHit", ExtendetRandom.Random.Next(5, 8) / 10f);
         }
 
-        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
+        public override void Draw(Scene scene)
         {
-            base.Draw(sceneManagerLayer, scene);
+            base.Draw(scene);
             ExplosionSheet.Draw(TextureDepth + 1);
 
             if (IsDestroyed) return;
-            sceneManagerLayer.DebugSystem.DrawSensorRadius(Position, SensorArray.ShortRangeScanDistance, scene);
+            scene.GameLayer.DebugSystem.DrawSensorRadius(Position, SensorArray.ShortRangeScanDistance, scene);
             TextureManager.Instance.DrawGameObject(this);
-            WeaponSystem.Draw(sceneManagerLayer, scene);
+            WeaponSystem.Draw(scene);
             DefenseSystem.DrawShields(this);
             DefenseSystem.DrawLive(this);
-            SublightEngine.Draw(sceneManagerLayer.DebugSystem, this, scene);
+            SublightEngine.Draw(scene.GameLayer.DebugSystem, this, scene);
         }
 
         public void Explode(Scene scene)
@@ -116,9 +116,9 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
             IsDestroyed = true;
             Velocity = 0;
 
-            var shakeamount = (500000 - Vector2.Distance(scene.Camera.Position, Position)) / 500000;
+            var shakeamount = (500000 - Vector2.Distance(scene.Camera2D.Position, Position)) / 500000;
             if (shakeamount < 0) shakeamount = 0;
-            scene.Camera.Shake((int)(shakeamount * 100));
+            scene.Camera2D.Shake((int)(shakeamount * 100));
 
             for (int i = 0; i < 5; i++) ActualPlanetSystem.ItemManager.PopItem(Direction, Position, new Items.Metall());
 

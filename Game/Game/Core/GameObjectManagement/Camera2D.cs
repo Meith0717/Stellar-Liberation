@@ -21,7 +21,7 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
     /// <summary>
     /// Represents a camera used for viewing and manipulating the game world.
     /// </summary>
-    public class Camera
+    public class Camera2D
     {
         private const int CameraGlide = 4;
         private float mMaxZoom;
@@ -58,7 +58,7 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
         private bool mShake;
         private float mShakeAmount;
 
-        public Camera(float minZoom, float maxZoom, bool allowMovingWithMouse)
+        public Camera2D(float minZoom, float maxZoom, bool allowMovingWithMouse)
         {
             Position = Vector2.Zero;
             mMaxZoom = maxZoom;

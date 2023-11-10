@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="StellarLiberation.Game1" Collapsed="true">
+    <Position X="19" Y="17.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAwCAAAAAAAAAAAACAACAAIEAAgIAAQQ=</HashCode>
+      <FileName>Game1.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="mInputManager" />
+      <Field Name="mLayerManager" />
+      <Field Name="mSerialize" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.InputManagement.InputManager" Collapsed="true">
+    <Position X="21" Y="16.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAgAAAAAAAAAAAAAQBAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Game\Core\InputManagement\InputManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.LayerManagement.LayerManager" Collapsed="true">
+    <Position X="19" Y="16.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAABAAAgABAAAQAAEAAAIDAAAAoAAAAAAAAAA=</HashCode>
+      <FileName>Game\Core\LayerManagement\LayerManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.Persistance.Serialize" Collapsed="true">
+    <Position X="17" Y="16.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEBAAAAAAAAAAAACAAAAAAAAAAEAAABAAAg=</HashCode>
+      <FileName>Game\Core\Persistance\Serialize.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.LayerManagement.Layer" Collapsed="true">
+    <Position X="19" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAACAAABAAAwCBAAAAAAAAAABDAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Core\LayerManagement\Layer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="mLayerManager" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.LayerManagement.SceneManagerLayer" Collapsed="true">
+    <Position X="17" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAACAAAAAAAgAAgAAAAAAAAAAQAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Game\Core\LayerManagement\SceneManagerLayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Layers.MainMenueLayer" Collapsed="true">
+    <Position X="19" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAhAAAwAAAAAAAAAgAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Layers\MainMenueLayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Layers.PauseLayer" Collapsed="true">
+    <Position X="21" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAABAAAwAAAAAAAAAAAARAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Game\Layers\PauseLayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Layers.GameLayer" Collapsed="true">
+    <Position X="17" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAQAAABACAAAAAAAAAAEAAABAAAAAAAAAAQAAAEA=</HashCode>
+      <FileName>Game\Layers\GameLayer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Map" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.LayerManagement.Scene" Collapsed="true">
+    <Position X="17" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAQAAAEAABAABgAIADAgAEAAAAACgCAAAAAAAAAQAAA=</HashCode>
+      <FileName>Game\Core\LayerManagement\Scene.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="SpatialHashing" />
+      <Field Name="ViewFrustumFilter" />
+      <Field Name="Camera2D" />
+      <Field Name="GameLayer" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.GameObjectManagement.Camera2D" Collapsed="true">
+    <Position X="15.25" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QIQAAAEAAAAAMIAgFBAIAAAAEAQGAgABEIAADAAAEAg=</HashCode>
+      <FileName>Game\Core\GameObjectManagement\Camera2D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Core.GameEngine.Position_Management.ViewFrustumFilter" Collapsed="true">
+    <Position X="17.25" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQAAAYAAAAAAAAAAAAAAAAIAABAAAAAAAAAAQAAAAE=</HashCode>
+      <FileName>Game\Core\PositionManagement\FrustumCuller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Core.GameEngine.Position_Management.SpatialHashing&lt;T&gt;" Collapsed="true">
+    <Position X="19" Y="11.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AABAACAAAAIgAAAEABAAAAAACEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Core\PositionManagement\SpatialHashing.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Core.GameEngine.Content_Management.TextureManager" Collapsed="true">
+    <Position X="13" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAMAAACAhAAAgBAAIAgAAAAAAiAEBAAQEAAAABAAgg=</HashCode>
+      <FileName>Game\Core\ContentManagement\TextureManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Core.GameEngine.Content_Management.SoundManager" Collapsed="true">
+    <Position X="14.75" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ECCAAACAggIAAAAKgYAQBIgAAgAACAAIQAAAAAgAAAA=</HashCode>
+      <FileName>Game\Core\ContentManagement\SoundManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.ContentManagement.ContentRegistry.TextureRegistries" Collapsed="true">
+    <Position X="13" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAghP0hGQUCACXFBCAwJSLlEAAD6lQQVCAQQfQACKAQ=</HashCode>
+      <FileName>Game\Core\ContentManagement\ContentRegistry\TextureRegistries.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.ContentManagement.ContentRegistry.SoundRegistries" Collapsed="true">
+    <Position X="14.75" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAACAAAAAAAAAAAAAAAAAAAAAEAgAAAAAQAAAAE=</HashCode>
+      <FileName>Game\Core\ContentManagement\ContentRegistry\SoundRegistries.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.ContentManagement.ContentRegistry.MusicRegistries" Collapsed="true">
+    <Position X="14.75" Y="17.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQCAAAAAA=</HashCode>
+      <FileName>Game\Core\ContentManagement\ContentRegistry\MusicRegistries.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.ContentManagement.ContentRegistry.FontRegistries" Collapsed="true">
+    <Position X="13" Y="17.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQCAAQAAA=</HashCode>
+      <FileName>Game\Core\ContentManagement\ContentRegistry\FontRegistries.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.MapSystem.Map" Collapsed="true">
+    <Position X="14.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAoAAAIAAIAAAAAAAAAAAAAAIAEAAAAAAEEIIAA=</HashCode>
+      <FileName>Game\Core\MapSystem\Map.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.GameObjectManagement.GameObjectManager" Collapsed="true">
+    <Position X="31.75" Y="18.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAQEAAAAAAAgAAAAAAAAACAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Game\Core\GameObjectManagement\GameObjectManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.GameObjectManagement.GameObject" Collapsed="true">
+    <Position X="31.75" Y="16" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>ACQIAAKABCAAAqAgAAAAAkAQEAAAEAAAAAAAABAAgAA=</HashCode>
+      <FileName>Game\Core\GameObjectManagement\GameObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.ItemManagement.ItemManager" Collapsed="true">
+    <Position X="29.75" Y="17" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Core\ItemManagement\ItemManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem.ProjectileManager" Collapsed="true">
+    <Position X="31.75" Y="17" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Core\SpaceShipManagement\ShipSystems\WeaponSystem\ProjectileManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.SpaceShipManagement.SpaceShipManager" Collapsed="true">
+    <Position X="34" Y="17" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Game\Core\SpaceShipManagement\SpaceShipManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.GameObjectManagement.InteractiveObject" Collapsed="true">
+    <Position X="25.75" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQIAAAAAAAAAAAAAAAAAAGAAAAgAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Game\Core\GameObjectManagement\InteractiveObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.GameObjectManagement.MovingObject" Collapsed="true">
+    <Position X="38" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAACACAAAACAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Game\Core\GameObjectManagement\MovingObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.ParticleSystem.Particle" Collapsed="true">
+    <Position X="27.5" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Core\ParticleSystem\Particle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem.Turret" Collapsed="true">
+    <Position X="29.25" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAgAAAAAAEAAAAAAEAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Game\Core\SpaceShipManagement\ShipSystems\WeaponSystem\Turret.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.GameObjects.AstronomicalObjects.Asteroid" Collapsed="true">
+    <Position X="31" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\GameObjects\AstronomicalObjects\Asteroid.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.GameObjects.AstronomicalObjects.Planet" Collapsed="true">
+    <Position X="32.75" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAIAAAAAAAAEAAAIAAAAABAAAAAAA=</HashCode>
+      <FileName>Game\GameObjects\AstronomicalObjects\Planet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.GameObjects.AstronomicalObjects.Star" Collapsed="true">
+    <Position X="34.5" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\GameObjects\AstronomicalObjects\Star.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.GameObjects.QuantumGate" Collapsed="true">
+    <Position X="36.25" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\GameObjects\QuantumGate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.GameObjects.AstronomicalObjects.PlanetSystem" Collapsed="true">
+    <Position X="25.75" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAUAgAAAAAAAAgAAAAAAQAAQIBAIACCAgAAAAQACAEA=</HashCode>
+      <FileName>Game\GameObjects\AstronomicalObjects\PlanetSystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.ItemManagement.Item" Collapsed="true">
+    <Position X="36.25" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAACAAAAAgAAAAAAAAAAAAAAAAAAAQAAAAAAgAA=</HashCode>
+      <FileName>Game\Core\ItemManagement\Item.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem.Projectile" Collapsed="true">
+    <Position X="38" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAQAIAACAAQgAAAAACAAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Core\SpaceShipManagement\ShipSystems\WeaponSystem\Projectile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.SpaceShipManagement.SpaceShip" Collapsed="true">
+    <Position X="39.75" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAQAAAAAEBAQAgAQAAAAAQgAAAAAABACBAAQAAgAAAA=</HashCode>
+      <FileName>Game\Core\SpaceShipManagement\SpaceShip.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.GameObjects.Items">
+    <Position X="36.25" Y="10.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="StellarLiberation.Game.GameObjects.Items.Metall" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Game\GameObjects\Items.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\GameObjects\Items.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Core.SpaceShipManagement.Enemy" Collapsed="true">
+    <Position X="38.75" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Core\SpaceShipManagement\Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.GameObjects.Player" Collapsed="true">
+    <Position X="40.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAACAAAAAAAAAAAAAAACAAAAAgA=</HashCode>
+      <FileName>Game\GameObjects\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.GameObjects.Enemys">
+    <Position X="38.75" Y="6.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="StellarLiberation.Game.GameObjects.Enemys.Carrior" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Game\GameObjects\Enemys.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="StellarLiberation.Game.GameObjects.Enemys.BattleShip" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Game\GameObjects\Enemys.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="StellarLiberation.Game.GameObjects.Enemys.Bomber" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Game\GameObjects\Enemys.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="StellarLiberation.Game.GameObjects.Enemys.Fighter" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Game\GameObjects\Enemys.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\GameObjects\Enemys.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Layers.Scenes.MapScene" Collapsed="true">
+    <Position X="16" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAABAABAAAADAAAAAAAAAAAAAAAAAAAABACAA=</HashCode>
+      <FileName>Game\Layers\Scenes\MapScene.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StellarLiberation.Game.Layers.Scenes.PlanetSystemScene" Collapsed="true">
+    <Position X="18" Y="9" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAABBAAADAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Layers\Scenes\PlanetSystemScene.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

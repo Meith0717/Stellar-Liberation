@@ -17,7 +17,7 @@ namespace StellarLiberation.Core.GameEngine.Position_Management
     /// <summary>
     /// Represents a frustum culler for efficient visibility testing of objects within a view frustum.
     /// </summary>
-    public class FrustumCuller
+    public class ViewFrustumFilter
     {
         /// <summary>
         /// Represents the frustum in world coordinates.

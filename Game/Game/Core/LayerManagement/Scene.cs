@@ -2,13 +2,14 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
 using StellarLiberation.Core.GameEngine.Position_Management;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.Utilitys;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended;
+using StellarLiberation.Game.Layers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,25 +20,27 @@ namespace StellarLiberation.Game.Core.LayerManagement
     {
         public Vector2 WorldMousePosition { get; private set; }
         public readonly SpatialHashing<GameObject> SpatialHashing;
-        public readonly FrustumCuller FrustumCuller;
-        public readonly Camera Camera;
+        public readonly ViewFrustumFilter ViewFrustumFilter;
+        public readonly Camera2D Camera2D;
+        public readonly GameLayer GameLayer;
         private Matrix mViewTransformationMatrix;
         private HashSet<GameObject> mVisibleObjects = new();
 
-        public Scene(int spatialHashingCellSize, float minCamZoom, float maxCamZoom, bool moveCamByMouse)
+        public Scene(GameLayer gameLayer, int spatialHashingCellSize, float minCamZoom, float maxCamZoom, bool moveCamByMouse)
         {
             SpatialHashing = new(spatialHashingCellSize);
-            FrustumCuller = new();
-            Camera = new(minCamZoom, maxCamZoom, moveCamByMouse);
+            ViewFrustumFilter = new();
+            Camera2D = new(minCamZoom, maxCamZoom, moveCamByMouse);
+            GameLayer = gameLayer;
         }
 
         public void Update(GameTime gameTime, InputState inputState, int screenWidth, int screenHeight)
         {
-            mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera.Position, Camera.Zoom, 0, screenWidth, screenHeight);
+            mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera2D.Position, Camera2D.Zoom, 0, screenWidth, screenHeight);
             WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, inputState.mMousePosition);
             UpdateObj(gameTime, inputState);
-            Camera.Update(gameTime, inputState, inputState.mMousePosition, mViewTransformationMatrix);
-            FrustumCuller.Update(screenWidth, screenHeight, mViewTransformationMatrix);
+            Camera2D.Update(gameTime, inputState, inputState.mMousePosition, mViewTransformationMatrix);
+            ViewFrustumFilter.Update(screenWidth, screenHeight, mViewTransformationMatrix);
             GetObjectsOnScreen();
         }
 
@@ -50,7 +53,7 @@ namespace StellarLiberation.Game.Core.LayerManagement
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: mViewTransformationMatrix, samplerState: SamplerState.PointClamp);
-            foreach (var obj in mVisibleObjects) obj.Draw(sceneManagerLayer, this);
+            foreach (var obj in mVisibleObjects) obj.Draw(this);
             DrawOnWorld();
             sceneManagerLayer.DebugSystem.DrawOnScene(this);
             spriteBatch.End();
@@ -101,7 +104,7 @@ namespace StellarLiberation.Game.Core.LayerManagement
         public void GetObjectsOnScreen()
         {
             mVisibleObjects.Clear();
-            Rectangle space = FrustumCuller.WorldFrustum.ToRectangle();
+            Rectangle space = ViewFrustumFilter.WorldFrustum.ToRectangle();
             int cellSize = SpatialHashing.CellSize;
 
             for (int x = space.X - cellSize; x <= space.Right + cellSize; x += cellSize)

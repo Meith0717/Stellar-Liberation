@@ -26,16 +26,16 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             LightColor = starColor;
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
             RemoveFromSpatialHashing(scene);
-            base.Update(gameTime, inputState, gameLayer, scene);
+            base.Update(gameTime, inputState, scene);
             AddToSpatialHashing(scene);
         }
 
-        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
+        public override void Draw(Scene scene)
         {
-            base.Draw(sceneManagerLayer, scene);
+            base.Draw(scene);
             TextureManager.Instance.DrawGameObject(this);
             TextureManager.Instance.Draw(TextureRegistries.starLightAlpha.Name, Position, TextureOffset, TextureScale * 2f, Rotation, 3, LightColor);
         }

@@ -23,9 +23,9 @@ namespace StellarLiberation.Game.Core.ItemManagement
         protected Item(string textureId, float textureScale, bool collectable)
             : base(Vector2.Zero, textureId, textureScale, 30) { Collectable = collectable; }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
-            base.Update(gameTime, inputState, gameLayer, scene);
+            base.Update(gameTime, inputState, scene);
             Velocity = MovementController.GetVelocity(Velocity, 0, ExtendetRandom.Random.Next(5, 10) / 1000f);
         }
 
@@ -44,9 +44,9 @@ namespace StellarLiberation.Game.Core.ItemManagement
             Velocity = ExtendetRandom.Random.Next(10, 25) / 10;
         }
 
-        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
+        public override void Draw(Scene scene)
         {
-            base.Draw(sceneManagerLayer, scene);
+            base.Draw(scene);
             TextureManager.Instance.DrawGameObject(this);
         }
     }

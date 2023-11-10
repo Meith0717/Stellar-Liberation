@@ -16,10 +16,5 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyst
         {
             AddObj(projectile);
         }
-
-        public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
-        {
-            base.Update(gameTime, inputState, gameLayer, scene);
-        }
     }
 }

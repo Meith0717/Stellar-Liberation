@@ -54,6 +54,6 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyst
             if (hasFired) mFireCoolDown = 0;
         }
 
-        public void Draw(SceneManagerLayer sceneManagerLayer, Scene sceme) { foreach (var weapon in mTurrets) weapon.Draw(sceneManagerLayer, sceme); }
+        public void Draw(Scene sceme) { foreach (var weapon in mTurrets) weapon.Draw(sceme); }
     }
 }

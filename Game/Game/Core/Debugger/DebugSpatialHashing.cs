@@ -19,35 +19,35 @@ namespace StellarLiberation.Game.Core.DebugSystem
                 var obj = GameObjects[i];
                 if (i > 0) color = Color.Blue;
                 TextureManager.Instance.DrawAdaptiveLine(scene.WorldMousePosition, obj.Position, color,
-                    2, (int)TextureManager.Instance.MaxLayerDepth, scene.Camera.Zoom);
+                    2, (int)TextureManager.Instance.MaxLayerDepth, scene.Camera2D.Zoom);
             }
         }
 
         public static void Buckets(Scene scene, Vector2 mousePosition)
         {
-            var screen = scene.FrustumCuller.WorldFrustum;
+            var screen = scene.ViewFrustumFilter.WorldFrustum;
             var size = scene.SpatialHashing.CellSize;
             var depth = (int)TextureManager.Instance.MaxLayerDepth;
 
             for (int x = 0; x < screen.Right; x += size)
             {
-                TextureManager.Instance.DrawAdaptiveLine(new(x, screen.Top), new(x, screen.Bottom), new Color(100, 100, 100, 100), 1, depth, scene.Camera.Zoom);
+                TextureManager.Instance.DrawAdaptiveLine(new(x, screen.Top), new(x, screen.Bottom), new Color(100, 100, 100, 100), 1, depth, scene.Camera2D.Zoom);
             }
             for (int y = 0; y < screen.Bottom; y += size)
             {
-                TextureManager.Instance.DrawAdaptiveLine(new(screen.Left, y), new(screen.Right, y), new Color(100, 100, 100, 100), 1, depth, scene.Camera.Zoom);
+                TextureManager.Instance.DrawAdaptiveLine(new(screen.Left, y), new(screen.Right, y), new Color(100, 100, 100, 100), 1, depth, scene.Camera2D.Zoom);
             }
             for (int x = -size; x > screen.Left; x -= size)
             {
-                TextureManager.Instance.DrawAdaptiveLine(new(x, screen.Bottom), new(x, screen.Top), new Color(100, 100, 100, 100), 1, depth, scene.Camera.Zoom);
+                TextureManager.Instance.DrawAdaptiveLine(new(x, screen.Bottom), new(x, screen.Top), new Color(100, 100, 100, 100), 1, depth, scene.Camera2D.Zoom);
             }
             for (int y = -size; y > screen.Top; y -= size)
             {
-                TextureManager.Instance.DrawAdaptiveLine(new(screen.Right, y), new(screen.Left, y), new Color(100, 100, 100, 100), 1, depth, scene.Camera.Zoom);
+                TextureManager.Instance.DrawAdaptiveLine(new(screen.Right, y), new(screen.Left, y), new Color(100, 100, 100, 100), 1, depth, scene.Camera2D.Zoom);
             }
 
             var hash = scene.SpatialHashing.Hash((int)mousePosition.X, (int)mousePosition.Y);
-            TextureManager.Instance.DrawString("debug", mousePosition + (new Vector2(1, -5) * 5 / scene.Camera.Zoom), hash.ToString(), 1 / scene.Camera.Zoom, Color.White);
+            TextureManager.Instance.DrawString("debug", mousePosition + (new Vector2(1, -5) * 5 / scene.Camera2D.Zoom), hash.ToString(), 1 / scene.Camera2D.Zoom, Color.White);
         }
     }
 }

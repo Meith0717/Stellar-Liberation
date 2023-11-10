@@ -2,11 +2,10 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using StellarLiberation.Game.Core.InputManagement;
-using StellarLiberation.Game.Core.LayerManagement;
-using StellarLiberation.Game.Layers;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
+using StellarLiberation.Game.Core.InputManagement;
+using StellarLiberation.Game.Core.LayerManagement;
 using System;
 using System.Collections.Generic;
 
@@ -26,14 +25,14 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
 
         protected virtual bool RemobeObj(GameObject onj) => mObjects.Remove(onj);
 
-        public virtual void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
+        public virtual void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
             var lst = new List<GameObject>();
 
             // Update all obj in Objects
             foreach (var obj in mObjects)
             {
-                obj.Update(gameTime, inputState, gameLayer, scene);
+                obj.Update(gameTime, inputState, scene);
 
                 // Check if obj is Disposed
                 if (obj.Dispose) lst.Add(obj);
@@ -49,12 +48,12 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
             }
         }
 
-        public void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
+        public void Draw(Scene scene)
         {
             foreach (var obj in mObjects)
             {
-                if (!scene.FrustumCuller.CircleOnWorldView(obj.BoundedBox)) continue;
-                obj.Draw(sceneManagerLayer, scene);
+                if (!scene.ViewFrustumFilter.CircleOnWorldView(obj.BoundedBox)) continue;
+                obj.Draw(scene);
             }
         }
 

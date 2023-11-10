@@ -21,9 +21,9 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         public Asteroid(Vector2 position) 
             : base(position, TextureRegistries.asteroid1, 0.1f, 50) {; }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
-            base.Update(gameTime, inputState, gameLayer, scene);
+            base.Update(gameTime, inputState, scene);
             Rotation += .01f;
             CheckForHit(scene);
         }
@@ -42,9 +42,9 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             if (gotHit) SoundManager.Instance.PlaySound("torpedoHit", ExtendetRandom.Random.Next(5, 8) / 10f);
         }
 
-        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
+        public override void Draw(Scene scene)
         {
-            base.Draw(sceneManagerLayer, scene);
+            base.Draw(scene);
             TextureManager.Instance.DrawGameObject(this);
         }
     }

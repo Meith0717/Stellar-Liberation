@@ -18,18 +18,15 @@ using System.Linq;
 namespace StellarLiberation.Game.Layers
 {
     [Serializable]
-    public class GameLayer : SceneManagerLayer
+    public class GameLayer : Core.LayerManagement.SceneManagerLayer
     {
         [JsonProperty] public readonly HashSet<PlanetSystem> PlanetSystems;
         [JsonProperty] public readonly Map Map;
         [JsonProperty] public readonly Player Player;
-        [JsonIgnore] private readonly FrustumCuller mFrustumCuller;
         [JsonIgnore] public PlanetSystem CurrentSystem { get; private set; }
 
         public GameLayer() : base()
         {
-            mFrustumCuller = new();
-
             // Build and place player to startsystem
             Player = new();
 
@@ -51,8 +48,7 @@ namespace StellarLiberation.Game.Layers
             inputState.DoAction(ActionType.ESC, () => mLayerManager.AddLayer(new PauseLayer()));
 
             // Check if mouse clicks outside window
-            mFrustumCuller.Update(mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height, Matrix.Identity);
-            if (!mFrustumCuller.VectorOnScreenView(inputState.mMousePosition) && (inputState.HasMouseAction(MouseActionType.LeftClick) || inputState.HasMouseAction(MouseActionType.RightClick))) mLayerManager.AddLayer(new PauseLayer());
+            if (!mGraphicsDevice.Viewport.Bounds.Contains(inputState.mMousePosition) && (inputState.HasMouseAction(MouseActionType.LeftClick) || inputState.HasMouseAction(MouseActionType.RightClick))) mLayerManager.AddLayer(new PauseLayer());
 
             // Update Top Scene
             base.Update(gameTime, inputState);

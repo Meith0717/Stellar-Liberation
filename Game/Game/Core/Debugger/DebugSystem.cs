@@ -127,13 +127,13 @@ namespace StellarLiberation.Game.Core.Debugger
         {
             if (!ShowHitBoxes) { return; }
             TextureManager.Instance.DrawAdaptiveCircle(box.Position, box.Radius, Color.Red, 2, (int)TextureManager.Instance.MaxLayerDepth,
-                scene.Camera.Zoom);
+                scene.Camera2D.Zoom);
         }
 
         public void DrawPath(Vector2? target, SpaceShip spaceShip, Scene scene)
         {
             if (target is null | !ShowPaths) return;
-            TextureManager.Instance.DrawAdaptiveLine(spaceShip.Position, (Vector2)target, Color.LightBlue, 1, spaceShip.TextureDepth -1, scene.Camera.Zoom);
+            TextureManager.Instance.DrawAdaptiveLine(spaceShip.Position, (Vector2)target, Color.LightBlue, 1, spaceShip.TextureDepth -1, scene.Camera2D.Zoom);
         }
 
         public void DrawSensorRadius(Vector2 center, float radius, Scene scene)
@@ -141,7 +141,7 @@ namespace StellarLiberation.Game.Core.Debugger
             if (!ShowSensorRadius) { return; }
             CircleF box = new(center, radius);
             TextureManager.Instance.DrawAdaptiveCircle(box.Position, box.Radius, Color.Red, 2, (int)TextureManager.Instance.MaxLayerDepth,
-                scene.Camera.Zoom);
+                scene.Camera2D.Zoom);
         }
     }
 }

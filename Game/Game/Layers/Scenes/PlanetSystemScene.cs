@@ -14,12 +14,10 @@ namespace StellarLiberation.Game.Layers.Scenes
     internal class PlanetSystemScene : Scene
     {
         private PlanetSystem mPlanetSystem;
-        private ParllaxManager mParlaxManager;
-        private GameLayer mGameLayer;
+        private ParallaxController mParlaxManager;
 
-        public PlanetSystemScene(GameLayer gameLayer, PlanetSystem planetSystem) : base(50000, 0.001f, 1, false)
+        public PlanetSystemScene(GameLayer gameLayer, PlanetSystem planetSystem) : base(gameLayer, 50000, 0.001f, 1, false)
         {
-            mGameLayer = gameLayer;
             mPlanetSystem = planetSystem;
             mPlanetSystem.Player.ActualPlanetSystem = mPlanetSystem;
             mPlanetSystem.Player.SpawnInNewPlanetSystem(Vector2.Zero);
@@ -31,12 +29,12 @@ namespace StellarLiberation.Game.Layers.Scenes
 
         public override void UpdateObj(GameTime gameTime, InputState inputState)
         {
-            inputState.DoAction(ActionType.ToggleHyperMap, () => mGameLayer.LoadMap());
+            inputState.DoAction(ActionType.ToggleHyperMap, () => GameLayer.LoadMap());
 
-            mParlaxManager.Update(Camera.Movement, Camera.Zoom);
+            mParlaxManager.Update(Camera2D.Movement, Camera2D.Zoom);
 
-            mGameLayer.DebugSystem.CheckForSpawn(mPlanetSystem);
-            mPlanetSystem.UpdateObjects(gameTime, inputState, mGameLayer, this);
+            GameLayer.DebugSystem.CheckForSpawn(mPlanetSystem);
+            mPlanetSystem.UpdateObjects(gameTime, inputState, this);
         }
 
         public override void DrawOnScreen() => mParlaxManager.Draw();

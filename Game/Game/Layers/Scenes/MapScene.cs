@@ -17,31 +17,29 @@ namespace StellarLiberation.Game.Layers.Scenes
     {
 
         private List<PlanetSystem> mPlanetSystems;
-        private ParllaxManager mParlaxManager;
-        private GameLayer mGameLayer;
+        private ParallaxController mParallaxController;
         private PlanetSystem mCurrentSystem;
 
-        public MapScene(GameLayer gameLayer, List<PlanetSystem> planetSystems, PlanetSystem currentSystem) 
-            : base(100, 1f, 3, false)
+        public MapScene(GameLayer gameLayer, List<PlanetSystem> planetSystems, PlanetSystem currentSystem)
+            : base(gameLayer, 100, 1f, 3, false)
         {
             mCurrentSystem = currentSystem;
-            mGameLayer = gameLayer;
-            Camera.SetPosition(mCurrentSystem.Position);
+            Camera2D.SetPosition(mCurrentSystem.Position);
             mPlanetSystems = planetSystems;
             foreach (var system in mPlanetSystems) SpatialHashing.InsertObject(system, (int)system.Position.X, (int)system.Position.Y);
-            mParlaxManager = new();
-            mParlaxManager.Add(new(TextureRegistries.gameBackgroundParlax1, .1f));
+            mParallaxController = new();
+            mParallaxController.Add(new(TextureRegistries.gameBackgroundParlax1, .1f));
         }
 
         public override void UpdateObj(GameTime gameTime, InputState inputState)
         {
-            inputState.DoAction(ActionType.ToggleHyperMap, () => mGameLayer.PopScene());
-            mParlaxManager.Update(Camera.Movement, Camera.Zoom);
+            inputState.DoAction(ActionType.ToggleHyperMap, () => GameLayer.PopScene());
+            mParallaxController.Update(Camera2D.Movement, Camera2D.Zoom);
 
-            foreach (var item in mPlanetSystems) item.Update(gameTime, inputState, mGameLayer, this);
+            foreach (var item in mPlanetSystems) item.Update(gameTime, inputState, this);
         }
 
-        public override void DrawOnScreen() => mParlaxManager.Draw();
+        public override void DrawOnScreen() => mParallaxController.Draw();
 
         public override void DrawOnWorld() 
         {

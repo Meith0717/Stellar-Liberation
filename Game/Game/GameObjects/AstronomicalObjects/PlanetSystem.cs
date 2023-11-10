@@ -37,19 +37,19 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             SystemBounding = new(sectorPosition, boundaryRadius);
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
             LeftPressAction = () => {
-                gameLayer.PopScene();
+                scene.GameLayer.PopScene();
                 Player.HyperDrive.TargetPlanetSystem = this;
             };
 
-            base.Update(gameTime, inputState, gameLayer, scene);
+            base.Update(gameTime, inputState, scene);
         }
 
-        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
+        public override void Draw(Scene scene)
         {
-            base.Draw(sceneManagerLayer, scene);
+            base.Draw(scene);
             TextureManager.Instance.DrawGameObject(this, IsHover);
             TextureManager.Instance.Draw(TextureRegistries.starLightAlpha, Position, TextureOffset, TextureScale * 2f, Rotation, 0, TextureColor);
         }
@@ -94,15 +94,15 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             Player.Position = Vector2.Zero;
         }
 
-        public void UpdateObjects(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
+        public void UpdateObjects(GameTime gameTime, InputState inputState, Scene scene)
         {
-            QuantumGate.Update(gameTime, inputState, gameLayer, scene);
-            Star.Update(gameTime, inputState, gameLayer, scene);
-            Player.Update(gameTime, inputState, gameLayer, scene);
-            foreach (var item in Planets) item.Update(gameTime, inputState, gameLayer, scene);
-            SpaceShipManager.Update(gameTime, inputState, gameLayer, scene);
-            ItemManager.Update(gameTime, inputState, gameLayer, scene);
-            ProjectileManager.Update(gameTime, inputState, gameLayer, scene);
+            QuantumGate.Update(gameTime, inputState, scene);
+            Star.Update(gameTime, inputState, scene);
+            Player.Update(gameTime, inputState, scene);
+            foreach (var item in Planets) item.Update(gameTime, inputState, scene);
+            SpaceShipManager.Update(gameTime, inputState, scene);
+            ItemManager.Update(gameTime, inputState, scene);
+            ProjectileManager.Update(gameTime, inputState, scene);
         }
 
         //--------------------------------------------------------------------------------------//

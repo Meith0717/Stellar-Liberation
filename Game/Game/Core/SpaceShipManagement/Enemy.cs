@@ -13,7 +13,6 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
     [Serializable]
     public abstract class Enemy : SpaceShip
     {
-
         protected Enemy(Vector2 position, string textureId, float textureScale, SensorArray sensorArray, SublightEngine sublightEngine, TurretBattery weaponSystem, DefenseSystem defenseSystem)
             : base(position, textureId, textureScale, sensorArray, sublightEngine, weaponSystem, defenseSystem, Factions.Allies)
         { }

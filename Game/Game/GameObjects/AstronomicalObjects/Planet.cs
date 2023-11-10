@@ -39,9 +39,9 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             UpdateBoundBox();
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
-            base.Update(gameTime, inputState, gameLayer, scene);
+            base.Update(gameTime, inputState, scene);
             RemoveFromSpatialHashing(scene);
             OrbitRadians -= 0.00001f;
             Position = Geometry.GetPointOnCircle(OrbitCenter, OrbitRadius, OrbitRadians);
@@ -50,9 +50,9 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             AddToSpatialHashing(scene);
         }
 
-        public override void Draw(SceneManagerLayer sceneManagerLayer, Scene scene)
+        public override void Draw(Scene scene)
         {
-            base.Draw(sceneManagerLayer, scene);
+            base.Draw(scene);
             TextureManager.Instance.Draw(TextureRegistries.planetShadow, Position, TextureOffset, TextureScale * 1.05f, mShadowRotation, TextureDepth + 1, Color.White);
             TextureManager.Instance.DrawGameObject(this);
         }
