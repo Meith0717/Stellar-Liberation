@@ -4,7 +4,7 @@
 
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
-using System;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,17 +41,16 @@ namespace StellarLiberation.Core.GameEngine.Content_Management
             MaxSoundEffectInstances = maxSoundEffectInstances;
         }
 
-        public bool LoadSoundEffects(ContentManager content, string id, string fileName)
+        public void LoadRegistries(ContentManager content, List<Registry> registries)
+        {
+            foreach (Registry reg in registries) LoadSoundEffects(content, reg.Name, reg.FilePath);
+        }
+
+        private void LoadSoundEffects(ContentManager content, string id, string fileName)
         {
             if (SoundEffects[fileName] != null) SoundEffects.Remove(fileName);
-
-            try
-            {
-                var soundEffect = content.Load<SoundEffect>(fileName);
-                SoundEffects.Add(id, soundEffect);
-                return true;
-            }
-            catch { throw new Exception(id); }
+            var soundEffect = content.Load<SoundEffect>(fileName);
+            SoundEffects.Add(id, soundEffect);
         }
 
         public void CreateSoundEffectInstances()

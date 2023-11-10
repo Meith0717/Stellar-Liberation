@@ -2,9 +2,9 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
+using StellarLiberation.Game.Core.Utilitys;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,32 +50,32 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
         // Define nested star classes
         public class Dwarf
         {
-            public class M : Star { public M(Vector2 position) : base(position, ContentRegistry.starM, CommonScaleDwarf, TypeM) { } }
-            public class K : Star { public K(Vector2 position) : base(position, ContentRegistry.starK, CommonScaleDwarf, TypeK) { } }
-            public class A : Star { public A(Vector2 position) : base(position, ContentRegistry.starA, CommonScaleDwarf, TypeA) { } }
+            public class M : Star { public M(Vector2 position) : base(position, TextureRegistries.starM, CommonScaleDwarf, TypeM) { } }
+            public class K : Star { public K(Vector2 position) : base(position, TextureRegistries.starK, CommonScaleDwarf, TypeK) { } }
+            public class A : Star { public A(Vector2 position) : base(position, TextureRegistries.starA, CommonScaleDwarf, TypeA) { } }
         }
 
         public class Main
         {
-            public class G : Star { public G(Vector2 position) : base(position, ContentRegistry.starG, CommonScaleMain, TypeG) { } }
-            public class F : Star { public F(Vector2 position) : base(position, ContentRegistry.starF, CommonScaleMain, TypeF) { } }
-            public class A : Star { public A(Vector2 position) : base(position, ContentRegistry.starA, CommonScaleMain, TypeA) { } }
-            public class B : Star { public B(Vector2 position) : base(position, ContentRegistry.starB, CommonScaleMain, TypeB) { } }
+            public class G : Star { public G(Vector2 position) : base(position, TextureRegistries.starG, CommonScaleMain, TypeG) { } }
+            public class F : Star { public F(Vector2 position) : base(position, TextureRegistries.starF, CommonScaleMain, TypeF) { } }
+            public class A : Star { public A(Vector2 position) : base(position, TextureRegistries.starA, CommonScaleMain, TypeA) { } }
+            public class B : Star { public B(Vector2 position) : base(position, TextureRegistries.starB, CommonScaleMain, TypeB) { } }
         }
 
         public class Giants
         {
-            public class K : Star { public K(Vector2 position) : base(position, ContentRegistry.starK, CommonScaleGiants, TypeK) { } }
-            public class G : Star { public G(Vector2 position) : base(position, ContentRegistry.starG, CommonScaleGiants, TypeG) { } }
-            public class F : Star { public F(Vector2 position) : base(position, ContentRegistry.starF, CommonScaleGiants, TypeF) { } }
+            public class K : Star { public K(Vector2 position) : base(position, TextureRegistries.starK, CommonScaleGiants, TypeK) { } }
+            public class G : Star { public G(Vector2 position) : base(position, TextureRegistries.starG, CommonScaleGiants, TypeG) { } }
+            public class F : Star { public F(Vector2 position) : base(position, TextureRegistries.starF, CommonScaleGiants, TypeF) { } }
         }
 
         public class SuperGiants
         {
-            public class M : Star { public M(Vector2 position) : base(position, ContentRegistry.starM, CommonScaleSuperGiants, TypeM) { } }
-            public class G : Star { public G(Vector2 position) : base(position, ContentRegistry.starG, CommonScaleSuperGiants, TypeG) { } }
-            public class A : Star { public A(Vector2 position) : base(position, ContentRegistry.starA, CommonScaleSuperGiants, TypeA) { } }
-            public class O : Star { public O(Vector2 position) : base(position, ContentRegistry.starO, CommonScaleSuperGiants, TypeO) { } }
+            public class M : Star { public M(Vector2 position) : base(position, TextureRegistries.starM, CommonScaleSuperGiants, TypeM) { } }
+            public class G : Star { public G(Vector2 position) : base(position, TextureRegistries.starG, CommonScaleSuperGiants, TypeG) { } }
+            public class A : Star { public A(Vector2 position) : base(position, TextureRegistries.starA, CommonScaleSuperGiants, TypeA) { } }
+            public class O : Star { public O(Vector2 position) : base(position, TextureRegistries.starO, CommonScaleSuperGiants, TypeO) { } }
         }
     }
 

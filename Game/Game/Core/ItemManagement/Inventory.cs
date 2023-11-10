@@ -2,13 +2,13 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using StellarLiberation.Core.GameEngine.Content_Management;
-using StellarLiberation.Game.Core.Collision_Detection;
-using StellarLiberation.Game.Core.LayerManagement;
-using StellarLiberation.Game.Core.SpaceShipManagement;
-using StellarLiberation.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
+using StellarLiberation.Core.GameEngine.Content_Management;
+using StellarLiberation.Game.Core.Collision_Detection;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
+using StellarLiberation.Game.Core.LayerManagement;
+using StellarLiberation.Game.Core.SpaceShipManagement;
 using System;
 using System.Collections.Generic;
 
@@ -36,7 +36,7 @@ namespace StellarLiberation.Game.Core.ItemManagement
                 Collect(item);
                 collected = true;
             }
-            if (collected) SoundManager.Instance.PlaySound(ContentRegistry.collect, 1f);
+            if (collected) SoundManager.Instance.PlaySound(SoundRegistries.collect, 1f);
         }
 
         public void Collect(Item item)

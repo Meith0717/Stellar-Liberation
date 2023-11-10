@@ -7,11 +7,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using StellarLiberation.Core.GameEngine.Content_Management;
 using StellarLiberation.Game.Core.ConfigReader;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.Persistance;
 using StellarLiberation.Game.Layers;
-using StellarLiberation.GameEngine.Content_Management;
 
 namespace StellarLiberation
 {
@@ -42,6 +42,7 @@ namespace StellarLiberation
 
             mGraphicsManager.PreferredBackBufferWidth = 1920;
             mGraphicsManager.PreferredBackBufferHeight = 1080;
+            ToggleFullscreen();
         }
 
         protected override void Initialize()
@@ -57,27 +58,15 @@ namespace StellarLiberation
 
             // setup texture manager
             TextureManager.Instance.SetSpriteBatch(mSpriteBatch);
-            foreach (Registry registry in ContentRegistry.IterateThroughRegistries())
-            {
-                switch (registry.RegistryType)
-                {
-                    case RegistryType.Texture:
-                        TextureManager.Instance.LoadTexture(Content, registry.Name, registry.FilePath);
-                        break;
-                    case RegistryType.Font:
-                        TextureManager.Instance.LoadFont(Content, registry.Name, registry.FilePath);
-                        break;
-                    case RegistryType.Sound:
-                        SoundManager.Instance.LoadSoundEffects(Content, registry.Name, registry.FilePath);
-                        break;
-                }
-            }
-            SoundManager.Instance.CreateSoundEffectInstances();
-            SetCursor(ContentRegistry.cursor);
+            TextureManager.Instance.LoadTextureRegistries(Content, Registries.GetRegistryList<TextureRegistries>());
+            TextureManager.Instance.LoadFontRegistries(Content, Registries.GetRegistryList<FontRegistries>());
 
-            // game fonts
-            TextureManager.Instance.LoadFont(Content, "debug", "fonts/debug");
-            TextureManager.Instance.LoadFont(Content, "button", "fonts/button");
+            // setup sound manager
+            SoundManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<SoundRegistries>());
+            SoundManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<MusicRegistries>());
+            SoundManager.Instance.CreateSoundEffectInstances();
+
+
 
             Configs.Load(Content);
         }

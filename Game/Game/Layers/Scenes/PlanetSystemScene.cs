@@ -2,12 +2,12 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using Microsoft.Xna.Framework;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.Parallax;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
-using StellarLiberation.GameEngine.Content_Management;
-using Microsoft.Xna.Framework;
 
 namespace StellarLiberation.Game.Layers.Scenes
 {
@@ -25,7 +25,7 @@ namespace StellarLiberation.Game.Layers.Scenes
             mPlanetSystem.Player.SpawnInNewPlanetSystem(Vector2.Zero);
 
             mParlaxManager = new();
-            mParlaxManager.Add(new(ContentRegistry.gameBackgroundParlax1, .1f));
+            mParlaxManager.Add(new(TextureRegistries.gameBackgroundParlax1, .1f));
             mPlanetSystem.SpawnShip();
         }
 

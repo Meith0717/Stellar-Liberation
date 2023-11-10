@@ -2,13 +2,11 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using Microsoft.Xna.Framework;
 using StellarLiberation.Core.GameEngine.Content_Management;
 using StellarLiberation.Game.Core.Collision_Detection;
-using StellarLiberation.Game.Core.GameObjectManagement;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.LayerManagement;
-using StellarLiberation.GameEngine.Content_Management;
-using Microsoft.Xna.Framework;
-using MonoGame.Extended;
 using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem
@@ -52,7 +50,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyst
                 hasFired = true;
             }
             
-            if (hasFired) SoundManager.Instance.PlaySound(ContentRegistry.torpedoFire, 1f);
+            if (hasFired) SoundManager.Instance.PlaySound(SoundRegistries.torpedoFire, 1f);
             if (hasFired) mFireCoolDown = 0;
         }
 

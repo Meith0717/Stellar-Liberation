@@ -2,14 +2,14 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
 using StellarLiberation.Core.GameEngine.Content_Management;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Layers;
-using StellarLiberation.GameEngine.Content_Management;
-using Microsoft.Xna.Framework;
-using Newtonsoft.Json;
 using System;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
@@ -37,7 +37,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         {
             base.Draw(sceneManagerLayer, scene);
             TextureManager.Instance.DrawGameObject(this);
-            TextureManager.Instance.Draw(ContentRegistry.starLightAlpha.Name, Position, TextureOffset, TextureScale * 2f, Rotation, 3, LightColor);
+            TextureManager.Instance.Draw(TextureRegistries.starLightAlpha.Name, Position, TextureOffset, TextureScale * 2f, Rotation, 3, LightColor);
         }
     }
 }

@@ -17,6 +17,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 
 namespace StellarLiberation.Core.GameEngine.Content_Management
 {
@@ -44,14 +45,24 @@ namespace StellarLiberation.Core.GameEngine.Content_Management
             SpriteBatch = spriteBatch;
         }
 
-        public bool LoadTexture(ContentManager content, string id, string fileName)
+        public void LoadTextureRegistries(ContentManager content, List<Registry> registries)
+        {
+            foreach (Registry reg in registries) LoadTexture(content, reg.Name, reg.FilePath);
+        }
+
+        private bool LoadTexture(ContentManager content, string id, string fileName)
         {
             Texture2D texture = content.Load<Texture2D>(fileName);
             mTextures.Add(id, texture);
             return true;
         }
 
-        public bool LoadFont(ContentManager content, string id, string fileName)
+        public void LoadFontRegistries(ContentManager content, List<Registry> registries)
+        {
+            foreach (Registry reg in registries) LoadFont(content, reg.Name, reg.FilePath);
+        }
+
+        private bool LoadFont(ContentManager content, string id, string fileName)
         {
             SpriteFont spriteFont = content.Load<SpriteFont>(fileName);
             mSpriteFonts.Add(id, spriteFont);

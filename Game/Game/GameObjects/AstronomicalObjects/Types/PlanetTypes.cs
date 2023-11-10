@@ -2,9 +2,9 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
+using StellarLiberation.Game.Core.Utilitys;
 using System.Collections.Generic;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
@@ -18,13 +18,13 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
         private static float TerrScale { get { return 5 * ExtendetRandom.Random.Next(3, 4); } }
         private static float WarmScale { get { return 5 * ExtendetRandom.Random.Next(3, 4); } }
 
-        private static List<Registry> ColdTextures = new() { ContentRegistry.cold1, ContentRegistry.cold2, ContentRegistry.cold3, ContentRegistry.cold4 };
-        private static List<Registry> DryTextures = new() { ContentRegistry.dry1, ContentRegistry.dry2, ContentRegistry.dry3, ContentRegistry.dry4, ContentRegistry.dry5, ContentRegistry.dry6 };
-        private static List<Registry> StoneTextures = new() { ContentRegistry.stone1, ContentRegistry.stone2, ContentRegistry.stone3, ContentRegistry.stone4, ContentRegistry.stone5, ContentRegistry.stone6 };
-        private static List<Registry> GasTextures = new() { ContentRegistry.gas1, ContentRegistry.gas2, ContentRegistry.gas3, ContentRegistry.gas4 };
-        private static List<Registry> WarmTextures = new() { ContentRegistry.warm1, ContentRegistry.warm2, ContentRegistry.warm3, ContentRegistry.warm4 };
-        private static List<Registry> TerrTextures = new() { ContentRegistry.terrestrial1, ContentRegistry.terrestrial2, ContentRegistry.terrestrial3, ContentRegistry.terrestrial4,
-            ContentRegistry.terrestrial5, ContentRegistry.terrestrial6, ContentRegistry.terrestrial7, ContentRegistry.terrestrial8 };
+        private static List<Registry> ColdTextures = new() { TextureRegistries.cold1, TextureRegistries.cold2, TextureRegistries.cold3, TextureRegistries.cold4 };
+        private static List<Registry> DryTextures = new() { TextureRegistries.dry1, TextureRegistries.dry2, TextureRegistries.dry3, TextureRegistries.dry4, TextureRegistries.dry5, TextureRegistries.dry6 };
+        private static List<Registry> StoneTextures = new() { TextureRegistries.stone1, TextureRegistries.stone2, TextureRegistries.stone3, TextureRegistries.stone4, TextureRegistries.stone5, TextureRegistries.stone6 };
+        private static List<Registry> GasTextures = new() { TextureRegistries.gas1, TextureRegistries.gas2, TextureRegistries.gas3, TextureRegistries.gas4 };
+        private static List<Registry> WarmTextures = new() { TextureRegistries.warm1, TextureRegistries.warm2, TextureRegistries.warm3, TextureRegistries.warm4 };
+        private static List<Registry> TerrTextures = new() { TextureRegistries.terrestrial1, TextureRegistries.terrestrial2, TextureRegistries.terrestrial3, TextureRegistries.terrestrial4,
+            TextureRegistries.terrestrial5, TextureRegistries.terrestrial6, TextureRegistries.terrestrial7, TextureRegistries.terrestrial8 };
 
         public class Cold
         {

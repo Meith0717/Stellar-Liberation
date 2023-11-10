@@ -2,10 +2,10 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using StellarLiberation.Core.GameEngine.Content_Management;
-using StellarLiberation.Game.Core.InputManagement;
-using StellarLiberation.GameEngine.Content_Management;
 using Microsoft.Xna.Framework;
+using StellarLiberation.Core.GameEngine.Content_Management;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
+using StellarLiberation.Game.Core.InputManagement;
 using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.UserInterface
@@ -21,7 +21,7 @@ namespace StellarLiberation.Game.Core.UserInterface
         public override void Draw()
         {
             var color = new Color((int)(Color.R * Alpha), (int)(Color.G * Alpha), (int)(Color.B * Alpha), (int)(Color.A * Alpha));
-            var texture = TextureManager.Instance.GetTexture(ContentRegistry.layer);
+            var texture = TextureManager.Instance.GetTexture(TextureRegistries.layer);
             TextureManager.Instance.SpriteBatch.Draw(texture, Frame, color);
             foreach ( var child in mChildren ) child.Draw();
         }

@@ -2,13 +2,13 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using Microsoft.Xna.Framework;
 using StellarLiberation.Core.GameEngine.Content_Management;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.PropulsionSystem;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.GameEngine.Content_Management;
-using Microsoft.Xna.Framework;
 
 namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem
 {
@@ -17,7 +17,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyst
         private Vector2 mRelativePosition;
 
         public Turret(Vector2 relativePosition, float textureScale, int textureDepth)
-        : base(Vector2.Zero, ContentRegistry.turette, textureScale, textureDepth) => mRelativePosition = relativePosition;
+        : base(Vector2.Zero, TextureRegistries.turette, textureScale, textureDepth) => mRelativePosition = relativePosition;
 
         public void Fire(ProjectileManager projectileManager, SpaceShip origin, Color particleColor, int shieldDamage, int hullDamage) => projectileManager.AddProjectiel(new(Position, Rotation, particleColor, shieldDamage, hullDamage, origin));
 

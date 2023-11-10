@@ -2,10 +2,14 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
+using rache_der_reti.Core.Animation;
 using StellarLiberation.Core.GameEngine.Content_Management;
 using StellarLiberation.Game.Core.AI;
 using StellarLiberation.Game.Core.Animations;
 using StellarLiberation.Game.Core.Collision_Detection;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
@@ -16,12 +20,7 @@ using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.Layers;
-using StellarLiberation.GameEngine.Content_Management;
-using Microsoft.Xna.Framework;
-using Newtonsoft.Json;
-using rache_der_reti.Core.Animation;
 using System;
-using System.ComponentModel;
 using System.Linq;
 
 namespace StellarLiberation.Game.Core.SpaceShipManagement
@@ -53,7 +52,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
             this.DefenseSystem = defenseSystem;
             mOpponent = opponent;
 
-            ExplosionSheet = new(ContentRegistry.explosion, 64, 3, TextureScale * 10);
+            ExplosionSheet = new(TextureRegistries.explosion, 64, 3, TextureScale * 10);
             ExplosionSheet.Animate("destroy", new(60, Animation.GetRowList(1, 64), false));
         }
 

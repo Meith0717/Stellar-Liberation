@@ -2,14 +2,14 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using StellarLiberation.Core.GameEngine.Content_Management;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.Persistance;
 using StellarLiberation.Game.Core.UserInterface;
-using StellarLiberation.GameEngine.Content_Management;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using StellarLiberation.Core.GameEngine.Content_Management;
 
 namespace StellarLiberation.Game.Layers
 {
@@ -21,15 +21,15 @@ namespace StellarLiberation.Game.Layers
         {
             mBackgroundLayer = new() {RelHeight = 1, RelWidth = 1, Color = Color.Black, Alpha = .8f};
 
-            mBackgroundLayer.AddChild(new UiButton(ContentRegistry.button, "Continue") {HSpace = 20, RelY = .4f, OnClickAction = () => mLayerManager.PopLayer() });
-            mBackgroundLayer.AddChild(new UiButton(ContentRegistry.button, "Save") { HSpace = 20, RelY = .5f, OnClickAction = null });
-            mBackgroundLayer.AddChild(new UiButton(ContentRegistry.button, "Menue")
+            mBackgroundLayer.AddChild(new UiButton(TextureRegistries.button, "Continue") {HSpace = 20, RelY = .4f, OnClickAction = () => mLayerManager.PopLayer() });
+            mBackgroundLayer.AddChild(new UiButton(TextureRegistries.button, "Save") { HSpace = 20, RelY = .5f, OnClickAction = null });
+            mBackgroundLayer.AddChild(new UiButton(TextureRegistries.button, "Menue")
             {
                 HSpace = 20,
                 RelY = .6f,
                 OnClickAction = () =>
                 {
-                    mLayerManager.PopLayer(); mLayerManager.PopLayer(); SoundManager.Instance.PlaySound(ContentRegistry.bgMusicMenue, 1, isLooped: true, isBackroungMusic: true);
+                    mLayerManager.PopLayer(); mLayerManager.PopLayer(); SoundManager.Instance.PlaySound(MusicRegistries.bgMusicMenue, 1, isLooped: true, isBackroungMusic: true);
                 }
             });
         }

@@ -2,13 +2,13 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using Microsoft.Xna.Framework;
 using StellarLiberation.Core.GameEngine.Content_Management;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.Parallax;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
-using StellarLiberation.GameEngine.Content_Management;
-using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Layers.Scenes
@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.Layers.Scenes
             mPlanetSystems = planetSystems;
             foreach (var system in mPlanetSystems) SpatialHashing.InsertObject(system, (int)system.Position.X, (int)system.Position.Y);
             mParlaxManager = new();
-            mParlaxManager.Add(new(ContentRegistry.gameBackgroundParlax1, .1f));
+            mParlaxManager.Add(new(TextureRegistries.gameBackgroundParlax1, .1f));
         }
 
         public override void UpdateObj(GameTime gameTime, InputState inputState)
@@ -45,10 +45,10 @@ namespace StellarLiberation.Game.Layers.Scenes
 
         public override void DrawOnWorld() 
         {
-            TextureManager.Instance.Draw(ContentRegistry.mapCrosshair, mCurrentSystem.Position, 0.02f, 0, 1, Color.YellowGreen);
+            TextureManager.Instance.Draw(TextureRegistries.mapCrosshair, mCurrentSystem.Position, 0.02f, 0, 1, Color.YellowGreen);
             var targetSystem = mCurrentSystem.Player.HyperDrive.TargetPlanetSystem;
             if (targetSystem is null) return;
-            TextureManager.Instance.Draw(ContentRegistry.mapCrosshair, targetSystem.Position, 0.02f, 0, 1, Color.LightBlue);
+            TextureManager.Instance.Draw(TextureRegistries.mapCrosshair, targetSystem.Position, 0.02f, 0, 1, Color.LightBlue);
         }
 
         public override void OnResolutionChanged() {; }

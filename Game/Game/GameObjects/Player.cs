@@ -2,15 +2,13 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using StellarLiberation.Game.Core.AI.Behaviors.Combat;
-using StellarLiberation.Game.Core.AI.Behaviors;
+using Microsoft.Xna.Framework;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.ItemManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.SpaceShipManagement;
 using StellarLiberation.Game.Layers;
-using StellarLiberation.GameEngine.Content_Management;
-using Microsoft.Xna.Framework;
 using System;
 
 namespace StellarLiberation.Game.GameObjects
@@ -21,7 +19,7 @@ namespace StellarLiberation.Game.GameObjects
 
         private Inventory mInventory;
 
-        public Player() : base(Vector2.Zero, ContentRegistry.player.Name, 1, new(20000), new(1f, 0.01f), new(1000, Color.BlueViolet, 2, 2), new(100, int.MaxValue, 0, 0), Factions.Enemys)
+        public Player() : base(Vector2.Zero, TextureRegistries.player, 1, new(20000), new(1f, 0.01f), new(1000, Color.BlueViolet, 2, 2), new(100, int.MaxValue, 0, 0), Factions.Enemys)
         {
             mInventory = new(2000);
 

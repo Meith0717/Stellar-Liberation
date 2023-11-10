@@ -2,16 +2,16 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using Microsoft.Xna.Framework;
+using rache_der_reti.Core.Animation;
 using StellarLiberation.Core.GameEngine.Content_Management;
 using StellarLiberation.Game.Core.Animations;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Layers;
-using StellarLiberation.GameEngine.Content_Management;
-using Microsoft.Xna.Framework;
-using rache_der_reti.Core.Animation;
 
 namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem
 {
@@ -26,7 +26,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyst
         private bool mHit;
 
         public Projectile(Vector2 startPosition, float rotation, Color color, int shieldDamage, int hullDamage, SpaceShip origine)
-            : base(startPosition, ContentRegistry.projectile, 1f, 15)
+            : base(startPosition, TextureRegistries.projectile, 1f, 15)
         {
             Direction = Geometry.CalculateDirectionVector(rotation);
             Rotation = rotation;
@@ -36,7 +36,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyst
             Origine = origine;
             Velocity = 20;
             DisposeTime = 5000;
-            mExplosionSheet = new(ContentRegistry.explosion, 64, 3, TextureScale * 2);
+            mExplosionSheet = new(TextureRegistries.explosion, 64, 3, TextureScale * 2);
             mExplosionSheet.Animate("hit", new(45, Animation.GetRowList(0, 64), false));
         }
 

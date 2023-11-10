@@ -2,16 +2,16 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using Microsoft.Xna.Framework;
 using StellarLiberation.Core.GameEngine.Content_Management;
 using StellarLiberation.Game.Core.Collision_Detection;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Layers;
-using StellarLiberation.GameEngine.Content_Management;
-using Microsoft.Xna.Framework;
 using System.Linq;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
@@ -19,7 +19,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
     public class Asteroid : GameObject
     {
         public Asteroid(Vector2 position) 
-            : base(position, ContentRegistry.asteroid1, 0.1f, 50) {; }
+            : base(position, TextureRegistries.asteroid1, 0.1f, 50) {; }
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, Scene scene)
         {

@@ -4,11 +4,11 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.Persistance;
 using StellarLiberation.Game.Core.UserInterface;
-using StellarLiberation.GameEngine.Content_Management;
 
 namespace StellarLiberation.Game.Layers
 {
@@ -20,9 +20,9 @@ namespace StellarLiberation.Game.Layers
         public TestLayer(bool updateBelow) : base(updateBelow)
         {
             mFrame = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
-            mFrame.AddChild(new UiSprite(ContentRegistry.menueBackground) { FillScale = FillScale.X });
+            mFrame.AddChild(new UiSprite(TextureRegistries.menueBackground) { FillScale = FillScale.X });
 
-            mFrame.AddChild(new UiButton(ContentRegistry.button, "< Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => mLayerManager.PopLayer()});
+            mFrame.AddChild(new UiButton(TextureRegistries.button, "< Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => mLayerManager.PopLayer()});
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)

@@ -2,21 +2,21 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
-using StellarLiberation.Core.GameEngine.Content_Management;
-using StellarLiberation.Game.Core.GameObjectManagement;
-using StellarLiberation.Game.Core.SpaceShipManagement;
-using StellarLiberation.GameEngine.Content_Management;
-using StellarLiberation.Game.Core.LayerManagement;
-using StellarLiberation.Game.Core.InputManagement;
-using StellarLiberation.Game.Core.ItemManagement;
-using StellarLiberation.Game.Layers;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
-using System;
+using StellarLiberation.Core.GameEngine.Content_Management;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
+using StellarLiberation.Game.Core.GameObjectManagement;
+using StellarLiberation.Game.Core.InputManagement;
+using StellarLiberation.Game.Core.ItemManagement;
+using StellarLiberation.Game.Core.LayerManagement;
+using StellarLiberation.Game.Core.SpaceShipManagement;
+using StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
 using StellarLiberation.Game.Core.Utilitys;
+using StellarLiberation.Game.Layers;
+using System;
+using System.Collections.Generic;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
@@ -51,7 +51,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         {
             base.Draw(sceneManagerLayer, scene);
             TextureManager.Instance.DrawGameObject(this, IsHover);
-            TextureManager.Instance.Draw(ContentRegistry.starLightAlpha, Position, TextureOffset, TextureScale * 2f, Rotation, 0, TextureColor);
+            TextureManager.Instance.Draw(TextureRegistries.starLightAlpha, Position, TextureOffset, TextureScale * 2f, Rotation, 0, TextureColor);
         }
 
         private Color GetColor() => Danger switch
