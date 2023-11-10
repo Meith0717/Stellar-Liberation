@@ -35,59 +35,59 @@
 /processorParam:TextureFormat=Compressed
 /build:fonts/text.spritefont
 
-#begin SoundEffects/bgMusicGame.wav
+#begin music/bgMusicGame.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SoundEffects/bgMusicGame.wav
+/build:music/bgMusicGame.wav
 
-#begin SoundEffects/bgMusicMenue.wav
+#begin music/bgMusicMenue.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SoundEffects/bgMusicMenue.wav
+/build:music/bgMusicMenue.wav
 
-#begin SoundEffects/chargeHyperdrive.wav
+#begin sounds/chargeHyperdrive.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SoundEffects/chargeHyperdrive.wav
+/build:sounds/chargeHyperdrive.wav
 
-#begin SoundEffects/collect.wav
+#begin sounds/collect.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SoundEffects/collect.wav
+/build:sounds/collect.wav
 
-#begin SoundEffects/coolHyperdrive.wav
+#begin sounds/coolHyperdrive.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SoundEffects/coolHyperdrive.wav
+/build:sounds/coolHyperdrive.wav
 
-#begin SoundEffects/CourseSet.wav
+#begin sounds/CourseSet.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SoundEffects/CourseSet.wav
+/build:sounds/CourseSet.wav
 
-#begin SoundEffects/engineSound.wav
+#begin sounds/engineSound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SoundEffects/engineSound.wav
+/build:sounds/engineSound.wav
 
-#begin SoundEffects/torpedoFire.wav
+#begin sounds/torpedoFire.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SoundEffects/torpedoFire.wav
+/build:sounds/torpedoFire.wav
 
-#begin SoundEffects/torpedoHit.wav
+#begin sounds/torpedoHit.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:SoundEffects/torpedoHit.wav
+/build:sounds/torpedoHit.wav
 
 #begin textures/animations/explosion.png
 /importer:TextureImporter
