@@ -18,7 +18,7 @@ using System.Collections.Generic;
 namespace StellarLiberation.Game.Core.MapSystem
 {
     [Serializable]
-    public class Map
+    public class MapFactory
     {
         [JsonProperty] private int mSectorCountWidth = 40;
         [JsonProperty] private int mSectorCountHeight = 40;

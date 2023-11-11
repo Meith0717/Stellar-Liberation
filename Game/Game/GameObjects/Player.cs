@@ -19,7 +19,7 @@ namespace StellarLiberation.Game.GameObjects
 
         private Inventory mInventory;
 
-        public Player() : base(Vector2.Zero, TextureRegistries.player, 1, new(20000), new(1f, 0.01f), new(1000, Color.BlueViolet, 2, 2), new(100, int.MaxValue, 0, 0), Factions.Enemys)
+        public Player() : base(Vector2.Zero, TextureRegistries.player, 1, new(20000), new(10f, 0.01f), new(1000, Color.BlueViolet, 2, 2), new(100, int.MaxValue, 0, 0), Factions.Enemys)
         {
             mInventory = new(2000);
 

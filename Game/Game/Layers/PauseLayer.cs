@@ -23,15 +23,7 @@ namespace StellarLiberation.Game.Layers
 
             mBackgroundLayer.AddChild(new UiButton(TextureRegistries.button, "Continue") {HSpace = 20, RelY = .4f, OnClickAction = () => mLayerManager.PopLayer() });
             mBackgroundLayer.AddChild(new UiButton(TextureRegistries.button, "Save") { HSpace = 20, RelY = .5f, OnClickAction = null });
-            mBackgroundLayer.AddChild(new UiButton(TextureRegistries.button, "Menue")
-            {
-                HSpace = 20,
-                RelY = .6f,
-                OnClickAction = () =>
-                {
-                    mLayerManager.PopLayer(); mLayerManager.PopLayer(); SoundManager.Instance.PlaySound(MusicRegistries.bgMusicMenue, 1, isLooped: true, isBackroungMusic: true);
-                }
-            });
+            mBackgroundLayer.AddChild(new UiButton(TextureRegistries.button, "Menue") { HSpace = 20, RelY = .6f, OnClickAction = Menue });
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
@@ -62,9 +54,10 @@ namespace StellarLiberation.Game.Layers
             mBackgroundLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds);
         }
         
-        private void Exit()
+        private void Menue()
         {
-            mLayerManager.Exit();
+            mLayerManager.PopLayer(); mLayerManager.PopLayer(); SoundManager.Instance.PlaySound(MusicRegistries.bgMusicMenue, 1, isLooped: true, isBackroungMusic: true);
+            SoundManager.Instance.StopBackgroundMusic(MusicRegistries.bgMusicGame);
         }
     }
 }

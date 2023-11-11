@@ -2,15 +2,15 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using StellarLiberation.Core.GameEngine.Position_Management;
+using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
+using StellarLiberation.Core.GameEngine.Content_Management;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
-using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.MapSystem;
 using StellarLiberation.Game.GameObjects;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.Layers.Scenes;
-using Microsoft.Xna.Framework;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +21,7 @@ namespace StellarLiberation.Game.Layers
     public class GameLayer : Core.LayerManagement.SceneManagerLayer
     {
         [JsonProperty] public readonly HashSet<PlanetSystem> PlanetSystems;
-        [JsonProperty] public readonly Map Map;
+        [JsonProperty] public readonly MapFactory Map;
         [JsonProperty] public readonly Player Player;
         [JsonIgnore] public PlanetSystem CurrentSystem { get; private set; }
 
@@ -35,7 +35,7 @@ namespace StellarLiberation.Game.Layers
             Map.Generate(Player, out PlanetSystems);
 
             // Play bg music
-            // SoundManager.Instance.PlaySound(ContentRegistry.bgMusicGame, 1.2f, false, true, true);
+            SoundManager.Instance.PlaySound(MusicRegistries.bgMusicGame, 1.2f, false, true, true);
 
             // Add Main Scene
             CurrentSystem = PlanetSystems.First();
