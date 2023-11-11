@@ -13,6 +13,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.Propulsion
     public class SublightEngine
     {
         public bool IsMoving { get; private set; }
+
         public float MaxVelocity { get; }
         private readonly float Maneuverability;
 
@@ -32,14 +33,13 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.Propulsion
             mVector2Target ??= position;
 
             UpdateRotation(spaceShip);
-            UpdateVelocity(spaceShip);
         }
 
-        private void UpdateVelocity(SpaceShip spaceShip)
+        public void UpdateVelocity(SpaceShip spaceShip)
         {
             if (!IsMoving)
             {
-                spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, .005f);
+                spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, MaxVelocity / 100);
                 return;
             }
 
@@ -56,7 +56,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.Propulsion
                 >= 0.7f => MaxVelocity * relRotation,
                 float.NaN => 0
             };
-            spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, targetVelocity, .005f);
+            spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, targetVelocity, MaxVelocity / 100);
             if (spaceShip.BoundedBox.Contains((Vector2)mVector2Target)) 
                  Standstill();
         }
@@ -92,22 +92,13 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.Propulsion
             IsMoving = false;
         }
 
-        public void FollowMouse(InputState inputState, Vector2 worldMousePosition)
+        public void FollowMouse(SpaceShip spaceShip, InputState inputState, Vector2 worldMousePosition)
         {
-            if (inputState.HasMouseAction(MouseActionType.LeftClickHold))
-            {
-                MoveToPosition(worldMousePosition);
-            }
-            else
-            {
-                Standstill();
-            }
+            inputState.DoAction(ActionType.Accelerate, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, MaxVelocity, MaxVelocity / 100));
+            inputState.DoAction(ActionType.Break, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, MaxVelocity / 100));
+            MoveToPosition(worldMousePosition);
         }
 
-        public void Draw(Debugger.DebugSystem debugSystem, SpaceShip spaceShip, Scene scene)
-        {
-            debugSystem.DrawPath(mVector2Target, spaceShip, scene);
-        }
+        public void Draw(Debugger.DebugSystem debugSystem, SpaceShip spaceShip, Scene scene) => debugSystem.DrawPath(mVector2Target, spaceShip, scene);
     }
-
 }

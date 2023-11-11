@@ -3,6 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using StellarLiberation.Core.GameEngine.Content_Management;
 using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
@@ -10,7 +11,9 @@ using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.ItemManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.MapSystem;
+using StellarLiberation.Game.Core.Persistance;
 using StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
+using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.Layers.Scenes;
@@ -40,23 +43,27 @@ namespace StellarLiberation.Game.Layers
 
             // Add Main Scene
             CurrentSystem = PlanetSystems.First();
-            Player.Position = CurrentSystem.QuantumGate.Position;
+            Player.Position = ExtendetRandom.NextVectorInCircle(CurrentSystem.SystemBounding);
             mMainGameScene = new(this);
             AddScene(mMainGameScene);
         }
 
+        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
+        {
+            base.Initialize(game1, layerManager, graphicsDevice, serialize);
+            mLayerManager.AddLayer(new HudLayer(mMainGameScene));
+        }
+
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            // Check if pause is pressed
-            inputState.DoAction(ActionType.ESC, () => mLayerManager.AddLayer(new PauseLayer()));
-
             // Check if mouse clicks outside window
             if (!mGraphicsDevice.Viewport.Bounds.Contains(inputState.mMousePosition) && (inputState.HasMouseAction(MouseActionType.LeftClick) || inputState.HasMouseAction(MouseActionType.RightClick))) mLayerManager.AddLayer(new PauseLayer());
 
-            System.Diagnostics.Debug.WriteLine(Player.Position);
-
             // Update Top Scene
             base.Update(gameTime, inputState);
+
+            // Check if pause is pressed
+            inputState.DoAction(ActionType.ESC, () => mLayerManager.AddLayer(new PauseLayer()));
         }
 
         public override void Destroy() { }

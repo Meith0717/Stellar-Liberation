@@ -38,11 +38,9 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
                 { Keys.P, ActionType.None },
                 { Keys.Q, ActionType.None },
                 { Keys.R, ActionType.None },
-                { Keys.S, ActionType.Save },
                 { Keys.T, ActionType.None },
                 { Keys.U, ActionType.None },
                 { Keys.V, ActionType.None },
-                { Keys.W, ActionType.None },
                 { Keys.X, ActionType.None },
                 { Keys.Y, ActionType.None },
                 { Keys.Z, ActionType.None },
@@ -65,6 +63,9 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
             mActionOnKeyboardHold = new()
             {
                 { Keys.Space, ActionType.FireInitialWeapon },
+                { Keys.W, ActionType.Accelerate },                
+                { Keys.S, ActionType.Break },
+
             };
             mKeysKeyEventTypes = new();
         }

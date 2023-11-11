@@ -21,9 +21,12 @@ namespace StellarLiberation.Game.Layers
         {
             mBackgroundLayer = new() {RelHeight = 1, RelWidth = 1, Color = Color.Black, Alpha = .8f};
 
-            mBackgroundLayer.AddChild(new UiButton(TextureRegistries.button, "Continue") {HSpace = 20, RelY = .4f, OnClickAction = () => mLayerManager.PopLayer() });
-            mBackgroundLayer.AddChild(new UiButton(TextureRegistries.button, "Save") { HSpace = 20, RelY = .5f, OnClickAction = null });
-            mBackgroundLayer.AddChild(new UiButton(TextureRegistries.button, "Menue") { HSpace = 20, RelY = .6f, OnClickAction = Menue });
+            var buttonFrame = new UiLayer() { Anchor = Anchor.Center, Height = 300, Width = 300 , HSpace = 20, VSpace = 20, Alpha = 0 };
+            mBackgroundLayer.AddChild(buttonFrame);
+
+            buttonFrame.AddChild(new UiButton(TextureRegistries.button, "Continue") {Anchor = Anchor.N, FillScale = FillScale.X, OnClickAction = () => mLayerManager.PopLayer(), TextAllign = TextAllign.Center });
+            buttonFrame.AddChild(new UiButton(TextureRegistries.button, "Save") {Anchor = Anchor.Center, FillScale = FillScale.X, OnClickAction = null, TextAllign = TextAllign.Center });
+            buttonFrame.AddChild(new UiButton(TextureRegistries.button, "Menue") { Anchor = Anchor.S, FillScale = FillScale.X, OnClickAction = Menue, TextAllign = TextAllign.Center });
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
@@ -56,8 +59,11 @@ namespace StellarLiberation.Game.Layers
         
         private void Menue()
         {
-            mLayerManager.PopLayer(); mLayerManager.PopLayer(); SoundManager.Instance.PlaySound(MusicRegistries.bgMusicMenue, 1, isLooped: true, isBackroungMusic: true);
+            mLayerManager.PopLayer(); // Pause Menue
+            mLayerManager.PopLayer(); // Hud
+            mLayerManager.PopLayer(); // Game
             SoundManager.Instance.StopBackgroundMusic(MusicRegistries.bgMusicGame);
+            SoundManager.Instance.PlaySound(MusicRegistries.bgMusicMenue, 1, isLooped: true, isBackroungMusic: true);
         }
     }
 }

@@ -107,23 +107,36 @@ namespace StellarLiberation.Game.Core.ContentManagement.ContentRegistry
         public readonly static Registry mapCrosshair = new(crosshair, "selectCrosshait");
         public readonly static Registry dot = new(crosshair, "dot");
 
-        private readonly static string layer1 = @"textures\UserInterface\Layer";
-        public readonly static Registry layer = new(layer1, "layer");
-        public readonly static Registry circle = new(layer1, "circle");
+        private readonly static string _layer = @"textures\UserInterface\layer";
+        public readonly static Registry layer = new(_layer, "layer");
+        public readonly static Registry layer1 = new(_layer, "layer1");
+        public readonly static Registry circle = new(_layer, "circle");
 
-        private readonly static string menueButtons = @"textures\UserInterface\MenueButtons";
+        private readonly static string menueButtons = @"textures\UserInterface\buttons";
         public readonly static Registry button = new(menueButtons, "button");
+        public readonly static Registry pauseButton = new(menueButtons, "pauseButton");
+        public readonly static Registry copyrightButton = new(menueButtons, "copyrightButton");
 
         private readonly static string animations = @"textures\animations\";
         public readonly static Registry explosion = new(animations, "explosion");
 
-        private readonly static string bar = @"textures\UserInterface\Bar";
+        private readonly static string bar = @"textures\UserInterface\bar";
         public readonly static Registry barHorizontalLeft = new(bar, "barHorizontalLeft");
         public readonly static Registry barHorizontalMid = new(bar, "barHorizontalMid");
         public readonly static Registry barHorizontalRight = new(bar, "barHorizontalRight");
         public readonly static Registry barHorizontalShadowLeft = new(bar, "barHorizontalShadowLeft");
         public readonly static Registry barHorizontalShadowMid = new(bar, "barHorizontalShadowMid");
         public readonly static Registry barHorizontalShadowRight = new(bar, "barHorizontalShadowRight");
+
+        public readonly static Registry barVerticalBottom = new(bar, "barVerticalBottom");
+        public readonly static Registry barVerticalMid = new(bar, "barVerticalMid");
+        public readonly static Registry barVerticalTop = new(bar, "barVerticalTop");
+        public readonly static Registry barVerticalShadowBottom = new(bar, "barVerticalShadowBottom");
+        public readonly static Registry barVerticalShadowMid = new(bar, "barVerticalShadowMid");
+        public readonly static Registry barVerticalShadowTop = new(bar, "barVerticalShadowTop");
+        public readonly static Registry shield = new(bar, "shield");
+        public readonly static Registry ship = new(bar, "ship");
+        public readonly static Registry propulsion = new(bar, "propulsion");
 
     }
 }

@@ -3,6 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Core.GameEngine.Content_Management;
 using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
@@ -15,14 +16,18 @@ namespace StellarLiberation.Game.Core.UserInterface
         public Color Color = Color.White;
         public double Alpha = 1;
         private LinkedList<UiElement> mChildren = new LinkedList<UiElement>();
+        private Texture2D mTexture;
+
+        public UiLayer() => mTexture = TextureManager.Instance.GetTexture(TextureRegistries.layer);
+
+        public UiLayer(string texture) => mTexture = TextureManager.Instance.GetTexture(texture);
 
         public void AddChild(UiElement child) => mChildren.AddLast(child);
 
         public override void Draw()
         {
             var color = new Color((int)(Color.R * Alpha), (int)(Color.G * Alpha), (int)(Color.B * Alpha), (int)(Color.A * Alpha));
-            var texture = TextureManager.Instance.GetTexture(TextureRegistries.layer);
-            TextureManager.Instance.SpriteBatch.Draw(texture, Frame, color);
+            TextureManager.Instance.SpriteBatch.Draw(mTexture, Frame, color);
             foreach ( var child in mChildren ) child.Draw();
         }
 

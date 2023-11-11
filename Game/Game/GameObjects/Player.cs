@@ -3,6 +3,8 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using StellarLiberation.Game.Core.AI.Behaviors;
+using StellarLiberation.Game.Core.AI.Behaviors.Combat;
 using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.ItemManagement;
@@ -19,7 +21,7 @@ namespace StellarLiberation.Game.GameObjects
 
         private Inventory mInventory;
 
-        public Player() : base(Vector2.Zero, TextureRegistries.player, 1, new(20000), new(10f, 0.01f), new(1000, Color.BlueViolet, 2, 2), new(100, int.MaxValue, 0, 0), Factions.Enemys)
+        public Player() : base(Vector2.Zero, TextureRegistries.player, 1, new(20000), new(10f, 0.01f), new(1000, Color.BlueViolet, 2, 2), new(100, 1000, 1), Factions.Enemys)
         {
             mInventory = new(2000);
 
@@ -31,11 +33,12 @@ namespace StellarLiberation.Game.GameObjects
 
             mAi = new(new()
             {
-                // new PatrollBehavior(),
-                // new InterceptBehavior(),
-                // new FarCombatBehavior(10000),
-                // new FleeBehavior()
-            });
+                new PatrollBehavior(),
+                new InterceptBehavior(),
+                new FarCombatBehavior(10000),
+                new FleeBehavior()
+            })
+            { Debug = true };
         }
 
         public void SpawnInNewPlanetSystem(Vector2 position)
@@ -46,10 +49,11 @@ namespace StellarLiberation.Game.GameObjects
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
-            WeaponSystem.StopFire();
-            inputState.DoMouseAction(MouseActionType.RightClickHold, () => WeaponSystem.Fire());
-            SublightEngine.FollowMouse(inputState, scene.WorldMousePosition);
+            // WeaponSystem.StopFire();
+            // inputState.DoMouseAction(MouseActionType.RightClickHold, () => WeaponSystem.Fire());
+            // SublightEngine.FollowMouse(this, inputState, scene.WorldMousePosition);
             mInventory.Update(this, scene);
+            SublightEngine.UpdateVelocity(this);
 
             base.Update(gameTime, inputState, scene);
             scene.Camera2D.SetPosition(Position);

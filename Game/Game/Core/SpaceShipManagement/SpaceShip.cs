@@ -102,8 +102,6 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
             scene.GameLayer.DebugSystem.DrawSensorRadius(Position, SensorArray.ShortRangeScanDistance, scene);
             TextureManager.Instance.DrawGameObject(this);
             WeaponSystem.Draw(scene);
-            DefenseSystem.DrawShields(this);
-            DefenseSystem.DrawLive(this);
             SublightEngine.Draw(scene.GameLayer.DebugSystem, this, scene);
         }
 

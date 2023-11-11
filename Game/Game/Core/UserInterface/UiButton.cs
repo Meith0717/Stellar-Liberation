@@ -9,6 +9,8 @@ using System;
 
 namespace StellarLiberation.Game.Core.UserInterface
 {
+    public enum TextAllign { W, E, Center }
+
     internal class UiButton : UiElement
     {
         public bool IsHover;
@@ -17,6 +19,8 @@ namespace StellarLiberation.Game.Core.UserInterface
         private string mText;
         private float mTextScale;
         private bool mIsDisabled;
+        public TextAllign TextAllign = TextAllign.W;
+        private Vector2 TextPosition;
 
         public UiButton(string SpriteId, string text, float textScale = 1)
         {
@@ -31,17 +35,31 @@ namespace StellarLiberation.Game.Core.UserInterface
         public override void Draw() 
         {
             var color = IsHover ? Color.MonoGameOrange : Color.White;
-            var position = new Vector2(Frame.Location.X + 5, Frame.Location.Y + 10);
             TextureManager.Instance.Draw(mSpriteId, Frame.Location.ToVector2(), Frame.Width, Frame.Height, color);
-            TextureManager.Instance.DrawString("button", position, mText, mTextScale, color);
+            TextureManager.Instance.DrawString("button", TextPosition, mText, mTextScale, color);
         } 
 
         public override void Update(InputState inputState, Rectangle root) 
         {
             mIsDisabled = OnClickAction is null;
+
+            var stringDim = TextureManager.Instance.GetFont("button").MeasureString(mText);
+            switch (TextAllign)
+            {
+                case TextAllign.W:
+                    TextPosition = new Vector2(Frame.X + 5, Frame.Location.Y + 10);
+                    break;
+                case TextAllign.E:
+                    TextPosition = new Vector2(Frame.Right - stringDim.X - 5, Frame.Location.Y + 10);
+                    break;
+                case TextAllign.Center:
+                    TextPosition = new Vector2(Frame.Center.X - (stringDim.X / 2), Frame.Location.Y + 10);
+                    break;
+            }
+
             if (mIsDisabled) return;
             IsHover = Frame.Contains(inputState.mMousePosition);
-            if (IsHover && OnClickAction is not null) inputState.DoMouseAction(MouseActionType.LeftClick, OnClickAction);
+            if (IsHover && OnClickAction is not null) inputState.DoMouseAction(MouseActionType.LeftClickReleased, OnClickAction);
         }
     }
 }

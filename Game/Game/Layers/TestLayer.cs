@@ -16,7 +16,7 @@ namespace StellarLiberation.Game.Layers
     {
 
         private UiLayer mFrame;
-        private UiBare mBare;
+        private UiVBar mBare;
 
         public TestLayer(bool updateBelow) : base(updateBelow)
         {
@@ -25,7 +25,7 @@ namespace StellarLiberation.Game.Layers
 
             mFrame.AddChild(new UiButton(TextureRegistries.button, "< Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => mLayerManager.PopLayer()});
 
-            mBare = new UiBare(Color.LightGreen) { RelHeight = 0.05f, RelWidth = 0.3f, RelX = 0.5f, RelY = 0.5f};
+            mBare = new(Color.LightGreen, TextureRegistries.shield) { RelHeight = 0.5f, RelWidth = 0.01f, RelX = 0.5f, RelY = 0.5f};
             mFrame.AddChild(mBare);
         }
 

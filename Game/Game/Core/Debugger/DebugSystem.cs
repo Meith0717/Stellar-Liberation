@@ -24,7 +24,7 @@ namespace StellarLiberation.Game.Core.Debugger
         public float DrawnObjectCount;
         public float UpdateObjectCount;
 
-        private bool IsDebug = true;
+        private bool IsDebug;
         private bool DrawBuckets;
         private bool ShowObjectsInBucket;
         private bool ShowHitBoxes;
@@ -89,7 +89,7 @@ namespace StellarLiberation.Game.Core.Debugger
         public void DrawOnScreen()
         {
             if (!IsDebug) return;
-            ShowInfo(new(10, 10));
+            ShowInfo(new(10, 120));
         }
 
         public void DrawOnScene(Scene scene)

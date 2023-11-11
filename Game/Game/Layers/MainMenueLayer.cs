@@ -27,7 +27,7 @@ namespace StellarLiberation.Game.Layers
             mFrame.AddChild(new UiButton(TextureRegistries.button, "New Game") { VSpace = 20, HSpace = 20, RelY = .5f, OnClickAction = StartGame });
             mFrame.AddChild(new UiButton(TextureRegistries.button, "Continue") { VSpace = 20, HSpace = 20, RelY = .6f, OnClickAction = null });
             mFrame.AddChild(new UiButton(TextureRegistries.button, "Settings") { VSpace = 20, HSpace = 20, RelY = .7f, OnClickAction = () => mLayerManager.AddLayer(new TestLayer(false))});
-            mFrame.AddChild(new UiButton(TextureRegistries.button, "Credits") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = null });
+            mFrame.AddChild(new UiButton(TextureRegistries.copyrightButton,"") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = null });
             mFrame.AddChild(new UiButton(TextureRegistries.button, "Exit Game") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => mLayerManager.Exit() });
 
             var topTitleFrame = new UiLayer() { RelHeight = 0.25f, RelWidth = 0.4f, Color = Color.Green, Alpha = .0f, HSpace = 20, VSpace = 20 };
