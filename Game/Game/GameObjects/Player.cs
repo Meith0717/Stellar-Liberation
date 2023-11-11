@@ -33,10 +33,10 @@ namespace StellarLiberation.Game.GameObjects
 
             mAi = new(new()
             {
-                new PatrollBehavior(),
-                new InterceptBehavior(),
-                new FarCombatBehavior(10000),
-                new FleeBehavior()
+                // new PatrollBehavior(),
+                // new InterceptBehavior(),
+                // new FarCombatBehavior(10000),
+                // new FleeBehavior()
             })
             { Debug = true };
         }
@@ -49,11 +49,10 @@ namespace StellarLiberation.Game.GameObjects
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
-            // WeaponSystem.StopFire();
-            // inputState.DoMouseAction(MouseActionType.RightClickHold, () => WeaponSystem.Fire());
-            // SublightEngine.FollowMouse(this, inputState, scene.WorldMousePosition);
+            WeaponSystem.StopFire();
+            inputState.DoMouseAction(MouseActionType.RightClickHold, () => WeaponSystem.Fire());
+            SublightEngine.FollowMouse(this, inputState, scene.WorldMousePosition);
             mInventory.Update(this, scene);
-            SublightEngine.UpdateVelocity(this);
 
             base.Update(gameTime, inputState, scene);
             scene.Camera2D.SetPosition(Position);
