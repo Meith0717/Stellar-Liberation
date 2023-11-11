@@ -8,7 +8,6 @@ using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
-using System.Linq;
 
 namespace StellarLiberation.Game.GameObjects
 {
@@ -25,11 +24,13 @@ namespace StellarLiberation.Game.GameObjects
             base.Update(gameTime, inputState, scene);
             AddToSpatialHashing(scene);
 
-            var players = scene.GetObjectsInRadius<Player>(Position, (int)BoundedBox.Radius);
-            if (!players.Any()) return;
-            if (players.First().HyperDrive.TargetPlanetSystem is null) return;
-            scene.GameLayer.SwitchCurrentPlanetSystemScene(players.First().HyperDrive.TargetPlanetSystem);
-            players.First().HyperDrive.TargetPlanetSystem = null;
+            var player = scene.GameLayer.Player;
+
+            if (!BoundedBox.Intersects(player.BoundedBox)) return;
+            if (player.HyperDrive.TargetPlanetSystem is null) return;
+            scene.GameLayer.CurrentSystem = player.HyperDrive.TargetPlanetSystem;
+            scene.GameLayer.Player.Position = player.HyperDrive.TargetPlanetSystem.QuantumGate.Position;
+            player.HyperDrive.TargetPlanetSystem = null;
         }
 
         public override void Draw(Scene scene)

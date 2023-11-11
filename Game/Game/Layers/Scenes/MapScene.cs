@@ -44,7 +44,7 @@ namespace StellarLiberation.Game.Layers.Scenes
         public override void DrawOnWorld() 
         {
             TextureManager.Instance.Draw(TextureRegistries.mapCrosshair, mCurrentSystem.Position, 0.02f, 0, 1, Color.YellowGreen);
-            var targetSystem = mCurrentSystem.Player.HyperDrive.TargetPlanetSystem;
+            var targetSystem = GameLayer.Player.HyperDrive.TargetPlanetSystem;
             if (targetSystem is null) return;
             TextureManager.Instance.Draw(TextureRegistries.mapCrosshair, targetSystem.Position, 0.02f, 0, 1, Color.LightBlue);
         }

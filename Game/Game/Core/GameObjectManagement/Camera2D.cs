@@ -64,7 +64,7 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
             mMaxZoom = maxZoom;
             mMinZoom = minZoom;
             mAllowMovingWithMouse = allowMovingWithMouse;
-            Zoom = mMinZoom;
+            Zoom = mMaxZoom;
         }
 
         public void Shake(int amount)

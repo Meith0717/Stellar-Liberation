@@ -16,6 +16,7 @@ namespace StellarLiberation.Game.Layers
     {
 
         private UiLayer mFrame;
+        private UiBare mBare;
 
         public TestLayer(bool updateBelow) : base(updateBelow)
         {
@@ -23,6 +24,9 @@ namespace StellarLiberation.Game.Layers
             mFrame.AddChild(new UiSprite(TextureRegistries.menueBackground) { FillScale = FillScale.X });
 
             mFrame.AddChild(new UiButton(TextureRegistries.button, "< Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => mLayerManager.PopLayer()});
+
+            mBare = new UiBare(Color.LightGreen) { RelHeight = 0.05f, RelWidth = 0.3f, RelX = 0.5f, RelY = 0.5f};
+            mFrame.AddChild(mBare);
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
@@ -48,6 +52,7 @@ namespace StellarLiberation.Game.Layers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds);
+            if (inputState.HasMouseAction(MouseActionType.LeftClick)) mBare.Percentage = 0.5;
         }
     }
 }

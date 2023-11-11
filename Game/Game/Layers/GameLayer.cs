@@ -7,7 +7,10 @@ using Newtonsoft.Json;
 using StellarLiberation.Core.GameEngine.Content_Management;
 using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
+using StellarLiberation.Game.Core.ItemManagement;
+using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.MapSystem;
+using StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
 using StellarLiberation.Game.GameObjects;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.Layers.Scenes;
@@ -18,28 +21,28 @@ using System.Linq;
 namespace StellarLiberation.Game.Layers
 {
     [Serializable]
-    public class GameLayer : Core.LayerManagement.SceneManagerLayer
+    public class GameLayer : SceneManagerLayer
     {
-        [JsonProperty] public readonly HashSet<PlanetSystem> PlanetSystems;
-        [JsonProperty] public readonly MapFactory Map;
-        [JsonProperty] public readonly Player Player;
-        [JsonIgnore] public PlanetSystem CurrentSystem { get; private set; }
+        [JsonProperty] public readonly HashSet<PlanetSystem> PlanetSystems = new();
+        [JsonProperty] public readonly Player Player = new();
+        [JsonProperty] public readonly ProjectileManager ProjectileManager = new();
+        [JsonProperty] public readonly ItemManager ItemManager = new();
+
+        [JsonIgnore] public PlanetSystem CurrentSystem { get; set; }
+        [JsonIgnore] private readonly MainGameScene mMainGameScene;
 
         public GameLayer() : base()
         {
-            // Build and place player to startsystem
-            Player = new();
-
-            // Build and generate map
-            Map = new();
-            Map.Generate(Player, out PlanetSystems);
+            MapFactory.Generate(out PlanetSystems);
 
             // Play bg music
             SoundManager.Instance.PlaySound(MusicRegistries.bgMusicGame, 1.2f, false, true, true);
 
             // Add Main Scene
             CurrentSystem = PlanetSystems.First();
-            AddScene(new PlanetSystemScene(this, CurrentSystem));
+            Player.Position = CurrentSystem.QuantumGate.Position;
+            mMainGameScene = new(this);
+            AddScene(mMainGameScene);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
@@ -50,6 +53,8 @@ namespace StellarLiberation.Game.Layers
             // Check if mouse clicks outside window
             if (!mGraphicsDevice.Viewport.Bounds.Contains(inputState.mMousePosition) && (inputState.HasMouseAction(MouseActionType.LeftClick) || inputState.HasMouseAction(MouseActionType.RightClick))) mLayerManager.AddLayer(new PauseLayer());
 
+            System.Diagnostics.Debug.WriteLine(Player.Position);
+
             // Update Top Scene
             base.Update(gameTime, inputState);
         }
@@ -57,13 +62,6 @@ namespace StellarLiberation.Game.Layers
         public override void Destroy() { }
 
         public override void OnResolutionChanged() { }
-
-        public void SwitchCurrentPlanetSystemScene(PlanetSystem planetSystem)
-        {
-            PopScene();
-            CurrentSystem = planetSystem;
-            AddScene(new PlanetSystemScene(this, planetSystem));
-        }
 
         public void LoadMap() => AddScene(new MapScene(this, PlanetSystems.ToList(), CurrentSystem));
     }

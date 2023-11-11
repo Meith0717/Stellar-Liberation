@@ -18,8 +18,6 @@ using StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.PropulsionSyst
 using StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects;
-using StellarLiberation.Game.GameObjects.AstronomicalObjects;
-using StellarLiberation.Game.Layers;
 using System;
 using System.Linq;
 
@@ -38,7 +36,6 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
         [JsonIgnore] public HyperDrive HyperDrive { get; private set; }
         [JsonIgnore] public TurretBattery WeaponSystem { get; private set; }
         [JsonProperty] public DefenseSystem DefenseSystem { get; private set; }
-        [JsonIgnore] public PlanetSystem ActualPlanetSystem { get; set; }
         [JsonIgnore] protected Factions mOpponent;
 
 
@@ -68,8 +65,8 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
 
             HasProjectileHit(scene);
             DefenseSystem.Update(gameTime);
-            SensorArray.Update(gameTime, Position, ActualPlanetSystem, scene, mOpponent);
-            if (!IsDestroyed) WeaponSystem.Update(gameTime, this, ActualPlanetSystem.ProjectileManager, SensorArray.AimingShip);
+            SensorArray.Update(gameTime, Position, scene.GameLayer.CurrentSystem, scene, mOpponent);
+            if (!IsDestroyed) WeaponSystem.Update(gameTime, this, scene.GameLayer.ProjectileManager, SensorArray.AimingShip);
             mAi.Update(gameTime, SensorArray, this);
 
             if (!IsDestroyed) return;
@@ -120,7 +117,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
             if (shakeamount < 0) shakeamount = 0;
             scene.Camera2D.Shake((int)(shakeamount * 100));
 
-            for (int i = 0; i < 5; i++) ActualPlanetSystem.ItemManager.PopItem(Direction, Position, new Items.Metall());
+            for (int i = 0; i < 5; i++) scene.GameLayer.ItemManager.PopItem(Direction, Position, new Items.Metall());
 
             return;
         }

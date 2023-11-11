@@ -32,7 +32,7 @@ namespace StellarLiberation.Game.Core.ItemManagement
             {
                 item.Pull(position);
                 if (!ContinuousCollisionDetection.HasCollide(item, spaceShip, out _)) continue;
-                spaceShip.ActualPlanetSystem.ItemManager.RemoveItem(scene, item);
+                scene.GameLayer.ItemManager.RemoveItem(scene, item);
                 Collect(item);
                 collected = true;
             }

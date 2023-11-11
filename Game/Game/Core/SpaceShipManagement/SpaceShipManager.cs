@@ -21,16 +21,16 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
             switch (type)
             {
                 case ShipType.EnemyBattleShip:
-                    AddObj(new Enemys.BattleShip(position) { ActualPlanetSystem = planetSystem });
+                    AddObj(new Enemys.BattleShip(position));
                     break;
                 case ShipType.EnemyCorvette:
-                    AddObj(new Enemys.Bomber(position) { ActualPlanetSystem = planetSystem });
+                    AddObj(new Enemys.Bomber(position));
                     break;
                 case ShipType.EnemyFighter:
-                    AddObj(new Enemys.Fighter(position) { ActualPlanetSystem = planetSystem });
+                    AddObj(new Enemys.Fighter(position));
                     break;
                 case ShipType.EnemyCarrior:
-                    AddObj(new Enemys.Carrior(position) { ActualPlanetSystem = planetSystem });
+                    AddObj(new Enemys.Carrior(position));
                     break;
             }
         }
