@@ -20,17 +20,17 @@ namespace StellarLiberation.Game.GameObjects
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
-            RemoveFromSpatialHashing(scene);
-            base.Update(gameTime, inputState, scene);
-            AddToSpatialHashing(scene);
-
-            var player = scene.GameLayer.Player;
-
-            if (!BoundedBox.Intersects(player.BoundedBox)) return;
-            if (player.HyperDrive.TargetPlanetSystem is null) return;
-            scene.GameLayer.CurrentSystem = player.HyperDrive.TargetPlanetSystem;
-            scene.GameLayer.Player.Position = player.HyperDrive.TargetPlanetSystem.QuantumGate.Position;
-            player.HyperDrive.TargetPlanetSystem = null;
+            // RemoveFromSpatialHashing(scene);
+            // base.Update(gameTime, inputState, scene);
+            // AddToSpatialHashing(scene);
+            // 
+            // var player = scene.GameLayer.Player;
+            // 
+            // if (!BoundedBox.Intersects(player.BoundedBox)) return;
+            // if (player.HyperDrive.TargetPlanetSystem is null) return;
+            // scene.GameLayer.CurrentSystem = player.HyperDrive.TargetPlanetSystem;
+            // scene.GameLayer.Player.Position = player.HyperDrive.TargetPlanetSystem.QuantumGate.Position;
+            // player.HyperDrive.TargetPlanetSystem = null;
         }
 
         public override void Draw(Scene scene)

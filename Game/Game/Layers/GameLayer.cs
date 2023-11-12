@@ -45,12 +45,12 @@ namespace StellarLiberation.Game.Layers
             CurrentSystem = PlanetSystems.First();
             Player.Position = ExtendetRandom.NextVectorInCircle(CurrentSystem.SystemBounding);
             mMainGameScene = new(this);
-            AddScene(mMainGameScene);
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
         {
             base.Initialize(game1, layerManager, graphicsDevice, serialize);
+            AddScene(mMainGameScene);
             mLayerManager.AddLayer(new HudLayer(mMainGameScene));
         }
 
@@ -68,7 +68,7 @@ namespace StellarLiberation.Game.Layers
 
         public override void Destroy() { }
 
-        public override void OnResolutionChanged() { }
+        public override void OnResolutionChanged() { base.OnResolutionChanged(); }
 
         public void LoadMap() => AddScene(new MapScene(this, PlanetSystems.ToList(), CurrentSystem));
     }

@@ -105,7 +105,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public virtual void Initialize(Rectangle root) => UpdateFrame(root);
         public virtual void OnResolutionChanged(Rectangle root) => UpdateFrame(root);
-        public abstract void Update(InputState inputState, Rectangle root);
+        public virtual void Update(InputState inputState, Rectangle root) { ; }
         public abstract void Draw();
     }
 }

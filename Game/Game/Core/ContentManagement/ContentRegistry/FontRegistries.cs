@@ -7,7 +7,7 @@ namespace StellarLiberation.Game.Core.ContentManagement.ContentRegistry
     public class FontRegistries : Registries
     {
         private readonly static string fonts = @"fonts\";
-        public readonly static Registry bgMusicGame = new(fonts, "debug");
-        public readonly static Registry bgMusicMenue = new(fonts, "button");
+        public readonly static Registry debug = new(fonts, "debug");
+        public readonly static Registry button = new(fonts, "button");
     }
 }

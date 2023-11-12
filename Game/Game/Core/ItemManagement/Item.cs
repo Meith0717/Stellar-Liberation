@@ -12,6 +12,7 @@ using StellarLiberation.Game.Layers;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
+using StellarLiberation.Game.GameObjects;
 
 namespace StellarLiberation.Game.Core.ItemManagement
 {
@@ -19,9 +20,10 @@ namespace StellarLiberation.Game.Core.ItemManagement
     public abstract class Item : MovingObject
     {
         public readonly bool Collectable;
+        public readonly ItemID ItemID;
 
-        protected Item(string textureId, float textureScale, bool collectable)
-            : base(Vector2.Zero, textureId, textureScale, 30) { Collectable = collectable; }
+        protected Item(string textureId, float textureScale, bool collectable, ItemID itemID)
+            : base(Vector2.Zero, textureId, textureScale, 30) { Collectable = collectable; ItemID = itemID; }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
@@ -33,7 +35,7 @@ namespace StellarLiberation.Game.Core.ItemManagement
         {
             var angleToPosition = Geometry.AngleBetweenVectors(Position, position);
             Direction = Geometry.CalculateDirectionVector(angleToPosition);
-            Velocity = MovementController.GetVelocity(Velocity, float.PositiveInfinity, 0.015f);
+            Velocity = MovementController.GetVelocity(Velocity, float.PositiveInfinity, 0.03f);
         }
 
         public void Throw(Vector2 momentum, Vector2 position)

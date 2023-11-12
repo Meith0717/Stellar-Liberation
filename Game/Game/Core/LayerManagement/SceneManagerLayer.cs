@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using StellarLiberation.Game.Core.Persistance;
+using MonoGame.Extended;
 
 namespace StellarLiberation.Game.Core.LayerManagement
 {
@@ -16,12 +18,21 @@ namespace StellarLiberation.Game.Core.LayerManagement
     {
         public readonly Debugger.DebugSystem DebugSystem = new();
         protected readonly LinkedList<Scene> Scenes = new();
+        private RenderTarget2D mRenderTarget;
 
         protected SceneManagerLayer() : base(false) { }
 
         public void AddScene(Scene scene)
         {
+            ArgumentNullException.ThrowIfNull(mGraphicsDevice);
+            scene.Initialize(mGraphicsDevice);
             Scenes.AddLast(scene);
+        }
+
+        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
+        {
+            base.Initialize(game1, layerManager, graphicsDevice, serialize);
+            mRenderTarget = new(graphicsDevice, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
         }
 
         public void PopScene()
@@ -33,18 +44,40 @@ namespace StellarLiberation.Game.Core.LayerManagement
         public override void Update(GameTime gameTime, InputState inputState)
         {
             DebugSystem.Update(gameTime, inputState);
-            if (Scenes.Any()) Scenes.Last().Update(gameTime, inputState, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
+            foreach (Scene scene in Scenes.Reverse()) scene.Update(gameTime, inputState);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             DebugSystem.UpdateFrameCounting();
 
-            if (Scenes.Any()) Scenes.Last().Draw(this, spriteBatch);
+            // Update Render Targets of scenes
+            foreach (Scene scene in Scenes) scene.UpdateRenderTarget(this, spriteBatch);
+
+            mGraphicsDevice.SetRenderTarget(mRenderTarget);
+            mGraphicsDevice.Clear(Color.Transparent);
+
+            // Draw Scene Render Targets on Main Render Target
+            spriteBatch.Begin();
+            foreach (Scene scene in Scenes) spriteBatch.Draw(scene.RenderTarget, scene.RenderRectangle.ToRectangle(), Color.White);
+            spriteBatch.End();
+            mGraphicsDevice.SetRenderTarget(null);
+
+            // Draw the RenderTarget onto the screen
+            spriteBatch.Begin();
+            spriteBatch.Draw(mRenderTarget, mGraphicsDevice.Viewport.Bounds, Color.White);
+            spriteBatch.End();
 
             spriteBatch.Begin();
             DebugSystem.DrawOnScreen();
             spriteBatch.End();
+        }
+
+        public override void OnResolutionChanged()
+        {
+            mRenderTarget.Dispose();
+            mRenderTarget = new(mGraphicsDevice, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
+            foreach (Scene scene in Scenes) scene.OnResolutionChanged();
         }
     }
 }

@@ -18,6 +18,12 @@ namespace StellarLiberation.Game.Core.LayerManagement
 {
     public abstract class Scene
     {
+        public RenderTarget2D RenderTarget { get; private set; }
+        public RectangleF RenderRectangle { get; private set; }
+        private GraphicsDevice mGraphicsDevice;
+        private float mRelHeight;
+        private float mRelWidth;
+
         public Vector2 WorldMousePosition { get; private set; }
         public readonly SpatialHashing<GameObject> SpatialHashing;
         public readonly ViewFrustumFilter ViewFrustumFilter;
@@ -26,18 +32,31 @@ namespace StellarLiberation.Game.Core.LayerManagement
         private Matrix mViewTransformationMatrix;
         private HashSet<GameObject> mVisibleObjects = new();
 
-        public Scene(GameLayer gameLayer, int spatialHashingCellSize, float minCamZoom, float maxCamZoom, bool moveCamByMouse)
+        public Scene(GameLayer gameLayer, int spatialHashingCellSize, float minCamZoom, float maxCamZoom, bool moveCamByMouse, float RelWidth = 1, float RelHeight = 1)
         {
             SpatialHashing = new(spatialHashingCellSize);
             ViewFrustumFilter = new();
             Camera2D = new(minCamZoom, maxCamZoom, moveCamByMouse);
             GameLayer = gameLayer;
+            mRelHeight = RelHeight;
+            mRelWidth = RelWidth;
         }
 
-        public void Update(GameTime gameTime, InputState inputState, int screenWidth, int screenHeight)
+        public void Initialize(GraphicsDevice graphicsDevice)
         {
+            mGraphicsDevice = graphicsDevice;
+            var dim = new Vector2(mGraphicsDevice.Viewport.Width * mRelWidth, mGraphicsDevice.Viewport.Height * mRelHeight);
+            RenderRectangle = new(mGraphicsDevice.Viewport.Bounds.Center.ToVector2() - dim / 2, dim);
+            RenderTarget = new(mGraphicsDevice, (int)RenderRectangle.Width, (int)RenderRectangle.Height, true, SurfaceFormat.Color, DepthFormat.Depth24);
+        }
+
+        public void Update(GameTime gameTime, InputState inputState)
+        {
+            var screenWidth = (int)RenderRectangle.Width;
+            var screenHeight = (int)RenderRectangle.Height;
+
             mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera2D.Position, Camera2D.Zoom, 0, screenWidth, screenHeight);
-            WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, inputState.mMousePosition);
+            WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, Geometry.GetRelativePosition(inputState.mMousePosition, RenderRectangle.ToRectangle()));
             UpdateObj(gameTime, inputState);
             Camera2D.Update(gameTime, inputState, inputState.mMousePosition, mViewTransformationMatrix);
             ViewFrustumFilter.Update(screenWidth, screenHeight, mViewTransformationMatrix);
@@ -46,8 +65,13 @@ namespace StellarLiberation.Game.Core.LayerManagement
 
         public abstract void UpdateObj(GameTime gameTime, InputState inputState);
 
-        public void Draw(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch)
+        public void UpdateRenderTarget(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch)
         {
+            // Set the render target
+            mGraphicsDevice.SetRenderTarget(RenderTarget);
+            mGraphicsDevice.Clear(Color.Black);
+
+            // Drawing to the RenderTarget
             spriteBatch.Begin();
             DrawOnScreen();
             spriteBatch.End();
@@ -59,10 +83,17 @@ namespace StellarLiberation.Game.Core.LayerManagement
             spriteBatch.End();
         }
 
+
         public abstract void DrawOnScreen();
         public abstract void DrawOnWorld();
 
-        public abstract void OnResolutionChanged();
+        public virtual void OnResolutionChanged() 
+        {
+            var dim = new Vector2(mGraphicsDevice.Viewport.Width * mRelWidth, mGraphicsDevice.Viewport.Height * mRelHeight);
+            RenderRectangle = new(mGraphicsDevice.Viewport.Bounds.Center.ToVector2() - dim / 2, dim);
+            RenderTarget.Dispose();
+            RenderTarget = new(mGraphicsDevice, (int)RenderRectangle.Width, (int)RenderRectangle.Height, true, SurfaceFormat.Color, DepthFormat.Depth24);
+        }
 
         public List<T> GetObjectsInRadius<T>(Vector2 position, int radius) where T : GameObject
         {

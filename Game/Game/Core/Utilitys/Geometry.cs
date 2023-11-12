@@ -46,6 +46,15 @@ namespace StellarLiberation.Game.Core.Utilitys
             return (float)MathF.Acos(Vector2.Dot(new Vector2(1, 0), direction));
         }
 
+        public static Vector2 GetRelativePosition(Vector2 absolutePosition, Rectangle rectangle)
+        {
+            float relativeX = absolutePosition.X - rectangle.X;
+            float relativeY = absolutePosition.Y - rectangle.Y;
+
+            return new Vector2(relativeX, relativeY);
+        }
+
+
         public static float RadToDeg(float rad) => rad * (360 / (2 * MathF.PI));
 
         public static float DegToRad(float deg) => deg * (2 * MathF.PI / 360);

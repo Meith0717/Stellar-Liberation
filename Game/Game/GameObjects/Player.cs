@@ -19,11 +19,11 @@ namespace StellarLiberation.Game.GameObjects
     public class Player : SpaceShip
     {
 
-        private Inventory mInventory;
+        public Inventory Inventory;
 
         public Player() : base(Vector2.Zero, TextureRegistries.player, 1, new(20000), new(10f, 0.01f), new(1000, Color.BlueViolet, 2, 2), new(100, 1000, 1), Factions.Enemys)
         {
-            mInventory = new(2000);
+            Inventory = new(20, 10000);
 
             WeaponSystem.PlaceTurret(new(new(110, 35), 1, TextureDepth + 1));
             WeaponSystem.PlaceTurret(new(new(110, -35), 1, TextureDepth + 1));
@@ -52,7 +52,7 @@ namespace StellarLiberation.Game.GameObjects
             WeaponSystem.StopFire();
             inputState.DoMouseAction(MouseActionType.RightClickHold, () => WeaponSystem.Fire());
             SublightEngine.FollowMouse(this, inputState, scene.WorldMousePosition);
-            mInventory.Update(this, scene);
+            Inventory.Update(this, scene);
 
             base.Update(gameTime, inputState, scene);
             scene.Camera2D.SetPosition(Position);
@@ -66,7 +66,7 @@ namespace StellarLiberation.Game.GameObjects
         public override void Draw( Scene scene)
         {
             base.Draw(scene);
-            mInventory.Draw(this);
+            Inventory.Draw(this);
         }
     }
 }

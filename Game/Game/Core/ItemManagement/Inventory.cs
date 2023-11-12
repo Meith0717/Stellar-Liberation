@@ -9,6 +9,7 @@ using StellarLiberation.Game.Core.Collision_Detection;
 using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.SpaceShipManagement;
+using StellarLiberation.Game.GameObjects;
 using System;
 using System.Collections.Generic;
 
@@ -17,45 +18,56 @@ namespace StellarLiberation.Game.Core.ItemManagement
     [Serializable]
     public class Inventory { 
 
-        [JsonProperty] private int mPullRadius;
-        [JsonProperty] private readonly Dictionary<Type, int> mItems = new();
-        [JsonIgnore] private List<Item> mItemsInRange;
+        [JsonProperty] public int Count { get; private set; }
+        [JsonProperty] public int Capacity { get; private set; }
 
-        public Inventory(int PullRadius) { mPullRadius = PullRadius; }
+        [JsonProperty] private readonly Dictionary<ItemID, int> Items = new();
+        [JsonProperty] private float mPullRadius;
+        [JsonIgnore] private List<Item> mItemsInRange = new();
+
+        public Inventory(int capacity, int PullRadius) { mPullRadius = PullRadius; Capacity = capacity; }
 
         public void Update(SpaceShip spaceShip, Scene scene)
         {
+            mItemsInRange.Clear();
+            if (Count >= Capacity) return;
             var position = spaceShip.Position;
-            mItemsInRange = scene.GetObjectsInRadius<Item>(position, mPullRadius);
-            var collected = false;
+            mItemsInRange = scene.GetObjectsInRadius<Item>(position, (int)mPullRadius);
             foreach (var item in mItemsInRange)
             {
                 item.Pull(position);
-                if (!ContinuousCollisionDetection.HasCollide(item, spaceShip, out _)) continue;
-                scene.GameLayer.ItemManager.RemoveItem(scene, item);
-                Collect(item);
-                collected = true;
+                if (ContinuousCollisionDetection.HasCollide(item, spaceShip, out _)) Collect(item, scene);
             }
-            if (collected) SoundManager.Instance.PlaySound(SoundRegistries.collect, 1f);
         }
 
-        public void Collect(Item item)
+        private void Collect(Item item, Scene scene)
         {
-            if (!mItems.TryGetValue(item.GetType(), out _)) mItems[item.GetType()] = 0;
-            mItems[item.GetType()]++;
+            SoundManager.Instance.PlaySound(SoundRegistries.collect, 1f);
+
+            // Add Item in Inventory
+            if (!Items.TryGetValue(item.ItemID, out _)) Items[item.ItemID] = 0;
+            Items[item.ItemID]++;
+
+            // Some Other stuff
+            scene.GameLayer.ItemManager.RemoveItem(scene, item);
+            Count ++;
         }
 
-        public bool Drop(Item item)
+        public bool RemoveItemAmount(ItemID itemID, int amount)
         {
-            if (!mItems.TryGetValue(item.GetType(), out _)) return false;
-            mItems[item.GetType()]--;
-            if (mItems[item.GetType()] == 0) mItems.Remove(item.GetType());
+            if (!Items.TryGetValue(itemID, out var _)) return false;
+            if (Items[itemID] < amount) return false;
+            Items[itemID] -= amount;
+            if (Items[itemID] == 0) Items.Remove(itemID);
             return true;
         }
 
-        public void Draw(SpaceShip space)
+        public int GetIDAmount(ItemID itemID)
         {
-            foreach (var item in mItemsInRange) TextureManager.Instance.DrawLine(space.Position, item.Position, Color.Purple, 4, space.TextureDepth - 1);
+            if (!Items.TryGetValue(itemID, out var count)) return 0;
+            return count;
         }
+
+        public void Draw(SpaceShip space) { foreach (var item in mItemsInRange) TextureManager.Instance.DrawLine(space.Position, item.Position, Color.Purple, 4, space.TextureDepth - 1); }
     }
 }

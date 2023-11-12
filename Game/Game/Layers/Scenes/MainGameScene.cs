@@ -36,6 +36,6 @@ namespace StellarLiberation.Game.Layers.Scenes
 
         public override void DrawOnWorld() {; }
 
-        public override void OnResolutionChanged() { }
+        public override void OnResolutionChanged() { base.OnResolutionChanged(); }
     }
 }
