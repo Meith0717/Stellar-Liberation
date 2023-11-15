@@ -7,6 +7,7 @@ using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.Parallax;
+using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 
 namespace StellarLiberation.Game.Layers.Scenes
 {
@@ -24,12 +25,18 @@ namespace StellarLiberation.Game.Layers.Scenes
         {
             inputState.DoAction(ActionType.ToggleHyperMap, () => GameLayer.LoadMap());
 
-            GameLayer.Player.Update(gameTime, inputState, this);
             mParlaxManager.Update(Camera2D.Movement, Camera2D.Zoom);
+            GameLayer.Player.Update(gameTime, inputState, this);
             GameLayer.ItemManager.Update(gameTime, inputState, this);
             GameLayer.ProjectileManager.Update(gameTime, inputState, this);
             GameLayer.DebugSystem.CheckForSpawn(GameLayer.CurrentSystem);
-            GameLayer.CurrentSystem.UpdateObjects(gameTime, inputState, this);
+            foreach (PlanetSystem planetSystem in GameLayer.PlanetSystems)
+            {
+                if (!ViewFrustumFilter.WorldFrustum.Intersects(planetSystem.SystemBounding)) continue;
+                planetSystem.UpdateObjects(gameTime, inputState, this);
+                GameLayer.CurrentSystem = planetSystem;
+                break;
+            }
         }
 
         public override void DrawOnScreen() => mParlaxManager.Draw();

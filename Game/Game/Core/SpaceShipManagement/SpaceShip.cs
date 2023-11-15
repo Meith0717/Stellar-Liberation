@@ -44,7 +44,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
         {
             SensorArray = sensorArray;
             SublightEngine = sublightEngine;
-            HyperDrive = new();
+            HyperDrive = new(500, 500);
             WeaponSystem = weaponSystem;
             DefenseSystem = defenseSystem;
             mOpponent = opponent;
@@ -55,11 +55,13 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
-            Direction = Geometry.CalculateDirectionVector(Rotation);
-            base.Update(gameTime, inputState, scene);
 
             ExplosionSheet.Update(gameTime, Position);
-            SublightEngine.Update(gameTime, this);
+            HyperDrive.Update(gameTime, this);
+            if (!HyperDrive.IsActive) SublightEngine.Update(gameTime, this);
+
+            Direction = Geometry.CalculateDirectionVector(Rotation);
+            base.Update(gameTime, inputState, scene);
 
             if (DefenseSystem.HullLevel <= 0 && !IsDestroyed) Explode(scene);
 

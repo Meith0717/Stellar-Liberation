@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.Core.LayerManagement
         public readonly Camera2D Camera2D;
         public readonly GameLayer GameLayer;
         private Matrix mViewTransformationMatrix;
-        private HashSet<GameObject> mVisibleObjects = new();
+        private List<GameObject> mVisibleObjects = new();
 
         public Scene(GameLayer gameLayer, int spatialHashingCellSize, float minCamZoom, float maxCamZoom, bool moveCamByMouse, float RelWidth = 1, float RelHeight = 1)
         {
@@ -55,10 +55,10 @@ namespace StellarLiberation.Game.Core.LayerManagement
             var screenWidth = (int)RenderRectangle.Width;
             var screenHeight = (int)RenderRectangle.Height;
 
-            mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera2D.Position, Camera2D.Zoom, 0, screenWidth, screenHeight);
-            WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, Geometry.GetRelativePosition(inputState.mMousePosition, RenderRectangle.ToRectangle()));
             UpdateObj(gameTime, inputState);
             Camera2D.Update(gameTime, inputState, inputState.mMousePosition, mViewTransformationMatrix);
+            mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera2D.Position, Camera2D.Zoom, 0, screenWidth, screenHeight);
+            WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, Geometry.GetRelativePosition(inputState.mMousePosition, RenderRectangle.ToRectangle()));
             ViewFrustumFilter.Update(screenWidth, screenHeight, mViewTransformationMatrix);
             GetObjectsOnScreen();
         }
@@ -136,16 +136,8 @@ namespace StellarLiberation.Game.Core.LayerManagement
         {
             mVisibleObjects.Clear();
             Rectangle space = ViewFrustumFilter.WorldFrustum.ToRectangle();
-            int cellSize = SpatialHashing.CellSize;
-
-            for (int x = space.X - cellSize; x <= space.Right + cellSize; x += cellSize)
-            {
-                for (int y = space.Y - cellSize; y <= space.Bottom + cellSize; y += cellSize)
-                {
-                    var objs = SpatialHashing.GetObjectsInBucket(x, y);
-                    foreach (var obj in objs) mVisibleObjects.Add(obj);
-                }
-            }
+            var edgeDistance = Vector2.Distance(space.Center.ToVector2(), space.Location.ToVector2());
+            mVisibleObjects = GetObjectsInRadius<GameObject>(space.Center.ToVector2(), (int)edgeDistance);
         }
     }
 }

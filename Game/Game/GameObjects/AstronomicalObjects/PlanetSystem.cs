@@ -38,7 +38,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         {
             LeftPressAction = () => {
                 scene.GameLayer.PopScene();
-                scene.GameLayer.Player.HyperDrive.TargetPlanetSystem = this;
+                scene.GameLayer.Player.HyperDrive.SetTarget(this);
             };
 
             base.Update(gameTime, inputState, scene);
