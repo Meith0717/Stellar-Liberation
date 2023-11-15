@@ -32,7 +32,7 @@ namespace StellarLiberation.Game.Core.ItemManagement
             mItemsInRange.Clear();
             if (Count >= Capacity) return;
             var position = spaceShip.Position;
-            mItemsInRange = scene.GetObjectsInRadius<Item>(position, (int)mPullRadius);
+            mItemsInRange = scene.SpatialHashing.GetObjectsInRadius<Item>(position, (int)mPullRadius);
             foreach (var item in mItemsInRange)
             {
                 item.Pull(position);

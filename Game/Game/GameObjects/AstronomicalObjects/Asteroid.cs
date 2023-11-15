@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 
         private void CheckForHit(Scene scene)
         {
-            var projectileInRange = scene.GetObjectsInRadius<Projectile>(Position, (int)BoundedBox.Radius);
+            var projectileInRange = scene.SpatialHashing.GetObjectsInRadius<Projectile>(Position, (int)BoundedBox.Radius);
             if (!projectileInRange.Any()) return;
             var gotHit = false;
             foreach (var projectile in projectileInRange)

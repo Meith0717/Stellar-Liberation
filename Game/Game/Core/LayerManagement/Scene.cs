@@ -8,6 +8,7 @@ using MonoGame.Extended;
 using StellarLiberation.Core.GameEngine.Position_Management;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.InputManagement;
+using StellarLiberation.Game.Core.Rendering;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Layers;
 using System;
@@ -26,16 +27,17 @@ namespace StellarLiberation.Game.Core.LayerManagement
 
         public Vector2 WorldMousePosition { get; private set; }
         public readonly SpatialHashing<GameObject> SpatialHashing;
+        public readonly RenderPipeline<GameObject> RenderPipeline;
         public readonly ViewFrustumFilter ViewFrustumFilter;
         public readonly Camera2D Camera2D;
         public readonly GameLayer GameLayer;
         private Matrix mViewTransformationMatrix;
-        private List<GameObject> mVisibleObjects = new();
 
         public Scene(GameLayer gameLayer, int spatialHashingCellSize, float minCamZoom, float maxCamZoom, bool moveCamByMouse, float RelWidth = 1, float RelHeight = 1)
         {
             SpatialHashing = new(spatialHashingCellSize);
             ViewFrustumFilter = new();
+            RenderPipeline = new(ViewFrustumFilter, SpatialHashing);
             Camera2D = new(minCamZoom, maxCamZoom, moveCamByMouse);
             GameLayer = gameLayer;
             mRelHeight = RelHeight;
@@ -60,7 +62,7 @@ namespace StellarLiberation.Game.Core.LayerManagement
             mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera2D.Position, Camera2D.Zoom, 0, screenWidth, screenHeight);
             WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, Geometry.GetRelativePosition(inputState.mMousePosition, RenderRectangle.ToRectangle()));
             ViewFrustumFilter.Update(screenWidth, screenHeight, mViewTransformationMatrix);
-            GetObjectsOnScreen();
+            RenderPipeline.Update();
         }
 
         public abstract void UpdateObj(GameTime gameTime, InputState inputState);
@@ -77,12 +79,11 @@ namespace StellarLiberation.Game.Core.LayerManagement
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: mViewTransformationMatrix, samplerState: SamplerState.PointClamp);
-            foreach (var obj in mVisibleObjects) obj.Draw(this);
+            RenderPipeline.Render(this);
             DrawOnWorld();
             sceneManagerLayer.DebugSystem.DrawOnScene(this);
             spriteBatch.End();
         }
-
 
         public abstract void DrawOnScreen();
         public abstract void DrawOnWorld();
@@ -95,49 +96,5 @@ namespace StellarLiberation.Game.Core.LayerManagement
             RenderTarget = new(mGraphicsDevice, (int)RenderRectangle.Width, (int)RenderRectangle.Height, true, SurfaceFormat.Color, DepthFormat.Depth24);
         }
 
-        public List<T> GetObjectsInRadius<T>(Vector2 position, int radius) where T : GameObject
-        {
-            int CellSize = SpatialHashing.CellSize;
-
-            // Determine the range of bucket indices that fall within the radius.
-            var startX = (int)Math.Floor((position.X - radius) / CellSize);
-            var endX = (int)Math.Ceiling((position.X + radius) / CellSize);
-            var startY = (int)Math.Floor((position.Y - radius) / CellSize);
-            var endY = (int)Math.Ceiling((position.Y + radius) / CellSize);
-
-            List<T> objectsInRadius = new List<T>();
-
-            foreach (var x in Enumerable.Range(startX, endX - startX + 1))
-            {
-                foreach (var y in Enumerable.Range(startY, endY - startY + 1))
-                {
-                    var objectsInBucket = SpatialHashing.GetObjectsInBucket(x * CellSize, y * CellSize);
-                    foreach (var gameObject in objectsInBucket.OfType<T>())
-                    {
-                        var objPosition = gameObject.Position;
-                        var distance = Vector2.Distance(position, objPosition);
-                        if (distance <= radius) objectsInRadius.Add(gameObject);
-                    }
-                }
-            }
-
-            // Sort the objects by distance to the specified position
-            objectsInRadius.Sort((obj1, obj2) =>
-            {
-                var distance1 = Vector2.DistanceSquared(position, obj1.Position);
-                var distance2 = Vector2.DistanceSquared(position, obj2.Position);
-                return distance1.CompareTo(distance2);
-            });
-
-            return objectsInRadius;
-        }
-
-        public void GetObjectsOnScreen()
-        {
-            mVisibleObjects.Clear();
-            Rectangle space = ViewFrustumFilter.WorldFrustum.ToRectangle();
-            var edgeDistance = Vector2.Distance(space.Center.ToVector2(), space.Location.ToVector2());
-            mVisibleObjects = GetObjectsInRadius<GameObject>(space.Center.ToVector2(), (int)edgeDistance);
-        }
     }
 }

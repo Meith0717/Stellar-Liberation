@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using StellarLiberation.Core.GameEngine.Content_Management;
-using StellarLiberation.Game.Core.ConfigReader;
 using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
@@ -32,14 +31,14 @@ namespace StellarLiberation
         public Game1()
         {
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
-            Window.AllowUserResizing = true;
-            Window.ClientSizeChanged += delegate { mResulutionWasResized = true; };
-
-            mInputManager = new InputManager();
-            mGraphicsManager = new GraphicsDeviceManager(this);
+            mGraphicsManager = new(this);
+            mInputManager = new();
             mSerialize = new Serialize();
 
+            // Window properties
+            IsMouseVisible = true;
+            Window.AllowUserResizing = false;
+            Window.ClientSizeChanged += delegate { mResulutionWasResized = true; };
             mGraphicsManager.PreferredBackBufferWidth = 1920;
             mGraphicsManager.PreferredBackBufferHeight = 1080;
         }
@@ -47,7 +46,7 @@ namespace StellarLiberation
         protected override void Initialize()
         {
             base.Initialize();
-            mLayerManager = new LayerManager(this, GraphicsDevice, mSerialize);
+            mLayerManager = new(this, GraphicsDevice, mSerialize);
             mLayerManager.AddLayer(new MainMenueLayer());
         }
 
@@ -64,21 +63,15 @@ namespace StellarLiberation
             SoundManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<SoundRegistries>());
             SoundManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<MusicRegistries>());
             SoundManager.Instance.CreateSoundEffectInstances();
-
-
-
-            Configs.Load(Content);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) Exit();
             if (mResulutionWasResized) mLayerManager.OnResolutionChanged();
 
             InputState inputState = mInputManager.Update();
             inputState.DoAction(ActionType.ToggleFullscreen, ToggleFullscreen);
             mLayerManager.Update(gameTime, inputState);
-
             base.Update(gameTime);
         }
 
@@ -89,13 +82,8 @@ namespace StellarLiberation
             base.Draw(gameTime);
         }
 
-        // Some Stuff
         private void ToggleFullscreen() =>  mGraphicsManager.ToggleFullScreen();
 
-
-        public void SetCursor(Registry registry)
-        {
-            Mouse.SetCursor(MouseCursor.FromTexture2D(Content.Load<Texture2D>(registry.FilePath), 0, 0));
-        }
+        public void SetCursorTexture(Registry registry) => Mouse.SetCursor(MouseCursor.FromTexture2D(Content.Load<Texture2D>(registry.FilePath), 0, 0));
     }
 }

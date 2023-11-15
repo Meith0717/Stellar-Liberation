@@ -78,7 +78,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
 
         private void HasProjectileHit(Scene scene)
         {
-            var projectileInRange = scene.GetObjectsInRadius<Projectile>(Position, (int)BoundedBox.Radius);
+            var projectileInRange = scene.SpatialHashing.GetObjectsInRadius<Projectile>(Position, (int)BoundedBox.Radius);
             if (!projectileInRange.Any()) return;
             var hits = 0;
             foreach (var projectile in projectileInRange)

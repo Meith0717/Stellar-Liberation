@@ -42,6 +42,7 @@ namespace StellarLiberation.Core.GameEngine.Content_Management
 
         public void SetSpriteBatch(SpriteBatch spriteBatch)
         {
+            if (spriteBatch is null) throw new Exception();
             SpriteBatch = spriteBatch;
         }
 

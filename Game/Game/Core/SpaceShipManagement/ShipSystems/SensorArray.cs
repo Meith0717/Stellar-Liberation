@@ -45,7 +45,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems
             AstronomicalObjects.Clear();
             AstronomicalObjects.Add(planetSystem.Star);
             AstronomicalObjects.AddRange(planetSystem.Planets);
-            SortedSpaceShips = scene.GetObjectsInRadius<SpaceShip>(position, ShortRangeScanDistance);
+            SortedSpaceShips = scene.SpatialHashing.GetObjectsInRadius<SpaceShip>(position, ShortRangeScanDistance);
 
             var opponents = new List<SpaceShip>(); 
 
