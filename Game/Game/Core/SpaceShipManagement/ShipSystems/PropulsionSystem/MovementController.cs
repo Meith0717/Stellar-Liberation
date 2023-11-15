@@ -35,14 +35,14 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.Propulsion
         public static float GetVelocity(float currentVelocity, float targetVelocity, float acceleration)
         {
             var a = MathF.Abs(acceleration);
-            if (targetVelocity < currentVelocity) a = -acceleration;
+            if (targetVelocity < currentVelocity) a = -a;
 
             var newVelocity = currentVelocity + a;
 
             return a switch
             {
-                < 0 => MathF.Max(0, newVelocity),
-                > 0 => MathF.Min(newVelocity, targetVelocity),
+                < 0f => MathF.Max(0f, newVelocity),
+                > 0f => MathF.Min(newVelocity, targetVelocity),
                 _ => currentVelocity
             };
         }

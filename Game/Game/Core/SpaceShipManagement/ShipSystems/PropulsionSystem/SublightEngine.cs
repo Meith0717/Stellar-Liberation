@@ -39,7 +39,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.Propulsion
         {
             if (!IsMoving)
             {
-                spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, MaxVelocity / 100);
+                spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, MaxVelocity / 100f);
                 return;
             }
 
@@ -56,7 +56,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.Propulsion
                 >= 0.7f => MaxVelocity * relRotation,
                 float.NaN => 0
             };
-            spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, targetVelocity, MaxVelocity / 100);
+            spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, targetVelocity, MaxVelocity / 100f);
             if (spaceShip.BoundedBox.Contains((Vector2)mVector2Target)) 
                  Standstill();
         }
@@ -94,8 +94,8 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.Propulsion
 
         public void FollowMouse(SpaceShip spaceShip, InputState inputState, Vector2 worldMousePosition)
         {
-            inputState.DoAction(ActionType.Accelerate, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, MaxVelocity, MaxVelocity / 100));
-            inputState.DoAction(ActionType.Break, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, MaxVelocity / 100));
+            inputState.DoAction(ActionType.Accelerate, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, MaxVelocity, MaxVelocity / 100f));
+            inputState.DoAction(ActionType.Break, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, MaxVelocity / 100f));
             MoveToPosition(worldMousePosition);
         }
 
