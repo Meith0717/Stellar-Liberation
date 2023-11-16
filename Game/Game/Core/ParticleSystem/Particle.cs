@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace StellarLiberation.Game.Core.ParticleSystem
 {
-    public class Particle : GameObject
+    public class Particle : GameObject2D
     {
         public Particle(Vector2 position, string textureId, float textureScale, int textureDepth)
             : base(position, "pixle", textureScale, textureDepth)

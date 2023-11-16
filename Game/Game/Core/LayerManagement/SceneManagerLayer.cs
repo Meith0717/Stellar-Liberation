@@ -52,7 +52,7 @@ namespace StellarLiberation.Game.Core.LayerManagement
             DebugSystem.UpdateFrameCounting();
 
             // Update Render Targets of scenes
-            foreach (Scene scene in Scenes) scene.UpdateRenderTarget(this, spriteBatch);
+            foreach (Scene scene in Scenes) scene.UpdateRenderTarget2D(this, spriteBatch);
 
             mGraphicsDevice.SetRenderTarget(mRenderTarget);
             mGraphicsDevice.Clear(Color.Transparent);

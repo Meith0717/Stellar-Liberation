@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.Rendering
 {
-    public class RenderPipeline<T> where T : GameObject
+    public class RenderPipeline<T> where T : GameObject2D
     {
         private readonly ViewFrustumFilter mViewFrustumFilter;
         private readonly SpatialHashing<T> mSpatialHashing;

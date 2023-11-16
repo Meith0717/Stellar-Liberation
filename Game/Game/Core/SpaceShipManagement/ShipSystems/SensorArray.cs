@@ -18,7 +18,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems
     public class SensorArray
     {
         // Scan results
-        public List<GameObject> AstronomicalObjects { get; private set; } = new();
+        public List<GameObject2D> AstronomicalObjects { get; private set; } = new();
         public List<SpaceShip> SortedSpaceShips { get; private set; } = new();
         public SpaceShip AimingShip { get; private set; }
         public float DistanceToAimingShip { get; private set; }

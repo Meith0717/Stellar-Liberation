@@ -22,7 +22,7 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
     /// Abstract class representing an interactive game object derived from the GameObject class.
     /// </summary>
     [Serializable]
-    public abstract class InteractiveObject : GameObject
+    public abstract class InteractiveObject : GameObject2D
     {
         internal InteractiveObject(Vector2 position, string textureId, float textureScale, int textureDepth)
             : base(position, textureId, textureScale, textureDepth) { }

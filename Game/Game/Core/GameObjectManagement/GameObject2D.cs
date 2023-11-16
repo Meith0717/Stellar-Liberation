@@ -20,7 +20,7 @@ using System;
 namespace StellarLiberation.Game.Core.GameObjectManagement
 {
     [Serializable]
-    public abstract class GameObject
+    public abstract class GameObject2D
     {
         [JsonProperty] public Vector2 Position;
         [JsonProperty] public float Rotation;
@@ -37,7 +37,7 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
         [JsonIgnore] private double LiveTime32;
         [JsonIgnore] public double DisposeTime;
 
-        internal GameObject(Vector2 position, string textureId, float textureScale, int textureDepth)
+        internal GameObject2D(Vector2 position, string textureId, float textureScale, int textureDepth)
         {
             DisposeTime = double.PositiveInfinity;
             Position = position;

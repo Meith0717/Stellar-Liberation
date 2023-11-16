@@ -120,12 +120,12 @@ namespace StellarLiberation.Core.GameEngine.Content_Management
         }
 
         // render Game Objects ___________________________________________________________________________
-        public void DrawGameObject(GameObject obj)
+        public void DrawGameObject(GameObject2D obj)
         {
             SpriteBatch.Draw(GetTexture(obj.TextureId), obj.Position, null, obj.TextureColor, obj.Rotation, obj.TextureOffset,
                 obj.TextureScale, SpriteEffects.None, GetDepth(obj.TextureDepth));
         }
-        public void DrawGameObject(GameObject obj, bool isHover)
+        public void DrawGameObject(GameObject2D obj, bool isHover)
         {
             var color = isHover ? Color.Gray : obj.TextureColor;
             SpriteBatch.Draw(GetTexture(obj.TextureId), obj.Position, null, color, obj.Rotation, obj.TextureOffset,

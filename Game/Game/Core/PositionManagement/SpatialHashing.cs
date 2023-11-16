@@ -10,6 +10,7 @@
  */
 
 using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using System;
@@ -23,7 +24,7 @@ namespace StellarLiberation.Core.GameEngine.Position_Management
     /// </summary>
     /// <typeparam name="T">The type of objects stored in the spatial hashing structure.</typeparam>
     [Serializable]
-    public class SpatialHashing<T> where T : GameObject
+    public class SpatialHashing<T> where T : GameObject2D
     {
         [JsonProperty] public int CellSize;
         [JsonProperty] private Dictionary<int, HashSet<T>> mSpatialGrids = new();
@@ -77,7 +78,7 @@ namespace StellarLiberation.Core.GameEngine.Position_Management
             return mSpatialGrids.TryGetValue(hash, out var objectsInBucket) ? objectsInBucket.ToList() : new List<T>();
         }
 
-        public List<T> GetObjectsInRadius<T>(Vector2 position, int radius, bool sortedByDistance = true) where T : GameObject
+        public List<T> GetObjectsInRadius<T>(Vector2 position, float radius, bool sortedByDistance = true) where T : GameObject2D
         {
             // Determine the range of bucket indices that fall within the radius.
             var startX = (int)Math.Floor((position.X - radius) / CellSize);
@@ -94,9 +95,8 @@ namespace StellarLiberation.Core.GameEngine.Position_Management
                     var objectsInBucket = GetObjectsInBucket(x * CellSize, y * CellSize);
                     foreach (var gameObject in objectsInBucket.OfType<T>())
                     {
-                        var objPosition = gameObject.Position;
-                        var distance = Vector2.Distance(position, objPosition);
-                        if (distance <= radius) objectsInRadius.Add(gameObject);
+                        var circle = new CircleF(position, radius);
+                        if (CircleF.Intersects(circle, gameObject.BoundedBox)) objectsInRadius.Add(gameObject);
                     }
                 }
             }

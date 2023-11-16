@@ -11,7 +11,7 @@ using System;
 namespace StellarLiberation.Game.Core.GameObjectManagement
 {
     [Serializable]
-    public abstract class MovingObject : GameObject
+    public abstract class MovingObject : GameObject2D
     {
         [JsonProperty] public float Velocity;
         [JsonProperty] public Vector2 Direction;

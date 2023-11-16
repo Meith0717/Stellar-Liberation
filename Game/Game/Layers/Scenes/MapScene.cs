@@ -3,8 +3,6 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using StellarLiberation.Core.GameEngine.Content_Management;
-using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
@@ -34,16 +32,6 @@ namespace StellarLiberation.Game.Layers.Scenes
             foreach (var item in mPlanetSystems) item.Update(gameTime, inputState, this);
         }
 
-        public override void DrawOnWorld() 
-        {
-            TextureManager.Instance.Draw(TextureRegistries.mapCrosshair, mCurrentSystem.Position, 0.02f, 0, 1, Color.YellowGreen);
-            // var targetSystem =  GameLayer.Player.HyperDrive.TargetPlanetSystem;
-            // if (targetSystem is null) return;
-            // TextureManager.Instance.Draw(TextureRegistries.mapCrosshair, targetSystem.Position, 0.02f, 0, 1, Color.LightBlue);
-        }
-
         public override void OnResolutionChanged() { base.OnResolutionChanged(); }
-
-        public override void DrawOnScreen() { }
     }
 }

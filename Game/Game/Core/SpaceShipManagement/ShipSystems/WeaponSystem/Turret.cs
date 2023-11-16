@@ -12,7 +12,7 @@ using StellarLiberation.Game.Core.Utilitys;
 
 namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem
 {
-    public class Turret : GameObject
+    public class Turret : GameObject2D
     {
         private Vector2 mRelativePosition;
 

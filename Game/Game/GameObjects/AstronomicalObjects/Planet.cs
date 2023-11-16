@@ -16,7 +16,7 @@ using System;
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
     [Serializable]
-    public class Planet : GameObject
+    public class Planet : GameObject2D
     {
         [JsonProperty]
         public Vector2 OrbitCenter { get; private set; }

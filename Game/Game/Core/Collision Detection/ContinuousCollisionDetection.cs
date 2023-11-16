@@ -9,7 +9,7 @@ namespace StellarLiberation.Game.Core.Collision_Detection
 {
     public static class ContinuousCollisionDetection
     {
-        public static bool HasCollide(MovingObject checkingObj, GameObject collidingObj, out Vector2 collidingPosition)
+        public static bool HasCollide(MovingObject checkingObj, GameObject2D collidingObj, out Vector2 collidingPosition)
         {
             collidingPosition = Vector2.Zero;
 

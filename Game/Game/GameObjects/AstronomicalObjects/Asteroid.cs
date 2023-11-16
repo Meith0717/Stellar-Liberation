@@ -16,7 +16,7 @@ using System.Linq;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
-    public class Asteroid : GameObject
+    public class Asteroid : GameObject2D
     {
         public Asteroid(Vector2 position) 
             : base(position, TextureRegistries.asteroid1, 0.1f, 50) {; }

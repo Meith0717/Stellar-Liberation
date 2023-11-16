@@ -11,7 +11,7 @@ using StellarLiberation.Game.Core.LayerManagement;
 
 namespace StellarLiberation.Game.GameObjects
 {
-    public class QuantumGate : GameObject
+    public class QuantumGate : GameObject2D
     {
 
         public QuantumGate(Vector2 position)

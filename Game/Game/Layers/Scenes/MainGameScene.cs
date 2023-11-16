@@ -3,6 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
@@ -39,9 +40,11 @@ namespace StellarLiberation.Game.Layers.Scenes
             }
         }
 
-        public override void DrawOnScreen() => mParlaxManager.Draw();
-
-        public override void DrawOnWorld() {; }
+        public override void DrawOnScreenView(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch)
+        {
+            base.DrawOnScreenView(sceneManagerLayer, spriteBatch);
+            mParlaxManager.Draw();
+        }
 
         public override void OnResolutionChanged() { base.OnResolutionChanged(); }
     }

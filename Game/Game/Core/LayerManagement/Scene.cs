@@ -11,9 +11,6 @@ using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.Rendering;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Layers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace StellarLiberation.Game.Core.LayerManagement
 {
@@ -26,8 +23,8 @@ namespace StellarLiberation.Game.Core.LayerManagement
         private float mRelWidth;
 
         public Vector2 WorldMousePosition { get; private set; }
-        public readonly SpatialHashing<GameObject> SpatialHashing;
-        public readonly RenderPipeline<GameObject> RenderPipeline;
+        public readonly SpatialHashing<GameObject2D> SpatialHashing;
+        public readonly RenderPipeline<GameObject2D> RenderPipeline;
         public readonly ViewFrustumFilter ViewFrustumFilter;
         public readonly Camera2D Camera2D;
         public readonly GameLayer GameLayer;
@@ -67,7 +64,7 @@ namespace StellarLiberation.Game.Core.LayerManagement
 
         public abstract void UpdateObj(GameTime gameTime, InputState inputState);
 
-        public void UpdateRenderTarget(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch)
+        public void UpdateRenderTarget2D(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch)
         {
             // Set the render target
             mGraphicsDevice.SetRenderTarget(RenderTarget);
@@ -75,18 +72,16 @@ namespace StellarLiberation.Game.Core.LayerManagement
 
             // Drawing to the RenderTarget
             spriteBatch.Begin();
-            DrawOnScreen();
+            DrawOnScreenView(sceneManagerLayer, spriteBatch);
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: mViewTransformationMatrix, samplerState: SamplerState.PointClamp);
             RenderPipeline.Render(this);
-            DrawOnWorld();
             sceneManagerLayer.DebugSystem.DrawOnScene(this);
             spriteBatch.End();
         }
 
-        public abstract void DrawOnScreen();
-        public abstract void DrawOnWorld();
+        public virtual void DrawOnScreenView(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch) { }
 
         public virtual void OnResolutionChanged() 
         {

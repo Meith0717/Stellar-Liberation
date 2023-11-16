@@ -15,7 +15,7 @@ using System;
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
     [Serializable]
-    public class Star : GameObject
+    public class Star : GameObject2D
     {
         [JsonProperty]
         public Color LightColor { get; private set; }
