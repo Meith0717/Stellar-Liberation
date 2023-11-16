@@ -51,8 +51,6 @@ namespace StellarLiberation.Game.Core.MapSystem
                         planets.Add(GetPlanet(star.Position, (int)orbitRadius, i));
                     }
 
-                    orbitRadius *= 1.5f;
-
                     // Generate Planet System
                     var danger = GetDanger(x, y);
                     var planetSystem = new PlanetSystem(GetScalingPosition(x, y, MapScale), star.Position, (int)orbitRadius, star.TextureId, star.LightColor, danger);

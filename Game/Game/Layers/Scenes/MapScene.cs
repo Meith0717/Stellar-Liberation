@@ -17,7 +17,7 @@ namespace StellarLiberation.Game.Layers.Scenes
         private PlanetSystem mCurrentSystem;
 
         public MapScene(GameLayer gameLayer, List<PlanetSystem> planetSystems, PlanetSystem currentSystem)
-            : base(gameLayer, 100, 1f, 3, false, .9f, .9f)
+            : base(gameLayer, 100, 1f, 3, true, .9f, .9f)
         {
             mCurrentSystem = currentSystem;
             Camera2D.SetPosition(mCurrentSystem.Position);
