@@ -22,7 +22,7 @@ namespace StellarLiberation.Game.Core.InputManagement
         CameraZoomIn,
         CameraZoomOut,
         ToggleFullscreen,
-        ToggleDebugModes,
+        ToggleDebug,
         Load,
         Save,
         FireSecondaryWeapon,

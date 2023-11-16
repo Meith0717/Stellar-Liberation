@@ -43,7 +43,7 @@ namespace StellarLiberation.Game.Core.Debugger
 
         public void Update(GameTime gameTime, InputState inputState)
         {
-            inputState.DoAction(ActionType.ToggleDebugModes, () => IsDebug = !IsDebug);
+            inputState.DoAction(ActionType.ToggleDebug, () => IsDebug = !IsDebug);
             mGameTime = gameTime;
             DrawnObjectCount = 0;
             UpdateObjectCount = 0;

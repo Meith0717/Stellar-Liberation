@@ -12,39 +12,22 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
 {
     public class KeyboardManager
     {
-        private readonly Dictionary<Keys, ActionType> mActionOnKeyboardPressed, mActionOnKeyboardHold;
+        private readonly Dictionary<int, ActionType> mActionOnMultiplePressed;
+        private readonly Dictionary<Keys, ActionType> mActionOnPressed, mActionOnHold;
         private readonly Dictionary<Keys, KeyEventType> mKeysKeyEventTypes;
         private Keys[] mCurrentKeysPressed, mPreviousKeysPressed;
 
         public KeyboardManager()
         {
-            mActionOnKeyboardPressed = new()
+            mActionOnMultiplePressed = new()
             {
-                { Keys.A, ActionType.None },
-                { Keys.B, ActionType.None },
-                { Keys.C, ActionType.None },
-                { Keys.D, ActionType.None },
-                { Keys.E, ActionType.None },
-                { Keys.F, ActionType.None },
-                { Keys.G, ActionType.None },
-                { Keys.H, ActionType.ToggleHyperMap },
-                { Keys.I, ActionType.None },
-                { Keys.J, ActionType.None },
-                { Keys.K, ActionType.None },
-                { Keys.L, ActionType.Load },
-                { Keys.M, ActionType.None },
-                { Keys.N, ActionType.None },
-                { Keys.O, ActionType.None },
-                { Keys.P, ActionType.None },
-                { Keys.Q, ActionType.None },
-                { Keys.R, ActionType.None },
-                { Keys.T, ActionType.None },
-                { Keys.U, ActionType.None },
-                { Keys.V, ActionType.None },
-                { Keys.X, ActionType.None },
-                { Keys.Y, ActionType.None },
-                { Keys.Z, ActionType.None },
+                { Hash(Keys.LeftAlt, Keys.F12), ActionType.ToggleDebug },
+                { Hash(Keys.LeftAlt, Keys.Enter), ActionType.ToggleFullscreen},
+            };
 
+            mActionOnPressed = new()
+            {
+                { Keys.M, ActionType.ToggleHyperMap },
                 { Keys.Escape, ActionType.ESC },
                 { Keys.F1, ActionType.F1 },
                 { Keys.F2, ActionType.F2 },
@@ -56,18 +39,27 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
                 { Keys.F8, ActionType.F8 },
                 { Keys.F9, ActionType.F9 },
                 { Keys.F10, ActionType.F10 },
-                { Keys.F11, ActionType.ToggleFullscreen},
-                { Keys.F12, ActionType.ToggleDebugModes},
             };
 
-            mActionOnKeyboardHold = new()
+            mActionOnHold = new()
             {
                 { Keys.Space, ActionType.FireInitialWeapon },
                 { Keys.W, ActionType.Accelerate },                
                 { Keys.S, ActionType.Break },
-
             };
             mKeysKeyEventTypes = new();
+        }
+
+        private int Hash(params Keys[] keys)
+        {
+            int tmp = 0;
+            Array.Sort(keys);
+            for (int i = keys.Length - 1; i >= 0; i--)
+            {
+                Keys key = keys[i];
+                tmp += (int)key * (int)Math.Pow(1000, i);
+            }
+            return tmp;
         }
 
         private void UpdateKeysKeyEventTypes()
@@ -100,20 +92,22 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
             mCurrentKeysPressed = Keyboard.GetState().GetPressedKeys();
             UpdateKeysKeyEventTypes();
 
+            if (mActionOnMultiplePressed.TryGetValue(Hash(mCurrentKeysPressed), out var action))
+            {
+               foreach (var key in mCurrentKeysPressed)
+               {
+                    if (mKeysKeyEventTypes[key] == KeyEventType.OnButtonDown) actions.Add(action);
+               }
+            }
+
             foreach (var key in mCurrentKeysPressed)
             {
-                if (mActionOnKeyboardPressed.TryGetValue(key, out var actionPressed))
+                if (mActionOnPressed.TryGetValue(key, out var actionPressed))
                 {
-                    if (mKeysKeyEventTypes[key] == KeyEventType.OnButtonDown)
-                    {
-                        actions.Add(actionPressed);
-                    }
+                    if (mKeysKeyEventTypes[key] == KeyEventType.OnButtonDown) actions.Add(actionPressed);
                 }
-                if (!mActionOnKeyboardHold.TryGetValue(key, out var actionHold)) continue;
-                if (mKeysKeyEventTypes[key] == KeyEventType.OnButtonPressed)
-                {
-                    actions.Add(actionHold);
-                }
+                if (!mActionOnHold.TryGetValue(key, out var actionHold)) continue;
+                if (mKeysKeyEventTypes[key] == KeyEventType.OnButtonPressed) actions.Add(actionHold);
             }
             return actions;
         }

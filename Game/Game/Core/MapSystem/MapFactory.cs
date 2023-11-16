@@ -59,9 +59,8 @@ namespace StellarLiberation.Game.Core.MapSystem
                     planetSystems.Add(planetSystem);
                      
                     // Generate Quantum Gate
-                    var quantumGate = new QuantumGate(ExtendetRandom.NextVectorOnBorder(planetSystem.SystemBounding));
 
-                    planetSystem.SetObjects(star, planets, quantumGate);
+                    planetSystem.SetObjects(star, planets);
                 }
             }
         }

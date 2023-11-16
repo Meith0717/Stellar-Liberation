@@ -57,6 +57,7 @@ namespace StellarLiberation.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            inputState.DoAction(ActionType.ESC, mLayerManager.Exit);
             mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds);
         }
 

@@ -63,16 +63,14 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         //--------------------------------------------------------------------------------------//
 
         //--planetsystem scene associated-------------------------------------------------------//
-        [JsonProperty] public QuantumGate QuantumGate { get; private set; }
         [JsonProperty] public Star Star { get; private set; }
         [JsonProperty] public List<Planet> Planets { get; private set; }
 
         [JsonProperty] public readonly SpaceShipManager SpaceShipManager = new();
 
         //--generation associated--//
-        public void SetObjects(Star star, List<Planet> planets, QuantumGate quantumGate)
+        public void SetObjects(Star star, List<Planet> planets)
         {
-            QuantumGate = quantumGate;
             Planets = planets;  
             Star = star;
             for (int i = 0; i < 10; i++) SpaceShipManager.Spawn(this, ExtendetRandom.NextVectorInCircle(SystemBounding), ShipType.EnemyBattleShip);
@@ -85,7 +83,6 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 
         public void UpdateObjects(GameTime gameTime, InputState inputState, Scene scene)
         {
-            QuantumGate.Update(gameTime, inputState, scene);
             Star.Update(gameTime, inputState, scene);
             foreach (var item in Planets) item.Update(gameTime, inputState, scene);
             SpaceShipManager.Update(gameTime, inputState, scene);
