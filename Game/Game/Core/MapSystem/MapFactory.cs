@@ -43,7 +43,7 @@ namespace StellarLiberation.Game.Core.MapSystem
                     // Generate Planets of Star
                     var planets = new List<Planet>();
                     var planetAmount = (int)triangularDistribution.Sample();
-                    var orbitRadius = star.Width * star.TextureScale;
+                    var orbitRadius = star.BoundedBox.Radius;
 
                     for (int i = 1; i <= planetAmount; i++)
                     {

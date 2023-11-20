@@ -13,6 +13,7 @@ using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
+using StellarLiberation.Game.Core.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems;
 using StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.PropulsionSystem;
 using StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
@@ -26,7 +27,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
     public enum Factions { Enemys, Allies }
 
     [Serializable]
-    public abstract class SpaceShip : MovingObject
+    public abstract class SpaceShip : GameObject2D
     {
         [JsonIgnore] protected SpriteSheet ExplosionSheet;
         [JsonIgnore] protected UtilityAi mAi;
@@ -60,12 +61,13 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
             HyperDrive.Update(gameTime, this);
             if (!HyperDrive.IsActive) SublightEngine.Update(gameTime, this);
 
-            Direction = Geometry.CalculateDirectionVector(Rotation);
+            MovingDirection = Geometry.CalculateDirectionVector(Rotation);
+            GameObject2DMover.Move(gameTime, this, scene);
             base.Update(gameTime, inputState, scene);
 
             if (DefenseSystem.HullLevel <= 0 && !IsDestroyed) Explode(scene);
 
-            HasProjectileHit(scene);
+            HasProjectileHit(gameTime, scene);
             DefenseSystem.Update(gameTime);
             SensorArray.Update(gameTime, Position, scene.GameLayer.CurrentSystem, scene, mOpponent);
             if (!IsDestroyed) WeaponSystem.Update(gameTime, this, scene.GameLayer.ProjectileManager, SensorArray.AimingShip);
@@ -76,7 +78,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
             Dispose = true;
         }
 
-        private void HasProjectileHit(Scene scene)
+        private void HasProjectileHit(GameTime gameTime, Scene scene)
         {
             var projectileInRange = scene.SpatialHashing.GetObjectsInRadius<Projectile>(Position, (int)BoundedBox.Radius);
             if (!projectileInRange.Any()) return;
@@ -85,7 +87,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
             {
                 if (projectile.Origine is Enemy && this is Enemy) continue;
                 if (projectile.Origine == this) return;
-                if (!ContinuousCollisionDetection.HasCollide(projectile, this, out var _)) continue;
+                if (!ContinuousCollisionDetection.HasCollide(gameTime, projectile, this, out var _)) continue;
 
                 projectile.HasCollide();
                 DefenseSystem.GetDamage(projectile.ShieldDamage, projectile.HullDamage);
@@ -105,6 +107,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
             TextureManager.Instance.DrawGameObject(this);
             WeaponSystem.Draw(scene);
             SublightEngine.Draw(scene.GameLayer.DebugSystem, this, scene);
+            DefenseSystem.DrawShields(this);
         }
 
         public void Explode(Scene scene)
@@ -116,8 +119,9 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
             var shakeamount = (500000 - Vector2.Distance(scene.Camera2D.Position, Position)) / 500000;
             if (shakeamount < 0) shakeamount = 0;
             scene.Camera2D.Shake((int)(shakeamount * 100));
+            ExplosionEffect.Emit(Position, MovingDirection * Velocity, scene.ParticleManager);
 
-            for (int i = 0; i < 5; i++) scene.GameLayer.ItemManager.PopItem(Direction, Position, new Items.Metall());
+            for (int i = 0; i < 5; i++) scene.GameLayer.ItemManager.PopItem(MovingDirection, Position, new Items.Metall());
 
             return;
         }

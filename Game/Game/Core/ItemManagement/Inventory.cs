@@ -27,7 +27,7 @@ namespace StellarLiberation.Game.Core.ItemManagement
 
         public Inventory(int capacity, int PullRadius) { mPullRadius = PullRadius; Capacity = capacity; }
 
-        public void Update(SpaceShip spaceShip, Scene scene)
+        public void Update(GameTime gameTime, SpaceShip spaceShip, Scene scene)
         {
             mItemsInRange.Clear();
             if (Count >= Capacity) return;
@@ -36,7 +36,7 @@ namespace StellarLiberation.Game.Core.ItemManagement
             foreach (var item in mItemsInRange)
             {
                 item.Pull(position);
-                if (ContinuousCollisionDetection.HasCollide(item, spaceShip, out _)) Collect(item, scene);
+                if (ContinuousCollisionDetection.HasCollide(gameTime, item, spaceShip, out _)) Collect(item, scene);
             }
         }
 

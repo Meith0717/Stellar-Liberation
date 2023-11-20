@@ -14,7 +14,7 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
     [Serializable]
     public abstract class GameObjectManager
     {
-        [JsonProperty] private readonly List<GameObject2D> mObjects = new();
+        [JsonProperty] protected readonly List<GameObject2D> mObjects = new();
 
         protected void AddObj(GameObject2D obj) => mObjects.Add(obj);
 

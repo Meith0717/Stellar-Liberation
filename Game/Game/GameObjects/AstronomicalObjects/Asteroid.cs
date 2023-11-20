@@ -25,17 +25,17 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         {
             base.Update(gameTime, inputState, scene);
             Rotation += .01f;
-            CheckForHit(scene);
+            CheckForHit(gameTime, scene);
         }
 
-        private void CheckForHit(Scene scene)
+        private void CheckForHit(GameTime gameTime, Scene scene)
         {
             var projectileInRange = scene.SpatialHashing.GetObjectsInRadius<Projectile>(Position, (int)BoundedBox.Radius);
             if (!projectileInRange.Any()) return;
             var gotHit = false;
             foreach (var projectile in projectileInRange)
             {
-                if (!ContinuousCollisionDetection.HasCollide(projectile, this, out var _)) continue;
+                if (!ContinuousCollisionDetection.HasCollide(gameTime, projectile, this, out var _)) continue;
                 projectile.HasCollide();
                 gotHit = true;
             }

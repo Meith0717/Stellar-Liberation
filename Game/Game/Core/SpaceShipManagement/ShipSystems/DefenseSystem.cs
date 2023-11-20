@@ -3,6 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using StellarLiberation.Core.GameEngine.Content_Management;
 
 namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems
 {
@@ -13,7 +14,6 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems
         private float mActualShieldForce;
         private float mActualHullForce;
         private float mShieldRegeneration;
-        private float mHullRegeneration;
         private float mShieldAlpha;
 
         public double ShildLevel { get { return mActualShieldForce / mMaxShieldForce; } }
@@ -54,6 +54,15 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems
                 return;
             }
             mActualHullForce -= mActualHullForce > 0 ? hullDamage : 0;
+        }
+
+        public void DrawShields(SpaceShip spaceShip)
+        {
+            var alpha = mShieldAlpha;
+            var color = new Color(87, 191, 255);
+            TextureManager.Instance.Draw($"{spaceShip.TextureId}Shield", spaceShip.Position,
+                spaceShip.TextureScale, spaceShip.Rotation, spaceShip.TextureDepth + 1,
+                new Color((int)(color.R * alpha), (int)(color.G * alpha), (int)(color.B * alpha), (int)(255 * alpha)));
         }
     }
 }

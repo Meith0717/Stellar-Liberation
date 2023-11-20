@@ -2,22 +2,21 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using StellarLiberation.Core.GameEngine.Content_Management;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.PropulsionSystem;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.Layers;
-using Microsoft.Xna.Framework;
-using MonoGame.Extended;
-using System;
 using StellarLiberation.Game.GameObjects;
+using System;
 
 namespace StellarLiberation.Game.Core.ItemManagement
 {
     [Serializable]
-    public abstract class Item : MovingObject
+    public abstract class Item : GameObject2D
     {
         public readonly bool Collectable;
         public readonly ItemID ItemID;
@@ -27,14 +26,15 @@ namespace StellarLiberation.Game.Core.ItemManagement
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
-            base.Update(gameTime, inputState, scene);
             Velocity = MovementController.GetVelocity(Velocity, 0, ExtendetRandom.Random.Next(5, 10) / 1000f);
+            GameObject2DMover.Move(gameTime, this, scene);
+            base.Update(gameTime, inputState, scene);
         }
 
         public void Pull(Vector2 position)
         {
             var angleToPosition = Geometry.AngleBetweenVectors(Position, position);
-            Direction = Geometry.CalculateDirectionVector(angleToPosition);
+            MovingDirection = Geometry.CalculateDirectionVector(angleToPosition);
             Velocity = MovementController.GetVelocity(Velocity, float.PositiveInfinity, 0.03f);
         }
 
@@ -42,7 +42,7 @@ namespace StellarLiberation.Game.Core.ItemManagement
         {
             Position = position;
             ExtendetRandom.Random.NextUnitVector(out var direction);
-            Direction = momentum + direction;
+            MovingDirection = momentum + direction;
             Velocity = ExtendetRandom.Random.Next(10, 25) / 10;
         }
 

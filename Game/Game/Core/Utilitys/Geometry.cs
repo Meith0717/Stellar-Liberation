@@ -55,12 +55,12 @@ namespace StellarLiberation.Game.Core.Utilitys
         }
 
 
-        public static float RadToDeg(float rad) => rad * (360 / (2 * MathF.PI));
+        public static float RadToDeg(float rad) => rad * (360f / (2f * MathF.PI));
 
-        public static float DegToRad(float deg) => deg * (2 * MathF.PI / 360);
+        public static float DegToRad(float deg) => deg * (2f * MathF.PI / 360f);
 
-        public static float AngleDegDelta(float degCurrent, float degTarget) => (degTarget - degCurrent + 540) % 360 - 180;
+        public static float AngleDegDelta(float degCurrent, float degTarget) => (degTarget - degCurrent + 540f) % 360f - 180f;
 
-        public static float AngleRadDelta(float radCurrent, float radTarget) => (RadToDeg(radTarget) - RadToDeg(radCurrent) + 540) % 360 - 180;
+        public static float AngleRadDelta(float radCurrent, float radTarget) => (RadToDeg(radTarget) - RadToDeg(radCurrent) + 540f) % 360f - 180f;
     }
 }

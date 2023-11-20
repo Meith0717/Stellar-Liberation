@@ -9,7 +9,7 @@ namespace StellarLiberation.Game.Core.Collision_Detection
 {
     public class CollisionPredictor
     {
-        public static Vector2? PredictPosition(GameTime gameTime, Vector2 position, float speed, MovingObject target)
+        public static Vector2? PredictPosition(GameTime gameTime, Vector2 position, float speed, GameObject2D target)
         {
             if (target is null) return null;
 
@@ -20,7 +20,7 @@ namespace StellarLiberation.Game.Core.Collision_Detection
             float timeToIntersection = distance / (speed * gameTime.ElapsedGameTime.Milliseconds);
 
             // Calculate the future position of the target based on its velocity
-            Vector2 futureTargetPosition = target.Position + (target.Velocity * gameTime.ElapsedGameTime.Milliseconds * target.Direction) * timeToIntersection;
+            Vector2 futureTargetPosition = target.Position + (target.Velocity * gameTime.ElapsedGameTime.Milliseconds * target.MovingDirection) * timeToIntersection;
 
             return futureTargetPosition;
         }

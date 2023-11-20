@@ -15,7 +15,7 @@ namespace StellarLiberation.Game.GameObjects
         public class Carrior : Enemy
         {
             public Carrior(Vector2 position)
-                : base(position, TextureRegistries.enemyCarrior, 4, new(20000), new(0.5f, 0.01f), new(1000, Color.IndianRed, 1, 1), new(100, 100, 0))
+                : base(position, TextureRegistries.enemyCarrior, 4, new(20000), new(0.5f, 0.01f), new(1000, new(255, 4, 0), 1, 1), new(100, 100, 0))
             {
                 WeaponSystem.PlaceTurret(new(new(1100, 600), 1, TextureDepth + 1));
                 WeaponSystem.PlaceTurret(new(new(975, 600), 1, TextureDepth + 1));
@@ -50,8 +50,6 @@ namespace StellarLiberation.Game.GameObjects
                     new FleeBehavior()
                 });
             }
-
-            public override void HasCollide() => throw new System.NotImplementedException(); 
         }
 
         public class BattleShip : Enemy
@@ -72,8 +70,6 @@ namespace StellarLiberation.Game.GameObjects
                     new FleeBehavior()
                 });
             }
-
-            public override void HasCollide() => throw new System.NotImplementedException();
         }
 
         public class Bomber : Enemy
@@ -93,8 +89,6 @@ namespace StellarLiberation.Game.GameObjects
                     new FleeBehavior()
                 });
             }
-
-            public override void HasCollide() => throw new System.NotImplementedException();
         }
 
         public class Fighter : Enemy
@@ -110,8 +104,6 @@ namespace StellarLiberation.Game.GameObjects
                     new FleeBehavior(),
                 });
             }
-
-            public override void HasCollide() => throw new System.NotImplementedException();
         }
     }
 }

@@ -98,6 +98,7 @@ namespace StellarLiberation.Game.Core.ContentManagement.ContentRegistry
 
         private readonly static string textures = @"textures\";
         public readonly static Registry pixle = new(textures, "pixle");
+        public readonly static Registry particle = new(textures, "particle");
         public readonly static Registry cursor = new(textures, "cursor");
         public readonly static Registry placeHolder = new(textures, "placeHolder");
         public readonly static Registry title = new(textures, "title");

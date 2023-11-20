@@ -62,8 +62,8 @@ namespace StellarLiberation.Game.Core.Utilitys
 
         public static Vector2 Rotation(Vector2 rotationCenter, Vector2 rotatetVector, float angleRad)
         {
-            float cosTheta = (float)Math.Cos(angleRad);
-            float sinTheta = (float)Math.Sin(angleRad);
+            float cosTheta = (float)MathF.Cos(angleRad);
+            float sinTheta = (float)MathF.Sin(angleRad);
             Vector2 rotatedVector = new Vector2(
                 rotatetVector.X * cosTheta - rotatetVector.Y * sinTheta,
                 rotatetVector.X * sinTheta + rotatetVector.Y * cosTheta

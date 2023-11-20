@@ -36,7 +36,6 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 
             Position = Geometry.GetPointOnCircle(OrbitCenter, OrbitRadius, OrbitRadians);
             mShadowRotation = Geometry.AngleBetweenVectors(Position, OrbitCenter) + MathF.PI;
-            UpdateBoundBox();
         }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)

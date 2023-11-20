@@ -20,7 +20,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
     public enum Danger { None, Moderate, Medium, High }
 
     [Serializable]
-    public class PlanetSystem : InteractiveObject
+    public class PlanetSystem : GameObject2D
     {
         //--game object associated--------------------------------------------------------------//
         [JsonProperty] public Danger Danger { get; private set; }
@@ -36,10 +36,12 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
-            LeftPressAction = () => {
+            var LeftPressAction = () => {
                 scene.GameLayer.PopScene();
                 scene.GameLayer.Player.HyperDrive.SetTarget(this);
             };
+
+            GameObject2DInteractionManager.Manage(inputState, this, scene, LeftPressAction, null);
 
             base.Update(gameTime, inputState, scene);
         }
@@ -47,7 +49,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         public override void Draw(Scene scene)
         {
             base.Draw(scene);
-            TextureManager.Instance.DrawGameObject(this, IsHover);
+            TextureManager.Instance.DrawGameObject(this);
             TextureManager.Instance.Draw(TextureRegistries.starLightAlpha, Position, TextureOffset, TextureScale * 2f, Rotation, 0, TextureColor);
         }
 

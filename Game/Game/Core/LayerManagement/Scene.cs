@@ -8,6 +8,7 @@ using MonoGame.Extended;
 using StellarLiberation.Core.GameEngine.Position_Management;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.InputManagement;
+using StellarLiberation.Game.Core.ParticleSystem;
 using StellarLiberation.Game.Core.Rendering;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Layers;
@@ -25,6 +26,7 @@ namespace StellarLiberation.Game.Core.LayerManagement
         public Vector2 WorldMousePosition { get; private set; }
         public readonly SpatialHashing<GameObject2D> SpatialHashing;
         public readonly RenderPipeline<GameObject2D> RenderPipeline;
+        public readonly ParticleManager ParticleManager;
         public readonly ViewFrustumFilter ViewFrustumFilter;
         public readonly Camera2D Camera2D;
         public readonly GameLayer GameLayer;
@@ -35,6 +37,7 @@ namespace StellarLiberation.Game.Core.LayerManagement
             SpatialHashing = new(spatialHashingCellSize);
             ViewFrustumFilter = new();
             RenderPipeline = new(ViewFrustumFilter, SpatialHashing);
+            ParticleManager = new();
             Camera2D = new(minCamZoom, maxCamZoom, moveCamByMouse);
             GameLayer = gameLayer;
             mRelHeight = RelHeight;
@@ -55,6 +58,7 @@ namespace StellarLiberation.Game.Core.LayerManagement
             var screenHeight = (int)RenderRectangle.Height;
 
             UpdateObj(gameTime, inputState);
+            ParticleManager.Update(gameTime, inputState, this);
             Camera2D.Update(gameTime, inputState, inputState.mMousePosition, mViewTransformationMatrix);
             mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera2D.Position, Camera2D.Zoom, 0, screenWidth, screenHeight);
             WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, Geometry.GetRelativePosition(inputState.mMousePosition, RenderRectangle.ToRectangle()));

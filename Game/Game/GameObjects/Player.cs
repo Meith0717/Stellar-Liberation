@@ -18,7 +18,7 @@ namespace StellarLiberation.Game.GameObjects
 
         public Inventory Inventory;
 
-        public Player() : base(Vector2.Zero, TextureRegistries.player, 1, new(20000), new(10f, 0.01f), new(1000, Color.BlueViolet, 2, 2), new(100, 1000, 1), Factions.Enemys)
+        public Player() : base(Vector2.Zero, TextureRegistries.player, 1, new(20000), new(10f, 0.01f), new(1000, new(0, 251, 255), 2, 2), new(100, 1000, 1), Factions.Enemys)
         {
             Inventory = new(20, 10000);
 
@@ -49,15 +49,10 @@ namespace StellarLiberation.Game.GameObjects
             WeaponSystem.StopFire();
             inputState.DoMouseAction(MouseActionType.RightClickHold, () => WeaponSystem.Fire());
             SublightEngine.FollowMouse(this, inputState, scene.WorldMousePosition);
-            Inventory.Update(this, scene);
+            Inventory.Update(gameTime, this, scene);
 
             base.Update(gameTime, inputState, scene);
             scene.Camera2D.SetPosition(Position);
-        }
-
-        public override void HasCollide()
-        {
-            throw new NotImplementedException();
         }
 
         public override void Draw( Scene scene)

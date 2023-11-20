@@ -1073,6 +1073,18 @@
 /processorParam:TextureFormat=Color
 /build:textures/menueBackground.png
 
+#begin textures/particle.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/particle.png
+
 #begin textures/pixle.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1121,18 +1133,6 @@
 /processorParam:TextureFormat=Color
 /build:textures/userInterface/bar/barHorizontalLeft.png
 
-#begin textures/userInterface/bar/barHorizontalLeft.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/barHorizontalLeft.png
-
 #begin textures/userInterface/bar/barHorizontalMid.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1144,30 +1144,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/userInterface/bar/barHorizontalMid.png
-
-#begin textures/userInterface/bar/barHorizontalMid.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/barHorizontalMid.png
-
-#begin textures/userInterface/bar/barHorizontalRight.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/barHorizontalRight.png
 
 #begin textures/userInterface/bar/barHorizontalRight.png
 /importer:TextureImporter
@@ -1193,18 +1169,6 @@
 /processorParam:TextureFormat=Color
 /build:textures/userInterface/bar/barHorizontalShadowLeft.png
 
-#begin textures/userInterface/bar/barHorizontalShadowLeft.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/barHorizontalShadowLeft.png
-
 #begin textures/userInterface/bar/barHorizontalShadowMid.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1216,30 +1180,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/userInterface/bar/barHorizontalShadowMid.png
-
-#begin textures/userInterface/bar/barHorizontalShadowMid.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/barHorizontalShadowMid.png
-
-#begin textures/userInterface/bar/barHorizontalShadowRight.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/barHorizontalShadowRight.png
 
 #begin textures/userInterface/bar/barHorizontalShadowRight.png
 /importer:TextureImporter
@@ -1348,30 +1288,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/userInterface/bar/shield.png
-
-#begin textures/userInterface/bar/shield.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/shield.png
-
-#begin textures/userInterface/bar/ship.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/ship.png
 
 #begin textures/userInterface/bar/ship.png
 /importer:TextureImporter

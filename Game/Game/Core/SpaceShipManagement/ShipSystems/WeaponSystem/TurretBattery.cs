@@ -42,7 +42,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyst
             var hasFired = false;
             foreach (var turret in mTurrets) 
             {
-                var position = CollisionPredictor.PredictPosition(gameTime, origin.Position, 20f, aimingShip);
+                var position = CollisionPredictor.PredictPosition(gameTime, origin.Position, 40, aimingShip);
                 turret.GetPosition(origin.Position, origin.Rotation);
                 turret.RotateToTArget(origin.Rotation, position);
                 if (!mFire || mFireCoolDown < mMaxFireCoolDown) continue;

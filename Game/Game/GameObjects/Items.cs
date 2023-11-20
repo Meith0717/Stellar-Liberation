@@ -14,8 +14,6 @@ namespace StellarLiberation.Game.GameObjects
         public class Metall : Item
         {
             public Metall() : base(TextureRegistries.metall, 0.075f, true, ItemID.Metall) => DisposeTime = 60000;
-
-            public override void HasCollide() { }
         }
     }
 }
