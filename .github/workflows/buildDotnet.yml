@@ -3,8 +3,6 @@ name: Build MonoGame Project
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
 
 jobs:
   build:
@@ -21,7 +19,3 @@ jobs:
 
     - name: Build Project
       run: dotnet build --configuration Release Game/StellarLiberation.csproj
-
-
-
-
