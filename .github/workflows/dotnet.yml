@@ -25,6 +25,4 @@ jobs:
       run: dotnet restore
 
     - name: Build Project
-      run: dotnet build --configuration Release StellarLiberation.csproj
-      working-directory: Game/
-
+      run: dotnet build --configuration Release Game/StellarLiberation.csproj
