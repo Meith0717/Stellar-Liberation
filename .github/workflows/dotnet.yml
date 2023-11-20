@@ -25,4 +25,6 @@ jobs:
       run: dotnet restore
 
     - name: Build Project
-      run: dotnet build --configuration Release
+        run: |
+          cd Game
+          dotnet build --configuration Release
