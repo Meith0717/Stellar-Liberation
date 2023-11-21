@@ -47,12 +47,12 @@ namespace StellarLiberation.Game.GameObjects
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
             WeaponSystem.StopFire();
-            inputState.DoMouseAction(MouseActionType.RightClickHold, () => WeaponSystem.Fire());
+            inputState.DoAction(ActionType.FireInitialWeapon, () => WeaponSystem.Fire());
             SublightEngine.FollowMouse(this, inputState, scene.WorldMousePosition);
+            scene.Camera2D.SetPosition(Position);
             Inventory.Update(gameTime, this, scene);
 
             base.Update(gameTime, inputState, scene);
-            scene.Camera2D.SetPosition(Position);
         }
 
         public override void Draw( Scene scene)

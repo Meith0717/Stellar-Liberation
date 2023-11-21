@@ -46,6 +46,8 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
                 { Keys.Space, ActionType.FireInitialWeapon },
                 { Keys.W, ActionType.Accelerate },                
                 { Keys.S, ActionType.Break },
+                { Keys.Q, ActionType.CameraZoomIn },
+                { Keys.E, ActionType.CameraZoomOut }
             };
             mKeysKeyEventTypes = new();
         }

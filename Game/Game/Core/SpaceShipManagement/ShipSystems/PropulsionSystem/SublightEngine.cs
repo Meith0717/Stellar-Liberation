@@ -47,7 +47,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.Propulsion
 
             var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, mVector2Target.Value);
 
-            var relRotation = 1 - (MathF.Abs(rotationUpdate) / MathF.PI);
+            var relRotation = 1f - (MathF.Abs(rotationUpdate) / MathF.PI);
             var rotationScore = MathF.Abs(0.5f - (MathF.Abs(rotationUpdate) / MathF.PI));
 
             var targetVelocity = relRotation switch
