@@ -52,7 +52,6 @@ namespace StellarLiberation.Game.GameObjects
             Inventory.Update(gameTime, this, scene);
 
             base.Update(gameTime, inputState, scene);
-            scene.Camera2D.SetPosition(Position);
         }
 
         public override void Draw( Scene scene)

@@ -14,11 +14,8 @@
     
   <ItemGroup>
     <Compile Remove="Game\Core\ActionManager\**" />
-    <Compile Remove="Game\Core\NewFolder\**" />
     <EmbeddedResource Remove="Game\Core\ActionManager\**" />
-    <EmbeddedResource Remove="Game\Core\NewFolder\**" />
     <None Remove="Game\Core\ActionManager\**" />
-    <None Remove="Game\Core\NewFolder\**" />
   </ItemGroup>
 
     <ItemGroup>
