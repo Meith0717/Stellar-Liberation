@@ -65,7 +65,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
             GameObject2DMover.Move(gameTime, this, scene);
             base.Update(gameTime, inputState, scene);
 
-            if (DefenseSystem.HullLevel <= 0 && !IsDestroyed) Explode(scene);
+            if (DefenseSystem.HullPercentage <= 0 && !IsDestroyed) Explode(scene);
 
             HasProjectileHit(gameTime, scene);
             DefenseSystem.Update(gameTime);
@@ -90,7 +90,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
                 if (!ContinuousCollisionDetection.HasCollide(gameTime, projectile, this, out var _)) continue;
 
                 projectile.HasCollide();
-                DefenseSystem.GetDamage(projectile.ShieldDamage, projectile.HullDamage);
+                DefenseSystem.GotHit(projectile.ShieldDamage, projectile.HullDamage);
                 hits++;
             }
             if (hits == 0) return;

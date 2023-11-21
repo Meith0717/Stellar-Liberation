@@ -11,7 +11,7 @@ namespace StellarLiberation.Game.Core.AI.Behaviors
     {
         public override double GetScore(SensorArray environment, SpaceShip spaceShip)
         {
-            var shielHhullScore = spaceShip.DefenseSystem.ShildLevel * 0.2 + spaceShip.DefenseSystem.HullLevel * 0.8;
+            var shielHhullScore = spaceShip.DefenseSystem.ShieldPercentage * 0.2 + spaceShip.DefenseSystem.HullPercentage * 0.8;
 
             var distanceToAimingShip = float.IsPositiveInfinity(environment.DistanceToAimingShip)? 0 : environment.DistanceToAimingShip;
 

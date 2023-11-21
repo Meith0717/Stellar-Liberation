@@ -64,8 +64,8 @@ namespace StellarLiberation.Game.Layers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             mUiLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds);
-            mShieldBar.Percentage = mScene.GameLayer.Player.DefenseSystem.ShildLevel;
-            mHullBar.Percentage = mScene.GameLayer.Player.DefenseSystem.HullLevel;
+            mShieldBar.Percentage = mScene.GameLayer.Player.DefenseSystem.ShieldPercentage;
+            mHullBar.Percentage = mScene.GameLayer.Player.DefenseSystem.HullPercentage;
             mPropulsiondBar.Percentage = (double)(mScene.GameLayer.Player.Velocity / mScene.GameLayer.Player.SublightEngine.MaxVelocity);
             mCargoHold.Text = $"{mScene.GameLayer.Player.Inventory.Count}/{mScene.GameLayer.Player.Inventory.Capacity}";
         }
