@@ -7,6 +7,8 @@ using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using Microsoft.Xna.Framework;
 using System;
+using StellarLiberation.Game.Core.Utilitys;
+using Microsoft.Xna.Framework.Input;
 
 namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.PropulsionSystem
 {
@@ -96,7 +98,8 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.Propulsion
         {
             inputState.DoAction(ActionType.Accelerate, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, MaxVelocity, MaxVelocity / 100f));
             inputState.DoAction(ActionType.Break, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, MaxVelocity / 100f));
-            MoveToPosition(worldMousePosition);
+            MoveToPosition(Geometry.GetPointOnCircle(spaceShip.Position, spaceShip.BoundedBox.Diameter, Geometry.AngleBetweenVectors(Vector2.Zero, inputState.mGamePadValues.mLeftThumbSticks)));
+            // MoveToPosition(worldMousePosition);
         }
 
         public void Draw(Debugger.DebugSystem debugSystem, SpaceShip spaceShip, Scene scene) => debugSystem.DrawPath(mVector2Target, spaceShip, scene);

@@ -66,7 +66,8 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
 
         private void UpdateKeysKeyEventTypes()
         {
-            mCurrentKeysPressed = Keyboard.GetState().GetPressedKeys();
+            var keyboardState = Keyboard.GetState();
+            mCurrentKeysPressed = keyboardState.GetPressedKeys();
 
             // Get KeyEventTypes (down or pressed) for keys.
             foreach (var key in mCurrentKeysPressed)

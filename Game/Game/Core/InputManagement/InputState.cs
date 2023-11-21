@@ -56,41 +56,39 @@ namespace StellarLiberation.Game.Core.InputManagement
         OnButtonPressed
     }
 
-    internal class GamePadValues
+    public struct GamePadValues
     {
-        internal Vector2 mLeftThumbSticks;
-        internal Vector2 mRightThumbSticks;
-        internal float mLeftTrigger;
-        internal float mRightTrigger;
+        internal Vector2 mLeftThumbSticks = Vector2.Zero;
+        internal Vector2 mRightThumbSticks = Vector2.Zero;
+        internal float mLeftTrigger = new();
+        internal float mRightTrigger = new();
+
+        public GamePadValues() {; }
     }
 
-    public class InputState
+    public struct InputState
     {
-        internal List<ActionType> mActions;
-        internal List<MouseActionType> mMouseActions;
-        internal Vector2 mMousePosition;
-        internal GamePadValues mGamePadValues;
-        internal GamePadValues mPrevGamePadValues;
+        public List<ActionType> mActions = new();
+        public List<MouseActionType> mMouseActions = new();
+        public Vector2 mMousePosition = Vector2.Zero;
+        public GamePadValues mGamePadValues = new();
 
-        public InputState()
+        public InputState(List<ActionType> actions, List<MouseActionType> mouseActions, Vector2 mousePosition, GamePadValues gamePadValues)
         {
-            mActions = new List<ActionType>();
+            mActions = actions;
+            mMouseActions = mouseActions;
+            mMousePosition = mousePosition;
+            mGamePadValues = gamePadValues;
         }
 
-        public bool HasMouseAction(MouseActionType mouseActionType)
-        {
-            return mMouseActions.Remove(mouseActionType);
-        }
+        public bool HasMouseAction(MouseActionType mouseActionType) => mMouseActions.Remove(mouseActionType);
 
         public void DoMouseAction(MouseActionType mouseActionType, Action funktion)
         {
             if (HasMouseAction(mouseActionType)) funktion();
         }
 
-        public bool HasAction(ActionType action)
-        {
-            return mActions.Remove(action);
-        }
+        public bool HasAction(ActionType action) => mActions.Remove(action);
 
         public void DoAction(ActionType action, Action funktion)
         {

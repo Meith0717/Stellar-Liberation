@@ -119,7 +119,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
             var shakeamount = (500000 - Vector2.Distance(scene.Camera2D.Position, Position)) / 500000;
             if (shakeamount < 0) shakeamount = 0;
             scene.Camera2D.Shake((int)(shakeamount * 100));
-            ExplosionEffect.Emit(Position, MovingDirection * Velocity, scene.ParticleManager);
+            ExplosionEffect.Emit(Position, scene.ParticleManager);
 
             for (int i = 0; i < 5; i++) scene.GameLayer.ItemManager.PopItem(MovingDirection, Position, new Items.Metall());
 

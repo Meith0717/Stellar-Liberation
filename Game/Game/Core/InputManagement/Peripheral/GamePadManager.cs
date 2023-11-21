@@ -24,10 +24,10 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
 
             mActionOnPadHold = new()
             {
-                { Buttons.RightThumbstickUp, ActionType.CameraZoomIn },
-                { Buttons.RightThumbstickDown, ActionType.CameraZoomOut },
-                { Buttons.RightTrigger, ActionType.FireInitialWeapon },
-                { Buttons.LeftTrigger, ActionType.FireSecondaryWeapon },
+                { Buttons.RightThumbstickUp, ActionType.CameraZoomOut },
+                { Buttons.RightThumbstickDown, ActionType.CameraZoomIn },
+                { Buttons.RightTrigger, ActionType.Accelerate },
+                { Buttons.LeftTrigger, ActionType.Break },
             };
         }
 
@@ -55,25 +55,21 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
             padValues.mLeftTrigger = mState.Triggers.Left;
         }
 
-        public List<ActionType> GetActions(out GamePadValues padValues)
+        public List<ActionType> GetActions(out bool isConected, out GamePadValues padValues)
         {
             GetGamePadValues(out padValues);
             List<ActionType> actions = new();
             mPreviousState = mState;
             mState = GamePad.GetState(PlayerIndex.One);
+            isConected = mState.IsConnected;
             foreach (Buttons button in GetPressedButtons(mState))
             {
-                if (mActionOnPadPressed.TryGetValue(button, out var actionPressed))
-                {
-                    actions.Add(actionPressed);
-                }
+                if (mActionOnPadPressed.TryGetValue(button, out var actionPressed)) actions.Add(actionPressed);
             }
             foreach (Buttons button in GetHoldButtons(mState))
             {
-                if (mActionOnPadHold.TryGetValue(button, out var actionPressed))
-                {
-                    actions.Add(actionPressed);
-                }
+                if (mActionOnPadHold.TryGetValue(button, out var actionPressed)) actions.Add(actionPressed);
+
             }
             return actions;
         }
