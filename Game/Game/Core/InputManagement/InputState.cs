@@ -46,6 +46,7 @@ namespace StellarLiberation.Game.Core.InputManagement
         LeftClickHold,
         RightClickHold,
         LeftClickReleased,
+        RightClickReleased,
         MouseWheelForward,
         MouseWheelBackward
     }
@@ -56,14 +57,14 @@ namespace StellarLiberation.Game.Core.InputManagement
         OnButtonPressed
     }
 
-    public struct GamePadValues
+    public struct ThumbSticksState
     {
-        internal Vector2 mLeftThumbSticks = Vector2.Zero;
-        internal Vector2 mRightThumbSticks = Vector2.Zero;
-        internal float mLeftTrigger = new();
-        internal float mRightTrigger = new();
+        public Vector2 LeftThumbSticks = Vector2.Zero;
+        public Vector2 RightThumbSticks = Vector2.Zero;
+        public float LeftTrigger = new();
+        public float RightTrigger = new();
 
-        public GamePadValues() {; }
+        public ThumbSticksState() {; }
     }
 
     public struct InputState
@@ -71,14 +72,16 @@ namespace StellarLiberation.Game.Core.InputManagement
         public List<ActionType> mActions = new();
         public List<MouseActionType> mMouseActions = new();
         public Vector2 mMousePosition = Vector2.Zero;
-        public GamePadValues mGamePadValues = new();
+        public ThumbSticksState mThumbSticksState = new();
+        public bool GamePadIsConnected = false;
 
-        public InputState(List<ActionType> actions, List<MouseActionType> mouseActions, Vector2 mousePosition, GamePadValues gamePadValues)
+        public InputState(List<ActionType> actions, List<MouseActionType> mouseActions, Vector2 mousePosition, bool gamePadIsConnected, ThumbSticksState thumbSticksState)
         {
             mActions = actions;
             mMouseActions = mouseActions;
             mMousePosition = mousePosition;
-            mGamePadValues = gamePadValues;
+            mThumbSticksState = thumbSticksState;
+            GamePadIsConnected = gamePadIsConnected;
         }
 
         public bool HasMouseAction(MouseActionType mouseActionType) => mMouseActions.Remove(mouseActionType);

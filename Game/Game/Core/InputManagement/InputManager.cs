@@ -2,25 +2,27 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-
 using StellarLiberation.Game.Core.InputManagement.Peripheral;
+using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.InputManagement
 {
     public class InputManager
     {
-        private KeyboardManager mKeyboardManager = new();
-        private MouseManager mMouseManager = new();
-        private GamePadManager mGamePadManager = new();
+        private KeyboardListener mKeyboardListener = new();
+        private MouseListener mMouseListener = new();
+        private GamePadListener mGamePadListener = new();
 
         public InputState Update()
         {
-            var actions = mGamePadManager.GetActions(out var gamePadIsConnected, out var gamePadValues);
-            var mousePosition = mMouseManager.GetPosition();
-            actions.AddRange(mMouseManager.GetAction(out var mouseActions));
-            actions.AddRange(mKeyboardManager.GetActions());
-            System.Diagnostics.Debug.WriteLine(gamePadValues.mLeftThumbSticks.ToString());
-            return new InputState(actions, mouseActions, mousePosition, gamePadValues);
+            var actions = new List<ActionType>();
+
+            mGamePadListener.Listen(ref actions, out var gamePadIsConnected, out var thumbSticksState);
+            mMouseListener.Listen(ref actions, out var mouseActions, out var mousePosition);
+            mKeyboardListener.Listener(ref actions);
+
+            System.Diagnostics.Debug.WriteLine(thumbSticksState.LeftTrigger.ToString());
+            return new(actions, mouseActions, mousePosition, gamePadIsConnected, thumbSticksState);
         }
     }
 }

@@ -116,11 +116,11 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
             var zoom = 0f;
             if (inputState.HasAction(ActionType.CameraZoomIn) && Zoom < mMaxZoom)
             {
-                zoom += 5f * inputState.mGamePadValues.mRightThumbSticks.Y == 0 ? 10 : inputState.mGamePadValues.mRightThumbSticks.Y;
+                zoom += 5f;
             }
             if (inputState.HasAction(ActionType.CameraZoomOut) && Zoom > mMinZoom)
             {
-                zoom += 5f * inputState.mGamePadValues.mRightThumbSticks.Y == 0 ? -10 : inputState.mGamePadValues.mRightThumbSticks.Y;
+                zoom -= 5f;
             }
 
             if (zoom == 0) return;

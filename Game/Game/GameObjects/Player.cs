@@ -48,11 +48,11 @@ namespace StellarLiberation.Game.GameObjects
         {
             WeaponSystem.StopFire();
             inputState.DoAction(ActionType.FireInitialWeapon, () => WeaponSystem.Fire());
-            SublightEngine.FollowMouse(this, inputState, scene.WorldMousePosition);
-            scene.Camera2D.SetPosition(Position);
+            SublightEngine.ControlByInput(this, inputState, scene.WorldMousePosition);
             Inventory.Update(gameTime, this, scene);
 
             base.Update(gameTime, inputState, scene);
+            scene.Camera2D.SetPosition(Position);
         }
 
         public override void Draw( Scene scene)
