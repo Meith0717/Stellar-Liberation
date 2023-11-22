@@ -13,7 +13,7 @@ namespace StellarLiberation.Game.Core.UserInterface
     public enum Anchor { N, NE, E, SE, S, SW, W, NW, Center, None }
     public enum FillScale { X, Y, None }
 
-    internal abstract class UiElement
+    public abstract class UiElement
     {
         public Rectangle Frame { get; private set; }
 

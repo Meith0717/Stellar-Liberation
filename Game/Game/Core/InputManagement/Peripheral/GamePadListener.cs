@@ -13,6 +13,7 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
     internal class GamePadListener
     {
         private readonly Dictionary<Buttons, ActionType> mActionOnPadPressed, mActionOnPadHold;
+        private readonly Dictionary<Buttons, GamePadActionType> mGamePadActions;
         private GamePadState mPreviousState, mCurrentState;
 
         public GamePadListener()
@@ -20,8 +21,6 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
             mActionOnPadPressed = new()
             {
                 { Buttons.Start, ActionType.ESC },
-                { Buttons.RightThumbstickDown, ActionType.None },
-                { Buttons.RightThumbstickUp, ActionType.None },
             };
 
             mActionOnPadHold = new()
@@ -31,6 +30,13 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
                 { Buttons.RightTrigger, ActionType.Accelerate },
                 { Buttons.LeftTrigger, ActionType.Break },
                 { Buttons.A, ActionType.FireInitialWeapon },
+            };
+
+            mGamePadActions = new()
+            {
+                { Buttons.RightThumbstickUp, GamePadActionType.RightThumbStickUp },
+                { Buttons.RightThumbstickDown, GamePadActionType.RightThumbStickDown },
+                { Buttons.A, GamePadActionType.Select },
             };
         }
 
@@ -53,8 +59,9 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
                .Where(b => mCurrentState.IsButtonDown(b) && !mPreviousState.IsButtonDown(b))
                .ToList();
 
-        public void Listen(ref List<ActionType> actions, out bool isConected, out ThumbSticksState thumbSticksState)
+        public void Listen(ref List<ActionType> actions, out List<GamePadActionType> gamePadActionTypes, out bool isConected, out ThumbSticksState thumbSticksState)
         {
+            gamePadActionTypes = new();
             mPreviousState = mCurrentState;
             mCurrentState = GamePad.GetState(PlayerIndex.One);
             thumbSticksState = GetThumbSticksState();
@@ -62,6 +69,7 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
             foreach (Buttons button in PressedButtons)
             {
                 if (mActionOnPadPressed.TryGetValue(button, out var actionPressed)) actions.Add(actionPressed);
+                if (mGamePadActions.TryGetValue(button, out var gamePadActionPressed)) gamePadActionTypes.Add(gamePadActionPressed);
             }
             foreach (Buttons button in HoldButtons)
             {

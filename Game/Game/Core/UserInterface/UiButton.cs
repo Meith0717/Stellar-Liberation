@@ -11,7 +11,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 {
     public enum TextAllign { W, E, Center }
 
-    internal class UiButton : UiElement
+    public class UiButton : UiElement
     {
         public bool IsHover;
         public Action OnClickAction;

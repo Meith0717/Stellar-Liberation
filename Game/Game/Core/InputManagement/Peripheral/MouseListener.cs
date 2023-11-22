@@ -32,7 +32,7 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
 
         public void Listen(ref List<ActionType> actions, out List<MouseActionType> actionTypes, out Vector2 mousePosition)
         {
-            actionTypes = new List<MouseActionType>();
+            actionTypes = new();
             mPreviousState = mCurrentState;
 
             // Update current and previous MouseWheelValue
