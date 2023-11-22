@@ -2,14 +2,6 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-
-/*
- *  Camera.cs
- *
- *  Copyright (c) 2023 Thierry Meiers
- *  All rights reserved.
- */
-
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using Microsoft.Xna.Framework;
@@ -24,8 +16,10 @@ namespace StellarLiberation.Game.Core.Camera
     public class Camera2D
     {
         private const int CameraGlide = 100;
-        private float mMaxZoom;
-        private float mMinZoom;
+        public Vector2 Position { get; private set; }
+        public float MaxZoom { get; private set; }
+        public float MinZoom { get; private set; }
+
         private bool mAllowMovingWithMouse;
 
         /// <summary>
@@ -33,10 +27,6 @@ namespace StellarLiberation.Game.Core.Camera
         /// </summary>
         public float Zoom { get; private set; }
 
-        /// <summary>
-        /// Current position of the camera.
-        /// </summary>
-        public Vector2 Position { get; private set; }
         private Vector2 mLastPosition;
 
         /// <summary>
@@ -61,10 +51,10 @@ namespace StellarLiberation.Game.Core.Camera
         public Camera2D(float minZoom, float maxZoom, bool allowMovingWithMouse)
         {
             Position = Vector2.Zero;
-            mMaxZoom = maxZoom;
-            mMinZoom = minZoom;
+            MaxZoom = maxZoom;
+            MinZoom = minZoom;
             mAllowMovingWithMouse = allowMovingWithMouse;
-            Zoom = mMaxZoom;
+            Zoom = MaxZoom;
         }
 
         public void Shake(int amount)
@@ -112,11 +102,11 @@ namespace StellarLiberation.Game.Core.Camera
         private void AdjustZoomByMouse(GameTime gameTime, InputState inputState)
         {
             var zoom = 0f;
-            if (inputState.HasAction(ActionType.CameraZoomIn) && Zoom < mMaxZoom)
+            if (inputState.HasAction(ActionType.CameraZoomIn) && Zoom < MaxZoom)
             {
                 zoom += 5f;
             }
-            if (inputState.HasAction(ActionType.CameraZoomOut) && Zoom > mMinZoom)
+            if (inputState.HasAction(ActionType.CameraZoomOut) && Zoom > MinZoom)
             {
                 zoom -= 5f;
             }

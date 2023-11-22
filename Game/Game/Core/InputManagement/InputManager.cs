@@ -20,8 +20,6 @@ namespace StellarLiberation.Game.Core.InputManagement
             mGamePadListener.Listen(ref actions, out var gamePadIsConnected, out var thumbSticksState);
             mMouseListener.Listen(ref actions, out var mouseActions, out var mousePosition);
             mKeyboardListener.Listener(ref actions);
-
-            System.Diagnostics.Debug.WriteLine(thumbSticksState.LeftTrigger.ToString());
             return new(actions, mouseActions, mousePosition, gamePadIsConnected, thumbSticksState);
         }
     }
