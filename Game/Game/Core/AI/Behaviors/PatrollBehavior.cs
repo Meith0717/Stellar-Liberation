@@ -8,6 +8,7 @@ using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using Microsoft.Xna.Framework;
 using System.Linq;
+using StellarLiberation.Game.Core.LayerManagement;
 
 namespace StellarLiberation.Game.Core.AI.Behaviors
 {
@@ -15,22 +16,22 @@ namespace StellarLiberation.Game.Core.AI.Behaviors
     {
         private Vector2? mPatrolTarget;
 
-        public override double GetScore(SensorArray environment, SpaceShip spaceShip)
+        public override double GetScore(GameTime gameTime, SpaceShip spaceShip, Scene scene)
         {
             var shielHhullScore = spaceShip.DefenseSystem.ShieldPercentage * 0.5 + spaceShip.DefenseSystem.HullPercentage * 0.5;
-            var hasNoAimingShip = environment.AimingShip is null ? 1 : 0;
+            var hasNoAimingShip = spaceShip.SensorArray.AimingShip is null ? 1 : 0;
 
             var score = shielHhullScore * hasNoAimingShip;
             return score;
         }
 
-        public override void Execute(SensorArray environment, SpaceShip spaceShip)
+        public override void Execute(GameTime gameTime, SpaceShip spaceShip, Scene scene)
         {
             switch (mPatrolTarget)
             {
                 case null:
                     // Get Planets in Radius
-                    var patrolTargets = environment.AstronomicalObjects.OfType<Planet>().ToList();
+                    var patrolTargets = spaceShip.SensorArray.AstronomicalObjects.OfType<Planet>().ToList();
                     if (!patrolTargets.Any()) break;
 
                     // Get Random Target

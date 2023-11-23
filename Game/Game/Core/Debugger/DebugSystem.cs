@@ -65,10 +65,11 @@ namespace StellarLiberation.Game.Core.Debugger
 
         public void CheckForSpawn(PlanetSystem planetSystem)
         {
-            if (SpawnBattleShip) planetSystem.SpaceShipManager.Spawn(planetSystem, Vector2.Zero, SpaceShipManagement.ShipType.EnemyBattleShip);
-            if (SpawnCorvette) planetSystem.SpaceShipManager.Spawn(planetSystem, Vector2.Zero, SpaceShipManagement.ShipType.EnemyCorvette);
-            if (SpawnFighter) planetSystem.SpaceShipManager.Spawn(planetSystem, Vector2.Zero, SpaceShipManagement.ShipType.EnemyFighter);
-            if (SpawnCarrior) planetSystem.SpaceShipManager.Spawn(planetSystem, Vector2.Zero, SpaceShipManagement.ShipType.EnemyCarrior);
+            var position = planetSystem.Star.Position;
+            if (SpawnBattleShip) planetSystem.SpaceShipManager.Spawn(position, ShipType.EnemyBattleShip);
+            if (SpawnCorvette) planetSystem.SpaceShipManager.Spawn(position, ShipType.EnemyCorvette);
+            if (SpawnFighter) planetSystem.SpaceShipManager.Spawn(position, ShipType.EnemyFighter);
+            if (SpawnCarrior) planetSystem.SpaceShipManager.Spawn(position, ShipType.EnemyCarrior);
             SpawnFighter = SpawnBattleShip = SpawnCorvette = SpawnCarrior = false;
         }
 

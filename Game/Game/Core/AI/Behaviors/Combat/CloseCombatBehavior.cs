@@ -6,6 +6,7 @@ using StellarLiberation.Game.Core.SpaceShipManagement;
 using StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems;
 using StellarLiberation.Game.Core.Utilitys;
 using Microsoft.Xna.Framework;
+using StellarLiberation.Game.Core.LayerManagement;
 
 namespace StellarLiberation.Game.Core.AI.Behaviors.Combat
 {
@@ -15,10 +16,10 @@ namespace StellarLiberation.Game.Core.AI.Behaviors.Combat
 
         public CloseCombatBehavior(float attacDistance) : base(attacDistance) { }
 
-        public override void Execute(SensorArray environment, SpaceShip spaceShip)
+        public override void Execute(GameTime gameTime, SpaceShip spaceShip, Scene scene)
         {
-            if (environment.AimingShip is null) return;
-            mDistance = Vector2.Distance(spaceShip.Position, environment.AimingShip.Position);
+            if (spaceShip.SensorArray.AimingShip is null) return;
+            mDistance = Vector2.Distance(spaceShip.Position, spaceShip.SensorArray.AimingShip.Position);
 
             switch (mReorienting)
             {
@@ -33,13 +34,13 @@ namespace StellarLiberation.Game.Core.AI.Behaviors.Combat
                     {
                         mReorienting = true;
                         // Set course to reorientation Position
-                        spaceShip.SublightEngine.MoveToPosition(GetReorientingPosition(environment));
+                        spaceShip.SublightEngine.MoveToPosition(GetReorientingPosition(spaceShip.SensorArray));
                         break;
                     }
 
                     // Set course to attac target
                     if (mDistance < mAttackDistance) spaceShip.WeaponSystem.Fire();
-                    spaceShip.SublightEngine.FollowSpaceShip(environment.AimingShip);
+                    spaceShip.SublightEngine.FollowSpaceShip(spaceShip.SensorArray.AimingShip);
                     break;
             }
         }

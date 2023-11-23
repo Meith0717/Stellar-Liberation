@@ -5,6 +5,7 @@
 using StellarLiberation.Game.Core.SpaceShipManagement;
 using StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems;
 using Microsoft.Xna.Framework;
+using StellarLiberation.Game.Core.LayerManagement;
 
 namespace StellarLiberation.Game.Core.AI.Behaviors.Combat
 {
@@ -15,11 +16,11 @@ namespace StellarLiberation.Game.Core.AI.Behaviors.Combat
 
         public CombatBehavior(float attacDistance) => mAttackDistance = attacDistance;
 
-        public override double GetScore(SensorArray environment, SpaceShip spaceShip)
+        public override double GetScore(GameTime gameTime, SpaceShip spaceShip, Scene scene)
         {
             var shielHhullScore = spaceShip.DefenseSystem.ShieldPercentage * 0.4 + spaceShip.DefenseSystem.HullPercentage * 0.6;
 
-            var target = environment.AimingShip;
+            var target = spaceShip.SensorArray.AimingShip;
             if (target is null)
             {
                 return 0;

@@ -71,7 +71,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
             DefenseSystem.Update(gameTime);
             SensorArray.Update(gameTime, Position, scene.GameLayer.CurrentSystem, scene, mOpponent);
             if (!IsDestroyed) WeaponSystem.Update(gameTime, this, scene.GameLayer.ProjectileManager, SensorArray.AimingShip);
-            mAi.Update(gameTime, SensorArray, this);
+            mAi.Update(gameTime, this, scene);
 
             if (!IsDestroyed) return;
             if (ExplosionSheet.IsActive("destroy")) return;

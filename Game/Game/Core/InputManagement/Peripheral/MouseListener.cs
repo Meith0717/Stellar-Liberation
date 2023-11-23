@@ -29,7 +29,6 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
         private bool LeftMouseButtonReleased => mCurrentState.LeftButton == ButtonState.Released && mPreviousState.LeftButton == ButtonState.Pressed;
         private bool RightMouseButtonReleased => mCurrentState.RightButton == ButtonState.Released && mPreviousState.RightButton == ButtonState.Pressed;
 
-
         public void Listen(ref List<ActionType> actions, out List<MouseActionType> actionTypes, out Vector2 mousePosition)
         {
             actionTypes = new();
@@ -48,8 +47,10 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
             if (RightMouseButtonReleased) actionTypes.Add(MouseActionType.RightClickReleased);
 
             // Set Mouse Action to MouseWheel
-            if (mCurrentMouseWheelValue > mPreviousMouseWheelValue) actionTypes.Add(MouseActionType.MouseWheelForward);
-            if (mCurrentMouseWheelValue < mPreviousMouseWheelValue) actionTypes.Add(MouseActionType.MouseWheelBackward);
+            if (mCurrentMouseWheelValue > mPreviousMouseWheelValue) 
+                actionTypes.Add(MouseActionType.MouseWheelForward);
+            if (mCurrentMouseWheelValue < mPreviousMouseWheelValue) 
+                actionTypes.Add(MouseActionType.MouseWheelBackward);
 
             // Add actions to InputState.mActionList based on MouseAction.
             foreach (var key in mKeyBindingsMouse.Keys)

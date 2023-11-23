@@ -16,7 +16,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
     {
         public void AddRange(List<SpaceShip> spaceShips) => base.AddRange(spaceShips);
 
-        public void Spawn(PlanetSystem planetSystem, Vector2 position, ShipType type)
+        public void Spawn(Vector2 position, ShipType type)
         {
             switch (type)
             {
