@@ -11,7 +11,6 @@ using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.Layers;
 using System.Linq;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
@@ -19,18 +18,20 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
     public class Asteroid : GameObject2D
     {
         public Asteroid(Vector2 position) 
-            : base(position, TextureRegistries.asteroid1, 0.1f, 50) {; }
+            : base(position, TextureRegistries.asteroid1, 5f, 50) {; }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
+            RemoveFromSpatialHashing(scene);
             base.Update(gameTime, inputState, scene);
             Rotation += .01f;
             CheckForHit(gameTime, scene);
+            AddToSpatialHashing(scene);
         }
 
         private void CheckForHit(GameTime gameTime, Scene scene)
         {
-            var projectileInRange = scene.SpatialHashing.GetObjectsInRadius<Projectile>(Position, (int)BoundedBox.Radius);
+            var projectileInRange = scene.SpatialHashing.GetObjectsInRadius<Projectile>(Position, (int)BoundedBox.Diameter);
             if (!projectileInRange.Any()) return;
             var gotHit = false;
             foreach (var projectile in projectileInRange)
