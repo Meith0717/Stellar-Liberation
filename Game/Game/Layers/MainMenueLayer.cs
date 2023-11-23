@@ -16,7 +16,7 @@ namespace StellarLiberation.Game.Layers
     internal class MainMenueLayer : Layer
     {
         private UiLayer mFrame;
-        private UiButtonHoverTracer mButtonHoverTracer;
+        private ButtonInputTracer mButtonHoverTracer;
 
         public MainMenueLayer() : base(false)
         {
@@ -66,8 +66,8 @@ namespace StellarLiberation.Game.Layers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             inputState.DoAction(ActionType.ESC, mLayerManager.Exit);
-            mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds);
             mButtonHoverTracer.Trace(inputState);
+            mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds);
         }
 
         private void StartGame()

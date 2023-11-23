@@ -103,6 +103,8 @@ namespace StellarLiberation.Game.Core.UserInterface
             Frame = new Rectangle(x, y, width, height);
         }
 
+        public bool Contains(Vector2 position) => Frame.Contains(position);
+
         public virtual void Initialize(Rectangle root) => UpdateFrame(root);
         public virtual void OnResolutionChanged(Rectangle root) => UpdateFrame(root);
         public virtual void Update(InputState inputState, Rectangle root) { ; }

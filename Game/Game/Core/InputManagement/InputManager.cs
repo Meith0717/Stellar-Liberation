@@ -17,10 +17,10 @@ namespace StellarLiberation.Game.Core.InputManagement
         {
             var actions = new List<ActionType>();
 
-            mGamePadListener.Listen(ref actions, out var gamePadActions, out var gamePadIsConnected, out var thumbSticksState);
-            mMouseListener.Listen(ref actions, out var mouseActions, out var mousePosition);
+            mGamePadListener.Listen(ref actions, out var gamePadIsConnected, out var thumbSticksState);
+            mMouseListener.Listen(ref actions, out var mousePosition);
             mKeyboardListener.Listener(ref actions);
-            return new(actions, mouseActions, gamePadActions, mousePosition,  gamePadIsConnected, thumbSticksState);
+            return new(actions, mousePosition,  gamePadIsConnected, thumbSticksState);
         }
     }
 }

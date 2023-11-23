@@ -28,19 +28,12 @@ namespace StellarLiberation.Game.Core.InputManagement
         FireSecondaryWeapon,
         FireInitialWeapon,
         ToggleHyperMap,
-        LeftClick,
-        RightClick,
-        LeftClickHold,
-        RightClickHold,
-        LeftClickReleased,
         F1, F2, F3, F4, F5, F6, F7, F8, F9, F10,
         Accelerate,
         Break,
-    }
+        Select,
 
-    public enum MouseActionType
-    {
-        None,
+        // Mouse
         LeftClick,
         RightClick,
         LeftClickHold,
@@ -48,7 +41,9 @@ namespace StellarLiberation.Game.Core.InputManagement
         LeftClickReleased,
         RightClickReleased,
         MouseWheelForward,
-        MouseWheelBackward
+        MouseWheelBackward,
+        MoveButtonUp,
+        MoveButtonDown,
     }
 
     public enum GamePadActionType
@@ -80,33 +75,23 @@ namespace StellarLiberation.Game.Core.InputManagement
     public struct InputState
     {
         public List<ActionType> Actions = new();
-        public List<MouseActionType> MouseActions = new();
-        public List<GamePadActionType> GamePadActions = new();
         public Vector2 mMousePosition = Vector2.Zero;
         public ThumbSticksState mThumbSticksState = new();
         public bool GamePadIsConnected = false;
 
-        public InputState(List<ActionType> actions, List<MouseActionType> mouseActions, List<GamePadActionType> gamePadActions, Vector2 mousePosition, bool gamePadIsConnected, ThumbSticksState thumbSticksState)
+        public InputState(List<ActionType> actions, Vector2 mousePosition, bool gamePadIsConnected, ThumbSticksState thumbSticksState)
         {
             Actions = actions;
-            MouseActions = mouseActions;
             mMousePosition = mousePosition;
             mThumbSticksState = thumbSticksState;
             GamePadIsConnected = gamePadIsConnected;
-            GamePadActions = gamePadActions;
-        }
-
-        public bool HasMouseAction(MouseActionType mouseActionType) => MouseActions.Remove(mouseActionType);
-
-        public void DoMouseAction(MouseActionType mouseActionType, Action funktion)
-        {
-            if (HasMouseAction(mouseActionType)) funktion();
         }
 
         public bool HasAction(ActionType action) => Actions.Remove(action);
 
         public void DoAction(ActionType action, Action funktion)
         {
+            if (funktion is null) return;
             if (HasAction(action)) funktion();
         }
     }
