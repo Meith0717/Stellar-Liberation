@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems
 
         public void Update(GameTime gameTime)
         {
-            mShieldDrawAlpha -= (mShieldDrawAlpha < 0) ? 0 : -0.1f;
+            mShieldDrawAlpha = (mShieldDrawAlpha < 0) ? 0 : mShieldDrawAlpha - 0.1f;
 
             // Regenerate Shield
             if (mActualShieldForce + mRegenerationPerSecond >= mMaxShieldForce)
@@ -49,7 +49,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems
         {
             if (mActualShieldForce > 0)
             {
-                mShieldDrawAlpha = 1;
+                mShieldDrawAlpha = 1f;
                 mActualShieldForce -= shieldDamage;
                 return;
             }
@@ -65,7 +65,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems
 
         public void DrawShields(SpaceShip spaceShip)
         {
-            var color = new Color(87 * mShieldDrawAlpha, 191 * mShieldDrawAlpha, 255 * mShieldDrawAlpha);
+            var color = new Color((int)(87 * mShieldDrawAlpha), (int)(191 * mShieldDrawAlpha), (int)(255 * mShieldDrawAlpha), (int)(255 * mShieldDrawAlpha));
             TextureManager.Instance.Draw($"{spaceShip.TextureId}Shield", spaceShip.Position,spaceShip.TextureScale, spaceShip.Rotation, spaceShip.TextureDepth + 1, color);
         }
     }

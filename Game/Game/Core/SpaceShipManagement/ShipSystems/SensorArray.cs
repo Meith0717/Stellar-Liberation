@@ -16,7 +16,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems
     public class SensorArray
     {
         // Scan results
-        public List<SpaceShip> ShipsInDistance { get; private set; } = new();
+        public List<GameObject2D> ObjInDistance { get; private set; } = new();
         public readonly List<GameObject2D> AstronomicalObjects = new();
         public SpaceShip AimingShip { get; private set; }
         public float DistanceToAimingShip { get; private set; }
@@ -43,17 +43,18 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems
             AstronomicalObjects.Clear();
             AstronomicalObjects.Add(planetSystem.Star);
             AstronomicalObjects.AddRange(planetSystem.Planets);
-            ShipsInDistance = scene.SpatialHashing.GetObjectsInRadius<SpaceShip>(position, ShortRangeScanDistance);
+            ObjInDistance = scene.SpatialHashing.GetObjectsInRadius<GameObject2D>(position, ShortRangeScanDistance);
+            ObjInDistance.AddRange(AstronomicalObjects);
 
             var opponents = new List<SpaceShip>(); 
             switch (opponent)
             {
                 case Factions.Enemys:
-                    var enemis = (IEnumerable<SpaceShip>)ShipsInDistance.OfType<Enemy>();
+                    var enemis = (IEnumerable<SpaceShip>)ObjInDistance.OfType<Enemy>();
                     opponents = enemis.ToList();
                     break;
                 case Factions.Allies:
-                    var allies = (IEnumerable<SpaceShip>)ShipsInDistance.OfType<Player>();
+                    var allies = (IEnumerable<SpaceShip>)ObjInDistance.OfType<Player>();
                     opponents = allies.ToList();
                     break;
             }

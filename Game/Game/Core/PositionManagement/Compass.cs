@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using StellarLiberation.Core.GameEngine.Content_Management;
 using StellarLiberation.Core.GameEngine.Position_Management;
+using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.SpaceShipManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using System;
@@ -18,7 +19,7 @@ namespace StellarLiberation.Game.Core.PositionManagement
         private readonly Dictionary<Vector2, string> mKeyValuePairs = new();
         private CircleF mCompass;
 
-        public void Update(Vector2 position, ViewFrustumFilter viewFrustumFilter, List<SpaceShip> objects)
+        public void Update(Vector2 position, ViewFrustumFilter viewFrustumFilter, List<GameObject2D> objects)
         {
             mKeyValuePairs.Clear();
             mCompass = new CircleF(viewFrustumFilter.ViewFrustum.Center, MathF.Min(viewFrustumFilter.ViewFrustum.Width, viewFrustumFilter.ViewFrustum.Height) * 0.45f );
@@ -35,7 +36,7 @@ namespace StellarLiberation.Game.Core.PositionManagement
         public void Draw()
         {
             TextureManager.Instance.DrawCircle(mCompass.Position, mCompass.Radius, new(20, 20, 10, 10), 1, 1);
-            foreach (var pos in mKeyValuePairs.Keys) TextureManager.Instance.Draw(mKeyValuePairs[pos], pos, 20, 20);
+            foreach (var pos in mKeyValuePairs.Keys) TextureManager.Instance.Draw(mKeyValuePairs[pos], pos - new Vector2(10, 10), 20, 20);
         }
     }
 }
