@@ -12,6 +12,7 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
+using System.Reflection.Metadata;
 
 namespace StellarLiberation.Game.Core.Utilitys
 {
@@ -52,6 +53,17 @@ namespace StellarLiberation.Game.Core.Utilitys
             float relativeY = absolutePosition.Y - rectangle.Y;
 
             return new Vector2(relativeX, relativeY);
+        }
+
+        public static Vector2 GetPoitOnRectangle(RectangleF rectangle, float angle)
+        {
+            float halfWidth = rectangle.Width / 2;
+            float halfHeight = rectangle.Height / 2;
+
+            float x = halfWidth * (float)Math.Cos(angle);
+            float y = halfHeight * (float)Math.Sin(angle);
+
+            return Vector2.Add(new Vector2(x, y), rectangle.Center);
         }
 
 
