@@ -86,7 +86,7 @@ namespace StellarLiberation.Game.Core.Camera
         private void MoveCameraByMouse(InputState inputState, Vector2 screenMousePosition, Matrix ViewTransformation)
         {
             MovedByUser = false;
-            if (inputState.HasMouseAction(MouseActionType.LeftClickHold))
+            if (inputState.HasAction(ActionType.LeftClickHold))
             {
                 if (Vector2.Distance(mLastScreenMousePosition, screenMousePosition) > 1)
                 {

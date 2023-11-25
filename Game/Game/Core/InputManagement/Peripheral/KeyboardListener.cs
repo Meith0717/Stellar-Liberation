@@ -85,7 +85,7 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
             }
         }
 
-        public List<ActionType> Listener(ref List<ActionType> actions)
+        public void Listener(ref List<ActionType> actions)
         {
             mPreviousKeysPressed = mCurrentKeysPressed;
             mKeysKeyEventTypes.Clear();
@@ -110,7 +110,6 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
                 if (!mActionOnHold.TryGetValue(key, out var actionHold)) continue;
                 if (mKeysKeyEventTypes[key] == KeyEventType.OnButtonPressed) actions.Add(actionHold);
             }
-            return actions;
         }
 
     }

@@ -22,7 +22,7 @@ public abstract class Layer
     [JsonProperty]
     public bool UpdateBelow { get; private set; }
 
-    protected Layer(bool updateBelow) { UpdateBelow = updateBelow; }
+    protected Layer(bool updateBelow) { UpdateBelow = updateBelow;}
 
     public virtual void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
     {
