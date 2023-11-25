@@ -9,7 +9,6 @@ using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.Parallax;
-using StellarLiberation.Game.Core.PositionManagement;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 
 namespace StellarLiberation.Game.Layers.Scenes
@@ -17,7 +16,6 @@ namespace StellarLiberation.Game.Layers.Scenes
     internal class MainGameScene : Scene
     {
         private ParallaxController mParlaxManager;
-        private Compass mCompass = new();
 
         public MainGameScene(GameLayer gameLayer) : base(gameLayer, 50000, 0.00001f, 1, false)
         {
@@ -42,14 +40,12 @@ namespace StellarLiberation.Game.Layers.Scenes
                 break;
             }
             Camer2DController.Track(GameLayer.Player, this);
-            mCompass.Update(Camera2D.Position, ViewFrustumFilter, GameLayer.Player.SensorArray.ShipsInDistance);
         }
 
         public override void DrawOnScreenView(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch)
         {
             base.DrawOnScreenView(sceneManagerLayer, spriteBatch);
             mParlaxManager.Draw();
-            mCompass.Draw();
         }
 
         public override void OnResolutionChanged() { base.OnResolutionChanged(); }

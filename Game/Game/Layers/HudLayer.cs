@@ -4,10 +4,13 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using StellarLiberation.Core.GameEngine.Position_Management;
+using StellarLiberation.Game.Core.Camera;
 using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.Persistance;
+using StellarLiberation.Game.Core.PositionManagement;
 using StellarLiberation.Game.Core.UserInterface;
 
 namespace StellarLiberation.Game.Layers
@@ -22,6 +25,8 @@ namespace StellarLiberation.Game.Layers
         private UiVBar mPropulsiondBar;
 
         private UiText mCargoHold;
+        private Compass mCompass = new();
+
 
         public HudLayer(Scene scene) : base(true) 
         {
@@ -53,6 +58,7 @@ namespace StellarLiberation.Game.Layers
         {
             spriteBatch.Begin();
             mUiLayer.Draw();
+            mCompass.Draw();
             spriteBatch.End();
         }
 
@@ -68,6 +74,7 @@ namespace StellarLiberation.Game.Layers
             mHullBar.Percentage = mScene.GameLayer.Player.DefenseSystem.HullPercentage;
             mPropulsiondBar.Percentage = (double)(mScene.GameLayer.Player.Velocity / mScene.GameLayer.Player.SublightEngine.MaxVelocity);
             mCargoHold.Text = $"{mScene.GameLayer.Player.Inventory.Count}/{mScene.GameLayer.Player.Inventory.Capacity}";
+            mCompass.Update(mScene.GameLayer.Player.Position, mScene.ViewFrustumFilter, mScene.GameLayer.Player.SensorArray.ShipsInDistance);
         }
     }
 }
