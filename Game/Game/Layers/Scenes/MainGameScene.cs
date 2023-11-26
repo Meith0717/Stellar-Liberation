@@ -20,6 +20,7 @@ namespace StellarLiberation.Game.Layers.Scenes
         public MainGameScene(GameLayer gameLayer) : base(gameLayer, 50000, 0.00001f, 1, false)
         {
             mParlaxManager = new();
+            mParlaxManager.Add(new(TextureRegistries.gameBackground, 0));
             mParlaxManager.Add(new(TextureRegistries.gameBackgroundParlax4, .1f));
             mParlaxManager.Add(new(TextureRegistries.gameBackgroundParlax3, .05f));
             mParlaxManager.Add(new(TextureRegistries.gameBackgroundParlax2, .01f));

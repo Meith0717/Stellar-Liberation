@@ -33,7 +33,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyst
             ShieldDamage = shieldDamage;
             TextureColor = color;
             Origine = origine;
-            Velocity = 50;
+            Velocity = 20;
             DisposeTime = 5000;
             mExplosionSheet = new(TextureRegistries.explosion, 64, 3, TextureScale * 2);
             mExplosionSheet.Animate("hit", new(45, Animation.GetRowList(0, 64), false));

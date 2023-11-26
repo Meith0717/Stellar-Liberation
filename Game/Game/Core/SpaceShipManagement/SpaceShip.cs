@@ -84,18 +84,19 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
         {
             var projectileInRange = scene.SpatialHashing.GetObjectsInRadius<Projectile>(Position, (int)BoundedBox.Radius);
             if (!projectileInRange.Any()) return;
-            var hits = 0;
+            var hit = false;
+            Vector2? position = null;
             foreach (var projectile in projectileInRange)
             {
                 if (projectile.Origine is Enemy && this is Enemy) continue;
                 if (projectile.Origine == this) return;
-                if (!ContinuousCollisionDetection.HasCollide(gameTime, projectile, this, out var _)) continue;
+                if (!ContinuousCollisionDetection.HasCollide(gameTime, projectile, this, out position)) continue;
 
                 projectile.HasCollide();
-                DefenseSystem.GotHit(projectile.ShieldDamage, projectile.HullDamage);
-                hits++;
+                DefenseSystem.GotHit((Vector2)position, projectile.ShieldDamage, projectile.HullDamage, scene);
+                hit = true;
             }
-            if (hits == 0) return;
+            if (!hit) return;
             SoundManager.Instance.PlaySound("torpedoHit", ExtendetRandom.Random.Next(5, 8) / 10f);
         }
 
@@ -121,7 +122,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
             var shakeamount = (500000 - Vector2.Distance(scene.Camera2D.Position, Position)) / 500000;
             if (shakeamount < 0) shakeamount = 0;
             scene.Camera2D.Shake((int)(shakeamount * 100));
-            ExplosionEffect.Emit(Position, scene.ParticleManager);
+            ExplosionEffect.ShipDestroyed(Position, scene.ParticleManager);
 
             for (int i = 0; i < 5; i++) scene.GameLayer.ItemManager.PopItem(MovingDirection, Position, new Items.Metall());
 

@@ -19,7 +19,11 @@ namespace StellarLiberation.Game.Core.Collision_Detection
             collidingPosition = null;
 
             // Check if Collision actually happened with the bounding box
-            if (checkingObj.BoundedBox.Intersects(collidingObj.BoundedBox)) return true;
+            if (checkingObj.BoundedBox.Intersects(collidingObj.BoundedBox))
+            {
+                collidingPosition = checkingObj.Position;
+                return true;
+            }
 
             var futurePosition = checkingObj.Position + checkingObj.Velocity * checkingObj.MovingDirection * gameTime.ElapsedGameTime.Milliseconds;
             var frameDistance = Vector2.Distance(checkingObj.Position, futurePosition);

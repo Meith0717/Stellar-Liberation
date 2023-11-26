@@ -5,6 +5,8 @@
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using StellarLiberation.Core.GameEngine.Content_Management;
+using StellarLiberation.Game.Core.LayerManagement;
+using StellarLiberation.Game.Core.ParticleSystem.ParticleEffects;
 using System;
 
 namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems
@@ -19,6 +21,8 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems
         [JsonIgnore] private float mActualShieldForce;
         [JsonIgnore] private float mActualHullForce; 
         [JsonIgnore] private float mShieldDrawAlpha; // Alpah for Drawind Shields by Impact
+
+        [JsonIgnore] private int ShieldRegenerateCoolDown;
 
         public double ShieldPercentage => mActualShieldForce / mMaxShieldForce;
         public double HullPercentage => mActualHullForce / mMaxHullForce; 
@@ -35,6 +39,9 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems
         public void Update(GameTime gameTime)
         {
             mShieldDrawAlpha = (mShieldDrawAlpha < 0) ? 0 : mShieldDrawAlpha - 0.1f;
+            ShieldRegenerateCoolDown -= gameTime.ElapsedGameTime.Milliseconds;
+
+            if (ShieldRegenerateCoolDown > 0) return;
 
             // Regenerate Shield
             if (mActualShieldForce + mRegenerationPerSecond >= mMaxShieldForce)
@@ -45,15 +52,18 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems
             mActualShieldForce += mRegenerationPerSecond / gameTime.ElapsedGameTime.Milliseconds;
         }
 
-        public void GotHit(int shieldDamage, int hullDamage)
+        public void GotHit(Vector2 position, int shieldDamage, int hullDamage, Scene scene)
         {
+            ShieldRegenerateCoolDown = 5000;
             if (mActualShieldForce > 0)
             {
                 mShieldDrawAlpha = 1f;
                 mActualShieldForce -= shieldDamage;
+                if (mActualShieldForce < 0) mActualShieldForce = 0;
                 return;
             }
             mActualHullForce -= mActualHullForce > 0 ? hullDamage : 0;
+            ExplosionEffect.ShipHit(position, Vector2.Zero, scene.ParticleManager);
         }
 
         public void Upgrade(float shieldUpgradePercentage = 0, float hullUpgradePercentage = 0, float regenerationUpgradePercentage = 0)

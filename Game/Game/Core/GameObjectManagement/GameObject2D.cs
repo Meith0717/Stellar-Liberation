@@ -23,7 +23,7 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
     public abstract class GameObject2D
     {
         // Phisics Stuff
-        public CircleF BoundedBox => new(Position, MathF.Max(mTextureHeight, mTextureWidth) / 2 * TextureScale);
+        public CircleF BoundedBox => new(Position, (MathF.Max(mTextureHeight, mTextureWidth) / 2 * TextureScale) * 0.85f);
         [JsonProperty] public Vector2 Position { get; set; }
         [JsonProperty] public float Rotation { get; set; }
         [JsonProperty] public Vector2 MovingDirection { get; set; }
@@ -31,9 +31,9 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
 
         // Texture Stuff
         [JsonProperty] public Color TextureColor = Color.White;
+        [JsonProperty] public float TextureScale;
         [JsonProperty] public readonly string TextureId;
         [JsonProperty] public readonly int TextureDepth;
-        [JsonProperty] public readonly float TextureScale;
         [JsonProperty] public readonly Vector2 TextureOffset;
         [JsonProperty] private readonly int mTextureWidth;
         [JsonProperty] private readonly int mTextureHeight;
