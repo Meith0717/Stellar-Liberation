@@ -46,5 +46,10 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
+<<<<<<< HEAD
           files: StellarLiberation.zip
           tag_name: Test
+=======
+          files: ./*
+          tag_name: Test
+>>>>>>> c5eec02991aebe7f5d43c18844aaa9860caf3dee
