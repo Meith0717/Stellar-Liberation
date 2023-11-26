@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  build_artifact:
     runs-on: windows-latest
 
     steps:
@@ -23,5 +23,21 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
-        name: stellar-liberation-artifact
+        name: StellarLiberationArtifact
         path: ./Game/bin/Release/net6.0/
+
+  create_release:
+    needs: build_artifact
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v3
+
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: StellarLiberationArtifact
+
+      - name: List files
+        run: ls -l
