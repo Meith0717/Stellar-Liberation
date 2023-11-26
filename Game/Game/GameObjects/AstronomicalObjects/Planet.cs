@@ -5,17 +5,18 @@
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using StellarLiberation.Core.GameEngine.Content_Management;
+using StellarLiberation.Game.Core.Collision_Detection;
 using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.Layers;
 using System;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
     [Serializable]
+    [Collidable]
     public class Planet : GameObject2D
     {
         [JsonProperty]

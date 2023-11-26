@@ -64,7 +64,6 @@ namespace StellarLiberation.Game.Core.Collision_Detection
                     var rotationToObj = Geometry.AngleBetweenVectors(gameObject2D.Position, obj.Position);
                     var pushDir = -Geometry.CalculateDirectionVector(rotationToObj);
                     gameObject2D.MovingDirection += pushDir;
-                    gameObject2D.MovingDirection.Normalize();
                 }
             }
         }
