@@ -1,11 +1,11 @@
-name: Build MonoGame Project
+name: Release MonoGame Project
 
 on:
-  push:
-    branches: [main]
+  pull_request:
+    branches: [release]
 
 jobs:
-  build_artifact:
+  Release_Game:
     runs-on: windows-latest
 
     steps:
@@ -17,10 +17,10 @@ jobs:
       with:
         dotnet-version: '6.0.x'
 
-    - name: Build project
+    - name: Build game
       run: dotnet build --configuration Release Game/StellarLiberation.csproj
 
-    - name: Zip release
+    - name: Zip game release
       uses: vimtor/action-zip@v1.1
       with:
         files: ./Game/bin/Release/net6.0/
@@ -32,7 +32,7 @@ jobs:
         $newTag = "v$($latestTag + 1)"
         echo "RELEASE_TAG=$newTag" >> $env:GITHUB_ENV  
 
-    - name: Create release
+    - name: Create game release
       id: create_release
       uses: softprops/action-gh-release@v1
       with:
