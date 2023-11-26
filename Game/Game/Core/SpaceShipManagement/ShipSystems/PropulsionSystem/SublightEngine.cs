@@ -7,6 +7,10 @@ using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using Microsoft.Xna.Framework;
 using System;
+using StellarLiberation.Game.Core.Utilitys;
+using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
+using MathNet.Numerics.Distributions;
 
 namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.PropulsionSystem
 {
@@ -47,7 +51,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.Propulsion
 
             var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, mVector2Target.Value);
 
-            var relRotation = 1 - (MathF.Abs(rotationUpdate) / MathF.PI);
+            var relRotation = 1f - (MathF.Abs(rotationUpdate) / MathF.PI);
             var rotationScore = MathF.Abs(0.5f - (MathF.Abs(rotationUpdate) / MathF.PI));
 
             var targetVelocity = relRotation switch
@@ -92,11 +96,25 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.Propulsion
             IsMoving = false;
         }
 
-        public void FollowMouse(SpaceShip spaceShip, InputState inputState, Vector2 worldMousePosition)
+        public void ControlByInput(SpaceShip spaceShip, InputState inputState, Vector2 worldMousePosition)
         {
-            inputState.DoAction(ActionType.Accelerate, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, MaxVelocity, MaxVelocity / 100f));
-            inputState.DoAction(ActionType.Break, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, MaxVelocity / 100f));
-            MoveToPosition(worldMousePosition);
+            switch (inputState.GamePadIsConnected)
+            {
+                case true:
+                    inputState.DoAction(ActionType.Accelerate, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, MaxVelocity, MaxVelocity / 100f * inputState.mThumbSticksState.RightTrigger));
+                    inputState.DoAction(ActionType.Break, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, MaxVelocity / 100f * inputState.mThumbSticksState.LeftTrigger));
+
+                    var leftThumbSticksValue = inputState.mThumbSticksState.LeftThumbSticks;
+                    if (leftThumbSticksValue == Vector2.Zero) break;
+                    var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, Geometry.AngleBetweenVectors(Vector2.Zero, leftThumbSticksValue), 1);
+                    spaceShip.Rotation += rotationUpdate * Maneuverability;
+                    break;
+                case false:
+                    inputState.DoAction(ActionType.Accelerate, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, MaxVelocity, MaxVelocity / 100f));
+                    inputState.DoAction(ActionType.Break, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, MaxVelocity / 100f));
+                    MoveToPosition(worldMousePosition);
+                    break;
+            }
         }
 
         public void Draw(Debugger.DebugSystem debugSystem, SpaceShip spaceShip, Scene scene) => debugSystem.DrawPath(mVector2Target, spaceShip, scene);

@@ -6,7 +6,10 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.AI.Behaviors;
 using StellarLiberation.Game.Core.AI.Behaviors.Combat;
 using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
+using StellarLiberation.Game.Core.InputManagement;
+using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.SpaceShipManagement;
+using StellarLiberation.Game.Core.Utilitys;
 
 namespace StellarLiberation.Game.GameObjects
 {
@@ -14,6 +17,7 @@ namespace StellarLiberation.Game.GameObjects
     {
         public class Carrior : Enemy
         {
+
             public Carrior(Vector2 position)
                 : base(position, TextureRegistries.enemyCarrior, 4, new(20000), new(0.5f, 0.01f), new(1000, new(255, 4, 0), 1, 1), new(100, 100, 0))
             {
@@ -42,11 +46,13 @@ namespace StellarLiberation.Game.GameObjects
                 WeaponSystem.PlaceTurret(new(new(-100, 50), 1, TextureDepth + 1));
                 WeaponSystem.PlaceTurret(new(new(-200, 50), 1, TextureDepth + 1));
                 WeaponSystem.PlaceTurret(new(new(-300, 50), 1, TextureDepth + 1));
+
                 mAi = new(new()
                 {
                     new PatrollBehavior(),
                     new InterceptBehavior(),
                     new FarCombatBehavior(10000),
+                    new SpawnFighterBehavior(20000),
                     new FleeBehavior()
                 });
             }
@@ -101,7 +107,6 @@ namespace StellarLiberation.Game.GameObjects
                 mAi = new(new() {
                     new PatrollBehavior(),
                     new CloseCombatBehavior(10000),
-                    new FleeBehavior(),
                 });
             }
         }

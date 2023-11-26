@@ -6,6 +6,7 @@ using StellarLiberation.Game.Core.SpaceShipManagement;
 using StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems;
 using Microsoft.Xna.Framework;
 using System;
+using StellarLiberation.Game.Core.LayerManagement;
 
 namespace StellarLiberation.Game.Core.AI.Behaviors.Combat
 {
@@ -13,7 +14,7 @@ namespace StellarLiberation.Game.Core.AI.Behaviors.Combat
     {
         public FarCombatBehavior(float attacDistance) : base(attacDistance) { }
 
-        public override void Execute(SensorArray environment, SpaceShip spaceShip)
+        public override void Execute(GameTime gameTime, SpaceShip spaceShip, Scene scene)
         {
             spaceShip.SublightEngine.Standstill();
             spaceShip.WeaponSystem.StopFire();

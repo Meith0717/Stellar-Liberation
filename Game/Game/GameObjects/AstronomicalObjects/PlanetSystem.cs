@@ -32,6 +32,8 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             TextureColor = color;
             Danger = danger;
             SystemBounding = new(sectorPosition, boundaryRadius);
+
+            for (int i = 0; i < 80; i++) mAsteroids.Add(new(ExtendetRandom.NextVectorInCircle(SystemBounding)));
         }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
@@ -70,14 +72,17 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 
         [JsonProperty] public readonly SpaceShipManager SpaceShipManager = new();
 
+        [JsonProperty] public readonly List<Asteroid> mAsteroids = new();
+
+
         //--generation associated--//
         public void SetObjects(Star star, List<Planet> planets)
         {
             Planets = planets;  
             Star = star;
-            for (int i = 0; i < 10; i++) SpaceShipManager.Spawn(this, ExtendetRandom.NextVectorInCircle(SystemBounding), ShipType.EnemyBattleShip);
-            for (int i = 0; i < 20; i++) SpaceShipManager.Spawn(this, ExtendetRandom.NextVectorInCircle(SystemBounding), ShipType.EnemyCorvette);
-            for (int i = 0; i < 30; i++) SpaceShipManager.Spawn(this, ExtendetRandom.NextVectorInCircle(SystemBounding), ShipType.EnemyCarrior);
+            for (int i = 0; i < 10; i++) SpaceShipManager.Spawn(ExtendetRandom.NextVectorInCircle(SystemBounding), ShipType.EnemyBattleShip);
+            for (int i = 0; i < 10; i++) SpaceShipManager.Spawn(ExtendetRandom.NextVectorInCircle(SystemBounding), ShipType.EnemyCorvette);
+            for (int i = 0; i < 3; i++) SpaceShipManager.Spawn(ExtendetRandom.NextVectorInCircle(SystemBounding), ShipType.EnemyCarrior);
 
         }
         //------------------------//
@@ -88,6 +93,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             Star.Update(gameTime, inputState, scene);
             foreach (var item in Planets) item.Update(gameTime, inputState, scene);
             SpaceShipManager.Update(gameTime, inputState, scene);
+            foreach (var asteroid in mAsteroids) asteroid.Update(gameTime, inputState, scene);
         }
 
         //--------------------------------------------------------------------------------------//

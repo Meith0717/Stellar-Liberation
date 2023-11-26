@@ -28,26 +28,32 @@ namespace StellarLiberation.Game.Core.InputManagement
         FireSecondaryWeapon,
         FireInitialWeapon,
         ToggleHyperMap,
-        LeftClick,
-        RightClick,
-        LeftClickHold,
-        RightClickHold,
-        LeftClickReleased,
         F1, F2, F3, F4, F5, F6, F7, F8, F9, F10,
         Accelerate,
         Break,
-    }
+        Select,
 
-    public enum MouseActionType
-    {
-        None,
+        // Mouse
         LeftClick,
         RightClick,
         LeftClickHold,
         RightClickHold,
         LeftClickReleased,
+        RightClickReleased,
         MouseWheelForward,
-        MouseWheelBackward
+        MouseWheelBackward,
+        MoveButtonUp,
+        MoveButtonDown,
+    }
+
+    public enum GamePadActionType
+    {
+        None,
+        LeftThumbStickUp,
+        LeftThumbStickDown,
+        RightThumbStickUp,
+        RightThumbStickDown,
+        Select
     }
 
     public enum KeyEventType
@@ -56,44 +62,36 @@ namespace StellarLiberation.Game.Core.InputManagement
         OnButtonPressed
     }
 
-    internal class GamePadValues
+    public struct ThumbSticksState
     {
-        internal Vector2 mLeftThumbSticks;
-        internal Vector2 mRightThumbSticks;
-        internal float mLeftTrigger;
-        internal float mRightTrigger;
+        public Vector2 LeftThumbSticks = Vector2.Zero;
+        public Vector2 RightThumbSticks = Vector2.Zero;
+        public float LeftTrigger = new();
+        public float RightTrigger = new();
+
+        public ThumbSticksState() {; }
     }
 
-    public class InputState
+    public struct InputState
     {
-        internal List<ActionType> mActions;
-        internal List<MouseActionType> mMouseActions;
-        internal Vector2 mMousePosition;
-        internal GamePadValues mGamePadValues;
-        internal GamePadValues mPrevGamePadValues;
+        public List<ActionType> Actions = new();
+        public Vector2 mMousePosition = Vector2.Zero;
+        public ThumbSticksState mThumbSticksState = new();
+        public bool GamePadIsConnected = false;
 
-        public InputState()
+        public InputState(List<ActionType> actions, Vector2 mousePosition, bool gamePadIsConnected, ThumbSticksState thumbSticksState)
         {
-            mActions = new List<ActionType>();
+            Actions = actions;
+            mMousePosition = mousePosition;
+            mThumbSticksState = thumbSticksState;
+            GamePadIsConnected = gamePadIsConnected;
         }
 
-        public bool HasMouseAction(MouseActionType mouseActionType)
-        {
-            return mMouseActions.Remove(mouseActionType);
-        }
-
-        public void DoMouseAction(MouseActionType mouseActionType, Action funktion)
-        {
-            if (HasMouseAction(mouseActionType)) funktion();
-        }
-
-        public bool HasAction(ActionType action)
-        {
-            return mActions.Remove(action);
-        }
+        public bool HasAction(ActionType action) => Actions.Remove(action);
 
         public void DoAction(ActionType action, Action funktion)
         {
+            if (funktion is null) return;
             if (HasAction(action)) funktion();
         }
     }

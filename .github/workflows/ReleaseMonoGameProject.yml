@@ -1,0 +1,41 @@
+name: Release MonoGame Project
+
+on:
+  pull_request:
+    branches: [release]
+
+jobs:
+  Release_Game:
+    runs-on: windows-latest
+
+    steps:
+    - name: Set up Git repository
+      uses: actions/checkout@v3
+
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: Build game
+      run: dotnet build --configuration Release Game/StellarLiberation.csproj
+
+    - name: Zip game release
+      uses: vimtor/action-zip@v1.1
+      with:
+        files: ./Game/bin/Release/net6.0/
+        dest: StellarLiberation.zip
+      
+    - name: Set release tag
+      run: |
+        $latestTag = git tag -l 'v*' | ForEach-Object { [int]($_ -replace '^v') } | Sort-Object -Descending | Select-Object -First 1
+        $newTag = "v$($latestTag + 1)"
+        echo "RELEASE_TAG=$newTag" >> $env:GITHUB_ENV  
+
+    - name: Create game release
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      with:
+        name: StellarLiberation
+        files: StellarLiberation.zip
+        tag_name: ${{ env.RELEASE_TAG }}

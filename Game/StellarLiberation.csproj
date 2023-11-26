@@ -40,7 +40,6 @@
     <Folder Include="bin\Debug\net6.0\Content\" />
     <Folder Include="Content\GameObjects\Stars\" />
     <Folder Include="Content\configs\" />
-    <Folder Include="Game\Core\NewFolder\" />
     <Folder Include="Game\Core\UserInterface\NewFolder\" />
   </ItemGroup>
     

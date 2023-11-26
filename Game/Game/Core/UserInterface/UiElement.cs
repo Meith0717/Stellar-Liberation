@@ -13,7 +13,7 @@ namespace StellarLiberation.Game.Core.UserInterface
     public enum Anchor { N, NE, E, SE, S, SW, W, NW, Center, None }
     public enum FillScale { X, Y, None }
 
-    internal abstract class UiElement
+    public abstract class UiElement
     {
         public Rectangle Frame { get; private set; }
 
@@ -102,6 +102,8 @@ namespace StellarLiberation.Game.Core.UserInterface
 
             Frame = new Rectangle(x, y, width, height);
         }
+
+        public bool Contains(Vector2 position) => Frame.Contains(position);
 
         public virtual void Initialize(Rectangle root) => UpdateFrame(root);
         public virtual void OnResolutionChanged(Rectangle root) => UpdateFrame(root);

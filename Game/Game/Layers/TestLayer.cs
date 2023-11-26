@@ -52,7 +52,7 @@ namespace StellarLiberation.Game.Layers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds);
-            if (inputState.HasMouseAction(MouseActionType.LeftClick)) mBare.Percentage = 0.5;
+            if (inputState.HasAction(ActionType.LeftClick)) mBare.Percentage = 0.5;
         }
     }
 }

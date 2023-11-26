@@ -12,6 +12,7 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
+using System.Reflection.Metadata;
 
 namespace StellarLiberation.Game.Core.Utilitys
 {
@@ -32,8 +33,8 @@ namespace StellarLiberation.Game.Core.Utilitys
         {
             Vector2 directionVector = target - position;
             float rotation = CalculateAngle(directionVector);
-            if (directionVector.Y < 0) { rotation = 2 * MathF.PI - MathF.Abs(rotation); }
-            return rotation == float.NaN ? 0 : rotation;
+            if (directionVector.Y < 0) { rotation = 2f * MathF.PI - MathF.Abs(rotation); }
+            return float.IsNaN(rotation) ? 0 : rotation;
         }
 
         public static Vector2 GetPointInDirection(Vector2 position, Vector2 direction, float length) => position + direction * length;
@@ -43,7 +44,7 @@ namespace StellarLiberation.Game.Core.Utilitys
         public static float CalculateAngle(Vector2 direction)
         {
             direction.Normalize();
-            return (float)MathF.Acos(Vector2.Dot(new Vector2(1, 0), direction));
+            return MathF.Acos(Vector2.Dot(new Vector2(1, 0), direction));
         }
 
         public static Vector2 GetRelativePosition(Vector2 absolutePosition, Rectangle rectangle)
@@ -52,6 +53,17 @@ namespace StellarLiberation.Game.Core.Utilitys
             float relativeY = absolutePosition.Y - rectangle.Y;
 
             return new Vector2(relativeX, relativeY);
+        }
+
+        public static Vector2 GetPoitOnRectangle(RectangleF rectangle, float angle)
+        {
+            float halfWidth = rectangle.Width / 2;
+            float halfHeight = rectangle.Height / 2;
+
+            float x = halfWidth * (float)Math.Cos(angle);
+            float y = halfHeight * (float)Math.Sin(angle);
+
+            return Vector2.Add(new Vector2(x, y), rectangle.Center);
         }
 
 

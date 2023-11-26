@@ -15,8 +15,9 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
     public abstract class GameObjectManager
     {
         [JsonProperty] protected readonly List<GameObject2D> mObjects = new();
+        [JsonProperty] protected readonly List<GameObject2D> mAddedObjects = new();
 
-        protected void AddObj(GameObject2D obj) => mObjects.Add(obj);
+        protected void AddObj(GameObject2D obj) => mAddedObjects.Add(obj);
 
         protected void AddRange(IEnumerable<GameObject2D> values)
         {
@@ -28,6 +29,9 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
         public virtual void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
             var lst = new List<GameObject2D>();
+
+            mObjects.AddRange(mAddedObjects);
+            mAddedObjects.Clear();
 
             // Update all obj in Objects
             foreach (var obj in mObjects)

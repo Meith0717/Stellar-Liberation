@@ -1,0 +1,27 @@
+name: Create MonoGame Artifact
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  Release_Game_Artifact:
+    runs-on: windows-latest
+
+    steps:
+    - name: Set up Git repository
+      uses: actions/checkout@v3
+
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: Build game
+      run: dotnet build --configuration Release Game/StellarLiberation.csproj
+  
+    - name: Upload game artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: StellarLiberationArtifact
+        path: ./Game/bin/Release/net6.0/

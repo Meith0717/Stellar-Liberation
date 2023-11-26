@@ -45,7 +45,7 @@ namespace StellarLiberation.Game.Core.UserInterface.Messages
             if (mRect.Contains(inputState.mMousePosition))
             {
                 Color = new Color(20, 20, 20, 20);
-                if (inputState.HasMouseAction(MouseActionType.LeftClick)) { return; }
+                if (inputState.HasAction(ActionType.LeftClick)) { return; }
                 Clicked = true;
             }
         }

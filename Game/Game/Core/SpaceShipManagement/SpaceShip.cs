@@ -65,13 +65,13 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
             GameObject2DMover.Move(gameTime, this, scene);
             base.Update(gameTime, inputState, scene);
 
-            if (DefenseSystem.HullLevel <= 0 && !IsDestroyed) Explode(scene);
+            if (DefenseSystem.HullPercentage <= 0 && !IsDestroyed) Explode(scene);
 
             HasProjectileHit(gameTime, scene);
             DefenseSystem.Update(gameTime);
             SensorArray.Update(gameTime, Position, scene.GameLayer.CurrentSystem, scene, mOpponent);
             if (!IsDestroyed) WeaponSystem.Update(gameTime, this, scene.GameLayer.ProjectileManager, SensorArray.AimingShip);
-            mAi.Update(gameTime, SensorArray, this);
+            mAi.Update(gameTime, this, scene);
 
             if (!IsDestroyed) return;
             if (ExplosionSheet.IsActive("destroy")) return;
@@ -90,7 +90,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
                 if (!ContinuousCollisionDetection.HasCollide(gameTime, projectile, this, out var _)) continue;
 
                 projectile.HasCollide();
-                DefenseSystem.GetDamage(projectile.ShieldDamage, projectile.HullDamage);
+                DefenseSystem.GotHit(projectile.ShieldDamage, projectile.HullDamage);
                 hits++;
             }
             if (hits == 0) return;
@@ -119,7 +119,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
             var shakeamount = (500000 - Vector2.Distance(scene.Camera2D.Position, Position)) / 500000;
             if (shakeamount < 0) shakeamount = 0;
             scene.Camera2D.Shake((int)(shakeamount * 100));
-            ExplosionEffect.Emit(Position, MovingDirection * Velocity, scene.ParticleManager);
+            ExplosionEffect.Emit(Position, scene.ParticleManager);
 
             for (int i = 0; i < 5; i++) scene.GameLayer.ItemManager.PopItem(MovingDirection, Position, new Items.Metall());
 

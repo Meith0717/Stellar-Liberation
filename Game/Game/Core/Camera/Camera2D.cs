@@ -2,30 +2,24 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-
-/*
- *  Camera.cs
- *
- *  Copyright (c) 2023 Thierry Meiers
- *  All rights reserved.
- */
-
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
 
-namespace StellarLiberation.Game.Core.GameObjectManagement
+namespace StellarLiberation.Game.Core.Camera
 {
     /// <summary>
     /// Represents a camera used for viewing and manipulating the game world.
     /// </summary>
     public class Camera2D
     {
-        private const int CameraGlide = 4;
-        private float mMaxZoom;
-        private float mMinZoom;
+        private const int CameraGlide = 100;
+        public Vector2 Position { get; private set; }
+        public float MaxZoom { get; private set; }
+        public float MinZoom { get; private set; }
+
         private bool mAllowMovingWithMouse;
 
         /// <summary>
@@ -33,10 +27,6 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
         /// </summary>
         public float Zoom { get; private set; }
 
-        /// <summary>
-        /// Current position of the camera.
-        /// </summary>
-        public Vector2 Position { get; private set; }
         private Vector2 mLastPosition;
 
         /// <summary>
@@ -52,19 +42,19 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
         private Vector2 mTargetPosition;
         private float mTargetZoom;
         private bool mZoomAnimation;
-        private bool mMoveAnimation;
         private Vector2 mLastScreenMousePosition;
 
         private bool mShake;
         private float mShakeAmount;
 
+
         public Camera2D(float minZoom, float maxZoom, bool allowMovingWithMouse)
         {
             Position = Vector2.Zero;
-            mMaxZoom = maxZoom;
-            mMinZoom = minZoom;
+            MaxZoom = maxZoom;
+            MinZoom = minZoom;
             mAllowMovingWithMouse = allowMovingWithMouse;
-            Zoom = mMaxZoom;
+            Zoom = MaxZoom;
         }
 
         public void Shake(int amount)
@@ -73,16 +63,14 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
             mShakeAmount += amount;
         }
 
-        private void MovingAnimation()
+        private void MovingAnimation(GameTime gameTime)
         {
-            mTargetPosition = Vector2.Distance(Position, mTargetPosition) < 1 ? Position : mTargetPosition;
+            mTargetPosition = Vector2.Distance(Position, mTargetPosition) < 10 ? Position : mTargetPosition;
             if (Position != mTargetPosition)
             {
-                mMoveAnimation = true;
-                Position += (mTargetPosition - Position) / CameraGlide; ;
+                Position += (mTargetPosition - Position) / CameraGlide * gameTime.ElapsedGameTime.Milliseconds;
                 return;
             }
-            mMoveAnimation = false;
         }
 
         private void ZoomAnimation()
@@ -98,7 +86,7 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
         private void MoveCameraByMouse(InputState inputState, Vector2 screenMousePosition, Matrix ViewTransformation)
         {
             MovedByUser = false;
-            if (inputState.HasMouseAction(MouseActionType.LeftClickHold))
+            if (inputState.HasAction(ActionType.LeftClickHold))
             {
                 if (Vector2.Distance(mLastScreenMousePosition, screenMousePosition) > 1)
                 {
@@ -114,13 +102,13 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
         private void AdjustZoomByMouse(GameTime gameTime, InputState inputState)
         {
             var zoom = 0f;
-            if (inputState.HasAction(ActionType.CameraZoomIn) && Zoom < mMaxZoom)
+            if (inputState.HasAction(ActionType.CameraZoomIn) && Zoom < MaxZoom)
             {
-                zoom += 5f * inputState.mGamePadValues.mRightThumbSticks.Y == 0 ? 10 : inputState.mGamePadValues.mRightThumbSticks.Y;
+                zoom += 5f;
             }
-            if (inputState.HasAction(ActionType.CameraZoomOut) && Zoom > mMinZoom)
+            if (inputState.HasAction(ActionType.CameraZoomOut) && Zoom > MinZoom)
             {
-                zoom += 5f * inputState.mGamePadValues.mRightThumbSticks.Y == 0 ? -10 : inputState.mGamePadValues.mRightThumbSticks.Y;
+                zoom -= 5f;
             }
 
             if (zoom == 0) return;
@@ -145,13 +133,12 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
         public void MoveToTarget(Vector2 position)
         {
             if (MovedByUser) return;
-            mMoveAnimation = true;
             mTargetPosition = position;
         }
 
         public void SetPosition(Vector2 position)
         {
-            if (MovedByUser || mMoveAnimation) return;
+            if (MovedByUser) return;
             Position = mTargetPosition = position;
         }
 
@@ -166,7 +153,7 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
             Movement = Vector2.Zero;
             AdjustZoomByMouse(gameTime, inputState);
             if (mAllowMovingWithMouse) MoveCameraByMouse(inputState, screenMousePosition, ViewTransformation);
-            MovingAnimation();
+            MovingAnimation(gameTime);
             ZoomAnimation();
             Movement = Position - mLastPosition;
             mLastPosition = Position;

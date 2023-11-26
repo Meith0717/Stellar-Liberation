@@ -4,6 +4,7 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Core.GameEngine.Content_Management;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using System;
 
@@ -11,14 +12,15 @@ namespace StellarLiberation.Game.Core.UserInterface
 {
     public enum TextAllign { W, E, Center }
 
-    internal class UiButton : UiElement
+    public class UiButton : UiElement
     {
+        public bool IsDisabled {get; private set; }
         public bool IsHover;
+
         public Action OnClickAction;
         protected string mSpriteId;
         private string mText;
         private float mTextScale;
-        private bool mIsDisabled;
         public TextAllign TextAllign = TextAllign.W;
         private Vector2 TextPosition;
 
@@ -41,8 +43,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Update(InputState inputState, Rectangle root) 
         {
-            mIsDisabled = OnClickAction is null;
-
+            IsDisabled = OnClickAction is null;
             var stringDim = TextureManager.Instance.GetFont("button").MeasureString(mText);
             switch (TextAllign)
             {
@@ -56,10 +57,7 @@ namespace StellarLiberation.Game.Core.UserInterface
                     TextPosition = new Vector2(Frame.Center.X - (stringDim.X / 2), Frame.Location.Y + 10);
                     break;
             }
-
-            if (mIsDisabled) return;
-            IsHover = Frame.Contains(inputState.mMousePosition);
-            if (IsHover && OnClickAction is not null) inputState.DoMouseAction(MouseActionType.LeftClickReleased, OnClickAction);
+            if (IsHover) inputState.DoAction(ActionType.Select, OnClickAction);
         }
     }
 }

@@ -10,14 +10,14 @@ using System.Linq;
 
 namespace StellarLiberation.Game.Core.InputManagement.Peripheral
 {
-    public class KeyboardManager
+    public class KeyboardListener
     {
         private readonly Dictionary<int, ActionType> mActionOnMultiplePressed;
         private readonly Dictionary<Keys, ActionType> mActionOnPressed, mActionOnHold;
         private readonly Dictionary<Keys, KeyEventType> mKeysKeyEventTypes;
         private Keys[] mCurrentKeysPressed, mPreviousKeysPressed;
 
-        public KeyboardManager()
+        public KeyboardListener()
         {
             mActionOnMultiplePressed = new()
             {
@@ -46,6 +46,8 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
                 { Keys.Space, ActionType.FireInitialWeapon },
                 { Keys.W, ActionType.Accelerate },                
                 { Keys.S, ActionType.Break },
+                { Keys.Q, ActionType.CameraZoomIn },
+                { Keys.E, ActionType.CameraZoomOut }
             };
             mKeysKeyEventTypes = new();
         }
@@ -64,7 +66,8 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
 
         private void UpdateKeysKeyEventTypes()
         {
-            mCurrentKeysPressed = Keyboard.GetState().GetPressedKeys();
+            var keyboardState = Keyboard.GetState();
+            mCurrentKeysPressed = keyboardState.GetPressedKeys();
 
             // Get KeyEventTypes (down or pressed) for keys.
             foreach (var key in mCurrentKeysPressed)
@@ -82,10 +85,8 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
             }
         }
 
-        public List<ActionType> GetActions()
+        public void Listener(ref List<ActionType> actions)
         {
-            List<ActionType> actions = new();
-
             mPreviousKeysPressed = mCurrentKeysPressed;
             mKeysKeyEventTypes.Clear();
 
@@ -109,7 +110,6 @@ namespace StellarLiberation.Game.Core.InputManagement.Peripheral
                 if (!mActionOnHold.TryGetValue(key, out var actionHold)) continue;
                 if (mKeysKeyEventTypes[key] == KeyEventType.OnButtonPressed) actions.Add(actionHold);
             }
-            return actions;
         }
 
     }
