@@ -19,11 +19,17 @@ jobs:
 
     - name: Build project
       run: dotnet build --configuration Release Game/StellarLiberation.csproj
+
+    - name: Zip release
+      uses: vimtor/action-zip@v1.1
+      with:
+        files: ./Game/bin/Release/net6.0/*
+        dest: StellarLiberation.zip
       
     - name: Create release
       id: create_release
       uses: softprops/action-gh-release@v1
       with:
-        name: StellarLiberationArtifact
-        path: ./Game/bin/Release/net6.0/
+        name: StellarLiberation
+        files: StellarLiberation.zip
         tag_name: Test
