@@ -39,12 +39,12 @@ jobs:
         with:
           name: StellarLiberationArtifact
 
-      - name: List files
-        run: ls -l
+      - name: Zip artifact
+        run: Compress-Archive -Path ./* -DestinationPath StellarLiberationArtifact.zip
 
       - name: Create release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          files: ./Game/bin/Release/net6.0/*
+          files: StellarLiberation.zip
           tag_name: Test
