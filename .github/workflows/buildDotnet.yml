@@ -17,5 +17,10 @@ jobs:
       with:
         dotnet-version: '6.0.x'
 
-    - name: Build Project
+    - name: Build project
       run: dotnet build --configuration Release Game/StellarLiberation.csproj
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: StellarLiberation
