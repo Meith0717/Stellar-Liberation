@@ -15,6 +15,7 @@ using System.Linq;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
+    [Collidable]
     public class Asteroid : GameObject2D
     {
         public Asteroid(Vector2 position) 

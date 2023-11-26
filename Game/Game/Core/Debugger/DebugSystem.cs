@@ -12,6 +12,8 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
+using MathNet.Numerics.Distributions;
+using StellarLiberation.Game.Core.Utilitys;
 
 namespace StellarLiberation.Game.Core.Debugger
 {
@@ -131,10 +133,10 @@ namespace StellarLiberation.Game.Core.Debugger
                 scene.Camera2D.Zoom);
         }
 
-        public void DrawPath(Vector2? target, SpaceShip spaceShip, Scene scene)
+        public void DrawMovingDir(Vector2? target, SpaceShip spaceShip, Scene scene)
         {
             if (target is null | !ShowPaths) return;
-            TextureManager.Instance.DrawAdaptiveLine(spaceShip.Position, (Vector2)target, Color.LightBlue, 1, spaceShip.TextureDepth -1, scene.Camera2D.Zoom);
+            TextureManager.Instance.DrawAdaptiveLine(spaceShip.Position, Geometry.GetPointInDirection(spaceShip.Position, spaceShip.MovingDirection, 500), Color.LightBlue, 2, spaceShip.TextureDepth -1, scene.Camera2D.Zoom);
         }
 
         public void DrawSensorRadius(Vector2 center, float radius, Scene scene)

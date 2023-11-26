@@ -39,7 +39,7 @@ namespace StellarLiberation.Game.Layers
             MapFactory.Generate(out PlanetSystems);
 
             // Play bg music
-            SoundManager.Instance.PlaySound(MusicRegistries.bgMusicGame, 1.2f, false, true, true);
+            SoundManager.Instance.PlaySound(MusicRegistries.bgMusicGame, 0.8f, false, true, true);
 
             // Add Main Scene
             CurrentSystem = PlanetSystems.First();

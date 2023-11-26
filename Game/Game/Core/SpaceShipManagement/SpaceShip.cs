@@ -27,6 +27,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
     public enum Factions { Enemys, Allies }
 
     [Serializable]
+    [Collidable]
     public abstract class SpaceShip : GameObject2D
     {
         [JsonIgnore] protected SpriteSheet ExplosionSheet;
@@ -62,6 +63,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
             if (!HyperDrive.IsActive) SublightEngine.Update(gameTime, this);
 
             MovingDirection = Geometry.CalculateDirectionVector(Rotation);
+            ContinuousCollisionDetection.ManageColisions(gameTime, this, scene.SpatialHashing);
             GameObject2DMover.Move(gameTime, this, scene);
             base.Update(gameTime, inputState, scene);
 

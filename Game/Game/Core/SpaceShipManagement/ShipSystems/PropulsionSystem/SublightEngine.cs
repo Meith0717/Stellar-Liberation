@@ -117,6 +117,6 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.Propulsion
             }
         }
 
-        public void Draw(Debugger.DebugSystem debugSystem, SpaceShip spaceShip, Scene scene) => debugSystem.DrawPath(mVector2Target, spaceShip, scene);
+        public void Draw(Debugger.DebugSystem debugSystem, SpaceShip spaceShip, Scene scene) => debugSystem.DrawMovingDir(mVector2Target, spaceShip, scene);
     }
 }

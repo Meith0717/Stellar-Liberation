@@ -8,6 +8,7 @@ using StellarLiberation.Core.GameEngine.Position_Management;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
 using StellarLiberation.Game.Core.Utilitys;
+using System;
 
 namespace StellarLiberation.Game.Core.Collision_Detection
 {
@@ -49,11 +50,15 @@ namespace StellarLiberation.Game.Core.Collision_Detection
             return false;
         }
 
-        public static void ManageColisions(GameTime gameTime, SpatialHashing<GameObject2D> spatialHashing, GameObject2D gameObject2D)
+        public static void ManageColisions(GameTime gameTime, GameObject2D gameObject2D, SpatialHashing<GameObject2D> spatialHashing)
         {
             var objts = spatialHashing.GetObjectsInRadius<GameObject2D>(gameObject2D.Position, gameObject2D.BoundedBox.Diameter);
+            objts.Remove(gameObject2D);
             foreach (var obj in objts)
             {
+                Type type = obj.GetType();
+                CollidableAttribute collidableAttribute = (CollidableAttribute)Attribute.GetCustomAttribute(type, typeof(CollidableAttribute));
+                if (collidableAttribute is null) continue;
                 if (HasCollide(gameTime, gameObject2D, obj, out var _))
                 {
                     var rotationToObj = Geometry.AngleBetweenVectors(gameObject2D.Position, obj.Position);

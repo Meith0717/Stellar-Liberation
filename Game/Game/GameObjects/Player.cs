@@ -3,6 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using StellarLiberation.Game.Core.Collision_Detection;
 using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.ItemManagement;
