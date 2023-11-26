@@ -23,7 +23,7 @@ jobs:
     - name: Zip release
       uses: vimtor/action-zip@v1.1
       with:
-        files: ./Game/bin/Release/net6.0/*
+        files: ./Game/bin/Release/net6.0/
         dest: StellarLiberation.zip
       
     - name: Create release
