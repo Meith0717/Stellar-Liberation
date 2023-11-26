@@ -9,8 +9,8 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+    - name: Set up Git repository
+      uses: actions/checkout@v3
 
     - name: Set up .NET
       uses: actions/setup-dotnet@v3
@@ -20,7 +20,12 @@ jobs:
     - name: Build project
       run: dotnet build --configuration Release Game/StellarLiberation.csproj
 
+    - name: Debug
+      run: |
+        ls -l
+
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
-        name: StellarLiberation
+        name: stellar-liberation-artifact
+        path: ./Game/bin/Release/net6.0/
