@@ -41,3 +41,10 @@ jobs:
 
       - name: List files
         run: ls -l
+
+      - name: Create release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./Game/bin/Release/net6.0/*
+          tag_name: Test
