@@ -14,8 +14,10 @@ jobs:
 
     - name: Check commit message for trigger word
       run: |
-        if [[ $(git log -1 --pretty=%B) == *(build)* ]]; then
-          echo "Commit message contains 'build', triggering the build."
+        COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+        if [[ $COMMIT_MESSAGE == *"build"* ]] 
+        then
+            echo "Commit message contains 'build', triggering the build."
         else
           echo "Commit message does not contain 'build', skipping the build."
           exit 0
