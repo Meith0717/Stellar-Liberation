@@ -4,12 +4,9 @@
 
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
-using rache_der_reti.Core.Animation;
 using StellarLiberation.Core.GameEngine.Content_Management;
 using StellarLiberation.Game.Core.AI;
-using StellarLiberation.Game.Core.Animations;
 using StellarLiberation.Game.Core.Collision_Detection;
-using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
@@ -108,7 +105,6 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
 
         public void Explode(Scene scene)
         {
-            //ExplosionSheet.Play("destroy");
             IsDestroyed = true;
             Velocity = 0;
 

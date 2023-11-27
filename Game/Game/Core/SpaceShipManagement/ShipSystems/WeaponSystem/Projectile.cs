@@ -3,9 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using rache_der_reti.Core.Animation;
 using StellarLiberation.Core.GameEngine.Content_Management;
-using StellarLiberation.Game.Core.Animations;
 using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.InputManagement;
@@ -21,7 +19,6 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyst
         public readonly int ShieldDamage;
         public readonly int HullDamage;
 
-        private readonly SpriteSheet mExplosionSheet;
         private bool mHit;
 
         public Projectile(Vector2 startPosition, float rotation, Color color, int shieldDamage, int hullDamage, SpaceShip origine)
@@ -35,21 +32,17 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyst
             Origine = origine;
             Velocity = 20;
             DisposeTime = 5000;
-            mExplosionSheet = new(TextureRegistries.explosion, 64, 3, TextureScale * 2);
-            mExplosionSheet.Animate("hit", new(45, Animation.GetRowList(0, 64), false));
         }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
             GameObject2DMover.Move(gameTime, this, scene);
             base.Update(gameTime, inputState, scene);
-            mExplosionSheet.Update(gameTime, Position);
         }
 
         public override void Draw(Scene scene)
         {
             base.Draw(scene);
-            mExplosionSheet.Draw(TextureDepth + 1);
             if (!mHit) TextureManager.Instance.DrawGameObject(this);
         }
 
@@ -58,7 +51,6 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyst
             Dispose = true;
             Velocity = 0;
             mHit = true;
-            mExplosionSheet.Play("hit");
         }
     }
 }

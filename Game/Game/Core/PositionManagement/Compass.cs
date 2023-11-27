@@ -7,7 +7,9 @@ using MonoGame.Extended;
 using StellarLiberation.Core.GameEngine.Content_Management;
 using StellarLiberation.Core.GameEngine.Position_Management;
 using StellarLiberation.Game.Core.GameObjectManagement;
+using StellarLiberation.Game.Core.ParticleSystem;
 using StellarLiberation.Game.Core.SpaceShipManagement;
+using StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
 using StellarLiberation.Game.Core.Utilitys;
 using System;
 using System.Collections.Generic;
@@ -26,6 +28,7 @@ namespace StellarLiberation.Game.Core.PositionManagement
             foreach (var obj in objects)
             {
                 if (viewFrustumFilter.CircleOnWorldView(obj.BoundedBox)) continue;
+                if (obj is Projectile || obj is Particle) continue;
                 var rectangle = viewFrustumFilter.ViewFrustum;
                 rectangle.Inflate(-25, -25);
                 var pos = Geometry.GetPointOnCircle(mCompass, Geometry.AngleBetweenVectors(position, obj.Position));

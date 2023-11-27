@@ -9,7 +9,6 @@
  *  All rights reserved.
  */
 
-using StellarLiberation.Game.Core.Animations;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -176,22 +175,6 @@ namespace StellarLiberation.Core.GameEngine.Content_Management
         public void DrawAdaptiveLine(Vector2 start, Vector2 end, Color color, float thickness, int depth, float zoom)
         {
             SpriteBatch.DrawLine(start, end, color, thickness / zoom, GetDepth(depth));
-        }
-
-        public void DrawSpriteSheetFrame(SpriteSheet spriteSheet, Vector2 position, Point spritePosition, int depth)
-        {
-            var row = spritePosition.X;
-            var collumn = spritePosition.Y;
-
-            if (row > spriteSheet.CountWidth - 1 || row < 0) throw new Exception();
-            if (collumn > spriteSheet.CountHeight - 1 || collumn < 0) throw new Exception();
-
-            var texture = spriteSheet.Texture;
-            var sheet = new RectangleF(position.X, position.Y, spriteSheet.SpriteWidth * spriteSheet.Scale, spriteSheet.SpriteHeight * spriteSheet.Scale);
-            var frame = new RectangleF(row * spriteSheet.SpriteWidth, collumn * spriteSheet.SpriteHeight, spriteSheet.SpriteWidth, spriteSheet.SpriteHeight);
-            var origin = new Vector2(spriteSheet.SpriteWidth / 2, spriteSheet.SpriteHeight / 2);
-
-            SpriteBatch.Draw(texture, sheet.ToRectangle(), frame.ToRectangle(), Color.White, 0, origin, SpriteEffects.None, GetDepth(depth));
         }
     }
 }
