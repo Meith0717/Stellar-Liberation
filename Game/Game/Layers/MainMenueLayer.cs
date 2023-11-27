@@ -20,7 +20,7 @@ namespace StellarLiberation.Game.Layers
 
         public MainMenueLayer() : base(false)
         {
-            SoundManager.Instance.PlaySound(MusicRegistries.bgMusicMenue, 1, isLooped:true, isBackroungMusic: true);
+            MusicManager.Instance.PlayMusic(MusicRegistries.bgMusicMenue);
 
             mButtonHoverTracer = new();
             mFrame = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
@@ -49,7 +49,11 @@ namespace StellarLiberation.Game.Layers
             mFrame.Initialize(mGraphicsDevice.Viewport.Bounds);
         }
 
-        public override void Destroy() { }
+        public override void Destroy() 
+        { 
+            SoundEffectManager.Instance.StopAllSounds();
+            MusicManager.Instance.StopAllMusics();
+        }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -72,8 +76,8 @@ namespace StellarLiberation.Game.Layers
 
         private void StartGame()
         {
+            MusicManager.Instance.StopAllMusics();
             mLayerManager.AddLayer(new GameLayer());
-            SoundManager.Instance.StopBackgroundMusic(MusicRegistries.bgMusicMenue);
         }
     }
 }

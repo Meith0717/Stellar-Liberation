@@ -39,6 +39,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
             var LeftPressAction = () => {
+                scene.GameLayer.HudLayer.Hide = false;
                 scene.GameLayer.PopScene();
                 scene.GameLayer.Player.HyperDrive.SetTarget(this);
             };
@@ -54,15 +55,6 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             TextureManager.Instance.DrawGameObject(this);
             TextureManager.Instance.Draw(TextureRegistries.starLightAlpha, Position, TextureOffset, TextureScale * 2f, Rotation, 0, TextureColor);
         }
-
-        private Color GetColor() => Danger switch
-        {
-            Danger.None => Color.White,
-            Danger.Moderate => Color.Yellow,
-            Danger.Medium => Color.Orange,
-            Danger.High => Color.Red,
-            _ => throw new NotImplementedException()
-        };
 
         //--------------------------------------------------------------------------------------//
 

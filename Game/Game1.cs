@@ -61,9 +61,8 @@ namespace StellarLiberation
             TextureManager.Instance.LoadFontRegistries(Content, Registries.GetRegistryList<FontRegistries>());
 
             // setup sound manager
-            SoundManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<SoundRegistries>());
-            SoundManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<MusicRegistries>());
-            SoundManager.Instance.CreateSoundEffectInstances();
+            SoundEffectManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<SoundEffectRegistries>());
+            MusicManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<MusicRegistries>());
         }
 
         protected override void Update(GameTime gameTime)

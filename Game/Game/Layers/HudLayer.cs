@@ -4,8 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using StellarLiberation.Core.GameEngine.Position_Management;
-using StellarLiberation.Game.Core.Camera;
 using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
@@ -17,6 +15,8 @@ namespace StellarLiberation.Game.Layers
 {
     public class HudLayer : Layer
     {
+        public bool Hide;
+
         private Scene mScene;
         private UiLayer mUiLayer;
 
@@ -26,7 +26,6 @@ namespace StellarLiberation.Game.Layers
 
         private UiText mCargoHold;
         private Compass mCompass = new();
-
 
         public HudLayer(Scene scene) : base(true) 
         {
@@ -56,6 +55,7 @@ namespace StellarLiberation.Game.Layers
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            if (Hide) return;
             spriteBatch.Begin();
             mUiLayer.Draw();
             mCompass.Draw();

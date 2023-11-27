@@ -4,7 +4,7 @@
 
 namespace StellarLiberation.Game.Core.ContentManagement.ContentRegistry
 {
-    public class SoundRegistries : Registries
+    public class SoundEffectRegistries : Registries
     {
         private readonly static string soundEffects = @"sounds\";
         public readonly static Registry torpedoHit = new(soundEffects, "torpedoHit");

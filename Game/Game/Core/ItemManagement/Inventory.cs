@@ -42,7 +42,7 @@ namespace StellarLiberation.Game.Core.ItemManagement
 
         private void Collect(Item item, Scene scene)
         {
-            SoundManager.Instance.PlaySound(SoundRegistries.collect, 1f);
+            SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.collect);
 
             // Add Item in Inventory
             if (!Items.TryGetValue(item.ItemID, out _)) Items[item.ItemID] = 0;

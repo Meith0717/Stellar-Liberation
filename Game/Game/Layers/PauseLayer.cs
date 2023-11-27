@@ -70,8 +70,8 @@ namespace StellarLiberation.Game.Layers
             mLayerManager.PopLayer(); // Pause Menue
             mLayerManager.PopLayer(); // Hud
             mLayerManager.PopLayer(); // Game
-            SoundManager.Instance.StopBackgroundMusic(MusicRegistries.bgMusicGame);
-            SoundManager.Instance.PlaySound(MusicRegistries.bgMusicMenue, 1, isLooped: true, isBackroungMusic: true);
+            MusicManager.Instance.StopAllMusics();
+            MusicManager.Instance.PlayMusic(MusicRegistries.bgMusicMenue);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.Propulsion
         public void SetTarget(PlanetSystem planetSystem)
         {
             if (mEngineCoolDownTime > mActualEngineCoolDownTime) return;
-            SoundManager.Instance.PlaySound(SoundRegistries.ChargeHyperdrive, 1);
+            SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.ChargeHyperdrive);
             IsActive = true;
             mActualChargingTime = 0;
             TargetPosition = planetSystem.Star.Position;
@@ -64,7 +64,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.Propulsion
                     if (spaceShip.Velocity > 0) spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, -mMaxVelocity / 5);
                     if (spaceShip.Velocity <= 0)
                     {
-                        SoundManager.Instance.PlaySound(SoundRegistries.CoolHyperdrive, 1);
+                        SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.CoolHyperdrive);
                         spaceShip.Velocity = 0;
                         mActualEngineCoolDownTime = 0;
                         IsActive = false;

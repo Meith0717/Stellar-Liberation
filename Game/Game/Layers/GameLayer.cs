@@ -33,25 +33,26 @@ namespace StellarLiberation.Game.Layers
 
         [JsonIgnore] public PlanetSystem CurrentSystem { get; set; }
         [JsonIgnore] private readonly MainGameScene mMainGameScene;
+        [JsonIgnore] public readonly HudLayer HudLayer;
 
         public GameLayer() : base()
         {
             MapFactory.Generate(out PlanetSystems);
 
-            // Play bg music
-            SoundManager.Instance.PlaySound(MusicRegistries.bgMusicGame, 0.8f, false, true, true);
+            MusicManager.Instance.PlayMusic(MusicRegistries.bgMusicGame);
 
             // Add Main Scene
             CurrentSystem = PlanetSystems.First();
             Player.Position = ExtendetRandom.NextVectorInCircle(CurrentSystem.SystemBounding);
             mMainGameScene = new(this);
+            HudLayer = new(mMainGameScene);
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
         {
             base.Initialize(game1, layerManager, graphicsDevice, serialize);
             AddScene(mMainGameScene);
-            mLayerManager.AddLayer(new HudLayer(mMainGameScene));
+            mLayerManager.AddLayer(HudLayer);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
@@ -66,7 +67,11 @@ namespace StellarLiberation.Game.Layers
             inputState.DoAction(ActionType.ESC, () => mLayerManager.AddLayer(new PauseLayer()));
         }
 
-        public override void Destroy() { }
+        public override void Destroy()
+        {
+            SoundEffectManager.Instance.StopAllSounds();
+            MusicManager.Instance.StopAllMusics();
+        }
 
         public override void OnResolutionChanged() { base.OnResolutionChanged(); }
 

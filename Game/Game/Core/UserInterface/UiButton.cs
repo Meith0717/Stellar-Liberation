@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Core.GameEngine.Content_Management;
-using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using System;
 
@@ -57,6 +56,7 @@ namespace StellarLiberation.Game.Core.UserInterface
                     TextPosition = new Vector2(Frame.Center.X - (stringDim.X / 2), Frame.Location.Y + 10);
                     break;
             }
+            IsHover = Frame.Contains(inputState.mMousePosition);
             if (IsHover) inputState.DoAction(ActionType.Select, OnClickAction);
         }
     }

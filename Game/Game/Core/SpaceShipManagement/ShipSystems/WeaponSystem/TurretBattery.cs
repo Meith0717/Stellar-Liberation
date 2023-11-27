@@ -50,7 +50,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSyst
                 hasFired = true;
             }
             
-            if (hasFired) SoundManager.Instance.PlaySound(SoundRegistries.torpedoFire, 1f);
+            if (hasFired) SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.torpedoFire);
             if (hasFired) mFireCoolDown = 0;
         }
 

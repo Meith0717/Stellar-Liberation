@@ -12,13 +12,13 @@ namespace StellarLiberation.Game.Layers.Scenes
 {
     internal class MapScene : Scene
     {
-
         private List<PlanetSystem> mPlanetSystems;
         private PlanetSystem mCurrentSystem;
 
         public MapScene(GameLayer gameLayer, List<PlanetSystem> planetSystems, PlanetSystem currentSystem)
             : base(gameLayer, 100, 1f, 3, true, .9f, .9f)
         {
+            gameLayer.HudLayer.Hide = true;
             mCurrentSystem = currentSystem;
             Camera2D.SetPosition(mCurrentSystem.Position);
             mPlanetSystems = planetSystems;
@@ -27,7 +27,7 @@ namespace StellarLiberation.Game.Layers.Scenes
 
         public override void UpdateObj(GameTime gameTime, InputState inputState)
         {
-            inputState.DoAction(ActionType.ToggleHyperMap, () => GameLayer.PopScene());
+            inputState.DoAction(ActionType.ToggleHyperMap, () => { GameLayer.HudLayer.Hide = false; GameLayer.PopScene(); }) ;
 
             foreach (var item in mPlanetSystems) item.Update(gameTime, inputState, this);
         }

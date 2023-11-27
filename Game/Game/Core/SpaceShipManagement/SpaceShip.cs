@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using StellarLiberation.Core.GameEngine.Content_Management;
 using StellarLiberation.Game.Core.AI;
 using StellarLiberation.Game.Core.Collision_Detection;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
@@ -88,7 +89,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
                 hit = true;
             }
             if (!hit) return;
-            SoundManager.Instance.PlaySound("torpedoHit", ExtendetRandom.Random.Next(5, 8) / 10f);
+            SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.torpedoHit);
         }
 
         public override void Draw(Scene scene)
