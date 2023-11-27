@@ -53,6 +53,12 @@
 /processorParam:Quality=Best
 /build:music/DeepSpace10(loop).wav
 
+#begin music/Sci-Fi 5.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:music/Sci-Fi 5.wav
+
 #begin music/ShoulderOfOrion(loop).wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -125,18 +131,6 @@
 /processorParam:TextureFormat=Color
 /build:textures/background/gameBackground.png
 
-#begin textures/background/gameBackground.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/background/gameBackground.png
-
 #begin textures/background/gameBackgroundParlax.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -148,30 +142,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/background/gameBackgroundParlax.png
-
-#begin textures/background/gameBackgroundParlax.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/background/gameBackgroundParlax.png
-
-#begin textures/background/gameBackgroundParlax2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/background/gameBackgroundParlax2.png
 
 #begin textures/background/gameBackgroundParlax2.png
 /importer:TextureImporter
@@ -208,18 +178,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/background/gameBackgroundParlax4.png
-
-#begin textures/background/mapBackground.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/background/mapBackground.png
 
 #begin textures/background/mapBackground.png
 /importer:TextureImporter

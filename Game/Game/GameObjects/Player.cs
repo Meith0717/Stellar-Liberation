@@ -19,9 +19,9 @@ namespace StellarLiberation.Game.GameObjects
 
         public Inventory Inventory;
 
-        public Player() : base(Vector2.Zero, TextureRegistries.player, 1, new(20000), new(10f, 0.01f), new(1000, new(0, 251, 255), 2, 2), new(100, 1000, 1), Factions.Enemys)
+        public Player() : base(Vector2.Zero, TextureRegistries.player, 1, new(20000), new(10f, 0.01f), new(1000, Color.LightBlue, 2, 2), new(100, 1000, 1), Factions.Enemys)
         {
-            Inventory = new(20, 10000);
+            Inventory = new(500, 10000);
 
             WeaponSystem.PlaceTurret(new(new(110, 35), 1, TextureDepth + 1));
             WeaponSystem.PlaceTurret(new(new(110, -35), 1, TextureDepth + 1));

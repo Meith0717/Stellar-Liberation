@@ -30,7 +30,6 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
     [Collidable]
     public abstract class SpaceShip : GameObject2D
     {
-        [JsonIgnore] protected SpriteSheet ExplosionSheet;
         [JsonIgnore] protected UtilityAi mAi;
         [JsonProperty] protected bool IsDestroyed { get; private set; }
         [JsonIgnore] public SensorArray SensorArray { get; private set; }
@@ -51,14 +50,11 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
             DefenseSystem = defenseSystem;
             mOpponent = opponent;
 
-            ExplosionSheet = new(TextureRegistries.explosion, 64, 3, TextureScale * 10);
-            ExplosionSheet.Animate("destroy", new(60, Animation.GetRowList(1, 64), false));
         }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
 
-            ExplosionSheet.Update(gameTime, Position);
             HyperDrive.Update(gameTime, this);
             if (!HyperDrive.IsActive) SublightEngine.Update(gameTime, this);
 
@@ -76,7 +72,6 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
             mAi.Update(gameTime, this, scene);
 
             if (!IsDestroyed) return;
-            if (ExplosionSheet.IsActive("destroy")) return;
             Dispose = true;
         }
 
@@ -85,12 +80,11 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
             var projectileInRange = scene.SpatialHashing.GetObjectsInRadius<Projectile>(Position, (int)BoundedBox.Radius);
             if (!projectileInRange.Any()) return;
             var hit = false;
-            Vector2? position = null;
             foreach (var projectile in projectileInRange)
             {
                 if (projectile.Origine is Enemy && this is Enemy) continue;
                 if (projectile.Origine == this) return;
-                if (!ContinuousCollisionDetection.HasCollide(gameTime, projectile, this, out position)) continue;
+                if (!ContinuousCollisionDetection.HasCollide(gameTime, projectile, this, out var position)) continue;
 
                 projectile.HasCollide();
                 DefenseSystem.GotHit((Vector2)position, projectile.ShieldDamage, projectile.HullDamage, scene);
@@ -103,7 +97,6 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
         public override void Draw(Scene scene)
         {
             base.Draw(scene);
-            ExplosionSheet.Draw(TextureDepth + 1);
 
             if (IsDestroyed) return;
             scene.GameLayer.DebugSystem.DrawSensorRadius(Position, SensorArray.ShortRangeScanDistance, scene);
@@ -115,7 +108,7 @@ namespace StellarLiberation.Game.Core.SpaceShipManagement
 
         public void Explode(Scene scene)
         {
-            ExplosionSheet.Play("destroy");
+            //ExplosionSheet.Play("destroy");
             IsDestroyed = true;
             Velocity = 0;
 
