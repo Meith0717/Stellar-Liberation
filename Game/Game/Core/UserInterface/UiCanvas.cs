@@ -41,20 +41,6 @@ namespace StellarLiberation.Game.Core.UserInterface
 
             var aspectRatio = (float)width / height;
 
-            var SpaceBottom = root.Bottom - (height + y);
-            if (SpaceBottom < VSpace)
-            {
-                height = (root.Bottom - root.Top) - VSpace * 2;
-                width = (int)(height * aspectRatio);
-            }
-
-            var SpaceRight = root.Right - (width + x);
-            if (SpaceRight < HSpace)
-            {
-                width = (root.Right - root.Left) - HSpace * 2;
-                height = (int)(width / aspectRatio);
-            }
-
             switch (FillScale)
             {
                 case FillScale.X:
@@ -64,6 +50,7 @@ namespace StellarLiberation.Game.Core.UserInterface
                     height = root.Height; width = (int)(height * aspectRatio);
                     break;
             }
+
 
             switch (Anchor)
             {
@@ -101,6 +88,18 @@ namespace StellarLiberation.Game.Core.UserInterface
 
             var SpaceTop = y - root.Top;
             if (SpaceTop < VSpace) y = root.Y + VSpace;
+
+            var SpaceBottom = root.Bottom - (height + y);
+            if (SpaceBottom < VSpace)
+            {
+                height = root.Bottom - VSpace * 2;
+            }
+
+            var SpaceRight = root.Right - (width + x);
+            if (SpaceRight < HSpace)
+            {
+                width = root.Right - HSpace * 2;
+            }
 
             mCanvas = new Rectangle(x, y, width, height);
         }

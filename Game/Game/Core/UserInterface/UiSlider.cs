@@ -15,33 +15,31 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         private float mSliderLength;
         private float mSliderValue;
+        private readonly string mText;
+        private Vector2 mTextDim;
 
         private bool mWasPressed;
 
         public float Value => mSliderValue;
 
-        public UiSlider(float val) 
+        public UiSlider(string text, float val) 
         {            
             mSliderValue = val;
-        }
-
-        public UiSlider(float val, int width, int x, int y)
-        {
-            mSliderValue = val;
-            mCanvas.Width = width; mCanvas.Height = 50;
-            mCanvas.X = x; mCanvas.Y = y;
+            mText = text;
+            mCanvas.Height = 50;
+            mTextDim = TextureManager.Instance.GetFont(FontRegistries.button).MeasureString(mText);
         }
 
         public override void Initialize(Rectangle root)
         {
             mCanvas.UpdateFrame(root);
-            mSliderLength = MathF.Abs(mCanvas.Bounds.Left - mCanvas.Bounds.Right);
-            mSliderDotPosition = new(mCanvas.Bounds.Left + mSliderLength * mSliderValue, mCanvas.Center.Y);
+            mSliderLength = MathF.Abs((mCanvas.Bounds.Left + mTextDim.X) - mCanvas.Bounds.Right);
+            mSliderDotPosition = sliderPosition;
         }
 
         public override void Update(InputState inputState, Rectangle root)
         {
-            if (!inputState.HasAction(ActionType.LeftClickHold))
+            if (!inputState.Actions.Contains(ActionType.LeftClickHold))
             {
                 mWasPressed = false;
                 return;
@@ -52,12 +50,12 @@ namespace StellarLiberation.Game.Core.UserInterface
             mWasPressed = true;
 
             mSliderValue = GetValue(inputState.mMousePosition);
-            mSliderDotPosition = new(mCanvas.Bounds.Left + mSliderLength * mSliderValue, mCanvas.Center.Y);
+            mSliderDotPosition = sliderPosition;
         }
 
         private float GetValue(Vector2 mousePos)
         {
-            var relMouselength = mousePos.X - mCanvas.Bounds.Left;
+            var relMouselength = mousePos.X - (mCanvas.Bounds.Left + mTextDim.X);
             var tmp = relMouselength / mSliderLength;
             if (tmp > 1) return 1;
             if (tmp < 0) return 0;
@@ -68,16 +66,21 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Draw()
         {
-            var start = new Vector2(mCanvas.Bounds.Left, mCanvas.Center.Y);
-            TextureManager.Instance.DrawLine(start, mSliderLength, Color.White, 5, 1);
+            var textPos = new Vector2(mCanvas.Bounds.Left, mCanvas.Center.Y - (mTextDim.Y / 2) + 3);
+            var sliderPos = new Vector2(mCanvas.Bounds.Left + mTextDim.X, mCanvas.Center.Y);
+
+            TextureManager.Instance.DrawString(FontRegistries.button, textPos, mText, 1, Color.White);
+            TextureManager.Instance.DrawLine(sliderPos, mSliderLength, Color.White, 6, 1);
             TextureManager.Instance.Draw(TextureRegistries.sliderDot, mSliderDotPosition - new Vector2(10, 10), 20, 20);
         }
 
         public override void OnResolutionChanged(Rectangle root)
         {
             mCanvas.UpdateFrame(root);
-            mSliderLength = MathF.Abs(mCanvas.Bounds.Left - mCanvas.Bounds.Right);
-            mSliderDotPosition = new(mCanvas.Bounds.Left + mSliderLength * mSliderValue, mCanvas.Center.Y);
+            mSliderLength = MathF.Abs((mCanvas.Bounds.Left + mTextDim.X) - mCanvas.Bounds.Right);
+            mSliderDotPosition = sliderPosition;
         }
+
+        private Vector2 sliderPosition => new((mCanvas.Bounds.Left + mTextDim.X) + mSliderLength * mSliderValue, mCanvas.Center.Y);
     }
 }
