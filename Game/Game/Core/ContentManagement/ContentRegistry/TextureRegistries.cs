@@ -123,6 +123,9 @@ namespace StellarLiberation.Game.Core.ContentManagement.ContentRegistry
         private readonly static string animations = @"textures\animations\";
         public readonly static Registry explosion = new(animations, "explosion");
 
+        private readonly static string ui = @"textures\UserInterface";
+        public readonly static Registry sliderDot = new(ui, "SliderDot");
+
         private readonly static string bar = @"textures\UserInterface\bar";
         public readonly static Registry barHorizontalLeft = new(bar, "barHorizontalLeft");
         public readonly static Registry barHorizontalMid = new(bar, "barHorizontalMid");
@@ -130,7 +133,6 @@ namespace StellarLiberation.Game.Core.ContentManagement.ContentRegistry
         public readonly static Registry barHorizontalShadowLeft = new(bar, "barHorizontalShadowLeft");
         public readonly static Registry barHorizontalShadowMid = new(bar, "barHorizontalShadowMid");
         public readonly static Registry barHorizontalShadowRight = new(bar, "barHorizontalShadowRight");
-
         public readonly static Registry barVerticalBottom = new(bar, "barVerticalBottom");
         public readonly static Registry barVerticalMid = new(bar, "barVerticalMid");
         public readonly static Registry barVerticalTop = new(bar, "barVerticalTop");

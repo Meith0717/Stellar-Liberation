@@ -10,6 +10,7 @@ using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.Persistance;
 using StellarLiberation.Game.Core.PositionManagement;
 using StellarLiberation.Game.Core.UserInterface;
+using StellarLiberation.Game.Core.UserInterface.UiBar;
 
 namespace StellarLiberation.Game.Layers
 {

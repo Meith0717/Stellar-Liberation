@@ -29,14 +29,20 @@ namespace StellarLiberation.Game.Core.UserInterface
             mText = text;
             mSpriteId = SpriteId;
             var texture = TextureManager.Instance.GetTexture(mSpriteId);
-            Width = texture.Width;
-            Height = texture.Height;
+            mCanvas.Width = texture.Width;
+            mCanvas.Height = texture.Height;
+        }
+
+
+        public override void Initialize(Rectangle root)
+        {
+            mCanvas.UpdateFrame(root);
         }
 
         public override void Draw() 
         {
             var color = IsHover ? Color.MonoGameOrange : Color.White;
-            TextureManager.Instance.Draw(mSpriteId, Frame.Location.ToVector2(), Frame.Width, Frame.Height, color);
+            TextureManager.Instance.Draw(mSpriteId, mCanvas.Position, mCanvas.Bounds.Width, mCanvas.Bounds.Height, color);
             TextureManager.Instance.DrawString("button", TextPosition, mText, mTextScale, color);
         } 
 
@@ -47,17 +53,24 @@ namespace StellarLiberation.Game.Core.UserInterface
             switch (TextAllign)
             {
                 case TextAllign.W:
-                    TextPosition = new Vector2(Frame.X + 5, Frame.Location.Y + 10);
+                    TextPosition = new Vector2(mCanvas.Bounds.Left + 5, mCanvas.Position.Y + 10);
                     break;
                 case TextAllign.E:
-                    TextPosition = new Vector2(Frame.Right - stringDim.X - 5, Frame.Location.Y + 10);
+                    TextPosition = new Vector2(mCanvas.Bounds.Right - stringDim.X - 5, mCanvas.Position.Y + 10);
                     break;
                 case TextAllign.Center:
-                    TextPosition = new Vector2(Frame.Center.X - (stringDim.X / 2), Frame.Location.Y + 10);
+                    TextPosition = new Vector2(mCanvas.Center.X - (stringDim.X / 2), mCanvas.Position.Y + 10);
                     break;
             }
-            IsHover = Frame.Contains(inputState.mMousePosition);
+            IsHover = mCanvas.Contains(inputState.mMousePosition);
             if (IsHover) inputState.DoAction(ActionType.Select, OnClickAction);
         }
+
+        public override void OnResolutionChanged(Rectangle root)
+        {
+            mCanvas.UpdateFrame(root);
+        }
+
+        public bool Contains(Vector2 position) => mCanvas.Contains(position);
     }
 }

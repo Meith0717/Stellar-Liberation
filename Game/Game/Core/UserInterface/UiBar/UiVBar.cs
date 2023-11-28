@@ -8,7 +8,7 @@ using StellarLiberation.Core.GameEngine.Content_Management;
 using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 
-namespace StellarLiberation.Game.Core.UserInterface
+namespace StellarLiberation.Game.Core.UserInterface.UiBar
 {
     internal class UiVBar : UiElement
     {
@@ -38,17 +38,17 @@ namespace StellarLiberation.Game.Core.UserInterface
         {
             var ratio = 26 / 6f;
 
-            mTextureFrame = new(Frame.Location.X, Frame.Location.Y, Frame.Width, Frame.Width);
+            mTextureFrame = new(mCanvas.Position.X, mCanvas.Position.Y, mCanvas.Bounds.Width, mCanvas.Bounds.Width);
 
-            var sideFrameWidth = Frame.Width;
-            var sideFrameHeight = (int)(Frame.Width / ratio);
+            var sideFrameWidth = mCanvas.Bounds.Width;
+            var sideFrameHeight = (int)(mCanvas.Width / ratio);
 
-            mTopShadowFrame = new(Frame.X, mTextureFrame.Bottom, sideFrameWidth, sideFrameHeight);
-            mMidShadowFrame = new(Frame.X, mTopShadowFrame.Bottom, Frame.Width, Frame.Height - sideFrameHeight * 2 - mTextureFrame.Height);
-            mBottomShadowFrame = new(Frame.X, mMidShadowFrame.Bottom, sideFrameWidth, sideFrameHeight);
+            mTopShadowFrame = new(mCanvas.Position.X, mTextureFrame.Bottom, sideFrameWidth, sideFrameHeight);
+            mMidShadowFrame = new(mCanvas.Position.X, mTopShadowFrame.Bottom, mCanvas.Bounds.Width, mCanvas.Bounds.Height - sideFrameHeight * 2 - mTextureFrame.Height);
+            mBottomShadowFrame = new(mCanvas.Position.X, mMidShadowFrame.Bottom, sideFrameWidth, sideFrameHeight);
 
             mBottomFrame = mBottomShadowFrame;
-            mMidFrame = new(mMidShadowFrame.X, mBottomFrame.Top + 1f - (mMidShadowFrame.Height * (float)Percentage), mMidShadowFrame.Width , mMidShadowFrame.Height * (float)Percentage);
+            mMidFrame = new(mMidShadowFrame.X, mBottomFrame.Top + 1f - mMidShadowFrame.Height * (float)Percentage, mMidShadowFrame.Width, mMidShadowFrame.Height * (float)Percentage);
             mTopFrame = new(mMidFrame.X, mMidFrame.Top - sideFrameHeight, sideFrameWidth, sideFrameHeight); ;
         }
 
@@ -67,5 +67,14 @@ namespace StellarLiberation.Game.Core.UserInterface
             TextureManager.Instance.Draw(TextureRegistries.barVerticalMid, mMidFrame.Position, mMidFrame.Width, mMidFrame.Height, mColor);
         }
 
+        public override void Initialize(Rectangle root)
+        {
+            mCanvas.UpdateFrame(root);
+        }
+
+        public override void OnResolutionChanged(Rectangle root)
+        {
+            mCanvas.UpdateFrame(root);
+        }
     }
 }
