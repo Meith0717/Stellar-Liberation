@@ -16,19 +16,24 @@ namespace StellarLiberation.Game.Layers
     internal class SettingsLayer : Layer
     {
         private UiLayer mFrame;
-        private UiSlider mSlider;
+        private UiLayer mSettingFrame;
+        private UiSlider mMusicSlider;
+        private UiSlider mSfxSlider;
 
         public SettingsLayer(bool updateBelow) : base(updateBelow)
         {
             mFrame = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
             mFrame.AddChild(new UiSprite(TextureRegistries.menueBackground) { FillScale = FillScale.X });
-
             mFrame.AddChild(new UiButton(TextureRegistries.button, "< Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => mLayerManager.PopLayer() });
             mFrame.AddChild(new UiButton(TextureRegistries.button, "Apply") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = ApplyChanges });
 
+            mSettingFrame = new() { FillScale = FillScale.X, HSpace = 100, VSpace = 100, Color = Color.Black, Alpha = .8f };
+            mFrame.AddChild(mSettingFrame);
 
-            mSlider = new(MusicManager.Instance.OverallVolume) { Width = 500, RelX = .5f, RelY = .5f};
-            mFrame.AddChild(mSlider);
+            mMusicSlider = new("Music Volume ", MusicManager.Instance.OverallVolume) { Width = 800, RelX = .01f, RelY = .1f};
+            mSettingFrame.AddChild(mMusicSlider);
+            mSfxSlider = new("SFX Volume       ", SoundEffectManager.Instance.OverallVolume) { Width = 800, RelX = .01f, RelY = .2f };
+            mSettingFrame.AddChild(mSfxSlider);
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
@@ -54,7 +59,8 @@ namespace StellarLiberation.Game.Layers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds);
-            MusicManager.Instance.ChangeOverallVolume(mSlider.Value);
+            MusicManager.Instance.ChangeOverallVolume(mMusicSlider.Value);
+            SoundEffectManager.Instance.ChangeOverallVolume(mSfxSlider.Value);
         }
 
         private void ApplyChanges()

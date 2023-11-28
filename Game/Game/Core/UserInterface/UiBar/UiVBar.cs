@@ -41,7 +41,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiBar
             mTextureFrame = new(mCanvas.Position.X, mCanvas.Position.Y, mCanvas.Bounds.Width, mCanvas.Bounds.Width);
 
             var sideFrameWidth = mCanvas.Bounds.Width;
-            var sideFrameHeight = (int)(mCanvas.Width / ratio);
+            var sideFrameHeight = (int)(mCanvas.Bounds.Width / ratio);
 
             mTopShadowFrame = new(mCanvas.Position.X, mTextureFrame.Bottom, sideFrameWidth, sideFrameHeight);
             mMidShadowFrame = new(mCanvas.Position.X, mTopShadowFrame.Bottom, mCanvas.Bounds.Width, mCanvas.Bounds.Height - sideFrameHeight * 2 - mTextureFrame.Height);

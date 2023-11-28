@@ -87,9 +87,9 @@ namespace StellarLiberation.Game.Core.InputManagement
             GamePadIsConnected = gamePadIsConnected;
         }
 
-        public bool HasAction(ActionType action) => Actions.Remove(action);
+        public readonly bool HasAction(ActionType action) => Actions.Remove(action);
 
-        public void DoAction(ActionType action, Action funktion)
+        public readonly void DoAction(ActionType action, Action funktion)
         {
             if (funktion is null) return;
             if (HasAction(action)) funktion();
