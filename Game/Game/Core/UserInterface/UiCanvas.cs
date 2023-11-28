@@ -4,6 +4,7 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Core.GameEngine.Content_Management;
+using System;
 
 namespace StellarLiberation.Game.Core.UserInterface
 {
@@ -92,13 +93,13 @@ namespace StellarLiberation.Game.Core.UserInterface
             var SpaceBottom = root.Bottom - (height + y);
             if (SpaceBottom < VSpace)
             {
-                height = root.Bottom - VSpace * 2;
+                height -= (int)MathF.Abs(SpaceBottom - VSpace);
             }
 
             var SpaceRight = root.Right - (width + x);
             if (SpaceRight < HSpace)
             {
-                width = root.Right - HSpace * 2;
+                width -= (int)MathF.Abs(SpaceRight - HSpace);
             }
 
             mCanvas = new Rectangle(x, y, width, height);

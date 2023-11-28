@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using StellarLiberation.Core.GameEngine.Content_Management;
+using StellarLiberation.Game.Core.ContentManagement;
 using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
@@ -55,12 +56,9 @@ namespace StellarLiberation
         {
             mSpriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // setup texture manager
             TextureManager.Instance.SetSpriteBatch(mSpriteBatch);
             TextureManager.Instance.LoadTextureRegistries(Content, Registries.GetRegistryList<TextureRegistries>());
             TextureManager.Instance.LoadFontRegistries(Content, Registries.GetRegistryList<FontRegistries>());
-
-            // setup sound manager
             SoundEffectManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<SoundEffectRegistries>());
             MusicManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<MusicRegistries>());
         }

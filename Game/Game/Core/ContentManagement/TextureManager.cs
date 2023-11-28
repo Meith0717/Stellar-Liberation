@@ -47,14 +47,11 @@ namespace StellarLiberation.Core.GameEngine.Content_Management
 
         public void LoadTextureRegistries(ContentManager content, List<Registry> registries)
         {
-            foreach (Registry reg in registries) LoadTexture(content, reg.Name, reg.FilePath);
-        }
-
-        private bool LoadTexture(ContentManager content, string id, string fileName)
-        {
-            Texture2D texture = content.Load<Texture2D>(fileName);
-            mTextures.Add(id, texture);
-            return true;
+            foreach (Registry reg in registries)
+            {
+                Texture2D texture = content.Load<Texture2D>(reg.FilePath);
+                mTextures.Add(reg.Name, texture);
+            }
         }
 
         public void LoadFontRegistries(ContentManager content, List<Registry> registries)
