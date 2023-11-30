@@ -35,7 +35,7 @@ namespace StellarLiberation.Game.Layers
             mSettingFrame.AddChild(mSfxSlider);
 
             mSettingFrame.AddChild(new UiText(FontRegistries.buttonFont, "Resolution") { HSpace = 20, RelY = .3f });
-            mSettingFrame.AddChild(new UiVariableSelector(new() { "Test1", "Test2" }) { Width = 400, Height = 35, RelX = .2f, RelY = .3f });
+            mSettingFrame.AddChild(new UiVariableSelector(new() { "1920x1080" }) { Width = 400, Height = 35, RelX = .2f, RelY = .3f });
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)

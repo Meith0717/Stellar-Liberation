@@ -7,6 +7,7 @@ using StellarLiberation.Core.GameEngine.Content_Management;
 using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using System;
+using System.IO.Pipes;
 
 namespace StellarLiberation.Game.Core.UserInterface
 {
@@ -70,8 +71,9 @@ namespace StellarLiberation.Game.Core.UserInterface
             var sliderPos = new Vector2(mCanvas.Bounds.Left + mTextDim.X, mCanvas.Center.Y);
 
             TextureManager.Instance.DrawString(FontRegistries.buttonFont, textPos, mText, 1, Color.White);
-            TextureManager.Instance.DrawLine(sliderPos, mSliderLength, Color.White, 6, 1);
-            TextureManager.Instance.Draw(TextureRegistries.sliderDot, mSliderDotPosition - new Vector2(10, 10), 20, 20);
+            TextureManager.Instance.DrawLine(sliderPos, mSliderDotPosition, Color.White, 6, 1);
+            TextureManager.Instance.DrawLine(sliderPos, mSliderLength, new(100, 100, 100, 100), 6, 1);
+            TextureManager.Instance.Draw(TextureRegistries.sliderDot, mSliderDotPosition - new Vector2(10, 10), 20, 20, mWasPressed ? Color.MonoGameOrange : Color.White);
         }
 
         public override void OnResolutionChanged(Rectangle root)

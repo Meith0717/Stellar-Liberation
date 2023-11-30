@@ -16,9 +16,8 @@ namespace StellarLiberation.Game.Core.UserInterface
         private readonly UiButton mLeftArrow;
         private readonly UiButton mRightArrow;
         private readonly UiText mVariable;
-
         private int mIndex;
-        
+
         public UiVariableSelector(List<String> variables)
         { 
             mVariables = variables;
