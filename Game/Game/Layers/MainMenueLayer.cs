@@ -24,7 +24,7 @@ namespace StellarLiberation.Game.Layers
 
             mButtonHoverTracer = new();
             mFrame = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
-            mFrame.AddChild(new UiSprite(TextureRegistries.menueBackground) { FillScale = FillScale.X });
+            mFrame.AddChild(new UiSprite(TextureRegistries.gameBackground) { FillScale = FillScale.X });
 
             var newGame = new UiButton(TextureRegistries.button, "New Game") { VSpace = 20, HSpace = 20, RelY = .5f, OnClickAction = StartGame };
             var _continue = new UiButton(TextureRegistries.button, "Continue") { VSpace = 20, HSpace = 20, RelY = .6f, OnClickAction = null };

@@ -14,26 +14,33 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin fonts/button.spritefont
+#begin fonts/buttonFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:fonts/button.spritefont
+/build:fonts/buttonFont.spritefont
 
-#begin fonts/debug.spritefont
+#begin fonts/debugFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:fonts/debug.spritefont
+/build:fonts/debugFont.spritefont
 
-#begin fonts/text.spritefont
+#begin fonts/textFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:fonts/text.spritefont
+/build:fonts/textFont.spritefont
+
+#begin fonts/titleFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:fonts/titleFont.spritefont
 
 #begin music/bgMusicGame.wav
 /importer:WavImporter
@@ -1162,6 +1169,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/title.png
+
+#begin textures/userInterface/arrowL.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/userInterface/arrowL.png
+
+#begin textures/userInterface/arrowR.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/userInterface/arrowR.png
 
 #begin textures/userInterface/bar/barHorizontalLeft.png
 /importer:TextureImporter

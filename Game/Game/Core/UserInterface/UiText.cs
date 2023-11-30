@@ -25,24 +25,30 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Initialize(Rectangle root)
         {
-            mCanvas.UpdateFrame(root);
             var dim = GetTextDimension(FontID, Text);
-            mCanvas.Width = (int)dim.X;
             mCanvas.Height = (int)dim.Y;
+            mCanvas.Width = (int)dim.X;
+            mCanvas.UpdateFrame(root);
         }
 
         public override void OnResolutionChanged(Rectangle root)
         {
-            mCanvas.UpdateFrame(root);
             var dim = GetTextDimension(FontID, Text);
-            mCanvas.Width = (int)dim.X;
             mCanvas.Height = (int)dim.Y;
+            mCanvas.Width = (int)dim.X;
+            mCanvas.UpdateFrame(root);
         }
 
         private Vector2 GetTextDimension(string fontID, string text) => TextureManager.Instance.GetFont(fontID).MeasureString(text);
 
-        public override void Draw() => TextureManager.Instance.DrawString(FontID, mCanvas.Center, Text, 1, Color);
+        public override void Draw()
+        {
+            TextureManager.Instance.DrawString(FontID, mCanvas.Position, Text, 1, Color);
+        }
 
-        public override void Update(InputState inputState, Rectangle root){}
+        public override void Update(InputState inputState, Rectangle root) 
+        {
+            OnResolutionChanged(root);
+        }
     }
 }

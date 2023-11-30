@@ -125,6 +125,8 @@ namespace StellarLiberation.Game.Core.ContentManagement.ContentRegistry
 
         private readonly static string ui = @"textures\UserInterface";
         public readonly static Registry sliderDot = new(ui, "SliderDot");
+        public readonly static Registry arrowL = new(ui, "arrowL");
+        public readonly static Registry arrowR = new(ui, "arrowR");
 
         private readonly static string bar = @"textures\UserInterface\bar";
         public readonly static Registry barHorizontalLeft = new(bar, "barHorizontalLeft");

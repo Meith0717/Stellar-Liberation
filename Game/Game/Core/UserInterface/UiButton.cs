@@ -4,6 +4,7 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Core.GameEngine.Content_Management;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using System;
 
@@ -43,13 +44,13 @@ namespace StellarLiberation.Game.Core.UserInterface
         {
             var color = IsHover ? Color.MonoGameOrange : Color.White;
             TextureManager.Instance.Draw(mSpriteId, mCanvas.Position, mCanvas.Bounds.Width, mCanvas.Bounds.Height, color);
-            TextureManager.Instance.DrawString("button", TextPosition, mText, mTextScale, color);
+            TextureManager.Instance.DrawString(FontRegistries.buttonFont, TextPosition, mText, mTextScale, color);
         } 
 
         public override void Update(InputState inputState, Rectangle root) 
         {
             IsDisabled = OnClickAction is null;
-            var stringDim = TextureManager.Instance.GetFont("button").MeasureString(mText);
+            var stringDim = TextureManager.Instance.GetFont(FontRegistries.buttonFont).MeasureString(mText);
             switch (TextAllign)
             {
                 case TextAllign.W:

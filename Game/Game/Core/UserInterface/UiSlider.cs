@@ -27,7 +27,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             mSliderValue = val;
             mText = text;
             mCanvas.Height = 50;
-            mTextDim = TextureManager.Instance.GetFont(FontRegistries.button).MeasureString(mText);
+            mTextDim = TextureManager.Instance.GetFont(FontRegistries.buttonFont).MeasureString(mText);
         }
 
         public override void Initialize(Rectangle root)
@@ -69,7 +69,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             var textPos = new Vector2(mCanvas.Bounds.Left, mCanvas.Center.Y - (mTextDim.Y / 2) + 3);
             var sliderPos = new Vector2(mCanvas.Bounds.Left + mTextDim.X, mCanvas.Center.Y);
 
-            TextureManager.Instance.DrawString(FontRegistries.button, textPos, mText, 1, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.buttonFont, textPos, mText, 1, Color.White);
             TextureManager.Instance.DrawLine(sliderPos, mSliderLength, Color.White, 6, 1);
             TextureManager.Instance.Draw(TextureRegistries.sliderDot, mSliderDotPosition - new Vector2(10, 10), 20, 20);
         }

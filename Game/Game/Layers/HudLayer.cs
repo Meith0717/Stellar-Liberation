@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.Layers
             mShieldBar = new(new Color(135, 206, 235), TextureRegistries.shield) { RelHeight = .025f, RelWidth = .15f, RelX = .01f, RelY = .02f };
             mHullBar = new(new Color(210, 105, 30), TextureRegistries.ship) { RelHeight = .025f, RelWidth = .15f, RelX = .01f, RelY = .05f };
             mPropulsiondBar = new(new Color(241, 196, 15), TextureRegistries.propulsion) { RelHeight = .25f, RelWidth = .02f, Anchor = Anchor.SW, HSpace = 20, VSpace = 20 };
-            mCargoHold = new(FontRegistries.button, "test") { Anchor = Anchor.N, VSpace = 20 };
+            mCargoHold = new(FontRegistries.buttonFont, "test") { Anchor = Anchor.N, VSpace = 20 };
 
             mUiLayer.AddChild(new UiButton(TextureRegistries.pauseButton, "") { Anchor = Anchor.NE, HSpace = 20, VSpace = 20, OnClickAction = () => mLayerManager.AddLayer(new PauseLayer()) });
             mUiLayer.AddChild(mShieldBar);
