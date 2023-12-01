@@ -2,18 +2,18 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using StellarLiberation.Core.GameEngine.Content_Management;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.DebugSystem;
 using StellarLiberation.Game.Core.InputManagement;
 using StellarLiberation.Game.Core.LayerManagement;
 using StellarLiberation.Game.Core.SpaceShipManagement;
+using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
-using Microsoft.Xna.Framework;
-using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
-using MathNet.Numerics.Distributions;
-using StellarLiberation.Game.Core.Utilitys;
 
 namespace StellarLiberation.Game.Core.Debugger
 {
@@ -104,16 +104,16 @@ namespace StellarLiberation.Game.Core.Debugger
 
         private void ShowInfo(Vector2 position)
         {
-            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 0), "F1 - Draw Spatial Hashing Grid", 1, DrawBuckets ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 25), "F2 - Draw Objects in Bucket", 1, ShowObjectsInBucket ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 50), "F3 - Show Hit Box", 1, ShowHitBoxes ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 75), "F4 - Show Sensor Radius", 1, ShowSensorRadius ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 200), "F5 - Show Paths", 1, ShowPaths ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 100), "F6 - Spawn Fighter", 1, Color.White);
-            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 125), "F7 - Spawn Corvette", 1, Color.White);
-            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 150), "F8 - Spawn Battle Ship", 1, Color.White);
-            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 175), "F9 - Spawn Carrior", 1, Color.White);
-            TextureManager.Instance.DrawString("debug", position + new Vector2(0, 225), "F10 - none", 1, false ? Color.GreenYellow : Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 0), "F1 - Draw Spatial Hashing Grid", 1, DrawBuckets ? Color.GreenYellow : Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 25), "F2 - Draw Objects in Bucket", 1, ShowObjectsInBucket ? Color.GreenYellow : Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 50), "F3 - Show Hit Box", 1, ShowHitBoxes ? Color.GreenYellow : Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 75), "F4 - Show Sensor Radius", 1, ShowSensorRadius ? Color.GreenYellow : Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 200), "F5 - Show Paths", 1, ShowPaths ? Color.GreenYellow : Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 100), "F6 - Spawn Fighter", 1, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 125), "F7 - Spawn Corvette", 1, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 150), "F8 - Spawn Battle Ship", 1, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 175), "F9 - Spawn Carrior", 1, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 225), "F10 - none", 1, false ? Color.GreenYellow : Color.White);
 
             List<string> debug = new() {
                 $"FPS - {Math.Round(mCurrentFramesPerSecond)}", $"Render Latency - {mFrameDuration} ms",
@@ -122,7 +122,7 @@ namespace StellarLiberation.Game.Core.Debugger
 
             for (int i = 0; i < debug.Count; i++)
             {
-                TextureManager.Instance.DrawString("debug", position + new Vector2(300, i * 25), debug[i], 1, Color.White);
+                TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(300, i * 25), debug[i], 1, Color.White);
             }
         }
 
