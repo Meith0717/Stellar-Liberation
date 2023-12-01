@@ -9,7 +9,7 @@ using System;
 namespace StellarLiberation.Game.Core.UserInterface
 {
     public enum Anchor { N, NE, E, SE, S, SW, W, NW, Center, None }
-    public enum FillScale { X, Y, None }
+    public enum FillScale { X, Y, Both, None }
 
     public class UiCanvas
     {
@@ -28,30 +28,40 @@ namespace StellarLiberation.Game.Core.UserInterface
         public int? Width;
 
         // Optional properties
-        public int HSpace;
-        public int VSpace;
+        public int? HSpace;
+        public int? VSpace;
         public Anchor Anchor = Anchor.None;
         public FillScale FillScale = FillScale.None;
 
         public void UpdateFrame(Rectangle root)
         {
-            var width = Width ?? (int)(root.Width * RelWidth);
-            var height = Height ?? (int)(root.Height * RelHeight);
-            var x = root.X + X ?? (int)(root.X + (root.Width * RelX));
-            var y = root.Y + Y ?? (int)(root.Y + (root.Height * RelY));
+            var width = Width ??
+                (int)(root.Width * RelWidth);
+            var height = Height ??
+                (int)(root.Height * RelHeight);
+            var x = root.X + X ??
+                (int)(root.X + (root.Width * RelX));
+            var y = root.Y + Y ??
+                (int)(root.Y + (root.Height * RelY));
 
             var aspectRatio = (float)width / height;
 
             switch (FillScale)
             {
                 case FillScale.X:
-                    width = root.Width; height = (int)(width / aspectRatio);
+                    width = root.Width;
+                    height = (int)(width / aspectRatio);
                     break;
                 case FillScale.Y:
-                    height = root.Height; width = (int)(height * aspectRatio);
+                    height = root.Height;
+                    width = (int)(height * aspectRatio);
+                    break;
+                case FillScale.Both:
+                    x = 0; y = 0;
+                    height = root.Height;
+                    width = root.Width;
                     break;
             }
-
 
             switch (Anchor)
             {
@@ -60,46 +70,54 @@ namespace StellarLiberation.Game.Core.UserInterface
                     break;
                 case Anchor.N:
                     x = root.Center.X - (width / 2); y = root.Y;
-                    break; 
+                    break;
                 case Anchor.NE:
-                    x = root.Right - HSpace - width; y = root.Y;
+                    x = root.Right - width; y = root.Y;
                     break;
                 case Anchor.E:
-                    x = root.Right - HSpace - width; y = root.Center.Y - (height / 2);
+                    x = root.Right - width; y = root.Center.Y - (height / 2);
                     break;
                 case Anchor.SE:
-                    x = root.Right - HSpace - width; y = root.Bottom - VSpace - height;
+                    x = root.Right - width; y = root.Bottom - height;
                     break;
                 case Anchor.S:
-                    x = root.Center.X - (width / 2); y = root.Bottom - VSpace - height;
+                    x = root.Center.X - (width / 2); y = root.Bottom - height;
                     break;
                 case Anchor.SW:
-                    x = root.X; y = root.Bottom - VSpace - height;
+                    x = root.X; y = root.Bottom - height;
                     break;
                 case Anchor.W:
-                    x = root.X; y = root.Center.Y - (height/2);
+                    x = root.X; y = root.Center.Y - (height / 2);
                     break;
                 case Anchor.Center:
                     x = root.Center.X - (width / 2); y = root.Center.Y - (height / 2);
                     break;
             }
 
-            var spaceLeft = x - root.Left;
-            if (spaceLeft < HSpace) x = root.X + HSpace;
-
-            var SpaceTop = y - root.Top;
-            if (SpaceTop < VSpace) y = root.Y + VSpace;
-
-            var SpaceBottom = root.Bottom - (height + y);
-            if (SpaceBottom < VSpace)
+            if (HSpace is not null)
             {
-                height -= (int)MathF.Abs(SpaceBottom - VSpace);
+                var spaceLeft = x - root.Left;
+                if (spaceLeft < HSpace) x = root.X + (int)HSpace;
+
+                var SpaceRight = root.Right - (width + x);
+                if (SpaceRight < HSpace)
+                {
+                    width -= (int)MathF.Abs(SpaceRight - (int)HSpace);
+                    height = (int)(width / aspectRatio);
+                }
             }
 
-            var SpaceRight = root.Right - (width + x);
-            if (SpaceRight < HSpace)
+            if (VSpace is not null)
             {
-                width -= (int)MathF.Abs(SpaceRight - HSpace);
+                var SpaceTop = y - root.Top;
+                if (SpaceTop < VSpace) y = root.Y + (int)VSpace;
+
+                var SpaceBottom = root.Bottom - (height + y);
+                if (SpaceBottom < VSpace)
+                {
+                    height -= (int)MathF.Abs(SpaceBottom - (int)VSpace);
+                    width = (int)(height * aspectRatio);
+                }
             }
 
             mCanvas = new Rectangle(x, y, width, height);
@@ -115,6 +133,9 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public Rectangle Bounds => mCanvas;
 
-        public void Draw()=> TextureManager.Instance.DrawRectangleF(mCanvas, Color.Green, 2, 1);
+        public void Draw()
+        {
+            //TextureManager.Instance.DrawRectangleF(mCanvas, Color.Green, 2, 1);
+        }
     }
 }

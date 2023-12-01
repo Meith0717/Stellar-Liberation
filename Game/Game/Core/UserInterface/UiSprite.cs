@@ -20,7 +20,11 @@ namespace StellarLiberation.Game.Core.UserInterface
             mCanvas.Height = texture.Height;
         }
 
-        public override void Draw() => TextureManager.Instance.Draw(mSpriteId, mCanvas.Position, mCanvas.Bounds.Width, mCanvas.Bounds.Height);
+        public override void Draw()  
+        {
+            TextureManager.Instance.Draw(mSpriteId, mCanvas.Position, mCanvas.Bounds.Width, mCanvas.Bounds.Height);
+            mCanvas.Draw();
+        } 
 
         public override void Initialize(Rectangle root)
         {

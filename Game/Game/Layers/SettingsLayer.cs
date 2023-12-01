@@ -16,32 +16,44 @@ namespace StellarLiberation.Game.Layers
 {
     internal class SettingsLayer : Layer
     {
-        private UiLayer mSettingFrame;
-        private UiSlider mMusicSlider;
-        private UiSlider mSfxSlider;
+        private readonly UiLayer mMainFrame;
+        private readonly UiSlider mMusicSlider;
+        private readonly UiSlider mSfxSlider;
 
-        public SettingsLayer(bool updateBelow) : base(updateBelow)
+        public SettingsLayer(bool showBgImage) : base(false)
         {
-            mSettingFrame = new() { RelHeight = 1, RelWidth = 1 };
-            mSettingFrame.AddChild(new UiSprite(TextureRegistries.gameBackground) { FillScale = FillScale.X });
+            mMainFrame = new() { RelHeight = 1, RelWidth = 1, Color = Color.Black, Alpha = .8f };
+            if (showBgImage) mMainFrame.AddChild(new UiSprite(TextureRegistries.gameBackground) { FillScale = FillScale.X});
 
-            mSettingFrame.AddChild(new UiButton(TextureRegistries.button, "< Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => mLayerManager.PopLayer() });
-            mSettingFrame.AddChild(new UiButton(TextureRegistries.button, "Apply") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = ApplyChanges });
+            mMainFrame.AddChild(new UiText(FontRegistries.titleFont, "Settings") { Anchor = Anchor.NW, HSpace = 5, VSpace = 5 });
+            mMainFrame.AddChild(new UiButton(TextureRegistries.button, "< Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => mLayerManager.PopLayer() });
+            mMainFrame.AddChild(new UiButton(TextureRegistries.button, "Apply") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = ApplyChanges });
 
-            mSettingFrame.AddChild(new UiText(FontRegistries.titleFont, "Settings") { Anchor = Anchor.NW, HSpace = 20, VSpace = 20 });
-            mMusicSlider = new("Music Volume ", MusicManager.Instance.OverallVolume) { Width = 800, HSpace = 20, RelY = .2f};
-            mSettingFrame.AddChild(mMusicSlider);
-            mSfxSlider = new("SFX Volume       ", SoundEffectManager.Instance.OverallVolume) { Width = 800, HSpace = 20, RelY = .25f };
-            mSettingFrame.AddChild(mSfxSlider);
 
-            mSettingFrame.AddChild(new UiText(FontRegistries.buttonFont, "Resolution") { HSpace = 20, RelY = .3f });
-            mSettingFrame.AddChild(new UiVariableSelector(new() { "1920x1080" }) { Width = 400, Height = 35, RelX = .2f, RelY = .3f });
+            var settingsFrame = new UiLayer() { RelHeight = .8f, RelWidth = .5f, Color = new(11, 15, 20), Anchor = Anchor.Center };
+            mMainFrame.AddChild(settingsFrame);
+
+            // Sound Settings
+            settingsFrame.AddChild(new UiText(FontRegistries.subTitleFont, "Audio") { HSpace = 20, RelY = .05f });
+            mMusicSlider = new(MusicManager.Instance.OverallVolume) ;
+            mSfxSlider = new(SoundEffectManager.Instance.OverallVolume);
+            settingsFrame.AddChild(new UiDescriber("Music", mMusicSlider) { Height = 50, RelWidth = 1, HSpace = 40, RelY = .12f });
+            settingsFrame.AddChild(new UiDescriber("Effects", mSfxSlider) { Height = 50, RelWidth = 1, HSpace = 40, RelY = .21f });
+
+            // Graphics Settings
+            settingsFrame.AddChild(new UiText(FontRegistries.subTitleFont, "Video ") { HSpace = 20, RelY = .30f });
+            var variableSelector = new UiVariableSelector(new() { "1920x1080", "1080x720", "720x480" });
+            var fullScreenSelector = new UiVariableSelector(new() { "True", "False" });
+            var particleSelector = new UiVariableSelector(new() {  "Off", "0.25", "0.5", "0.75", "1" });
+            settingsFrame.AddChild(new UiDescriber("Resolution", variableSelector) { Height = 50, RelWidth = 1, HSpace = 40, RelY = .37f });
+            settingsFrame.AddChild(new UiDescriber("Fullscreen", fullScreenSelector) { Height = 50, RelWidth = 1, HSpace = 40, RelY = .44f });
+            settingsFrame.AddChild(new UiDescriber("Particles", particleSelector) { Height = 50, RelWidth = 1, HSpace = 40, RelY = .51f });
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
         {
             base.Initialize(game1, layerManager, graphicsDevice, serialize);
-            mSettingFrame.Initialize(mGraphicsDevice.Viewport.Bounds);
+            mMainFrame.Initialize(mGraphicsDevice.Viewport.Bounds);
         }
 
         public override void Destroy() { }
@@ -49,18 +61,18 @@ namespace StellarLiberation.Game.Layers
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            mSettingFrame.Draw();
+            mMainFrame.Draw();
             spriteBatch.End();
         }
 
         public override void OnResolutionChanged()
         {
-            mSettingFrame.OnResolutionChanged(mGraphicsDevice.Viewport.Bounds);
+            mMainFrame.OnResolutionChanged(mGraphicsDevice.Viewport.Bounds);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mSettingFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds);
+            mMainFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds);
             MusicManager.Instance.ChangeOverallVolume(mMusicSlider.Value);
             SoundEffectManager.Instance.ChangeOverallVolume(mSfxSlider.Value);
         }

@@ -38,7 +38,7 @@ namespace StellarLiberation
 
             // Window properties
             IsMouseVisible = true;
-            Window.AllowUserResizing = false;
+            Window.AllowUserResizing = true;
             Window.AllowAltF4 = false;
             Window.ClientSizeChanged += delegate { mResulutionWasResized = true; };
             mGraphicsManager.PreferredBackBufferWidth = 1920;

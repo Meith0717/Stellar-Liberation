@@ -7,7 +7,6 @@ using StellarLiberation.Core.GameEngine.Content_Management;
 using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using System;
-using System.IO.Pipes;
 
 namespace StellarLiberation.Game.Core.UserInterface
 {
@@ -16,47 +15,34 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         private float mSliderLength;
         private float mSliderValue;
-        private readonly string mText;
-        private Vector2 mTextDim;
+
 
         private bool mWasPressed;
 
         public float Value => mSliderValue;
 
-        public UiSlider(string text, float val) 
+        public UiSlider(float val) 
         {            
             mSliderValue = val;
-            mText = text;
-            mCanvas.Height = 50;
-            mTextDim = TextureManager.Instance.GetFont(FontRegistries.buttonFont).MeasureString(mText);
         }
 
-        public override void Initialize(Rectangle root)
-        {
-            mCanvas.UpdateFrame(root);
-            mSliderLength = MathF.Abs((mCanvas.Bounds.Left + mTextDim.X) - mCanvas.Bounds.Right);
-            mSliderDotPosition = sliderPosition;
-        }
+        public override void Initialize(Rectangle root) => OnResolutionChanged(root);
 
         public override void Update(InputState inputState, Rectangle root)
         {
-            if (!inputState.Actions.Contains(ActionType.LeftClickHold))
-            {
-                mWasPressed = false;
-                return;
-            }
 
-            if (!mCanvas.Contains(inputState.mMousePosition) && !mWasPressed) return;
+            if (inputState.Actions.Contains(ActionType.LeftClickReleased)) mWasPressed = false;
+            if (mCanvas.Contains(inputState.mMousePosition) &&
+                inputState.Actions.Contains(ActionType.LeftClick)) mWasPressed = true;
 
-            mWasPressed = true;
-
+            if (!mWasPressed) return;
             mSliderValue = GetValue(inputState.mMousePosition);
             mSliderDotPosition = sliderPosition;
         }
 
         private float GetValue(Vector2 mousePos)
         {
-            var relMouselength = mousePos.X - (mCanvas.Bounds.Left + mTextDim.X);
+            var relMouselength = mousePos.X - mCanvas.Bounds.Left;
             var tmp = relMouselength / mSliderLength;
             if (tmp > 1) return 1;
             if (tmp < 0) return 0;
@@ -67,22 +53,23 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Draw()
         {
-            var textPos = new Vector2(mCanvas.Bounds.Left, mCanvas.Center.Y - (mTextDim.Y / 2) + 3);
-            var sliderPos = new Vector2(mCanvas.Bounds.Left + mTextDim.X, mCanvas.Center.Y);
+            var sliderPos = new Vector2(mCanvas.Bounds.Left, mCanvas.Center.Y);
+            var dotDim = new Vector2(mCanvas.Bounds.Height, mCanvas.Bounds.Height);
 
-            TextureManager.Instance.DrawString(FontRegistries.buttonFont, textPos, mText, 1, Color.White);
             TextureManager.Instance.DrawLine(sliderPos, mSliderDotPosition, Color.White, 6, 1);
             TextureManager.Instance.DrawLine(sliderPos, mSliderLength, new(100, 100, 100, 100), 6, 1);
-            TextureManager.Instance.Draw(TextureRegistries.sliderDot, mSliderDotPosition - new Vector2(10, 10), 20, 20, mWasPressed ? Color.MonoGameOrange : Color.White);
+            TextureManager.Instance.Draw(TextureRegistries.sliderDot, mSliderDotPosition - (dotDim / 2), dotDim.X, dotDim.Y, mWasPressed ? Color.MonoGameOrange : Color.White);
+            mCanvas.Draw();
         }
 
         public override void OnResolutionChanged(Rectangle root)
         {
+            Height = 25;
             mCanvas.UpdateFrame(root);
-            mSliderLength = MathF.Abs((mCanvas.Bounds.Left + mTextDim.X) - mCanvas.Bounds.Right);
+            mSliderLength = MathF.Abs(mCanvas.Bounds.Left - mCanvas.Bounds.Right);
             mSliderDotPosition = sliderPosition;
         }
 
-        private Vector2 sliderPosition => new((mCanvas.Bounds.Left + mTextDim.X) + mSliderLength * mSliderValue, mCanvas.Center.Y);
+        private Vector2 sliderPosition => new(mCanvas.Bounds.Left + mSliderLength * mSliderValue, mCanvas.Center.Y);
     }
 }

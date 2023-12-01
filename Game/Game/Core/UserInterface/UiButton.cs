@@ -14,7 +14,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
     public class UiButton : UiElement
     {
-        public bool IsDisabled {get; private set; }
+        public bool IsDisabled;
         public bool IsHover;
 
         public Action OnClickAction;
@@ -42,14 +42,14 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Draw() 
         {
-            var color = IsHover ? Color.MonoGameOrange : Color.White;
+            var color = IsDisabled ? Color.DarkGray : IsHover ? Color.MonoGameOrange : Color.White;
             TextureManager.Instance.Draw(mSpriteId, mCanvas.Position, mCanvas.Bounds.Width, mCanvas.Bounds.Height, color);
             TextureManager.Instance.DrawString(FontRegistries.buttonFont, TextPosition, mText, mTextScale, color);
+            mCanvas.Draw();
         } 
 
         public override void Update(InputState inputState, Rectangle root) 
         {
-            IsDisabled = OnClickAction is null;
             var stringDim = TextureManager.Instance.GetFont(FontRegistries.buttonFont).MeasureString(mText);
             switch (TextAllign)
             {

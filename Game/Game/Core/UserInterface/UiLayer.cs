@@ -38,6 +38,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             var color = new Color((int)(Color.R * Alpha), (int)(Color.G * Alpha), (int)(Color.B * Alpha), (int)(Color.A * Alpha));
             TextureManager.Instance.SpriteBatch.Draw(mTexture, mCanvas.Bounds, color);
             foreach ( var child in mChildren ) child.Draw();
+            mCanvas.Draw();
         }
 
         public override void Update(InputState inputState, Rectangle root)  

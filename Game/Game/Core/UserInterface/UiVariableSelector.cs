@@ -3,6 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using StellarLiberation.Core.GameEngine.Content_Management;
 using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.InputManagement;
 using System;
@@ -33,10 +34,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Initialize(Rectangle root)
         {
-            mCanvas.UpdateFrame(root);
-            mLeftArrow.Initialize(mCanvas.Bounds);
-            mRightArrow.Initialize(mCanvas.Bounds);
-            mVariable.Initialize(mCanvas.Bounds);
+            OnResolutionChanged(root);
         }
 
         public override void Update(InputState inputState, Rectangle root)
@@ -45,6 +43,8 @@ namespace StellarLiberation.Game.Core.UserInterface
             mLeftArrow.Update(inputState, mCanvas.Bounds);
             mRightArrow.Update(inputState, mCanvas.Bounds);
             mVariable.Text = mVariables[mIndex];
+            mLeftArrow.IsDisabled = mIndex == 0;
+            mRightArrow.IsDisabled = mIndex == mVariables.Count - 1;
         }
 
         public override void Draw()
@@ -52,14 +52,16 @@ namespace StellarLiberation.Game.Core.UserInterface
             mLeftArrow.Draw();
             mRightArrow.Draw();
             mVariable.Draw();
+            mCanvas.Draw();
         }
 
         public override void OnResolutionChanged(Rectangle root)
         {
+            mCanvas.Height = (int)TextureManager.Instance.GetFont(FontRegistries.buttonFont).MeasureString(" ").Y;
+            mCanvas.UpdateFrame(root);
             mLeftArrow.Initialize(mCanvas.Bounds);
             mRightArrow.Initialize(mCanvas.Bounds);
             mVariable.Initialize(mCanvas.Bounds);
-            mCanvas.UpdateFrame(root);
         }
 
     }

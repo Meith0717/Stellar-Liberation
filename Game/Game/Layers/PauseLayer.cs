@@ -27,12 +27,14 @@ namespace StellarLiberation.Game.Layers
             var buttonFrame = new UiLayer() { Anchor = Anchor.Center, Height = 300, Width = 300 , HSpace = 20, VSpace = 20, Alpha = 0 };
             mBackgroundLayer.AddChild(buttonFrame);
 
-            var _continue = new UiButton(TextureRegistries.button, "Continue") { Anchor = Anchor.N, FillScale = FillScale.X, OnClickAction = () => mLayerManager.PopLayer(), TextAllign = TextAllign.Center };
-            var save = new UiButton(TextureRegistries.button, "Save") { Anchor = Anchor.Center, FillScale = FillScale.X, OnClickAction = null, TextAllign = TextAllign.Center };
+            var _continue = new UiButton(TextureRegistries.button, "Resume") { Anchor = Anchor.N, FillScale = FillScale.X, OnClickAction = () => mLayerManager.PopLayer(), TextAllign = TextAllign.Center };
+            var save = new UiButton(TextureRegistries.button, "Save") { RelY = .27f, FillScale = FillScale.X, OnClickAction = null, TextAllign = TextAllign.Center };
+            var settings = new UiButton(TextureRegistries.button, "Settings") { RelY = .55f, FillScale = FillScale.X, OnClickAction =  () => mLayerManager.AddLayer(new SettingsLayer(false)), TextAllign = TextAllign.Center };
             var menue = new UiButton(TextureRegistries.button, "Menue") { Anchor = Anchor.S, FillScale = FillScale.X, OnClickAction = Menue, TextAllign = TextAllign.Center };
 
-            buttonFrame.AddChild(_continue); mButtonInputTracer.AddButton(_continue); ; 
-            buttonFrame.AddChild(save); mButtonInputTracer.AddButton(save); 
+            buttonFrame.AddChild(_continue); mButtonInputTracer.AddButton(_continue); ;
+            buttonFrame.AddChild(save); mButtonInputTracer.AddButton(save);
+            buttonFrame.AddChild(settings); mButtonInputTracer.AddButton(settings);
             buttonFrame.AddChild(menue); mButtonInputTracer.AddButton(menue);
         }
 
