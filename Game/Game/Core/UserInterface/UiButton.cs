@@ -16,6 +16,7 @@ namespace StellarLiberation.Game.Core.UserInterface
     {
         public bool IsDisabled;
         public bool IsHover;
+        private bool mLastHoverState;
 
         public Action OnClickAction;
         protected string mSpriteId;
@@ -64,7 +65,16 @@ namespace StellarLiberation.Game.Core.UserInterface
                     break;
             }
             IsHover = mCanvas.Contains(inputState.mMousePosition);
-            if (IsHover) inputState.DoAction(ActionType.Select, OnClickAction);
+            if (IsHover && !IsDisabled && IsHover != mLastHoverState) SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.hover);
+            if (IsHover) inputState.DoAction(ActionType.Select, Click);
+            mLastHoverState = IsHover;
+        }
+
+        private void Click()
+        {
+            if (OnClickAction is null) return;
+            OnClickAction();
+            //SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.click);
         }
 
         public override void OnResolutionChanged(Rectangle root)

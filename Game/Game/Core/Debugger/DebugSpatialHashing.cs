@@ -5,6 +5,7 @@
 using StellarLiberation.Core.GameEngine.Content_Management;
 using StellarLiberation.Game.Core.LayerManagement;
 using Microsoft.Xna.Framework;
+using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
 
 namespace StellarLiberation.Game.Core.DebugSystem
 {
@@ -47,7 +48,7 @@ namespace StellarLiberation.Game.Core.DebugSystem
             }
 
             var hash = scene.SpatialHashing.Hash((int)mousePosition.X, (int)mousePosition.Y);
-            TextureManager.Instance.DrawString("debug", mousePosition + (new Vector2(1, -5) * 5 / scene.Camera2D.Zoom), hash.ToString(), 1 / scene.Camera2D.Zoom, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, mousePosition + (new Vector2(1, -5) * 5 / scene.Camera2D.Zoom), hash.ToString(), 1 / scene.Camera2D.Zoom, Color.White);
         }
     }
 }

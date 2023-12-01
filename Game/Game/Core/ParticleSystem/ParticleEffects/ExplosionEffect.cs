@@ -65,7 +65,7 @@ namespace StellarLiberation.Game.Core.ParticleSystem.ParticleEffects
         {
             var size = ExtendetRandom.Random.Next(1, 10) * 0.01f;
 
-            for (int i = 0; i < ExtendetRandom.Random.Next(50, 150); i++)
+            for (int i = 0; i < ExtendetRandom.Random.Next(100, 250); i++)
             {
                 ExtendetRandom.Random.NextUnitVector(out var dir);
                 var direction = Vector2.Normalize(dir + (momentum * 0.8f));

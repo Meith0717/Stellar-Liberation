@@ -22,10 +22,10 @@ namespace StellarLiberation.Game.Layers
 
         public SettingsLayer(bool showBgImage) : base(false)
         {
-            mMainFrame = new() { RelHeight = 1, RelWidth = 1, Color = Color.Black, Alpha = .8f };
+            mMainFrame = new() { RelHeight = 1, RelWidth = 1, Color = Color.Transparent };
+            if (showBgImage) mMainFrame.Alpha = .8f;
             if (showBgImage) mMainFrame.AddChild(new UiSprite(TextureRegistries.gameBackground) { FillScale = FillScale.X});
 
-            mMainFrame.AddChild(new UiText(FontRegistries.titleFont, "Settings") { Anchor = Anchor.NW, HSpace = 5, VSpace = 5 });
             mMainFrame.AddChild(new UiButton(TextureRegistries.button, "< Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => mLayerManager.PopLayer() });
             mMainFrame.AddChild(new UiButton(TextureRegistries.button, "Apply") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = ApplyChanges });
 
@@ -72,6 +72,7 @@ namespace StellarLiberation.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            inputState.DoAction(ActionType.ESC, () => mLayerManager.PopLayer());
             mMainFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds);
             MusicManager.Instance.ChangeOverallVolume(mMusicSlider.Value);
             SoundEffectManager.Instance.ChangeOverallVolume(mSfxSlider.Value);

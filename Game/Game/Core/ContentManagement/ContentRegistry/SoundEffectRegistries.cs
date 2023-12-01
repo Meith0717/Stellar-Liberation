@@ -12,5 +12,7 @@ namespace StellarLiberation.Game.Core.ContentManagement.ContentRegistry
         public readonly static Registry collect = new(soundEffects, "collect");
         public readonly static Registry ChargeHyperdrive = new(soundEffects, "chargeHyperdrive");
         public readonly static Registry CoolHyperdrive = new(soundEffects, "coolHyperdrive");
+        public readonly static Registry click = new(soundEffects, "click");
+        public readonly static Registry hover = new(soundEffects, "hover");
     }
 }

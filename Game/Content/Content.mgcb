@@ -21,20 +21,6 @@
 /processorParam:TextureFormat=Compressed
 /build:fonts/buttonFont.spritefont
 
-#begin fonts/buttonFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:fonts/buttonFont.spritefont
-
-#begin fonts/debugFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:fonts/debugFont.spritefont
-
 #begin fonts/debugFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -55,20 +41,6 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:fonts/textFont.spritefont
-
-#begin fonts/textFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:fonts/textFont.spritefont
-
-#begin fonts/titleFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:fonts/titleFont.spritefont
 
 #begin fonts/titleFont.spritefont
 /importer:FontDescriptionImporter
@@ -113,6 +85,12 @@
 /processorParam:Quality=Best
 /build:sounds/chargeHyperdrive.wav
 
+#begin sounds/click.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/click.wav
+
 #begin sounds/collect.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -136,6 +114,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:sounds/engineSound.wav
+
+#begin sounds/hover.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/hover.wav
 
 #begin sounds/torpedoFire.wav
 /importer:WavImporter
