@@ -3,8 +3,6 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using StellarLiberation.Core.GameEngine.Content_Management;
-using System;
 
 namespace StellarLiberation.Game.Core.UserInterface
 {
@@ -35,14 +33,13 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public void UpdateFrame(Rectangle root)
         {
-            var width = Width ??
-                (int)(root.Width * RelWidth);
-            var height = Height ??
-                (int)(root.Height * RelHeight);
-            var x = root.X + X ??
-                (int)(root.X + (root.Width * RelX));
-            var y = root.Y + Y ??
-                (int)(root.Y + (root.Height * RelY));
+            var xL = root.X + X ?? (int)(root.X + (root.Width * RelX));
+            var yL = root.Y + Y ?? (int)(root.Y + (root.Height * RelY));
+            var xR = 0;
+            var yR = 0;
+
+            var width = Width ?? (int)(root.Width * RelWidth);
+            var height = Height ?? (int)(root.Height * RelHeight);
 
             var aspectRatio = (float)width / height;
 
@@ -57,7 +54,7 @@ namespace StellarLiberation.Game.Core.UserInterface
                     width = (int)(height * aspectRatio);
                     break;
                 case FillScale.Both:
-                    x = 0; y = 0;
+                    xL = 0; yL = 0;
                     height = root.Height;
                     width = root.Width;
                     break;
@@ -66,61 +63,53 @@ namespace StellarLiberation.Game.Core.UserInterface
             switch (Anchor)
             {
                 case Anchor.NW:
-                    x = root.X; y = root.Y;
+                    xL = root.X; yL = root.Y;
                     break;
                 case Anchor.N:
-                    x = root.Center.X - (width / 2); y = root.Y;
+                    xL = root.Center.X - (width / 2); yL = root.Y;
                     break;
                 case Anchor.NE:
-                    x = root.Right - width; y = root.Y;
+                    xL = root.Right - width; yL = root.Y;
                     break;
                 case Anchor.E:
-                    x = root.Right - width; y = root.Center.Y - (height / 2);
+                    xL = root.Right - width; yL = root.Center.Y - (height / 2);
                     break;
                 case Anchor.SE:
-                    x = root.Right - width; y = root.Bottom - height;
+                    xL = root.Right - width; yL = root.Bottom - height;
                     break;
                 case Anchor.S:
-                    x = root.Center.X - (width / 2); y = root.Bottom - height;
+                    xL = root.Center.X - (width / 2); yL = root.Bottom - height;
                     break;
                 case Anchor.SW:
-                    x = root.X; y = root.Bottom - height;
+                    xL = root.X; yL = root.Bottom - height;
                     break;
                 case Anchor.W:
-                    x = root.X; y = root.Center.Y - (height / 2);
+                    xL = root.X; yL = root.Center.Y - (height / 2);
                     break;
                 case Anchor.Center:
-                    x = root.Center.X - (width / 2); y = root.Center.Y - (height / 2);
+                    xL = root.Center.X - (width / 2); yL = root.Center.Y - (height / 2);
                     break;
             }
 
             if (HSpace is not null)
             {
-                var spaceLeft = x - root.Left;
-                if (spaceLeft < HSpace) x = root.X + (int)HSpace;
+                var spaceLeft = xL - root.Left;
+                if (spaceLeft < HSpace) xL = root.X + (int)HSpace;
 
-                var SpaceRight = root.Right - (width + x);
-                if (SpaceRight < HSpace)
-                {
-                    width -= (int)MathF.Abs(SpaceRight - (int)HSpace);
-                    height = (int)(width / aspectRatio);
-                }
+                var SpaceRight = root.Right - (width + xL);
+                if (SpaceRight < HSpace) xL -= (int)HSpace;
             }
 
             if (VSpace is not null)
             {
-                var SpaceTop = y - root.Top;
-                if (SpaceTop < VSpace) y = root.Y + (int)VSpace;
+                var SpaceTop = yL - root.Top;
+                if (SpaceTop < VSpace) yL = root.Y + (int)VSpace;
 
-                var SpaceBottom = root.Bottom - (height + y);
-                if (SpaceBottom < VSpace)
-                {
-                    height -= (int)MathF.Abs(SpaceBottom - (int)VSpace);
-                    width = (int)(height * aspectRatio);
-                }
+                var SpaceBottom = root.Bottom - (height + yL);
+                if (SpaceBottom < VSpace) yL -= (int)VSpace;
             }
 
-            mCanvas = new Rectangle(x, y, width, height);
+            mCanvas = new Rectangle(xL, yL, width, height);
         }
 
         public bool Contains(Vector2 position) => mCanvas.Contains(position);
@@ -133,8 +122,8 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public Rectangle Bounds => mCanvas;
 
-        public void Draw()
-        {
+        public void Draw() 
+        { 
             //TextureManager.Instance.DrawRectangleF(mCanvas, Color.Green, 2, 1);
         }
     }
