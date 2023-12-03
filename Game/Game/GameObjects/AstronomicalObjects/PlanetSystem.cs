@@ -66,7 +66,6 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 
         [JsonProperty] public readonly List<Asteroid> mAsteroids = new();
 
-
         //--generation associated--//
         public void SetObjects(Star star, List<Planet> planets)
         {

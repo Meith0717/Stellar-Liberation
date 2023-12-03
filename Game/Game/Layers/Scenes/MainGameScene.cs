@@ -43,7 +43,7 @@ namespace StellarLiberation.Game.Layers.Scenes
                 GameLayer.CurrentSystem = planetSystem;
                 break;
             }
-            Camer2DController.Track(GameLayer.Player, this);
+            Camera2DController.Track(GameLayer.Player, this);
         }
 
         public override void DrawOnScreenView(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch)

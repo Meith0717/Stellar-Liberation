@@ -8,7 +8,7 @@ using StellarLiberation.Game.GameObjects;
 
 namespace StellarLiberation.Game.Core.Camera
 {
-    public static class Camer2DController
+    public static class Camera2DController
     {
         public static void Track(Player player, Scene scene)
         {
