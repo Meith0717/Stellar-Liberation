@@ -1,0 +1,59 @@
+﻿// TurretBattery.cs 
+// Copyright (c) 2023 Thierry Meiers 
+// All rights reserved.
+
+using Microsoft.Xna.Framework;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
+using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
+using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
+using System.Collections.Generic;
+
+namespace StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems.WeaponSystem
+{
+    public class TurretBattery
+    {
+        private readonly List<Turret> mTurrets = new();
+        private readonly int mMaxFireCoolDown;
+        private float mFireCoolDown;
+        private bool mFire;
+        private Color mParticleColor;
+        private int mHullDamage;
+        private int mShielDamage;
+
+        public TurretBattery(int fireCoolDown, Color particleColor, int hullDamage, int shieldDamage)
+        {
+            mMaxFireCoolDown = fireCoolDown;
+            mFireCoolDown = fireCoolDown;
+            mHullDamage = hullDamage;
+            mShielDamage = shieldDamage;
+            mParticleColor = particleColor;
+        }
+
+        public void PlaceTurret(Turret turret) => mTurrets.Add(turret);
+
+        public void Fire() => mFire = true;
+
+        public void StopFire() => mFire = false;
+
+        public void Update(GameTime gameTime, SpaceShip origin, ProjectileManager projectileManager, SpaceShip aimingShip)
+        {
+            mFireCoolDown += gameTime.ElapsedGameTime.Milliseconds;
+            var hasFired = false;
+            foreach (var turret in mTurrets)
+            {
+                var position = CollisionPredictor.PredictPosition(gameTime, origin.Position, 20, aimingShip);
+                turret.GetPosition(origin.Position, origin.Rotation);
+                turret.RotateToTArget(origin.Rotation, position);
+                if (!mFire || mFireCoolDown < mMaxFireCoolDown) continue;
+                turret.Fire(projectileManager, origin, mParticleColor, mShielDamage, mHullDamage);
+                hasFired = true;
+            }
+
+            if (hasFired) SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.torpedoFire);
+            if (hasFired) mFireCoolDown = 0;
+        }
+
+        public void Draw(Scene sceme) { foreach (var weapon in mTurrets) weapon.Draw(sceme); }
+    }
+}

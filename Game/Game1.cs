@@ -5,11 +5,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using StellarLiberation.Core.GameEngine.Content_Management;
-using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
-using StellarLiberation.Game.Core.InputManagement;
-using StellarLiberation.Game.Core.LayerManagement;
-using StellarLiberation.Game.Core.Persistance;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
+using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Layers;
 
 namespace StellarLiberation
@@ -79,7 +79,7 @@ namespace StellarLiberation
             base.Draw(gameTime);
         }
 
-        private void ToggleFullscreen() =>  mGraphicsManager.ToggleFullScreen();
+        private void ToggleFullscreen() => mGraphicsManager.ToggleFullScreen();
 
         public void SetCursorTexture(Registry registry) => Mouse.SetCursor(MouseCursor.FromTexture2D(Content.Load<Texture2D>(registry.FilePath), 0, 0));
     }

@@ -3,24 +3,22 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using StellarLiberation.Core.GameEngine.Content_Management;
-using StellarLiberation.Game.Core.Collision_Detection;
-using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
+using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameObjectManagement;
-using StellarLiberation.Game.Core.InputManagement;
-using StellarLiberation.Game.Core.LayerManagement;
-using StellarLiberation.Game.Core.ParticleSystem.ParticleEffects;
-using StellarLiberation.Game.Core.SpaceShipManagement.ShipSystems.WeaponSystem;
-using StellarLiberation.Game.Core.Utilitys;
+using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
+using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
+using StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems.WeaponSystem;
 using System.Linq;
-using static StellarLiberation.Game.GameObjects.Items;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
     [Collidable]
     public class Asteroid : GameObject2D
     {
-        public Asteroid(Vector2 position) 
+        public Asteroid(Vector2 position)
             : base(position, TextureRegistries.asteroid1, 5f, 50) {; }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
@@ -46,7 +44,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             }
             if (!gotHit) return;
             TextureScale -= 0.05f;
-            if (TextureScale < 0.1f) Dispose = true;
+            if (TextureScale < 0.2f) Dispose = true;
             if (position is null) return;
             var momentum = Vector2.Normalize((Vector2)position - Position);
             ExplosionEffect.AsteroidHit((Vector2)position, momentum, scene.ParticleManager);

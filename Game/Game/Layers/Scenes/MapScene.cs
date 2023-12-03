@@ -3,8 +3,8 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using StellarLiberation.Game.Core.InputManagement;
-using StellarLiberation.Game.Core.LayerManagement;
+using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using System.Collections.Generic;
 
@@ -20,16 +20,24 @@ namespace StellarLiberation.Game.Layers.Scenes
         {
             gameLayer.HudLayer.Hide = true;
             mCurrentSystem = currentSystem;
-            Camera2D.SetPosition(mCurrentSystem.Position);
+            Camera2D.SetPosition(mCurrentSystem.MapObj.Position);
             mPlanetSystems = planetSystems;
-            foreach (var system in mPlanetSystems) SpatialHashing.InsertObject(system, (int)system.Position.X, (int)system.Position.Y);
+            foreach (var system in mPlanetSystems)
+            {
+                var mapObj = system.MapObj;
+                SpatialHashing.InsertObject(mapObj, (int)mapObj.Position.X, (int)mapObj.Position.Y);
+            }
         }
 
         public override void UpdateObj(GameTime gameTime, InputState inputState)
         {
-            inputState.DoAction(ActionType.ToggleHyperMap, () => { GameLayer.HudLayer.Hide = false; GameLayer.PopScene(); }) ;
+            inputState.DoAction(ActionType.ToggleHyperMap, () => { GameLayer.HudLayer.Hide = false; GameLayer.PopScene(); });
 
-            foreach (var item in mPlanetSystems) item.Update(gameTime, inputState, this);
+            foreach (var system in mPlanetSystems)
+            {
+                var mapObj = system.MapObj;
+                mapObj.Update(gameTime, inputState, this);
+            }
         }
 
         public override void OnResolutionChanged() { base.OnResolutionChanged(); }

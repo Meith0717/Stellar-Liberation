@@ -1,14 +1,14 @@
-﻿// PlanetSystemScene.cs 
+﻿// MainGameScene.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using StellarLiberation.Game.Core.Camera;
-using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
-using StellarLiberation.Game.Core.InputManagement;
-using StellarLiberation.Game.Core.LayerManagement;
-using StellarLiberation.Game.Core.Parallax;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
+using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
+using StellarLiberation.Game.Core.Visuals.ParallaxSystem;
+using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 
 namespace StellarLiberation.Game.Layers.Scenes

@@ -4,11 +4,11 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using StellarLiberation.Core.GameEngine.Content_Management;
-using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
-using StellarLiberation.Game.Core.InputManagement;
-using StellarLiberation.Game.Core.LayerManagement;
-using StellarLiberation.Game.Core.Persistance;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
+using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.UserInterface;
 
 namespace StellarLiberation.Game.Layers
@@ -47,8 +47,8 @@ namespace StellarLiberation.Game.Layers
             mFrame.Initialize(mGraphicsDevice.Viewport.Bounds);
         }
 
-        public override void Destroy() 
-        { 
+        public override void Destroy()
+        {
             SoundEffectManager.Instance.StopAllSounds();
             MusicManager.Instance.StopAllMusics();
         }

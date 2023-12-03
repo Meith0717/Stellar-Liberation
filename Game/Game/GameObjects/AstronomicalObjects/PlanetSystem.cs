@@ -5,13 +5,13 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
-using StellarLiberation.Core.GameEngine.Content_Management;
-using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
+using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameObjectManagement;
-using StellarLiberation.Game.Core.InputManagement;
-using StellarLiberation.Game.Core.LayerManagement;
-using StellarLiberation.Game.Core.SpaceShipManagement;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement;
 using StellarLiberation.Game.Core.Utilitys;
+using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
+using StellarLiberation.Game.GameObjects.SpaceShipManagement;
 using System;
 using System.Collections.Generic;
 
@@ -20,73 +20,37 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
     public enum Danger { None, Moderate, Medium, High }
 
     [Serializable]
-    public class PlanetSystem : GameObject2D
+    public class PlanetSystem
     {
-        //--game object associated--------------------------------------------------------------//
-        [JsonProperty] public Danger Danger { get; private set; }
-        [JsonProperty] public CircleF SystemBounding { get; private set; }
+        [JsonProperty] public readonly Danger Danger;
+        [JsonProperty] public readonly CircleF SystemBounding;
+        [JsonIgnore] private MapPlanetSystem mMapObj;
 
-        public PlanetSystem(Vector2 mapPosition, Vector2 sectorPosition, int boundaryRadius, string textureId, Color color, Danger danger)
-            : base(mapPosition, textureId, 0.01f, 1)
-        {
-            TextureColor = color;
-            Danger = danger;
-            SystemBounding = new(sectorPosition, boundaryRadius);
-
-            for (int i = 0; i < 80; i++) mAsteroids.Add(new(ExtendetRandom.NextVectorInCircle(SystemBounding)));
-        }
-
-        public override void Update(GameTime gameTime, InputState inputState, Scene scene)
-        {
-            var LeftPressAction = () => {
-                scene.GameLayer.HudLayer.Hide = false;
-                scene.GameLayer.PopScene();
-                scene.GameLayer.Player.HyperDrive.SetTarget(this);
-            };
-
-            GameObject2DInteractionManager.Manage(inputState, this, scene, LeftPressAction, null);
-
-            base.Update(gameTime, inputState, scene);
-        }
-
-        public override void Draw(Scene scene)
-        {
-            base.Draw(scene);
-            TextureManager.Instance.DrawGameObject(this);
-            TextureManager.Instance.Draw(TextureRegistries.starLightAlpha, Position, TextureOffset, TextureScale * 2f, Rotation, 0, TextureColor);
-        }
-
-        //--------------------------------------------------------------------------------------//
-
-        //--planetsystem scene associated-------------------------------------------------------//
-        [JsonProperty] public Star Star { get; private set; }
-        [JsonProperty] public List<Planet> Planets { get; private set; }
-
+        [JsonProperty] public readonly Star Star;
+        [JsonProperty] public readonly List<Planet> Planets;
         [JsonProperty] public readonly SpaceShipManager SpaceShipManager = new();
+        [JsonProperty] public readonly GameObjectManager AsteroidManager = new();
 
-        [JsonProperty] public readonly List<Asteroid> mAsteroids = new();
-
-        //--generation associated--//
-        public void SetObjects(Star star, List<Planet> planets)
+        public PlanetSystem(Star star, List<Planet> planets, Danger danger, float radius) 
         {
-            Planets = planets;  
+            Planets = planets;
             Star = star;
-            for (int i = 0; i < 10; i++) SpaceShipManager.Spawn(ExtendetRandom.NextVectorInCircle(SystemBounding), ShipType.EnemyBattleShip);
-            for (int i = 0; i < 10; i++) SpaceShipManager.Spawn(ExtendetRandom.NextVectorInCircle(SystemBounding), ShipType.EnemyCorvette);
-            for (int i = 0; i < 3; i++) SpaceShipManager.Spawn(ExtendetRandom.NextVectorInCircle(SystemBounding), ShipType.EnemyCarrior);
-
+            Danger = danger;
+            SystemBounding = new(Star.Position, radius);
+            for (int i = 0; i < 10; i++) SpaceShipManager.Spawn(ExtendetRandom.NextVectorInCircle(SystemBounding), EnemyId.EnemyBattleShip);
+            for (int i = 0; i < 10; i++) SpaceShipManager.Spawn(ExtendetRandom.NextVectorInCircle(SystemBounding), EnemyId.EnemyBomber);
+            for (int i = 0; i < 3; i++) SpaceShipManager.Spawn(ExtendetRandom.NextVectorInCircle(SystemBounding), EnemyId.EnemyCarrior);
+            for (int i = 0; i < 50; i++) AsteroidManager.AddObj(new Asteroid(ExtendetRandom.NextVectorInCircle(SystemBounding)));
         }
-        //------------------------//
-
 
         public void UpdateObjects(GameTime gameTime, InputState inputState, Scene scene)
         {
-            Star.Update(gameTime, inputState, scene);
             foreach (var item in Planets) item.Update(gameTime, inputState, scene);
+            Star.Update(gameTime, inputState, scene);
             SpaceShipManager.Update(gameTime, inputState, scene);
-            foreach (var asteroid in mAsteroids) asteroid.Update(gameTime, inputState, scene);
+            AsteroidManager.Update(gameTime, inputState, scene);
         }
 
-        //--------------------------------------------------------------------------------------//
+        public MapPlanetSystem MapObj { get { return mMapObj ??= new(Vector2.Zero, this, Star.TextureId); } }
     }
 }
