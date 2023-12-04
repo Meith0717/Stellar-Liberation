@@ -44,7 +44,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
         {
             SensorArray = sensorArray;
             SublightEngine = sublightEngine;
-            HyperDrive = new(500, 500);
+            HyperDrive = new(500);
             WeaponSystem = weaponSystem;
             DefenseSystem = defenseSystem;
             Fraction = fractions;
@@ -54,7 +54,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
 
-            HyperDrive.Update(gameTime, this);
+            HyperDrive.Update(gameTime, scene);
             if (!HyperDrive.IsActive) SublightEngine.Update(gameTime, this);
 
             MovingDirection = Geometry.CalculateDirectionVector(Rotation);
@@ -67,7 +67,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
             HasProjectileHit(gameTime, scene);
             DefenseSystem.Update(gameTime);
             SensorArray.Scan(Position, Fraction, scene);
-            if (!IsDestroyed) WeaponSystem.Update(gameTime, this, scene.GameLayer.ProjectileManager);
+            if (!IsDestroyed) WeaponSystem.Update(gameTime, this, scene.GameLayer.CurrentSystem.GameObjects);
             mAi.Update(gameTime, this, scene);
 
             if (!IsDestroyed) return;
@@ -115,7 +115,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
             scene.Camera2D.Shake((int)(shakeamount * 100));
             ExplosionEffect.ShipDestroyed(Position, scene.ParticleManager);
 
-            for (int i = 0; i < 5; i++) scene.GameLayer.ItemManager.Add(ItemFactory.Get(ItemID.Metall, MovingDirection, Position));
+            for (int i = 0; i < 5; i++) scene.GameLayer.CurrentSystem.GameObjects.AddObj(ItemFactory.Get(ItemID.Metall, MovingDirection, Position));
 
             return;
         }

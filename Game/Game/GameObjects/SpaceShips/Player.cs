@@ -52,6 +52,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
 
             base.Update(gameTime, inputState, scene);
             WeaponSystem.AimShip(SensorArray.GetAimingShip(Position, Fraction));
+            System.Diagnostics.Debug.WriteLine(Position);
         }
 
         public override void Draw(Scene scene)

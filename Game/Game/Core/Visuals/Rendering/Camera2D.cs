@@ -25,7 +25,7 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
         /// <summary>
         /// Current zoom level of the camera.
         /// </summary>
-        public float Zoom { get; private set; }
+        public float Zoom { get; set; }
 
         private Vector2 mLastPosition;
 

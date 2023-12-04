@@ -50,7 +50,7 @@ namespace StellarLiberation.Game.Core.GameProceses.ItemManagement
             Items[item.ItemID]++;
 
             // Some Other stuff
-            scene.GameLayer.ItemManager.RemoveItem(scene, item);
+            scene.GameLayer.CurrentSystem.GameObjects.RemobeObj(item);
             Count++;
         }
 

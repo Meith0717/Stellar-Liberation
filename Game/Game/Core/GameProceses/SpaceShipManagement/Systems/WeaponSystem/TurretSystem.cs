@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
+using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.ProjectileManagement;
 using StellarLiberation.Game.GameObjects.SpaceShipManagement;
@@ -45,7 +46,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.W
         public void Fire() => mFire = true;
         public void StopFire() => mFire = false;
 
-        public void Update(GameTime gameTime, SpaceShip origin, ProjectileManager projectileManager)
+        public void Update(GameTime gameTime, SpaceShip origin, GameObjectManager objManager)
         {
             mFireCoolDown += gameTime.ElapsedGameTime.Milliseconds;
             var hasFired = false;
@@ -55,7 +56,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.W
                 turret.GetPosition(origin.Position, origin.Rotation);
                 turret.RotateToTArget(origin.Rotation, position);
                 if (!mFire || mFireCoolDown < mMaxFireCoolDown) continue;
-                turret.Fire(projectileManager, origin, mParticleColor, mShielDamage, mHullDamage);
+                turret.Fire(objManager, origin, mParticleColor, mShielDamage, mHullDamage);
                 hasFired = true;
             }
 

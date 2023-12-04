@@ -42,6 +42,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.SceneManagement
             Scenes.RemoveLast();
         }
 
+        public void RemoveScene(Scene scene) => Scenes.Remove(scene);
+
         public override void Update(GameTime gameTime, InputState inputState)
         {
             DebugSystem.Update(gameTime, inputState);

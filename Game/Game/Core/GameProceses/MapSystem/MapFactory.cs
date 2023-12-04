@@ -37,7 +37,7 @@ namespace StellarLiberation.Game.Core.GameProceses.MapSystem
                     if (noiseMap[x, y] == 0) continue;
 
                     // Generate Star
-                    var star = StarTypes.GenerateRandomStar(GetScalingPosition(x, y, ViewScale));
+                    var star = StarTypes.GenerateRandomStar(Vector2.Zero);
 
                     // Generate Planets of Star
                     var planets = new List<Planet>();

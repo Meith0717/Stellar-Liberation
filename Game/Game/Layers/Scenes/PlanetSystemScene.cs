@@ -1,4 +1,4 @@
-﻿// MainGameScene.cs 
+﻿// PlanetSystemScene.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
@@ -7,18 +7,24 @@ using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
+using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParallaxSystem;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 
 namespace StellarLiberation.Game.Layers.Scenes
 {
-    internal class MainGameScene : Scene
+    internal class PlanetSystemScene : Scene
     {
-        private ParallaxController mParlaxManager;
 
-        public MainGameScene(GameLayer gameLayer) : base(gameLayer, 50000, 0.00001f, 1, false)
+        private readonly ParallaxController mParlaxManager;
+        private readonly PlanetSystem mPlanetSystem;
+
+        public PlanetSystemScene(GameLayer gameLayer, PlanetSystem currentPlanetSystem, float camZoom) : base(gameLayer, 50000, 0.00001f, 1, false)
         {
+            Camera2D.Zoom = camZoom;
+            mPlanetSystem = currentPlanetSystem;
+            gameLayer.Player.Position = ExtendetRandom.NextVectorInCircle(currentPlanetSystem.SystemBounding);
             mParlaxManager = new();
             mParlaxManager.Add(new(TextureRegistries.gameBackground, 0));
             mParlaxManager.Add(new(TextureRegistries.gameBackgroundParlax4, .1f));
@@ -33,16 +39,8 @@ namespace StellarLiberation.Game.Layers.Scenes
 
             mParlaxManager.Update(Camera2D.Movement, Camera2D.Zoom);
             GameLayer.Player.Update(gameTime, inputState, this);
-            GameLayer.ItemManager.Update(gameTime, inputState, this);
-            GameLayer.ProjectileManager.Update(gameTime, inputState, this);
+            mPlanetSystem.UpdateObjects(gameTime, inputState, this);
             GameLayer.DebugSystem.CheckForSpawn(GameLayer.CurrentSystem, this);
-            foreach (PlanetSystem planetSystem in GameLayer.PlanetSystems)
-            {
-                if (!ViewFrustumFilter.WorldFrustum.Intersects(planetSystem.SystemBounding)) continue;
-                planetSystem.UpdateObjects(gameTime, inputState, this);
-                GameLayer.CurrentSystem = planetSystem;
-                break;
-            }
             Camera2DController.Track(GameLayer.Player, this);
         }
 
