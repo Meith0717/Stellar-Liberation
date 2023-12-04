@@ -4,9 +4,9 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.SpaceShipManagement;
+using System.Linq;
 
 namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 {
@@ -21,16 +21,19 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
         public override double GetScore(GameTime gameTime, SpaceShip spaceShip, Scene scene)
         {
             mSpawnCoolDown += gameTime.ElapsedGameTime.Milliseconds;
-            if (mSpawnCoolDown > mMaxSpawnCoolDown && !(spaceShip.SensorArray.AimingShip is null)) return double.PositiveInfinity;
+            if (mSpawnCoolDown > mMaxSpawnCoolDown && spaceShip.SensorArray.OpponentsInRannge.Any()) return double.PositiveInfinity;
             return 0;
         }
 
         public override void Execute(GameTime gameTime, SpaceShip spaceShip, Scene scene)
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 15; i++)
             {
                 var position = ExtendetRandom.NextVectorOnBorder(spaceShip.BoundedBox);
-                scene.GameLayer.CurrentSystem.SpaceShipManager.Spawn(position, EnemyId.EnemyFighter);
+                var fighter = EnemyFactory.Get(EnemyId.EnemyFighter, position);
+                var target = ExtendetRandom.GetRandomElement(spaceShip.SensorArray.OpponentsInRannge);
+                fighter.WeaponSystem.AimShip(target);
+                scene.GameLayer.CurrentSystem.GameObjects.AddObj(fighter);
                 mSpawnCoolDown = 0;
             }
         }

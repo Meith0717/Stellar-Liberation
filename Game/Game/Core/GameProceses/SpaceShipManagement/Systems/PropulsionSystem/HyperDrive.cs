@@ -3,11 +3,14 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
+using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
+using StellarLiberation.Game.GameObjects.SpaceShipManagement;
 
-namespace StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems.PropulsionSystem
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PropulsionSystem
 {
     public class HyperDrive
     {
@@ -35,7 +38,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems.Pro
             SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.ChargeHyperdrive);
             IsActive = true;
             mActualChargingTime = 0;
-            TargetPosition = planetSystem.Star.Position;
+            TargetPosition = ExtendetRandom.NextVectorOnBorder(planetSystem.SystemBounding);
         }
 
         public void Update(GameTime gameTime, SpaceShip spaceShip)

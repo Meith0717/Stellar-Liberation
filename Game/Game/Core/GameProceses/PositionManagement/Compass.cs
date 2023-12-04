@@ -6,9 +6,9 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.GameObjectManagement;
+using StellarLiberation.Game.Core.GameProceses.ProjectileManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems.WeaponSystem;
 using System;
 using System.Collections.Generic;
 
@@ -36,8 +36,8 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
 
         public void Draw()
         {
-            TextureManager.Instance.DrawCircle(mCompass.Position, mCompass.Radius, new(20, 20, 10, 10), 1, 1);
-            foreach (var pos in mKeyValuePairs.Keys) TextureManager.Instance.Draw(mKeyValuePairs[pos], pos - new Vector2(10, 10), 20, 20);
+            // TextureManager.Instance.DrawCircle(mCompass.Position, mCompass.Radius, new(20, 20, 10, 10), 1, 1);
+            // foreach (var pos in mKeyValuePairs.Keys) TextureManager.Instance.Draw(mKeyValuePairs[pos], pos - new Vector2(10, 10), 20, 20);
         }
     }
 }

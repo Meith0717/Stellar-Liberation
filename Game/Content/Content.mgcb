@@ -1105,6 +1105,18 @@
 /processorParam:TextureFormat=Color
 /build:textures/gameobjects/spacecrafts/playerShield.png
 
+#begin textures/gameobjects/spacecrafts/unkownObj.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameobjects/spacecrafts/unkownObj.png
+
 #begin textures/gameobjects/weapons/projectile.png
 /importer:TextureImporter
 /processor:TextureProcessor

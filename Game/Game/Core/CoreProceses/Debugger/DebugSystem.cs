@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
         private bool ShowPaths;
 
         private bool SpawnFighter;
-        private bool SpawnCorvette;
+        private bool SpawnBomber;
         private bool SpawnBattleShip;
         private bool SpawnCarrior;
 
@@ -60,19 +60,18 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
             inputState.DoAction(ActionType.F4, () => ShowSensorRadius = !ShowSensorRadius);
             inputState.DoAction(ActionType.F5, () => ShowPaths = !ShowPaths);
             inputState.DoAction(ActionType.F6, () => SpawnFighter = true);
-            inputState.DoAction(ActionType.F7, () => SpawnCorvette = true);
+            inputState.DoAction(ActionType.F7, () => SpawnBomber = true);
             inputState.DoAction(ActionType.F8, () => SpawnBattleShip = true);
             inputState.DoAction(ActionType.F9, () => SpawnCarrior = true);
         }
 
-        public void CheckForSpawn(PlanetSystem planetSystem)
+        public void CheckForSpawn(PlanetSystem planetSystem, Scene scene)
         {
-            var position = planetSystem.Star.Position;
-            if (SpawnBattleShip) planetSystem.SpaceShipManager.Spawn(position, EnemyId.EnemyBattleShip);
-            if (SpawnCorvette) planetSystem.SpaceShipManager.Spawn(position, EnemyId.EnemyBomber);
-            if (SpawnFighter) planetSystem.SpaceShipManager.Spawn(position, EnemyId.EnemyFighter);
-            if (SpawnCarrior) planetSystem.SpaceShipManager.Spawn(position, EnemyId.EnemyCarrior);
-            SpawnFighter = SpawnBattleShip = SpawnCorvette = SpawnCarrior = false;
+            if (SpawnBattleShip) planetSystem.GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyBattleShip, scene.Camera2D.Position));
+            if (SpawnBomber) planetSystem.GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyBomber, scene.Camera2D.Position));
+            if (SpawnFighter) planetSystem.GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyFighter, scene.Camera2D.Position));
+            if (SpawnCarrior) planetSystem.GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyCarrior, scene.Camera2D.Position));
+            SpawnFighter = SpawnBattleShip = SpawnBomber = SpawnCarrior = false;
         }
 
         public void UpdateFrameCounting()
@@ -108,11 +107,11 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 25), "F2 - Draw Objects in Bucket", 1, ShowObjectsInBucket ? Color.GreenYellow : Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 50), "F3 - Show Hit Box", 1, ShowHitBoxes ? Color.GreenYellow : Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 75), "F4 - Show Sensor Radius", 1, ShowSensorRadius ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 200), "F5 - Show Paths", 1, ShowPaths ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 100), "F6 - Spawn Fighter", 1, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 125), "F7 - Spawn Corvette", 1, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 150), "F8 - Spawn Battle Ship", 1, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 175), "F9 - Spawn Carrior", 1, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 100), "F5 - Show Paths", 1, ShowPaths ? Color.GreenYellow : Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 120), "F6 - Spawn Fighter", 1, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 150), "F7 - Spawn Bomber", 1, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 175), "F8 - Spawn Battle Ship", 1, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 100), "F9 - Spawn Carrior", 1, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 225), "F10 - none", 1, false ? Color.GreenYellow : Color.White);
 
             List<string> debug = new() {

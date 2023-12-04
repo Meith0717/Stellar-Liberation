@@ -9,19 +9,18 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
+using StellarLiberation.Game.GameObjects.SpaceShipManagement;
 
-namespace StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems.WeaponSystem
+namespace StellarLiberation.Game.Core.GameProceses.ProjectileManagement
 {
     public class Projectile : GameObject2D
     {
         public SpaceShip Origine { get; private set; }
 
-        public readonly int ShieldDamage;
-        public readonly int HullDamage;
+        public readonly float ShieldDamage;
+        public readonly float HullDamage;
 
-        private bool mHit;
-
-        public Projectile(Vector2 startPosition, float rotation, Color color, int shieldDamage, int hullDamage, SpaceShip origine)
+        public Projectile(Vector2 startPosition, float rotation, Color color, float shieldDamage, float hullDamage, SpaceShip origine)
             : base(startPosition, TextureRegistries.projectile, 1f, 15)
         {
             MovingDirection = Geometry.CalculateDirectionVector(rotation);
@@ -30,7 +29,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems.Wea
             ShieldDamage = shieldDamage;
             TextureColor = color;
             Origine = origine;
-            Velocity = 20;
+            Velocity = 20 + (float)ExtendetRandom.Random.NextDouble();
             DisposeTime = 5000;
         }
 
@@ -43,14 +42,9 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems.Wea
         public override void Draw(Scene scene)
         {
             base.Draw(scene);
-            if (!mHit) TextureManager.Instance.DrawGameObject(this);
+            TextureManager.Instance.DrawGameObject(this);
         }
 
-        public override void HasCollide()
-        {
-            Dispose = true;
-            Velocity = 0;
-            mHit = true;
-        }
+        public override void HasCollide() => Dispose = true;
     }
 }

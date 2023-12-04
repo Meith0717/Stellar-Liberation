@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.Utilitys;
 using System;
 
-namespace StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems.PropulsionSystem
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PropulsionSystem
 {
     public static class MovementController
     {

@@ -17,7 +17,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
 
         public Inventory Inventory;
 
-        public Player() : base(Vector2.Zero, TextureRegistries.player, 1, new(20000), new(10f, 0.01f), new(1000, Color.LightBlue, 2, 2), new(100, 1000, 1), Factions.Enemys)
+        public Player() : base(Vector2.Zero, TextureRegistries.player, 1, new(20000), new(10f, 0.01f), new(1000, Color.LightBlue, 2, 2, 10000), new(100, 1000, 1), Factions.Allies)
         {
             Inventory = new(500, 10000);
 
@@ -31,7 +31,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
             {
                 // new PatrollBehavior(),
                 // new InterceptBehavior(),
-                // new FarCombatBehavior(10000),
+                // new FarCombatBehavior(),
                 // new FleeBehavior()
             })
             { Debug = true };
@@ -51,6 +51,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
             Inventory.Update(gameTime, this, scene);
 
             base.Update(gameTime, inputState, scene);
+            WeaponSystem.AimShip(SensorArray.GetAimingShip(Position, Fraction));
         }
 
         public override void Draw(Scene scene)

@@ -11,12 +11,13 @@ using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.AI;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
+using StellarLiberation.Game.Core.GameProceses.ProjectileManagement;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PropulsionSystem;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.WeaponSystem;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.GameObjects.Items;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems.PropulsionSystem;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems.WeaponSystem;
 using System;
 using System.Linq;
 
@@ -30,15 +31,15 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
     {
         [JsonIgnore] protected UtilityAi mAi;
         [JsonProperty] protected bool IsDestroyed { get; private set; }
-        [JsonIgnore] public SensorArray SensorArray { get; private set; }
-        [JsonIgnore] public SublightEngine SublightEngine { get; private set; }
+        [JsonIgnore] public SensorSystem SensorArray { get; private set; }
+        [JsonIgnore] public SublightDrive SublightEngine { get; private set; }
         [JsonIgnore] public HyperDrive HyperDrive { get; private set; }
-        [JsonIgnore] public TurretBattery WeaponSystem { get; private set; }
+        [JsonIgnore] public TurretSystem WeaponSystem { get; private set; }
         [JsonProperty] public DefenseSystem DefenseSystem { get; private set; }
-        [JsonIgnore] protected Factions mOpponent;
+        [JsonIgnore] public Factions Fraction;
 
 
-        public SpaceShip(Vector2 position, string textureId, float textureScale, SensorArray sensorArray, SublightEngine sublightEngine, TurretBattery weaponSystem, DefenseSystem defenseSystem, Factions opponent)
+        public SpaceShip(Vector2 position, string textureId, float textureScale, SensorSystem sensorArray, SublightDrive sublightEngine, TurretSystem weaponSystem, DefenseSystem defenseSystem, Factions fractions)
             : base(position, textureId, textureScale, 10)
         {
             SensorArray = sensorArray;
@@ -46,7 +47,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
             HyperDrive = new(500, 500);
             WeaponSystem = weaponSystem;
             DefenseSystem = defenseSystem;
-            mOpponent = opponent;
+            Fraction = fractions;
 
         }
 
@@ -65,8 +66,8 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
 
             HasProjectileHit(gameTime, scene);
             DefenseSystem.Update(gameTime);
-            SensorArray.Update(gameTime, Position, scene.GameLayer.CurrentSystem, scene, mOpponent);
-            if (!IsDestroyed) WeaponSystem.Update(gameTime, this, scene.GameLayer.ProjectileManager, SensorArray.AimingShip);
+            SensorArray.Scan(Position, Fraction, scene);
+            if (!IsDestroyed) WeaponSystem.Update(gameTime, this, scene.GameLayer.ProjectileManager);
             mAi.Update(gameTime, this, scene);
 
             if (!IsDestroyed) return;

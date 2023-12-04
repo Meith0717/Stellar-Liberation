@@ -5,11 +5,16 @@
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
+using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
+using StellarLiberation.Game.Core.GameProceses.ProjectileManagement;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
+using StellarLiberation.Game.GameObjects.SpaceShipManagement;
 using System;
+using System.Linq;
 
-namespace StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems
 {
     [Serializable]
     public class DefenseSystem
@@ -52,7 +57,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems
             mActualShieldForce += mRegenerationPerSecond / gameTime.ElapsedGameTime.Milliseconds;
         }
 
-        public void GotHit(Vector2 position, int shieldDamage, int hullDamage, Scene scene)
+        public void GotHit(Vector2 position, float shieldDamage, float hullDamage, Scene scene)
         {
             ShieldRegenerateCoolDown = 5000;
             if (mActualShieldForce > 0)
@@ -71,6 +76,16 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems
             mMaxShieldForce += mMaxShieldForce * shieldUpgradePercentage;
             mMaxHullForce += mMaxHullForce * hullUpgradePercentage;
             mRegenerationPerSecond += mRegenerationPerSecond * regenerationUpgradePercentage;
+        }
+
+        public void Repair(float amount)
+        {
+            if (amount > mMaxHullForce)
+            {
+                mActualHullForce = mMaxHullForce;
+                return;
+            }
+            mActualHullForce += amount;
         }
 
         public void DrawShields(SpaceShip spaceShip)

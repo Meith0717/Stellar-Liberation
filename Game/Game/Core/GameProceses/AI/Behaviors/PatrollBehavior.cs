@@ -18,7 +18,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
         public override double GetScore(GameTime gameTime, SpaceShip spaceShip, Scene scene)
         {
             var shielHhullScore = spaceShip.DefenseSystem.ShieldPercentage * 0.5 + spaceShip.DefenseSystem.HullPercentage * 0.5;
-            var hasNoAimingShip = spaceShip.SensorArray.AimingShip is null ? 1 : 0;
+            var hasNoAimingShip = !spaceShip.SensorArray.OpponentsInRannge.Any() ? 1 : 0;
 
             var score = shielHhullScore * hasNoAimingShip;
             return score;
@@ -26,11 +26,17 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
         public override void Execute(GameTime gameTime, SpaceShip spaceShip, Scene scene)
         {
+            spaceShip.SublightEngine.SetVelocity(.5f);
+
+            var aimingShip = spaceShip.SensorArray.GetAimingShip(spaceShip.Position, spaceShip.Fraction);
+            spaceShip.WeaponSystem.AimShip(aimingShip);
+
+
             switch (mPatrolTarget)
             {
                 case null:
                     // Get Planets in Radius
-                    var patrolTargets = spaceShip.SensorArray.AstronomicalObjects.OfType<Planet>().ToList();
+                    var patrolTargets = spaceShip.SensorArray.LongRangeScan.OfType<Planet>().ToList();
                     if (!patrolTargets.Any()) break;
 
                     // Get Random Target

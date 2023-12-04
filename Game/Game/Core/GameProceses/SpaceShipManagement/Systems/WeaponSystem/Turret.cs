@@ -7,10 +7,12 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameObjectManagement;
+using StellarLiberation.Game.Core.GameProceses.ProjectileManagement;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PropulsionSystem;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems.PropulsionSystem;
+using StellarLiberation.Game.GameObjects.SpaceShipManagement;
 
-namespace StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems.WeaponSystem
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.WeaponSystem
 {
     public class Turret : GameObject2D
     {
@@ -19,8 +21,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems.Wea
         public Turret(Vector2 relativePosition, float textureScale, int textureDepth)
         : base(Vector2.Zero, TextureRegistries.turette, textureScale, textureDepth) => mRelativePosition = relativePosition;
 
-        public void Fire(ProjectileManager projectileManager, SpaceShip origin, Color particleColor, int shieldDamage, int hullDamage) => projectileManager.AddProjectiel(new(Position, Rotation, particleColor, shieldDamage, hullDamage, origin));
-
+        public void Fire(ProjectileManager projectileManager, SpaceShip origin, Color particleColor, float shieldDamage, float hullDamage) => projectileManager.AddProjectiel(new(Position, Rotation, particleColor, shieldDamage, hullDamage, origin));
 
         public void GetPosition(Vector2 originPosition, float originRotation) => Position = Transformations.Rotation(originPosition, mRelativePosition, originRotation);
 

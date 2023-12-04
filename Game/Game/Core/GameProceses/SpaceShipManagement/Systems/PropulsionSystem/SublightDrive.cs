@@ -8,21 +8,23 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.Utilitys;
+using StellarLiberation.Game.GameObjects.SpaceShipManagement;
 using System;
 
-namespace StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems.PropulsionSystem
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PropulsionSystem
 {
-    public class SublightEngine
+    public class SublightDrive
     {
         public bool IsMoving { get; private set; }
 
         public float MaxVelocity { get; }
+        private float mVelocity;
         private readonly float Maneuverability;
 
         private Vector2? mVector2Target;
         private SpaceShip mShipTarget;
 
-        public SublightEngine(float maxVelocity, float maneuverability)
+        public SublightDrive(float maxVelocity, float maneuverability)
         {
             MaxVelocity = maxVelocity;
             Maneuverability = maneuverability;
@@ -41,7 +43,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems.Pro
         {
             if (!IsMoving)
             {
-                spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, MaxVelocity / 100f);
+                spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, mVelocity / 100f);
                 return;
             }
 
@@ -54,11 +56,11 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems.Pro
 
             var targetVelocity = relRotation switch
             {
-                < 0.7f => MaxVelocity * rotationScore,
-                >= 0.7f => MaxVelocity * relRotation,
+                < 0.7f => mVelocity * rotationScore,
+                >= 0.7f => mVelocity * relRotation,
                 float.NaN => 0
             };
-            spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, targetVelocity, MaxVelocity / 100f);
+            spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, targetVelocity, mVelocity / 100f);
             if (spaceShip.BoundedBox.Contains((Vector2)mVector2Target))
                 Standstill();
         }
@@ -72,6 +74,8 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems.Pro
                 spaceShip.Rotation += rotationUpdate * Maneuverability;
             }
         }
+
+        public void SetVelocity(float percentage) => mVelocity = MaxVelocity * percentage;
 
         public void MoveToPosition(Vector2 position)
         {

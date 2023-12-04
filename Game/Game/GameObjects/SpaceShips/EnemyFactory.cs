@@ -4,6 +4,8 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
+using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.AI.Behaviors;
 using StellarLiberation.Game.Core.GameProceses.AI.Behaviors.Combat;
 
@@ -17,7 +19,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
         {
 
             public Carrior(Vector2 position)
-                : base(position, TextureRegistries.enemyCarrior, 4, new(20000), new(0.5f, 0.01f), new(1000, new(255, 4, 0), 1, 1), new(100, 100, 0))
+                : base(position, TextureRegistries.enemyCarrior, 4, new(80000), new(1f, 0.01f), new(1000, new(255, 4, 0), 1, 1, 10000), new(100, 100, 0))
             {
                 WeaponSystem.PlaceTurret(new(new(1100, 600), 1, TextureDepth + 1));
                 WeaponSystem.PlaceTurret(new(new(975, 600), 1, TextureDepth + 1));
@@ -49,7 +51,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
                 {
                     new PatrollBehavior(),
                     new InterceptBehavior(),
-                    new FarCombatBehavior(10000),
+                    new FarCombatBehavior(),
                     new SpawnFighterBehavior(20000),
                     new FleeBehavior()
                 });
@@ -59,7 +61,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
         private class BattleShip : Enemy
         {
             public BattleShip(Vector2 position)
-                : base(position, TextureRegistries.enemyBattleShip, 1, new(20000), new(0.5f, 0.01f), new(1000, Color.IndianRed, 1, 1), new(100, 100, 0))
+                : base(position, TextureRegistries.enemyBattleShip, 1, new(50000), new(2f, 0.01f), new(1000, Color.IndianRed, 1, 1, 10000), new(100, 100, 0))
             {
                 WeaponSystem.PlaceTurret(new(new(110, 35), 1, TextureDepth + 1));
                 WeaponSystem.PlaceTurret(new(new(110, -35), 1, TextureDepth + 1));
@@ -70,7 +72,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
                 mAi = new(new() {
                     new PatrollBehavior(),
                     new InterceptBehavior(),
-                    new FarCombatBehavior(10000),
+                    new CloseCombatBehavior(),
                     new FleeBehavior()
                 });
             }
@@ -79,7 +81,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
         private class Bomber : Enemy
         {
             public Bomber(Vector2 position)
-                : base(position, TextureRegistries.enemyBomber, 0.7f, new(20000), new(0.6f, 0.01f), new(1000, Color.IndianRed, 1, 1), new(100, 100, 0))
+                : base(position, TextureRegistries.enemyBomber, 0.7f, new(20000), new(3f, 0.01f), new(1000, Color.IndianRed, 1, 1, 10000), new(100, 100, 0))
             {
                 WeaponSystem.PlaceTurret(new(new(-50, 106), 1, TextureDepth + 1));
                 WeaponSystem.PlaceTurret(new(new(-50, -106), 1, TextureDepth + 1));
@@ -89,7 +91,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
                 {
                     new PatrollBehavior(),
                     new InterceptBehavior(),
-                    new FarCombatBehavior(10000),
+                    new CloseCombatBehavior(),
                     new FleeBehavior()
                 });
             }
@@ -98,14 +100,20 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
         private class Fighter : Enemy
         {
             public Fighter(Vector2 position)
-                : base(position, TextureRegistries.enemyFighter, 0.2f, new(20000), new(1.5f, 0.2f), new(1000, Color.IndianRed, 1, 1), new(100, 100, 0))
+                : base(position, TextureRegistries.enemyFighter, 0.2f, new(10000), new(4f, 0.2f), new(1000, Color.IndianRed, 1, 1, 10000), new(100, 100, 0))
             {
                 WeaponSystem.PlaceTurret(new(new(0, 0), 1, TextureDepth + 1));
 
                 mAi = new(new() {
-                    new PatrollBehavior(),
-                    new CloseCombatBehavior(10000),
-                });
+                    new InterceptBehavior(),
+                    new CloseCombatBehavior(),
+                })
+                { Debug = true };
+            }
+
+            public override void Update(GameTime gameTime, InputState inputState, Scene scene)
+            {
+                base.Update(gameTime, inputState, scene);
             }
         }
 

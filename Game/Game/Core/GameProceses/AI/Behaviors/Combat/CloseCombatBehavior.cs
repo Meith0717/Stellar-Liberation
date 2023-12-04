@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.SpaceShipManagement;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems;
 
 namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors.Combat
 {
@@ -14,18 +13,17 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors.Combat
     {
         private bool mReorienting;
 
-        public CloseCombatBehavior(float attacDistance) : base(attacDistance) { }
-
         public override void Execute(GameTime gameTime, SpaceShip spaceShip, Scene scene)
         {
-            if (spaceShip.SensorArray.AimingShip is null) return;
-            mDistance = Vector2.Distance(spaceShip.Position, spaceShip.SensorArray.AimingShip.Position);
+            if (spaceShip.WeaponSystem.AimingShip is null) return;
+            mDistance = Vector2.Distance(spaceShip.Position, spaceShip.WeaponSystem.AimingShip.Position);
 
             switch (mReorienting)
             {
                 case true:
                     // Check for breaking reorientation
                     if (!spaceShip.SublightEngine.IsMoving) mReorienting = false;
+                    spaceShip.SublightEngine.SetVelocity(1f);
                     break;
 
                 case false:
@@ -34,20 +32,21 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors.Combat
                     {
                         mReorienting = true;
                         // Set course to reorientation Position
-                        spaceShip.SublightEngine.MoveToPosition(GetReorientingPosition(spaceShip.SensorArray));
+                        spaceShip.SublightEngine.MoveToPosition(GetReorientingPosition(spaceShip));
                         break;
                     }
 
+                    spaceShip.SublightEngine.Standstill();
                     // Set course to attac target
-                    if (mDistance < mAttackDistance) spaceShip.WeaponSystem.Fire();
-                    spaceShip.SublightEngine.FollowSpaceShip(spaceShip.SensorArray.AimingShip);
+                    if (mDistance < spaceShip.WeaponSystem.Range) spaceShip.WeaponSystem.Fire();
+                    spaceShip.SublightEngine.FollowSpaceShip(spaceShip.WeaponSystem.AimingShip);
                     break;
             }
         }
 
-        private Vector2 GetReorientingPosition(SensorArray environment)
+        private Vector2 GetReorientingPosition(SpaceShip spaceShip)
         {
-            var targetPos = environment.AimingShip.Position;
+            var targetPos = spaceShip.WeaponSystem.AimingShip.Position;
             return ExtendetRandom.NextVectorOnBorder(new(targetPos, 5000));
         }
 

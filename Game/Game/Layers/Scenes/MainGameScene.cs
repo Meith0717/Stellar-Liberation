@@ -35,7 +35,7 @@ namespace StellarLiberation.Game.Layers.Scenes
             GameLayer.Player.Update(gameTime, inputState, this);
             GameLayer.ItemManager.Update(gameTime, inputState, this);
             GameLayer.ProjectileManager.Update(gameTime, inputState, this);
-            GameLayer.DebugSystem.CheckForSpawn(GameLayer.CurrentSystem);
+            GameLayer.DebugSystem.CheckForSpawn(GameLayer.CurrentSystem, this);
             foreach (PlanetSystem planetSystem in GameLayer.PlanetSystems)
             {
                 if (!ViewFrustumFilter.WorldFrustum.Intersects(planetSystem.SystemBounding)) continue;

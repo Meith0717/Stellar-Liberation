@@ -93,6 +93,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegi
         public readonly static Registry enemyBattleShipShield = new(spacecrafts, "enemyBattleShipShield");
         public readonly static Registry enemyCarrior = new(spacecrafts, "enemyCarrior");
         public readonly static Registry enemyCarriorShield = new(spacecrafts, "enemyCarriorShield");
+        public readonly static Registry unkownObj = new(spacecrafts, "unkownObj");
 
         private readonly static string weapons = @"textures\gameobjects\weapons";
         public readonly static Registry projectile = new(weapons, "projectile");

@@ -7,42 +7,51 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
+using StellarLiberation.Game.Core.GameProceses.ProjectileManagement;
+using StellarLiberation.Game.GameObjects.SpaceShipManagement;
 using System.Collections.Generic;
 
-namespace StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems.WeaponSystem
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.WeaponSystem
 {
-    public class TurretBattery
+    public class TurretSystem
     {
         private readonly List<Turret> mTurrets = new();
         private readonly int mMaxFireCoolDown;
         private float mFireCoolDown;
-        private bool mFire;
         private Color mParticleColor;
-        private int mHullDamage;
-        private int mShielDamage;
+        private float mHullDamage;
+        private float mShielDamage;
+        public float Range;
 
-        public TurretBattery(int fireCoolDown, Color particleColor, int hullDamage, int shieldDamage)
+        private SpaceShip mAimingShip;
+        private Vector2? mAimingPos;
+        private bool mFire;
+
+        public TurretSystem(int fireCoolDown, Color particleColor, int hullDamage, int shieldDamage, float range)
         {
             mMaxFireCoolDown = fireCoolDown;
             mFireCoolDown = fireCoolDown;
             mHullDamage = hullDamage;
             mShielDamage = shieldDamage;
             mParticleColor = particleColor;
+            Range = range;
         }
 
         public void PlaceTurret(Turret turret) => mTurrets.Add(turret);
 
+        public SpaceShip AimingShip => mAimingShip;
+        public void AimShip(SpaceShip spaceShip) => mAimingShip = spaceShip;
+        public void AimPosition(SpaceShip spaceShip) => mAimingShip = spaceShip;
         public void Fire() => mFire = true;
-
         public void StopFire() => mFire = false;
 
-        public void Update(GameTime gameTime, SpaceShip origin, ProjectileManager projectileManager, SpaceShip aimingShip)
+        public void Update(GameTime gameTime, SpaceShip origin, ProjectileManager projectileManager)
         {
             mFireCoolDown += gameTime.ElapsedGameTime.Milliseconds;
             var hasFired = false;
             foreach (var turret in mTurrets)
             {
-                var position = CollisionPredictor.PredictPosition(gameTime, origin.Position, 20, aimingShip);
+                var position = mAimingPos ?? CollisionPredictor.PredictPosition(gameTime, origin.Position, 20, mAimingShip);
                 turret.GetPosition(origin.Position, origin.Rotation);
                 turret.RotateToTArget(origin.Rotation, position);
                 if (!mFire || mFireCoolDown < mMaxFireCoolDown) continue;
@@ -52,6 +61,13 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems.Wea
 
             if (hasFired) SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.torpedoFire);
             if (hasFired) mFireCoolDown = 0;
+        }
+
+        public void Upgrade(float hullDamagePercentage = 0, float shieldDamagePercentage = 0, float fireCoolDownPercentage = 0)
+        {
+            mHullDamage += mHullDamage * hullDamagePercentage;
+            mShielDamage += mShielDamage * shieldDamagePercentage;
+            mFireCoolDown -= mFireCoolDown * fireCoolDownPercentage;
         }
 
         public void Draw(Scene sceme) { foreach (var weapon in mTurrets) weapon.Draw(sceme); }

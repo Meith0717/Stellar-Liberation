@@ -4,7 +4,7 @@
 
 using StellarLiberation.Game.Core.GameObjectManagement;
 
-namespace StellarLiberation.Game.GameObjects.SpaceShipManagement.ShipSystems.WeaponSystem
+namespace StellarLiberation.Game.Core.GameProceses.ProjectileManagement
 {
     public class ProjectileManager : GameObjectManager
     {

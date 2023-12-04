@@ -4,6 +4,7 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
+using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.GameObjects.SpaceShipManagement;
 using System.Linq;
 
@@ -17,7 +18,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
         {
             var shielHhullScore = spaceShip.DefenseSystem.ShieldPercentage * 0.01 + spaceShip.DefenseSystem.HullPercentage * 0.99;
 
-            var target = spaceShip.SensorArray.AimingShip;
+            var target = spaceShip.WeaponSystem.AimingShip;
             if (target is null) return 0;
             var targetShielHhullScore = target.DefenseSystem.ShieldPercentage * 0.1 + target.DefenseSystem.HullPercentage * 0.9;
 
@@ -27,7 +28,8 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
         public override void Execute(GameTime gameTime, SpaceShip spaceShip, Scene scene)
         {
-            if (mFleePosition is null) mFleePosition = spaceShip.SensorArray.AstronomicalObjects.Last().Position;
+            spaceShip.SublightEngine.SetVelocity(1f);
+            if (mFleePosition is null) mFleePosition = spaceShip.SensorArray.LongRangeScan.OfType<Planet>().Last().Position;
             spaceShip.SublightEngine.MoveToPosition((Vector2)mFleePosition);
         }
 
