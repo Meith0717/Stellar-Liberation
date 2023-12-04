@@ -47,6 +47,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
         {
             WeaponSystem.StopFire();
             SublightEngine.ControlByInput(this, inputState, scene.WorldMousePosition);
+            WeaponSystem.AimPosition(null);
             inputState.DoAction(ActionType.RightClickHold, () => WeaponSystem.AimPosition(scene.WorldMousePosition));
             inputState.DoAction(ActionType.LeftClickHold, () => WeaponSystem.Fire());
             Inventory.Update(gameTime, this, scene);
