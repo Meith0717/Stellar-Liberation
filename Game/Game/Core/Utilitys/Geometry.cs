@@ -12,7 +12,6 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
-using System.Reflection.Metadata;
 
 namespace StellarLiberation.Game.Core.Utilitys
 {

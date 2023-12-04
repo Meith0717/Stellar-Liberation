@@ -14,26 +14,40 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin fonts/button.spritefont
+#begin fonts/buttonFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:fonts/button.spritefont
+/build:fonts/buttonFont.spritefont
 
-#begin fonts/debug.spritefont
+#begin fonts/debugFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:fonts/debug.spritefont
+/build:fonts/debugFont.spritefont
 
-#begin fonts/text.spritefont
+#begin fonts/subTitleFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:fonts/text.spritefont
+/build:fonts/subTitleFont.spritefont
+
+#begin fonts/textFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:fonts/textFont.spritefont
+
+#begin fonts/titleFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:fonts/titleFont.spritefont
 
 #begin music/bgMusicGame.wav
 /importer:WavImporter
@@ -47,11 +61,35 @@
 /processorParam:Quality=Best
 /build:music/bgMusicMenue.wav
 
+#begin music/DeepSpace10(loop).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:music/DeepSpace10(loop).wav
+
+#begin music/Sci-Fi 5.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:music/Sci-Fi 5.wav
+
+#begin music/ShoulderOfOrion(loop).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:music/ShoulderOfOrion(loop).wav
+
 #begin sounds/chargeHyperdrive.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:sounds/chargeHyperdrive.wav
+
+#begin sounds/click.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/click.wav
 
 #begin sounds/collect.wav
 /importer:WavImporter
@@ -76,6 +114,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:sounds/engineSound.wav
+
+#begin sounds/hover.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/hover.wav
 
 #begin sounds/torpedoFire.wav
 /importer:WavImporter
@@ -136,6 +180,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/background/gameBackgroundParlax2.png
+
+#begin textures/background/gameBackgroundParlax3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/background/gameBackgroundParlax3.png
+
+#begin textures/background/gameBackgroundParlax4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/background/gameBackgroundParlax4.png
 
 #begin textures/background/mapBackground.png
 /importer:TextureImporter
@@ -1037,6 +1105,18 @@
 /processorParam:TextureFormat=Color
 /build:textures/gameobjects/spacecrafts/playerShield.png
 
+#begin textures/gameobjects/spacecrafts/unkownObj.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameobjects/spacecrafts/unkownObj.png
+
 #begin textures/gameobjects/weapons/projectile.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1120,6 +1200,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/title.png
+
+#begin textures/userInterface/arrowL.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/userInterface/arrowL.png
+
+#begin textures/userInterface/arrowR.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/userInterface/arrowR.png
 
 #begin textures/userInterface/bar/barHorizontalLeft.png
 /importer:TextureImporter
@@ -1384,4 +1488,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/userInterface/layer/layer1.png
+
+#begin textures/userInterface/SliderDot.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/userInterface/SliderDot.png
 

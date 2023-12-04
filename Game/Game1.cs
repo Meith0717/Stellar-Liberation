@@ -5,11 +5,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using StellarLiberation.Core.GameEngine.Content_Management;
-using StellarLiberation.Game.Core.ContentManagement.ContentRegistry;
-using StellarLiberation.Game.Core.InputManagement;
-using StellarLiberation.Game.Core.LayerManagement;
-using StellarLiberation.Game.Core.Persistance;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
+using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Layers;
 
 namespace StellarLiberation
@@ -37,7 +37,7 @@ namespace StellarLiberation
 
             // Window properties
             IsMouseVisible = true;
-            Window.AllowUserResizing = false;
+            Window.AllowUserResizing = true;
             Window.AllowAltF4 = false;
             Window.ClientSizeChanged += delegate { mResulutionWasResized = true; };
             mGraphicsManager.PreferredBackBufferWidth = 1920;
@@ -55,15 +55,11 @@ namespace StellarLiberation
         {
             mSpriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // setup texture manager
             TextureManager.Instance.SetSpriteBatch(mSpriteBatch);
             TextureManager.Instance.LoadTextureRegistries(Content, Registries.GetRegistryList<TextureRegistries>());
             TextureManager.Instance.LoadFontRegistries(Content, Registries.GetRegistryList<FontRegistries>());
-
-            // setup sound manager
-            SoundManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<SoundRegistries>());
-            SoundManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<MusicRegistries>());
-            SoundManager.Instance.CreateSoundEffectInstances();
+            SoundEffectManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<SoundEffectRegistries>());
+            MusicManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<MusicRegistries>());
         }
 
         protected override void Update(GameTime gameTime)
@@ -83,7 +79,7 @@ namespace StellarLiberation
             base.Draw(gameTime);
         }
 
-        private void ToggleFullscreen() =>  mGraphicsManager.ToggleFullScreen();
+        private void ToggleFullscreen() => mGraphicsManager.ToggleFullScreen();
 
         public void SetCursorTexture(Registry registry) => Mouse.SetCursor(MouseCursor.FromTexture2D(Content.Load<Texture2D>(registry.FilePath), 0, 0));
     }
