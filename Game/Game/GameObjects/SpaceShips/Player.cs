@@ -29,10 +29,10 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
 
             mAi = new(new()
             {
-                // new PatrollBehavior(),
-                // new InterceptBehavior(),
-                // new FarCombatBehavior(),
-                // new FleeBehavior()
+                //new PatrollBehavior(),
+                //new InterceptBehavior(),
+                //new FarCombatBehavior(),
+                //new FleeBehavior()
             })
             { Debug = true };
         }

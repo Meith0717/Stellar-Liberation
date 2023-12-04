@@ -46,16 +46,37 @@ namespace StellarLiberation.Game.Core.GameProceses.MapSystem
 
                     for (int i = 1; i <= planetAmount; i++)
                     {
-                        orbitRadius += ExtendetRandom.Random.Next(25000, 40000);
+                        orbitRadius += ExtendetRandom.Random.Next(40000, 60000);
                         planets.Add(GetPlanet(star.Position, (int)orbitRadius, i));
                     }
 
+                    var asteroids = GetAsteroidsRing(ExtendetRandom.Random.Next(50, 200), star.Position, orbitRadius * 1.3f, orbitRadius * 1.3f + ExtendetRandom.Random.Next(25000, 40000));
+
                     // Generate Planet System
                     var danger = GetDanger(x, y);
-                    var planetSystem = new PlanetSystem(star, planets, danger, orbitRadius) ;
+                    var planetSystem = new PlanetSystem(GetScalingPosition(x, y, MapScale), star, planets, asteroids, danger, orbitRadius);
                     planetSystems.Add(planetSystem);
                 }
             }
+        }
+
+        public static List<Asteroid> GetAsteroidsRing(int numAsteroids, Vector2 center, float radiusMin, float radiusMax)
+        {
+            List<Asteroid> asteroids = new();
+            Random random = ExtendetRandom.Random;
+
+            for (int i = 0; i < numAsteroids; i++)
+            {
+                float angle = (float)random.NextDouble() * 2f * MathF.PI; // Random angle in radians
+                float radius = (float)(random.NextDouble() * (radiusMax - radiusMin) + radiusMin);
+
+                float x = center.X + radius * MathF.Cos(angle);
+                float y = center.Y + radius * MathF.Sin(angle);
+
+                asteroids.Add(new(new(x, y)));
+            }
+
+            return asteroids;
         }
 
         private static Danger GetDanger(int x, int y) => Hash(x, y) switch
@@ -75,7 +96,7 @@ namespace StellarLiberation.Game.Core.GameProceses.MapSystem
             return distance / Math.Min(centerX, centerY);
         }
 
-        private static Vector2 GetScalingPosition(int x, int y, int scaling)
+        public static Vector2 GetScalingPosition(int x, int y, int scaling)
         {
             var sectorBegin = new Vector2(x, y) * scaling + new Vector2(scaling, scaling) * 0.2f;
             var sectorEnd = sectorBegin + new Vector2(scaling, scaling) * 0.6f;
