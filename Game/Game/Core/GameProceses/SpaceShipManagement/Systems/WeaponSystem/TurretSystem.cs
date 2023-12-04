@@ -1,4 +1,4 @@
-﻿// TurretBattery.cs 
+﻿// TurretSystem.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
@@ -8,7 +8,6 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
-using StellarLiberation.Game.Core.GameProceses.ProjectileManagement;
 using StellarLiberation.Game.GameObjects.SpaceShipManagement;
 using System.Collections.Generic;
 
@@ -42,7 +41,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.W
 
         public SpaceShip AimingShip => mAimingShip;
         public void AimShip(SpaceShip spaceShip) => mAimingShip = spaceShip;
-        public void AimPosition(SpaceShip spaceShip) => mAimingShip = spaceShip;
+        public void AimPosition(Vector2 position) => mAimingPos = position;
         public void Fire() => mFire = true;
         public void StopFire() => mFire = false;
 

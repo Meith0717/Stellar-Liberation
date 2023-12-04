@@ -46,7 +46,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
                     mPatrolTarget = target;
 
                     // Send Ship to Target
-                    spaceShip.SublightEngine.MoveToPosition(target);
+                    spaceShip.SublightEngine.MoveInDirection(Vector2.Normalize(target - spaceShip.Position));
                     break;
                 case not null:
                     // Check if Target is Reached

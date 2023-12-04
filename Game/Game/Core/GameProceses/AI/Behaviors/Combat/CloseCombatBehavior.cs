@@ -32,7 +32,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors.Combat
                     {
                         mReorienting = true;
                         // Set course to reorientation Position
-                        spaceShip.SublightEngine.MoveToPosition(GetReorientingPosition(spaceShip));
+                        spaceShip.SublightEngine.MoveInDirection(GetReorientingDirection(spaceShip));
                         break;
                     }
 
@@ -44,10 +44,10 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors.Combat
             }
         }
 
-        private Vector2 GetReorientingPosition(SpaceShip spaceShip)
+        private Vector2 GetReorientingDirection(SpaceShip spaceShip)
         {
             var targetPos = spaceShip.WeaponSystem.AimingShip.Position;
-            return ExtendetRandom.NextVectorOnBorder(new(targetPos, 5000));
+            return Vector2.Normalize(targetPos - spaceShip.Position);
         }
 
         public override void Reset(SpaceShip spaceShip)

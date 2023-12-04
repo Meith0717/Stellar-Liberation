@@ -20,12 +20,6 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
             : base(position, textureId, textureScale, sensorArray, sublightEngine, weaponSystem, defenseSystem, Factions.Enemys)
         { }
 
-        public override void Update(GameTime gameTime, InputState inputState, Scene scene)
-        {
-            base.Update(gameTime, inputState, scene);
-            SublightEngine.UpdateVelocity(this);
-        }
-
         public override void Draw(Scene scene)
         {
             base.Draw(scene);

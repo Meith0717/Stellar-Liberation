@@ -1,4 +1,4 @@
-﻿// SensorArray.cs 
+﻿// SensorSystem.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
@@ -41,7 +41,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems
         }
 
         public void Draw(SpaceShip spaceShip, Scene scene) => TextureManager.Instance.DrawAdaptiveCircle(spaceShip.Position, ShortRangeScanDistance, new(50, 50, 50, 50), 2.5f, spaceShip.TextureDepth, scene.Camera2D.Zoom);
-        
+
         public SpaceShip GetAimingShip(Vector2 spaceShipPosition, Factions fraction)
         {
             SpaceShip spaceShip = null;

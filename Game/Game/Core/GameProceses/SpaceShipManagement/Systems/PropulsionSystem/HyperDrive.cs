@@ -6,7 +6,9 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
+using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
+using StellarLiberation.Game.GameObjects.SpaceShipManagement;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PropulsionSystem
 {
@@ -36,13 +38,14 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
             TargetPlanetSystem = planetSystem;
         }
 
-        public void Update(GameTime gameTime, Scene scene)
+        public void Update(GameTime gameTime, SpaceShip operatingShip, Scene scene)
         {
             mActualEngineCoolDownTime += gameTime.ElapsedGameTime.Milliseconds;
             mActualChargingTime += gameTime.ElapsedGameTime.Milliseconds;
 
-            if (mChargingTime > mActualChargingTime) return;
             if (TargetPlanetSystem is null) return;
+            HyperDriveEffect.Charge(operatingShip.Position, scene.ParticleManager);
+            if (mChargingTime > mActualChargingTime) return;
             SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.CoolHyperdrive);
             scene.GameLayer.ChangePlanetSystem(TargetPlanetSystem);
             TargetPlanetSystem = null;

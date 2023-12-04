@@ -29,8 +29,8 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
         public override void Execute(GameTime gameTime, SpaceShip spaceShip, Scene scene)
         {
             spaceShip.SublightEngine.SetVelocity(1f);
-            if (mFleePosition is null) mFleePosition = spaceShip.SensorArray.LongRangeScan.OfType<Planet>().Last().Position;
-            spaceShip.SublightEngine.MoveToPosition((Vector2)mFleePosition);
+            mFleePosition ??= spaceShip.SensorArray.LongRangeScan.OfType<Planet>().Last().Position;
+            spaceShip.SublightEngine.MoveInDirection(Vector2.Normalize((Vector2)mFleePosition - spaceShip.Position));
         }
 
         public override void Reset(SpaceShip spaceShip) => mFleePosition = null;

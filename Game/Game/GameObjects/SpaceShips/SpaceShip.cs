@@ -50,11 +50,11 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
             Fraction = fractions;
 
         }
-
+        
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
 
-            HyperDrive.Update(gameTime, scene);
+            HyperDrive.Update(gameTime, this, scene);
             if (!HyperDrive.IsActive) SublightEngine.Update(gameTime, this);
 
             MovingDirection = Geometry.CalculateDirectionVector(Rotation);

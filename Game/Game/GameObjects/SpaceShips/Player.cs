@@ -17,7 +17,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
 
         public Inventory Inventory;
 
-        public Player() : base(Vector2.Zero, TextureRegistries.player, 1, new(20000), new(10f, 0.01f), new(1000, Color.LightBlue, 2, 2, 10000), new(100, 1000, 1), Factions.Allies)
+        public Player() : base(Vector2.Zero, TextureRegistries.player, 1, new(20000), new(10f, 0.05f), new(1000, Color.LightBlue, 2, 2, 10000), new(100, 1000, 1), Factions.Allies)
         {
             Inventory = new(500, 10000);
 
@@ -46,8 +46,9 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
             WeaponSystem.StopFire();
-            inputState.DoAction(ActionType.FireInitialWeapon, () => WeaponSystem.Fire());
             SublightEngine.ControlByInput(this, inputState, scene.WorldMousePosition);
+            inputState.DoAction(ActionType.RightClickHold, () => WeaponSystem.AimPosition(scene.WorldMousePosition));
+            inputState.DoAction(ActionType.LeftClickHold, () => WeaponSystem.Fire());
             Inventory.Update(gameTime, this, scene);
 
             base.Update(gameTime, inputState, scene);

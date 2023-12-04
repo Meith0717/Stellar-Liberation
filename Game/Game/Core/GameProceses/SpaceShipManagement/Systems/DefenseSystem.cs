@@ -5,14 +5,10 @@
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
-using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
-using StellarLiberation.Game.Core.GameProceses.ProjectileManagement;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.GameObjects.SpaceShipManagement;
 using System;
-using System.Linq;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems
 {

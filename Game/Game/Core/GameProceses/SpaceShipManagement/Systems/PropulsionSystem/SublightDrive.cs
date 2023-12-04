@@ -10,6 +10,7 @@ using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.SpaceShipManagement;
 using System;
+using System.Runtime.InteropServices;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PropulsionSystem
 {
@@ -21,7 +22,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
         private float mVelocity;
         private readonly float Maneuverability;
 
-        private Vector2? mVector2Target;
+        private Vector2? mDirection;
         private SpaceShip mShipTarget;
 
         public SublightDrive(float maxVelocity, float maneuverability)
@@ -34,9 +35,10 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
         {
             var position = CollisionPredictor.PredictPosition(gameTime, spaceShip.Position, spaceShip.SublightEngine.MaxVelocity, mShipTarget);
 
-            mVector2Target ??= position;
+            mDirection ??= (position is null) ? null : Vector2.Normalize((Vector2)position - spaceShip.Position);
 
             UpdateRotation(spaceShip);
+            UpdateVelocity(spaceShip);
         }
 
         public void UpdateVelocity(SpaceShip spaceShip)
@@ -47,9 +49,9 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
                 return;
             }
 
-            if (mVector2Target is null) return;
+            if (mDirection is null) return;
 
-            var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, mVector2Target.Value);
+            var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, Geometry.GetPointInDirection(spaceShip.Position, (Vector2)mDirection, 1));
 
             var relRotation = 1f - MathF.Abs(rotationUpdate) / MathF.PI;
             var rotationScore = MathF.Abs(0.5f - MathF.Abs(rotationUpdate) / MathF.PI);
@@ -61,32 +63,26 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
                 float.NaN => 0
             };
             spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, targetVelocity, mVelocity / 100f);
-            if (spaceShip.BoundedBox.Contains((Vector2)mVector2Target))
-                Standstill();
         }
 
         private void UpdateRotation(SpaceShip spaceShip)
         {
-            if (mVector2Target != null)
-            {
-                var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, mVector2Target.Value);
-
-                spaceShip.Rotation += rotationUpdate * Maneuverability;
-            }
+            if (mDirection is null) return;
+            var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, Geometry.GetPointInDirection(spaceShip.Position, (Vector2)mDirection, 1)); spaceShip.Rotation += rotationUpdate * Maneuverability;
         }
 
         public void SetVelocity(float percentage) => mVelocity = MaxVelocity * percentage;
 
-        public void MoveToPosition(Vector2 position)
+        public void MoveInDirection(Vector2 direction)
         {
             mShipTarget = null;
-            mVector2Target = position;
+            mDirection = direction;
             IsMoving = true;
         }
 
         public void FollowSpaceShip(SpaceShip spaceShip)
         {
-            mVector2Target = null;
+            mDirection = null;
             mShipTarget = spaceShip;
             IsMoving = true;
         }
@@ -94,31 +90,18 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
         public void Standstill()
         {
             mShipTarget = null;
-            mVector2Target = null;
+            mDirection = null;
             IsMoving = false;
         }
 
         public void ControlByInput(SpaceShip spaceShip, InputState inputState, Vector2 worldMousePosition)
         {
-            switch (inputState.GamePadIsConnected)
-            {
-                case true:
-                    inputState.DoAction(ActionType.Accelerate, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, MaxVelocity, MaxVelocity / 100f * inputState.mThumbSticksState.RightTrigger));
-                    inputState.DoAction(ActionType.Break, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, MaxVelocity / 100f * inputState.mThumbSticksState.LeftTrigger));
-
-                    var leftThumbSticksValue = inputState.mThumbSticksState.LeftThumbSticks;
-                    if (leftThumbSticksValue == Vector2.Zero) break;
-                    var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, Geometry.AngleBetweenVectors(Vector2.Zero, leftThumbSticksValue), 1);
-                    spaceShip.Rotation += rotationUpdate * Maneuverability;
-                    break;
-                case false:
-                    inputState.DoAction(ActionType.Accelerate, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, MaxVelocity, MaxVelocity / 100f));
-                    inputState.DoAction(ActionType.Break, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, MaxVelocity / 100f));
-                    MoveToPosition(worldMousePosition);
-                    break;
-            }
+            inputState.DoAction(ActionType.Accelerate, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, MaxVelocity, MaxVelocity / 100f));
+            inputState.DoAction(ActionType.Break, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, MaxVelocity / 100f));
+            if (inputState.Actions.Contains(ActionType.RightClickHold)) return;
+            MoveInDirection(Vector2.Normalize(worldMousePosition - spaceShip.Position));
         }
 
-        public void Draw(DebugSystem debugSystem, SpaceShip spaceShip, Scene scene) => debugSystem.DrawMovingDir(mVector2Target, spaceShip, scene);
+        public void Draw(DebugSystem debugSystem, SpaceShip spaceShip, Scene scene) => debugSystem.DrawMovingDir(mDirection, spaceShip, scene);
     }
 }

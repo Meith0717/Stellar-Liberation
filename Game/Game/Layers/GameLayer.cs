@@ -73,7 +73,7 @@ namespace StellarLiberation.Game.Layers
 
         public void LoadMap() => AddScene(new MapScene(this, PlanetSystems.ToList(), CurrentSystem));
         public void ChangePlanetSystem(PlanetSystem planetSystem)
-        { 
+        {
             CurrentSystem = planetSystem;
             var zoom = mPlanetSystemScene.Camera2D.Zoom;
             RemoveScene(mPlanetSystemScene);
