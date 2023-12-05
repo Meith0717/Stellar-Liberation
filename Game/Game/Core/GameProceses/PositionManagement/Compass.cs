@@ -4,10 +4,12 @@
 
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.ProjectileManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem;
+using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using System;
 using System.Collections.Generic;
 
@@ -25,7 +27,7 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
             foreach (var obj in objects)
             {
                 if (viewFrustumFilter.CircleOnWorldView(obj.BoundedBox)) continue;
-                if (obj is Projectile || obj is Particle) continue;
+                if (obj is Projectile || obj is Particle || obj is Asteroid) continue;
                 var rectangle = viewFrustumFilter.ViewFrustum;
                 rectangle.Inflate(-25, -25);
                 var pos = Geometry.GetPointOnCircle(mCompass, Geometry.AngleBetweenVectors(position, obj.Position));
@@ -35,8 +37,8 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
 
         public void Draw()
         {
-            // TextureManager.Instance.DrawCircle(mCompass.Position, mCompass.Radius, new(20, 20, 10, 10), 1, 1);
-            // foreach (var pos in mKeyValuePairs.Keys) TextureManager.Instance.Draw(mKeyValuePairs[pos], pos - new Vector2(10, 10), 20, 20);
+            TextureManager.Instance.DrawCircle(mCompass.Position, mCompass.Radius, new(2, 2, 2, 2), 5, 1);
+            foreach (var pos in mKeyValuePairs.Keys) TextureManager.Instance.Draw(mKeyValuePairs[pos], pos - new Vector2(10, 10), 20, 20);
         }
     }
 }

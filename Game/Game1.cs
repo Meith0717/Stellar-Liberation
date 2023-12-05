@@ -42,6 +42,7 @@ namespace StellarLiberation
             Window.ClientSizeChanged += delegate { mResulutionWasResized = true; };
             mGraphicsManager.PreferredBackBufferWidth = 1920;
             mGraphicsManager.PreferredBackBufferHeight = 1080;
+            ToggleFullscreen();
         }
 
         protected override void Initialize()

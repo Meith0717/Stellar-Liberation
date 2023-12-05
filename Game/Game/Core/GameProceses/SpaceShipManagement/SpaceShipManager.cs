@@ -5,6 +5,7 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.GameObjects.SpaceShipManagement;
+using StellarLiberation.Game.GameObjects.SpaceShips.Enemys;
 using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement

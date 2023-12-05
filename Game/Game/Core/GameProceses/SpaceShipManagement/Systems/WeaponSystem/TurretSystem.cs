@@ -5,6 +5,7 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
+using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
@@ -61,6 +62,14 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.W
 
             if (hasFired) SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.torpedoFire);
             if (hasFired) mFireCoolDown = 0;
+        }
+
+        public void ControlByInput(InputState inputState, Vector2 worldMousePosition)
+        {
+            StopFire();
+            AimPosition(null);
+            inputState.DoAction(ActionType.RightClickHold, () => AimPosition(worldMousePosition));
+            inputState.DoAction(ActionType.LeftClickHold, () => Fire());
         }
 
         public void Upgrade(float hullDamagePercentage = 0, float shieldDamagePercentage = 0, float fireCoolDownPercentage = 0)

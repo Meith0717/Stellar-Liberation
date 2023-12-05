@@ -50,7 +50,7 @@ namespace StellarLiberation.Game.Core.GameProceses.MapSystem
                         planets.Add(GetPlanet(star.Position, (int)orbitRadius, i));
                     }
 
-                    var asteroids = GetAsteroidsRing(ExtendetRandom.Random.Next(50, 200), star.Position, orbitRadius * 1.3f, orbitRadius * 1.3f + ExtendetRandom.Random.Next(25000, 40000));
+                    var asteroids = GetAsteroidsRing(ExtendetRandom.Random.Next(50, 200), star.Position, orbitRadius * 1.3f, orbitRadius * 1.3f + ExtendetRandom.Random.Next(3000, 60000));
 
                     // Generate Planet System
                     var danger = GetDanger(x, y);

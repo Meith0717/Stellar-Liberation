@@ -75,8 +75,8 @@ namespace StellarLiberation.Game.Layers
             mShieldBar.Percentage = mScene.GameLayer.Player.DefenseSystem.ShieldPercentage;
             mHullBar.Percentage = mScene.GameLayer.Player.DefenseSystem.HullPercentage;
             mPropulsiondBar.Percentage = (double)(mScene.GameLayer.Player.Velocity / mScene.GameLayer.Player.SublightEngine.MaxVelocity);
-            mCargoHold.Text = $"{mScene.GameLayer.Player.Inventory.Count}/{mScene.GameLayer.Player.Inventory.Capacity}";
-            mCompass.Update(mScene.GameLayer.Player.Position, mScene.ViewFrustumFilter, mScene.GameLayer.Player.SensorArray.ShortRangeScan);
+            mCargoHold.Text = $"{mScene.GameLayer.Inventory.Count}/{mScene.GameLayer.Inventory.Capacity}";
+            mCompass.Update(mScene.GameLayer.Player.Position, mScene.ViewFrustumFilter, mScene.GameLayer.Player.SensorArray.LongRangeScan);
         }
     }
 }

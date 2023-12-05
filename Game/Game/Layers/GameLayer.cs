@@ -11,6 +11,7 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
+using StellarLiberation.Game.Core.GameProceses.ItemManagement;
 using StellarLiberation.Game.Core.GameProceses.MapSystem;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
@@ -27,6 +28,8 @@ namespace StellarLiberation.Game.Layers
     {
         [JsonProperty] public readonly HashSet<PlanetSystem> PlanetSystems = new();
         [JsonProperty] public readonly Player Player = new();
+        [JsonProperty] public readonly Inventory Inventory = new(500);
+
         [JsonIgnore] public PlanetSystem CurrentSystem { get; set; }
         [JsonIgnore] private PlanetSystemScene mPlanetSystemScene;
         [JsonIgnore] public readonly HudLayer HudLayer;
