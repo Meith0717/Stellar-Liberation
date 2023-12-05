@@ -2,14 +2,11 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
-using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.GameObjects.Items;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement;
 using System;
 using System.Collections.Generic;
 
@@ -23,25 +20,10 @@ namespace StellarLiberation.Game.Core.GameProceses.ItemManagement
         [JsonProperty] public int Capacity { get; private set; }
 
         [JsonProperty] private readonly Dictionary<ItemID, int> Items = new();
-        [JsonProperty] private float mPullRadius;
-        [JsonIgnore] private List<Item> mItemsInRange = new();
 
-        public Inventory(int capacity, int PullRadius) { mPullRadius = PullRadius; Capacity = capacity; }
+        public Inventory(int capacity) => Capacity = capacity;
 
-        public void Update(GameTime gameTime, SpaceShip spaceShip, Scene scene)
-        {
-            mItemsInRange.Clear();
-            if (Count >= Capacity) return;
-            var position = spaceShip.Position;
-            mItemsInRange = scene.SpatialHashing.GetObjectsInRadius<Item>(position, (int)mPullRadius);
-            foreach (var item in mItemsInRange)
-            {
-                item.Pull(position);
-                if (ContinuousCollisionDetection.HasCollide(gameTime, item, spaceShip, out _)) Collect(item, scene);
-            }
-        }
-
-        private void Collect(Item item, Scene scene)
+        public void Collect(Item item, Scene scene)
         {
             SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.collect);
 
@@ -68,7 +50,5 @@ namespace StellarLiberation.Game.Core.GameProceses.ItemManagement
             if (!Items.TryGetValue(itemID, out var count)) return 0;
             return count;
         }
-
-        public void Draw(SpaceShip space) { foreach (var item in mItemsInRange) TextureManager.Instance.DrawLine(space.Position, item.Position, Color.Purple, 4, space.TextureDepth - 1); }
     }
 }

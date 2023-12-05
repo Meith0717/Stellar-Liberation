@@ -16,7 +16,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
         private static MusicManager mInstance;
         public static MusicManager Instance { get { return mInstance ??= new(); } }
         private readonly Dictionary<string, SoundEffectInstance> mMusicInstances = new();
-        public float OverallVolume = 1.0f;
+        public float OverallVolume = 0;
 
         public void LoadRegistries(ContentManager content, List<Registry> registries)
         {

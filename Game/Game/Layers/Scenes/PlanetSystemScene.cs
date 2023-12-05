@@ -20,7 +20,7 @@ namespace StellarLiberation.Game.Layers.Scenes
         private readonly ParallaxController mParlaxManager;
         private readonly PlanetSystem mPlanetSystem;
 
-        public PlanetSystemScene(GameLayer gameLayer, PlanetSystem currentPlanetSystem, float camZoom) : base(gameLayer, 50000, 0.00001f, 1, false)
+        public PlanetSystemScene(GameLayer gameLayer, PlanetSystem currentPlanetSystem, float camZoom) : base(gameLayer, 50000, 0.001f, 1, false)
         {
             Camera2D.Zoom = camZoom;
             mPlanetSystem = currentPlanetSystem;

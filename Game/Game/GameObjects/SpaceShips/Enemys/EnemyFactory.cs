@@ -8,16 +8,16 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.AI.Behaviors;
 using StellarLiberation.Game.Core.GameProceses.AI.Behaviors.Combat;
+using StellarLiberation.Game.GameObjects.SpaceShipManagement;
 
-namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
+namespace StellarLiberation.Game.GameObjects.SpaceShips.Enemys
 {
     public enum EnemyId { EnemyBattleShip, EnemyBomber, EnemyFighter, EnemyCarrior }
 
     public static class EnemyFactory
     {
-        private class Carrior : Enemy
+        private class Carrior : EnemyShip
         {
-
             public Carrior(Vector2 position)
                 : base(position, TextureRegistries.enemyCarrior, 4, new(80000), new(1f, 0.01f), new(1000, new(255, 4, 0), 1, 1, 10000), new(100, 100, 0))
             {
@@ -58,7 +58,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
             }
         }
 
-        private class BattleShip : Enemy
+        private class BattleShip : EnemyShip
         {
             public BattleShip(Vector2 position)
                 : base(position, TextureRegistries.enemyBattleShip, 1, new(50000), new(2f, 0.01f), new(1000, Color.IndianRed, 1, 1, 10000), new(100, 100, 0))
@@ -78,7 +78,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
             }
         }
 
-        private class Bomber : Enemy
+        private class Bomber : EnemyShip
         {
             public Bomber(Vector2 position)
                 : base(position, TextureRegistries.enemyBomber, 0.7f, new(20000), new(3f, 0.01f), new(1000, Color.IndianRed, 1, 1, 10000), new(100, 100, 0))
@@ -97,7 +97,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
             }
         }
 
-        private class Fighter : Enemy
+        private class Fighter : EnemyShip
         {
             public Fighter(Vector2 position)
                 : base(position, TextureRegistries.enemyFighter, 0.2f, new(10000), new(4f, 0.2f), new(1000, Color.IndianRed, 1, 1, 10000), new(100, 100, 0))
@@ -117,7 +117,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
             }
         }
 
-        public static Enemy Get(EnemyId id, Vector2 position) => id switch
+        public static EnemyShip Get(EnemyId id, Vector2 position) => id switch
         {
             EnemyId.EnemyCarrior => new Carrior(position),
             EnemyId.EnemyBattleShip => new BattleShip(position),

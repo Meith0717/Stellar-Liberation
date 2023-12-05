@@ -23,7 +23,7 @@ using System.Linq;
 
 namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
 {
-    public enum Factions { Enemys, Allies }
+    public enum Fractions { Enemys, Allies }
 
     [Serializable]
     [Collidable]
@@ -36,10 +36,10 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
         [JsonIgnore] public HyperDrive HyperDrive { get; private set; }
         [JsonIgnore] public TurretSystem WeaponSystem { get; private set; }
         [JsonProperty] public DefenseSystem DefenseSystem { get; private set; }
-        [JsonIgnore] public Factions Fraction;
+        [JsonIgnore] public Fractions Fraction;
 
 
-        public SpaceShip(Vector2 position, string textureId, float textureScale, SensorSystem sensorArray, SublightDrive sublightEngine, TurretSystem weaponSystem, DefenseSystem defenseSystem, Factions fractions)
+        public SpaceShip(Vector2 position, string textureId, float textureScale, SensorSystem sensorArray, SublightDrive sublightEngine, TurretSystem weaponSystem, DefenseSystem defenseSystem, Fractions fractions)
             : base(position, textureId, textureScale, 10)
         {
             SensorArray = sensorArray;
@@ -50,7 +50,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
             Fraction = fractions;
 
         }
-        
+
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
 
@@ -81,7 +81,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
             var hit = false;
             foreach (var projectile in projectileInRange)
             {
-                if (projectile.Origine is Enemy && this is Enemy) continue;
+                if (projectile.Origine is EnemyShip && this is EnemyShip) continue;
                 if (projectile.Origine == this) return;
                 if (!ContinuousCollisionDetection.HasCollide(gameTime, projectile, this, out var position)) continue;
 

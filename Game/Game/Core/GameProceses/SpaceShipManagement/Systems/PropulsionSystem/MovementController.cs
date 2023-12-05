@@ -9,7 +9,7 @@ using System;
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PropulsionSystem
 {
     public static class MovementController
-    { 
+    {
 
         public static float GetRotationUpdate(float currentRotation, Vector2 currentPosition, Vector2 targetPosition)
         {

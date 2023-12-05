@@ -26,7 +26,7 @@ namespace StellarLiberation.Game.Layers
             if (showBgImage) mMainFrame.AddChild(new UiSprite(TextureRegistries.gameBackground) { FillScale = FillScale.X });
 
             mMainFrame.AddChild(new UiButton(TextureRegistries.button, "< Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => mLayerManager.PopLayer() });
-            mMainFrame.AddChild(new UiButton(TextureRegistries.button, "Apply") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = ApplyChanges });
+            // mMainFrame.AddChild(new UiButton(TextureRegistries.button, "Apply") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = ApplyChanges });
 
 
             var settingsFrame = new UiLayer() { RelHeight = .8f, RelWidth = .5f, Color = new(11, 15, 20), Anchor = Anchor.Center };
@@ -40,13 +40,13 @@ namespace StellarLiberation.Game.Layers
             settingsFrame.AddChild(new UiDescriber("Effects", mSfxSlider) { Height = 50, RelWidth = 1, HSpace = 40, RelY = .21f });
 
             // Graphics Settings
-            settingsFrame.AddChild(new UiText(FontRegistries.subTitleFont, "Video ") { HSpace = 20, RelY = .30f });
-            var variableSelector = new UiVariableSelector(new() { "1920x1080", "1080x720", "720x480" });
-            var fullScreenSelector = new UiVariableSelector(new() { "True", "False" });
-            var particleSelector = new UiVariableSelector(new() { "Off", "0.25", "0.5", "0.75", "1" });
-            settingsFrame.AddChild(new UiDescriber("Resolution", variableSelector) { Height = 50, RelWidth = 1, HSpace = 40, RelY = .37f });
-            settingsFrame.AddChild(new UiDescriber("Fullscreen", fullScreenSelector) { Height = 50, RelWidth = 1, HSpace = 40, RelY = .44f });
-            settingsFrame.AddChild(new UiDescriber("Particles", particleSelector) { Height = 50, RelWidth = 1, HSpace = 40, RelY = .51f });
+            // settingsFrame.AddChild(new UiText(FontRegistries.subTitleFont, "Video ") { HSpace = 20, RelY = .30f });
+            // var variableSelector = new UiVariableSelector(new() { "1920x1080", "1080x720", "720x480" });
+            // var fullScreenSelector = new UiVariableSelector(new() { "True", "False" });
+            // var particleSelector = new UiVariableSelector(new() { "Off", "0.25", "0.5", "0.75", "1" });
+            // settingsFrame.AddChild(new UiDescriber("Resolution", variableSelector) { Height = 50, RelWidth = 1, HSpace = 40, RelY = .37f });
+            // settingsFrame.AddChild(new UiDescriber("Fullscreen", fullScreenSelector) { Height = 50, RelWidth = 1, HSpace = 40, RelY = .44f });
+            // settingsFrame.AddChild(new UiDescriber("Particles", particleSelector) { Height = 50, RelWidth = 1, HSpace = 40, RelY = .51f });
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
