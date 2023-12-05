@@ -12,12 +12,12 @@ namespace StellarLiberation.Game.Core.UserInterface
     {
         protected string mSpriteId;
 
-        public UiSprite(string SpriteId)
+        public UiSprite(string SpriteId, float scale = 1)
         {
             mSpriteId = SpriteId;
             var texture = TextureManager.Instance.GetTexture(mSpriteId);
-            mCanvas.Width = texture.Width;
-            mCanvas.Height = texture.Height;
+            mCanvas.Width = (int)(texture.Width * scale);
+            mCanvas.Height = (int)(texture.Height * scale);
         }
 
         public override void Draw()

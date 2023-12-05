@@ -9,6 +9,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
+using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 
 namespace StellarLiberation.Game.Layers
@@ -21,10 +22,10 @@ namespace StellarLiberation.Game.Layers
         public PauseLayer()
             : base(false)
         {
-            mBackgroundLayer = new() { RelHeight = 1, RelWidth = 1, Color = Color.Black, Alpha = .8f };
+            mBackgroundLayer = new() { RelHeight = 1, RelWidth = 1, Color = Color.Black, Alpha = .3f };
             mButtonInputTracer = new();
 
-            var buttonFrame = new UiLayer() { Anchor = Anchor.Center, Height = 300, Width = 300, HSpace = 20, VSpace = 20, Alpha = 0 };
+            var buttonFrame = new UiFrame(25) { Anchor = Anchor.Center, Height = 400, Width = 400, Color = new(33, 47, 60) };
             mBackgroundLayer.AddChild(buttonFrame);
 
             var _continue = new UiButton(TextureRegistries.button, "Resume") { Anchor = Anchor.N, FillScale = FillScale.X, OnClickAction = () => mLayerManager.PopLayer(), TextAllign = TextAllign.Center };

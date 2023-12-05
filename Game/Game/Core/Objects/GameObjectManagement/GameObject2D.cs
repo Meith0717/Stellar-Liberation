@@ -39,7 +39,7 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
         [JsonProperty] private readonly int mTextureHeight;
 
         // Managing Stuff
-        [JsonIgnore] public bool Dispose { get; protected set; }
+        [JsonIgnore] public bool Dispose { get; set; }
         [JsonIgnore] public double DisposeTime;
         [JsonIgnore] private double LiveTime32;
 

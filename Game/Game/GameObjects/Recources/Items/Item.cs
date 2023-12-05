@@ -12,7 +12,7 @@ using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.Propu
 using StellarLiberation.Game.Core.Utilitys;
 using System;
 
-namespace StellarLiberation.Game.GameObjects.Items
+namespace StellarLiberation.Game.GameObjects.Recources.Items
 {
     [Serializable]
     public abstract class Item : GameObject2D

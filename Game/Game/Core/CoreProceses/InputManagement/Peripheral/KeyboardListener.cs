@@ -27,6 +27,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement.Peripheral
             mActionOnPressed = new()
             {
                 { Keys.M, ActionType.ToggleHyperMap },
+                { Keys.I, ActionType.Inventar },
                 { Keys.Escape, ActionType.ESC },
                 { Keys.F1, ActionType.F1 },
                 { Keys.F2, ActionType.F2 },

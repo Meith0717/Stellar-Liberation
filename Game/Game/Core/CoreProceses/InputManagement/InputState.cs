@@ -33,6 +33,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement
         Break,
         Select,
         CtrlLeft,
+        Inventar,
 
         // Mouse
         LeftClick,

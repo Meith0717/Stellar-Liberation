@@ -9,6 +9,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
+using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 
 namespace StellarLiberation.Game.Layers
@@ -29,7 +30,7 @@ namespace StellarLiberation.Game.Layers
             // mMainFrame.AddChild(new UiButton(TextureRegistries.button, "Apply") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = ApplyChanges });
 
 
-            var settingsFrame = new UiLayer() { RelHeight = .8f, RelWidth = .5f, Color = new(11, 15, 20), Anchor = Anchor.Center };
+            var settingsFrame = new UiFrame(25) { RelHeight = .8f, RelWidth = .5f, Anchor = Anchor.Center, Color = new(33, 47, 60) };
             mMainFrame.AddChild(settingsFrame);
 
             // Sound Settings

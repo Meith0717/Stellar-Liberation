@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
-using StellarLiberation.Game.GameObjects.Items;
+using StellarLiberation.Game.GameObjects.Recources.Items;
 using StellarLiberation.Game.GameObjects.SpaceShipManagement;
 using System;
 using System.Collections.Generic;
@@ -33,7 +33,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems
             foreach (var item in mItemsInRange)
             {
                 item.Pull(position);
-                if (ContinuousCollisionDetection.HasCollide(gameTime, item, spaceShip, out _)) inventory.Collect(item, scene);
+                if (ContinuousCollisionDetection.HasCollide(gameTime, item, spaceShip, out _)) inventory.Collect(item);
             }
         }
 

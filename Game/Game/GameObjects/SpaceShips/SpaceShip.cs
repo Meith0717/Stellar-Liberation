@@ -17,7 +17,7 @@ using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.Propu
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.WeaponSystem;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
-using StellarLiberation.Game.GameObjects.Items;
+using StellarLiberation.Game.GameObjects.Recources.Items;
 using System;
 using System.Linq;
 
@@ -115,7 +115,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
             scene.Camera2D.Shake((int)(shakeamount * 100));
             ExplosionEffect.ShipDestroyed(Position, scene.ParticleManager);
 
-            for (int i = 0; i < 5; i++) scene.GameLayer.CurrentSystem.GameObjects.AddObj(ItemFactory.Get(ItemID.Metall, MovingDirection, Position));
+            for (int i = 0; i < 5; i++) scene.GameLayer.CurrentSystem.GameObjects.AddObj(ItemFactory.Get(ItemID.Iron, MovingDirection, Position));
 
             return;
         }
