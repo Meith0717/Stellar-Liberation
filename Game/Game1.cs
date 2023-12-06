@@ -10,6 +10,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Layers;
 
 namespace StellarLiberation
@@ -24,6 +25,7 @@ namespace StellarLiberation
         private SpriteBatch mSpriteBatch;
         public LayerManager mLayerManager;
         public readonly Serialize mSerialize;
+        public ResolutionManager mResolutionManager;
 
         // Window attributes
         private bool mResulutionWasResized;
@@ -37,12 +39,8 @@ namespace StellarLiberation
 
             // Window properties
             IsMouseVisible = true;
-            Window.AllowUserResizing = true;
+            Window.AllowUserResizing = false;
             Window.AllowAltF4 = false;
-            Window.ClientSizeChanged += delegate { mResulutionWasResized = true; };
-            mGraphicsManager.PreferredBackBufferWidth = 1920;
-            mGraphicsManager.PreferredBackBufferHeight = 1080;
-            ToggleFullscreen();
         }
 
         protected override void Initialize()
@@ -50,6 +48,9 @@ namespace StellarLiberation
             base.Initialize();
             mLayerManager = new(this, GraphicsDevice, mSerialize);
             mLayerManager.AddLayer(new MainMenueLayer());
+            mResolutionManager = new(mGraphicsManager, mLayerManager);
+            mResolutionManager.Apply(new(1920, 1080, 1));
+            mResolutionManager.ToggleFullscreen();
         }
 
         protected override void LoadContent()
@@ -68,7 +69,7 @@ namespace StellarLiberation
             if (mResulutionWasResized) mLayerManager.OnResolutionChanged();
 
             InputState inputState = mInputManager.Update();
-            inputState.DoAction(ActionType.ToggleFullscreen, ToggleFullscreen);
+            inputState.DoAction(ActionType.ToggleFullscreen, mResolutionManager.ToggleFullscreen);
             mLayerManager.Update(gameTime, inputState);
             base.Update(gameTime);
         }
@@ -79,8 +80,6 @@ namespace StellarLiberation
             mLayerManager.Draw(mSpriteBatch);
             base.Draw(gameTime);
         }
-
-        private void ToggleFullscreen() => mGraphicsManager.ToggleFullScreen();
 
         public void SetCursorTexture(Registry registry) => Mouse.SetCursor(MouseCursor.FromTexture2D(Content.Load<Texture2D>(registry.FilePath), 0, 0));
     }
