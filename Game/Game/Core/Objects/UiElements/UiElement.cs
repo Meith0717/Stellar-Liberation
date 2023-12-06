@@ -19,10 +19,10 @@ namespace StellarLiberation.Game.Core.UserInterface
         public abstract void Draw();
 
         // Position propeties
-        public float RelX { set => mCanvas.RelX = value; }
-        public float RelY { set => mCanvas.RelY = value; }
-        public int X { set => mCanvas.X = value; }
-        public int Y { set => mCanvas.Y = value; }
+        public float RelX { set => mCanvas.RelativeX = value; }
+        public float RelY { set => mCanvas.RelativeY = value; }
+        public int X { set => mCanvas.AbsoluteX = value; }
+        public int Y { set => mCanvas.AbsoluteY = value; }
 
         // Dimension propeties
         public float RelWidth { set => mCanvas.RelWidth = value; }
@@ -35,7 +35,6 @@ namespace StellarLiberation.Game.Core.UserInterface
         public int VSpace { set => mCanvas.VSpace = value; }
         public Anchor Anchor { set => mCanvas.Anchor = value; }
         public FillScale FillScale { set => mCanvas.FillScale = value; }
-
 
     }
 }

@@ -7,7 +7,8 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 
 namespace StellarLiberation.Game.Core.UserInterface
 {
-    public enum Anchor { N, NE, E, SE, S, SW, W, NW, Center, None }
+    public enum Anchor { N, NE, E, SE, S, SW, W, NW, Center, Top, Bottom, Left, Right, CenterH, CenterV, None }
+    public enum Sticky { Left, Right, Top, Bottom, CenterH, CenterV }
     public enum FillScale { X, Y, Both, None }
 
     public class UiCanvas
@@ -16,10 +17,10 @@ namespace StellarLiberation.Game.Core.UserInterface
         private Rectangle mCanvas;
 
         // Needet properties
-        public float RelX;
-        public float RelY;
-        public int? X;
-        public int? Y;
+        public float RelativeX;
+        public float RelativeY;
+        public int? AbsoluteX;
+        public int? AbsoluteY;
 
         public float RelWidth = 0.1f;
         public float RelHeight = 0.1f;
@@ -34,12 +35,21 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public void UpdateFrame(Rectangle root)
         {
-            var xL = root.X + X ?? (int)(root.X + (root.Width * RelX));
-            var yL = root.Y + Y ?? (int)(root.Y + (root.Height * RelY));
+            var x = root.X + AbsoluteX ?? (int)(root.X + (root.Width * RelativeX));
+            var y = root.Y + AbsoluteY ?? (int)(root.Y + (root.Height * RelativeY));
 
             var width = Width ?? (int)(root.Width * RelWidth);
             var height = Height ?? (int)(root.Height * RelHeight);
 
+            ManageFillScale(root, ref x, ref y, ref width, ref height);
+            ManageAnchor(root, ref x, ref y, ref width, ref height);
+            ManageSpacing(root, ref x, ref y, ref width, ref height);
+
+            mCanvas = new(x, y, width, height);
+        }
+
+        private void ManageFillScale(Rectangle root, ref int x, ref int y, ref int width, ref int height)
+        {
             var aspectRatio = (float)width / height;
 
             switch (FillScale)
@@ -53,63 +63,102 @@ namespace StellarLiberation.Game.Core.UserInterface
                     width = (int)(height * aspectRatio);
                     break;
                 case FillScale.Both:
-                    xL = 0; yL = 0;
+                    x = 0; y = 0;
                     height = root.Height;
                     width = root.Width;
                     break;
             }
+        }
 
+        private void ManageAnchor(Rectangle root, ref int x, ref int y, ref int width, ref int height)
+        {
             switch (Anchor)
             {
                 case Anchor.NW:
-                    xL = root.X; yL = root.Y;
+                    x = root.X; y = root.Y;
                     break;
                 case Anchor.N:
-                    xL = root.Center.X - (width / 2); yL = root.Y;
+                    x = root.Center.X - (width / 2); y = root.Y;
                     break;
                 case Anchor.NE:
-                    xL = root.Right - width; yL = root.Y;
+                    x = root.Right - width; y = root.Y;
                     break;
                 case Anchor.E:
-                    xL = root.Right - width; yL = root.Center.Y - (height / 2);
+                    x = root.Right - width; y = root.Center.Y - (height / 2);
                     break;
                 case Anchor.SE:
-                    xL = root.Right - width; yL = root.Bottom - height;
+                    x = root.Right - width; y = root.Bottom - height;
                     break;
                 case Anchor.S:
-                    xL = root.Center.X - (width / 2); yL = root.Bottom - height;
+                    x = root.Center.X - (width / 2); y = root.Bottom - height;
                     break;
                 case Anchor.SW:
-                    xL = root.X; yL = root.Bottom - height;
+                    x = root.X; y = root.Bottom - height;
                     break;
                 case Anchor.W:
-                    xL = root.X; yL = root.Center.Y - (height / 2);
+                    x = root.X; y = root.Center.Y - (height / 2);
                     break;
                 case Anchor.Center:
-                    xL = root.Center.X - (width / 2); yL = root.Center.Y - (height / 2);
+                    x = root.Center.X - (width / 2); y = root.Center.Y - (height / 2);
+                    break;
+                case Anchor.Left:
+                    x = root.Left;
+                    break;
+                case Anchor.Right:
+                    x = root.Right - width;
+                    break;
+                case Anchor.Top:
+                    y = root.Top;
+                    break;
+                case Anchor.Bottom:
+                    y = root.Bottom - height;
+                    break;
+                case Anchor.CenterH:
+                    y = root.Center.Y - (height / 2);
+                    break;
+                case Anchor.CenterV:
+                    x = root.Center.X - (width / 2);
                     break;
             }
-
-            if (HSpace is not null)
-            {
-                var spaceLeft = xL - root.Left;
-                if (spaceLeft < HSpace) xL = root.X + (int)HSpace;
-
-                var SpaceRight = root.Right - (width + xL);
-                if (SpaceRight < HSpace) xL -= (int)HSpace;
-            }
-
-            if (VSpace is not null)
-            {
-                var SpaceTop = yL - root.Top;
-                if (SpaceTop < VSpace) yL = root.Y + (int)VSpace;
-
-                var SpaceBottom = root.Bottom - (height + yL);
-                if (SpaceBottom < VSpace) yL -= (int)VSpace;
-            }
-
-            mCanvas = new Rectangle(xL, yL, width, height);
         }
+
+        private void ManageSpacing(Rectangle root, ref int x, ref int y, ref int width, ref int height)
+        {
+            if (HSpace != null)
+            {
+                var spaceLeft = x - root.Left;
+                var spaceRight = root.Right - (width + x);
+
+                if (spaceLeft < HSpace && spaceRight < HSpace)
+                {
+                    x += (int)HSpace;
+                    width -= (int)HSpace * 2;
+                }
+                else
+                {
+                    if (spaceLeft < HSpace) x = root.X + (int)HSpace;
+                    if (spaceRight < HSpace) x -= (int)HSpace;
+                }
+            }
+
+            if (VSpace != null)
+            {
+                var spaceTop = y - root.Top;
+                var spaceBottom = root.Bottom - (height + y);
+
+                if (spaceTop < VSpace && spaceBottom < VSpace)
+                {
+                    y += (int)VSpace;
+                    height -= (int)VSpace * 2;
+                }
+                else
+                {
+                    if (spaceTop < VSpace) y = root.Y + (int)VSpace;
+                    if (spaceBottom < VSpace) y -= (int)VSpace;
+                }
+            }
+        }
+
 
         public bool Contains(Vector2 position) => mCanvas.Contains(position);
 
@@ -123,7 +172,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public void Draw()
         {
-            //TextureManager.Instance.DrawRectangleF(mCanvas, Color.Green, 2, 1);
+            TextureManager.Instance.DrawRectangleF(mCanvas, Color.Green, 2, 1);
         }
     }
 }
