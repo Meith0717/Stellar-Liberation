@@ -1453,18 +1453,6 @@
 /processorParam:TextureFormat=Color
 /build:textures/userInterface/buttons/pauseButton.png
 
-#begin textures/userInterface/layer/circle.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/userInterface/layer/circle.png
-
 #begin textures/userInterface/layer/edge0.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1512,30 +1500,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/userInterface/layer/edge3.png
-
-#begin textures/userInterface/layer/layer.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/userInterface/layer/layer.png
-
-#begin textures/userInterface/layer/layer1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/userInterface/layer/layer1.png
 
 #begin textures/userInterface/SliderDot.png
 /importer:TextureImporter

@@ -3,13 +3,12 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
+using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.UserInterface;
 using System.Collections.Generic;
-using MonoGame.Extended;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace StellarLiberation.Game.Core.Objects.UiElements
 {
@@ -37,7 +36,6 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
         public override void Draw()
         {
             var color = new Color((int)(Color.R * Alpha), (int)(Color.G * Alpha), (int)(Color.B * Alpha), (int)(Color.A * Alpha));
-            var layer = TextureManager.Instance.GetTexture(TextureRegistries.layer);
 
             var bounds = mCanvas.Bounds;
             var edgePositions = mCanvas.Bounds.ToRectangleF().GetCorners();

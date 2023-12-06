@@ -17,11 +17,6 @@ namespace StellarLiberation.Game.Core.UserInterface
         public Color Color = Color.White;
         public double Alpha = 1;
         private LinkedList<UiElement> mChildren = new LinkedList<UiElement>();
-        private Texture2D mTexture;
-
-        public UiLayer() : base() => mTexture = TextureManager.Instance.GetTexture(TextureRegistries.layer);
-
-        public UiLayer(string texture) : base() => mTexture = TextureManager.Instance.GetTexture(texture);
 
         public override void Initialize(Rectangle root)
         {
