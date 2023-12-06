@@ -115,6 +115,10 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegi
         public readonly static Registry layer = new(_layer, "layer");
         public readonly static Registry layer1 = new(_layer, "layer1");
         public readonly static Registry circle = new(_layer, "circle");
+        public readonly static Registry edge0 = new(_layer, "edge0");
+        public readonly static Registry edge1 = new(_layer, "edge1");
+        public readonly static Registry edge2 = new(_layer, "edge2");
+        public readonly static Registry edge3 = new(_layer, "edge3");
 
         private readonly static string menueButtons = @"textures\UserInterface\buttons";
         public readonly static Registry button = new(menueButtons, "button");

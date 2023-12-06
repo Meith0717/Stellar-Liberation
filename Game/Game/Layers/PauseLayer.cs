@@ -22,10 +22,10 @@ namespace StellarLiberation.Game.Layers
         public PauseLayer()
             : base(false)
         {
-            mBackgroundLayer = new() { RelHeight = 1, RelWidth = 1, Color = Color.Black, Alpha = .3f };
+            mBackgroundLayer = new() { RelHeight = 1, RelWidth = 1, Color = Color.Transparent};
             mButtonInputTracer = new();
 
-            var buttonFrame = new UiFrame(25) { Anchor = Anchor.Center, Height = 400, Width = 400, Color = new(33, 47, 60) };
+            var buttonFrame = new UiFrame(50) { Anchor = Anchor.Center, Height = 400, Width = 400, Color = new(17, 17, 17), Alpha = .8f};
             mBackgroundLayer.AddChild(buttonFrame);
 
             var _continue = new UiButton(TextureRegistries.button, "Resume") { Anchor = Anchor.N, FillScale = FillScale.X, OnClickAction = () => mLayerManager.PopLayer(), TextAllign = TextAllign.Center };

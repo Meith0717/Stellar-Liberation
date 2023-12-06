@@ -168,7 +168,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
             SpriteBatch.DrawLine(start, length, 0, color, thickness, GetDepth(depth));
         }
 
-
         public void DrawAdaptiveLine(Vector2 start, Vector2 end, Color color, float thickness, int depth, float zoom)
         {
             SpriteBatch.DrawLine(start, end, color, thickness / zoom, GetDepth(depth));

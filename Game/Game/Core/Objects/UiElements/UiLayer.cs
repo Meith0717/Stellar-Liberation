@@ -4,6 +4,7 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
@@ -33,7 +34,7 @@ namespace StellarLiberation.Game.Core.UserInterface
         public override void Draw()
         {
             var color = new Color((int)(Color.R * Alpha), (int)(Color.G * Alpha), (int)(Color.B * Alpha), (int)(Color.A * Alpha));
-            TextureManager.Instance.SpriteBatch.Draw(mTexture, mCanvas.Bounds, color);
+            TextureManager.Instance.SpriteBatch.FillRectangle(mCanvas.Bounds, color, 1);
             foreach (var child in mChildren) child.Draw();
             mCanvas.Draw();
         }

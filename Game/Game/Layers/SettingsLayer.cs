@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.Layers
             // mMainFrame.AddChild(new UiButton(TextureRegistries.button, "Apply") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = ApplyChanges });
 
 
-            var settingsFrame = new UiFrame(25) { RelHeight = .8f, RelWidth = .5f, Anchor = Anchor.Center, Color = new(33, 47, 60) };
+            var settingsFrame = new UiFrame(50) { RelHeight = .8f, RelWidth = .5f, Anchor = Anchor.Center, Color = new(17, 17, 17)};
             mMainFrame.AddChild(settingsFrame);
 
             // Sound Settings
@@ -60,7 +60,7 @@ namespace StellarLiberation.Game.Layers
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
+            spriteBatch.Begin(blendState: BlendState.AlphaBlend);
             mMainFrame.Draw();
             spriteBatch.End();
         }

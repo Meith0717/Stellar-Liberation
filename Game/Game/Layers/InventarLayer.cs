@@ -20,7 +20,7 @@ namespace StellarLiberation.Game.Layers
 
         public InventarLayer(Inventory inventory) : base(false)
         {
-            mFrame = new(25) { RelHeight = .8f, RelWidth = .6f, Anchor = Anchor.Center, Color = new(33, 47, 60) };
+            mFrame = new(50) { RelHeight = .8f, RelWidth = .6f, Anchor = Anchor.Center, Color = new(17, 17, 17) };
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
