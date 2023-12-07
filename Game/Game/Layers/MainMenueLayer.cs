@@ -44,6 +44,7 @@ namespace StellarLiberation.Game.Layers
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
         {
             base.Initialize(game1, layerManager, graphicsDevice, serialize);
+            mLayerManager.mResolutionManager.GetNativeResolution(); 
             mFrame.Initialize(mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.UiScaling);
         }
 
