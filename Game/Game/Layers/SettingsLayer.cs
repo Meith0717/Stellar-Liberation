@@ -53,7 +53,7 @@ namespace StellarLiberation.Game.Layers
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
         {
             base.Initialize(game1, layerManager, graphicsDevice, serialize);
-            mMainFrame.Initialize(mGraphicsDevice.Viewport.Bounds);
+            mMainFrame.Initialize(mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.UiScaling);
         }
 
         public override void Destroy() { }
@@ -67,13 +67,13 @@ namespace StellarLiberation.Game.Layers
 
         public override void OnResolutionChanged()
         {
-            mMainFrame.OnResolutionChanged(mGraphicsDevice.Viewport.Bounds);
+            mMainFrame.OnResolutionChanged(mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.UiScaling);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
             inputState.DoAction(ActionType.ESC, () => mLayerManager.PopLayer());
-            mMainFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds);
+            mMainFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.UiScaling);
             MusicManager.Instance.ChangeOverallVolume(mMusicSlider.Value);
             SoundEffectManager.Instance.ChangeOverallVolume(mSfxSlider.Value);
         }

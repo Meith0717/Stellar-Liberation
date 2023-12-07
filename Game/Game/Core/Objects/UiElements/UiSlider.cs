@@ -26,9 +26,9 @@ namespace StellarLiberation.Game.Core.UserInterface
             mSliderValue = val;
         }
 
-        public override void Initialize(Rectangle root) => OnResolutionChanged(root);
+        public override void Initialize(Rectangle root, float UiScaling) => OnResolutionChanged(root, 1);
 
-        public override void Update(InputState inputState, Rectangle root)
+        public override void Update(InputState inputState, Rectangle root, float UiScaling)
         {
 
             if (inputState.Actions.Contains(ActionType.LeftClickReleased)) mWasPressed = false;
@@ -62,7 +62,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             mCanvas.Draw();
         }
 
-        public override void OnResolutionChanged(Rectangle root)
+        public override void OnResolutionChanged(Rectangle root, float UiScaling)
         {
             Height = 25;
             mCanvas.UpdateFrame(root);

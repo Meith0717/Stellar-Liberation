@@ -18,10 +18,10 @@ namespace StellarLiberation.Game.Core.UserInterface
         public double Alpha = 1;
         private LinkedList<UiElement> mChildren = new LinkedList<UiElement>();
 
-        public override void Initialize(Rectangle root)
+        public override void Initialize(Rectangle root, float UiScaling)
         {
             mCanvas.UpdateFrame(root);
-            foreach (var child in mChildren) child.Initialize(mCanvas.Bounds);
+            foreach (var child in mChildren) child.Initialize(mCanvas.Bounds, 1);
         }
 
         public void AddChild(UiElement child) => mChildren.AddLast(child);
@@ -34,15 +34,15 @@ namespace StellarLiberation.Game.Core.UserInterface
             mCanvas.Draw();
         }
 
-        public override void Update(InputState inputState, Rectangle root)
+        public override void Update(InputState inputState, Rectangle root, float UiScaling)
         {
-            foreach (var child in mChildren) child.Update(inputState, mCanvas.Bounds);
+            foreach (var child in mChildren) child.Update(inputState, mCanvas.Bounds, 1);
         }
 
-        public override void OnResolutionChanged(Rectangle root)
+        public override void OnResolutionChanged(Rectangle root, float UiScaling)
         {
             mCanvas.UpdateFrame(root);
-            foreach (var child in mChildren) child.OnResolutionChanged(mCanvas.Bounds);
+            foreach (var child in mChildren) child.OnResolutionChanged(mCanvas.Bounds, 1);
         }
     }
 }

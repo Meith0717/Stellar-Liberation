@@ -4,15 +4,12 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.UserInterface;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Layers
 {
@@ -47,7 +44,7 @@ namespace StellarLiberation.Game.Layers
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
         {
             base.Initialize(game1, layerManager, graphicsDevice, serialize);
-            mFrame.Initialize(mGraphicsDevice.Viewport.Bounds);
+            mFrame.Initialize(mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.UiScaling);
         }
 
         public override void Destroy()
@@ -65,14 +62,14 @@ namespace StellarLiberation.Game.Layers
 
         public override void OnResolutionChanged()
         {
-            mFrame.OnResolutionChanged(mGraphicsDevice.Viewport.Bounds);
+            mFrame.OnResolutionChanged(mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.UiScaling);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
             inputState.DoAction(ActionType.ESC, mLayerManager.Exit);
             mButtonHoverTracer.Trace(inputState);
-            mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds);
+            mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.UiScaling);
         }
 
         private void StartGame()

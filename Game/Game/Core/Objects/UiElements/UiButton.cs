@@ -36,7 +36,7 @@ namespace StellarLiberation.Game.Core.UserInterface
         }
 
 
-        public override void Initialize(Rectangle root)
+        public override void Initialize(Rectangle root, float UiScaling)
         {
             mCanvas.UpdateFrame(root);
         }
@@ -49,7 +49,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             mCanvas.Draw();
         }
 
-        public override void Update(InputState inputState, Rectangle root)
+        public override void Update(InputState inputState, Rectangle root, float UiScaling)
         {
             var stringDim = TextureManager.Instance.GetFont(FontRegistries.buttonFont).MeasureString(mText);
             switch (TextAllign)
@@ -77,7 +77,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             //SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.click);
         }
 
-        public override void OnResolutionChanged(Rectangle root)
+        public override void OnResolutionChanged(Rectangle root, float UiScaling)
         {
             mCanvas.UpdateFrame(root);
         }

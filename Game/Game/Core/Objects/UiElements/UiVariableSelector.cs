@@ -32,16 +32,16 @@ namespace StellarLiberation.Game.Core.UserInterface
         private void DecrementIndex() => mIndex -= (mIndex > 0) ? 1 : 0;
 
 
-        public override void Initialize(Rectangle root)
+        public override void Initialize(Rectangle root, float UiScaling)
         {
-            OnResolutionChanged(root);
+            OnResolutionChanged(root, 1);
         }
 
-        public override void Update(InputState inputState, Rectangle root)
+        public override void Update(InputState inputState, Rectangle root, float UiScaling)
         {
-            mVariable.Update(inputState, mCanvas.Bounds);
-            mLeftArrow.Update(inputState, mCanvas.Bounds);
-            mRightArrow.Update(inputState, mCanvas.Bounds);
+            mVariable.Update(inputState, mCanvas.Bounds, 1);
+            mLeftArrow.Update(inputState, mCanvas.Bounds, 1);
+            mRightArrow.Update(inputState, mCanvas.Bounds, 1);
             mVariable.Text = mVariables[mIndex];
             mLeftArrow.IsDisabled = mIndex == 0;
             mRightArrow.IsDisabled = mIndex == mVariables.Count - 1;
@@ -55,13 +55,13 @@ namespace StellarLiberation.Game.Core.UserInterface
             mCanvas.Draw();
         }
 
-        public override void OnResolutionChanged(Rectangle root)
+        public override void OnResolutionChanged(Rectangle root, float UiScaling)
         {
             mCanvas.Height = (int)TextureManager.Instance.GetFont(FontRegistries.buttonFont).MeasureString(" ").Y;
             mCanvas.UpdateFrame(root);
-            mLeftArrow.Initialize(mCanvas.Bounds);
-            mRightArrow.Initialize(mCanvas.Bounds);
-            mVariable.Initialize(mCanvas.Bounds);
+            mLeftArrow.Initialize(mCanvas.Bounds, 1);
+            mRightArrow.Initialize(mCanvas.Bounds, 1);
+            mVariable.Initialize(mCanvas.Bounds, 1);
         }
 
     }

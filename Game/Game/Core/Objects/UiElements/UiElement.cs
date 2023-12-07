@@ -13,9 +13,9 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public UiElement() => mCanvas = new UiCanvas();
 
-        public abstract void Initialize(Rectangle root);
-        public abstract void Update(InputState inputState, Rectangle root);
-        public abstract void OnResolutionChanged(Rectangle root);
+        public abstract void Initialize(Rectangle root, float UiScaling);
+        public abstract void Update(InputState inputState, Rectangle root, float UiScaling);
+        public abstract void OnResolutionChanged(Rectangle root, float UiScaling);
         public abstract void Draw();
 
         // Position propeties
