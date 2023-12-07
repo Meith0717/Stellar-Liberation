@@ -172,7 +172,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public void Draw()
         {
-            //TextureManager.Instance.DrawRectangleF(mCanvas, Color.Green, 2, 1);
+            TextureManager.Instance.DrawRectangleF(mCanvas, Color.Green, 2, 1);
         }
     }
 }

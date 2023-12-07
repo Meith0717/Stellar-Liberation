@@ -28,7 +28,7 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
         public override void Initialize(Rectangle root, float UiScaling)
         {
             mCanvas.UpdateFrame(root);
-            foreach (var child in mChildren) child.Initialize(mCanvas.Bounds, 1);
+            foreach (var child in mChildren) child.Initialize(mCanvas.Bounds, UiScaling);
         }
 
         public void AddChild(UiElement child) => mChildren.AddLast(child);
@@ -60,13 +60,13 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
 
         public override void Update(InputState inputState, Rectangle root, float UiScaling)
         {
-            foreach (var child in mChildren) child.Update(inputState, mCanvas.Bounds, 1);
+            foreach (var child in mChildren) child.Update(inputState, mCanvas.Bounds, UiScaling);
         }
 
         public override void OnResolutionChanged(Rectangle root, float UiScaling)
         {
             mCanvas.UpdateFrame(root);
-            foreach (var child in mChildren) child.OnResolutionChanged(mCanvas.Bounds, 1);
+            foreach (var child in mChildren) child.OnResolutionChanged(mCanvas.Bounds, UiScaling);
         }
     }
 }

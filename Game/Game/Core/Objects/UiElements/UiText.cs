@@ -24,13 +24,13 @@ namespace StellarLiberation.Game.Core.UserInterface
             FontID = fontID;
         }
 
-        public override void Initialize(Rectangle root, float UiScaling) => OnResolutionChanged(root, 1);
+        public override void Initialize(Rectangle root, float UiScaling) => OnResolutionChanged(root, UiScaling);
 
         public override void OnResolutionChanged(Rectangle root, float UiScaling)
         {
             mTextDim = GetTextDimension(FontID, Text);
-            mCanvas.Height = (int)mTextDim.Y;
-            mCanvas.Width = (int)mTextDim.X;
+            Height = (int)(mTextDim.Y * UiScaling);
+            Width = (int)(mTextDim.X * UiScaling);
             mCanvas.UpdateFrame(root);
         }
 
@@ -43,6 +43,6 @@ namespace StellarLiberation.Game.Core.UserInterface
             mCanvas.Draw();
         }
 
-        public override void Update(InputState inputState, Rectangle root, float UiScaling) => OnResolutionChanged(root, 1);
+        public override void Update(InputState inputState, Rectangle root, float UiScaling) => OnResolutionChanged(root, UiScaling);
     }
 }

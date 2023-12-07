@@ -24,7 +24,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Initialize(Rectangle root, float UiScaling)
         {
-            OnResolutionChanged(root, 1);
+            OnResolutionChanged(root, UiScaling);
         }
 
         public override void Update(InputState inputState, Rectangle root, float uiScaling)
@@ -36,8 +36,8 @@ namespace StellarLiberation.Game.Core.UserInterface
         public override void OnResolutionChanged(Rectangle root, float UiScaling)
         {
             mCanvas.UpdateFrame(root);
-            mUiElement.OnResolutionChanged(mCanvas.Bounds, 1);
-            mText.OnResolutionChanged(mCanvas.Bounds, 1);
+            mUiElement.OnResolutionChanged(mCanvas.Bounds, UiScaling);
+            mText.OnResolutionChanged(mCanvas.Bounds, UiScaling);
         }
 
         public override void Draw()
