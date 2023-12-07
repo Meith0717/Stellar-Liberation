@@ -11,26 +11,31 @@ using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.UserInterface
 {
-    public class UiVariableSelector : UiElement
+    public class UiVariableSelector<T> : UiElement
     {
-        private readonly List<String> mVariables;
+        private readonly List<T> mVariables;
         private readonly UiButton mLeftArrow;
         private readonly UiButton mRightArrow;
         private readonly UiText mVariable;
         private int mIndex;
+        public Action OnClickAction = () => throw new NotImplementedException();
 
-        public UiVariableSelector(List<String> variables)
+        public UiVariableSelector(List<T> variables)
         {
             mVariables = variables;
-            mLeftArrow = new(TextureRegistries.arrowL, "") { Anchor = Anchor.W, FillScale = FillScale.Y, OnClickAction = DecrementIndex };
-            mRightArrow = new(TextureRegistries.arrowR, "") { Anchor = Anchor.E, FillScale = FillScale.Y, OnClickAction = IncrementIndex };
+            mLeftArrow = new(TextureRegistries.arrowL, "") { Anchor = Anchor.W, FillScale = FillScale.Y, OnClickAction = () => { DecrementIndex(); OnClickAction(); } };
+            mRightArrow = new(TextureRegistries.arrowR, "") { Anchor = Anchor.E, FillScale = FillScale.Y, OnClickAction = () => { IncrementIndex(); OnClickAction(); } };
             mVariable = new(FontRegistries.buttonFont, "N.A") { Anchor = Anchor.Center };
         }
+
+        public void Add(T variable) => mVariables.Add(variable);
+        public void AddRange(List<T> variables) => mVariables.AddRange(variables);
 
         private void IncrementIndex() => mIndex += (mIndex < mVariables.Count - 1) ? 1 : 0;
 
         private void DecrementIndex() => mIndex -= (mIndex > 0) ? 1 : 0;
 
+        public T Value => mVariables[mIndex];
 
         public override void Initialize(Rectangle root, float UiScaling)
         {
@@ -39,10 +44,10 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Update(InputState inputState, Rectangle root, float UiScaling)
         {
-            mVariable.Update(inputState, mCanvas.Bounds, 1);
-            mLeftArrow.Update(inputState, mCanvas.Bounds, 1);
-            mRightArrow.Update(inputState, mCanvas.Bounds, 1);
-            mVariable.Text = mVariables[mIndex];
+            mVariable.Update(inputState, Canvas.Bounds, 1);
+            mLeftArrow.Update(inputState, Canvas.Bounds, 1);
+            mRightArrow.Update(inputState, Canvas.Bounds, 1);
+            mVariable.Text = mVariables[mIndex].ToString();
             mLeftArrow.IsDisabled = mIndex == 0;
             mRightArrow.IsDisabled = mIndex == mVariables.Count - 1;
         }
@@ -52,17 +57,16 @@ namespace StellarLiberation.Game.Core.UserInterface
             mLeftArrow.Draw();
             mRightArrow.Draw();
             mVariable.Draw();
-            mCanvas.Draw();
+            Canvas.Draw();
         }
 
         public override void OnResolutionChanged(Rectangle root, float UiScaling)
         {
-            mCanvas.Height = (int)TextureManager.Instance.GetFont(FontRegistries.buttonFont).MeasureString(" ").Y;
-            mCanvas.UpdateFrame(root);
-            mLeftArrow.Initialize(mCanvas.Bounds, 1);
-            mRightArrow.Initialize(mCanvas.Bounds, 1);
-            mVariable.Initialize(mCanvas.Bounds, 1);
+            Canvas.Height = (int)TextureManager.Instance.GetFont(FontRegistries.buttonFont).MeasureString(" ").Y;
+            Canvas.UpdateFrame(root);
+            mLeftArrow.Initialize(Canvas.Bounds, UiScaling);
+            mRightArrow.Initialize(Canvas.Bounds, UiScaling);
+            mVariable.Initialize(Canvas.Bounds, UiScaling);
         }
-
     }
 }

@@ -27,8 +27,8 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
 
         public override void Initialize(Rectangle root, float UiScaling)
         {
-            mCanvas.UpdateFrame(root);
-            foreach (var child in mChildren) child.Initialize(mCanvas.Bounds, UiScaling);
+            Canvas.UpdateFrame(root);
+            foreach (var child in mChildren) child.Initialize(Canvas.Bounds, UiScaling);
         }
 
         public void AddChild(UiElement child) => mChildren.AddLast(child);
@@ -37,7 +37,7 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
         {
             var color = new Color((int)(Color.R * Alpha), (int)(Color.G * Alpha), (int)(Color.B * Alpha), (int)(Color.A * Alpha));
 
-            var bounds = mCanvas.Bounds;
+            var bounds = Canvas.Bounds;
             bounds.Inflate(-mBorder / 2, -mBorder / 2);
 
             var edgePositions = bounds.ToRectangleF().GetCorners();
@@ -55,18 +55,18 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
             TextureManager.Instance.SpriteBatch.FillRectangle(bounds, color, 1);
 
             foreach (var child in mChildren) child.Draw();
-            mCanvas.Draw();
+            Canvas.Draw();
         }
 
         public override void Update(InputState inputState, Rectangle root, float UiScaling)
         {
-            foreach (var child in mChildren) child.Update(inputState, mCanvas.Bounds, UiScaling);
+            foreach (var child in mChildren) child.Update(inputState, Canvas.Bounds, UiScaling);
         }
 
         public override void OnResolutionChanged(Rectangle root, float UiScaling)
         {
-            mCanvas.UpdateFrame(root);
-            foreach (var child in mChildren) child.OnResolutionChanged(mCanvas.Bounds, UiScaling);
+            Canvas.UpdateFrame(root);
+            foreach (var child in mChildren) child.OnResolutionChanged(Canvas.Bounds, UiScaling);
         }
     }
 }

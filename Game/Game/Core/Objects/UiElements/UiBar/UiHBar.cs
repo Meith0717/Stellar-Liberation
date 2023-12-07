@@ -38,14 +38,14 @@ namespace StellarLiberation.Game.Core.UserInterface.UiBar
         {
             var ratio = 26 / 6f;
 
-            mTextureFrame = new(mCanvas.Position.X, mCanvas.Position.Y, mCanvas.Bounds.Height, mCanvas.Bounds.Height);
+            mTextureFrame = new(Canvas.Position.X, Canvas.Position.Y, Canvas.Bounds.Height, Canvas.Bounds.Height);
 
-            var sideFrameWidth = (int)(mCanvas.Bounds.Height / ratio);
-            var sideFrameHeight = mCanvas.Bounds.Height;
+            var sideFrameWidth = (int)(Canvas.Bounds.Height / ratio);
+            var sideFrameHeight = Canvas.Bounds.Height;
 
             mLeftShadowFrame = new(mTextureFrame.Right, mTextureFrame.Y, sideFrameWidth, sideFrameHeight);
-            mMidShadowFrame = new(mLeftShadowFrame.Right, mCanvas.Position.Y, mCanvas.Bounds.Width - sideFrameWidth * 2 - mTextureFrame.Width, mCanvas.Bounds.Height);
-            mRightShadowFrame = new(mMidShadowFrame.Right, mCanvas.Position.Y, sideFrameWidth, sideFrameHeight);
+            mMidShadowFrame = new(mLeftShadowFrame.Right, Canvas.Position.Y, Canvas.Bounds.Width - sideFrameWidth * 2 - mTextureFrame.Width, Canvas.Bounds.Height);
+            mRightShadowFrame = new(mMidShadowFrame.Right, Canvas.Position.Y, sideFrameWidth, sideFrameHeight);
 
             mLeftFrame = mLeftShadowFrame;
             mMidFrame = new(mMidShadowFrame.X, mMidShadowFrame.Y, mMidShadowFrame.Width * (float)Percentage, mMidShadowFrame.Height); ;
@@ -69,12 +69,12 @@ namespace StellarLiberation.Game.Core.UserInterface.UiBar
 
         public override void Initialize(Rectangle root, float UiScaling)
         {
-            mCanvas.UpdateFrame(root);
+            Canvas.UpdateFrame(root);
         }
 
         public override void OnResolutionChanged(Rectangle root, float UiScaling)
         {
-            mCanvas.UpdateFrame(root);
+            Canvas.UpdateFrame(root);
         }
     }
 }

@@ -35,16 +35,16 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void OnResolutionChanged(Rectangle root, float UiScaling)
         {
-            mCanvas.UpdateFrame(root);
-            mUiElement.OnResolutionChanged(mCanvas.Bounds, UiScaling);
-            mText.OnResolutionChanged(mCanvas.Bounds, UiScaling);
+            Canvas.UpdateFrame(root);
+            mUiElement.OnResolutionChanged(Canvas.Bounds, UiScaling);
+            mText.OnResolutionChanged(Canvas.Bounds, UiScaling);
         }
 
         public override void Draw()
         {
             mUiElement.Draw();
             mText.Draw();
-            mCanvas.Draw();
+            Canvas.Draw();
         }
     }
 }

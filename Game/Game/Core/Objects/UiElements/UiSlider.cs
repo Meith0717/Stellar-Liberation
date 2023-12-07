@@ -32,7 +32,7 @@ namespace StellarLiberation.Game.Core.UserInterface
         {
 
             if (inputState.Actions.Contains(ActionType.LeftClickReleased)) mWasPressed = false;
-            if (mCanvas.Contains(inputState.mMousePosition) &&
+            if (Canvas.Contains(inputState.mMousePosition) &&
                 inputState.Actions.Contains(ActionType.LeftClick)) mWasPressed = true;
 
             if (!mWasPressed) return;
@@ -42,7 +42,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         private float GetValue(Vector2 mousePos)
         {
-            var relMouselength = mousePos.X - mCanvas.Bounds.Left;
+            var relMouselength = mousePos.X - Canvas.Bounds.Left;
             var tmp = relMouselength / mSliderLength;
             if (tmp > 1) return 1;
             if (tmp < 0) return 0;
@@ -53,23 +53,23 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Draw()
         {
-            var sliderPos = new Vector2(mCanvas.Bounds.Left, mCanvas.Center.Y);
-            var dotDim = new Vector2(mCanvas.Bounds.Height, mCanvas.Bounds.Height);
+            var sliderPos = new Vector2(Canvas.Bounds.Left, Canvas.Center.Y);
+            var dotDim = new Vector2(Canvas.Bounds.Height, Canvas.Bounds.Height);
 
             TextureManager.Instance.DrawLine(sliderPos, mSliderDotPosition, Color.White, 6, 1);
             TextureManager.Instance.DrawLine(sliderPos, mSliderLength, new(100, 100, 100, 100), 6, 1);
             TextureManager.Instance.Draw(TextureRegistries.sliderDot, mSliderDotPosition - (dotDim / 2), dotDim.X, dotDim.Y, mWasPressed ? Color.MonoGameOrange : Color.White);
-            mCanvas.Draw();
+            Canvas.Draw();
         }
 
         public override void OnResolutionChanged(Rectangle root, float UiScaling)
         {
-            Height = 25;
-            mCanvas.UpdateFrame(root);
-            mSliderLength = MathF.Abs(mCanvas.Bounds.Left - mCanvas.Bounds.Right);
+            Height = (int)(25 * UiScaling);
+            Canvas.UpdateFrame(root);
+            mSliderLength = MathF.Abs(Canvas.Bounds.Left - Canvas.Bounds.Right);
             mSliderDotPosition = sliderPosition;
         }
 
-        private Vector2 sliderPosition => new(mCanvas.Bounds.Left + mSliderLength * mSliderValue, mCanvas.Center.Y);
+        private Vector2 sliderPosition => new(Canvas.Bounds.Left + mSliderLength * mSliderValue, Canvas.Center.Y);
     }
 }

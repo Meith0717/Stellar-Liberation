@@ -19,8 +19,8 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Draw()
         {
-            TextureManager.Instance.Draw(mSpriteId, mCanvas.Position, mCanvas.Bounds.Width, mCanvas.Bounds.Height);
-            mCanvas.Draw();
+            TextureManager.Instance.Draw(mSpriteId, Canvas.Position, Canvas.Bounds.Width, Canvas.Bounds.Height);
+            Canvas.Draw();
         }
 
         public override void Initialize(Rectangle root, float UiScaling) => OnResolutionChanged(root, UiScaling);
@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             var texture = TextureManager.Instance.GetTexture(mSpriteId);
             Width = (int)(texture.Width * UiScaling);
             Height = (int)(texture.Height * UiScaling);
-            mCanvas.UpdateFrame(root);
+            Canvas.UpdateFrame(root);
         }
 
         public override void Update(InputState inputState, Rectangle root, float UiScaling) { System.Diagnostics.Debug.WriteLine(UiScaling); }

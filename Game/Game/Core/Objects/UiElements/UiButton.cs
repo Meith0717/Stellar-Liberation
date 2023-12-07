@@ -25,46 +25,40 @@ namespace StellarLiberation.Game.Core.UserInterface
         public TextAllign TextAllign = TextAllign.W;
         private Vector2 TextPosition;
 
-        public UiButton(string SpriteId, string text, float textScale = 1)
+        public UiButton(string SpriteId, string text)
         {
-            mTextScale = textScale;
             mText = text;
             mSpriteId = SpriteId;
-            var texture = TextureManager.Instance.GetTexture(mSpriteId);
-            mCanvas.Width = texture.Width;
-            mCanvas.Height = texture.Height;
         }
 
 
-        public override void Initialize(Rectangle root, float UiScaling)
-        {
-            mCanvas.UpdateFrame(root);
-        }
+        public override void Initialize(Rectangle root, float UiScaling) => OnResolutionChanged(root, UiScaling);
 
         public override void Draw()
         {
             var color = IsDisabled ? Color.DarkGray : IsHover ? Color.MonoGameOrange : Color.White;
-            TextureManager.Instance.Draw(mSpriteId, mCanvas.Position, mCanvas.Bounds.Width, mCanvas.Bounds.Height, color);
+            TextureManager.Instance.Draw(mSpriteId, Canvas.Position, Canvas.Bounds.Width, Canvas.Bounds.Height, color);
             TextureManager.Instance.DrawString(FontRegistries.buttonFont, TextPosition, mText, mTextScale, color);
-            mCanvas.Draw();
+            Canvas.Draw();
         }
 
         public override void Update(InputState inputState, Rectangle root, float UiScaling)
         {
             var stringDim = TextureManager.Instance.GetFont(FontRegistries.buttonFont).MeasureString(mText);
+            var textHeight = Canvas.Center.Y - (stringDim.Y * UiScaling / 2);
             switch (TextAllign)
             {
                 case TextAllign.W:
-                    TextPosition = new Vector2(mCanvas.Bounds.Left + 5, mCanvas.Position.Y + 10);
+                    TextPosition = new Vector2(Canvas.Bounds.Left, textHeight);
                     break;
                 case TextAllign.E:
-                    TextPosition = new Vector2(mCanvas.Bounds.Right - stringDim.X - 5, mCanvas.Position.Y + 10);
+                    TextPosition = new Vector2(Canvas.Bounds.Right - (stringDim.X * UiScaling), textHeight);
                     break;
                 case TextAllign.Center:
-                    TextPosition = new Vector2(mCanvas.Center.X - (stringDim.X / 2), mCanvas.Position.Y + 10);
+                    TextPosition = new Vector2(Canvas.Center.X - (stringDim.X * UiScaling / 2), textHeight);
                     break;
             }
-            IsHover = mCanvas.Contains(inputState.mMousePosition);
+            IsHover = Canvas.Contains(inputState.mMousePosition);
             if (IsHover && !IsDisabled && IsHover != mLastHoverState) SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.hover);
             if (IsHover) inputState.DoAction(ActionType.Select, Click);
             mLastHoverState = IsHover;
@@ -74,14 +68,17 @@ namespace StellarLiberation.Game.Core.UserInterface
         {
             if (OnClickAction is null) return;
             OnClickAction();
-            //SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.click);
         }
 
         public override void OnResolutionChanged(Rectangle root, float UiScaling)
         {
-            mCanvas.UpdateFrame(root);
+            var texture = TextureManager.Instance.GetTexture(mSpriteId);
+            mTextScale = UiScaling;
+            Width = (int)(texture.Width * UiScaling);
+            Height = (int)(texture.Height * UiScaling);
+            Canvas.UpdateFrame(root);
         }
 
-        public bool Contains(Vector2 position) => mCanvas.Contains(position);
+        public bool Contains(Vector2 position) => Canvas.Contains(position);
     }
 }

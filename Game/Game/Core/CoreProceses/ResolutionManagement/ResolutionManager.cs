@@ -15,7 +15,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
         private readonly GraphicsDeviceManager mGraphicsManager;
         public readonly List<Resolution> mResolutions = new()
         {
-            new(1280, 720, .5f),
+            new(1280, 720, .66666666667f),
             new(1920, 1080, 1),
         };
 
@@ -29,6 +29,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
             var width = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             var height = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
         }
+
+        public List<Resolution> Resolutions => mResolutions;
 
         public bool WasResized
         {

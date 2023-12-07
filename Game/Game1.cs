@@ -37,7 +37,7 @@ namespace StellarLiberation
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
             Window.AllowAltF4 = false;
-            ResolutionManager.Apply(new(1280, 720, .5f));
+            ResolutionManager.Apply(new(1289, 720, .7f));
         }
 
         protected override void Initialize()

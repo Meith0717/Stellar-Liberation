@@ -38,14 +38,14 @@ namespace StellarLiberation.Game.Core.UserInterface.UiBar
         {
             var ratio = 26 / 6f;
 
-            mTextureFrame = new(mCanvas.Position.X, mCanvas.Position.Y, mCanvas.Bounds.Width, mCanvas.Bounds.Width);
+            mTextureFrame = new(Canvas.Position.X, Canvas.Position.Y, Canvas.Bounds.Width, Canvas.Bounds.Width);
 
-            var sideFrameWidth = mCanvas.Bounds.Width;
-            var sideFrameHeight = (int)(mCanvas.Bounds.Width / ratio);
+            var sideFrameWidth = Canvas.Bounds.Width;
+            var sideFrameHeight = (int)(Canvas.Bounds.Width / ratio);
 
-            mTopShadowFrame = new(mCanvas.Position.X, mTextureFrame.Bottom, sideFrameWidth, sideFrameHeight);
-            mMidShadowFrame = new(mCanvas.Position.X, mTopShadowFrame.Bottom, mCanvas.Bounds.Width, mCanvas.Bounds.Height - sideFrameHeight * 2 - mTextureFrame.Height);
-            mBottomShadowFrame = new(mCanvas.Position.X, mMidShadowFrame.Bottom, sideFrameWidth, sideFrameHeight);
+            mTopShadowFrame = new(Canvas.Position.X, mTextureFrame.Bottom, sideFrameWidth, sideFrameHeight);
+            mMidShadowFrame = new(Canvas.Position.X, mTopShadowFrame.Bottom, Canvas.Bounds.Width, Canvas.Bounds.Height - sideFrameHeight * 2 - mTextureFrame.Height);
+            mBottomShadowFrame = new(Canvas.Position.X, mMidShadowFrame.Bottom, sideFrameWidth, sideFrameHeight);
 
             mBottomFrame = mBottomShadowFrame;
             mMidFrame = new(mMidShadowFrame.X, mBottomFrame.Top + 1f - mMidShadowFrame.Height * (float)Percentage, mMidShadowFrame.Width, mMidShadowFrame.Height * (float)Percentage);
@@ -69,12 +69,12 @@ namespace StellarLiberation.Game.Core.UserInterface.UiBar
 
         public override void Initialize(Rectangle root, float UiScaling)
         {
-            mCanvas.UpdateFrame(root);
+            Canvas.UpdateFrame(root);
         }
 
         public override void OnResolutionChanged(Rectangle root, float UiScaling)
         {
-            mCanvas.UpdateFrame(root);
+            Canvas.UpdateFrame(root);
         }
     }
 }

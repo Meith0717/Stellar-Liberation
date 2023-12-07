@@ -9,9 +9,9 @@ namespace StellarLiberation.Game.Core.UserInterface
 {
     public abstract class UiElement
     {
-        protected UiCanvas mCanvas;
+        protected UiCanvas Canvas;
 
-        public UiElement() => mCanvas = new UiCanvas();
+        public UiElement() => Canvas = new UiCanvas();
 
         public abstract void Initialize(Rectangle root, float UiScaling);
         public abstract void Update(InputState inputState, Rectangle root, float UiScaling);
@@ -19,22 +19,22 @@ namespace StellarLiberation.Game.Core.UserInterface
         public abstract void Draw();
 
         // Position propeties
-        public float RelX { set => mCanvas.RelativeX = value; }
-        public float RelY { set => mCanvas.RelativeY = value; }
-        public int X { set => mCanvas.AbsoluteX = value; }
-        public int Y { set => mCanvas.AbsoluteY = value; }
+        public float RelX { set => Canvas.RelativeX = value; }
+        public float RelY { set => Canvas.RelativeY = value; }
+        public int X { set => Canvas.AbsoluteX = value; }
+        public int Y { set => Canvas.AbsoluteY = value; }
 
         // Dimension propeties
-        public float RelWidth { set => mCanvas.RelWidth = value; }
-        public float RelHeight { set => mCanvas.RelHeight = value; }
-        public int Height { set => mCanvas.Height = value; }
-        public int Width { set => mCanvas.Width = value; }
+        public float RelWidth { set => Canvas.RelWidth = value; }
+        public float RelHeight { set => Canvas.RelHeight = value; }
+        public int Height { set => Canvas.Height = value; }
+        public int Width { set => Canvas.Width = value; }
 
         // Optional propeties
-        public int HSpace { set => mCanvas.HSpace = value; }
-        public int VSpace { set => mCanvas.VSpace = value; }
-        public Anchor Anchor { set => mCanvas.Anchor = value; }
-        public FillScale FillScale { set => mCanvas.FillScale = value; }
+        public int HSpace { set => Canvas.HSpace = value; }
+        public int VSpace { set => Canvas.VSpace = value; }
+        public Anchor Anchor { set => Canvas.Anchor = value; }
+        public FillScale FillScale { set => Canvas.FillScale = value; }
 
     }
 }
