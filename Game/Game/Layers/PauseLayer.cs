@@ -28,10 +28,10 @@ namespace StellarLiberation.Game.Layers
             var buttonFrame = new UiFrame(50) { Anchor = Anchor.Center, Height = 400, Width = 400, Color = new(17, 17, 17), Alpha = .8f};
             mBackgroundLayer.AddChild(buttonFrame);
 
-            var _continue = new UiButton(TextureRegistries.button, "Resume") { Anchor = Anchor.CenterV, RelY = .1f, RelWidth = .9f, OnClickAction = () => mLayerManager.PopLayer(), TextAllign = TextAllign.Center };
-            var save = new UiButton(TextureRegistries.button, "Save") { Anchor = Anchor.CenterV, RelY = .35f, RelWidth = .9f, OnClickAction = null, TextAllign = TextAllign.Center };
-            var settings = new UiButton(TextureRegistries.button, "Settings") { Anchor = Anchor.CenterV, RelY = .55f, RelWidth = .9f, OnClickAction = () => mLayerManager.AddLayer(new SettingsLayer(false)), TextAllign = TextAllign.Center };
-            var menue = new UiButton(TextureRegistries.button, "Menue") { Anchor = Anchor.CenterV, RelY = .75f, RelWidth = .9f, OnClickAction = Menue, TextAllign = TextAllign.Center };
+            var _continue = new UiButton(TextureRegistries.button, "Resume") { Anchor = Anchor.CenterV, RelY = .1f, RelWidth = .8f, OnClickAction = () => mLayerManager.PopLayer(), TextAllign = TextAllign.Center };
+            var save = new UiButton(TextureRegistries.button, "Save") { Anchor = Anchor.CenterV, RelY = .32f, RelWidth = .8f, OnClickAction = null, TextAllign = TextAllign.Center };
+            var settings = new UiButton(TextureRegistries.button, "Settings") { Anchor = Anchor.CenterV, RelY = .54f, RelWidth = .8f, OnClickAction = () => mLayerManager.AddLayer(new SettingsLayer(false)), TextAllign = TextAllign.Center };
+            var menue = new UiButton(TextureRegistries.button, "Menue") { Anchor = Anchor.CenterV, RelY = .76f, RelWidth = .8f, OnClickAction = Menue, TextAllign = TextAllign.Center };
 
             buttonFrame.AddChild(_continue); mButtonInputTracer.AddButton(_continue); ;
             buttonFrame.AddChild(save); mButtonInputTracer.AddButton(save);
