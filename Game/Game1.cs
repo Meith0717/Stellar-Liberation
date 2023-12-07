@@ -20,37 +20,31 @@ namespace StellarLiberation
         // Local Classes
         private readonly GraphicsDeviceManager mGraphicsManager;
         private readonly InputManager mInputManager;
-
-        // Global Classes
+        private readonly ResolutionManager ResolutionManager;
+        private readonly Serialize Serialize;
         private SpriteBatch mSpriteBatch;
-        public LayerManager mLayerManager;
-        public readonly Serialize mSerialize;
-        public ResolutionManager mResolutionManager;
-
-        // Window attributes
-        private bool mResulutionWasResized;
+        private LayerManager mLayerManager;
 
         public Game1()
         {
             Content.RootDirectory = "Content";
             mGraphicsManager = new(this);
             mInputManager = new();
-            mSerialize = new Serialize();
+            Serialize = new();
+            ResolutionManager = new(mGraphicsManager);
 
             // Window properties
             IsMouseVisible = true;
-            Window.AllowUserResizing = false;
+            Window.AllowUserResizing = true;
             Window.AllowAltF4 = false;
+            ResolutionManager.Apply(new(1280, 720, .5f));
         }
 
         protected override void Initialize()
         {
             base.Initialize();
-            mLayerManager = new(this, GraphicsDevice, mSerialize);
+            mLayerManager = new(this, GraphicsDevice, Serialize, ResolutionManager);
             mLayerManager.AddLayer(new MainMenueLayer());
-            mResolutionManager = new(mGraphicsManager, mLayerManager);
-            mResolutionManager.Apply(new(1920, 1080, 1));
-            mResolutionManager.ToggleFullscreen();
         }
 
         protected override void LoadContent()
@@ -66,10 +60,8 @@ namespace StellarLiberation
 
         protected override void Update(GameTime gameTime)
         {
-            if (mResulutionWasResized) mLayerManager.OnResolutionChanged();
-
             InputState inputState = mInputManager.Update();
-            inputState.DoAction(ActionType.ToggleFullscreen, mResolutionManager.ToggleFullscreen);
+            inputState.DoAction(ActionType.ToggleFullscreen, ResolutionManager.ToggleFullscreen);
             mLayerManager.Update(gameTime, inputState);
             base.Update(gameTime);
         }

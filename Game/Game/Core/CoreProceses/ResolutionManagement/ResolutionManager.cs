@@ -12,19 +12,16 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
     public class ResolutionManager
     {
         public Resolution ActualResolution { get; private set; }
-
         private readonly GraphicsDeviceManager mGraphicsManager;
-        private readonly LayerManager mLayerManager;
         public readonly List<Resolution> mResolutions = new()
         {
             new(1280, 720, .5f),
             new(1920, 1080, 1),
         };
 
-        public ResolutionManager(GraphicsDeviceManager graphicsManager, LayerManager layerManager) 
+        public ResolutionManager(GraphicsDeviceManager graphicsManager) 
         {
             mGraphicsManager = graphicsManager;
-            mLayerManager = layerManager;
         }
 
         public void GetNativeResolution()
@@ -33,18 +30,31 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
             var height = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
         }
 
+        public bool WasResized
+        {
+            get
+            {
+                var tmp = mWasResized;
+                mWasResized = false;
+                return tmp;
+            }
+        }
+        private bool mWasResized;
+
         public void Apply(Resolution resolution)
         {
             mGraphicsManager.PreferredBackBufferWidth = resolution.Width;
             mGraphicsManager.PreferredBackBufferHeight = resolution.Height;
-            mLayerManager.OnResolutionChanged();
+            mGraphicsManager.ApplyChanges();
             ActualResolution = resolution;
+            mWasResized = true;
         }
 
         public void ToggleFullscreen()
         {
             mGraphicsManager.ToggleFullScreen();
-            mLayerManager.OnResolutionChanged();
+            mGraphicsManager.ApplyChanges();
+            mWasResized = true;
         }
     }
 }

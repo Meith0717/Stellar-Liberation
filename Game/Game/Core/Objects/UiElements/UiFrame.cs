@@ -38,7 +38,9 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
             var color = new Color((int)(Color.R * Alpha), (int)(Color.G * Alpha), (int)(Color.B * Alpha), (int)(Color.A * Alpha));
 
             var bounds = mCanvas.Bounds;
-            var edgePositions = mCanvas.Bounds.ToRectangleF().GetCorners();
+            bounds.Inflate(-mBorder / 2, -mBorder / 2);
+
+            var edgePositions = bounds.ToRectangleF().GetCorners();
             TextureManager.Instance.Draw(TextureRegistries.edge0, edgePositions[0] - new Vector2(mBorder, mBorder) / 2f, mBorder, mBorder, color);
             TextureManager.Instance.Draw(TextureRegistries.edge1, edgePositions[1] - new Vector2(mBorder, mBorder) / 2f, mBorder, mBorder, color);
             TextureManager.Instance.Draw(TextureRegistries.edge2, edgePositions[2] - new Vector2(mBorder, mBorder) / 2f, mBorder, mBorder, color);
