@@ -66,6 +66,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiBar
             TextureManager.Instance.Draw(TextureRegistries.barHorizontalLeft, mLeftFrame.Position, mLeftFrame.Width, mLeftFrame.Height, mColor);
             TextureManager.Instance.Draw(TextureRegistries.barHorizontalRight, mRightFrame.Position, mRightFrame.Width, mRightFrame.Height, mColor);
             TextureManager.Instance.Draw(TextureRegistries.barHorizontalMid, mMidFrame.Position, mMidFrame.Width, mMidFrame.Height, mColor);
+            Canvas.Draw();
         }
     }
 }
