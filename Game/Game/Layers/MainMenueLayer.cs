@@ -44,8 +44,7 @@ namespace StellarLiberation.Game.Layers
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
         {
             base.Initialize(game1, layerManager, graphicsDevice, serialize);
-            mLayerManager.mResolutionManager.GetNativeResolution(); 
-            mFrame.Initialize(mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.uiScaling);
+            mLayerManager.mResolutionManager.GetNativeResolution();
         }
 
         public override void Destroy()
@@ -61,10 +60,7 @@ namespace StellarLiberation.Game.Layers
             spriteBatch.End();
         }
 
-        public override void OnResolutionChanged()
-        {
-            mFrame.OnResolutionChanged(mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.uiScaling);
-        }
+        public override void OnResolutionChanged() { }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {

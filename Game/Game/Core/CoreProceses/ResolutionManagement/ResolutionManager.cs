@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,7 +15,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
         private readonly GraphicsDeviceManager mGraphicsManager;
         public readonly Dictionary<string, Resolution> mResolutions = new();
 
-        public ResolutionManager(GraphicsDeviceManager graphicsManager) 
+        public ResolutionManager(GraphicsDeviceManager graphicsManager)
         {
             mGraphicsManager = graphicsManager;
             var lst = new List<Resolution>()
@@ -64,10 +63,10 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
                 ActualResolution = resolution;
                 mWasResized = true;
                 return true;
-            } 
-            catch(KeyNotFoundException) 
-            { 
-                return false; 
+            }
+            catch (KeyNotFoundException)
+            {
+                return false;
             }
         }
 

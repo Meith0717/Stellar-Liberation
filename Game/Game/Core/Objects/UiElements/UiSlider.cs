@@ -26,11 +26,13 @@ namespace StellarLiberation.Game.Core.UserInterface
             mSliderValue = val;
         }
 
-        public override void Initialize(Rectangle root, float uiScaling) => OnResolutionChanged(root, 1);
-
         public override void Update(InputState inputState, Rectangle root, float uiScaling)
         {
+            Height = 25;
+            Canvas.UpdateFrame(root, uiScaling);
+            mSliderLength = MathF.Abs(Canvas.Bounds.Left - Canvas.Bounds.Right);
 
+            mSliderDotPosition = sliderPosition;
             if (inputState.Actions.Contains(ActionType.LeftClickReleased)) mWasPressed = false;
             if (Canvas.Contains(inputState.mMousePosition) &&
                 inputState.Actions.Contains(ActionType.LeftClick)) mWasPressed = true;
@@ -62,13 +64,6 @@ namespace StellarLiberation.Game.Core.UserInterface
             Canvas.Draw();
         }
 
-        public override void OnResolutionChanged(Rectangle root, float uiScaling)
-        {
-            Height = (int)(25 * uiScaling);
-            Canvas.UpdateFrame(root, uiScaling);
-            mSliderLength = MathF.Abs(Canvas.Bounds.Left - Canvas.Bounds.Right);
-            mSliderDotPosition = sliderPosition;
-        }
 
         private Vector2 sliderPosition => new(Canvas.Bounds.Left + mSliderLength * mSliderValue, Canvas.Center.Y);
     }

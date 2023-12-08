@@ -37,6 +37,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiBar
         public override void Update(InputState inputState, Rectangle root, float uiScaling)
         {
             var ratio = 26 / 6f;
+            Canvas.UpdateFrame(root, uiScaling);
 
             mTextureFrame = new(Canvas.Position.X, Canvas.Position.Y, Canvas.Bounds.Width, Canvas.Bounds.Width);
 
@@ -65,16 +66,6 @@ namespace StellarLiberation.Game.Core.UserInterface.UiBar
             TextureManager.Instance.Draw(TextureRegistries.barVerticalTop, mTopFrame.Position, mTopFrame.Width, mTopFrame.Height, mColor);
             TextureManager.Instance.Draw(TextureRegistries.barVerticalBottom, mBottomFrame.Position, mBottomFrame.Width, mBottomFrame.Height, mColor);
             TextureManager.Instance.Draw(TextureRegistries.barVerticalMid, mMidFrame.Position, mMidFrame.Width, mMidFrame.Height, mColor);
-        }
-
-        public override void Initialize(Rectangle root, float uiScaling)
-        {
-            Canvas.UpdateFrame(root, uiScaling);
-        }
-
-        public override void OnResolutionChanged(Rectangle root, float uiScaling)
-        {
-            Canvas.UpdateFrame(root, uiScaling);
         }
     }
 }

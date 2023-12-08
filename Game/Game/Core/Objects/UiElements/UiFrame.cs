@@ -19,16 +19,10 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
         private readonly int mBorder;
         private readonly LinkedList<UiElement> mChildren = new LinkedList<UiElement>();
 
-        public UiFrame(int border) 
+        public UiFrame(int border)
         {
             if (border % 2 != 0) throw new System.Exception("Odd values lead to artefacts");
             mBorder = border;
-        }
-
-        public override void Initialize(Rectangle root, float uiScaling)
-        {
-            Canvas.UpdateFrame(root, uiScaling);
-            foreach (var child in mChildren) child.Initialize(Canvas.Bounds, uiScaling);
         }
 
         public void AddChild(UiElement child) => mChildren.AddLast(child);
@@ -60,13 +54,9 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
 
         public override void Update(InputState inputState, Rectangle root, float uiScaling)
         {
+            Canvas.UpdateFrame(root, uiScaling);
             foreach (var child in mChildren) child.Update(inputState, Canvas.Bounds, uiScaling);
         }
 
-        public override void OnResolutionChanged(Rectangle root, float uiScaling)
-        {
-            Canvas.UpdateFrame(root, uiScaling);
-            foreach (var child in mChildren) child.OnResolutionChanged(Canvas.Bounds, uiScaling);
-        }
     }
 }

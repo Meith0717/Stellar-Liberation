@@ -10,11 +10,11 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
         public readonly int Height;
         public readonly float uiScaling;
 
-        public Resolution(int width, int height, float uiScaling) 
+        public Resolution(int width, int height, float uiScaling)
         {
             Width = width;
             Height = height;
-            this.uiScaling = uiScaling; 
+            this.uiScaling = uiScaling;
         }
 
         public override string ToString() => $"{Width}x{Height}";

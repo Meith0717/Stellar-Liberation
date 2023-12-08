@@ -10,7 +10,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
     [Serializable]
     public class Wallet
     {
-        [JsonProperty] 
+        [JsonProperty]
         public int Balance { get; private set; }
 
         public void Add(int amount) => Balance += amount;

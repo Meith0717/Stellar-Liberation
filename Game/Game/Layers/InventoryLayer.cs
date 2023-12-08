@@ -1,4 +1,4 @@
-﻿// InventarLayer.cs 
+﻿// InventoryLayer.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
@@ -34,15 +34,7 @@ namespace StellarLiberation.Game.Layers
             }
         }
 
-        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
-        {
-            base.Initialize(game1, layerManager ,graphicsDevice,serialize);
-            mFrame.Initialize(graphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.uiScaling);
-        }
-
-        public override void Destroy()
-        {
-        }
+        public override void Destroy() { }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -51,10 +43,7 @@ namespace StellarLiberation.Game.Layers
             spriteBatch.End();
         }
 
-        public override void OnResolutionChanged()
-        {
-            mFrame.OnResolutionChanged(mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.uiScaling);
-        }
+        public override void OnResolutionChanged() { }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {

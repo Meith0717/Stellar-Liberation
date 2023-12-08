@@ -41,7 +41,8 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
             if (!Items.TryGetValue(item.ItemID, out var stack))
             {
                 Items[item.ItemID] = new(1, item.ItemID.ToString(), item.TextureId);
-            } else
+            }
+            else
             {
                 stack.Amount++;
             }
@@ -63,7 +64,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
         public int GetIDAmount(ItemID itemID)
         {
             if (!Items.TryGetValue(itemID, out var stack)) return 0;
-            return stack.Amount; 
+            return stack.Amount;
         }
     }
 }

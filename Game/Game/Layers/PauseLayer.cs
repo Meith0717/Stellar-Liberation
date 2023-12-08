@@ -8,7 +8,6 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 
@@ -22,10 +21,10 @@ namespace StellarLiberation.Game.Layers
         public PauseLayer()
             : base(false)
         {
-            mBackgroundLayer = new() { RelHeight = 1, RelWidth = 1, Color = Color.Transparent};
+            mBackgroundLayer = new() { RelHeight = 1, RelWidth = 1, Color = Color.Transparent };
             mButtonInputTracer = new();
 
-            var buttonFrame = new UiFrame(50) { Anchor = Anchor.Center, Height = 400, Width = 400, Color = new(17, 17, 17), Alpha = .8f};
+            var buttonFrame = new UiFrame(50) { Anchor = Anchor.Center, Height = 400, Width = 400, Color = new(17, 17, 17), Alpha = .8f };
             mBackgroundLayer.AddChild(buttonFrame);
 
             var _continue = new UiButton(TextureRegistries.button, "Resume") { Anchor = Anchor.CenterV, RelY = .1f, RelWidth = .8f, OnClickAction = () => mLayerManager.PopLayer(), TextAllign = TextAllign.Center };
@@ -39,12 +38,6 @@ namespace StellarLiberation.Game.Layers
             buttonFrame.AddChild(menue); mButtonInputTracer.AddButton(menue);
         }
 
-        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
-        {
-            base.Initialize(game1, layerManager, graphicsDevice, serialize);
-            mBackgroundLayer.Initialize(mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.uiScaling);
-        }
-
         public override void Destroy() { }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -54,10 +47,7 @@ namespace StellarLiberation.Game.Layers
             spriteBatch.End();
         }
 
-        public override void OnResolutionChanged()
-        {
-            mBackgroundLayer.OnResolutionChanged(mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.uiScaling);
-        }
+        public override void OnResolutionChanged() { }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {

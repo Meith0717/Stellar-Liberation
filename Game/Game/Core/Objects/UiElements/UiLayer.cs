@@ -3,10 +3,8 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using System.Collections.Generic;
 
@@ -17,12 +15,6 @@ namespace StellarLiberation.Game.Core.UserInterface
         public Color Color = Color.White;
         public double Alpha = 1;
         private LinkedList<UiElement> mChildren = new LinkedList<UiElement>();
-
-        public override void Initialize(Rectangle root, float uiScaling)
-        {
-            Canvas.UpdateFrame(root, uiScaling);
-            foreach (var child in mChildren) child.Initialize(Canvas.Bounds, uiScaling);
-        }
 
         public void AddChild(UiElement child) => mChildren.AddLast(child);
 
@@ -36,13 +28,8 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Update(InputState inputState, Rectangle root, float uiScaling)
         {
-            foreach (var child in mChildren) child.Update(inputState, Canvas.Bounds, uiScaling);
-        }
-
-        public override void OnResolutionChanged(Rectangle root, float uiScaling)
-        {
             Canvas.UpdateFrame(root, uiScaling);
-            foreach (var child in mChildren) child.OnResolutionChanged(Canvas.Bounds, uiScaling);
+            foreach (var child in mChildren) child.Update(inputState, Canvas.Bounds, uiScaling);
         }
     }
 }

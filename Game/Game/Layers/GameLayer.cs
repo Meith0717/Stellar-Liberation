@@ -27,20 +27,20 @@ namespace StellarLiberation.Game.Layers
     [Serializable]
     public class GameLayer : SceneManagerLayer
     {
-        [JsonProperty] 
+        [JsonProperty]
         public readonly HashSet<PlanetSystem> PlanetSystems = new();
-        [JsonProperty] 
+        [JsonProperty]
         public readonly Player Player = new();
-        [JsonProperty] 
+        [JsonProperty]
         public readonly Inventory Inventory = new(500);
         [JsonProperty]
         public readonly Wallet Wallet = new();
 
         [JsonIgnore]
         public PlanetSystem CurrentSystem { get; set; }
-        [JsonIgnore] 
+        [JsonIgnore]
         private PlanetSystemScene mPlanetSystemScene;
-        [JsonIgnore] 
+        [JsonIgnore]
         public readonly HudLayer HudLayer;
 
         public GameLayer() : base()

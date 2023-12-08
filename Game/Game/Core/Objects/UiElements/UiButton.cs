@@ -1,4 +1,4 @@
-﻿ // UiButton.cs 
+﻿// UiButton.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
@@ -31,9 +31,6 @@ namespace StellarLiberation.Game.Core.UserInterface
             mSpriteId = SpriteId;
         }
 
-
-        public override void Initialize(Rectangle root, float uiScaling) => OnResolutionChanged(root, uiScaling);
-
         public override void Draw()
         {
             var color = IsDisabled ? Color.DarkGray : IsHover ? Color.MonoGameOrange : Color.White;
@@ -44,6 +41,12 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Update(InputState inputState, Rectangle root, float uiScaling)
         {
+            var texture = TextureManager.Instance.GetTexture(mSpriteId);
+            mTextScale = uiScaling;
+            Width = (int)(texture.Width * uiScaling);
+            Height = (int)(texture.Height * uiScaling);
+            Canvas.UpdateFrame(root, uiScaling);
+
             var stringDim = TextureManager.Instance.GetFont(FontRegistries.buttonFont).MeasureString(mText);
             var textHeight = Canvas.Center.Y - (stringDim.Y * uiScaling / 2);
             switch (TextAllign)
@@ -68,15 +71,6 @@ namespace StellarLiberation.Game.Core.UserInterface
         {
             if (OnClickAction is null) return;
             OnClickAction();
-        }
-
-        public override void OnResolutionChanged(Rectangle root, float uiScaling)
-        {
-            var texture = TextureManager.Instance.GetTexture(mSpriteId);
-            mTextScale = uiScaling;
-            Width = (int)(texture.Width * uiScaling);
-            Height = (int)(texture.Height * uiScaling);
-            Canvas.UpdateFrame(root, uiScaling);
         }
 
         public bool Contains(Vector2 position) => Canvas.Contains(position);

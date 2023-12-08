@@ -20,31 +20,25 @@ namespace StellarLiberation.Game.Core.UserInterface
         public UiText(string fontID, string text)
         {
             Color = Color.White;
-
             Text = text;
             FontID = fontID;
-        }
-
-        public override void Initialize(Rectangle root, float uiScaling) => OnResolutionChanged(root, uiScaling);
-
-        public override void OnResolutionChanged(Rectangle root, float uiScaling)
-        {
-            mUiScaling = uiScaling;
-            mTextDim = GetTextDimension(FontID, Text);
-            Height = (int)(mTextDim.Y * uiScaling);
-            Width = (int)(mTextDim.X * uiScaling);
-            Canvas.UpdateFrame(root, uiScaling);
         }
 
         private Vector2 GetTextDimension(string fontID, string text) => TextureManager.Instance.GetFont(fontID).MeasureString(text);
 
         public override void Draw()
         {
-            var textPos = new Vector2(Canvas.Bounds.Left, Canvas.Center.Y - (mTextDim.Y * mUiScaling / 2));
-            TextureManager.Instance.DrawString(FontID, textPos, Text, mUiScaling ,Color);
+            TextureManager.Instance.DrawString(FontID, Canvas.Position, Text, mUiScaling, Color);
             Canvas.Draw();
         }
 
-        public override void Update(InputState inputState, Rectangle root, float uiScaling) => OnResolutionChanged(root, uiScaling);
+        public override void Update(InputState inputState, Rectangle root, float uiScaling)
+        {
+            mUiScaling = uiScaling;
+            mTextDim = GetTextDimension(FontID, Text);
+            Height = (int)mTextDim.Y;
+            Width = (int)mTextDim.X;
+            Canvas.UpdateFrame(root, uiScaling);
+        }
     }
 }

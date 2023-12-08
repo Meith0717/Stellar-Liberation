@@ -13,9 +13,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public UiElement() => Canvas = new UiCanvas();
 
-        public abstract void Initialize(Rectangle root, float uiScaling);
         public abstract void Update(InputState inputState, Rectangle root, float uiScaling);
-        public abstract void OnResolutionChanged(Rectangle root, float uiScaling);
         public abstract void Draw();
 
         // Position propeties
@@ -33,6 +31,5 @@ namespace StellarLiberation.Game.Core.UserInterface
         public int VSpace { set => Canvas.VSpace = value; }
         public Anchor Anchor { set => Canvas.Anchor = value; }
         public FillScale FillScale { set => Canvas.FillScale = value; }
-
     }
 }

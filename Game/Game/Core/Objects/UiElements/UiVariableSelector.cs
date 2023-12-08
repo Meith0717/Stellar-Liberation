@@ -3,7 +3,6 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using System;
@@ -30,23 +29,16 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public void Add(T variable) => mVariables.Add(variable);
         public void AddRange(List<T> variables) => mVariables.AddRange(variables);
-
         private void IncrementIndex() => mIndex += (mIndex < mVariables.Count - 1) ? 1 : 0;
-
         private void DecrementIndex() => mIndex -= (mIndex > 0) ? 1 : 0;
-
         public T Value => mVariables[mIndex];
-
-        public override void Initialize(Rectangle root, float uiScaling)
-        {
-            OnResolutionChanged(root, 1);
-        }
 
         public override void Update(InputState inputState, Rectangle root, float uiScaling)
         {
-            mVariable.Update(inputState, Canvas.Bounds, 1);
-            mLeftArrow.Update(inputState, Canvas.Bounds, 1);
-            mRightArrow.Update(inputState, Canvas.Bounds, 1);
+            Canvas.UpdateFrame(root, uiScaling);
+            mVariable.Update(inputState, Canvas.Bounds, uiScaling);
+            mLeftArrow.Update(inputState, Canvas.Bounds, uiScaling);
+            mRightArrow.Update(inputState, Canvas.Bounds, uiScaling);
             mVariable.Text = mVariables[mIndex].ToString();
             mLeftArrow.IsDisabled = mIndex == 0;
             mRightArrow.IsDisabled = mIndex == mVariables.Count - 1;
@@ -58,15 +50,6 @@ namespace StellarLiberation.Game.Core.UserInterface
             mRightArrow.Draw();
             mVariable.Draw();
             Canvas.Draw();
-        }
-
-        public override void OnResolutionChanged(Rectangle root, float uiScaling)
-        {
-            Canvas.Height = (int)TextureManager.Instance.GetFont(FontRegistries.buttonFont).MeasureString(" ").Y;
-            Canvas.UpdateFrame(root, uiScaling);
-            mLeftArrow.Initialize(Canvas.Bounds, uiScaling);
-            mRightArrow.Initialize(Canvas.Bounds, uiScaling);
-            mVariable.Initialize(Canvas.Bounds, uiScaling);
         }
     }
 }
