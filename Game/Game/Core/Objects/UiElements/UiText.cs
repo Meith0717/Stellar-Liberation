@@ -33,7 +33,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             mTextDim = GetTextDimension(FontID, Text);
             Height = (int)(mTextDim.Y * UiScaling);
             Width = (int)(mTextDim.X * UiScaling);
-            Canvas.UpdateFrame(root);
+            Canvas.UpdateFrame(root, UiScaling);
         }
 
         private Vector2 GetTextDimension(string fontID, string text) => TextureManager.Instance.GetFont(fontID).MeasureString(text);

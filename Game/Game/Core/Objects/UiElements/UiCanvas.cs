@@ -3,7 +3,6 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 
 namespace StellarLiberation.Game.Core.UserInterface
 {
@@ -19,8 +18,6 @@ namespace StellarLiberation.Game.Core.UserInterface
         // Needet properties
         public float RelativeX;
         public float RelativeY;
-        public int? AbsoluteX;
-        public int? AbsoluteY;
 
         public float RelWidth = 0.1f;
         public float RelHeight = 0.1f;
@@ -33,22 +30,22 @@ namespace StellarLiberation.Game.Core.UserInterface
         public Anchor Anchor = Anchor.None;
         public FillScale FillScale = FillScale.None;
 
-        public void UpdateFrame(Rectangle root)
+        public void UpdateFrame(Rectangle root, float uiScale)
         {
-            var x = root.X + AbsoluteX ?? (int)(root.X + (root.Width * RelativeX));
-            var y = root.Y + AbsoluteY ?? (int)(root.Y + (root.Height * RelativeY));
+            var x = root.X + (root.Width * RelativeX);
+            var y = root.Y + (root.Height * RelativeY);
 
-            var width = Width ?? (int)(root.Width * RelWidth);
-            var height = Height ?? (int)(root.Height * RelHeight);
+            var width = Width * uiScale ?? (int)(root.Width * RelWidth);
+            var height = Height * uiScale ?? (int)(root.Height * RelHeight);
 
             ManageFillScale(root, ref x, ref y, ref width, ref height);
             ManageAnchor(root, ref x, ref y, ref width, ref height);
             ManageSpacing(root, ref x, ref y, ref width, ref height);
 
-            mCanvas = new(x, y, width, height);
+            mCanvas = new((int)x, (int)y, (int)width, (int)height);
         }
 
-        private void ManageFillScale(Rectangle root, ref int x, ref int y, ref int width, ref int height)
+        private void ManageFillScale(Rectangle root, ref float x, ref float y, ref float width, ref float height)
         {
             var aspectRatio = (float)width / height;
 
@@ -70,7 +67,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             }
         }
 
-        private void ManageAnchor(Rectangle root, ref int x, ref int y, ref int width, ref int height)
+        private void ManageAnchor(Rectangle root, ref float x, ref float y, ref float width, ref float height)
         {
             switch (Anchor)
             {
@@ -122,7 +119,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             }
         }
 
-        private void ManageSpacing(Rectangle root, ref int x, ref int y, ref int width, ref int height)
+        private void ManageSpacing(Rectangle root, ref float x, ref float y, ref float width, ref float height)
         {
             if (HSpace != null)
             {

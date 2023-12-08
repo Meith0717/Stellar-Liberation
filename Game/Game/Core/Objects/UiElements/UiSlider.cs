@@ -65,7 +65,7 @@ namespace StellarLiberation.Game.Core.UserInterface
         public override void OnResolutionChanged(Rectangle root, float UiScaling)
         {
             Height = (int)(25 * UiScaling);
-            Canvas.UpdateFrame(root);
+            Canvas.UpdateFrame(root, UiScaling);
             mSliderLength = MathF.Abs(Canvas.Bounds.Left - Canvas.Bounds.Right);
             mSliderDotPosition = sliderPosition;
         }

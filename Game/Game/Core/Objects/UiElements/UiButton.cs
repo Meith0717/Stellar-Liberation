@@ -76,7 +76,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             mTextScale = UiScaling;
             Width = (int)(texture.Width * UiScaling);
             Height = (int)(texture.Height * UiScaling);
-            Canvas.UpdateFrame(root);
+            Canvas.UpdateFrame(root, UiScaling);
         }
 
         public bool Contains(Vector2 position) => Canvas.Contains(position);

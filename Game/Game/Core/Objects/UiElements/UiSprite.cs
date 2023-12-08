@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             var texture = TextureManager.Instance.GetTexture(mSpriteId);
             Width = (int)(texture.Width * UiScaling);
             Height = (int)(texture.Height * UiScaling);
-            Canvas.UpdateFrame(root);
+            Canvas.UpdateFrame(root, UiScaling);
         }
 
         public override void Update(InputState inputState, Rectangle root, float UiScaling) { System.Diagnostics.Debug.WriteLine(UiScaling); }

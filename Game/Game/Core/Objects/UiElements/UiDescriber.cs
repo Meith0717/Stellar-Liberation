@@ -35,7 +35,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void OnResolutionChanged(Rectangle root, float UiScaling)
         {
-            Canvas.UpdateFrame(root);
+            Canvas.UpdateFrame(root, UiScaling);
             mUiElement.OnResolutionChanged(Canvas.Bounds, UiScaling);
             mText.OnResolutionChanged(Canvas.Bounds, UiScaling);
         }

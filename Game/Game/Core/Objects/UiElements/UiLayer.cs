@@ -20,7 +20,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Initialize(Rectangle root, float UiScaling)
         {
-            Canvas.UpdateFrame(root);
+            Canvas.UpdateFrame(root, UiScaling);
             foreach (var child in mChildren) child.Initialize(Canvas.Bounds, UiScaling);
         }
 
@@ -41,7 +41,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void OnResolutionChanged(Rectangle root, float UiScaling)
         {
-            Canvas.UpdateFrame(root);
+            Canvas.UpdateFrame(root, UiScaling);
             foreach (var child in mChildren) child.OnResolutionChanged(Canvas.Bounds, UiScaling);
         }
     }

@@ -76,7 +76,7 @@ namespace StellarLiberation.Game.Layers
             base.Update(gameTime, inputState);
 
             // Check if pause is pressed
-            inputState.DoAction(ActionType.Inventar, () => mLayerManager.AddLayer(new InventarLayer(Inventory)));
+            inputState.DoAction(ActionType.Inventar, () => mLayerManager.AddLayer(new InventoryLayer(Inventory)));
             inputState.DoAction(ActionType.ESC, () => mLayerManager.AddLayer(new PauseLayer()));
         }
 

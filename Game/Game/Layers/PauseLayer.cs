@@ -45,9 +45,7 @@ namespace StellarLiberation.Game.Layers
             mBackgroundLayer.Initialize(mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.UiScaling);
         }
 
-        public override void Destroy()
-        {
-        }
+        public override void Destroy() { }
 
         public override void Draw(SpriteBatch spriteBatch)
         {

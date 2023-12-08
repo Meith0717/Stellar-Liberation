@@ -63,7 +63,7 @@ namespace StellarLiberation.Game.Core.UserInterface
         public override void OnResolutionChanged(Rectangle root, float UiScaling)
         {
             Canvas.Height = (int)TextureManager.Instance.GetFont(FontRegistries.buttonFont).MeasureString(" ").Y;
-            Canvas.UpdateFrame(root);
+            Canvas.UpdateFrame(root, UiScaling);
             mLeftArrow.Initialize(Canvas.Bounds, UiScaling);
             mRightArrow.Initialize(Canvas.Bounds, UiScaling);
             mVariable.Initialize(Canvas.Bounds, UiScaling);

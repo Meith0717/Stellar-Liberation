@@ -69,12 +69,12 @@ namespace StellarLiberation.Game.Core.UserInterface.UiBar
 
         public override void Initialize(Rectangle root, float UiScaling)
         {
-            Canvas.UpdateFrame(root);
+            Canvas.UpdateFrame(root, UiScaling);
         }
 
         public override void OnResolutionChanged(Rectangle root, float UiScaling)
         {
-            Canvas.UpdateFrame(root);
+            Canvas.UpdateFrame(root, UiScaling);
         }
     }
 }

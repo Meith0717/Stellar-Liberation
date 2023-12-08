@@ -5,7 +5,6 @@
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
-using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.GameObjects.Recources.Items;
 using System;
 using System.Collections.Generic;
@@ -41,7 +40,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
             // Add Item in Inventory
             if (!Items.TryGetValue(item.ItemID, out var stack))
             {
-                Items[item.ItemID] = new(0, "", item.TextureId);
+                Items[item.ItemID] = new(1, item.ItemID.ToString(), item.TextureId);
             } else
             {
                 stack.Amount++;
@@ -64,7 +63,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
         public int GetIDAmount(ItemID itemID)
         {
             if (!Items.TryGetValue(itemID, out var stack)) return 0;
-            return stack.Amount;
+            return stack.Amount; 
         }
     }
 }

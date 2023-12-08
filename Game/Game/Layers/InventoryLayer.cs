@@ -14,13 +14,24 @@ using StellarLiberation.Game.Core.UserInterface;
 
 namespace StellarLiberation.Game.Layers
 {
-    internal class InventarLayer : Layer
+    internal class InventoryLayer : Layer
     {
         private readonly UiFrame mFrame;
 
-        public InventarLayer(Inventory inventory) : base(false)
+        public InventoryLayer(Inventory inventory) : base(false)
         {
             mFrame = new(50) { RelHeight = .8f, RelWidth = .6f, Anchor = Anchor.Center, Color = new(17, 17, 17) };
+
+            var i = 0;
+            foreach (var itemStack in inventory.Items.Values)
+            {
+                mFrame.AddChild(new UiText(FontRegistries.textFont, $"{itemStack.ItemName}: {itemStack.Amount}")
+                {
+                    Anchor = Anchor.CenterV,
+                    RelY = .1f * i
+                });
+                i++;
+            }
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)

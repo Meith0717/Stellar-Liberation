@@ -67,14 +67,14 @@ namespace StellarLiberation.Game.Core.UserInterface.UiBar
             TextureManager.Instance.Draw(TextureRegistries.barHorizontalMid, mMidFrame.Position, mMidFrame.Width, mMidFrame.Height, mColor);
         }
 
-        public override void Initialize(Rectangle root, float UiScaling)
+        public override void Initialize(Rectangle root, float uiScaling)
         {
-            Canvas.UpdateFrame(root);
+            Canvas.UpdateFrame(root, uiScaling);
         }
 
-        public override void OnResolutionChanged(Rectangle root, float UiScaling)
+        public override void OnResolutionChanged(Rectangle root, float uiScaling)
         {
-            Canvas.UpdateFrame(root);
+            Canvas.UpdateFrame(root, uiScaling);
         }
     }
 }
