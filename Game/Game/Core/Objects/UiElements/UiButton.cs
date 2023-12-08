@@ -32,7 +32,7 @@ namespace StellarLiberation.Game.Core.UserInterface
         }
 
 
-        public override void Initialize(Rectangle root, float UiScaling) => OnResolutionChanged(root, UiScaling);
+        public override void Initialize(Rectangle root, float uiScaling) => OnResolutionChanged(root, uiScaling);
 
         public override void Draw()
         {
@@ -42,20 +42,20 @@ namespace StellarLiberation.Game.Core.UserInterface
             Canvas.Draw();
         }
 
-        public override void Update(InputState inputState, Rectangle root, float UiScaling)
+        public override void Update(InputState inputState, Rectangle root, float uiScaling)
         {
             var stringDim = TextureManager.Instance.GetFont(FontRegistries.buttonFont).MeasureString(mText);
-            var textHeight = Canvas.Center.Y - (stringDim.Y * UiScaling / 2);
+            var textHeight = Canvas.Center.Y - (stringDim.Y * uiScaling / 2);
             switch (TextAllign)
             {
                 case TextAllign.W:
                     TextPosition = new Vector2(Canvas.Bounds.Left, textHeight);
                     break;
                 case TextAllign.E:
-                    TextPosition = new Vector2(Canvas.Bounds.Right - (stringDim.X * UiScaling), textHeight);
+                    TextPosition = new Vector2(Canvas.Bounds.Right - (stringDim.X * uiScaling), textHeight);
                     break;
                 case TextAllign.Center:
-                    TextPosition = new Vector2(Canvas.Center.X - (stringDim.X * UiScaling / 2), textHeight);
+                    TextPosition = new Vector2(Canvas.Center.X - (stringDim.X * uiScaling / 2), textHeight);
                     break;
             }
             IsHover = Canvas.Contains(inputState.mMousePosition);
@@ -70,13 +70,13 @@ namespace StellarLiberation.Game.Core.UserInterface
             OnClickAction();
         }
 
-        public override void OnResolutionChanged(Rectangle root, float UiScaling)
+        public override void OnResolutionChanged(Rectangle root, float uiScaling)
         {
             var texture = TextureManager.Instance.GetTexture(mSpriteId);
-            mTextScale = UiScaling;
-            Width = (int)(texture.Width * UiScaling);
-            Height = (int)(texture.Height * UiScaling);
-            Canvas.UpdateFrame(root, UiScaling);
+            mTextScale = uiScaling;
+            Width = (int)(texture.Width * uiScaling);
+            Height = (int)(texture.Height * uiScaling);
+            Canvas.UpdateFrame(root, uiScaling);
         }
 
         public bool Contains(Vector2 position) => Canvas.Contains(position);

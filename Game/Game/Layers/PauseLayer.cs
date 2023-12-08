@@ -42,7 +42,7 @@ namespace StellarLiberation.Game.Layers
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
         {
             base.Initialize(game1, layerManager, graphicsDevice, serialize);
-            mBackgroundLayer.Initialize(mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.UiScaling);
+            mBackgroundLayer.Initialize(mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.uiScaling);
         }
 
         public override void Destroy() { }
@@ -56,14 +56,14 @@ namespace StellarLiberation.Game.Layers
 
         public override void OnResolutionChanged()
         {
-            mBackgroundLayer.OnResolutionChanged(mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.UiScaling);
+            mBackgroundLayer.OnResolutionChanged(mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.uiScaling);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
             inputState.DoAction(ActionType.ESC, () => mLayerManager.PopLayer());
             mButtonInputTracer.Trace(inputState);
-            mBackgroundLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.UiScaling);
+            mBackgroundLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.uiScaling);
         }
 
         private void Menue()

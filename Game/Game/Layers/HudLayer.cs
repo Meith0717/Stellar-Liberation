@@ -50,7 +50,7 @@ namespace StellarLiberation.Game.Layers
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
         {
             base.Initialize(game1, layerManager, graphicsDevice, serialize);
-            mUiLayer.Initialize(graphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.UiScaling);
+            mUiLayer.Initialize(graphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.uiScaling);
         }
 
         public override void Destroy() { }
@@ -66,12 +66,12 @@ namespace StellarLiberation.Game.Layers
 
         public override void OnResolutionChanged()
         {
-            mUiLayer.OnResolutionChanged(mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.UiScaling);
+            mUiLayer.OnResolutionChanged(mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.uiScaling);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mUiLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.UiScaling);
+            mUiLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.uiScaling);
             mShieldBar.Percentage = mScene.GameLayer.Player.DefenseSystem.ShieldPercentage;
             mHullBar.Percentage = mScene.GameLayer.Player.DefenseSystem.HullPercentage;
             mPropulsiondBar.Percentage = (double)(mScene.GameLayer.Player.Velocity / mScene.GameLayer.Player.SublightEngine.MaxVelocity);

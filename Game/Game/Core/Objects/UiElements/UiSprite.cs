@@ -23,16 +23,16 @@ namespace StellarLiberation.Game.Core.UserInterface
             Canvas.Draw();
         }
 
-        public override void Initialize(Rectangle root, float UiScaling) => OnResolutionChanged(root, UiScaling);
+        public override void Initialize(Rectangle root, float uiScaling) => OnResolutionChanged(root, uiScaling);
 
-        public override void OnResolutionChanged(Rectangle root, float UiScaling)
+        public override void OnResolutionChanged(Rectangle root, float uiScaling)
         {
             var texture = TextureManager.Instance.GetTexture(mSpriteId);
-            Width = (int)(texture.Width * UiScaling);
-            Height = (int)(texture.Height * UiScaling);
-            Canvas.UpdateFrame(root, UiScaling);
+            Width = (int)(texture.Width * uiScaling);
+            Height = (int)(texture.Height * uiScaling);
+            Canvas.UpdateFrame(root, uiScaling);
         }
 
-        public override void Update(InputState inputState, Rectangle root, float UiScaling) { System.Diagnostics.Debug.WriteLine(UiScaling); }
+        public override void Update(InputState inputState, Rectangle root, float uiScaling) { System.Diagnostics.Debug.WriteLine(uiScaling); }
     }
 }

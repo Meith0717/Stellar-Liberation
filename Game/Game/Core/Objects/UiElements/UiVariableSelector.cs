@@ -37,12 +37,12 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public T Value => mVariables[mIndex];
 
-        public override void Initialize(Rectangle root, float UiScaling)
+        public override void Initialize(Rectangle root, float uiScaling)
         {
             OnResolutionChanged(root, 1);
         }
 
-        public override void Update(InputState inputState, Rectangle root, float UiScaling)
+        public override void Update(InputState inputState, Rectangle root, float uiScaling)
         {
             mVariable.Update(inputState, Canvas.Bounds, 1);
             mLeftArrow.Update(inputState, Canvas.Bounds, 1);
@@ -60,13 +60,13 @@ namespace StellarLiberation.Game.Core.UserInterface
             Canvas.Draw();
         }
 
-        public override void OnResolutionChanged(Rectangle root, float UiScaling)
+        public override void OnResolutionChanged(Rectangle root, float uiScaling)
         {
             Canvas.Height = (int)TextureManager.Instance.GetFont(FontRegistries.buttonFont).MeasureString(" ").Y;
-            Canvas.UpdateFrame(root, UiScaling);
-            mLeftArrow.Initialize(Canvas.Bounds, UiScaling);
-            mRightArrow.Initialize(Canvas.Bounds, UiScaling);
-            mVariable.Initialize(Canvas.Bounds, UiScaling);
+            Canvas.UpdateFrame(root, uiScaling);
+            mLeftArrow.Initialize(Canvas.Bounds, uiScaling);
+            mRightArrow.Initialize(Canvas.Bounds, uiScaling);
+            mVariable.Initialize(Canvas.Bounds, uiScaling);
         }
     }
 }

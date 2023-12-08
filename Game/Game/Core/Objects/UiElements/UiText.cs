@@ -25,15 +25,15 @@ namespace StellarLiberation.Game.Core.UserInterface
             FontID = fontID;
         }
 
-        public override void Initialize(Rectangle root, float UiScaling) => OnResolutionChanged(root, UiScaling);
+        public override void Initialize(Rectangle root, float uiScaling) => OnResolutionChanged(root, uiScaling);
 
-        public override void OnResolutionChanged(Rectangle root, float UiScaling)
+        public override void OnResolutionChanged(Rectangle root, float uiScaling)
         {
-            mUiScaling = UiScaling;
+            mUiScaling = uiScaling;
             mTextDim = GetTextDimension(FontID, Text);
-            Height = (int)(mTextDim.Y * UiScaling);
-            Width = (int)(mTextDim.X * UiScaling);
-            Canvas.UpdateFrame(root, UiScaling);
+            Height = (int)(mTextDim.Y * uiScaling);
+            Width = (int)(mTextDim.X * uiScaling);
+            Canvas.UpdateFrame(root, uiScaling);
         }
 
         private Vector2 GetTextDimension(string fontID, string text) => TextureManager.Instance.GetFont(fontID).MeasureString(text);
@@ -45,6 +45,6 @@ namespace StellarLiberation.Game.Core.UserInterface
             Canvas.Draw();
         }
 
-        public override void Update(InputState inputState, Rectangle root, float UiScaling) => OnResolutionChanged(root, UiScaling);
+        public override void Update(InputState inputState, Rectangle root, float uiScaling) => OnResolutionChanged(root, uiScaling);
     }
 }

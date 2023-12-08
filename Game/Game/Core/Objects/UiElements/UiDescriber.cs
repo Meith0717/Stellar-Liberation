@@ -22,9 +22,9 @@ namespace StellarLiberation.Game.Core.UserInterface
             mText = new(FontRegistries.buttonFont, text) { Anchor = Anchor.W };
         }
 
-        public override void Initialize(Rectangle root, float UiScaling)
+        public override void Initialize(Rectangle root, float uiScaling)
         {
-            OnResolutionChanged(root, UiScaling);
+            OnResolutionChanged(root, uiScaling);
         }
 
         public override void Update(InputState inputState, Rectangle root, float uiScaling)
@@ -33,11 +33,11 @@ namespace StellarLiberation.Game.Core.UserInterface
         }
 
 
-        public override void OnResolutionChanged(Rectangle root, float UiScaling)
+        public override void OnResolutionChanged(Rectangle root, float uiScaling)
         {
-            Canvas.UpdateFrame(root, UiScaling);
-            mUiElement.OnResolutionChanged(Canvas.Bounds, UiScaling);
-            mText.OnResolutionChanged(Canvas.Bounds, UiScaling);
+            Canvas.UpdateFrame(root, uiScaling);
+            mUiElement.OnResolutionChanged(Canvas.Bounds, uiScaling);
+            mText.OnResolutionChanged(Canvas.Bounds, uiScaling);
         }
 
         public override void Draw()

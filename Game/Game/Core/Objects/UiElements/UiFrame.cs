@@ -25,10 +25,10 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
             mBorder = border;
         }
 
-        public override void Initialize(Rectangle root, float UiScaling)
+        public override void Initialize(Rectangle root, float uiScaling)
         {
-            Canvas.UpdateFrame(root, UiScaling);
-            foreach (var child in mChildren) child.Initialize(Canvas.Bounds, UiScaling);
+            Canvas.UpdateFrame(root, uiScaling);
+            foreach (var child in mChildren) child.Initialize(Canvas.Bounds, uiScaling);
         }
 
         public void AddChild(UiElement child) => mChildren.AddLast(child);
@@ -58,15 +58,15 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
             Canvas.Draw();
         }
 
-        public override void Update(InputState inputState, Rectangle root, float UiScaling)
+        public override void Update(InputState inputState, Rectangle root, float uiScaling)
         {
-            foreach (var child in mChildren) child.Update(inputState, Canvas.Bounds, UiScaling);
+            foreach (var child in mChildren) child.Update(inputState, Canvas.Bounds, uiScaling);
         }
 
-        public override void OnResolutionChanged(Rectangle root, float UiScaling)
+        public override void OnResolutionChanged(Rectangle root, float uiScaling)
         {
-            Canvas.UpdateFrame(root, UiScaling);
-            foreach (var child in mChildren) child.OnResolutionChanged(Canvas.Bounds, UiScaling);
+            Canvas.UpdateFrame(root, uiScaling);
+            foreach (var child in mChildren) child.OnResolutionChanged(Canvas.Bounds, uiScaling);
         }
     }
 }
