@@ -66,7 +66,7 @@ namespace StellarLiberation.Game.Layers
         {
             inputState.DoAction(ActionType.ESC, mLayerManager.Exit);
             mButtonHoverTracer.Trace(inputState);
-            mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.uiScaling);
+            mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.UiScaling);
         }
 
         private void StartGame()

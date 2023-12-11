@@ -53,7 +53,7 @@ namespace StellarLiberation.Game.Layers
         {
             inputState.DoAction(ActionType.ESC, () => mLayerManager.PopLayer());
             mButtonInputTracer.Trace(inputState);
-            mBackgroundLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.uiScaling);
+            mBackgroundLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.UiScaling);
         }
 
         private void Menue()

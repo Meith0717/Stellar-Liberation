@@ -11,7 +11,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
 {
     public class ResolutionManager
     {
-        public Resolution ActualResolution { get; private set; }
+        public float UiScaling;
         private readonly GraphicsDeviceManager mGraphicsManager;
         public readonly Dictionary<string, Resolution> mResolutions = new();
 
@@ -60,7 +60,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
                 mGraphicsManager.PreferredBackBufferWidth = resolution.Width;
                 mGraphicsManager.PreferredBackBufferHeight = resolution.Height;
                 mGraphicsManager.ApplyChanges();
-                ActualResolution = resolution;
+                UiScaling = resolution.uiScaling;
                 mWasResized = true;
                 return true;
             }

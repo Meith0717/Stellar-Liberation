@@ -39,6 +39,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement.Peripheral
                 { Keys.F8, ActionType.F8 },
                 { Keys.F9, ActionType.F9 },
                 { Keys.F10, ActionType.F10 },
+                { Keys.O, ActionType.DecreaseScaling },
+                { Keys.P, ActionType.IncreaseScaling },
             };
 
             mActionOnHold = new()

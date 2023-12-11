@@ -42,7 +42,7 @@ namespace StellarLiberation.Game.Layers
 
             // Graphics Settings
             settingsFrame.AddChild(new UiText(FontRegistries.subTitleFont, "Video ") { HSpace = 20, RelY = .30f });
-            mResolutionSelector = new UiVariableSelector<string>(new()) { OnClickAction = () => mLayerManager.mResolutionManager.Apply(mResolutionSelector.Value) };
+            mResolutionSelector = new UiVariableSelector<string>(new()) { OnClickAction = () => mLayerManager.mResolutionManager.Apply(mResolutionSelector.Value) }; 
             settingsFrame.AddChild(new UiDescriber("Resolution", mResolutionSelector) { Height = 50, RelWidth = 1, HSpace = 40, RelY = .37f });
         }
 
@@ -66,7 +66,7 @@ namespace StellarLiberation.Game.Layers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             inputState.DoAction(ActionType.ESC, () => mLayerManager.PopLayer());
-            mMainFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.ActualResolution.uiScaling);
+            mMainFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.UiScaling);
             MusicManager.Instance.ChangeOverallVolume(mMusicSlider.Value);
             SoundEffectManager.Instance.ChangeOverallVolume(mSfxSlider.Value);
         }

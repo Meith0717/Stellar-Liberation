@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
             var bounds = Canvas.Bounds;
             bounds.Inflate(-mBorder / 2, -mBorder / 2);
 
-            var edgePositions = bounds.ToRectangleF().GetCorners();
+            var edgePositions = bounds.GetCorners();
             TextureManager.Instance.Draw(TextureRegistries.edge0, edgePositions[0] - new Vector2(mBorder, mBorder) / 2f, mBorder, mBorder, color);
             TextureManager.Instance.Draw(TextureRegistries.edge1, edgePositions[1] - new Vector2(mBorder, mBorder) / 2f, mBorder, mBorder, color);
             TextureManager.Instance.Draw(TextureRegistries.edge2, edgePositions[2] - new Vector2(mBorder, mBorder) / 2f, mBorder, mBorder, color);
@@ -52,7 +52,7 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
             Canvas.Draw();
         }
 
-        public override void Update(InputState inputState, Rectangle root, float uiScaling)
+        public override void Update(InputState inputState, RectangleF root, float uiScaling)
         {
             Canvas.UpdateFrame(root, uiScaling);
             foreach (var child in mChildren) child.Update(inputState, Canvas.Bounds, uiScaling);

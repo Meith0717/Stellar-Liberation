@@ -3,6 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 
 namespace StellarLiberation.Game.Core.UserInterface
@@ -14,7 +15,7 @@ namespace StellarLiberation.Game.Core.UserInterface
     public class UiCanvas
     {
         // UiFrame
-        private Rectangle mCanvas;
+        private RectangleF mCanvas;
 
         // Needet properties
         public float RelativeX;
@@ -22,8 +23,8 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public float RelWidth = 0.1f;
         public float RelHeight = 0.1f;
-        public int? Height;
-        public int? Width;
+        public float? Height;
+        public float? Width;
 
         // Optional properties
         public int? HSpace;
@@ -31,7 +32,7 @@ namespace StellarLiberation.Game.Core.UserInterface
         public Anchor Anchor = Anchor.None;
         public FillScale FillScale = FillScale.None;
 
-        public void UpdateFrame(Rectangle root, float uiScale)
+        public void UpdateFrame(RectangleF root, float uiScale)
         {
             var x = root.X + (root.Width * RelativeX);
             var y = root.Y + (root.Height * RelativeY);
@@ -43,10 +44,10 @@ namespace StellarLiberation.Game.Core.UserInterface
             ManageAnchor(root, ref x, ref y, ref width, ref height);
             ManageSpacing(root, ref x, ref y, ref width, ref height);
 
-            mCanvas = new((int)x, (int)y, (int)width, (int)height);
+            mCanvas = new(x, y, width, height);
         }
 
-        private void ManageFillScale(Rectangle root, ref float x, ref float y, ref float width, ref float height)
+        private void ManageFillScale(RectangleF root, ref float x, ref float y, ref float width, ref float height)
         {
             var aspectRatio = (float)width / height;
 
@@ -68,7 +69,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             }
         }
 
-        private void ManageAnchor(Rectangle root, ref float x, ref float y, ref float width, ref float height)
+        private void ManageAnchor(RectangleF root, ref float x, ref float y, ref float width, ref float height)
         {
             switch (Anchor)
             {
@@ -120,7 +121,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             }
         }
 
-        private void ManageSpacing(Rectangle root, ref float x, ref float y, ref float width, ref float height)
+        private void ManageSpacing(RectangleF root, ref float x, ref float y, ref float width, ref float height)
         {
             if (HSpace != null)
             {
@@ -162,15 +163,15 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public Vector2 Offset => new Vector2(mCanvas.Width, mCanvas.Height) / 2;
 
-        public Vector2 Center => mCanvas.Center.ToVector2();
+        public Vector2 Center => mCanvas.Center;
 
-        public Vector2 Position => mCanvas.Location.ToVector2();
+        public Vector2 Position => mCanvas.Position;
 
-        public Rectangle Bounds => mCanvas;
+        public RectangleF Bounds => mCanvas;
 
         public void Draw()
         {
-            // TextureManager.Instance.DrawRectangleF(mCanvas, Color.Green, 2, 1);
+            //TextureManager.Instance.DrawRectangleF(mCanvas, Color.Green, 2, 1);
         }
     }
 }

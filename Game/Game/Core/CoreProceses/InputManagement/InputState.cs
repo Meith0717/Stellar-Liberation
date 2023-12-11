@@ -34,6 +34,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement
         Select,
         CtrlLeft,
         Inventar,
+        IncreaseScaling,
+        DecreaseScaling,
 
         // Mouse
         LeftClick,
