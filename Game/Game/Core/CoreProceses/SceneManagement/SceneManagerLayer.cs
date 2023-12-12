@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.SceneManagement
             Scenes.AddLast(scene);
         }
 
-        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
+        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serializer serialize)
         {
             base.Initialize(game1, layerManager, graphicsDevice, serialize);
             mRenderTarget = new(graphicsDevice, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);

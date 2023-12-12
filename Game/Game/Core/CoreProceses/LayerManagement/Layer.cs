@@ -17,14 +17,14 @@ public abstract class Layer
     protected Game1 mGame1;
     protected LayerManager mLayerManager;
     protected GraphicsDevice mGraphicsDevice;
-    protected Serialize mSerialize;
+    protected Serializer mSerialize;
 
     [JsonProperty]
     public bool UpdateBelow { get; private set; }
 
     protected Layer(bool updateBelow) { UpdateBelow = updateBelow; }
 
-    public virtual void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
+    public virtual void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serializer serialize)
     {
         mGame1 = game1;
         mLayerManager = layerManager;

@@ -62,7 +62,7 @@ namespace StellarLiberation.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mUiLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.UiScaling);
+            mUiLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.ResolutionManager.UiScaling);
             mShieldBar.Percentage = mScene.GameLayer.Player.DefenseSystem.ShieldPercentage;
             mHullBar.Percentage = mScene.GameLayer.Player.DefenseSystem.HullPercentage;
             mPropulsiondBar.Percentage = (double)(mScene.GameLayer.Player.Velocity / mScene.GameLayer.Player.SublightEngine.MaxVelocity);

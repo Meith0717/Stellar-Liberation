@@ -23,7 +23,6 @@ namespace StellarLiberation.Game.Core.GameProceses.MapSystem
         {
             planetSystems = new();
 
-            var triangularDistribution = new Triangular(2, 10, 6);
             var noiseMapGenerator = new NoiseMapGenerator(mSectorCountWidth, mSectorCountHeight);
             var noiseMap = noiseMapGenerator.GenerateBinaryNoiseMap();
 
@@ -37,24 +36,10 @@ namespace StellarLiberation.Game.Core.GameProceses.MapSystem
                     if (noiseMap[x, y] == 0) continue;
 
                     // Generate Star
-                    var star = StarTypes.GenerateRandomStar(Vector2.Zero);
-
-                    // Generate Planets of Star
-                    var planets = new List<Planet>();
-                    var planetAmount = (int)triangularDistribution.Sample();
-                    var orbitRadius = star.BoundedBox.Radius;
-
-                    for (int i = 1; i <= planetAmount; i++)
-                    {
-                        orbitRadius += ExtendetRandom.Random.Next(40000, 60000);
-                        planets.Add(GetPlanet(star.Position, (int)orbitRadius, i));
-                    }
-
-                    var asteroids = GetAsteroidsRing(ExtendetRandom.Random.Next(50, 200), star.Position, orbitRadius * 1.3f, orbitRadius * 1.3f + ExtendetRandom.Random.Next(3000, 60000));
 
                     // Generate Planet System
                     var danger = GetDanger(x, y);
-                    var planetSystem = new PlanetSystem(GetScalingPosition(x, y, MapScale), star, planets, asteroids, danger, orbitRadius);
+                    var planetSystem = new PlanetSystem(GetScalingPosition(x, y, MapScale), danger);
                     planetSystems.Add(planetSystem);
                 }
             }
@@ -103,7 +88,7 @@ namespace StellarLiberation.Game.Core.GameProceses.MapSystem
             return ExtendetRandom.GetRandomVector2(sectorBegin, sectorEnd);
         }
 
-        private static Planet GetPlanet(Vector2 orbitCenter, int oribitRadius, int orbitNumber) => orbitNumber switch
+        public static Planet GetPlanet(Vector2 orbitCenter, int oribitRadius, int orbitNumber) => orbitNumber switch
         {
             1 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Warm(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
             2 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Warm(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),

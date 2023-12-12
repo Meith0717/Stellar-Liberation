@@ -38,18 +38,17 @@ namespace StellarLiberation.Game.Core.UserInterface
         {
             Canvas.UpdateFrame(root, uiScaling);
             mVariable.Text = mVariables[mIndex].ToString();
-            mVariable.Update(inputState, root, uiScaling);
+            mVariable.Update(inputState, Canvas.Bounds, uiScaling);
 
             mLeftArrow.Width = mVariable.Bounds.Width;
             mLeftArrow.Height = mVariable.Bounds.Height;
-            mLeftArrow.Update(inputState, root, uiScaling);
+            mLeftArrow.Update(inputState, Canvas.Bounds, uiScaling);
             mLeftArrow.IsDisabled = mIndex == 0;
 
             mRightArrow.Width = mVariable.Bounds.Width;
             mRightArrow.Height = mVariable.Bounds.Height;
-            mRightArrow.Update(inputState, root, uiScaling);
+            mRightArrow.Update(inputState, Canvas.Bounds, uiScaling);
             mRightArrow.IsDisabled = mIndex == (mVariables.Count - 1);
-
         }
 
         public override void Draw()

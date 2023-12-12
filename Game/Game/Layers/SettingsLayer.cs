@@ -14,7 +14,7 @@ using StellarLiberation.Game.Core.UserInterface;
 
 namespace StellarLiberation.Game.Layers
 {
-    internal class SettingsLayer : Layer
+    public class SettingsLayer : Layer
     {
         private readonly UiLayer mMainFrame;
         private readonly UiSlider mMusicSlider;
@@ -26,7 +26,7 @@ namespace StellarLiberation.Game.Layers
         {
             mMainFrame = new() { RelHeight = 1, RelWidth = 1, Color = Color.Transparent };
             if (showBgImage) mMainFrame.Alpha = .8f;
-            if (showBgImage) mMainFrame.AddChild(new UiSprite(TextureRegistries.gameBackground) { FillScale = FillScale.X });
+            if (showBgImage) mMainFrame.AddChild(new UiSprite(TextureRegistries.gameBackground) { FillScale = FillScale.Both });
 
             mMainFrame.AddChild(new UiButton(TextureRegistries.button, "< Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => mLayerManager.PopLayer() });
 
@@ -42,14 +42,14 @@ namespace StellarLiberation.Game.Layers
 
             // Graphics Settings
             settingsFrame.AddChild(new UiText(FontRegistries.subTitleFont, "Video ") { HSpace = 20, RelY = .30f });
-            mResolutionSelector = new UiVariableSelector<string>(new()) { OnClickAction = () => mLayerManager.mResolutionManager.Apply(mResolutionSelector.Value) }; 
+            mResolutionSelector = new UiVariableSelector<string>(new()) { OnClickAction = () => mLayerManager.ResolutionManager.Apply(mResolutionSelector.Value) }; 
             settingsFrame.AddChild(new UiDescriber("Resolution", mResolutionSelector) { Height = 50, RelWidth = 1, HSpace = 40, RelY = .37f });
         }
 
-        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
+        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serializer serialize)
         {
             base.Initialize(game1, layerManager, graphicsDevice, serialize);
-            mResolutionSelector.AddRange(mLayerManager.mResolutionManager.Resolutions);
+            mResolutionSelector.AddRange(mLayerManager.ResolutionManager.Resolutions);
         }
 
         public override void Destroy() { }
@@ -66,7 +66,7 @@ namespace StellarLiberation.Game.Layers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             inputState.DoAction(ActionType.ESC, () => mLayerManager.PopLayer());
-            mMainFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.UiScaling);
+            mMainFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.ResolutionManager.UiScaling);
             MusicManager.Instance.ChangeOverallVolume(mMusicSlider.Value);
             SoundEffectManager.Instance.ChangeOverallVolume(mSfxSlider.Value);
         }

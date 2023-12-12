@@ -9,7 +9,6 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 namespace StellarLiberation.Game.Core.UserInterface
 {
     public enum Anchor { N, NE, E, SE, S, SW, W, NW, Center, Top, Bottom, Left, Right, CenterH, CenterV, None }
-    public enum Sticky { Left, Right, Top, Bottom, CenterH, CenterV }
     public enum FillScale { X, Y, Both, None }
 
     public class UiCanvas
@@ -55,11 +54,11 @@ namespace StellarLiberation.Game.Core.UserInterface
             {
                 case FillScale.X:
                     width = root.Width;
-                    height = (int)(width / aspectRatio);
+                    height = width / aspectRatio;
                     break;
                 case FillScale.Y:
                     height = root.Height;
-                    width = (int)(height * aspectRatio);
+                    width = height * aspectRatio;
                     break;
                 case FillScale.Both:
                     x = 0; y = 0;
@@ -130,13 +129,13 @@ namespace StellarLiberation.Game.Core.UserInterface
 
                 if (spaceLeft < HSpace && spaceRight < HSpace)
                 {
-                    x += (int)HSpace;
-                    width -= (int)HSpace * 2;
+                    x += (float)HSpace;
+                    width -= (float)HSpace * 2;
                 }
                 else
                 {
-                    if (spaceLeft < HSpace) x = root.X + (int)HSpace;
-                    if (spaceRight < HSpace) x -= (int)HSpace;
+                    if (spaceLeft < HSpace) x = root.X + (float)HSpace;
+                    if (spaceRight < HSpace) x -= (float)HSpace;
                 }
             }
 
@@ -147,13 +146,13 @@ namespace StellarLiberation.Game.Core.UserInterface
 
                 if (spaceTop < VSpace && spaceBottom < VSpace)
                 {
-                    y += (int)VSpace;
-                    height -= (int)VSpace * 2;
+                    y += (float)VSpace;
+                    height -= (float)VSpace * 2;
                 }
                 else
                 {
-                    if (spaceTop < VSpace) y = root.Y + (int)VSpace;
-                    if (spaceBottom < VSpace) y -= (int)VSpace;
+                    if (spaceTop < VSpace) y = root.Y + (float)VSpace;
+                    if (spaceBottom < VSpace) y -= (float)VSpace;
                 }
             }
         }
@@ -171,7 +170,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public void Draw()
         {
-            //TextureManager.Instance.DrawRectangleF(mCanvas, Color.Green, 2, 1);
+            // TextureManager.Instance.DrawRectangleF(mCanvas, Color.Green, 2, 1);
         }
     }
 }

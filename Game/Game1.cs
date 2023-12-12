@@ -21,7 +21,7 @@ namespace StellarLiberation
         private readonly GraphicsDeviceManager mGraphicsManager;
         private readonly InputManager mInputManager;
         private readonly ResolutionManager ResolutionManager;
-        private readonly Serialize Serialize;
+        private readonly Serializer Serialize;
         private SpriteBatch mSpriteBatch;
         private LayerManager mLayerManager;
 

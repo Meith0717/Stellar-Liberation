@@ -14,7 +14,7 @@ using StellarLiberation.Game.Core.UserInterface;
 
 namespace StellarLiberation.Game.Layers
 {
-    internal class InventoryLayer : Layer
+    public class InventoryLayer : Layer
     {
         private readonly UiFrame mFrame;
 
@@ -48,7 +48,7 @@ namespace StellarLiberation.Game.Layers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             inputState.DoAction(ActionType.Inventar, mLayerManager.PopLayer);
-            mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.mResolutionManager.UiScaling);
+            mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.ResolutionManager.UiScaling);
         }
     }
 }

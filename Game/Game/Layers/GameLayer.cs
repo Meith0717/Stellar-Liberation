@@ -35,13 +35,13 @@ namespace StellarLiberation.Game.Layers
         public readonly Inventory Inventory = new(500);
         [JsonProperty]
         public readonly Wallet Wallet = new();
-
-        [JsonIgnore]
+        [JsonProperty]
         public PlanetSystem CurrentSystem { get; set; }
+
         [JsonIgnore]
         private PlanetSystemScene mPlanetSystemScene;
         [JsonIgnore]
-        public readonly HudLayer HudLayer;
+        public HudLayer HudLayer;
 
         public GameLayer() : base()
         {
@@ -52,16 +52,16 @@ namespace StellarLiberation.Game.Layers
             // Add Main Scene
             CurrentSystem = PlanetSystems.First();
             Player.Position = ExtendetRandom.NextVectorInCircle(CurrentSystem.SystemBounding);
-            mPlanetSystemScene = new(this, CurrentSystem, 1);
-            HudLayer = new(mPlanetSystemScene);
             Inventory.Collect(ItemFactory.Get(ItemID.Iron, Vector2.Zero, Vector2.Zero));
             Inventory.Collect(ItemFactory.Get(ItemID.Iron, Vector2.Zero, Vector2.Zero));
             Inventory.Collect(ItemFactory.Get(ItemID.Iron, Vector2.Zero, Vector2.Zero));
             Inventory.Collect(ItemFactory.Get(ItemID.Iron, Vector2.Zero, Vector2.Zero));
         }
 
-        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
+        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serializer serialize)
         {
+            mPlanetSystemScene = new(this, CurrentSystem, 1);
+            HudLayer = new(mPlanetSystemScene);
             base.Initialize(game1, layerManager, graphicsDevice, serialize);
             AddScene(mPlanetSystemScene);
             mLayerManager.AddLayer(HudLayer);

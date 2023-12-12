@@ -44,12 +44,20 @@ namespace StellarLiberation.Game.Core.UserInterface
         {
             var texture = TextureManager.Instance.GetTexture(mSpriteId);
             mTextScale = uiScaling;
-            Width = (int)(texture.Width * uiScaling);
-            Height = (int)(texture.Height * uiScaling);
+            Width = texture.Width;
+            Height = texture.Height;
             Canvas.UpdateFrame(root, uiScaling);
 
             var stringDim = TextureManager.Instance.GetFont(FontRegistries.buttonFont).MeasureString(mText);
-            var textHeight = Canvas.Center.Y - (stringDim.Y * uiScaling / 2);
+            IsHover = Canvas.Contains(inputState.mMousePosition);
+            if (IsHover && !IsDisabled && IsHover != mLastHoverState) SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.hover);
+            mLastHoverState = IsHover;
+            if (IsHover) 
+            {                
+                inputState.DoAction(ActionType.Select, Click);
+                mTextScale *= 1.1f;
+            }
+            var textHeight = Canvas.Center.Y - (stringDim.Y * uiScaling / 2 * mTextScale);
             switch (TextAllign)
             {
                 case TextAllign.W:
@@ -62,10 +70,7 @@ namespace StellarLiberation.Game.Core.UserInterface
                     TextPosition = new Vector2(Canvas.Center.X - (stringDim.X * uiScaling / 2), textHeight);
                     break;
             }
-            IsHover = Canvas.Contains(inputState.mMousePosition);
-            if (IsHover && !IsDisabled && IsHover != mLastHoverState) SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.hover);
-            if (IsHover) inputState.DoAction(ActionType.Select, Click);
-            mLastHoverState = IsHover;
+
         }
 
         private void Click()

@@ -37,8 +37,8 @@ namespace StellarLiberation.Game.Core.UserInterface
         {
             mUiScaling = uiScaling;
             mTextDim = GetTextDimension(FontID, Text);
-            Height = (int)mTextDim.Y;
-            Width = (int)mTextDim.X;
+            Height = mTextDim.Y;
+            Width = mTextDim.X;
             Canvas.UpdateFrame(root, uiScaling);
         }
     }

@@ -16,18 +16,20 @@ public class LayerManager
 {
     private readonly Game1 mGame1;
     private readonly GraphicsDevice mGraphicsDevice;
-    private readonly Serialize mSerialize;
-    public readonly ResolutionManager mResolutionManager;
+    private readonly Serializer mSerialize;
+    public readonly ResolutionManager ResolutionManager;
+    public readonly GameLayerFactory GameLayerFactory;
 
     // layer stack
     private readonly LinkedList<Layer> mLayerStack = new();
 
-    public LayerManager(Game1 game1, GraphicsDevice graphicsDevice, Serialize serialize, ResolutionManager resolutionManager)
+    public LayerManager(Game1 game1, GraphicsDevice graphicsDevice, Serializer serialize, ResolutionManager resolutionManager)
     {
         mGame1 = game1;
         mGraphicsDevice = graphicsDevice;
         mSerialize = serialize;
-        mResolutionManager = resolutionManager;
+        ResolutionManager = resolutionManager;
+        GameLayerFactory = new(serialize, this);
     }
 
     // add and remove layers from stack
@@ -49,7 +51,7 @@ public class LayerManager
     // update layers
     public void Update(GameTime gameTime, InputState inputState)
     {
-        if (mResolutionManager.WasResized) OnResolutionChanged();
+        if (ResolutionManager.WasResized) OnResolutionChanged();
 
         foreach (Layer layer in mLayerStack.Reverse())
         {
@@ -70,10 +72,7 @@ public class LayerManager
     // lifecycle methods
     public void Exit()
     {
-        foreach (Layer layer in mLayerStack)
-        {
-            layer.Destroy();
-        }
+        foreach (Layer layer in mLayerStack) layer.Destroy();
         mGame1.Exit();
     }
 

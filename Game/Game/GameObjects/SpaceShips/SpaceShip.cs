@@ -35,7 +35,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
         [JsonIgnore] public SublightDrive SublightEngine { get; private set; }
         [JsonIgnore] public HyperDrive HyperDrive { get; private set; }
         [JsonIgnore] public TurretSystem WeaponSystem { get; private set; }
-        [JsonProperty] public DefenseSystem DefenseSystem { get; private set; }
+        [JsonIgnore] public DefenseSystem DefenseSystem { get; private set; }
         [JsonIgnore] public Fractions Fraction;
 
 
