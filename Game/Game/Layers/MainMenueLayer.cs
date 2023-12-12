@@ -24,7 +24,7 @@ namespace StellarLiberation.Game.Layers
             mFrame = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
             mFrame.AddChild(new UiSprite(TextureRegistries.gameBackground) { FillScale = FillScale.Both });
 
-            mFrame.AddChild(new UiText(FontRegistries.titleFont, "Stellar\nLiberation") { Anchor = Anchor.NW, HSpace = 20, VSpace = 20 });
+            mFrame.AddChild(new UiText(FontRegistries.titleFont, "Stellar\nLiberation") { Anchor = Anchor.NW, HSpace = 50, VSpace = 50 });
 
             var newGame = new UiButton(TextureRegistries.button, "New Game") { VSpace = 20, HSpace = 20, RelY = .5f, OnClickAction = () => mLayerManager.GameLayerFactory.NewGameLayer() };
             var _continue = new UiButton(TextureRegistries.button, "Continue") { VSpace = 20, HSpace = 20, RelY = .6f, OnClickAction = () => mLayerManager.GameLayerFactory.LoadGameLayer() };

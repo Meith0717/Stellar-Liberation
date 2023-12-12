@@ -55,7 +55,6 @@ namespace StellarLiberation.Game.Core.UserInterface
             if (IsHover) 
             {                
                 inputState.DoAction(ActionType.Select, Click);
-                mTextScale *= 1.1f;
             }
             var textHeight = Canvas.Center.Y - (stringDim.Y * uiScaling / 2 * mTextScale);
             switch (TextAllign)
