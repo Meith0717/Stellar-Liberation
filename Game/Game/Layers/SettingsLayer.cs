@@ -28,10 +28,11 @@ namespace StellarLiberation.Game.Layers
             if (showBgImage) mMainFrame.Alpha = .8f;
             if (showBgImage) mMainFrame.AddChild(new UiSprite(TextureRegistries.gameBackground) { FillScale = FillScale.Both });
 
-            mMainFrame.AddChild(new UiButton(TextureRegistries.button, "< Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => mLayerManager.PopLayer() });
 
             var settingsFrame = new UiFrame(50) { RelHeight = .8f, RelWidth = .5f, Anchor = Anchor.Center, Color = new(17, 17, 17) };
             mMainFrame.AddChild(settingsFrame);
+
+            settingsFrame.AddChild(new UiButton(TextureRegistries.button, "Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => mLayerManager.PopLayer() });
 
             // Sound Settings
             settingsFrame.AddChild(new UiText(FontRegistries.subTitleFont, "Audio") { HSpace = 20, RelY = .05f });
