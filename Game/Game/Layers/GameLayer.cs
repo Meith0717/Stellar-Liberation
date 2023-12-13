@@ -52,10 +52,6 @@ namespace StellarLiberation.Game.Layers
             // Add Main Scene
             CurrentSystem = PlanetSystems.First();
             Player.Position = ExtendetRandom.NextVectorInCircle(CurrentSystem.SystemBounding);
-            Inventory.Collect(ItemFactory.Get(ItemID.Iron, Vector2.Zero, Vector2.Zero));
-            Inventory.Collect(ItemFactory.Get(ItemID.Iron, Vector2.Zero, Vector2.Zero));
-            Inventory.Collect(ItemFactory.Get(ItemID.Iron, Vector2.Zero, Vector2.Zero));
-            Inventory.Collect(ItemFactory.Get(ItemID.Iron, Vector2.Zero, Vector2.Zero));
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serializer serialize)
@@ -96,6 +92,7 @@ namespace StellarLiberation.Game.Layers
             RemoveScene(mPlanetSystemScene);
             mPlanetSystemScene = new PlanetSystemScene(this, CurrentSystem, zoom);
             AddScene(mPlanetSystemScene);
+            Player.Position = ExtendetRandom.NextVectorInCircle(CurrentSystem.SystemBounding);
         }
     }
 }

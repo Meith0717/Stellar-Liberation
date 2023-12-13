@@ -24,7 +24,6 @@ namespace StellarLiberation.Game.Layers.Scenes
         {
             Camera2D.Zoom = camZoom;
             mPlanetSystem = currentPlanetSystem;
-            gameLayer.Player.Position = ExtendetRandom.NextVectorInCircle(currentPlanetSystem.SystemBounding);
             mParlaxManager = new();
             mParlaxManager.Add(new(TextureRegistries.gameBackground, 0));
             mParlaxManager.Add(new(TextureRegistries.gameBackgroundParlax4, .1f));
