@@ -60,6 +60,7 @@ namespace StellarLiberation
         protected override void Update(GameTime gameTime)
         {
             InputState inputState = mInputManager.Update();
+            MusicManager.Instance.Update();
             inputState.DoAction(ActionType.ToggleFullscreen, ResolutionManager.ToggleFullscreen);
             inputState.DoAction(ActionType.IncreaseScaling, () => ResolutionManager.UiScaling += 0.01f);
             inputState.DoAction(ActionType.DecreaseScaling, () => ResolutionManager.UiScaling -= 0.01f);

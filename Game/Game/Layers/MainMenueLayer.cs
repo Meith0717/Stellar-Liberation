@@ -19,8 +19,6 @@ namespace StellarLiberation.Game.Layers
 
         public MainMenueLayer() : base(false)
         {
-            MusicManager.Instance.PlayMusic(MusicRegistries.bgMusicMenue);
-
             mFrame = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
             mFrame.AddChild(new UiSprite(TextureRegistries.gameBackground) { FillScale = FillScale.Both });
 
@@ -48,7 +46,6 @@ namespace StellarLiberation.Game.Layers
         public override void Destroy()
         {
             SoundEffectManager.Instance.StopAllSounds();
-            MusicManager.Instance.StopAllMusics();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -68,7 +65,6 @@ namespace StellarLiberation.Game.Layers
 
         private void StartGame()
         {
-            MusicManager.Instance.StopAllMusics();
             mLayerManager.AddLayer(new GameLayer());
         }
     }

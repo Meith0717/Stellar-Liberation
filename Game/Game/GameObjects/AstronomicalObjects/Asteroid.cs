@@ -39,7 +39,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             foreach (var projectile in projectileInRange)
             {
                 if (!ContinuousCollisionDetection.HasCollide(gameTime, projectile, this, out position)) continue;
-                projectile.HasCollide();
+                projectile.HasCollide(Position, scene);
                 gotHit = true;
             }
             if (!gotHit) return;

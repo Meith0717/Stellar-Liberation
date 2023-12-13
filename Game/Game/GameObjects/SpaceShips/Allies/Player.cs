@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
+using StellarLiberation.Game.Core.GameProceses.AI.Behaviors;
+using StellarLiberation.Game.Core.GameProceses.AI.Behaviors.Combat;
 using StellarLiberation.Game.GameObjects.SpaceShips.Allies;
 using System;
 
@@ -24,10 +26,10 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
 
             mAi = new(new()
             {
-                //new PatrollBehavior(),
-                //new InterceptBehavior(),
-                //new FarCombatBehavior(),
-                //new FleeBehavior()
+                new PatrollBehavior(),
+                new InterceptBehavior(),
+                new FarCombatBehavior(),
+                new FleeBehavior()
             })
             { Debug = true };
         }
@@ -40,9 +42,9 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
-            SublightEngine.ControlByInput(this, inputState, scene.WorldMousePosition);
+            // SublightEngine.ControlByInput(this, inputState, scene.WorldMousePosition);
             WeaponSystem.AimShip(SensorArray.GetAimingShip(Position, Fraction));
-            WeaponSystem.ControlByInput(inputState, scene.WorldMousePosition);
+            // WeaponSystem.ControlByInput(inputState, scene.WorldMousePosition);
             base.Update(gameTime, inputState, scene);
         }
     }

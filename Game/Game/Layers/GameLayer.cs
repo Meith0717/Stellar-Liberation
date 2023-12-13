@@ -47,8 +47,6 @@ namespace StellarLiberation.Game.Layers
         {
             MapFactory.Generate(out PlanetSystems);
 
-            MusicManager.Instance.PlayMusic(MusicRegistries.bgMusicGame);
-
             // Add Main Scene
             CurrentSystem = PlanetSystems.First();
             Player.Position = ExtendetRandom.NextVectorInCircle(CurrentSystem.SystemBounding);
@@ -79,7 +77,6 @@ namespace StellarLiberation.Game.Layers
         public override void Destroy()
         {
             SoundEffectManager.Instance.StopAllSounds();
-            MusicManager.Instance.StopAllMusics();
         }
 
         public override void OnResolutionChanged() { base.OnResolutionChanged(); }

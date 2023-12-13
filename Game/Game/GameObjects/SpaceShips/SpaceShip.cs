@@ -76,7 +76,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
 
         private void HasProjectileHit(GameTime gameTime, Scene scene)
         {
-            var projectileInRange = scene.SpatialHashing.GetObjectsInRadius<Projectile>(Position, (int)BoundedBox.Radius);
+            var projectileInRange = scene.SpatialHashing.GetObjectsInRadius<Projectile>(Position, (int)BoundedBox.Radius * 10);
             if (!projectileInRange.Any()) return;
             var hit = false;
             foreach (var projectile in projectileInRange)
@@ -85,7 +85,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
                 if (projectile.Origine == this) return;
                 if (!ContinuousCollisionDetection.HasCollide(gameTime, projectile, this, out var position)) continue;
 
-                projectile.HasCollide();
+                projectile.HasCollide((Vector2)position, scene);
                 DefenseSystem.GotHit((Vector2)position, projectile.ShieldDamage, projectile.HullDamage, scene);
                 hit = true;
             }

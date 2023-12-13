@@ -74,6 +74,6 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
             scene.GameLayer.DebugSystem.DrawHitbox(BoundedBox, scene);
         }
 
-        public virtual void HasCollide() { }
+        public virtual void HasCollide(Vector2 position, Scene scene) { }
     }
 }

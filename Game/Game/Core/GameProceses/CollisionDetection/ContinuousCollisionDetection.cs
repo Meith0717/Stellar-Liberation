@@ -23,7 +23,7 @@ namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection
                 return true;
             }
 
-            var futurePosition = checkingObj.Position + checkingObj.Velocity * checkingObj.MovingDirection * gameTime.ElapsedGameTime.Milliseconds;
+            var futurePosition = checkingObj.Position + (checkingObj.MovingDirection * (checkingObj.Velocity * gameTime.ElapsedGameTime.Milliseconds));
             var frameDistance = Vector2.Distance(checkingObj.Position, futurePosition);
 
             // Frame Movement Distance of Obj smaler than BoundBox Radius. No further check needet!

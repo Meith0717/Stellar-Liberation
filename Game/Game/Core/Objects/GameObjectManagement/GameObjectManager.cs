@@ -37,6 +37,14 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
             Objects.AddRange(mAddedObjects);
             mAddedObjects.Clear();
 
+            // Delete Disposed obj from Objects list
+            foreach (var item in mRemovedObjects)
+            {
+                Objects.Remove(item);
+                item.RemoveFromSpatialHashing(scene);
+            }
+            mRemovedObjects.Clear();
+
             // Update all obj in Objects
             foreach (var obj in Objects)
             {
@@ -45,14 +53,6 @@ namespace StellarLiberation.Game.Core.GameObjectManagement
                 // Check if obj is Disposed
                 if (obj.Dispose) mRemovedObjects.Add(obj);
             }
-
-            // Delete Disposed obj from Objects list
-            foreach (var item in mRemovedObjects)
-            {
-                Objects.Remove(item);
-                item.RemoveFromSpatialHashing(scene);
-            }
-            mRemovedObjects.Clear();
         }
 
         public void Draw(Scene scene)

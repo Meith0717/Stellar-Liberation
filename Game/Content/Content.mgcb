@@ -49,23 +49,29 @@
 /processorParam:TextureFormat=Compressed
 /build:fonts/titleFont.spritefont
 
-#begin music/bgMusicGame.wav
+#begin music/Sci-Fi 1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:music/bgMusicGame.wav
+/build:music/Sci-Fi 1.wav
 
-#begin music/bgMusicMenue.wav
+#begin music/Sci-fi 2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:music/bgMusicMenue.wav
+/build:music/Sci-fi 2.wav
 
-#begin music/DeepSpace10(loop).wav
+#begin music/Sci-Fi 3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:music/DeepSpace10(loop).wav
+/build:music/Sci-Fi 3.wav
+
+#begin music/Sci-Fi 4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:music/Sci-Fi 4.wav
 
 #begin music/Sci-Fi 5.wav
 /importer:WavImporter
@@ -73,11 +79,29 @@
 /processorParam:Quality=Best
 /build:music/Sci-Fi 5.wav
 
-#begin music/ShoulderOfOrion(loop).wav
+#begin music/Sci-Fi 5.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:music/ShoulderOfOrion(loop).wav
+/build:music/Sci-Fi 5.wav
+
+#begin music/Sci-Fi 6.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:music/Sci-Fi 6.wav
+
+#begin music/Sci-Fi 7.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:music/Sci-Fi 7.wav
+
+#begin music/Sci-Fi 8.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:music/Sci-Fi 8.wav
 
 #begin sounds/chargeHyperdrive.wav
 /importer:WavImporter

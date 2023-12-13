@@ -4,6 +4,7 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.GameObjectManagement;
+using StellarLiberation.Game.Core.Utilitys;
 
 namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection
 {
@@ -20,7 +21,8 @@ namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection
             float timeToIntersection = distance / (speed * gameTime.ElapsedGameTime.Milliseconds);
 
             // Calculate the future position of the target based on its velocity
-            Vector2 futureTargetPosition = target.Position + target.Velocity * gameTime.ElapsedGameTime.Milliseconds * target.MovingDirection * timeToIntersection;
+            var pos = ExtendetRandom.NextVectorInCircle(target.BoundedBox);
+            Vector2 futureTargetPosition = pos + target.Velocity * gameTime.ElapsedGameTime.Milliseconds * target.MovingDirection * timeToIntersection;
 
             return futureTargetPosition;
         }

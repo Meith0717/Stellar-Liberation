@@ -5,8 +5,10 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
+using StellarLiberation.Game.Core.Utilitys;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 {
@@ -15,7 +17,10 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
     {
         private static MusicManager mInstance;
         public static MusicManager Instance { get { return mInstance ??= new(); } }
-        private readonly Dictionary<string, SoundEffectInstance> mMusicInstances = new();
+
+        private readonly List<SoundEffect> mMusics = new();
+        private SoundEffectInstance mMusicInstance;
+        private int mMusicIndex;
         public float OverallVolume = 0f;
 
         public void LoadRegistries(ContentManager content, List<Registry> registries)
@@ -23,33 +28,28 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
             foreach (Registry reg in registries)
             {
                 var soundEffect = content.Load<SoundEffect>(reg.FilePath);
-                mMusicInstances[reg.Name] = soundEffect.CreateInstance();
+                mMusics.Add(soundEffect);
             };
+            mMusicInstance = ExtendetRandom.GetRandomElement(mMusics).CreateInstance();
+            mMusicInstance.Play();
         }
 
-        public void PlayMusic(string soundId)
-        {
-            if (!mMusicInstances.ContainsKey(soundId)) throw new Exception("SoundId not found!");
+        public void Pause() => mMusicInstance.Pause();
+        public void Resume() => mMusicInstance.Resume();
 
-            SoundEffectInstance instance = mMusicInstances[soundId];
-            instance.Volume = OverallVolume;
-            instance.IsLooped = true;
-            instance.Stop();
-            instance.Play();
+        public void Update()
+        {
+            if (mMusicInstance.State == SoundState.Playing) return;
+            if (mMusicInstance.State == SoundState.Paused) return;
+            mMusicIndex = (mMusicIndex + 1) % mMusics.Count;
+            var music = mMusics[mMusicIndex];
+            mMusicInstance = music.CreateInstance();
+            mMusicInstance.Play();
         }
 
-        public void StopAllMusics()
+        public void ChangeOverallVolume(float sliderValue)
         {
-            foreach (var instance in mMusicInstances.Values) instance.Stop();
-        }
-
-
-        internal void ChangeOverallVolume(float sliderValue)
-        {
-            foreach (var instance in mMusicInstances.Values)
-            {
-                if (sliderValue >= 0 && sliderValue <= 1) instance.Volume = sliderValue;
-            }
+            if (sliderValue >= 0 && sliderValue <= 1) mMusicInstance.Volume = sliderValue;
             OverallVolume = sliderValue;
         }
     }

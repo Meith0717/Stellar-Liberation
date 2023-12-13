@@ -8,6 +8,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameObjectManagement;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.WeaponSystem;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.SpaceShipManagement;
 
@@ -20,17 +21,20 @@ namespace StellarLiberation.Game.Core.GameProceses.ProjectileManagement
         public readonly float ShieldDamage;
         public readonly float HullDamage;
 
-        public Projectile(Vector2 startPosition, float rotation, Color color, float shieldDamage, float hullDamage, SpaceShip origine)
-            : base(startPosition, TextureRegistries.projectile, 1f, 15)
+        private readonly Turret mTurret;
+
+        public Projectile(Turret turret, float rotation, Color color, float shieldDamage, float hullDamage, SpaceShip origine)
+            : base(turret.Position, TextureRegistries.projectile, 1f, 15)
         {
+            mTurret = turret;
             MovingDirection = Geometry.CalculateDirectionVector(rotation);
             Rotation = rotation;
             HullDamage = hullDamage;
             ShieldDamage = shieldDamage;
             TextureColor = color;
             Origine = origine;
-            Velocity = 20 + (float)ExtendetRandom.Random.NextDouble();
-            DisposeTime = 5000;
+            Velocity = 50;
+            DisposeTime = 500;
         }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
@@ -42,9 +46,20 @@ namespace StellarLiberation.Game.Core.GameProceses.ProjectileManagement
         public override void Draw(Scene scene)
         {
             base.Draw(scene);
-            TextureManager.Instance.DrawGameObject(this);
+            for (float i = 1; i <= 3; i++)
+            {
+                var color = new Color((int)(TextureColor.R * (i/3f)), (int)(TextureColor.G * (i / 3f)), (int)(TextureColor.B * (i / 3f)), (int)(TextureColor.A * (i / 3f)));
+                TextureManager.Instance.DrawLine(mTurret.Position, Position, color, 9 / i, TextureDepth);
+            }
         }
 
-        public override void HasCollide() => Dispose = true;
+        public override void HasCollide(Vector2 position, Scene scene)
+        {
+            Dispose = true;
+            RemoveFromSpatialHashing(scene);
+            Position = position;
+            AddToSpatialHashing(scene);
+            Velocity = 0;
+        }
     }
 }
