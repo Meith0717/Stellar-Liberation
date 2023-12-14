@@ -24,8 +24,8 @@ namespace StellarLiberation.Game.Layers
 
             mFrame.AddChild(new UiText(FontRegistries.titleFont, "Stellar\nLiberation") { Anchor = Anchor.NW, HSpace = 50, VSpace = 50 });
 
-            var newGame = new UiButton(TextureRegistries.button, "New Game") { VSpace = 20, HSpace = 20, RelY = .5f, OnClickAction = () => mLayerManager.GameLayerFactory.NewGameLayer() };
-            var _continue = new UiButton(TextureRegistries.button, "Continue") { VSpace = 20, HSpace = 20, RelY = .6f, OnClickAction = () => mLayerManager.GameLayerFactory.LoadGameLayer() };
+            var newGame = new UiButton(TextureRegistries.button, "New Game") { VSpace = 20, HSpace = 20, RelY = .5f, OnClickAction = () => mLayerManager.AddLayer(new GameLayer()) };
+            var _continue = new UiButton(TextureRegistries.button, "Continue") { VSpace = 20, HSpace = 20, RelY = .6f, OnClickAction = () => mLayerManager.AddLayer(mPersistanceManager.LoadGameLayer()) };
             var settings = new UiButton(TextureRegistries.button, "Settings") { VSpace = 20, HSpace = 20, RelY = .7f, OnClickAction = () => mLayerManager.AddLayer(new SettingsLayer(true)) };
             var copyright = new UiButton(TextureRegistries.copyrightButton, "") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = null };
             var exitGame = new UiButton(TextureRegistries.button, "Exit Game") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => mLayerManager.Exit() };
@@ -37,9 +37,9 @@ namespace StellarLiberation.Game.Layers
             mFrame.AddChild(copyright);
         }
 
-        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serializer serialize)
+        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager)
         {
-            base.Initialize(game1, layerManager, graphicsDevice, serialize);
+            base.Initialize(game1, layerManager, graphicsDevice, persistanceManager);
             mLayerManager.ResolutionManager.GetNativeResolution();
         }
 

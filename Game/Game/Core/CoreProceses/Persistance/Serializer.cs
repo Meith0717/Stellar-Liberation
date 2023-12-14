@@ -12,7 +12,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Persistance
     {
         public readonly string RootPath;
 
-        public Serializer(string gameName = ".stellarLieberation")
+        public Serializer(string gameName)
         {
             string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             RootPath = Path.Combine(AppDataPath, gameName);

@@ -47,9 +47,9 @@ namespace StellarLiberation.Game.Layers
             settingsFrame.AddChild(new UiDescriber("Resolution", mResolutionSelector) { Height = 50, RelWidth = 1, HSpace = 40, RelY = .37f });
         }
 
-        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serializer serialize)
+        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager)
         {
-            base.Initialize(game1, layerManager, graphicsDevice, serialize);
+            base.Initialize(game1, layerManager, graphicsDevice, persistanceManager);
             mResolutionSelector.AddRange(mLayerManager.ResolutionManager.Resolutions);
         }
 

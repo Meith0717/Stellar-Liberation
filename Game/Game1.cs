@@ -9,7 +9,6 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Layers;
 
@@ -21,7 +20,6 @@ namespace StellarLiberation
         private readonly GraphicsDeviceManager mGraphicsManager;
         private readonly InputManager mInputManager;
         private readonly ResolutionManager ResolutionManager;
-        private readonly Serializer Serialize;
         private SpriteBatch mSpriteBatch;
         private LayerManager mLayerManager;
 
@@ -30,7 +28,6 @@ namespace StellarLiberation
             Content.RootDirectory = "Content";
             mGraphicsManager = new(this);
             mInputManager = new();
-            Serialize = new();
             ResolutionManager = new(mGraphicsManager);
 
             // Window properties
@@ -42,7 +39,7 @@ namespace StellarLiberation
         protected override void Initialize()
         {
             base.Initialize();
-            mLayerManager = new(this, GraphicsDevice, Serialize, ResolutionManager);
+            mLayerManager = new(this, GraphicsDevice, new(), ResolutionManager);
             mLayerManager.AddLayer(new MainMenueLayer());
         }
 

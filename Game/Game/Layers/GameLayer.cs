@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
@@ -15,7 +14,6 @@ using StellarLiberation.Game.Core.GameProceses.MapSystem;
 using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
-using StellarLiberation.Game.GameObjects.Recources.Items;
 using StellarLiberation.Game.GameObjects.SpaceShipManagement;
 using StellarLiberation.Game.Layers.Scenes;
 using System;
@@ -52,11 +50,11 @@ namespace StellarLiberation.Game.Layers
             Player.Position = ExtendetRandom.NextVectorInCircle(CurrentSystem.SystemBounding);
         }
 
-        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serializer serialize)
+        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager)
         {
             mPlanetSystemScene = new(this, CurrentSystem, 1);
             HudLayer = new(mPlanetSystemScene);
-            base.Initialize(game1, layerManager, graphicsDevice, serialize);
+            base.Initialize(game1, layerManager, graphicsDevice, persistanceManager);
             AddScene(mPlanetSystemScene);
             mLayerManager.AddLayer(HudLayer);
         }
@@ -64,14 +62,14 @@ namespace StellarLiberation.Game.Layers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             // Check if mouse clicks outside window
-            if (!mGraphicsDevice.Viewport.Bounds.Contains(inputState.mMousePosition) && (inputState.HasAction(ActionType.LeftClick) || inputState.HasAction(ActionType.RightClick))) mLayerManager.AddLayer(new PauseLayer());
+            if (!mGraphicsDevice.Viewport.Bounds.Contains(inputState.mMousePosition) && (inputState.HasAction(ActionType.LeftClick) || inputState.HasAction(ActionType.RightClick))) mLayerManager.AddLayer(new PauseLayer(this));
 
             // Update Top Scene
             base.Update(gameTime, inputState);
 
             // Check if pause is pressed
             inputState.DoAction(ActionType.Inventar, () => mLayerManager.AddLayer(new InventoryLayer(Inventory)));
-            inputState.DoAction(ActionType.ESC, () => mLayerManager.AddLayer(new PauseLayer()));
+            inputState.DoAction(ActionType.ESC, () => mLayerManager.AddLayer(new PauseLayer(this)));
         }
 
         public override void Destroy()

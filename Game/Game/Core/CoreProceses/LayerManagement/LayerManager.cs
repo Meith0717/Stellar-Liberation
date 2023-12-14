@@ -16,27 +16,25 @@ public class LayerManager
 {
     private readonly Game1 mGame1;
     private readonly GraphicsDevice mGraphicsDevice;
-    private readonly Serializer mSerialize;
+    private readonly PersistanceManager mPersistanceManager;
     public readonly ResolutionManager ResolutionManager;
-    public readonly GameLayerFactory GameLayerFactory;
 
     // layer stack
     private readonly LinkedList<Layer> mLayerStack = new();
 
-    public LayerManager(Game1 game1, GraphicsDevice graphicsDevice, Serializer serialize, ResolutionManager resolutionManager)
+    public LayerManager(Game1 game1, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, ResolutionManager resolutionManager)
     {
         mGame1 = game1;
         mGraphicsDevice = graphicsDevice;
-        mSerialize = serialize;
         ResolutionManager = resolutionManager;
-        GameLayerFactory = new(serialize, this);
+        mPersistanceManager = persistanceManager;
     }
 
     // add and remove layers from stack
     public void AddLayer(Layer layer)
     {
         mLayerStack.AddLast(layer);
-        layer.Initialize(mGame1, this, mGraphicsDevice, mSerialize);
+        layer.Initialize(mGame1, this, mGraphicsDevice, mPersistanceManager);
     }
 
     public void PopLayer()
