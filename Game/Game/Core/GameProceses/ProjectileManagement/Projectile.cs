@@ -46,11 +46,7 @@ namespace StellarLiberation.Game.Core.GameProceses.ProjectileManagement
         public override void Draw(Scene scene)
         {
             base.Draw(scene);
-            for (float i = 1; i <= 3; i++)
-            {
-                var color = new Color((int)(TextureColor.R * (i/3f)), (int)(TextureColor.G * (i / 3f)), (int)(TextureColor.B * (i / 3f)), (int)(TextureColor.A * (i / 3f)));
-                TextureManager.Instance.DrawLine(mTurret.Position, Position, color, 9 / i, TextureDepth);
-            }
+            TextureManager.Instance.DrawGameObject(this);
         }
 
         public override void HasCollide(Vector2 position, Scene scene)

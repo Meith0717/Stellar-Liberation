@@ -21,7 +21,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
         private readonly List<SoundEffect> mMusics = new();
         private SoundEffectInstance mMusicInstance;
         private int mMusicIndex;
-        public float OverallVolume = 0f;
+        public float OverallVolume = 1f;
 
         public void LoadRegistries(ContentManager content, List<Registry> registries)
         {
@@ -31,6 +31,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
                 mMusics.Add(soundEffect);
             };
             mMusicInstance = ExtendetRandom.GetRandomElement(mMusics).CreateInstance();
+            mMusicInstance.Volume = OverallVolume;
             mMusicInstance.Play();
         }
 
@@ -44,6 +45,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
             mMusicIndex = (mMusicIndex + 1) % mMusics.Count;
             var music = mMusics[mMusicIndex];
             mMusicInstance = music.CreateInstance();
+            mMusicInstance.Volume = OverallVolume;
             mMusicInstance.Play();
         }
 

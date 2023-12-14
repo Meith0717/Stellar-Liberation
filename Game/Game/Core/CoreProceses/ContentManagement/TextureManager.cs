@@ -95,9 +95,9 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 
         // render Textures ___________________________________________________________________________
 
-        public void Draw(string id, Vector2 position, float width, float height)
+        public void Draw(string id, Vector2 position, float width, float height, float rotation = 1)
         {
-            SpriteBatch.Draw(GetTexture(id), new RectangleF(position.X, position.Y, width, height).ToRectangle(), Color.White);
+            SpriteBatch.Draw(GetTexture(id), new RectangleF(position.X, position.Y, width, height).ToRectangle(), null, Color.White, rotation, Vector2.Zero, SpriteEffects.None, 1);
         }
         public void Draw(string id, Vector2 position, float width, float height, Color color)
         {

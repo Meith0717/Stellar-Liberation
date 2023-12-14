@@ -11,7 +11,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
 {
     public class ResolutionManager
     {
-        public float UiScaling;
+        public float UiScaling = 1;
         private readonly GraphicsDeviceManager mGraphicsManager;
         public readonly Dictionary<string, Resolution> mResolutions = new();
 

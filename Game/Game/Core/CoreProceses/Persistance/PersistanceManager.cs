@@ -2,9 +2,10 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Layers;
+using System;
 using System.IO;
+using System.Threading;
 
 namespace StellarLiberation.Game.Core.CoreProceses.Persistance
 {
@@ -32,6 +33,47 @@ namespace StellarLiberation.Game.Core.CoreProceses.Persistance
         {
             if (gameLayer is null) throw new System.Exception();
             mSerializer.SerializeObject(gameLayer, GameSaveFilePath);
+        }
+
+        public void LoadGameLayerAsync(Action<GameLayer> onLoadComplete, Action<Exception> onError)
+        {
+            Thread loadThread = new Thread(() =>
+            {
+                try
+                {
+                    if (!mSerializer.FileExist(GameSaveFilePath)) throw new FileNotFoundException();
+                    var gameLayer = new GameLayer();
+                    gameLayer = (GameLayer)mSerializer.PopulateObject(gameLayer, GameSaveFilePath);
+
+                    onLoadComplete?.Invoke(gameLayer);
+                }
+                catch (Exception ex)
+                {
+                    onError?.Invoke(ex);
+                }
+            });
+
+            loadThread.Start();
+        }
+
+        public void SaveGameLayerAsync(GameLayer gameLayer, Action onSaveComplete, Action<Exception> onError)
+        {
+            Thread saveThread = new Thread(() =>
+            {
+                try
+                {
+                    if (gameLayer is null) throw new Exception();
+                    mSerializer.SerializeObject(gameLayer, GameSaveFilePath);
+
+                    onSaveComplete?.Invoke();
+                }
+                catch (Exception ex)
+                {
+                    onError?.Invoke(ex);
+                }
+            });
+
+            saveThread.Start();
         }
     }
 }

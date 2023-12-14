@@ -26,7 +26,7 @@ namespace StellarLiberation.Game.Layers
         {
             mMainFrame = new() { RelHeight = 1, RelWidth = 1, Color = Color.Transparent };
             if (showBgImage) mMainFrame.Alpha = .8f;
-            if (showBgImage) mMainFrame.AddChild(new UiSprite(TextureRegistries.gameBackground) { FillScale = FillScale.Both });
+            if (showBgImage) mMainFrame.AddChild(new UiSprite(TextureRegistries.menueBackground) { FillScale = FillScale.Both });
 
 
             var settingsFrame = new UiFrame(50) { RelHeight = .8f, RelWidth = .5f, Anchor = Anchor.Center, Color = new(17, 17, 17) };
