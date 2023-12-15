@@ -33,7 +33,7 @@ namespace StellarLiberation
             // Window properties
             IsMouseVisible = true;
             Window.AllowAltF4 = false;
-            Window.AllowUserResizing = false;
+            Window.AllowUserResizing = true;
         }
 
         protected override void Initialize()

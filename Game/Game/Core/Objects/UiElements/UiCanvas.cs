@@ -8,7 +8,7 @@ using MonoGame.Extended;
 namespace StellarLiberation.Game.Core.UserInterface
 {
     public enum Anchor { N, NE, E, SE, S, SW, W, NW, Center, Top, Bottom, Left, Right, CenterH, CenterV, None }
-    public enum FillScale { X, Y, Both, None }
+    public enum FillScale { X, Y, Both, Adapt, None }
 
     public class UiCanvas
     {
@@ -47,7 +47,8 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         private void ManageFillScale(RectangleF root, ref float x, ref float y, ref float width, ref float height)
         {
-            var aspectRatio = (float)width / height;
+            var rootAspectRatio = root.Width / root.Height;
+            var aspectRatio = width / height;
 
             switch (FillScale)
             {
@@ -63,6 +64,24 @@ namespace StellarLiberation.Game.Core.UserInterface
                     x = 0; y = 0;
                     height = root.Height;
                     width = root.Width;
+                    break;
+                case FillScale.Adapt:
+                    if (aspectRatio > rootAspectRatio) 
+                    {
+                        height = root.Height;
+                        width = height * aspectRatio;
+                    }
+                    if (aspectRatio < rootAspectRatio) 
+                    {
+                        width = root.Width;
+                        height = width / aspectRatio;
+                    }
+                    if (aspectRatio == rootAspectRatio) 
+                    {
+                        x = 0; y = 0;
+                        height = root.Height;
+                        width = root.Width;
+                    }
                     break;
             }
         }

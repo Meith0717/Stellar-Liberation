@@ -10,7 +10,6 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.UserInterface;
-using System.Net.Security;
 
 namespace StellarLiberation.Game.Layers
 {
@@ -21,7 +20,7 @@ namespace StellarLiberation.Game.Layers
         public MainMenueLayer() : base(false)
         {
             mFrame = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
-            mFrame.AddChild(new UiSprite(TextureRegistries.menueBackground) { FillScale = FillScale.Both });
+            mFrame.AddChild(new UiSprite(TextureRegistries.menueBackground) { FillScale = FillScale.Adapt });
 
             mFrame.AddChild(new UiText(FontRegistries.titleFont, "Stellar\nLiberation") { Anchor = Anchor.NW, HSpace = 50, VSpace = 50 });
 
