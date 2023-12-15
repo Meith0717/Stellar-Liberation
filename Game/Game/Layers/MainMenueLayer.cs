@@ -20,7 +20,7 @@ namespace StellarLiberation.Game.Layers
         public MainMenueLayer() : base(false)
         {
             mFrame = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
-            mFrame.AddChild(new UiSprite(TextureRegistries.menueBackground) { FillScale = FillScale.Adapt });
+            mFrame.AddChild(new UiSprite(TextureRegistries.menueBackground) { FillScale = FillScale.Fit, Anchor = Anchor.Center });
 
             mFrame.AddChild(new UiText(FontRegistries.titleFont, "Stellar\nLiberation") { Anchor = Anchor.NW, HSpace = 50, VSpace = 50 });
 
