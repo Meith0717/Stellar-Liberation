@@ -24,15 +24,15 @@ namespace StellarLiberation.Game.Layers
             var buttonFrame = new UiFrame(50) { Anchor = Anchor.Center, Height = 500, Width = 500, Color = new(17, 17, 17) };
             mBackgroundLayer.AddChild(buttonFrame);
 
-            buttonFrame.AddChild(new UiButton(TextureRegistries.button, "Save Game") { Anchor = Anchor.CenterV, RelY = .05f, RelWidth = .8f, OnClickAction = () => {
+            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Save Game") { Anchor = Anchor.CenterV, RelY = .05f, RelWidth = .8f, OnClickAction = () => {
                 mLayerManager.PopLayer();
                 mLayerManager.AddLayer(new LoadingLayer("Saving", false));
                 mPersistanceManager.SaveGameLayerAsync(gameLayer, () =>  mLayerManager.PopLayer(), (ex) => throw ex);
             }, TextAllign = TextAllign.Center });
-            buttonFrame.AddChild(new UiButton(TextureRegistries.button, "Settings") { Anchor = Anchor.CenterV, RelY = .23f, RelWidth = .8f, OnClickAction = () => mLayerManager.AddLayer(new SettingsLayer(false)), TextAllign = TextAllign.Center });
-            buttonFrame.AddChild(new UiButton(TextureRegistries.button, "Exit to Menue") { Anchor = Anchor.CenterV, RelY = .41f, RelWidth = .75f, OnClickAction = Menue, TextAllign = TextAllign.Center });
-            buttonFrame.AddChild(new UiButton(TextureRegistries.button, "Exit to Desktop") { Anchor = Anchor.CenterV, RelY = .59f, RelWidth = .8f, OnClickAction = () => mLayerManager.Exit(), TextAllign = TextAllign.Center });
-            buttonFrame.AddChild(new UiButton(TextureRegistries.button, "Resume") { Anchor = Anchor.CenterV, RelY = .85f, RelWidth = .8f, OnClickAction = () => mLayerManager.PopLayer(), TextAllign = TextAllign.Center });
+            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Settings") { Anchor = Anchor.CenterV, RelY = .23f, RelWidth = .8f, OnClickAction = () => mLayerManager.AddLayer(new SettingsLayer(false)), TextAllign = TextAllign.Center });
+            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Exit to Menue") { Anchor = Anchor.CenterV, RelY = .41f, RelWidth = .75f, OnClickAction = Menue, TextAllign = TextAllign.Center });
+            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Exit to Desktop") { Anchor = Anchor.CenterV, RelY = .59f, RelWidth = .8f, OnClickAction = () => mLayerManager.Exit(), TextAllign = TextAllign.Center });
+            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Resume") { Anchor = Anchor.CenterV, RelY = .85f, RelWidth = .8f, OnClickAction = () => mLayerManager.PopLayer(), TextAllign = TextAllign.Center });
         }
 
         public override void Destroy() { }

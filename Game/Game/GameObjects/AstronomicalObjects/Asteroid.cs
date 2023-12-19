@@ -19,7 +19,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
     public class Asteroid : GameObject2D
     {
         public Asteroid(Vector2 position)
-            : base(position, TextureRegistries.asteroid1, 5f, 50) { }
+            : base(position, GameSpriteRegistries.asteroid1, 5f, 50) { }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {

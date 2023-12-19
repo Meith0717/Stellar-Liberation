@@ -19,7 +19,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.W
         private Vector2 mRelativePosition;
 
         public Turret(Vector2 relativePosition, float textureScale, int textureDepth)
-        : base(Vector2.Zero, TextureRegistries.turette, textureScale, textureDepth) => mRelativePosition = relativePosition;
+        : base(Vector2.Zero, GameSpriteRegistries.turette, textureScale, textureDepth) => mRelativePosition = relativePosition;
 
         public void Fire(GameObjectManager objManager, SpaceShip origin, Color particleColor, float shieldDamage, float hullDamage) => objManager.AddObj(new Projectile(this, Rotation, particleColor, shieldDamage, hullDamage, origin));
 

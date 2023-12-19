@@ -16,7 +16,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceShipManagement
     [Serializable]
     public class Player : AlliedShip
     {
-        public Player() : base(Vector2.Zero, TextureRegistries.player, 1, new(20000), new(10f, 0.05f), new(1000, Color.LightBlue, 2, 2, 10000), new(100, 1000, 1), new(10000))
+        public Player() : base(Vector2.Zero, GameSpriteRegistries.player, 1, new(20000), new(10f, 0.05f), new(1000, Color.LightBlue, 2, 2, 10000), new(100, 1000, 1), new(10000))
         {
             WeaponSystem.PlaceTurret(new(new(110, 35), 1, TextureDepth + 1));
             WeaponSystem.PlaceTurret(new(new(110, -35), 1, TextureDepth + 1));

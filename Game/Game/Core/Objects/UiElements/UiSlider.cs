@@ -61,7 +61,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
             TextureManager.Instance.DrawLine(sliderPos, mSliderDotPosition, Color.White, 6, 1);
             TextureManager.Instance.DrawLine(sliderPos, mSliderLength, new(100, 100, 100, 100), 6, 1);
-            TextureManager.Instance.Draw(TextureRegistries.sliderDot, mSliderDotPosition - (dotDim / 2), dotDim.X, dotDim.Y, mWasPressed ? Color.MonoGameOrange : Color.White);
+            TextureManager.Instance.Draw(MenueSpriteRegistries.dot, mSliderDotPosition - (dotDim / 2), dotDim.X, dotDim.Y, mWasPressed ? Color.MonoGameOrange : Color.White);
             Canvas.Draw();
         }
 

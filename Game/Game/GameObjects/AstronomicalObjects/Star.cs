@@ -38,7 +38,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         {
             base.Draw(scene);
             TextureManager.Instance.DrawGameObject(this);
-            TextureManager.Instance.Draw(TextureRegistries.starLightAlpha.Name, Position, TextureOffset, TextureScale * 2f, Rotation, 3, LightColor);
+            TextureManager.Instance.Draw(GameSpriteRegistries.starLightAlpha.Name, Position, TextureOffset, TextureScale * 2f, Rotation, 3, LightColor);
         }
     }
 }

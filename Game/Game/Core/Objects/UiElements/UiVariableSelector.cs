@@ -23,8 +23,8 @@ namespace StellarLiberation.Game.Core.UserInterface
         public UiVariableSelector(List<T> variables)
         {
             mVariables = variables;
-            mLeftArrow = new(TextureRegistries.arrowL, "") { Anchor = Anchor.W, OnClickAction = () => { DecrementIndex(); OnClickAction(); } };
-            mRightArrow = new(TextureRegistries.arrowR, "") { Anchor = Anchor.E, OnClickAction = () => { IncrementIndex(); OnClickAction(); } };
+            mLeftArrow = new(MenueSpriteRegistries.arrowL, "") { Anchor = Anchor.W, OnClickAction = () => { DecrementIndex(); OnClickAction(); } };
+            mRightArrow = new(MenueSpriteRegistries.arrowR, "") { Anchor = Anchor.E, OnClickAction = () => { IncrementIndex(); OnClickAction(); } };
             mVariable = new(FontRegistries.buttonFont, "N.A") { Anchor = Anchor.Center };
         }
 

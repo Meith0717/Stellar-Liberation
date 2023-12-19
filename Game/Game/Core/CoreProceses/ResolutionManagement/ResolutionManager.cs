@@ -20,7 +20,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
             mGraphicsManager = graphicsManager;
             var lst = new List<Resolution>()
             { 
-                new(800,480, .5f),      // default
                 new(1920, 1280, 1),     // 3:2      Full HD
                 new(1920, 1200, 1),     // 16:10    Full HD
                 new(1920, 1080, 1),     // 16:9     Full HD

@@ -40,6 +40,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 
         public void Update()
         {
+            if (mMusicInstance is null) return;
             if (mMusicInstance.State == SoundState.Playing) return;
             if (mMusicInstance.State == SoundState.Paused) return;
             mMusicIndex = (mMusicIndex + 1) % mMusics.Count;

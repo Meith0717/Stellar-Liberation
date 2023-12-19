@@ -25,11 +25,11 @@ namespace StellarLiberation.Game.Layers.Scenes
             Camera2D.Zoom = camZoom;
             mPlanetSystem = currentPlanetSystem;
             mParlaxManager = new();
-            mParlaxManager.Add(new(TextureRegistries.gameBackground, 0));
-            mParlaxManager.Add(new(TextureRegistries.gameBackgroundParlax4, .1f));
-            mParlaxManager.Add(new(TextureRegistries.gameBackgroundParlax3, .05f));
-            mParlaxManager.Add(new(TextureRegistries.gameBackgroundParlax2, .01f));
-            mParlaxManager.Add(new(TextureRegistries.gameBackgroundParlax1, .001f));
+            mParlaxManager.Add(new(GameSpriteRegistries.gameBackground, 0));
+            mParlaxManager.Add(new(GameSpriteRegistries.gameBackgroundParlax4, .1f));
+            mParlaxManager.Add(new(GameSpriteRegistries.gameBackgroundParlax3, .05f));
+            mParlaxManager.Add(new(GameSpriteRegistries.gameBackgroundParlax2, .01f));
+            mParlaxManager.Add(new(GameSpriteRegistries.gameBackgroundParlax1, .001f));
         }
 
         public override void UpdateObj(GameTime gameTime, InputState inputState)

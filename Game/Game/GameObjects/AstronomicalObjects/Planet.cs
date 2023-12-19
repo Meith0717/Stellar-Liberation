@@ -53,7 +53,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         public override void Draw(Scene scene)
         {
             base.Draw(scene);
-            TextureManager.Instance.Draw(TextureRegistries.planetShadow, Position, TextureOffset, TextureScale * 1.05f, mShadowRotation, TextureDepth + 1, Color.White);
+            TextureManager.Instance.Draw(GameSpriteRegistries.planetShadow, Position, TextureOffset, TextureScale * 1.05f, mShadowRotation, TextureDepth + 1, Color.White);
             TextureManager.Instance.DrawGameObject(this);
         }
     }

@@ -40,18 +40,16 @@ namespace StellarLiberation
         {
             base.Initialize();
             mLayerManager = new(this, GraphicsDevice, new(), ResolutionManager);
-            mLayerManager.AddLayer(new MainMenueLayer());
+            ResolutionManager.GetNativeResolution();
+            ResolutionManager.ToggleFullscreen();
+            mLayerManager.AddLayer(new LoadingLayer("Loading"));
         }
 
         protected override void LoadContent()
         {
             mSpriteBatch = new SpriteBatch(GraphicsDevice);
-
-            TextureManager.Instance.SetSpriteBatch(mSpriteBatch);
-            TextureManager.Instance.LoadTextureRegistries(Content, Registries.GetRegistryList<TextureRegistries>());
-            TextureManager.Instance.LoadFontRegistries(Content, Registries.GetRegistryList<FontRegistries>());
-            SoundEffectManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<SoundEffectRegistries>());
-            MusicManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<MusicRegistries>());
+            ContentLoader.PreLoad(Content, mSpriteBatch);
+            ContentLoader.LoadAsync(Content, mSpriteBatch, () => mLayerManager.AddLayer(new MainMenueLayer()), null);
         }
 
         protected override void Update(GameTime gameTime)

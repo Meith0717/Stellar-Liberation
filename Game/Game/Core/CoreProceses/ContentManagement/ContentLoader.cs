@@ -12,6 +12,13 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 {
     public static class ContentLoader
     {
+
+        public static void PreLoad(ContentManager Content, SpriteBatch spriteBatch)
+        {
+            TextureManager.Instance.LoadTextureRegistries(Content, Registries.GetRegistryList<MenueSpriteRegistries>());
+            TextureManager.Instance.LoadFontRegistries(Content, Registries.GetRegistryList<FontRegistries>());
+        }
+
         public static void LoadAsync(ContentManager Content, SpriteBatch spriteBatch, Action onLoadComplete, Action<Exception> onError)
         {
             Thread loadThread = new(() =>
@@ -19,8 +26,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
                 try
                 {
                     TextureManager.Instance.SetSpriteBatch(spriteBatch);
-                    TextureManager.Instance.LoadTextureRegistries(Content, Registries.GetRegistryList<TextureRegistries>());
-                    TextureManager.Instance.LoadFontRegistries(Content, Registries.GetRegistryList<FontRegistries>());
+                    TextureManager.Instance.LoadTextureRegistries(Content, Registries.GetRegistryList<GameSpriteRegistries>());
                     SoundEffectManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<SoundEffectRegistries>());
                     MusicManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<MusicRegistries>());
 
