@@ -20,21 +20,21 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
             mGraphicsManager = graphicsManager;
             var lst = new List<Resolution>()
             {
-                new Resolution(1024, 768, 4.25f),       // 4:3      XGA
-                new Resolution(1280, 720, 0.8333f),     // 16:9     HD
-                new Resolution(1280, 800, 1.25f),       // 8:5      WXGA
-                new Resolution(1366, 768, 1.1842f),     // 16:9     HD
-                new Resolution(1440, 900, 1.1667f),     // 16:10    WXGA+
-                new Resolution(1600, 900, 1.0625f),     // 16:9     HD+
-                new Resolution(1600, 1200, 1.0f),       // 4:3      UXGA
-                new Resolution(1680, 1050, 0.9706f),    // 16:10    WSXGA+
-                new Resolution(1920, 1080, 1.0f),       // 16:9     Full HD
-                new Resolution(1920, 1200, 1.0f),       // 16:10    WUXGA
-                new Resolution(2560, 1080, 0.875f),     // 64:27    UltraWide
-                new Resolution(2560, 1440, 0.8478f),    // 16:9     Quad HD
-                new Resolution(2560, 1600, 0.8125f),    // 16:10    WQXGA
-                new Resolution(3440, 1440, 0.8478f),    // 21:9     UltraWide QHD
-                new Resolution(3840, 2160, 1.5f)        // 16:9     4K UHD
+                new(1024, 768, 4.25f),       // 4:3      XGA
+                new(1280, 720, 0.8333f),     // 16:9     HD
+                new(1280, 800, 1.25f),       // 8:5      WXGA
+                new(1366, 768, 1.1842f),     // 16:9     HD
+                new(1440, 900, 1.1667f),     // 16:10    WXGA+
+                new(1600, 900, 1.0625f),     // 16:9     HD+
+                new(1600, 1200, 1.0f),       // 4:3      UXGA
+                new(1680, 1050, 0.9706f),    // 16:10    WSXGA+
+                new(1920, 1080, 1.0f),       // 16:9     Full HD
+                new(1920, 1200, 1.0f),       // 16:10    WUXGA
+                new(2560, 1080, 0.875f),     // 64:27    UltraWide
+                new(2560, 1440, 0.8478f),    // 16:9     Quad HD
+                new(2560, 1600, 0.8125f),    // 16:10    WQXGA
+                new(3440, 1440, 0.8478f),    // 21:9     UltraWide QHD
+                new(3840, 2160, 1.5f)        // 16:9     4K UHD
             };
 
 
