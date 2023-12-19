@@ -1,4 +1,4 @@
-![Title](https://github.com/Meith0717/Stellar-Liberation/blob/main/Game/Content/textures/title.png?raw=true)
+![Title](https://github.com/Meith0717/Stellar-Liberation/blob/main/docs/title.png?raw=true)
 
 Stellar Liberation is a 2D top-down space game that takes you on a thrilling journey through a vast and perilous galaxy. While still in beta, the game offers a tantalizing blend of exploration and intense battles. 
 
