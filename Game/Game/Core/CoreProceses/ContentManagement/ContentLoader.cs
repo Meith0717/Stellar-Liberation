@@ -12,6 +12,15 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 {
     public static class ContentLoader
     {
+        public static void Load(ContentManager Content, SpriteBatch spriteBatch)
+        {
+            TextureManager.Instance.LoadTextureRegistries(Content, Registries.GetRegistryList<MenueSpriteRegistries>());
+            TextureManager.Instance.LoadFontRegistries(Content, Registries.GetRegistryList<FontRegistries>());
+            TextureManager.Instance.SetSpriteBatch(spriteBatch);
+            TextureManager.Instance.LoadTextureRegistries(Content, Registries.GetRegistryList<GameSpriteRegistries>());
+            SoundEffectManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<SoundEffectRegistries>());
+            MusicManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<MusicRegistries>());
+        }
 
         public static void PreLoad(ContentManager Content, SpriteBatch spriteBatch)
         {

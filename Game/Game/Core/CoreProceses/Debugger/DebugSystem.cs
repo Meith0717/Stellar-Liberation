@@ -10,8 +10,8 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement;
-using StellarLiberation.Game.GameObjects.SpaceShips.Enemys;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys;
 using System;
 using System.Collections.Generic;
 

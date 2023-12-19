@@ -61,7 +61,7 @@ namespace StellarLiberation.Game.Core.UserInterface
                     width = height * aspectRatio;
                     break;
                 case FillScale.Both:
-                    x = 0; y = 0;
+                    x = root.X; y = root.Y;
                     height = root.Height;
                     width = root.Width;
                     break;
@@ -78,7 +78,7 @@ namespace StellarLiberation.Game.Core.UserInterface
                     }
                     if (aspectRatio == rootAspectRatio) 
                     {
-                        x = 0; y = 0;
+                        x = root.X; y = root.Y;
                         height = root.Height;
                         width = root.Width;
                     }

@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems

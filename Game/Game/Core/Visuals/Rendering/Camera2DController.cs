@@ -3,7 +3,7 @@
 // All rights reserved.
 
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Allies;
 
 namespace StellarLiberation.Game.Core.Visuals.Rendering
 {

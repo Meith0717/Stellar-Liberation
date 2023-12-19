@@ -14,7 +14,7 @@ using StellarLiberation.Game.Core.GameProceses.MapSystem;
 using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Allies;
 using StellarLiberation.Game.Layers.Scenes;
 using System;
 using System.Collections.Generic;

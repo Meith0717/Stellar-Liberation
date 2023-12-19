@@ -13,7 +13,8 @@ using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.MapSystem;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
-using StellarLiberation.Game.GameObjects.SpaceShips.Enemys;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceStations;
 using System;
 using System.Collections.Generic;
 
@@ -60,6 +61,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             for (int i = 0; i < 0; i++) GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyBomber, ExtendetRandom.NextVectorInCircle(SystemBounding)));
             for (int i = 0; i < 0; i++) GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyCarrior, ExtendetRandom.NextVectorInCircle(SystemBounding)));
 
+            GameObjects.AddObj(new ScienceStation(ExtendetRandom.NextVectorInCircle(SystemBounding)));
             GameObjects.AddObj(mStar);
             GameObjects.AddRange(mAsteroids);
             GameObjects.AddRange(mPlanets);

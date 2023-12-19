@@ -9,7 +9,7 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.WeaponSystem
@@ -52,7 +52,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.W
             var hasFired = false;
             foreach (var turret in mTurrets)
             {
-                var position = mAimingPos ?? CollisionPredictor.PredictPosition(gameTime, origin.Position, 50, mAimingShip);
+                var position = mAimingPos ?? CollisionPredictor.PredictPosition(gameTime, origin.Position, 20, mAimingShip);
                 turret.GetPosition(origin.Position, origin.Rotation);
                 turret.RotateToTArget(origin.Rotation, position);
                 if (!mFire || mFireCoolDown < mMaxFireCoolDown) continue;

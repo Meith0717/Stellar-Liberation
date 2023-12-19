@@ -91,9 +91,12 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegi
         public readonly static Registry asteroid15 = new(asteroids, "asteroid15");
 
         private readonly static string items = @"textures\gameSprites\gameobjects\items";
-        public readonly static Registry odyssyum = new(items, "odyssyum");
-        public readonly static Registry postyum = new(items, "postyum");
-        public readonly static Registry metall = new(items, "metall");
+        public readonly static Registry titan = new(items, "titan");
+        public readonly static Registry quantumCrystals = new(items, "quantumCrystals");
+        public readonly static Registry platin = new(items, "platin");
+        public readonly static Registry iron = new(items, "iron");
+        public readonly static Registry gold = new(items, "gold");
+        public readonly static Registry darkMatter = new(items, "darkMatter");
 
         private readonly static string spacecrafts = @"textures\gameSprites\gameobjects\spacecrafts";
         public readonly static Registry player = new(spacecrafts, "player");

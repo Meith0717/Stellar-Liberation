@@ -10,7 +10,7 @@ using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.WeaponSystem;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 
 namespace StellarLiberation.Game.Core.GameProceses.ProjectileManagement
 {
@@ -33,7 +33,7 @@ namespace StellarLiberation.Game.Core.GameProceses.ProjectileManagement
             ShieldDamage = shieldDamage;
             TextureColor = color;
             Origine = origine;
-            Velocity = 50;
+            Velocity = 20;
             DisposeTime = 500;
         }
 

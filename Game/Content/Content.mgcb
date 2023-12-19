@@ -1339,7 +1339,7 @@
 /processorParam:TextureFormat=Color
 /build:textures/gameSprites/gameObjects/astronomicalbodys/stars/StarLightAlpha.png
 
-#begin textures/gameSprites/gameObjects/items/metall.png
+#begin textures/gameSprites/gameObjects/items/darkMatter.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1349,9 +1349,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameSprites/gameObjects/items/metall.png
+/build:textures/gameSprites/gameObjects/items/darkMatter.png
 
-#begin textures/gameSprites/gameObjects/items/odyssyum.png
+#begin textures/gameSprites/gameObjects/items/gold.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1361,9 +1361,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameSprites/gameObjects/items/odyssyum.png
+/build:textures/gameSprites/gameObjects/items/gold.png
 
-#begin textures/gameSprites/gameObjects/items/postyum.png
+#begin textures/gameSprites/gameObjects/items/iron.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1373,7 +1373,43 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameSprites/gameObjects/items/postyum.png
+/build:textures/gameSprites/gameObjects/items/iron.png
+
+#begin textures/gameSprites/gameObjects/items/platin.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/items/platin.png
+
+#begin textures/gameSprites/gameObjects/items/quantumCrystals.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/items/quantumCrystals.png
+
+#begin textures/gameSprites/gameObjects/items/titan.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/items/titan.png
 
 #begin textures/gameSprites/gameObjects/particle.png
 /importer:TextureImporter

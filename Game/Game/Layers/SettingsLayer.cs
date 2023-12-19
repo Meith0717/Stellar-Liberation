@@ -29,7 +29,7 @@ namespace StellarLiberation.Game.Layers
             if (showBgImage) mMainFrame.AddChild(new UiSprite(MenueSpriteRegistries.menueBackground) { FillScale = FillScale.Both });
 
 
-            var settingsFrame = new UiFrame(50) { RelHeight = .8f, RelWidth = .5f, Anchor = Anchor.Center, Color = new(17, 17, 17) };
+            var settingsFrame = new UiFrame(50) { RelHeight = .8f, RelWidth = .5f, Anchor = Anchor.Center, Color = new(78, 121, 136)};
             mMainFrame.AddChild(settingsFrame);
 
             settingsFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => mLayerManager.PopLayer() });
