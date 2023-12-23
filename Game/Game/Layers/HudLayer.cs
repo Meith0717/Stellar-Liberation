@@ -11,6 +11,7 @@ using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiBar;
+using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Layers
 {
@@ -18,14 +19,15 @@ namespace StellarLiberation.Game.Layers
     {
         public bool Hide;
 
-        private Scene mScene;
-        private UiLayer mUiLayer;
+        private readonly UiLayer mUiLayer;
+        private readonly Scene mScene;
 
-        private UiHBar mShieldBar;
-        private UiHBar mHullBar;
-        private UiVBar mPropulsiondBar;
+        private readonly UiHBar mShieldBar;
+        private readonly UiHBar mHullBar;
+        private readonly UiVBar mPropulsiondBar;
 
-        private Compass mCompass = new();
+        private readonly Compass mCompass = new();
+        private readonly List<UiElement> mPopups = new();
 
         public HudLayer(Scene scene) : base(true)
         {
@@ -42,6 +44,8 @@ namespace StellarLiberation.Game.Layers
             mScene = scene;
         }
 
+        public void AddPopup(UiElement uiElement) => mPopups.Add(uiElement);
+
         public override void Destroy() { }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -49,6 +53,8 @@ namespace StellarLiberation.Game.Layers
             if (Hide) return;
             spriteBatch.Begin();
             mUiLayer.Draw();
+            foreach (var uiElement in mPopups)
+                uiElement.Draw();
             mCompass.Draw();
             spriteBatch.End();
         }
@@ -62,6 +68,9 @@ namespace StellarLiberation.Game.Layers
             mHullBar.Percentage = mScene.GameLayer.Player.DefenseSystem.HullPercentage;
             mPropulsiondBar.Percentage = (double)(mScene.GameLayer.Player.Velocity / mScene.GameLayer.Player.SublightEngine.MaxVelocity);
             mCompass.Update(mScene.GameLayer.Player.Position, mScene.ViewFrustumFilter, mScene.GameLayer.Player.SensorArray.LongRangeScan);
+            foreach (var uiElement in mPopups) 
+                uiElement.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.ResolutionManager.UiScaling);
+            mPopups.Clear();
         }
     }
 }

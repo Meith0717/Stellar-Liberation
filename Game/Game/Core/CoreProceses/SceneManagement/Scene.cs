@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
@@ -17,11 +16,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.SceneManagement
 {
     public abstract class Scene
     {
-        public RenderTarget2D RenderTarget { get; private set; }
-        public RectangleF RenderRectangle { get; private set; }
         private GraphicsDevice mGraphicsDevice;
-        private float mRelHeight;
-        private float mRelWidth;
 
         public Vector2 WorldMousePosition { get; private set; }
         public readonly SpatialHashing<GameObject2D> SpatialHashing;
@@ -40,41 +35,28 @@ namespace StellarLiberation.Game.Core.CoreProceses.SceneManagement
             ParticleManager = new();
             Camera2D = new(minCamZoom, maxCamZoom, moveCamByMouse);
             GameLayer = gameLayer;
-            mRelHeight = RelHeight;
-            mRelWidth = RelWidth;
         }
 
         public void Initialize(GraphicsDevice graphicsDevice)
         {
             mGraphicsDevice = graphicsDevice;
-            var dim = new Vector2(mGraphicsDevice.Viewport.Width * mRelWidth, mGraphicsDevice.Viewport.Height * mRelHeight);
-            RenderRectangle = new(mGraphicsDevice.Viewport.Bounds.Center.ToVector2() - dim / 2, dim);
-            RenderTarget = new(mGraphicsDevice, (int)RenderRectangle.Width, (int)RenderRectangle.Height, true, SurfaceFormat.Color, DepthFormat.Depth24);
         }
 
         public void Update(GameTime gameTime, InputState inputState)
         {
-            var screenWidth = (int)RenderRectangle.Width;
-            var screenHeight = (int)RenderRectangle.Height;
-
             UpdateObj(gameTime, inputState);
             ParticleManager.Update(gameTime, inputState, this);
             Camera2D.Update(gameTime, inputState, inputState.mMousePosition, mViewTransformationMatrix);
-            mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera2D.Position, Camera2D.Zoom, 0, screenWidth, screenHeight);
-            WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, Geometry.GetRelativePosition(inputState.mMousePosition, RenderRectangle.ToRectangle()));
-            ViewFrustumFilter.Update(screenWidth, screenHeight, mViewTransformationMatrix);
+            mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera2D.Position, Camera2D.Zoom, 0, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
+            WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, inputState.mMousePosition);
+            ViewFrustumFilter.Update(mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height, mViewTransformationMatrix);
             RenderPipeline.Update();
         }
 
         public abstract void UpdateObj(GameTime gameTime, InputState inputState);
 
-        public void UpdateRenderTarget2D(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch)
+        public void Draw(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch)
         {
-            // Set the render target
-            mGraphicsDevice.SetRenderTarget(RenderTarget);
-            mGraphicsDevice.Clear(Color.Black);
-
-            // Drawing to the RenderTarget
             spriteBatch.Begin();
             DrawOnScreenView(sceneManagerLayer, spriteBatch);
             spriteBatch.End();
@@ -89,10 +71,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.SceneManagement
 
         public virtual void OnResolutionChanged()
         {
-            var dim = new Vector2(mGraphicsDevice.Viewport.Width * mRelWidth, mGraphicsDevice.Viewport.Height * mRelHeight);
-            RenderRectangle = new(mGraphicsDevice.Viewport.Bounds.Center.ToVector2() - dim / 2, dim);
-            RenderTarget.Dispose();
-            RenderTarget = new(mGraphicsDevice, (int)RenderRectangle.Width, (int)RenderRectangle.Height, true, SurfaceFormat.Color, DepthFormat.Depth24);
         }
 
     }

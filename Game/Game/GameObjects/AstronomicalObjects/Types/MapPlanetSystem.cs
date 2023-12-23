@@ -31,7 +31,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             };
 
             base.Update(gameTime, inputState, scene);
-            GameObject2DInteractionManager.Manage(inputState, this, scene, LeftPressAction, null);
+            GameObject2DInteractionManager.Manage(inputState, this, scene, LeftPressAction, null, null);
         }
 
         public override void Draw(Scene scene)
