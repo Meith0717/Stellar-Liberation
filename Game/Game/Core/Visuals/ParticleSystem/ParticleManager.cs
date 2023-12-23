@@ -7,7 +7,7 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using StellarLiberation.Game.Core.GameObjectManagement;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 
 namespace StellarLiberation.Game.Core.Visuals.ParticleSystem
 {

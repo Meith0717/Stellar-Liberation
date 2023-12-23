@@ -3,11 +3,12 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
-using StellarLiberation.Game.Core.GameObjectManagement;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
 {
@@ -15,7 +16,10 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
     {
         public readonly PlanetSystem mPlanetSystem;
 
-        public MapPlanetSystem(Vector2 position, PlanetSystem planetSystem, string textureId) : base(position, textureId, 0.01f, 1) => mPlanetSystem = planetSystem;
+        public MapPlanetSystem(Vector2 position, PlanetSystem planetSystem, string textureId) : base(position, textureId, 0.01f, 1)
+        {
+            mPlanetSystem = planetSystem;
+        }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {

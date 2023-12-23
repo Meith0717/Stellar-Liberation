@@ -18,7 +18,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
         [JsonProperty] public int StackCapacity { get; private set; }
         [JsonProperty] public int Capacity { get; private set; }
 
-        [JsonProperty] private readonly List<InventoryItem> mItems = new();
+        [JsonProperty] public readonly List<InventoryItem> Items = new();
 
         public Inventory()
         {
@@ -26,7 +26,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
             Capacity = 25;
         }
 
-        [JsonIgnore] public int Count => mItems.Count;
+        [JsonIgnore] public int Count => Items.Count;
 
         public bool Add(Item item)
         {
@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
 
             // Add Item to existing Stack
             var itemID = item.ItemID;
-            foreach (var inventoryItem in mItems.Where((item) => item.ItemId == itemID))
+            foreach (var inventoryItem in Items.Where((item) => item.ItemId == itemID))
             {
                 if (inventoryItem.Count >= StackCapacity) continue;
                 inventoryItem.Add();
@@ -43,7 +43,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
             }
             
             // Add new Stack
-            mItems.Add(new(itemID, item.TextureId));
+            Items.Add(new(itemID, item.TextureId));
             return true;
         }
 
@@ -54,7 +54,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
             while (amount > 0)
             {
                 var rmv = new List<InventoryItem>();
-                foreach (var inventoryItem in mItems.Where((item) => item.ItemId == itemID))
+                foreach (var inventoryItem in Items.Where((item) => item.ItemId == itemID))
                 {
                     var inventoryItemCount = inventoryItem.Count;
                     inventoryItem.Remove(inventoryItemCount);
@@ -62,7 +62,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
                     if (inventoryItem.Count <= 0) rmv.Add(inventoryItem);
                 }
 
-                foreach (var item in rmv) mItems.Remove(item);
+                foreach (var item in rmv) Items.Remove(item);
             }
             return true;
         }
@@ -70,14 +70,14 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
         private int GetIemCount(ItemID itemID)
         {
             var tmp = 0;
-            foreach (var inventoryItem in mItems.Where((item) => item.ItemId == itemID)) tmp += inventoryItem.Count;
+            foreach (var inventoryItem in Items.Where((item) => item.ItemId == itemID)) tmp += inventoryItem.Count;
             return tmp;
         }
 
         public bool HasSpace(ItemID itemID)
         {
             if (Count < Capacity) return true;
-            foreach (var inventoryItem in mItems.Where((item) => item.ItemId != itemID))
+            foreach (var inventoryItem in Items.Where((item) => item.ItemId != itemID))
             {
                 if (inventoryItem.Count >= StackCapacity) continue;
                 return true;
@@ -88,7 +88,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
         public override string ToString()
         {
             var tmp = "";
-            foreach (var item in mItems) { tmp += $"[{item.ToString()}]"; }
+            foreach (var item in Items) { tmp += $"[{item.ToString()}]"; }
             return tmp;
         }
     }

@@ -3,7 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using StellarLiberation.Game.Core.GameObjectManagement;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
 
 namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection

@@ -5,7 +5,7 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.GameObjectManagement;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.ProjectileManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem;

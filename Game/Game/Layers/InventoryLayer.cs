@@ -1,4 +1,4 @@
-﻿// InventoryLayer.cs 
+﻿// InventoryLayer.cs
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
@@ -11,6 +11,7 @@ using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
+using System;
 
 namespace StellarLiberation.Game.Layers
 {
@@ -18,20 +19,44 @@ namespace StellarLiberation.Game.Layers
     {
         private readonly UiFrame mFrame;
 
-        private class StackLine : UiFrame
+        private class StackLine : UiLayer
         {
-            public StackLine() : base(0)
+            public StackLine(InventoryItem inventoryItem) : base()
             {
-                Anchor = Anchor.CenterV;
-                Height = 70;
-                Width = 70;
-                Color = Color.DarkGray;
+                Height = 80;
+                Width = 80;
+                Color = new(12, 12, 12);
+                AddChild(new UiSprite(inventoryItem.Texture) { FillScale = FillScale.FillIn });
+                AddChild(new UiText(FontRegistries.textFont, inventoryItem.Count.ToString()) { Anchor = Anchor.SE });
+            }
+
+            public StackLine() : base()
+            {
+                Height = 80;
+                Width = 80;
+                Color = new(12, 12, 12);
             }
         }
 
         public InventoryLayer(Inventory inventory) : base(false)
         {
-            mFrame = new(50) { Height = 500, Width = 800, Anchor = Anchor.Center, Color = new(17, 17, 17) };
+            mFrame = new(50) { Height = 500, Width = 500, Anchor = Anchor.Center, Color = new(17, 17, 17) };
+            var itemLayer = new UiLayer() { Height = 440, Width = 440, Anchor = Anchor.Center, Alpha = 0};
+            mFrame.AddChild(itemLayer);
+
+            var i = 0;
+            for (int y = 0;  y < 5; y++)
+            {
+                for (int x = 0; x < 5; x++)
+                {
+                    var relX = .205f * x;
+                    var relY = .205f * y;
+
+                    try { itemLayer.AddChild(new StackLine(inventory.Items[i]) { RelX = relX, RelY = relY }); } 
+                    catch(ArgumentOutOfRangeException) { itemLayer.AddChild(new StackLine() { RelX = relX, RelY = relY }); }
+                    i++;
+                }
+            }
         }
 
         public override void Destroy() { }

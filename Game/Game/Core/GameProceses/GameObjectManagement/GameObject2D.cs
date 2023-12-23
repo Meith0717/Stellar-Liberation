@@ -17,7 +17,7 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using System;
 
-namespace StellarLiberation.Game.Core.GameObjectManagement
+namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
 {
     [Serializable]
     public abstract class GameObject2D

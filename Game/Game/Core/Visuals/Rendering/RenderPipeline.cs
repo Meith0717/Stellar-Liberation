@@ -5,7 +5,7 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
-using StellarLiberation.Game.Core.GameObjectManagement;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using System.Collections.Generic;
 

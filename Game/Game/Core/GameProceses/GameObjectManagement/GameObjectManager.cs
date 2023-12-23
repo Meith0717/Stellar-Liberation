@@ -9,7 +9,7 @@ using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using System;
 using System.Collections.Generic;
 
-namespace StellarLiberation.Game.Core.GameObjectManagement
+namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
 {
     [Serializable]
     public class GameObjectManager

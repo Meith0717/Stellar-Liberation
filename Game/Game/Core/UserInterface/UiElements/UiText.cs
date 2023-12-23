@@ -9,7 +9,7 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 
 namespace StellarLiberation.Game.Core.UserInterface
 {
-    internal class UiText : UiElement
+    public class UiText : UiElement
     {
 
         public string Text;

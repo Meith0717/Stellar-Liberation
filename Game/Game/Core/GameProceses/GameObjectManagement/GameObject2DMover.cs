@@ -5,7 +5,7 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 
-namespace StellarLiberation.Game.Core.GameObjectManagement
+namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
 {
     public static class GameObject2DMover
     {

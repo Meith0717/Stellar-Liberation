@@ -4,6 +4,7 @@
 
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
+using System;
 
 namespace StellarLiberation.Game.Core.UserInterface
 {
@@ -16,6 +17,8 @@ namespace StellarLiberation.Game.Core.UserInterface
         private RectangleF mCanvas;
 
         // Needet properties
+        public float? X;
+        public float? Y;
         public float RelativeX;
         public float RelativeY;
 
@@ -32,8 +35,8 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public void UpdateFrame(RectangleF root, float uiScale)
         {
-            var x = root.X + (root.Width * RelativeX);
-            var y = root.Y + (root.Height * RelativeY);
+            var x = X ?? root.X + (root.Width * RelativeX);
+            var y = Y ?? root.Y + (root.Height * RelativeY);
 
             var width = Width * uiScale ?? (int)(root.Width * RelWidth);
             var height = Height * uiScale ?? (int)(root.Height * RelHeight);
@@ -113,28 +116,28 @@ namespace StellarLiberation.Game.Core.UserInterface
                     x = root.X; y = root.Y;
                     break;
                 case Anchor.N:
-                    x = root.Center.X - (width / 2); y = root.Y;
+                    x = root.Center.X - (width / 2f); y = root.Y;
                     break;
                 case Anchor.NE:
                     x = root.Right - width; y = root.Y;
                     break;
                 case Anchor.E:
-                    x = root.Right - width; y = root.Center.Y - (height / 2);
+                    x = root.Right - width; y = root.Center.Y - (height / 2f);
                     break;
                 case Anchor.SE:
                     x = root.Right - width; y = root.Bottom - height;
                     break;
                 case Anchor.S:
-                    x = root.Center.X - (width / 2); y = root.Bottom - height;
+                    x = root.Center.X - (width / 2f); y = root.Bottom - height;
                     break;
                 case Anchor.SW:
                     x = root.X; y = root.Bottom - height;
                     break;
                 case Anchor.W:
-                    x = root.X; y = root.Center.Y - (height / 2);
+                    x = root.X; y = root.Center.Y - (height / 2f);
                     break;
                 case Anchor.Center:
-                    x = root.Center.X - (width / 2); y = root.Center.Y - (height / 2);
+                    x = root.Center.X - (width / 2f); y = root.Center.Y - (height / 2f);
                     break;
                 case Anchor.Left:
                     x = root.Left;
@@ -149,10 +152,10 @@ namespace StellarLiberation.Game.Core.UserInterface
                     y = root.Bottom - height;
                     break;
                 case Anchor.CenterH:
-                    y = root.Center.Y - (height / 2);
+                    y = root.Center.Y - (height / 2f);
                     break;
                 case Anchor.CenterV:
-                    x = root.Center.X - (width / 2);
+                    x = root.Center.X - (width / 2f);
                     break;
             }
         }
@@ -167,7 +170,7 @@ namespace StellarLiberation.Game.Core.UserInterface
                 if (spaceLeft < HSpace && spaceRight < HSpace)
                 {
                     x += (float)HSpace;
-                    width -= (float)HSpace * 2;
+                    width -= (float)HSpace * 2f;
                 }
                 else
                 {
@@ -184,7 +187,7 @@ namespace StellarLiberation.Game.Core.UserInterface
                 if (spaceTop < VSpace && spaceBottom < VSpace)
                 {
                     y += (float)VSpace;
-                    height -= (float)VSpace * 2;
+                    height -= (float)VSpace * 2f;
                 }
                 else
                 {
@@ -197,7 +200,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public bool Contains(Vector2 position) => mCanvas.Contains(position);
 
-        public Vector2 Offset => new Vector2(mCanvas.Width, mCanvas.Height) / 2;
+        public Vector2 Offset => new Vector2(mCanvas.Width, mCanvas.Height) / 2f;
 
         public Vector2 Center => mCanvas.Center;
 
