@@ -11,26 +11,30 @@ using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.Visuals.Rendering
 {
+    /// <summary>
+    /// A generic class managing a list of 2D game objects and providing rendering functionality.
+    /// </summary>
     public class RenderPipeline<T> where T : GameObject2D
     {
-        private readonly ViewFrustumFilter mViewFrustumFilter;
-        private readonly SpatialHashing<T> mSpatialHashing;
+        /// <summary>
+        /// List of 2D game objects managed by the render pipeline.
+        /// </summary>
         private List<T> mObjects = new();
 
-        public RenderPipeline(ViewFrustumFilter viewFrustumFilter, SpatialHashing<T> spatialHashing)
+        /// <summary>
+        /// Filters 2D game objects based on a specified view frustum using spatial hashing.
+        /// </summary>
+        public void FilterObjs(RectangleF viewFrustum, SpatialHashing<T> spatialHashing)
         {
-            mViewFrustumFilter = viewFrustumFilter;
-            mSpatialHashing = spatialHashing;
-        }
-
-        public void Update()
-        {
-            var space = mViewFrustumFilter.WorldFrustum.ToRectangle();
+            var space = viewFrustum.ToRectangle();
             var edgeDistance = Vector2.Distance(space.Center.ToVector2(), space.Location.ToVector2());
-            mObjects = mSpatialHashing.GetObjectsInRadius<T>(space.Center.ToVector2(), (int)edgeDistance);
+            mObjects = spatialHashing.GetObjectsInRadius<T>(space.Center.ToVector2(), (int)edgeDistance);
         }
 
-        public void Render(Scene scene)
+        /// <summary>
+        /// Renders the filtered 2D game objects in a given scene.
+        /// </summary>
+        public void RenderFiltredObjs(Scene scene)
         {
             foreach (var obj in mObjects) obj.Draw(scene);
         }

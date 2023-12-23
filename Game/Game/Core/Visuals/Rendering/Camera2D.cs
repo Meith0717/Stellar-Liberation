@@ -13,6 +13,7 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
     /// <summary>
     /// Represents a camera used for viewing and manipulating the game world.
     /// </summary>
+    [Obsolete]
     public class Camera2D
     {
         private const int CameraGlide = 100;

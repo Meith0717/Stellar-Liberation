@@ -54,15 +54,5 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
                 if (obj.Dispose) mRemovedObjects.Add(obj);
             }
         }
-
-        public void Draw(Scene scene)
-        {
-            foreach (var obj in Objects)
-            {
-                if (!scene.ViewFrustumFilter.CircleOnWorldView(obj.BoundedBox)) continue;
-                obj.Draw(scene);
-            }
-        }
-
     }
 }

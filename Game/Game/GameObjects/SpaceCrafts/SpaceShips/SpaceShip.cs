@@ -113,7 +113,6 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 
             var shakeamount = (500000 - Vector2.Distance(scene.Camera2D.Position, Position)) / 500000;
             if (shakeamount < 0) shakeamount = 0;
-            scene.Camera2D.Shake((int)(shakeamount * 100));
             ExplosionEffect.ShipDestroyed(Position, scene.ParticleManager);
 
             scene.GameLayer.CurrentSystem.GameObjects.AddObj(ItemFactory.Get(ItemID.Iron, MovingDirection, Position));

@@ -12,7 +12,7 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
         public static void Track(Player player, Scene scene)
         {
             var camera = scene.Camera2D;
-            camera.SetPosition(player.Position);
+            camera.Position = player.Position;
             return;
         }
     }

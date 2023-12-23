@@ -36,7 +36,7 @@ namespace StellarLiberation.Game.Layers.Scenes
         {
             inputState.DoAction(ActionType.ToggleHyperMap, () => GameLayer.LoadMap());
 
-            mParlaxManager.Update(Camera2D.Movement, Camera2D.Zoom);
+            mParlaxManager.Update(Vector2.Zero, Camera2D.Zoom);
             GameLayer.Player.Update(gameTime, inputState, this);
             mPlanetSystem.UpdateObjects(gameTime, inputState, this);
             GameLayer.DebugSystem.CheckForSpawn(GameLayer.CurrentSystem, this);

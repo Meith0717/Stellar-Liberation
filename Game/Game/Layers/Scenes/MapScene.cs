@@ -20,7 +20,7 @@ namespace StellarLiberation.Game.Layers.Scenes
         {
             gameLayer.HudLayer.Hide = true;
             mCurrentSystem = currentSystem;
-            Camera2D.SetPosition(mCurrentSystem.MapObj.Position);
+            Camera2D.Position = mCurrentSystem.MapObj.Position;
             mPlanetSystems = planetSystems;
             foreach (var system in mPlanetSystems)
             {
