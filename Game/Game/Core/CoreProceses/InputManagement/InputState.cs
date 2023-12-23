@@ -36,6 +36,11 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement
         Inventar,
         IncreaseScaling,
         DecreaseScaling,
+        MoveCameraLeft,
+        MoveCameraRight,
+        MoveCameraUp,
+        MoveCameraDown,
+        ToggleCameraMode,
 
         // Mouse
         LeftClick,

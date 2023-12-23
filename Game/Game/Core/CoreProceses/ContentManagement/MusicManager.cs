@@ -30,9 +30,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
                 var soundEffect = content.Load<SoundEffect>(reg.FilePath);
                 mMusics.Add(soundEffect);
             };
-            mMusicInstance = ExtendetRandom.GetRandomElement(mMusics).CreateInstance();
-            mMusicInstance.Volume = OverallVolume;
-            mMusicInstance.Play();
+
         }
 
         public void Pause() => mMusicInstance.Pause();
@@ -40,14 +38,18 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 
         public void Update()
         {
-            if (mMusicInstance is null) return;
+            if (mMusics.Count == 0) return;
+            if (mMusicInstance is null)
+            {
+                mMusicInstance = ExtendetRandom.GetRandomElement(mMusics).CreateInstance();
+                mMusicInstance.Volume = OverallVolume;
+                mMusicInstance.Play();
+                return;
+            }
+
             if (mMusicInstance.State == SoundState.Playing) return;
             if (mMusicInstance.State == SoundState.Paused) return;
-            mMusicIndex = (mMusicIndex + 1) % mMusics.Count;
-            var music = mMusics[mMusicIndex];
-            mMusicInstance = music.CreateInstance();
-            mMusicInstance.Volume = OverallVolume;
-            mMusicInstance.Play();
+            mMusicInstance = null;
         }
 
         public void ChangeOverallVolume(float sliderValue)

@@ -41,6 +41,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement.Peripheral
                 { Keys.F10, ActionType.F10 },
                 { Keys.O, ActionType.DecreaseScaling },
                 { Keys.P, ActionType.IncreaseScaling },
+                { Keys.C, ActionType.ToggleCameraMode },
             };
 
             mActionOnHold = new()
@@ -50,7 +51,11 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement.Peripheral
                 { Keys.W, ActionType.Accelerate },
                 { Keys.S, ActionType.Break },
                 { Keys.Q, ActionType.CameraZoomIn },
-                { Keys.E, ActionType.CameraZoomOut }
+                { Keys.E, ActionType.CameraZoomOut },
+                { Keys.Left, ActionType.MoveCameraLeft },
+                { Keys.Right, ActionType.MoveCameraRight },
+                { Keys.Up, ActionType.MoveCameraUp },
+                { Keys.Down, ActionType.MoveCameraDown },
             };
             mKeysKeyEventTypes = new();
         }

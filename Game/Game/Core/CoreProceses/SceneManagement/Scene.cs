@@ -16,12 +16,12 @@ namespace StellarLiberation.Game.Core.CoreProceses.SceneManagement
 {
     public abstract class Scene
     {
-        private GraphicsDevice mGraphicsDevice;
+        protected GraphicsDevice mGraphicsDevice;
 
         public Vector2 WorldMousePosition { get; private set; }
         public readonly SpatialHashing<GameObject2D> SpatialHashing;
         public readonly ParticleManager ParticleManager;
-        public readonly NewCamera2D Camera2D;
+        public readonly Camera2D Camera2D;
         public readonly GameLayer GameLayer;
         private Matrix mViewTransformationMatrix;
 

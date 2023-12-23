@@ -69,7 +69,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.W
             StopFire();
             AimPosition(null);
             inputState.DoAction(ActionType.RightClickHold, () => AimPosition(worldMousePosition));
-            inputState.DoAction(ActionType.LeftClickHold, () => Fire());
+            inputState.DoAction(ActionType.FireInitialWeapon, () => Fire());
         }
 
         public void Upgrade(float hullDamagePercentage = 0, float shieldDamagePercentage = 0, float fireCoolDownPercentage = 0)
