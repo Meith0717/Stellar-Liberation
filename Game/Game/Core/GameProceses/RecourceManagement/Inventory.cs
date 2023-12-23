@@ -8,63 +8,88 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.GameObjects.Recources.Items;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
 {
-
-    public class ItemStack
-    {
-        public int Amount;
-        public readonly string ItemName;
-        public readonly string Texture;
-        public ItemStack(int amount, string itemName, string texture)
-        {
-            Amount = amount; ItemName = itemName; Texture = texture;
-        }
-    }
-
     [Serializable]
     public class Inventory
     {
-        [JsonProperty] public int Count { get; private set; }
+        [JsonProperty] public int StackCapacity { get; private set; }
         [JsonProperty] public int Capacity { get; private set; }
 
-        [JsonProperty] public readonly Dictionary<ItemID, ItemStack> Items = new();
+        [JsonProperty] private readonly List<InventoryItem> mItems = new();
 
-        public Inventory(int capacity) => Capacity = capacity;
-
-        public void Collect(Item item)
+        public Inventory()
         {
-            SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.collect);
-
-            // Add Item in Inventory
-            if (!Items.TryGetValue(item.ItemID, out var stack))
-            {
-                Items[item.ItemID] = new(1, item.ItemID.ToString(), item.TextureId);
-            }
-            else
-            {
-                stack.Amount++;
-            }
-
-            // Some Other stuff
-            item.Dispose = true; ;
-            Count++;
+            StackCapacity = 5;
+            Capacity = 25;
         }
 
-        public bool RemoveItemAmount(ItemID itemID, int amount)
+        [JsonIgnore] public int Count => mItems.Count;
+
+        public bool Add(Item item)
         {
-            if (!Items.TryGetValue(itemID, out var stack)) return false;
-            if (stack.Amount < amount) return false;
-            stack.Amount -= amount;
-            if (stack.Amount == 0) Items.Remove(itemID);
+            if (Count >= Capacity) return false;
+
+            // Add Item to existing Stack
+            var itemID = item.ItemID;
+            foreach (var inventoryItem in mItems.Where((item) => item.ItemId == itemID))
+            {
+                if (inventoryItem.Count >= StackCapacity) continue;
+                inventoryItem.Add();
+                item.Dispose = true;
+                return true;
+            }
+            
+            // Add new Stack
+            mItems.Add(new(itemID, item.TextureId));
             return true;
         }
 
-        public int GetIDAmount(ItemID itemID)
+        public bool Remove(ItemID itemID, int amount)
         {
-            if (!Items.TryGetValue(itemID, out var stack)) return 0;
-            return stack.Amount;
+            if (GetIemCount(itemID) < amount) return false;
+
+            while (amount > 0)
+            {
+                var rmv = new List<InventoryItem>();
+                foreach (var inventoryItem in mItems.Where((item) => item.ItemId == itemID))
+                {
+                    var inventoryItemCount = inventoryItem.Count;
+                    inventoryItem.Remove(inventoryItemCount);
+                    amount -= inventoryItemCount;
+                    if (inventoryItem.Count <= 0) rmv.Add(inventoryItem);
+                }
+
+                foreach (var item in rmv) mItems.Remove(item);
+            }
+            return true;
+        }
+
+        private int GetIemCount(ItemID itemID)
+        {
+            var tmp = 0;
+            foreach (var inventoryItem in mItems.Where((item) => item.ItemId == itemID)) tmp += inventoryItem.Count;
+            return tmp;
+        }
+
+        public bool HasSpace(ItemID itemID)
+        {
+            if (Count < Capacity) return true;
+            foreach (var inventoryItem in mItems.Where((item) => item.ItemId != itemID))
+            {
+                if (inventoryItem.Count >= StackCapacity) continue;
+                return true;
+            }
+            return false;
+        }
+
+        public override string ToString()
+        {
+            var tmp = "";
+            foreach (var item in mItems) { tmp += $"[{item.ToString()}]"; }
+            return tmp;
         }
     }
 }

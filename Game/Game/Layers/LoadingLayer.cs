@@ -24,7 +24,7 @@ namespace StellarLiberation.Game.Layers
         {
             mFrame = new() { FillScale = FillScale.Both, Alpha = 0 };
             mFrames = new() { $"{message} .  ", $"{message} .. ", $"{message} ..." };
-            if (hasBackground) mFrame.AddChild(new UiSprite(MenueSpriteRegistries.menueBackground) { FillScale = FillScale.FillIn });
+            if (hasBackground) mFrame.AddChild(new UiSprite(MenueSpriteRegistries.menueBackground) { FillScale = FillScale.FillIn, Anchor = Anchor.Center });
             mText = new(FontRegistries.subTitleFont, message) { Anchor = Anchor.CenterV, RelY = .9f };
             mFrame.AddChild(mText);
         }

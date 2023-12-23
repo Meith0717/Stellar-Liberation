@@ -20,27 +20,18 @@ namespace StellarLiberation.Game.Layers
 
         private class StackLine : UiFrame
         {
-            public StackLine(ItemStack itemStack) : base(0)
+            public StackLine() : base(0)
             {
                 Anchor = Anchor.CenterV;
                 Height = 70;
                 Width = 70;
                 Color = Color.DarkGray;
-                AddChild(new UiSprite(itemStack.Texture) { RelX = .1f, FillScale = FillScale.FillIn });
-                AddChild(new UiText(FontRegistries.textFont, itemStack.Amount.ToString()) { Anchor = Anchor.SE});
             }
         }
 
         public InventoryLayer(Inventory inventory) : base(false)
         {
-            mFrame = new(50) { RelHeight = .8f, RelWidth = .6f, Anchor = Anchor.Center, Color = new(17, 17, 17) };
-
-            var i = 0;
-            foreach (var itemStack in inventory.Items.Values)
-            {
-                mFrame.AddChild(new StackLine(itemStack) { RelY = .1f * i });
-                i++;
-            }
+            mFrame = new(50) { Height = 500, Width = 800, Anchor = Anchor.Center, Color = new(17, 17, 17) };
         }
 
         public override void Destroy() { }

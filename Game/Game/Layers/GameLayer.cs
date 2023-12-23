@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.Layers
         [JsonProperty]
         public readonly Player Player = new();
         [JsonProperty]
-        public readonly Inventory Inventory = new(500);
+        public readonly Inventory Inventory = new();
         [JsonProperty]
         public readonly Wallet Wallet = new();
         [JsonProperty]

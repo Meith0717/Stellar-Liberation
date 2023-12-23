@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.UserInterface;
@@ -26,7 +25,6 @@ namespace StellarLiberation.Game.Layers
         private UiHBar mHullBar;
         private UiVBar mPropulsiondBar;
 
-        private UiText mCargoHold;
         private Compass mCompass = new();
 
         public HudLayer(Scene scene) : base(true)
@@ -35,14 +33,11 @@ namespace StellarLiberation.Game.Layers
             mShieldBar = new(new Color(135, 206, 235), MenueSpriteRegistries.shield) { RelHeight = .025f, RelWidth = .15f, RelX = .01f, RelY = .02f };
             mHullBar = new(new Color(210, 105, 30), MenueSpriteRegistries.ship) { RelHeight = .025f, RelWidth = .15f, RelX = .01f, RelY = .05f };
             mPropulsiondBar = new(new Color(241, 196, 15), MenueSpriteRegistries.propulsion) { RelHeight = .25f, RelWidth = .02f, Anchor = Anchor.SW, HSpace = 20, VSpace = 20 };
-            mCargoHold = new(FontRegistries.buttonFont, "test") { Anchor = Anchor.N, VSpace = 20 };
 
             mUiLayer.AddChild(new UiButton(MenueSpriteRegistries.pause, "") { Anchor = Anchor.NE, HSpace = 20, VSpace = 20, OnClickAction = () => mLayerManager.AddLayer(new PauseLayer(scene.GameLayer)) });
             mUiLayer.AddChild(mShieldBar);
             mUiLayer.AddChild(mHullBar);
             mUiLayer.AddChild(mPropulsiondBar);
-            mUiLayer.AddChild(mCargoHold);
-            mUiLayer.AddChild(mCargoHold);
 
             mScene = scene;
         }
@@ -66,7 +61,6 @@ namespace StellarLiberation.Game.Layers
             mShieldBar.Percentage = mScene.GameLayer.Player.DefenseSystem.ShieldPercentage;
             mHullBar.Percentage = mScene.GameLayer.Player.DefenseSystem.HullPercentage;
             mPropulsiondBar.Percentage = (double)(mScene.GameLayer.Player.Velocity / mScene.GameLayer.Player.SublightEngine.MaxVelocity);
-            mCargoHold.Text = $"{mScene.GameLayer.Inventory.Count}/{mScene.GameLayer.Inventory.Capacity}";
             mCompass.Update(mScene.GameLayer.Player.Position, mScene.ViewFrustumFilter, mScene.GameLayer.Player.SensorArray.LongRangeScan);
         }
     }

@@ -11,6 +11,7 @@ using StellarLiberation.Game.GameObjects.Recources.Items;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems
 {
@@ -27,13 +28,14 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems
             var inventory = scene.GameLayer.Inventory;
 
             mItemsInRange.Clear();
-            if (inventory.Count == inventory.Capacity) return;
             var position = spaceShip.Position;
             mItemsInRange = scene.SpatialHashing.GetObjectsInRadius<Item>(position, (int)mPullRadius);
-            foreach (var item in mItemsInRange)
+            foreach (var item in mItemsInRange.Where((i) => inventory.HasSpace(i.ItemID)))
             {
                 item.Pull(position);
-                if (ContinuousCollisionDetection.HasCollide(gameTime, item, spaceShip, out _)) inventory.Collect(item);
+                if (!ContinuousCollisionDetection.HasCollide(gameTime, item, spaceShip, out _)) return;
+                inventory.Add(item);
+                System.Diagnostics.Debug.WriteLine(inventory.ToString());
             }
         }
 

@@ -8,7 +8,6 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.UserInterface;
 
 namespace StellarLiberation.Game.Layers
@@ -20,7 +19,7 @@ namespace StellarLiberation.Game.Layers
         public MainMenueLayer() : base(false)
         {
             mFrame = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
-            mFrame.AddChild(new UiSprite(MenueSpriteRegistries.menueBackground) { FillScale = FillScale.Fit, Anchor = Anchor.Center });
+            mFrame.AddChild(new UiSprite(MenueSpriteRegistries.menueBackground) { FillScale = FillScale.FillIn, Anchor = Anchor.Center });
 
             mFrame.AddChild(new UiText(FontRegistries.titleFont, "Stellar\nLiberation") { Anchor = Anchor.NW, HSpace = 50, VSpace = 50 });
 
@@ -29,7 +28,7 @@ namespace StellarLiberation.Game.Layers
             mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Continue") { VSpace = 20, HSpace = 20, RelY = .6f, OnClickAction = () => 
             {
                 mLayerManager.AddLayer(new LoadingLayer("Loading"));
-                mPersistanceManager.LoadGameLayerAsync((gL) => { mLayerManager.AddLayerFromThread(gL); mLayerManager.PopLayer(); }, (ex) => throw ex);
+                mPersistanceManager.LoadGameLayerAsync((gL) => { mLayerManager.AddLayerFromThread(gL); mLayerManager.PopLayer(); }, (ex) => mLayerManager.PopLayer());
             }
             });
 
