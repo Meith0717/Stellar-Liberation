@@ -21,5 +21,10 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             Canvas.Y = inputState.mMousePosition.Y;
             base.Update(inputState, root, uiScaling);
         }
+
+        public override void Draw()
+        {
+            base.Draw();
+        }
     }
 }
