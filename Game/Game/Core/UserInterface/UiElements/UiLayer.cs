@@ -28,7 +28,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             Canvas.Draw();
         }
 
-        public override void Update(InputState inputState, RectangleF root, float uiScaling)
+        public override void Update(InputState inputState, Rectangle root, float uiScaling)
         {
             Canvas.UpdateFrame(root, uiScaling);
             foreach (var child in mChildren) child.Update(inputState, Canvas.Bounds, uiScaling);

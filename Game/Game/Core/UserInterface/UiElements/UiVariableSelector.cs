@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.Core.UserInterface
         private void DecrementIndex() => mIndex -= (mIndex > 0) ? 1 : 0;
         public T Value => mVariables[mIndex];
 
-        public override void Update(InputState inputState, RectangleF root, float uiScaling)
+        public override void Update(InputState inputState, Rectangle root, float uiScaling)
         {
             Canvas.UpdateFrame(root, uiScaling);
             mVariable.Text = mVariables[mIndex].ToString();

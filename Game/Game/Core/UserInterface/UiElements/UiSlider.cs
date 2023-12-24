@@ -27,7 +27,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             mSliderValue = val;
         }
 
-        public override void Update(InputState inputState, RectangleF root, float uiScaling)
+        public override void Update(InputState inputState, Rectangle root, float uiScaling)
         {
             Height = 25;
             Canvas.UpdateFrame(root, uiScaling);

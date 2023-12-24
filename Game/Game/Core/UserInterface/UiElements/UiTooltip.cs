@@ -13,8 +13,8 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
     {
         public UiTooltip(string text, Vector2 position) : base(FontRegistries.textFont, text)
         {
-            Canvas.X = position.X + 10;
-            Canvas.Y = position.Y + 10;
+            Canvas.X = (int)position.X + 10;
+            Canvas.Y = (int)position.Y + 10;
         }
     }
 }

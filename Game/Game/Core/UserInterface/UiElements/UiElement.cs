@@ -5,7 +5,6 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
-using System;
 
 namespace StellarLiberation.Game.Core.UserInterface
 {
@@ -14,9 +13,9 @@ namespace StellarLiberation.Game.Core.UserInterface
         protected UiCanvas Canvas;
 
         public UiElement() => Canvas = new UiCanvas();
-        public abstract void Update(InputState inputState, RectangleF root, float uiScaling);
+        public abstract void Update(InputState inputState, Rectangle root, float uiScaling);
         public abstract void Draw();
-        public RectangleF Bounds => Canvas.Bounds;
+        public Rectangle Bounds => Canvas.Bounds;
 
         // Position propeties
         public float RelX { set => Canvas.RelativeX = value; }
@@ -25,8 +24,8 @@ namespace StellarLiberation.Game.Core.UserInterface
         // Dimension propeties
         public float RelWidth { set => Canvas.RelWidth = value; }
         public float RelHeight { set => Canvas.RelHeight = value; }
-        public float Height { set => Canvas.Height = value; }
-        public float Width { set => Canvas.Width = value; }
+        public int Height { set => Canvas.Height = value; }
+        public int Width { set => Canvas.Width = value; }
 
         // Optional propeties
         public int HSpace { set => Canvas.HSpace = value; }

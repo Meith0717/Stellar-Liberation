@@ -40,7 +40,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             Canvas.Draw();
         }
 
-        public override void Update(InputState inputState, RectangleF root, float uiScaling)
+        public override void Update(InputState inputState, Rectangle root, float uiScaling)
         {
             var texture = TextureManager.Instance.GetTexture(mSpriteId);
             mTextScale = uiScaling;

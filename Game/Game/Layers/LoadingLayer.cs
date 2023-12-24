@@ -16,6 +16,7 @@ namespace StellarLiberation.Game.Layers
     {
         private readonly UiLayer mFrame;
         private readonly UiText mText;
+        private readonly LoadingCircle mLoadingCircle;
         private readonly List<string> mFrames;
         private int mCounter;
         private int mIndex;
@@ -24,9 +25,11 @@ namespace StellarLiberation.Game.Layers
         {
             mFrame = new() { FillScale = FillScale.Both, Alpha = 0 };
             mFrames = new() { $"{message} .  ", $"{message} .. ", $"{message} ..." };
+            mLoadingCircle = new() { Width = 100, Height = 100, Anchor = Anchor.Center };
             if (hasBackground) mFrame.AddChild(new UiSprite(MenueSpriteRegistries.menueBackground) { FillScale = FillScale.FillIn, Anchor = Anchor.Center });
             mText = new(FontRegistries.subTitleFont, message) { Anchor = Anchor.CenterV, RelY = .9f };
             mFrame.AddChild(mText);
+            mFrame.AddChild(mLoadingCircle);
         }
 
         public override void Destroy()

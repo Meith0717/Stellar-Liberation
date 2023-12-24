@@ -4,17 +4,15 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
-using System;
 
 namespace StellarLiberation.Game.Core.UserInterface
 {
     internal class UiSprite : UiElement
     {
         protected string mSpriteId;
+        public float Rotation;
         public float Scale = 1;
 
         public UiSprite(string SpriteId)
@@ -28,17 +26,17 @@ namespace StellarLiberation.Game.Core.UserInterface
             Canvas.Draw();
         }
 
-        public void Draw(float rotation)
+        public void DrawWithRotation()
         {
-            TextureManager.Instance.Draw(mSpriteId, Canvas.Position, Canvas.Bounds.Width, Canvas.Bounds.Height, Canvas.Offset, rotation);
+            TextureManager.Instance.Draw(mSpriteId, Canvas.Position, Canvas.Bounds.Width, Canvas.Bounds.Height, Canvas.Offset, Rotation);
             Canvas.Draw();
         }
 
-        public override void Update(InputState inputState, RectangleF root, float uiScaling)
+        public override void Update(InputState inputState, Rectangle root, float uiScaling)
         {
             var texture = TextureManager.Instance.GetTexture(mSpriteId);
-            Width = texture.Width * Scale;
-            Height = texture.Height * Scale;
+            Width = (int)(texture.Width * Scale);
+            Height = (int)(texture.Height * Scale);
             Canvas.UpdateFrame(root, uiScaling);
         }
     }

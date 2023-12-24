@@ -35,15 +35,15 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
             bounds.Inflate(-mBorder / 2f, -mBorder / 2f);
 
             var edgePositions = bounds.GetCorners();
-            TextureManager.Instance.Draw(MenueSpriteRegistries.edge0, edgePositions[0] - new Vector2(mBorder, mBorder) / 2f, mBorder, mBorder, innerColor);
-            TextureManager.Instance.Draw(MenueSpriteRegistries.edge1, edgePositions[1] - new Vector2(mBorder, mBorder) / 2f, mBorder, mBorder, innerColor);
-            TextureManager.Instance.Draw(MenueSpriteRegistries.edge2, edgePositions[2] - new Vector2(mBorder, mBorder) / 2f, mBorder, mBorder, innerColor);
-            TextureManager.Instance.Draw(MenueSpriteRegistries.edge3, edgePositions[3] - new Vector2(mBorder, mBorder) / 2f, mBorder, mBorder, innerColor);
+            TextureManager.Instance.Draw(MenueSpriteRegistries.edge0, edgePositions[0].ToVector2() - new Vector2(mBorder, mBorder) / 2f, mBorder, mBorder, innerColor);
+            TextureManager.Instance.Draw(MenueSpriteRegistries.edge1, edgePositions[1].ToVector2() - new Vector2(mBorder, mBorder) / 2f, mBorder, mBorder, innerColor);
+            TextureManager.Instance.Draw(MenueSpriteRegistries.edge2, edgePositions[2].ToVector2() - new Vector2(mBorder, mBorder) / 2f, mBorder, mBorder, innerColor);
+            TextureManager.Instance.Draw(MenueSpriteRegistries.edge3, edgePositions[3].ToVector2() - new Vector2(mBorder, mBorder) / 2f, mBorder, mBorder, innerColor);
 
-            TextureManager.Instance.DrawLine(edgePositions[0] + new Vector2(mBorder / 2f, 0), edgePositions[1] + new Vector2(-mBorder / 2f, 0), innerColor, mBorder, 1);
-            TextureManager.Instance.DrawLine(edgePositions[1] + new Vector2(0, mBorder / 2f), edgePositions[2] + new Vector2(0, -mBorder / 2f), innerColor, mBorder, 1);
-            TextureManager.Instance.DrawLine(edgePositions[2] + new Vector2(-mBorder / 2f, 0), edgePositions[3] + new Vector2(mBorder / 2f, 0), innerColor, mBorder, 1);
-            TextureManager.Instance.DrawLine(edgePositions[3] + new Vector2(0, -mBorder / 2f), edgePositions[0] + new Vector2(0, +mBorder / 2f), innerColor, mBorder, 1);
+            TextureManager.Instance.DrawLine(edgePositions[0].ToVector2() + new Vector2(mBorder / 2f, 0), edgePositions[1].ToVector2() + new Vector2(-mBorder / 2f, 0), innerColor, mBorder, 1);
+            TextureManager.Instance.DrawLine(edgePositions[1].ToVector2() + new Vector2(0, mBorder / 2f), edgePositions[2].ToVector2() + new Vector2(0, -mBorder / 2f), innerColor, mBorder, 1);
+            TextureManager.Instance.DrawLine(edgePositions[2].ToVector2() + new Vector2(-mBorder / 2f, 0), edgePositions[3].ToVector2() + new Vector2(mBorder / 2f, 0), innerColor, mBorder, 1);
+            TextureManager.Instance.DrawLine(edgePositions[3].ToVector2() + new Vector2(0, -mBorder / 2f), edgePositions[0].ToVector2() + new Vector2(0, +mBorder / 2f), innerColor, mBorder, 1);
 
             bounds.Inflate(-mBorder / 2f, -mBorder / 2f);
             TextureManager.Instance.SpriteBatch.FillRectangle(bounds, innerColor, 1);
@@ -52,7 +52,7 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
             Canvas.Draw();
         }
 
-        public override void Update(InputState inputState, RectangleF root, float uiScaling)
+        public override void Update(InputState inputState, Rectangle root, float uiScaling)
         {
             Canvas.UpdateFrame(root, uiScaling);
             foreach (var child in mChildren) child.Update(inputState, Canvas.Bounds, uiScaling);

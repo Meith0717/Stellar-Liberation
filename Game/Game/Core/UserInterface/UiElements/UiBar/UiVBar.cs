@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiBar
             mColor = color;
         }
 
-        public override void Update(InputState inputState, RectangleF root, float uiScaling)
+        public override void Update(InputState inputState, Rectangle root, float uiScaling)
         {
             var ratio = 26 / 6f;
             Canvas.UpdateFrame(root, uiScaling);
