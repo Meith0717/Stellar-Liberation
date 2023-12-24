@@ -10,13 +10,15 @@ using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.UserInterface
 {
-    internal class UiLayer : UiElement
+    public class UiLayer : UiElement
     {
         public Color Color = Color.White;
         public double Alpha = 1;
         private LinkedList<UiElement> mChildren = new LinkedList<UiElement>();
 
         public void AddChild(UiElement child) => mChildren.AddLast(child);
+
+        public void ClearChilds() => mChildren.Clear();
 
         public override void Draw()
         {

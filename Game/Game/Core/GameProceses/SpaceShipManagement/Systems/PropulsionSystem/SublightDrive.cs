@@ -8,6 +8,7 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.Utilitys;
+using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System;
 
@@ -22,6 +23,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
         private readonly float Maneuverability;
 
         private Vector2? mDirection;
+        private Vector2? mVectorTarget;
         private SpaceShip mShipTarget;
 
         public SublightDrive(float maxVelocity, float maneuverability)
@@ -32,19 +34,22 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
 
         public void Update(GameTime gameTime, SpaceShip spaceShip)
         {
-            var position = CollisionPredictor.PredictPosition(gameTime, spaceShip.Position, spaceShip.SublightEngine.MaxVelocity, mShipTarget);
+            var position = mVectorTarget ?? CollisionPredictor.PredictPosition(gameTime, spaceShip.Position, spaceShip.SublightEngine.MaxVelocity, mShipTarget);
 
             mDirection ??= (position is null) ? null : Vector2.Normalize((Vector2)position - spaceShip.Position);
 
             UpdateRotation(spaceShip);
             UpdateVelocity(spaceShip);
+
+            if (mVectorTarget is null) return;
+            if (Vector2.Distance((Vector2)mVectorTarget, spaceShip.Position) < 1000) Standstill();
         }
 
         public void UpdateVelocity(SpaceShip spaceShip)
         {
             if (!IsMoving)
             {
-                spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, mVelocity / 100f);
+                spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, MaxVelocity / 100f);
                 return;
             }
 
@@ -61,7 +66,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
                 >= 0.7f => mVelocity * relRotation,
                 float.NaN => 0
             };
-            spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, targetVelocity, mVelocity / 100f);
+            spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, targetVelocity, MaxVelocity / 100f);
         }
 
         private void UpdateRotation(SpaceShip spaceShip)
@@ -76,12 +81,22 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
         {
             mShipTarget = null;
             mDirection = direction;
+            mVectorTarget = null;
+            IsMoving = true;
+        }
+
+        public void MoveToTarget(Vector2 target)
+        {
+            mShipTarget = null;
+            mVectorTarget = target;
+            mDirection = null;
             IsMoving = true;
         }
 
         public void FollowSpaceShip(SpaceShip spaceShip)
         {
             mDirection = null;
+            mVectorTarget = null;
             mShipTarget = spaceShip;
             IsMoving = true;
         }
@@ -89,16 +104,20 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
         public void Standstill()
         {
             mShipTarget = null;
+            mVectorTarget = null;
             mDirection = null;
             IsMoving = false;
         }
 
         public void ControlByInput(SpaceShip spaceShip, InputState inputState, Vector2 worldMousePosition)
         {
-            inputState.DoAction(ActionType.Accelerate, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, MaxVelocity, MaxVelocity / 100f));
-            inputState.DoAction(ActionType.Break, () => spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, MaxVelocity / 100f));
-            if (inputState.Actions.Contains(ActionType.RightClickHold)) return;
-            MoveInDirection(Vector2.Normalize(worldMousePosition - spaceShip.Position));
+            inputState.DoAction(ActionType.Accelerate, () => mVelocity = MathHelper.Clamp(mVelocity + .1f, 0, MaxVelocity));
+            inputState.DoAction(ActionType.Break, () => mVelocity = MathHelper.Clamp(mVelocity - .1f, 0, MaxVelocity));
+            if (Camera2DController.Track)
+            {
+                MoveInDirection(Vector2.Normalize(worldMousePosition - spaceShip.Position));
+                return;
+            } 
         }
 
         public void Draw(DebugSystem debugSystem, SpaceShip spaceShip, Scene scene) => debugSystem.DrawMovingDir(mDirection, spaceShip, scene);

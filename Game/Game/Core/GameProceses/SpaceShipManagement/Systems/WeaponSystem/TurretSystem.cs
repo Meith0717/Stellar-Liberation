@@ -68,7 +68,6 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.W
         {
             StopFire();
             AimPosition(null);
-            inputState.DoAction(ActionType.RightClickHold, () => AimPosition(worldMousePosition));
             inputState.DoAction(ActionType.FireInitialWeapon, () => Fire());
         }
 

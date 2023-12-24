@@ -12,6 +12,7 @@ using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.MapSystem;
 using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
+using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Allies;
@@ -61,6 +62,7 @@ namespace StellarLiberation.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+
             // Check if mouse clicks outside window
             if (!mGraphicsDevice.Viewport.Bounds.Contains(inputState.mMousePosition) && (inputState.HasAction(ActionType.LeftClick) || inputState.HasAction(ActionType.RightClick))) mLayerManager.AddLayer(new PauseLayer(this));
 

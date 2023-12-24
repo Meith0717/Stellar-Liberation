@@ -17,8 +17,10 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             if (!isHover) return;
 
             hoverAction?.Invoke();
-            if (inputState.HasAction(ActionType.LeftClick)) LeftPressAction?.Invoke();
-            if (inputState.HasAction(ActionType.RightClick)) LeftPressAction?.Invoke();
+            if (inputState.HasAction(ActionType.LeftClick)) 
+                LeftPressAction?.Invoke();
+            if (inputState.HasAction(ActionType.RightClick)) 
+                RightPressAction?.Invoke();
         }
     }
 }

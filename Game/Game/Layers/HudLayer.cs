@@ -55,7 +55,7 @@ namespace StellarLiberation.Game.Layers
             mUiLayer.Draw();
             foreach (var uiElement in mPopups)
                 uiElement.Draw();
-            mCompass.Draw();
+            // mCompass.Draw();
             spriteBatch.End();
         }
 

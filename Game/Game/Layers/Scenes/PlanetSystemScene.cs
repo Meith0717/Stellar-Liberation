@@ -7,9 +7,8 @@ using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
+using StellarLiberation.Game.Core.GameProceses.GridSystem;
 using StellarLiberation.Game.Core.UserInterface;
-using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.Core.Visuals.ParallaxSystem;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 
@@ -17,22 +16,24 @@ namespace StellarLiberation.Game.Layers.Scenes
 {
     internal class PlanetSystemScene : Scene
     {
+        private readonly UiLayer mBackgroundLayer;
 
-        private readonly ParallaxController mParlaxManager;
         private readonly PlanetSystem mPlanetSystem;
-        private readonly UiSprite mBackground;
+        private readonly Grid mGrid;
 
-        public PlanetSystemScene(GameLayer gameLayer, PlanetSystem currentPlanetSystem, float camZoom) : base(gameLayer, 50000, 0.001f, 1, false)
+        public PlanetSystemScene(GameLayer gameLayer, PlanetSystem currentPlanetSystem, float camZoom) : base(gameLayer, 50000)
         {
+            mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn };
+            mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
+            
             Camera2D.Zoom = camZoom;
             mPlanetSystem = currentPlanetSystem;
-            mParlaxManager = new();
-            mBackground = new(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn };
+            mGrid = new(10000);
         }
 
         public override void UpdateObj(GameTime gameTime, InputState inputState)
         {
-            mBackground.Update(inputState, mGraphicsDevice.Viewport.Bounds, 1);
+            mBackgroundLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, 1);
             inputState.DoAction(ActionType.ToggleHyperMap, () => GameLayer.LoadMap());
 
             GameLayer.Player.Update(gameTime, inputState, this);
@@ -41,13 +42,18 @@ namespace StellarLiberation.Game.Layers.Scenes
 
             Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, 0.001f, 1);
             Camera2DController.Manage(GameLayer.Player, inputState, Camera2D);
-            mParlaxManager.Update(Vector2.Zero, Camera2D.Zoom);
         }
 
         public override void DrawOnScreenView(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch)
         {
             base.DrawOnScreenView(sceneManagerLayer, spriteBatch);
-            mBackground.Draw();
+            mBackgroundLayer.Draw();
+        }
+
+        public override void DrawOnWorldView(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch)
+        {
+            base.DrawOnWorldView(sceneManagerLayer, spriteBatch);
+            mGrid.Draw(this);
         }
 
         public override void OnResolutionChanged() { base.OnResolutionChanged(); }
