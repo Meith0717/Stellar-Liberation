@@ -49,11 +49,6 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             mShadowRotation = Geometry.AngleBetweenVectors(Position, OrbitCenter) + MathF.PI;
             Rotation -= 0.0001f;
             AddToSpatialHashing(scene);
-            GameObject2DInteractionManager.Manage(inputState, this, scene, 
-                null, 
-                () => { scene.PopupLayer.ClearChilds(); scene.PopupLayer.AddChild(new UiTooltip(TextureId, scene.WorldMousePosition)); }, 
-                null
-                );
         }
 
         public override void Draw(Scene scene)

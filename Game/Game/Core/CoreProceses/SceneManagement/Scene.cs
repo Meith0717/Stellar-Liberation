@@ -49,7 +49,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.SceneManagement
             mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera2D.Position, Camera2D.Zoom, 0, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
             WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, inputState.mMousePosition);
             PopupLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, 1f / Camera2D.Zoom);
-            if (inputState.Actions.Contains(ActionType.LeftClick)) PopupLayer.ClearChilds();
         }
 
         public abstract void UpdateObj(GameTime gameTime, InputState inputState);

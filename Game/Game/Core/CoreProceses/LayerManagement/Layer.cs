@@ -15,8 +15,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 public abstract class Layer
 {
     [JsonIgnore] public readonly bool UpdateBelow ;
+    [JsonIgnore] public LayerManager LayerManager { get; private set; } 
     [JsonIgnore] protected Game1 mGame1;
-    [JsonIgnore] protected LayerManager mLayerManager;
     [JsonIgnore] protected GraphicsDevice mGraphicsDevice;
     [JsonIgnore] protected PersistanceManager mPersistanceManager;
 
@@ -25,7 +25,7 @@ public abstract class Layer
     public virtual void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager)
     {
         mGame1 = game1;
-        mLayerManager = layerManager;
+        LayerManager = layerManager;
         mGraphicsDevice = graphicsDevice;
         mPersistanceManager = persistanceManager;
     }

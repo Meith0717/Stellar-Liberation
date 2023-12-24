@@ -107,17 +107,15 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
             mVectorTarget = null;
             mDirection = null;
             IsMoving = false;
+            SetVelocity(0);
         }
 
         public void ControlByInput(SpaceShip spaceShip, InputState inputState, Vector2 worldMousePosition)
         {
             inputState.DoAction(ActionType.Accelerate, () => mVelocity = MathHelper.Clamp(mVelocity + .1f, 0, MaxVelocity));
             inputState.DoAction(ActionType.Break, () => mVelocity = MathHelper.Clamp(mVelocity - .1f, 0, MaxVelocity));
-            if (Camera2DController.Track)
-            {
-                MoveInDirection(Vector2.Normalize(worldMousePosition - spaceShip.Position));
-                return;
-            } 
+
+            MoveInDirection(Vector2.Normalize(worldMousePosition - spaceShip.Position));
         }
 
         public void Draw(DebugSystem debugSystem, SpaceShip spaceShip, Scene scene) => debugSystem.DrawMovingDir(mDirection, spaceShip, scene);

@@ -32,7 +32,7 @@ namespace StellarLiberation.Game.Layers
             var settingsFrame = new UiFrame(50) { RelHeight = .8f, RelWidth = .5f, Anchor = Anchor.Center, Color = new(78, 121, 136)};
             mMainFrame.AddChild(settingsFrame);
 
-            settingsFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => mLayerManager.PopLayer() });
+            settingsFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => LayerManager.PopLayer() });
 
             // Sound Settings
             settingsFrame.AddChild(new UiText(FontRegistries.subTitleFont, "Audio") { HSpace = 20, RelY = .05f });
@@ -43,14 +43,14 @@ namespace StellarLiberation.Game.Layers
 
             // Graphics Settings
             settingsFrame.AddChild(new UiText(FontRegistries.subTitleFont, "Video ") { HSpace = 20, RelY = .30f });
-            mResolutionSelector = new UiVariableSelector<string>(new()) { OnClickAction = () => mLayerManager.ResolutionManager.Apply(mResolutionSelector.Value) }; 
+            mResolutionSelector = new UiVariableSelector<string>(new()) { OnClickAction = () => LayerManager.ResolutionManager.Apply(mResolutionSelector.Value) }; 
             settingsFrame.AddChild(new UiDescriber("Resolution", mResolutionSelector) { Height = 50, RelWidth = 1, HSpace = 40, RelY = .37f });
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager)
         {
             base.Initialize(game1, layerManager, graphicsDevice, persistanceManager);
-            mResolutionSelector.AddRange(mLayerManager.ResolutionManager.Resolutions);
+            mResolutionSelector.AddRange(LayerManager.ResolutionManager.Resolutions);
         }
 
         public override void Destroy() { }
@@ -66,8 +66,8 @@ namespace StellarLiberation.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            inputState.DoAction(ActionType.ESC, () => mLayerManager.PopLayer());
-            mMainFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.ResolutionManager.UiScaling);
+            inputState.DoAction(ActionType.ESC, () => LayerManager.PopLayer());
+            mMainFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
             MusicManager.Instance.ChangeOverallVolume(mMusicSlider.Value);
             SoundEffectManager.Instance.ChangeOverallVolume(mSfxSlider.Value);
         }

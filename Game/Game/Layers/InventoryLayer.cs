@@ -38,7 +38,7 @@ namespace StellarLiberation.Game.Layers
             }
         }
 
-        public InventoryLayer(Inventory inventory) : base(false)
+        public InventoryLayer(Inventory inventory) : base(true)
         {
             mFrame = new(50) { Height = 500, Width = 500, Anchor = Anchor.Center, Color = new(17, 17, 17) };
             var itemLayer = new UiLayer() { Height = 440, Width = 440, Anchor = Anchor.Center, Alpha = 0};
@@ -72,8 +72,8 @@ namespace StellarLiberation.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            inputState.DoAction(ActionType.Inventar, mLayerManager.PopLayer);
-            mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.ResolutionManager.UiScaling);
+            inputState.DoAction(ActionType.Inventar, LayerManager.PopLayer);
+            mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
         }
     }
 }

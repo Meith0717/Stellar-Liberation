@@ -25,14 +25,14 @@ namespace StellarLiberation.Game.Layers
             mBackgroundLayer.AddChild(buttonFrame);
 
             buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Save Game") { Anchor = Anchor.CenterV, RelY = .05f, RelWidth = .8f, OnClickAction = () => {
-                mLayerManager.PopLayer();
-                mLayerManager.AddLayer(new LoadingLayer("Saving", false));
-                mPersistanceManager.SaveGameLayerAsync(gameLayer, () =>  mLayerManager.PopLayer(), (ex) => throw ex);
+                LayerManager.PopLayer();
+                LayerManager.AddLayer(new LoadingLayer("Saving", false));
+                mPersistanceManager.SaveGameLayerAsync(gameLayer, () =>  LayerManager.PopLayer(), (ex) => throw ex);
             }, TextAllign = TextAllign.Center });
-            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Settings") { Anchor = Anchor.CenterV, RelY = .23f, RelWidth = .8f, OnClickAction = () => mLayerManager.AddLayer(new SettingsLayer(false)), TextAllign = TextAllign.Center });
+            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Settings") { Anchor = Anchor.CenterV, RelY = .23f, RelWidth = .8f, OnClickAction = () => LayerManager.AddLayer(new SettingsLayer(false)), TextAllign = TextAllign.Center });
             buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Exit to Menue") { Anchor = Anchor.CenterV, RelY = .41f, RelWidth = .75f, OnClickAction = Menue, TextAllign = TextAllign.Center });
-            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Exit to Desktop") { Anchor = Anchor.CenterV, RelY = .59f, RelWidth = .8f, OnClickAction = () => mLayerManager.Exit(), TextAllign = TextAllign.Center });
-            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Resume") { Anchor = Anchor.CenterV, RelY = .85f, RelWidth = .8f, OnClickAction = () => mLayerManager.PopLayer(), TextAllign = TextAllign.Center });
+            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Exit to Desktop") { Anchor = Anchor.CenterV, RelY = .59f, RelWidth = .8f, OnClickAction = () => LayerManager.Exit(), TextAllign = TextAllign.Center });
+            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Resume") { Anchor = Anchor.CenterV, RelY = .85f, RelWidth = .8f, OnClickAction = () => LayerManager.PopLayer(), TextAllign = TextAllign.Center });
         }
 
         public override void Destroy() { }
@@ -48,15 +48,15 @@ namespace StellarLiberation.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            inputState.DoAction(ActionType.ESC, () => mLayerManager.PopLayer());
-            mBackgroundLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.ResolutionManager.UiScaling);
+            inputState.DoAction(ActionType.ESC, () => LayerManager.PopLayer());
+            mBackgroundLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
         }
 
         private void Menue()
         {
-            mLayerManager.PopLayer(); // Pause Menue
-            mLayerManager.PopLayer(); // Hud
-            mLayerManager.PopLayer(); // Game
+            LayerManager.PopLayer(); // Pause Menue
+            LayerManager.PopLayer(); // Hud
+            LayerManager.PopLayer(); // Game
         }
     }
 }

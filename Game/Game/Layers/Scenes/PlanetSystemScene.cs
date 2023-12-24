@@ -11,6 +11,7 @@ using StellarLiberation.Game.Core.GameProceses.GridSystem;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
+using System.IO.IsolatedStorage;
 
 namespace StellarLiberation.Game.Layers.Scenes
 {
@@ -36,12 +37,12 @@ namespace StellarLiberation.Game.Layers.Scenes
             mBackgroundLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, 1);
             inputState.DoAction(ActionType.ToggleHyperMap, () => GameLayer.LoadMap());
 
-            GameLayer.Player.Update(gameTime, inputState, this);
             mPlanetSystem.UpdateObjects(gameTime, inputState, this);
+            GameLayer.Player.Update(gameTime, inputState, this);
             GameLayer.DebugSystem.CheckForSpawn(GameLayer.CurrentSystem, this);
 
-            Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, 0.001f, 1);
-            Camera2DController.Manage(GameLayer.Player, inputState, Camera2D);
+            Camera2D.Position = GameLayer.Player.Position;
+            Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, .001f, 1);
         }
 
         public override void DrawOnScreenView(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch)

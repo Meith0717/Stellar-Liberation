@@ -56,7 +56,7 @@ namespace StellarLiberation.Game.Layers
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager)
         {
             base.Initialize(game1, layerManager, graphicsDevice, persistanceManager);
-            mLayerManager.AddLayer(HudLayer);
+            LayerManager.AddLayer(HudLayer);
             AddScene(mPlanetSystemScene);
         }
 
@@ -64,14 +64,14 @@ namespace StellarLiberation.Game.Layers
         {
 
             // Check if mouse clicks outside window
-            if (!mGraphicsDevice.Viewport.Bounds.Contains(inputState.mMousePosition) && (inputState.HasAction(ActionType.LeftClick) || inputState.HasAction(ActionType.RightClick))) mLayerManager.AddLayer(new PauseLayer(this));
+            if (!mGraphicsDevice.Viewport.Bounds.Contains(inputState.mMousePosition) && (inputState.HasAction(ActionType.LeftClick) || inputState.HasAction(ActionType.RightClick))) LayerManager.AddLayer(new PauseLayer(this));
 
             // Update Top Scene
             base.Update(gameTime, inputState);
 
             // Check if pause is pressed
-            inputState.DoAction(ActionType.Inventar, () => mLayerManager.AddLayer(new InventoryLayer(Inventory)));
-            inputState.DoAction(ActionType.ESC, () => mLayerManager.AddLayer(new PauseLayer(this)));
+            inputState.DoAction(ActionType.Inventar, () => LayerManager.AddLayer(new InventoryLayer(Inventory)));
+            inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this)));
         }
 
         public override void Destroy()

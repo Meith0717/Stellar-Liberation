@@ -36,7 +36,7 @@ namespace StellarLiberation.Game.Layers
             mHullBar = new(new Color(210, 105, 30), MenueSpriteRegistries.ship) { RelHeight = .025f, RelWidth = .15f, RelX = .01f, RelY = .05f };
             mPropulsiondBar = new(new Color(241, 196, 15), MenueSpriteRegistries.propulsion) { RelHeight = .25f, RelWidth = .02f, Anchor = Anchor.SW, HSpace = 20, VSpace = 20 };
 
-            mUiLayer.AddChild(new UiButton(MenueSpriteRegistries.pause, "") { Anchor = Anchor.NE, HSpace = 20, VSpace = 20, OnClickAction = () => mLayerManager.AddLayer(new PauseLayer(scene.GameLayer)) });
+            mUiLayer.AddChild(new UiButton(MenueSpriteRegistries.pause, "") { Anchor = Anchor.NE, HSpace = 20, VSpace = 20, OnClickAction = () => LayerManager.AddLayer(new PauseLayer(scene.GameLayer)) });
             mUiLayer.AddChild(mShieldBar);
             mUiLayer.AddChild(mHullBar);
             mUiLayer.AddChild(mPropulsiondBar);
@@ -63,13 +63,13 @@ namespace StellarLiberation.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mUiLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.ResolutionManager.UiScaling);
+            mUiLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
             mShieldBar.Percentage = mScene.GameLayer.Player.DefenseSystem.ShieldPercentage;
             mHullBar.Percentage = mScene.GameLayer.Player.DefenseSystem.HullPercentage;
             mPropulsiondBar.Percentage = (double)(mScene.GameLayer.Player.Velocity / mScene.GameLayer.Player.SublightEngine.MaxVelocity);
             mCompass.Update(mScene.GameLayer.Player.Position, mGraphicsDevice, mScene.GameLayer.Player.SensorArray.LongRangeScan);
             foreach (var uiElement in mPopups) 
-                uiElement.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.ResolutionManager.UiScaling);
+                uiElement.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
             mPopups.Clear();
         }
     }

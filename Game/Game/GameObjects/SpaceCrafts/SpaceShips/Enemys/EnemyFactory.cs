@@ -109,11 +109,6 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys
                 })
                 { Debug = true };
             }
-
-            public override void Update(GameTime gameTime, InputState inputState, Scene scene)
-            {
-                base.Update(gameTime, inputState, scene);
-            }
         }
 
         public static EnemyShip Get(EnemyId id, Vector2 position) => id switch

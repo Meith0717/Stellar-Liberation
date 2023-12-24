@@ -45,7 +45,7 @@ namespace StellarLiberation.Game.Layers
         {
             mCounter += gameTime.ElapsedGameTime.Milliseconds;
             mText.Text = mFrames[mIndex];
-            mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, mLayerManager.ResolutionManager.UiScaling);
+            mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
 
             if (mCounter < 500) return;
             mCounter = 0;

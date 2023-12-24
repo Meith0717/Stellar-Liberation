@@ -108,10 +108,10 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 50), "F3 - Show Hit Box", 1, ShowHitBoxes ? Color.GreenYellow : Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 75), "F4 - Show Sensor Radius", 1, ShowSensorRadius ? Color.GreenYellow : Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 100), "F5 - Show Paths", 1, ShowPaths ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 120), "F6 - Spawn Fighter", 1, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 125), "F6 - Spawn Fighter", 1, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 150), "F7 - Spawn Bomber", 1, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 175), "F8 - Spawn Battle Ship", 1, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 100), "F9 - Spawn Carrior", 1, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 200), "F9 - Spawn Carrior", 1, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 225), "F10 - none", 1, false ? Color.GreenYellow : Color.White);
 
             List<string> debug = new() {

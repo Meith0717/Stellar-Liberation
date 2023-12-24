@@ -7,6 +7,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,9 +36,13 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems
 
             OpponentsInRannge.Clear();
             OpponentsInRannge.AddRange(ShortRangeScan.OfType<SpaceShip>().ToList().Where((spaceShip) => spaceShip.Fraction != fraction));
+            foreach (var enemy in OpponentsInRannge.OfType<EnemyShip>()) 
+                enemy.IsSpotted = true;
 
             AlliesInRannge.Clear();
             AlliesInRannge.AddRange(ShortRangeScan.OfType<SpaceShip>().ToList().Where((spaceShip) => spaceShip.Fraction == fraction));
+            foreach (var enemy in AlliesInRannge.OfType<EnemyShip>()) 
+                enemy.IsSpotted = true;
         }
 
         public void Draw(SpaceShip spaceShip, Scene scene) => TextureManager.Instance.DrawAdaptiveCircle(spaceShip.Position, ShortRangeScanDistance, new(50, 50, 50, 50), 2.5f, spaceShip.TextureDepth, scene.Camera2D.Zoom);
