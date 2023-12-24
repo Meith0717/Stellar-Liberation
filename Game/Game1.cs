@@ -42,7 +42,7 @@ namespace StellarLiberation
             mLayerManager = new(this, GraphicsDevice, new(), ResolutionManager);
             ResolutionManager.GetNativeResolution();
             ResolutionManager.ToggleFullscreen();
-            mLayerManager.AddLayer(new LoadingLayer("Loading"));
+            mLayerManager.AddLayer(new LoadingLayer());
         }
 
         protected override void LoadContent()

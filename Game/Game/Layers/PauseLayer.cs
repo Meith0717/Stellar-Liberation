@@ -26,7 +26,7 @@ namespace StellarLiberation.Game.Layers
 
             buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Save Game") { Anchor = Anchor.CenterV, RelY = .05f, RelWidth = .8f, OnClickAction = () => {
                 LayerManager.PopLayer();
-                LayerManager.AddLayer(new LoadingLayer("Saving", false));
+                LayerManager.AddLayer(new LoadingLayer(false));
                 mPersistanceManager.SaveGameLayerAsync(gameLayer, () =>  LayerManager.PopLayer(), (ex) => throw ex);
             }, TextAllign = TextAllign.Center });
             buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Settings") { Anchor = Anchor.CenterV, RelY = .23f, RelWidth = .8f, OnClickAction = () => LayerManager.AddLayer(new SettingsLayer(false)), TextAllign = TextAllign.Center });

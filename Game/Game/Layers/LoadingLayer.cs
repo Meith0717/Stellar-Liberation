@@ -21,14 +21,11 @@ namespace StellarLiberation.Game.Layers
         private int mCounter;
         private int mIndex;
 
-        public LoadingLayer(string message, bool hasBackground = true) : base(false)
+        public LoadingLayer(bool hasBackground = true) : base(false)
         {
             mFrame = new() { FillScale = FillScale.Both, Alpha = 0 };
-            mFrames = new() { $"{message} .  ", $"{message} .. ", $"{message} ..." };
-            mLoadingCircle = new() { Width = 100, Height = 100, Anchor = Anchor.Center };
+            mLoadingCircle = new() { Width = 100, Height = 100, Anchor = Anchor.SE, HSpace = 10, VSpace = 10 };
             if (hasBackground) mFrame.AddChild(new UiSprite(MenueSpriteRegistries.menueBackground) { FillScale = FillScale.FillIn, Anchor = Anchor.Center });
-            mText = new(FontRegistries.subTitleFont, message) { Anchor = Anchor.CenterV, RelY = .9f };
-            mFrame.AddChild(mText);
             mFrame.AddChild(mLoadingCircle);
         }
 
@@ -47,12 +44,7 @@ namespace StellarLiberation.Game.Layers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             mCounter += gameTime.ElapsedGameTime.Milliseconds;
-            mText.Text = mFrames[mIndex];
             mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
-
-            if (mCounter < 500) return;
-            mCounter = 0;
-            mIndex = (mIndex + 1) % mFrames.Count;
         }
     }
 }
