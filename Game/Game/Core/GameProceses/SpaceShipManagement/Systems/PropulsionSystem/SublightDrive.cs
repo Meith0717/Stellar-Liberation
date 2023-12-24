@@ -42,7 +42,9 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
             UpdateVelocity(spaceShip);
 
             if (mVectorTarget is null) return;
-            if (Vector2.Distance((Vector2)mVectorTarget, spaceShip.Position) < 1000) Standstill();
+            if (Vector2.Distance((Vector2)mVectorTarget, spaceShip.Position) > 1000) return;
+            Standstill();
+            SetVelocity(0);
         }
 
         public void UpdateVelocity(SpaceShip spaceShip)
@@ -107,7 +109,6 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
             mVectorTarget = null;
             mDirection = null;
             IsMoving = false;
-            SetVelocity(0);
         }
 
         public void ControlByInput(SpaceShip spaceShip, InputState inputState, Vector2 worldMousePosition)

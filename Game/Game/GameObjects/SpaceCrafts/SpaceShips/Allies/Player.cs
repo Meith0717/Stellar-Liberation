@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys;
 using System;
 
 namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Allies
@@ -42,6 +44,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Allies
             SublightEngine.ControlByInput(this, inputState, scene.WorldMousePosition);
             WeaponSystem.AimShip(SensorArray.GetAimingShip(Position, Fraction));
             WeaponSystem.ControlByInput(inputState, scene.WorldMousePosition);
+            foreach(EnemyShip enemy in SensorArray.OpponentsInRannge) { enemy.IsSpotted = true; }
             base.Update(gameTime, inputState, scene);
         }
     }

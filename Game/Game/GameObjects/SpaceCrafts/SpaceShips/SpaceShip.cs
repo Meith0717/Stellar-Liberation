@@ -49,7 +49,6 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             WeaponSystem = weaponSystem;
             DefenseSystem = defenseSystem;
             Fraction = fractions;
-
         }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
