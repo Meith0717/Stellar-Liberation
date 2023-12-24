@@ -4,6 +4,7 @@
 
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using System;
 
 namespace StellarLiberation.Game.Core.UserInterface
@@ -200,7 +201,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public bool Contains(Vector2 position) => mCanvas.Contains(position);
 
-        public Vector2 Offset => new Vector2(mCanvas.Width, mCanvas.Height) / 2f;
+        public Vector2 Offset => new(mCanvas.Width / 2f, mCanvas.Height / 2f);
 
         public Vector2 Center => mCanvas.Center;
 

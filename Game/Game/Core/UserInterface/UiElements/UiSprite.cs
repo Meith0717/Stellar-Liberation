@@ -4,16 +4,17 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using System;
 
 namespace StellarLiberation.Game.Core.UserInterface
 {
     internal class UiSprite : UiElement
     {
         protected string mSpriteId;
-        public float Rotation;
         public float Scale = 1;
 
         public UiSprite(string SpriteId)
@@ -23,7 +24,13 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Draw()
         {
-            TextureManager.Instance.Draw(mSpriteId, Canvas.Position, Canvas.Bounds.Width, Canvas.Bounds.Height, Rotation);
+            TextureManager.Instance.Draw(mSpriteId, Canvas.Position, Canvas.Bounds.Width, Canvas.Bounds.Height);
+            Canvas.Draw();
+        }
+
+        public void Draw(float rotation)
+        {
+            TextureManager.Instance.Draw(mSpriteId, Canvas.Position, Canvas.Bounds.Width, Canvas.Bounds.Height, Canvas.Offset, rotation);
             Canvas.Draw();
         }
 

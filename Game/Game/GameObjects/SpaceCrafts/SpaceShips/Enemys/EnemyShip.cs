@@ -23,8 +23,6 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys
         [JsonIgnore] public bool IsSpotted { get; set; } = false;
         [JsonIgnore] private readonly RadarPing mRadarPing;
 
-        private bool debug = false;
-
         protected EnemyShip(Vector2 position, string textureId, float textureScale, SensorSystem sensorArray, SublightDrive sublightEngine, TurretSystem weaponSystem, DefenseSystem defenseSystem)
             : base(position, textureId, textureScale, sensorArray, sublightEngine, weaponSystem, defenseSystem, Fractions.Enemys)
         {
@@ -36,14 +34,10 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys
             base.Update(gameTime, inputState, scene);
             IsSpotted = false;
             mRadarPing.Update(Position, gameTime);
-            void act() => debug = true;
-            GameObject2DInteractionManager.Manage(inputState, this, scene, act, act, act);
-            if (debug) System.Diagnostics.Debugger.Break();
         }
 
         public override void Draw(Scene scene)
         {
-            if (debug) System.Diagnostics.Debugger.Break();
             if (!IsSpotted)
             {
                 scene.GameLayer.DebugSystem.DrawSensorRadius(Position, SensorArray.ShortRangeScanDistance, scene);
