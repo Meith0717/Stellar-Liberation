@@ -11,6 +11,8 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Layers;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace StellarLiberation
 {
