@@ -1915,7 +1915,7 @@
 /processorParam:TextureFormat=Color
 /build:textures/menueSprites/buttons/xMark.png
 
-#begin textures/menueSprites/layer/edge0 - Copy.png
+#begin textures/menueSprites/layer/edge0.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1925,7 +1925,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/menueSprites/layer/edge0 - Copy.png
+/build:textures/menueSprites/layer/edge0.png
 
 #begin textures/menueSprites/layer/edge0.png
 /importer:TextureImporter
@@ -1939,18 +1939,6 @@
 /processorParam:TextureFormat=Color
 /build:textures/menueSprites/layer/edge0.png
 
-#begin textures/menueSprites/layer/edge1 - Copy.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/menueSprites/layer/edge1 - Copy.png
-
 #begin textures/menueSprites/layer/edge1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1963,18 +1951,6 @@
 /processorParam:TextureFormat=Color
 /build:textures/menueSprites/layer/edge1.png
 
-#begin textures/menueSprites/layer/edge2 - Copy.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/menueSprites/layer/edge2 - Copy.png
-
 #begin textures/menueSprites/layer/edge2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1986,18 +1962,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/menueSprites/layer/edge2.png
-
-#begin textures/menueSprites/layer/edge3 - Copy.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/menueSprites/layer/edge3 - Copy.png
 
 #begin textures/menueSprites/layer/edge3.png
 /importer:TextureImporter

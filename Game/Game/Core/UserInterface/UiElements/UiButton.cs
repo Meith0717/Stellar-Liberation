@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Draw()
         {
-            var color = IsDisabled ? Color.DarkGray : IsHover ?  new(42, 118, 142) : Color.White;
+            var color = IsDisabled ? Color.DarkGray : IsHover ?  new(192, 57, 43) : Color.White;
             TextureManager.Instance.Draw(mSpriteId, Canvas.Position, Canvas.Bounds.Width, Canvas.Bounds.Height, color);
             TextureManager.Instance.DrawString(FontRegistries.buttonFont, TextPosition, mText, mTextScale, color);
             Canvas.Draw();
