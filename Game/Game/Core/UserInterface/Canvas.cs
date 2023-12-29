@@ -42,7 +42,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
             ManageFillScale(root, ref x, ref y, ref width, ref height);
             ManageAnchor(root, ref x, ref y, ref width, ref height);
-            ManageSpacing(root, ref x, ref y, ref width, ref height);
+            ManageSpacing(root, ref x, ref y, ref width, ref height, HSpace.HasValue ? HSpace * uiScale : null, VSpace.HasValue ? VSpace * uiScale : null);
 
             mCanvas = new(x, y, width, height);
         }
@@ -159,39 +159,39 @@ namespace StellarLiberation.Game.Core.UserInterface
             }
         }
 
-        private void ManageSpacing(Rectangle root, ref int x, ref int y, ref int width, ref int height)
+        private void ManageSpacing(Rectangle root, ref int x, ref int y, ref int width, ref int height, float? hSpace, float? vSpace)
         {
-            if (HSpace != null)
+            if (hSpace != null)
             {
                 var spaceLeft = x - root.Left;
                 var spaceRight = root.Right - (width + x);
 
-                if (spaceLeft < HSpace && spaceRight < HSpace)
+                if (spaceLeft < hSpace && spaceRight < hSpace)
                 {
-                    x += (int)HSpace;
-                    width -= (int)HSpace * 2;
+                    x += (int)hSpace;
+                    width -= (int)hSpace * 2;
                 }
                 else
                 {
-                    if (spaceLeft < HSpace) x = root.X + (int)HSpace;
-                    if (spaceRight < HSpace) x -= (int)HSpace;
+                    if (spaceLeft < hSpace) x = root.X + (int)hSpace;
+                    if (spaceRight < hSpace) x -= (int)hSpace;
                 }
             }
 
-            if (VSpace != null)
+            if (vSpace != null)
             {
                 var spaceTop = y - root.Top;
                 var spaceBottom = root.Bottom - (height + y);
 
-                if (spaceTop < VSpace && spaceBottom < VSpace)
+                if (spaceTop < vSpace && spaceBottom < vSpace)
                 {
-                    y += (int)VSpace;
-                    height -= (int)VSpace * 2;
+                    y += (int)vSpace;
+                    height -= (int)vSpace * 2;
                 }
                 else
                 {
-                    if (spaceTop < VSpace) y = root.Y + (int)VSpace;
-                    if (spaceBottom < VSpace) y -= (int)VSpace;
+                    if (spaceTop < vSpace) y = root.Y + (int)vSpace;
+                    if (spaceBottom < vSpace) y -= (int)vSpace;
                 }
             }
         }
