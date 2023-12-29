@@ -25,21 +25,21 @@ namespace StellarLiberation.Game.Layers
 
         public SettingsLayer(bool showBgImage) : base(false)
         {
-            mMainFrame = new() { RelHeight = 1, RelWidth = 1, Color = Color.Transparent };
+            mMainFrame = new() { FillScale = FillScale.Both, Color = Color.Transparent };
             if (showBgImage) mMainFrame.Alpha = .8f;
             if (showBgImage) mMainFrame.AddChild(new UiSprite(MenueSpriteRegistries.menueBackground) { FillScale = FillScale.FillIn, Anchor = Anchor.Center });
 
 
-            var settingsFrame = new UiFrame() { RelHeight = .8f, RelWidth = .5f, Anchor = Anchor.Center};
+            var settingsFrame = new UiFrame() { Width = 1800, Height = 900, Anchor = Anchor.Center};
             mMainFrame.AddChild(settingsFrame);
 
             var grid = new UiGrid(4, 15) { RelHeight = .9f, RelWidth = .9f, Anchor = Anchor.Center };
             settingsFrame.AddChild(grid);
 
-            grid.Set(0, 0, new UiText(FontRegistries.subTitleFont, "Audio") { Anchor = Anchor.W });
+            grid.Set(0, 0, new UiText(FontRegistries.subTitleFont, "Audio") { Anchor = Anchor.Center });
             grid.Set(0, 1, new UiText(FontRegistries.textFont, "Music") { Anchor = Anchor.Center });
             grid.Set(0, 2, new UiText(FontRegistries.textFont, "SFX") { Anchor = Anchor.Center });
-            grid.Set(2, 0, new UiText(FontRegistries.subTitleFont, "Video") { Anchor = Anchor.W });
+            grid.Set(2, 0, new UiText(FontRegistries.subTitleFont, "Video") { Anchor = Anchor.Center });
             grid.Set(2, 1, new UiText(FontRegistries.textFont, "Resolution") { Anchor = Anchor.Center });
 
             mMusicSlider = new(MusicManager.Instance.OverallVolume) { RelWidth = 1, Anchor = Anchor.CenterH };

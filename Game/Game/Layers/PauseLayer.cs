@@ -21,7 +21,7 @@ namespace StellarLiberation.Game.Layers
         {
             mBackgroundLayer = new() { RelHeight = 1, RelWidth = 1, Color = Color.Transparent };
 
-            var buttonFrame = new Core.Objects.UiElements.UiFrame() { Anchor = Anchor.Center, Height = 500, Width = 500 };
+            var buttonFrame = new UiFrame() { Anchor = Anchor.Center, Height = 500, Width = 400 };
             mBackgroundLayer.AddChild(buttonFrame);
 
             buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Save Game") { Anchor = Anchor.CenterV, RelY = .05f, RelWidth = .8f, OnClickAction = () => {
