@@ -20,7 +20,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 
         private readonly List<SoundEffect> mMusics = new();
         private SoundEffectInstance mMusicInstance;
-        private int mMusicIndex;
+        private bool mLoadet;
         public float OverallVolume = 1f;
 
         public void LoadRegistries(ContentManager content, List<Registry> registries)
@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
                 var soundEffect = content.Load<SoundEffect>(reg.FilePath);
                 mMusics.Add(soundEffect);
             };
-
+            mLoadet = true;
         }
 
         public void Pause() => mMusicInstance.Pause();
@@ -38,10 +38,11 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 
         public void Update()
         {
-            if (mMusics.Count == 0) return;
+            if (!mLoadet) return;
             if (mMusicInstance is null)
             {
-                mMusicInstance = ExtendetRandom.GetRandomElement(mMusics).CreateInstance();
+                var music = ExtendetRandom.GetRandomElement(mMusics);
+                mMusicInstance = music.CreateInstance();
                 mMusicInstance.Volume = OverallVolume;
                 mMusicInstance.Play();
                 return;

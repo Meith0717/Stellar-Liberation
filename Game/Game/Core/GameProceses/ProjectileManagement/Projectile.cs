@@ -21,12 +21,9 @@ namespace StellarLiberation.Game.Core.GameProceses.ProjectileManagement
         public readonly float ShieldDamage;
         public readonly float HullDamage;
 
-        private readonly Turret mTurret;
-
-        public Projectile(Turret turret, float rotation, Color color, float shieldDamage, float hullDamage, SpaceShip origine)
-            : base(turret.Position, GameSpriteRegistries.projectile, 1f, 15)
+        public Projectile(Vector2 position, float rotation, Color color, float shieldDamage, float hullDamage, SpaceShip origine)
+            : base(position, GameSpriteRegistries.projectile, 1f, 15)
         {
-            mTurret = turret;
             MovingDirection = Geometry.CalculateDirectionVector(rotation);
             Rotation = rotation;
             HullDamage = hullDamage;

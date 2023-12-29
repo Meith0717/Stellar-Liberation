@@ -13,14 +13,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StellarLiberation.Game.Core.UserInterface
+namespace StellarLiberation.Game.Core.UserInterface.UiElements
 {
-    public class LoadingCircle : UiElement
+    public class UiLoadingCircle : UiElement
     {
 
         private readonly UiSprite mCircle;
 
-        public LoadingCircle() 
+        public UiLoadingCircle()
         {
             mCircle = new(MenueSpriteRegistries.loading) { FillScale = FillScale.FillIn, Anchor = Anchor.Center };
         }

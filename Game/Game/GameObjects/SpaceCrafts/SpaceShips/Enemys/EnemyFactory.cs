@@ -99,15 +99,14 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys
         private class Fighter : EnemyShip
         {
             public Fighter(Vector2 position)
-                : base(position, GameSpriteRegistries.enemyFighter, 0.2f, new(10000), new(4f, 0.2f), new(1000, Color.IndianRed, 1, 1, 10000), new(100, 100, 0))
+                : base(position, GameSpriteRegistries.enemyFighter, 0.2f, new(10000), new(4f, 0.2f), new(1000, Color.IndianRed, 1, 1, 10000), new(20, 20, 0))
             {
                 WeaponSystem.PlaceTurret(new(new(0, 0), 1, TextureDepth + 1));
 
                 mAi = new(new() {
                     new InterceptBehavior(),
                     new CloseCombatBehavior(),
-                })
-                { Debug = true };
+                });
             }
         }
 

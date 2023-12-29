@@ -66,6 +66,8 @@ namespace StellarLiberation.Game.Layers
             // Check if mouse clicks outside window
             if (!mGraphicsDevice.Viewport.Bounds.Contains(inputState.mMousePosition) && (inputState.HasAction(ActionType.LeftClick) || inputState.HasAction(ActionType.RightClick))) LayerManager.AddLayer(new PauseLayer(this));
 
+            if (Player.DefenseSystem.HullForce == 0) LayerManager.PopLayer();
+
             // Update Top Scene
             base.Update(gameTime, inputState);
 

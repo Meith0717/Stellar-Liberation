@@ -13,11 +13,12 @@ namespace StellarLiberation.Game.Core.UserInterface
     {
         protected string mSpriteId;
         public float Rotation;
-        public float Scale = 1;
+        public float Scale;
 
-        public UiSprite(string SpriteId)
+        public UiSprite(string SpriteId, float scale = 1)
         {
             mSpriteId = SpriteId;
+            Scale = scale;
         }
 
         public override void Draw()

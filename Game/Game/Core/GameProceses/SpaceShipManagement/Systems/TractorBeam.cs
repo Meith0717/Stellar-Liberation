@@ -33,7 +33,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems
             foreach (var item in mItemsInRange.Where((i) => inventory.HasSpace(i.ItemID)))
             {
                 item.Pull(position);
-                if (!ContinuousCollisionDetection.HasCollide(gameTime, item, spaceShip, out _)) return;
+                if (!ContinuousCollisionDetection.HasCollide(gameTime, item, spaceShip, out _)) continue;
                 inventory.Add(item);
                 System.Diagnostics.Debug.WriteLine(inventory.ToString());
             }
