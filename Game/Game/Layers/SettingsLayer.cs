@@ -33,7 +33,7 @@ namespace StellarLiberation.Game.Layers
             var settingsFrame = new UiFrame() { RelHeight = .8f, RelWidth = .5f, Anchor = Anchor.Center};
             mMainFrame.AddChild(settingsFrame);
 
-            var grid = new UiGridFrame(4, 15) { RelHeight = .9f, RelWidth = .9f, Anchor = Anchor.Center };
+            var grid = new UiGrid(4, 15) { RelHeight = .9f, RelWidth = .9f, Anchor = Anchor.Center };
             settingsFrame.AddChild(grid);
 
             grid.Set(0, 0, new UiText(FontRegistries.subTitleFont, "Audio") { Anchor = Anchor.W });

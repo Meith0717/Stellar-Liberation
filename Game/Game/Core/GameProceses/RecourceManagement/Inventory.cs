@@ -21,15 +21,14 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
 
         public Inventory()
         {
-            CapacityPerStack = 5;
-            Capacity = 25;
+            CapacityPerStack = 16;
+            Capacity = 30;
         }
 
         [JsonIgnore] public int Count => Items.Count;
 
         public bool Add(Item item)
         {
-            if (Count >= Capacity) return false; 
 
             if (!keyValuePairs.TryGetValue(item.ItemID, out var itemStacks)) 
                 keyValuePairs.Add(item.ItemID, itemStacks = new());

@@ -9,15 +9,16 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.UserInterface;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StellarLiberation.Game.Core.Objects.UiElements
 {
     public class UiFrame : UiElement
     {
-        public Color Color = new(7, 13, 20);
-        public double Alpha = 1;
+        public Color Color = new(15, 15, 20);
+        public double Alpha = .92f;
         private readonly float mBorder;
-        private readonly LinkedList<UiElement> mChildren = new LinkedList<UiElement>();
+        private readonly LinkedList<UiElement> mChildren = new();
 
         public UiFrame(int border = 40)
         {
@@ -28,6 +29,8 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
         public void AddChild(UiElement child) => mChildren.AddLast(child);
 
         public void ClearChilds() => mChildren.Clear();
+
+        public bool AnyChild() => mChildren.Any();
 
         public override void Draw()
         {

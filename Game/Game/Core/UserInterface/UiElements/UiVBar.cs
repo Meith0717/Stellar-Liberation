@@ -8,7 +8,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 
-namespace StellarLiberation.Game.Core.UserInterface.UiBar
+namespace StellarLiberation.Game.Core.UserInterface.UiElements
 {
     internal class UiVBar : UiElement
     {

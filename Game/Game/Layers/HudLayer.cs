@@ -11,7 +11,7 @@ using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
-using StellarLiberation.Game.Core.UserInterface.UiBar;
+using StellarLiberation.Game.Core.UserInterface.UiElements;
 using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Layers

@@ -12,7 +12,6 @@ using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.MapSystem;
 using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
-using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Allies;
@@ -72,8 +71,8 @@ namespace StellarLiberation.Game.Layers
             base.Update(gameTime, inputState);
 
             // Check if pause is pressed
-            inputState.DoAction(ActionType.Inventar, () => LayerManager.AddLayer(new InventoryLayer(Inventory)));
             inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this)));
+            inputState.DoAction(ActionType.Inventar, () => LayerManager.AddLayer(new InventoryLayer(Inventory, Wallet)));
         }
 
         public override void Destroy()

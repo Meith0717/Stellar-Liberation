@@ -29,8 +29,12 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems
 
             mItemsInRange.Clear();
             var position = spaceShip.Position;
-            mItemsInRange = scene.SpatialHashing.GetObjectsInRadius<Item>(position, (int)mPullRadius);
-            foreach (var item in mItemsInRange.Where((i) => inventory.HasSpace(i.ItemID)))
+
+            mItemsInRange = scene.SpatialHashing.GetObjectsInRadius<Item>(position, (int)mPullRadius)
+                .Where((item) => inventory.HasSpace(item.ItemID))
+                .ToList();
+
+            foreach (var item in mItemsInRange)
             {
                 item.Pull(position);
                 if (!ContinuousCollisionDetection.HasCollide(gameTime, item, spaceShip, out _)) continue;

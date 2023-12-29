@@ -24,7 +24,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceStations
             RemoveFromSpatialHashing(scene);
             base.Update(gameTime, inputState, scene);
             AddToSpatialHashing(scene);
-            GameObject2DInteractionManager.Manage(inputState, this, scene, () => { scene.GameLayer.LayerManager.AddLayer(new InventoryLayer(scene.GameLayer.Inventory)); }, null, null);
+            GameObject2DInteractionManager.Manage(inputState, this, scene, null, null, null);
         }
 
         public override void Draw(Scene scene)

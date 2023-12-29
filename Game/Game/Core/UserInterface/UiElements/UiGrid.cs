@@ -9,24 +9,24 @@ using System.Collections.Generic;
 namespace StellarLiberation.Game.Core.UserInterface.UiElements
 {
 
-    internal class UiGridElement : UiElement
+    public class UiGrid : UiElement
     {
-        public UiElement UiElement;
-
-        public override void Draw() { UiElement?.Draw(); Canvas.Draw(); }
-
-        public override void Update(InputState inputState, Rectangle root, float uiScaling)
+        private class UiGridElement : UiElement
         {
-            Canvas.UpdateFrame(root, uiScaling);
-            UiElement?.Update(inputState, Bounds, uiScaling);
-        }
-    }
+            public UiElement UiElement;
 
-    public class UiGridFrame : UiElement
-    {
+            public override void Draw() { UiElement?.Draw(); Canvas.Draw(); }
+
+            public override void Update(InputState inputState, Rectangle root, float uiScaling)
+            {
+                Canvas.UpdateFrame(root, uiScaling);
+                UiElement?.Update(inputState, Bounds, uiScaling);
+            }
+        }
+
         private readonly Dictionary<Vector2, UiGridElement> mGrid = new();
 
-        public UiGridFrame(int i, int j)
+        public UiGrid(int i, int j)
         {
             for (int y = 0; y < j; y++)
             {

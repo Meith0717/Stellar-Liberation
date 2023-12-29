@@ -33,6 +33,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
             if (Count == 0) return false;
             ExtendetRandom.Random.NextUnitVector(out var dir);
             ItemFactory.Get(ItemId, dir, position);
+            Count--;
             return true;    
         }
 
