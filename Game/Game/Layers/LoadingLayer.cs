@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace StellarLiberation.Game.Layers
 {
     public class LoadingLayer: Layer
     {
-        private readonly UiLayer mFrame;
+        private readonly UiFrame mFrame;
         private readonly UiText mText;
         private readonly UiLoadingCircle mLoadingCircle;
         private readonly List<string> mFrames;

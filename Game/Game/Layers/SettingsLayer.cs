@@ -11,12 +11,13 @@ using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
+using StellarLiberation.Game.Core.UserInterface.UiElements;
 
 namespace StellarLiberation.Game.Layers
 {
     public class SettingsLayer : Layer
     {
-        private readonly UiLayer mMainFrame;
+        private readonly UiFrame mMainFrame;
         private readonly UiSlider mMusicSlider;
         private readonly UiSlider mSfxSlider;
 
@@ -29,22 +30,26 @@ namespace StellarLiberation.Game.Layers
             if (showBgImage) mMainFrame.AddChild(new UiSprite(MenueSpriteRegistries.menueBackground) { FillScale = FillScale.FillIn, Anchor = Anchor.Center });
 
 
-            var settingsFrame = new UiFrame(50) { RelHeight = .8f, RelWidth = .5f, Anchor = Anchor.Center, Color = new(78, 121, 136)};
+            var settingsFrame = new UiFrame() { RelHeight = .8f, RelWidth = .5f, Anchor = Anchor.Center};
             mMainFrame.AddChild(settingsFrame);
 
-            settingsFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => LayerManager.PopLayer() });
+            var grid = new UiGridFrame(4, 15) { RelHeight = .9f, RelWidth = .9f, Anchor = Anchor.Center };
+            settingsFrame.AddChild(grid);
 
-            // Sound Settings
-            settingsFrame.AddChild(new UiText(FontRegistries.subTitleFont, "Audio") { HSpace = 20, RelY = .05f });
-            mMusicSlider = new(MusicManager.Instance.OverallVolume);
-            mSfxSlider = new(SoundEffectManager.Instance.OverallVolume);
-            settingsFrame.AddChild(new UiDescriber("Music", mMusicSlider) { Height = 50, RelWidth = 1, HSpace = 40, RelY = .12f });
-            settingsFrame.AddChild(new UiDescriber("Effects", mSfxSlider) { Height = 50, RelWidth = 1, HSpace = 40, RelY = .21f });
+            grid.Set(0, 0, new UiText(FontRegistries.subTitleFont, "Audio") { Anchor = Anchor.W });
+            grid.Set(0, 1, new UiText(FontRegistries.textFont, "Music") { Anchor = Anchor.Center });
+            grid.Set(0, 2, new UiText(FontRegistries.textFont, "SFX") { Anchor = Anchor.Center });
+            grid.Set(2, 0, new UiText(FontRegistries.subTitleFont, "Video") { Anchor = Anchor.W });
+            grid.Set(2, 1, new UiText(FontRegistries.textFont, "Resolution") { Anchor = Anchor.Center });
 
-            // Graphics Settings
-            settingsFrame.AddChild(new UiText(FontRegistries.subTitleFont, "Video ") { HSpace = 20, RelY = .30f });
-            mResolutionSelector = new UiVariableSelector<string>(new()) { OnClickAction = () => LayerManager.ResolutionManager.Apply(mResolutionSelector.Value) }; 
-            settingsFrame.AddChild(new UiDescriber("Resolution", mResolutionSelector) { Height = 50, RelWidth = 1, HSpace = 40, RelY = .37f });
+            mMusicSlider = new(MusicManager.Instance.OverallVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
+            mSfxSlider = new(SoundEffectManager.Instance.OverallVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
+            mResolutionSelector = new UiVariableSelector<string>(new()) { OnClickAction = () => LayerManager.ResolutionManager.Apply(mResolutionSelector.Value), RelWidth = 1, Anchor = Anchor.CenterH }; 
+            grid.Set(1, 1, mMusicSlider);
+            grid.Set(1, 2, mSfxSlider);
+            grid.Set(3, 1, mResolutionSelector);
+
+            mMainFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => LayerManager.PopLayer() });
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager)

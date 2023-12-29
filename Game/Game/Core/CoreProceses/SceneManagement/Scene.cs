@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
+using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem;
@@ -24,7 +25,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.SceneManagement
         public readonly ParticleManager ParticleManager;
         public readonly Camera2D Camera2D;
         public readonly GameLayer GameLayer;
-        public readonly UiLayer PopupLayer;
+        public readonly UiFrame PopupLayer;
         private Matrix mViewTransformationMatrix;
 
         public Scene(GameLayer gameLayer, int spatialHashingCellSize)

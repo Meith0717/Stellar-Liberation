@@ -9,6 +9,7 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
+using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiBar;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace StellarLiberation.Game.Layers
     {
         public bool Hide;
 
-        private readonly UiLayer mUiLayer;
+        private readonly UiFrame mUiLayer;
         private readonly Scene mScene;
 
         private readonly UiHBar mShieldBar;

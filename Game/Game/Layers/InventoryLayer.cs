@@ -21,7 +21,7 @@ namespace StellarLiberation.Game.Layers
 
         public InventoryLayer(Inventory inventory) : base(true)
         {
-            mFrame = new(40) { Height = 600, Width = 750, Anchor = Anchor.Center, Color = new(17, 17, 17) };
+            mFrame = new() { Height = 600, Width = 750, Anchor = Anchor.Center, Color = new(17, 17, 17) };
             mFrame.AddChild(mUiInventoryGrid = new UiInventoryGrid(5, 5) { Anchor = Anchor.Center, Width = 500, Height = 500 });
             mInventory = inventory;
         }

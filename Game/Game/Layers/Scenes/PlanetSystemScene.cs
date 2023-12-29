@@ -8,6 +8,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.GridSystem;
+using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
@@ -17,7 +18,7 @@ namespace StellarLiberation.Game.Layers.Scenes
 {
     internal class PlanetSystemScene : Scene
     {
-        private readonly UiLayer mBackgroundLayer;
+        private readonly UiFrame mBackgroundLayer;
 
         private readonly PlanetSystem mPlanetSystem;
         private readonly Grid mGrid;

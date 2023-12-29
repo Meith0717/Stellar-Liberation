@@ -10,9 +10,9 @@ namespace StellarLiberation.Game.Core.UserInterface
 {
     public abstract class UiElement
     {
-        protected UiCanvas Canvas;
+        protected Canvas Canvas;
 
-        public UiElement() => Canvas = new UiCanvas();
+        public UiElement() => Canvas = new Canvas();
         public abstract void Update(InputState inputState, Rectangle root, float uiScaling);
         public abstract void Draw();
         public Rectangle Bounds => Canvas.Bounds;

@@ -18,7 +18,7 @@ namespace StellarLiberation.Game.Layers
 
         public EventPopup(string message) : base(false)
         {
-            mUiFrame = new(50) { RelHeight = .2f, RelWidth = .2f, Color = Color.DarkGray, Anchor = Anchor.Center };
+            mUiFrame = new() { RelHeight = .2f, RelWidth = .2f, Color = Color.DarkGray, Anchor = Anchor.Center };
             mUiFrame.AddChild(new UiText(FontRegistries.subTitleFont, message) { Anchor = Anchor.Center});
         }
 

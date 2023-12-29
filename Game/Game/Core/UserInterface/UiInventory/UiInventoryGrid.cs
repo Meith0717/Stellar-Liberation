@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
+using StellarLiberation.Game.Core.Objects.UiElements;
 using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.UserInterface.UiInventory
@@ -13,7 +14,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiInventory
     public class UiInventoryGrid : UiElement
     {
 
-        private readonly List<UiLayer> mGridElements = new();
+        private readonly List<UiFrame> mGridElements = new();
 
         public UiInventoryGrid(int i, int j) 
         {
@@ -26,7 +27,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiInventory
                     var width = 1f/i;
                     var height = 1f/j;
 
-                    var grid = new UiLayer { Color = Color.Transparent, RelX = relX, RelY = relY, RelWidth = width, RelHeight = height };
+                    var grid = new UiFrame { Color = Color.Transparent, RelX = relX, RelY = relY, RelWidth = width, RelHeight = height };
                     mGridElements.Add(grid);
 
                 }
@@ -38,7 +39,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiInventory
             var i = 0;
             foreach (var grid in mGridElements)
             {
-                var slot = new UiLayer { Color = new(5, 5, 5), RelHeight = .90f, RelWidth = .90f, Anchor = Anchor.Center };
+                var slot = new UiFrame { Color = new(5, 5, 5), RelHeight = .90f, RelWidth = .90f, Anchor = Anchor.Center };
                 grid.ClearChilds();
                 grid.AddChild(slot);
 
@@ -62,6 +63,6 @@ namespace StellarLiberation.Game.Core.UserInterface.UiInventory
         {
             Canvas.UpdateFrame(root, uiScaling);
             foreach (var slot in mGridElements) slot.Update(inputState, Canvas.Bounds, uiScaling);
-         }
+        }
     }
 }

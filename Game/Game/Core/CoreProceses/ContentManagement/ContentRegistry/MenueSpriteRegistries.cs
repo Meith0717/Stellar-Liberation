@@ -23,7 +23,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegi
         private readonly static string buttons = @"textures\menueSprites\buttons";
         public readonly static Registry arrowL = new(buttons, "arrowL");
         public readonly static Registry arrowR = new(buttons, "arrowR");
-        public readonly static Registry button = new(buttons, "button");
+        public readonly static Registry button = new(buttons, "button1");
         public readonly static Registry copyright = new(buttons, "copyright");
         public readonly static Registry dot = new(buttons, "dot");
         public readonly static Registry menu = new(buttons, "menu");

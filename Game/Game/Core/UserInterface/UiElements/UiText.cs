@@ -20,7 +20,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public UiText(string fontID, string text)
         {
-            Color = Color.White;
+            Color = new(51, 212, 243);
             Text = text;
             FontID = fontID;
         }

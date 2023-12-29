@@ -10,7 +10,7 @@ namespace StellarLiberation.Game.Core.UserInterface
     public enum Anchor { N, NE, E, SE, S, SW, W, NW, Center, Top, Bottom, Left, Right, CenterH, CenterV, None }
     public enum FillScale { X, Y, Both, FillIn, Fit, None }
 
-    public class UiCanvas
+    public class Canvas
     {
         // UiFrame
         private Rectangle mCanvas;
@@ -209,7 +209,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public void Draw()
         {
-            //TextureManager.Instance.DrawRectangleF(mCanvas, Color.Green, 2, 1);
+            // TextureManager.Instance.DrawRectangleF(mCanvas, Color.Green, 2, 1);
         }
     }
 }
