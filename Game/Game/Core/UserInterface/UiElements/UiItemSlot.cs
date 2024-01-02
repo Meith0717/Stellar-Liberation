@@ -14,7 +14,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
     public class UiItemSlot : UiFrame
     {
         private readonly Action<Item> mOnPressAction;
-        private Item mItem;
+        public Item Item { get; private set; }
 
         public UiItemSlot(Action<Item> onPressAction)
         {
@@ -27,7 +27,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
         public void SetItem(Item item)
         {
             ClearChilds();
-            mItem = item;
+            Item = item;
             AddChild(new UiSprite(item.TextureId) { FillScale = FillScale.Fit, Anchor = Anchor.Center });
             AddChild(new UiText(FontRegistries.textFont, item.Amount.ToString()) { Anchor = Anchor.SE, HSpace = 5, VSpace = 5 });
         }
@@ -40,7 +40,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             if (!Canvas.Contains(inputState.mMousePosition)) return;
             Color = new(30, 30, 30);
             if (!inputState.HasAction(ActionType.LeftClick)) return;
-            mOnPressAction?.Invoke(mItem);
+            mOnPressAction?.Invoke(Item);
         }
     }
 }

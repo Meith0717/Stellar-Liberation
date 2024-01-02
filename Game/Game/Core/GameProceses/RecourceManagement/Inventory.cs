@@ -19,10 +19,10 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
         [JsonProperty] public readonly List<Item> Items = new();
         [JsonProperty] private readonly Dictionary<ItemID, List<Item>> keyValuePairs = new();
 
-        public Inventory()
+        public Inventory(int capacity = 30)
         {
             CapacityPerStack = 16;
-            Capacity = 30;
+            Capacity = capacity;
         }
 
         [JsonIgnore] public int Count => Items.Count;

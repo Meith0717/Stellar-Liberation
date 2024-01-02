@@ -16,9 +16,9 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
         private readonly Inventory mInventory;
         private readonly Action<Item> mAction;
 
-        public UiInventory(Inventory inventory, Action<Item> action)
+        public UiInventory(Inventory inventory, Action<Item> action, int i = 5, int j = 6)
         {
-            mGrid = new(5, 6) { FillScale = FillScale.Both, Anchor = Anchor.Center };
+            mGrid = new(i, j) { FillScale = FillScale.Both, Anchor = Anchor.Center };
             mInventory = inventory;
             mAction = action;
         }
