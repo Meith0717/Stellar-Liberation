@@ -34,6 +34,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement
         Select,
         CtrlLeft,
         Inventar,
+        Trading,
         IncreaseScaling,
         DecreaseScaling,
         MoveCameraLeft,

@@ -17,11 +17,7 @@ namespace StellarLiberation.Game.Layers
     public class LoadingLayer: Layer
     {
         private readonly UiFrame mFrame;
-        private readonly UiText mText;
         private readonly UiLoadingCircle mLoadingCircle;
-        private readonly List<string> mFrames;
-        private int mCounter;
-        private int mIndex;
 
         public LoadingLayer(bool hasBackground = true) : base(false)
         {
@@ -45,7 +41,6 @@ namespace StellarLiberation.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mCounter += gameTime.ElapsedGameTime.Milliseconds;
             mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
         }
     }

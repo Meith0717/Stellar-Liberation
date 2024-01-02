@@ -17,11 +17,20 @@ namespace StellarLiberation.Game.GameObjects.Recources.Items
     [Serializable]
     public abstract class Item : GameObject2D
     {
-        public readonly bool Collectable;
-        public readonly ItemID ItemID;
+        public readonly bool IsCollectable;
+        public readonly bool IsStakable;
 
-        protected Item(string textureId, float textureScale, bool collectable, ItemID itemID)
-            : base(Vector2.Zero, textureId, textureScale, 30) { Collectable = collectable; ItemID = itemID; }
+        public readonly ItemID ItemID;
+        public int Amount;
+
+        protected Item(ItemID itemID, string textureId, float textureScale, bool isCollectable = true, bool isStackable = true)
+            : base(Vector2.Zero, textureId, textureScale, 30) 
+        {
+            Amount = 1;
+            IsCollectable = isCollectable; 
+            IsStakable = isStackable;
+            ItemID = itemID; 
+        }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {

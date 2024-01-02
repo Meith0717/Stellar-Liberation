@@ -16,8 +16,8 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
         [JsonProperty] public int CapacityPerStack { get; private set; }
         [JsonProperty] public int Capacity { get; private set; }
 
-        [JsonProperty] public readonly List<ItemStack> Items = new();
-        [JsonProperty] private readonly Dictionary<ItemID, List<ItemStack>> keyValuePairs = new();
+        [JsonProperty] public readonly List<Item> Items = new();
+        [JsonProperty] private readonly Dictionary<ItemID, List<Item>> keyValuePairs = new();
 
         public Inventory()
         {
@@ -27,73 +27,71 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
 
         [JsonIgnore] public int Count => Items.Count;
 
-        public bool Add(Item item)
+        public void Add(Item item)
         {
+            item.Dispose = true;
 
-            if (!keyValuePairs.TryGetValue(item.ItemID, out var itemStacks)) 
-                keyValuePairs.Add(item.ItemID, itemStacks = new());
+            if (!keyValuePairs.TryGetValue(item.ItemID, out var hashItems)) 
+                keyValuePairs.Add(item.ItemID, hashItems = new());
 
-            foreach (var stack in itemStacks)
+            foreach (var inItem in hashItems)
             {
-                if (stack.Count >= CapacityPerStack) continue;   
-                stack.Add(item);
-                return true;
+                if (inItem.Amount >= CapacityPerStack) continue;   
+                inItem.Amount++;
+                return;
             }
 
-            var newStack = new ItemStack(item.ItemID, item.TextureId);
-            newStack.Add(item);
-            itemStacks.Add(newStack);
-            Items.Add(newStack);
-            return true;
+            hashItems.Add(item);
+            Items.Add(item);
         }
 
         public bool Remove(ItemID itemID, int amount)
         {
             if (amount <= 0) return true;
-            if (GetItemCount(itemID, out var itemStacks) < amount) return false;
+            if (GetItemCount(itemID, out var items) < amount) return false;
 
-            var itemsToRemove = new List<ItemStack>();
+            var itemsToRemove = new List<Item>();
 
-            foreach (var stack in itemStacks.Reverse<ItemStack>())
+            foreach (var item in items.Reverse<Item>())
             {
-                if (stack.Count <= amount)
+                if (item.Amount <= amount)
                 {
-                    amount -= stack.Count;
-                    itemsToRemove.Add(stack);
+                    amount -= item.Amount;
+                    itemsToRemove.Add(item);
                 } else
                 {
-                    stack.Remove(amount);
+                    item.Amount -= amount;
                     amount = 0;
                 }
             }
 
-            foreach (var stackToRemove in itemsToRemove)
+            foreach (var item in itemsToRemove)
             {
-                Items.Remove(stackToRemove);
-                keyValuePairs[itemID].Remove(stackToRemove);
+                Items.Remove(item);
+                keyValuePairs[itemID].Remove(item);
             }
 
             return true;
         }
 
 
-        private int GetItemCount(ItemID itemID, out List<ItemStack> itemStacks)
+        private int GetItemCount(ItemID itemID, out List<Item> items)
         {
-            if (!keyValuePairs.TryGetValue(itemID, out itemStacks))
+            if (!keyValuePairs.TryGetValue(itemID, out items))
                 return 0;
 
-            return itemStacks.Sum(stack => stack.Count);
+            return items.Sum(item => item.Amount);
         }
 
 
         public bool HasSpace(ItemID itemID)
         {
             if (Count < Capacity) return true;
-            if (keyValuePairs.TryGetValue(itemID, out var itemStacks)) 
+            if (keyValuePairs.TryGetValue(itemID, out var items)) 
             {
-                foreach (var inventoryItem in itemStacks)
+                foreach (var item in items)
                 {
-                    if (inventoryItem.Count >= CapacityPerStack) continue;
+                    if (item.Amount >= CapacityPerStack) continue;
                     return true;
                 }
             }

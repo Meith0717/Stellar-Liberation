@@ -15,12 +15,12 @@ namespace StellarLiberation.Game.GameObjects.Recources.Items
 
     public static class ItemFactory
     {
-        private class Iron : Item { public Iron() : base(GameSpriteRegistries.iron, .2f, true, ItemID.Iron) => DisposeTime = 60000; }
-        private class Titanium : Item { public Titanium() : base(GameSpriteRegistries.titan, .2f, true, ItemID.Titanium) => DisposeTime = 60000; }
-        private class Gold : Item { public Gold() : base(GameSpriteRegistries.gold, .2f, true, ItemID.Gold) => DisposeTime = 60000; }
-        private class Platin : Item { public Platin() : base(GameSpriteRegistries.platin, .2f, true, ItemID.Platin) => DisposeTime = 60000; }
-        private class QuantumCrystals : Item { public QuantumCrystals() : base(GameSpriteRegistries.quantumCrystals, .2f, true, ItemID.QuantumCrystals) => DisposeTime = 60000; }
-        private class DarkMatter : Item { public DarkMatter() : base(GameSpriteRegistries.darkMatter, .2f, true, ItemID.DarkMatter) => DisposeTime = 60000; }
+        private class Iron : Item { public Iron() : base(ItemID.Iron, GameSpriteRegistries.iron, .2f) => DisposeTime = 60000; }
+        private class Titanium : Item { public Titanium() : base(ItemID.Titanium, GameSpriteRegistries.titan, .2f) => DisposeTime = 60000; }
+        private class Gold : Item { public Gold() : base(ItemID.Gold, GameSpriteRegistries.gold, .2f) => DisposeTime = 60000; }
+        private class Platin : Item { public Platin() : base(ItemID.Platin, GameSpriteRegistries.platin, .2f) => DisposeTime = 60000; }
+        private class QuantumCrystals : Item { public QuantumCrystals() : base(ItemID.QuantumCrystals, GameSpriteRegistries.quantumCrystals, .2f) => DisposeTime = 60000; }
+        private class DarkMatter : Item { public DarkMatter() : base(ItemID.DarkMatter, GameSpriteRegistries.darkMatter, .2f) => DisposeTime = 60000; }
 
         public static Item Get(ItemID id, Vector2 momentum, Vector2 position)
         {
