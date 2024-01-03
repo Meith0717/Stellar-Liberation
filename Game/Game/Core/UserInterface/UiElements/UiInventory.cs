@@ -14,13 +14,18 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
     {
         private readonly UiGrid mGrid;
         private readonly Inventory mInventory;
-        private readonly Action<Item> mAction;
+        private readonly Action<ItemStack> mAction;
 
-        public UiInventory(Inventory inventory, Action<Item> action, int i = 5, int j = 6)
+        private readonly int I;
+        private readonly int J;
+
+        public UiInventory(Inventory inventory, Action<ItemStack> action, int i = 5, int j = 6)
         {
             mGrid = new(i, j) { FillScale = FillScale.Both, Anchor = Anchor.Center };
             mInventory = inventory;
             mAction = action;
+            I = i;
+            J = j;
         }
 
         public override void Draw()
@@ -32,9 +37,9 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
         public override void Update(InputState inputState, Rectangle root, float uiScaling)
         {
             var i = 0;
-            for (int y = 0; y < 6; y++)
+            for (int y = 0; y < J; y++)
             {
-                for (int x = 0; x < 5; x++)
+                for (int x = 0; x < I; x++)
                 {
                     var slot = new UiItemSlot(mAction);
                     mGrid.Set(x, y, slot);

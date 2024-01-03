@@ -28,16 +28,17 @@ namespace StellarLiberation.Game.Layers
         {
             mPlayerInventory = playerInventory;
             mTraderInventory = traderInventory;
-            mTradingInventory = new(10);
+            mTradingInventory = new(10, 1);
 
             mFrame = new() { Height = 900, Width = 1400, Anchor = Anchor.Center};
             mFrame.AddChild(new UiText(FontRegistries.subTitleFont, "Trading") { Anchor = Anchor.NW, VSpace = 20, HSpace = 20 });
+            mFrame.AddChild(new UiInventory(mTradingInventory, null, 2, 5) { Anchor = Anchor.Center, Width = 200, Height = 500 });
 
             // Player Inventory
             var playerSide = new UiFrame() { Height = 800, Width = 550, Anchor = Anchor.SW, VSpace = 20, HSpace = 20, Alpha = 0};
             mFrame.AddChild(playerSide);
             playerSide.AddChild(new UiText(FontRegistries.subTitleFont, "Inventory") { Anchor = Anchor.NW, HSpace = 50, VSpace = 50 });
-            playerSide.AddChild(new UiInventory(mPlayerInventory, null) { Width = 500, Height = 600, Anchor = Anchor.Center });
+            playerSide.AddChild(new UiInventory(mPlayerInventory, SellItems) { Width = 500, Height = 600, Anchor = Anchor.Center });
             var walletGrid = new UiGrid(2, 1) { Width = 200, Height = 50, Anchor = Anchor.SE };
             playerSide.AddChild(walletGrid);
             walletGrid.Set(0, 0, new UiText(FontRegistries.textFont, "Credits:") { Anchor = Anchor.Center });
@@ -50,9 +51,10 @@ namespace StellarLiberation.Game.Layers
             traderSide.AddChild(new UiInventory(mTraderInventory, null) { Width = 500, Height = 600, Anchor = Anchor.Center });
         }
 
-        private void SellItems()
+        private void SellItems(ItemStack itemStack)
         {
-
+            mTradingInventory.Add(itemStack);
+            // mPlayerInventory.Remove(itemStack);
         }
 
         public override void Destroy() { }

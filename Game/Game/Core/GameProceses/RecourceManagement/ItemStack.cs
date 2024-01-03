@@ -3,24 +3,35 @@
 // All rights reserved.
 
 using StellarLiberation.Game.GameObjects.Recources.Items;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
 {
     public class ItemStack
     {
-        public int Amount { get; private set; } = 1;
         public readonly ItemID ItemID;
+        public readonly string TextureID;
+        private int mAmount;
 
-        public ItemStack(ItemID itemID) => ItemID = itemID;
+        public ItemStack(ItemID itemID, string textureID, int amount)
+        {
+            ItemID = itemID;
+            TextureID = textureID;
+            mAmount = amount;
+        }
 
-        public void Add(int amount = 1) => Amount+=amount;
+        public bool TrySplit(int amount, out ItemStack itemStack)
+        {
+            itemStack = null;
+            if (Amount <= amount) return false;
+            itemStack = new(ItemID, TextureID, amount);
+            mAmount -= amount;
+            return true;
+        }
 
-        public void Remove(int amount = 1) => Amount-=amount;
+        public void Add(int amount = 1) => mAmount += amount;
+
+        public void Remove(int amount = 1) => mAmount -= amount;
+
+        public int Amount => mAmount;
     }
 }
