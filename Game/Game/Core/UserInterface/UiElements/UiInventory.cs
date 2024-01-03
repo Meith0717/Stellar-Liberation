@@ -43,8 +43,8 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
                 {
                     var slot = new UiItemSlot(mAction);
                     mGrid.Set(x, y, slot);
-                    if (i >= mInventory.Items.Count) continue;
-                    var item = mInventory.Items[i];
+                    if (i >= mInventory.ItemStacks.Count) continue;
+                    var item = mInventory.ItemStacks[i];
                     slot.SetItem(item);
                     i++;
                 }

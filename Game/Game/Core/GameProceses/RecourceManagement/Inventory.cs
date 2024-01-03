@@ -16,7 +16,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
         [JsonProperty] public int CapacityPerStack { get; private set; }
         [JsonProperty] public int Capacity { get; private set; }
 
-        [JsonProperty] public readonly List<ItemStack> Items = new();
+        [JsonProperty] public readonly List<ItemStack> ItemStacks = new();
         [JsonProperty] private readonly Dictionary<ItemID, List<ItemStack>> keyValuePairs = new();
 
         public Inventory(int capacity = 30, int capacityPerStack = 16)
@@ -25,7 +25,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
             CapacityPerStack = capacityPerStack;
         }
 
-        [JsonIgnore] public int Count => Items.Count;
+        [JsonIgnore] public int Count => ItemStacks.Count;
 
         public void Add(Item item)
         {
@@ -38,7 +38,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
             {
                 var stack = new ItemStack(item.ItemID, item.TextureId, 1);
                 hashItems.Add(stack);
-                Items.Add(stack);
+                ItemStacks.Add(stack);
             }
             else
             {
@@ -66,16 +66,10 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
             {
                 if (Count >= Capacity) break;
 
-                if (itemStack.TrySplit(CapacityPerStack, out var newStack))
-                {
-                    hashItems.Add(newStack);                                
-                    Items.Add(newStack);
-                    continue;
-                }
-
-                hashItems.Add(itemStack);                                   
-                Items.Add(itemStack);
-                break;
+                var newStack = itemStack.Split(CapacityPerStack);
+                hashItems.Add(newStack);                                
+                ItemStacks.Add(newStack);
+                continue;
             }
         }
 
@@ -101,7 +95,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
 
             itemsToRemove.ForEach(item =>
             {
-                Items.Remove(item);
+                ItemStacks.Remove(item);
                 keyValuePairs[itemID].Remove(item);
             });
 
@@ -110,9 +104,20 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
 
         public void Remove(ItemStack itemStack)
         {
-            Items.Remove(itemStack);
+            ItemStacks.Remove(itemStack);
             keyValuePairs.TryGetValue(itemStack.ItemID, out var itemStacks);
             itemStacks.Remove(itemStack);
+        }
+
+        public void CheckForEmptyStacks(ItemID itemID)
+        {
+            keyValuePairs.TryGetValue(itemID, out var itemStacks);
+            var emptyStacks = itemStacks.Where(itemStack => itemStack.Amount == 0).ToList();
+            foreach (var item in emptyStacks)
+            {
+                ItemStacks.Remove(item);
+                itemStacks.Remove(item);
+            }
         }
 
         private int GetItemCount(ItemID itemID, out List<ItemStack> itemsStacks) =>
@@ -131,7 +136,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
         {
             keyValuePairs.TryGetValue(itemID, out var itemStacks);
             var stackSpace = itemStacks is null ? 0 : itemStacks.Sum(itemStack => CapacityPerStack - itemStack.Amount);
-            return stackSpace + (Capacity - Items.Count) * CapacityPerStack;
+            return stackSpace + (Capacity - ItemStacks.Count) * CapacityPerStack;
         }
     }
 }

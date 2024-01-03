@@ -11,8 +11,6 @@ using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
-using StellarLiberation.Game.GameObjects.Recources.Items;
-using System;
 
 namespace StellarLiberation.Game.Layers
 {
@@ -21,18 +19,21 @@ namespace StellarLiberation.Game.Layers
         private readonly UiFrame mFrame;
         private readonly Inventory mPlayerInventory;
         private readonly Inventory mTraderInventory;
-        private readonly Inventory mTradingInventory;
+        private readonly Inventory mSellInventory;
+        private readonly Inventory mBuyInventory;
 
         public TradeLayer(Inventory playerInventory, Inventory traderInventory, Wallet wallet)
             : base(false)
         {
             mPlayerInventory = playerInventory;
             mTraderInventory = traderInventory;
-            mTradingInventory = new(10, 1);
+            mSellInventory = new(8, 8);
+            mBuyInventory = new(8, 8);
 
-            mFrame = new() { Height = 900, Width = 1400, Anchor = Anchor.Center};
+            mFrame = new() { Height = 900, Width = 1600, Anchor = Anchor.Center};
             mFrame.AddChild(new UiText(FontRegistries.subTitleFont, "Trading") { Anchor = Anchor.NW, VSpace = 20, HSpace = 20 });
-            mFrame.AddChild(new UiInventory(mTradingInventory, null, 2, 5) { Anchor = Anchor.Center, Width = 200, Height = 500 });
+            mFrame.AddChild(new UiInventory(mSellInventory, BreakSell, 4, 2) { Anchor = Anchor.CenterV, Width = 400, Height = 200, RelY = .25f});
+            mFrame.AddChild(new UiInventory(mBuyInventory, null, 4, 2) { Anchor = Anchor.CenterV, Width = 400, Height = 200, RelY = .6f});
 
             // Player Inventory
             var playerSide = new UiFrame() { Height = 800, Width = 550, Anchor = Anchor.SW, VSpace = 20, HSpace = 20, Alpha = 0};
@@ -53,11 +54,22 @@ namespace StellarLiberation.Game.Layers
 
         private void SellItems(ItemStack itemStack)
         {
-            mTradingInventory.Add(itemStack);
-            // mPlayerInventory.Remove(itemStack);
+            var newItemStack = itemStack.Split(1);
+            mSellInventory.Add(newItemStack);
+            mPlayerInventory.CheckForEmptyStacks(itemStack.ItemID);
         }
 
-        public override void Destroy() { }
+        private void BreakSell(ItemStack itemStack)
+        {
+            var newItemStack = itemStack.Split(1);
+            mPlayerInventory.Add(newItemStack);
+            mSellInventory.CheckForEmptyStacks(itemStack.ItemID);
+        }
+
+        public override void Destroy() 
+        {
+            foreach (var itemStack in mSellInventory.ItemStacks) mPlayerInventory.Add(itemStack);
+        }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -71,7 +83,7 @@ namespace StellarLiberation.Game.Layers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             inputState.DoAction(ActionType.ESC, LayerManager.PopLayer);
-            inputState.DoAction(ActionType.Inventar, LayerManager.PopLayer);
+            inputState.DoAction(ActionType.Trading, LayerManager.PopLayer);
             mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
         }
     }

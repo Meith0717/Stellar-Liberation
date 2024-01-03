@@ -19,13 +19,11 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
             mAmount = amount;
         }
 
-        public bool TrySplit(int amount, out ItemStack itemStack)
+        public ItemStack Split(int amount)
         {
-            itemStack = null;
-            if (Amount <= amount) return false;
-            itemStack = new(ItemID, TextureID, amount);
+            if (Amount < amount) amount = Amount;
             mAmount -= amount;
-            return true;
+            return new(ItemID, TextureID, amount);
         }
 
         public void Add(int amount = 1) => mAmount += amount;
