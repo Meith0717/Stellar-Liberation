@@ -15,12 +15,12 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
 {
     public class UiFrame : UiElement
     {
-        public Color Color = new(15, 15, 20);
+        public Color Color = new(30, 34, 34);
         public double Alpha = .92f;
         private readonly float mBorder;
         private readonly LinkedList<UiElement> mChildren = new();
 
-        public UiFrame(int border = 40)
+        public UiFrame(int border = 16)
         {
             if (border % 2 != 0) throw new System.Exception("Odd values lead to artefacts");
             mBorder = border;

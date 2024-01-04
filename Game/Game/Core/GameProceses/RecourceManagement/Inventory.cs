@@ -120,6 +120,11 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
             }
         }
 
+        public void CheckForEmptyStacks()
+        {
+            foreach (var itemID in keyValuePairs.Keys) CheckForEmptyStacks(itemID);
+        }
+
         private int GetItemCount(ItemID itemID, out List<ItemStack> itemsStacks) =>
             keyValuePairs.TryGetValue(itemID, out itemsStacks) ? itemsStacks.Sum(itemStack => itemStack.Amount) : 0;
 
