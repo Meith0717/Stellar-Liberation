@@ -32,8 +32,20 @@ namespace StellarLiberation.Game.Layers
 
             mFrame = new() { Height = 900, Width = 1600, Anchor = Anchor.Center};
             mFrame.AddChild(new UiText(FontRegistries.subTitleFont, "Trading") { Anchor = Anchor.NW, VSpace = 20, HSpace = 20 });
-            mFrame.AddChild(new UiInventory(mSellInventory, BreakSell, 4, 2) { Anchor = Anchor.CenterV, Width = 400, Height = 200, RelY = .25f});
-            mFrame.AddChild(new UiInventory(mBuyInventory, null, 4, 2) { Anchor = Anchor.CenterV, Width = 400, Height = 200, RelY = .6f});
+
+            var centerGrid = new UiGrid(1, 5) { Anchor = Anchor.S, Width = 450, Height = 775, VSpace = 20, HSpace = 20 };
+            mFrame.AddChild(centerGrid);
+
+            centerGrid.Set(0, 0, new UiText(FontRegistries.subTitleFont, "Sell") { Anchor = Anchor.Center });
+            centerGrid.Set(0, 1, new UiInventory(mSellInventory, BreakSell, 4, 2) { Anchor = Anchor.S, Width = 400, Height = 200 });
+            centerGrid.Set(0, 2, new UiText(FontRegistries.subTitleFont, "Buy") { Anchor = Anchor.Center });
+            centerGrid.Set(0, 3, new UiInventory(mBuyInventory, null, 4, 2) { Anchor = Anchor.S, Width = 400, Height = 200 });
+
+            var bottomGrid =  new UiGrid(1, 2) { Anchor = Anchor.Center, FillScale = FillScale.Both };
+            centerGrid.Set(0, 4, bottomGrid);
+
+            bottomGrid.Set(0, 1, new UiButton(MenueSpriteRegistries.button, "Trade") { Anchor = Anchor.Center, TextAllign = TextAllign.Center });
+
 
             // Player Inventory
             var playerSide = new UiFrame() { Height = 800, Width = 550, Anchor = Anchor.SW, VSpace = 20, HSpace = 20, Alpha = 0};
