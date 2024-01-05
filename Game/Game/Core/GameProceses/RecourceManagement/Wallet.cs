@@ -13,6 +13,8 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
         [JsonProperty]
         public int Balance { get; private set; }
 
+        public Wallet(int balance = 1000) => Balance = balance;
+
         public void Add(int amount) => Balance += amount;
 
         public bool Remove(int amount)

@@ -17,15 +17,22 @@ namespace StellarLiberation.Game.Layers
 {
     public class TradeLayer : Layer
     {
+        private readonly TradingSystem mTradingSystem;
+        private readonly Wallet mWallet;
+
         private readonly UiFrame mFrame;
         private readonly Inventory mPlayerInventory;
         private readonly Inventory mTraderInventory;
         private readonly Inventory mSellInventory;
         private readonly Inventory mBuyInventory;
+        private readonly UiText mUiBalance;
+        private readonly UiText mUIWallet;
 
         public TradeLayer(Inventory playerInventory, Inventory traderInventory, Wallet wallet)
             : base(false)
         {
+            mWallet = wallet;
+            mTradingSystem = new();
             mPlayerInventory = playerInventory;
             mTraderInventory = traderInventory;
             mSellInventory = new(8, 8);
@@ -47,7 +54,8 @@ namespace StellarLiberation.Game.Layers
             var bottomGrid =  new UiGrid(1, 2) { Anchor = Anchor.Center, FillScale = FillScale.Both };
             centerGrid.Set(0, 4, bottomGrid);
             
-            bottomGrid.Set(0, 1, new UiButton(MenueSpriteRegistries.button, "Trade") { Anchor = Anchor.Center, TextAllign = TextAllign.Center, OnClickAction = Trade});
+            bottomGrid.Set(0, 1, new UiButton(MenueSpriteRegistries.button, "Trade") { Anchor = Anchor.Center, TextAllign = TextAllign.Center, OnClickAction = () => Trade(wallet)});
+            bottomGrid.Set(0, 0, mUiBalance = new UiText(FontRegistries.textFont, "Balance n.a") { Anchor = Anchor.Center });
 
             // Player Inventory
             var playerSide = new UiFrame() { Height = 800, Width = 550, Anchor = Anchor.W};
@@ -57,7 +65,7 @@ namespace StellarLiberation.Game.Layers
             var walletGrid = new UiGrid(2, 1) { Width = 200, Height = 50, Anchor = Anchor.SE };
             playerSide.AddChild(walletGrid);
             walletGrid.Set(0, 0, new UiText(FontRegistries.textFont, "Credits:") { Anchor = Anchor.Center });
-            walletGrid.Set(1, 0, new UiText(FontRegistries.textFont, wallet.Balance.ToString()) { Anchor = Anchor.Center });
+            walletGrid.Set(1, 0, mUIWallet = new UiText(FontRegistries.textFont, wallet.Balance.ToString()) { Anchor = Anchor.Center });
 
             // Trader Inventory
             var traderSide = new UiFrame() { Height = 800, Width = 550, Anchor = Anchor.E};
@@ -71,6 +79,7 @@ namespace StellarLiberation.Game.Layers
             if (!mSellInventory.HasSpace(itemStack.ItemID)) return;
             if (!mTraderInventory.HasSpace(itemStack.ItemID)) return;
             var newItemStack = itemStack.Split(1);
+            mTradingSystem.AddSellingItem(newItemStack);
             mSellInventory.Add(newItemStack);
             mPlayerInventory.CheckForEmptyStacks(itemStack.ItemID);
         }
@@ -78,6 +87,7 @@ namespace StellarLiberation.Game.Layers
         private void RedoSell(ItemStack itemStack)
         {
             var newItemStack = itemStack.Split(1);
+            mTradingSystem.RemoveSellingItem(newItemStack);
             mPlayerInventory.Add(newItemStack);
             mSellInventory.CheckForEmptyStacks(itemStack.ItemID);
         }
@@ -87,6 +97,7 @@ namespace StellarLiberation.Game.Layers
             if (!mBuyInventory.HasSpace(itemStack.ItemID)) return;
             if (!mPlayerInventory.HasSpace(itemStack.ItemID)) return;
             var newItemStack = itemStack.Split(1);
+            mTradingSystem.AddBuyingItem(newItemStack);
             mBuyInventory.Add(newItemStack);
             mTraderInventory.CheckForEmptyStacks(itemStack.ItemID);
         }
@@ -94,12 +105,14 @@ namespace StellarLiberation.Game.Layers
         private void RedoBuy(ItemStack itemStack)
         {
             var newItemStack = itemStack.Split(1);
+            mTradingSystem.RemoveBuyingItem(newItemStack);
             mTraderInventory.Add(newItemStack);
             mBuyInventory.CheckForEmptyStacks(itemStack.ItemID);
         }
 
-        private void Trade()
+        private void Trade(Wallet wallet)
         {
+            if (!mTradingSystem.TryToTrade(wallet)) return;
             foreach (var itemStack in mSellInventory.ItemStacks.ToList())
             {
                 mTraderInventory.Add(itemStack);
@@ -128,6 +141,9 @@ namespace StellarLiberation.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            mUiBalance.Text = $"Balance {mTradingSystem.GetBalance()}";
+            mUIWallet.Text = mWallet.Balance.ToString();
+
             inputState.DoAction(ActionType.ESC, LayerManager.PopLayer);
             inputState.DoAction(ActionType.Trading, LayerManager.PopLayer);
             mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
