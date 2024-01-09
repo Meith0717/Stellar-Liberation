@@ -1,4 +1,4 @@
-﻿// EnemyFactory.cs 
+﻿// AlliedFactory.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
@@ -6,17 +6,18 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameProceses.AI.Behaviors;
 using StellarLiberation.Game.Core.GameProceses.AI.Behaviors.Combat;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Allies;
 
 namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys
 {
-    public enum EnemyId { EnemyBattleShip, EnemyBomber, EnemyFighter, EnemyCarrior }
+    public enum AlliedId { AlliedBattleShip, AlliedBomber, AlliedFighter, AlliedCarrior }
 
-    public static class EnemyFactory
+    public static class AlliedFactory
     {
-        private class Carrior : EnemyShip
+        private class Carrior : AlliedShip
         {
             internal Carrior(Vector2 position)
-                : base(position, GameSpriteRegistries.enemyCarrior, 4, new(80000), new(1f, 0.01f), new(1000, new(255, 4, 0), 1, 1, 10000), new(100, 100, 0))
+                : base(position, GameSpriteRegistries.enemyCarrior, 4, new(80000), new(1f, 0.01f), new(1000, new(255, 4, 0), 1, 1, 10000), new(100, 100, 0), new(5000))
             {
                 WeaponSystem.PlaceTurret(new(new(1100, 600), 1, TextureDepth + 1));
                 WeaponSystem.PlaceTurret(new(new(975, 600), 1, TextureDepth + 1));
@@ -55,10 +56,10 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys
             }
         }
 
-        internal class BattleShip : EnemyShip
+        internal class BattleShip : AlliedShip
         {
             public BattleShip(Vector2 position)
-                : base(position, GameSpriteRegistries.enemyBattleShip, 1, new(50000), new(2f, 0.01f), new(1000, new(255, 4, 0), 1, 1, 10000), new(100, 100, 0))
+                : base(position, GameSpriteRegistries.enemyBattleShip, 1, new(50000), new(2f, 0.01f), new(1000, Color.IndianRed, 1, 1, 10000), new(100, 100, 0), new(5000))
             {
                 WeaponSystem.PlaceTurret(new(new(110, 35), 1, TextureDepth + 1));
                 WeaponSystem.PlaceTurret(new(new(110, -35), 1, TextureDepth + 1));
@@ -75,10 +76,10 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys
             }
         }
 
-        internal class Bomber : EnemyShip
+        internal class Bomber : AlliedShip
         {
             public Bomber(Vector2 position)
-                : base(position, GameSpriteRegistries.enemyBomber, 0.7f, new(20000), new(3f, 0.01f), new(1000, new(255, 4, 0), 1, 1, 10000), new(100, 100, 0))
+                : base(position, GameSpriteRegistries.enemyBomber, 0.7f, new(20000), new(3f, 0.01f), new(1000, Color.IndianRed, 1, 1, 10000), new(100, 100, 0), new(5000))
             {
                 WeaponSystem.PlaceTurret(new(new(-50, 106), 1, TextureDepth + 1));
                 WeaponSystem.PlaceTurret(new(new(-50, -106), 1, TextureDepth + 1));
@@ -94,10 +95,10 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys
             }
         }
 
-        internal class Fighter : EnemyShip
+        internal class Fighter : AlliedShip
         {
             public Fighter(Vector2 position)
-                : base(position, GameSpriteRegistries.enemyFighter, 0.2f, new(10000), new(4f, 0.2f), new(1000, new(255, 4, 0), 1, 1, 10000), new(20, 20, 0))
+                : base(position, GameSpriteRegistries.enemyFighter, 0.2f, new(10000), new(4f, 0.2f), new(1000, Color.IndianRed, 1, 1, 10000), new(20, 20, 0), new(5000))
             {
                 WeaponSystem.PlaceTurret(new(new(0, 0), 1, TextureDepth + 1));
 
@@ -108,12 +109,12 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys
             }
         }
 
-        internal static EnemyShip Get(EnemyId id, Vector2 position) => id switch
+        internal static AlliedShip Get(AlliedId id, Vector2 position) => id switch
         {
-            EnemyId.EnemyCarrior => new Carrior(position),
-            EnemyId.EnemyBattleShip => new BattleShip(position),
-            EnemyId.EnemyBomber => new Bomber(position),
-            EnemyId.EnemyFighter => new Fighter(position),
+            AlliedId.AlliedCarrior => new Carrior(position),
+            AlliedId.AlliedBattleShip => new BattleShip(position),
+            AlliedId.AlliedBomber => new Bomber(position),
+            AlliedId.AlliedFighter => new Fighter(position),
             _ => throw new System.NotImplementedException()
         };
     }

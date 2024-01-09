@@ -30,8 +30,8 @@ namespace StellarLiberation.Game.Core.GameProceses.ProjectileManagement
             ShieldDamage = shieldDamage;
             TextureColor = color;
             Origine = origine;
-            Velocity = 20;
-            DisposeTime = 500;
+            Velocity = 15;
+            DisposeTime = 1500;
         }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)

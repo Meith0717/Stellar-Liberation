@@ -57,9 +57,13 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             Danger = danger;
             SystemBounding = new(mStar.Position, radius);
 
-            for (int i = 0; i < 10; i++) GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyBattleShip, ExtendetRandom.NextVectorInCircle(SystemBounding)));
-            for (int i = 0; i < 10; i++) GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyBomber, ExtendetRandom.NextVectorInCircle(SystemBounding)));
-            for (int i = 0; i < 5; i++) GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyCarrior, ExtendetRandom.NextVectorInCircle(SystemBounding)));
+            for (int i = 0; i < 5; i++) GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyBattleShip, ExtendetRandom.NextVectorInCircle(SystemBounding)));
+            for (int i = 0; i < 4; i++) GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyBomber, ExtendetRandom.NextVectorInCircle(SystemBounding)));
+            for (int i = 0; i < 1; i++) GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyCarrior, ExtendetRandom.NextVectorInCircle(SystemBounding)));
+
+            for (int i = 0; i < 5; i++) GameObjects.AddObj(AlliedFactory.Get(AlliedId.AlliedBattleShip, ExtendetRandom.NextVectorInCircle(SystemBounding)));
+            for (int i = 0; i < 4; i++) GameObjects.AddObj(AlliedFactory.Get(AlliedId.AlliedBomber, ExtendetRandom.NextVectorInCircle(SystemBounding)));
+            for (int i = 0; i < 1; i++) GameObjects.AddObj(AlliedFactory.Get(AlliedId.AlliedCarrior, ExtendetRandom.NextVectorInCircle(SystemBounding)));
 
             GameObjects.AddObj(new ScienceStation(ExtendetRandom.NextVectorInCircle(SystemBounding)));
             GameObjects.AddObj(mStar);
