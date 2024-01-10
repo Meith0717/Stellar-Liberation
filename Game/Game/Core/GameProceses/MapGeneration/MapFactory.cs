@@ -2,7 +2,6 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using MathNet.Numerics.Distributions;
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
@@ -10,7 +9,7 @@ using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using System;
 using System.Collections.Generic;
 
-namespace StellarLiberation.Game.Core.GameProceses.MapSystem
+namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
 {
     public static class MapFactory
     {
@@ -23,25 +22,18 @@ namespace StellarLiberation.Game.Core.GameProceses.MapSystem
         {
             planetSystems = new();
 
-            var noiseMapGenerator = new NoiseMapGenerator(mSectorCountWidth, mSectorCountHeight);
-            var noiseMap = noiseMapGenerator.GenerateBinaryNoiseMap();
+            var noiseMap = BinaryMapGenerator.Generate(mSectorCountWidth, mSectorCountHeight, 6464733);
+            var positions = BinaryMapGenerator.GetVector2sFormBinaryMap(noiseMap);
+            BinaryMapGenerator.ScaleVector2s(ref positions, MapScale);
+            BinaryMapGenerator.ShiftVector2s(ref positions, 35, 6464733);
 
             int rows = noiseMap.GetLength(0);
             int columns = noiseMap.GetLength(1);
 
-            for (int x = 0; x < rows; x++)
+            foreach( var position in positions )
             {
-                for (int y = 0; y < columns; y++)
-                {
-                    if (noiseMap[x, y] == 0) continue;
-
-                    // Generate Star
-
-                    // Generate Planet System
-                    var danger = GetDanger(x, y);
-                    var planetSystem = new PlanetSystem(GetScalingPosition(x, y, MapScale), danger);
-                    planetSystems.Add(planetSystem);
-                }
+                var planetSystem = new PlanetSystem(position, Danger.None);
+                planetSystems.Add(planetSystem);
             }
         }
 
@@ -84,8 +76,7 @@ namespace StellarLiberation.Game.Core.GameProceses.MapSystem
         public static Vector2 GetScalingPosition(int x, int y, int scaling)
         {
             var sectorBegin = new Vector2(x, y) * scaling + new Vector2(scaling, scaling) * 0.2f;
-            var sectorEnd = sectorBegin + new Vector2(scaling, scaling) * 0.6f;
-            return ExtendetRandom.GetRandomVector2(sectorBegin, sectorEnd);
+            return sectorBegin;
         }
 
         public static Planet GetPlanet(Vector2 orbitCenter, int oribitRadius, int orbitNumber) => orbitNumber switch
