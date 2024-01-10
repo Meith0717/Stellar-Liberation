@@ -13,19 +13,20 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
 {
     public static class MapFactory
     {
-        public readonly static int mSectorCountWidth = 40;
-        public readonly static int mSectorCountHeight = 40;
+        public readonly static int mSectorCountWidth = 70;
+        public readonly static int mSectorCountHeight = 70;
         public readonly static int MapScale = 100;
         public readonly static int ViewScale = 1000000;
 
         public static void Generate(out HashSet<PlanetSystem> planetSystems)
         {
             planetSystems = new();
+            var seededRandom = new Random(6464733);
 
-            var noiseMap = BinaryMapGenerator.Generate(mSectorCountWidth, mSectorCountHeight, 6464733);
+            var noiseMap = BinaryMapGenerator.Generate(mSectorCountWidth, mSectorCountHeight, seededRandom);
             var positions = BinaryMapGenerator.GetVector2sFormBinaryMap(noiseMap);
             BinaryMapGenerator.ScaleVector2s(ref positions, MapScale);
-            BinaryMapGenerator.ShiftVector2s(ref positions, 35, 6464733);
+            BinaryMapGenerator.ShiftVector2s(ref positions, 35, seededRandom);
 
             int rows = noiseMap.GetLength(0);
             int columns = noiseMap.GetLength(1);
@@ -44,7 +45,7 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
 
             for (int i = 0; i < numAsteroids; i++)
             {
-                float angle = (float)random.NextDouble() * 2f * MathF.PI; // Random angle in radians
+                float angle = (float)random.NextDouble() * 2f * MathF.PI;
                 float radius = (float)(random.NextDouble() * (radiusMax - radiusMin) + radiusMin);
 
                 float x = center.X + radius * MathF.Cos(angle);

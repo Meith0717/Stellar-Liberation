@@ -11,10 +11,9 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
 {
     public static class BinaryMapGenerator
     {
-        public static int[,] Generate(int width, int height, int seed)
+        public static int[,] Generate(int width, int height, Random seededRandom)
         {
             int[,] matrix = new int[width, height];
-            var random = new Random(seed);
 
             // Mittelpunkt des Kreises
             int centerX = height / 2;
@@ -29,7 +28,7 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
                 {
                     // Berechnung der Entfernung zum Mittelpunkt
                     double distanceToCenter = Math.Sqrt(Math.Pow(i - centerY, 2) + Math.Pow(j - centerX, 2));
-                    matrix[i, j] = (distanceToCenter < radius) ? (random.NextDouble() < .2 ? 0 : 1) : 0;
+                    matrix[i, j] = (distanceToCenter < radius) ? (seededRandom.NextDouble() < .2 ? 0 : 1) : 0;
                 }
             }
             return matrix;
@@ -58,12 +57,11 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
             for (int i = 0; i < list.Count; i++) list[i] *= scaling;
         }
 
-        public static void ShiftVector2s(ref List<Vector2> list, int shiftLength, int seed)
+        public static void ShiftVector2s(ref List<Vector2> list, int shiftLength, Random seededRandom)
         {
-            var random = new Random(seed);
             for (int i = 0; i < list.Count; i++)
             {
-                random.NextUnitVector(out var shiftingDirection);
+                seededRandom.NextUnitVector(out var shiftingDirection);
                 list[i] += shiftingDirection * shiftLength ;
             }
         }
