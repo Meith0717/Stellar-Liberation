@@ -18,13 +18,11 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
     [Collidable]
     public class Star : GameObject2D
     {
-        [JsonProperty]
-        public Color LightColor { get; private set; }
 
-        public Star(Vector2 position, string textureId, float textureScale, Color starColor)
-            : base(position, textureId, textureScale, 1)
+        public Star(float textureScale, Color starColor)
+            : base(Vector2.Zero, GameSpriteRegistries.star, textureScale, 1)
         {
-            LightColor = starColor;
+            TextureColor = starColor;
         }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
@@ -38,7 +36,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         {
             base.Draw(scene);
             TextureManager.Instance.DrawGameObject(this);
-            TextureManager.Instance.Draw(GameSpriteRegistries.starLightAlpha.Name, Position, TextureOffset, TextureScale * 2f, Rotation, 3, LightColor);
+            TextureManager.Instance.Draw(GameSpriteRegistries.starLightAlpha.Name, Position, TextureOffset, TextureScale * 7f, Rotation, 3, TextureColor);
         }
     }
 }

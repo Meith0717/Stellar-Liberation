@@ -3,6 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGeneration;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
@@ -28,12 +29,10 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
             BinaryMapGenerator.ScaleVector2s(ref positions, MapScale);
             BinaryMapGenerator.ShiftVector2s(ref positions, 35, seededRandom);
 
-            int rows = noiseMap.GetLength(0);
-            int columns = noiseMap.GetLength(1);
-
             foreach( var position in positions )
             {
                 var planetSystem = new PlanetSystem(position, Danger.None);
+                planetSystem.SetObjects(StarGenerator.Generat(seededRandom));
                 planetSystems.Add(planetSystem);
             }
         }

@@ -16,9 +16,10 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
     {
         public readonly PlanetSystem mPlanetSystem;
 
-        public MapPlanetSystem(Vector2 position, PlanetSystem planetSystem, string textureId) : base(position, textureId, 0.01f, 1)
+        public MapPlanetSystem(Vector2 position, PlanetSystem planetSystem, string textureId, Color textureColor) : base(position, textureId, 0.01f, 1)
         {
             mPlanetSystem = planetSystem;
+            TextureColor = textureColor;
         }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)

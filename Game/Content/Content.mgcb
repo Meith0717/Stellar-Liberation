@@ -21,20 +21,6 @@
 /processorParam:TextureFormat=Compressed
 /build:fonts/buttonFont.spritefont
 
-#begin fonts/buttonFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:fonts/buttonFont.spritefont
-
-#begin fonts/debugFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:fonts/debugFont.spritefont
-
 #begin fonts/debugFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -56,33 +42,12 @@
 /processorParam:TextureFormat=Compressed
 /build:fonts/subTitleFont.spritefont
 
-#begin fonts/subTitleFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:fonts/subTitleFont.spritefont
-
 #begin fonts/textFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:fonts/textFont.spritefont
-
-#begin fonts/textFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:fonts/textFont.spritefont
-
-#begin fonts/titleFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:fonts/titleFont.spritefont
 
 #begin fonts/titleFont.spritefont
 /importer:FontDescriptionImporter
@@ -1368,6 +1333,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/gameSprites/gameObjects/astronomicalbodys/stars/Old/O.png
+
+#begin textures/gameSprites/gameObjects/astronomicalbodys/stars/star.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/astronomicalbodys/stars/star.png
 
 #begin textures/gameSprites/gameObjects/astronomicalbodys/stars/StarLightAlpha.png
 /importer:TextureImporter
