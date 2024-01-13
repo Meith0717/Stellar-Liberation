@@ -16,7 +16,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys
         private class Carrior : EnemyShip
         {
             internal Carrior(Vector2 position)
-                : base(position, GameSpriteRegistries.enemyCarrior, 4, new(80000), new(1f, 0.01f), new(1000, new(255, 4, 0), 1, 1, 10000), new(100, 100, 0))
+                : base(position, GameSpriteRegistries.destroyer, 4, new(80000), new(1f, 0.01f), new(1000, new(255, 4, 0), 1, 1, 10000), new(100, 100, 0))
             {
                 WeaponSystem.PlaceTurret(new(new(1100, 600), 1, TextureDepth + 1));
                 WeaponSystem.PlaceTurret(new(new(975, 600), 1, TextureDepth + 1));
@@ -44,21 +44,18 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys
                 WeaponSystem.PlaceTurret(new(new(-200, 50), 1, TextureDepth + 1));
                 WeaponSystem.PlaceTurret(new(new(-300, 50), 1, TextureDepth + 1));
 
-                mAi = new(new()
-                {
-                    new PatrollBehavior(),
-                    new InterceptBehavior(),
-                    new FarCombatBehavior(),
-                    new SpawnFighterBehavior(20000),
-                    new FleeBehavior()
-                });
+                mUtilityAi.AddBehavior(new PatrollBehavior());
+                mUtilityAi.AddBehavior(new InterceptBehavior());
+                mUtilityAi.AddBehavior(new FarCombatBehavior());
+                mUtilityAi.AddBehavior(new SpawnFighterBehavior(20000));
+                mUtilityAi.AddBehavior(new FleeBehavior());
             }
         }
 
         internal class BattleShip : EnemyShip
         {
             public BattleShip(Vector2 position)
-                : base(position, GameSpriteRegistries.enemyBattleShip, 1, new(50000), new(2f, 0.01f), new(1000, new(255, 4, 0), 1, 1, 10000), new(100, 100, 0))
+                : base(position, GameSpriteRegistries.cruiser, 1, new(50000), new(2f, 0.01f), new(1000, new(255, 4, 0), 1, 1, 10000), new(100, 100, 0))
             {
                 WeaponSystem.PlaceTurret(new(new(110, 35), 1, TextureDepth + 1));
                 WeaponSystem.PlaceTurret(new(new(110, -35), 1, TextureDepth + 1));
@@ -66,45 +63,38 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys
                 WeaponSystem.PlaceTurret(new(new(-130, -100), 1, TextureDepth + 1));
                 WeaponSystem.PlaceTurret(new(new(-150, -0), 1, TextureDepth + 1));
 
-                mAi = new(new() {
-                    new PatrollBehavior(),
-                    new InterceptBehavior(),
-                    new CloseCombatBehavior(),
-                    new FleeBehavior()
-                });
+                mUtilityAi.AddBehavior(new PatrollBehavior());
+                mUtilityAi.AddBehavior(new InterceptBehavior());
+                mUtilityAi.AddBehavior(new CloseCombatBehavior());
+                mUtilityAi.AddBehavior(new FleeBehavior());
             }
         }
 
         internal class Bomber : EnemyShip
         {
             public Bomber(Vector2 position)
-                : base(position, GameSpriteRegistries.enemyBomber, 0.7f, new(20000), new(3f, 0.01f), new(1000, new(255, 4, 0), 1, 1, 10000), new(100, 100, 0))
+                : base(position, GameSpriteRegistries.bomber, 0.7f, new(20000), new(3f, 0.01f), new(1000, new(255, 4, 0), 1, 1, 10000), new(100, 100, 0))
             {
                 WeaponSystem.PlaceTurret(new(new(-50, 106), 1, TextureDepth + 1));
                 WeaponSystem.PlaceTurret(new(new(-50, -106), 1, TextureDepth + 1));
                 WeaponSystem.PlaceTurret(new(new(-60, 0), 1, TextureDepth + 1));
 
-                mAi = new(new()
-                {
-                    new PatrollBehavior(),
-                    new InterceptBehavior(),
-                    new CloseCombatBehavior(),
-                    new FleeBehavior()
-                });
+                mUtilityAi.AddBehavior(new PatrollBehavior());
+                mUtilityAi.AddBehavior(new InterceptBehavior());
+                mUtilityAi.AddBehavior(new CloseCombatBehavior());
+                mUtilityAi.AddBehavior(new FleeBehavior());
             }
         }
 
         internal class Fighter : EnemyShip
         {
             public Fighter(Vector2 position)
-                : base(position, GameSpriteRegistries.enemyFighter, 0.2f, new(10000), new(4f, 0.2f), new(1000, new(255, 4, 0), 1, 1, 10000), new(20, 20, 0))
+                : base(position, GameSpriteRegistries.fighter, 0.2f, new(10000), new(4f, 0.2f), new(1000, new(255, 4, 0), 1, 1, 10000), new(20, 20, 0))
             {
                 WeaponSystem.PlaceTurret(new(new(0, 0), 1, TextureDepth + 1));
 
-                mAi = new(new() {
-                    new InterceptBehavior(),
-                    new CloseCombatBehavior(),
-                });
+                mUtilityAi.AddBehavior(new InterceptBehavior());
+                mUtilityAi.AddBehavior(new CloseCombatBehavior());
             }
         }
 

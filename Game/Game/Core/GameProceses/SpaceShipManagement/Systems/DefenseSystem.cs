@@ -86,7 +86,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems
 
         public void DrawShields(SpaceShip spaceShip)
         {
-            var color = new Color((int)(87 * mShieldDrawAlpha), (int)(191 * mShieldDrawAlpha), (int)(255 * mShieldDrawAlpha), (int)(255 * mShieldDrawAlpha));
+            var color = new Color((int)(255 * mShieldDrawAlpha), (int)(255 * mShieldDrawAlpha), (int)(255 * mShieldDrawAlpha), (int)(255 * mShieldDrawAlpha));
             TextureManager.Instance.Draw($"{spaceShip.TextureId}Shield", spaceShip.Position, spaceShip.TextureScale, spaceShip.Rotation, spaceShip.TextureDepth + 1, color);
         }
     }

@@ -100,18 +100,52 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegi
         public readonly static Registry darkMatter = new(items, "darkMatter");
 
         private readonly static string spacecrafts = @"textures\gameSprites\gameobjects\spacecrafts";
-        public readonly static Registry player = new(spacecrafts, "player");
-        public readonly static Registry playerShield = new(spacecrafts, "playerShield");
-        public readonly static Registry enemyFighter = new(spacecrafts, "enemyFighter");
-        public readonly static Registry enemyFighterShield = new(spacecrafts, "enemyFighterShield");
-        public readonly static Registry enemyBomber = new(spacecrafts, "enemyBomber");
-        public readonly static Registry enemyBomberShield = new(spacecrafts, "enemyBomberShield");
-        public readonly static Registry enemyBattleShip = new(spacecrafts, "enemyBattleShip");
-        public readonly static Registry enemyBattleShipShield = new(spacecrafts, "enemyBattleShipShield");
-        public readonly static Registry enemyCarrior = new(spacecrafts, "enemyCarrior");
-        public readonly static Registry enemyCarriorShield = new(spacecrafts, "enemyCarriorShield");
         public readonly static Registry unkownObj = new(spacecrafts, "unkownObj");
         public readonly static Registry scienceStation = new(spacecrafts, "scienceStation");
+
+        private readonly static string spaceShips= @"textures\gameSprites\gameobjects\spacecrafts\spaceShips";
+        // cargo
+        public readonly static Registry cargo = new(spaceShips, "cargo");
+        public readonly static Registry cargoBorders = new(spaceShips, "cargoBorders");
+        public readonly static Registry cargoFrame = new(spaceShips, "cargoFrame");
+        public readonly static Registry cargoHull = new(spaceShips, "cargoHull");
+        public readonly static Registry cargoShield = new(spaceShips, "cargoShield");
+        public readonly static Registry cargoStructure = new(spaceShips, "cargoStructure");
+        // fighter
+        public readonly static Registry fighter = new(spaceShips, "fighter");
+        public readonly static Registry fighterBorders = new(spaceShips, "fighterBorders");
+        public readonly static Registry fighterFrame = new(spaceShips, "fighterFrame");
+        public readonly static Registry fighterHull = new(spaceShips, "fighterHull");
+        public readonly static Registry fighterShield = new(spaceShips, "fighterShield");
+        public readonly static Registry fighterStructure = new(spaceShips, "fighterStructure");
+        // bomber
+        public readonly static Registry bomber = new(spaceShips, "bomber");
+        public readonly static Registry bomberBorders = new(spaceShips, "bomberBorders");
+        public readonly static Registry bomberFrame = new(spaceShips, "bomberFrame");
+        public readonly static Registry bomberHull = new(spaceShips, "bomberHull");
+        public readonly static Registry bomberShield = new(spaceShips, "bomberShield");
+        public readonly static Registry bomberStructure = new(spaceShips, "bomberStructure");
+        // corvette
+        public readonly static Registry corvette = new(spaceShips, "corvette");
+        public readonly static Registry corvetteBorders = new(spaceShips, "corvetteBorders");
+        public readonly static Registry corvetteFrame = new(spaceShips, "corvetteFrame");
+        public readonly static Registry corvetteHull = new(spaceShips, "corvetteHull");
+        public readonly static Registry corvetteShield = new(spaceShips, "corvetteShield");
+        public readonly static Registry corvetteStructure = new(spaceShips, "corvetteStructure");
+        // destroyer
+        public readonly static Registry destroyer = new(spaceShips, "destroyer");
+        public readonly static Registry destroyerBorders = new(spaceShips, "destroyerBorders");
+        public readonly static Registry destroyerFrame = new(spaceShips, "destroyerFrame");
+        public readonly static Registry destroyerHull = new(spaceShips, "destroyerHull");
+        public readonly static Registry destroyerShield = new(spaceShips, "destroyerShield");
+        public readonly static Registry destroyerStructure = new(spaceShips, "destroyerStructure");
+        // cruiser
+        public readonly static Registry cruiser = new(spaceShips, "cruiser");
+        public readonly static Registry cruiserBorders = new(spaceShips, "cruiserBorders");
+        public readonly static Registry cruiserFrame = new(spaceShips, "cruiserFrame");
+        public readonly static Registry cruiserHull = new(spaceShips, "cruiserHull");
+        public readonly static Registry cruiserShield = new(spaceShips, "cruiserShield");
+        public readonly static Registry cruiserStructure = new(spaceShips, "cruiserStructure");
 
         private readonly static string weapons = @"textures\gameSprites\gameobjects\weapons";
         public readonly static Registry projectile = new(weapons, "projectile");

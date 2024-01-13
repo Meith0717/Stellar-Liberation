@@ -6,14 +6,11 @@ using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
-using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PropulsionSystem;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.WeaponSystem;
-using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys
 {

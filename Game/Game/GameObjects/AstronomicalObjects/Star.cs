@@ -3,7 +3,6 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
@@ -20,7 +19,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
     {
 
         public Star(float textureScale, Color starColor)
-            : base(Vector2.Zero, GameSpriteRegistries.star, textureScale, 1)
+            : base(Vector2.Zero, GameSpriteRegistries.star, textureScale * 5f, 1)
         {
             TextureColor = starColor;
         }

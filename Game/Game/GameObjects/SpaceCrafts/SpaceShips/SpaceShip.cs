@@ -17,7 +17,6 @@ using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.Propu
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.WeaponSystem;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
-using StellarLiberation.Game.GameObjects.Recources.Items;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys;
 using System;
 using System.Linq;
@@ -30,19 +29,18 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
     [Collidable]
     public abstract class SpaceShip : GameObject2D
     {
-        [JsonIgnore] protected UtilityAi mAi;
-        [JsonProperty] protected bool IsDestroyed { get; private set; }
-        [JsonIgnore] public SensorSystem SensorArray { get; private set; }
-        [JsonIgnore] public SublightDrive SublightEngine { get; private set; }
-        [JsonIgnore] public HyperDrive HyperDrive { get; private set; }
-        [JsonIgnore] public TurretSystem WeaponSystem { get; private set; }
-        [JsonIgnore] public DefenseSystem DefenseSystem { get; private set; }
-        [JsonIgnore] public Fractions Fraction;
+        [JsonIgnore] protected readonly UtilityAi mUtilityAi;
+        [JsonIgnore] public readonly SensorSystem SensorArray;
+        [JsonIgnore] public readonly SublightDrive SublightEngine;
+        [JsonIgnore] public readonly HyperDrive HyperDrive;
+        [JsonIgnore] public readonly TurretSystem WeaponSystem;
+        [JsonIgnore] public readonly DefenseSystem DefenseSystem;
+        [JsonIgnore] public readonly Fractions Fraction;
 
-
-        public SpaceShip(Vector2 position, string textureId, float textureScale, SensorSystem sensorArray, SublightDrive sublightEngine, TurretSystem weaponSystem, DefenseSystem defenseSystem, Fractions fractions)
-            : base(position, textureId, textureScale, 10)
+        public SpaceShip(Vector2 position, string TextureID, float textureScale, SensorSystem sensorArray, SublightDrive sublightEngine, TurretSystem weaponSystem, DefenseSystem defenseSystem, Fractions fractions)
+            : base(position, TextureID, textureScale, 10)
         {
+            mUtilityAi = new();
             SensorArray = sensorArray;
             SublightEngine = sublightEngine;
             HyperDrive = new(500);
@@ -62,15 +60,14 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             GameObject2DMover.Move(gameTime, this, scene);
             base.Update(gameTime, inputState, scene);
 
-            if (DefenseSystem.HullPercentage <= 0 && !IsDestroyed) Explode(scene);
-
             HasProjectileHit(gameTime, scene);
             DefenseSystem.Update(gameTime);
             SensorArray.Scan(Position, Fraction, scene);
-            if (!IsDestroyed) WeaponSystem.Update(gameTime, this, scene.GameLayer.CurrentSystem.GameObjects);
-            mAi.Update(gameTime, this, scene);
+            WeaponSystem.Update(gameTime, this, scene.GameLayer.CurrentSystem.GameObjects);
+            mUtilityAi.Update(gameTime, this, scene);
 
-            if (!IsDestroyed) return;
+            if (DefenseSystem.HullPercentage > 0) return;
+            ExplosionEffect.ShipDestroyed(Position, scene.ParticleManager);
             Dispose = true;
         }
 
@@ -97,31 +94,16 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
         {
             base.Draw(scene);
 
-            if (IsDestroyed) return;
             scene.GameLayer.DebugSystem.DrawSensorRadius(Position, SensorArray.ShortRangeScanDistance, scene);
-            TextureManager.Instance.DrawGameObject(this);
+
+            TextureManager.Instance.Draw($"{TextureId}Borders", Position, TextureScale, Rotation, TextureDepth, Color.MonoGameOrange);
+            TextureManager.Instance.Draw($"{TextureId}Frame", Position, TextureScale, Rotation, TextureDepth, Color.White);
+            TextureManager.Instance.Draw($"{TextureId}Hull", Position, TextureScale, Rotation, TextureDepth, Color.LightGray);
+            TextureManager.Instance.Draw($"{TextureId}Structure", Position, TextureScale, Rotation, TextureDepth, Color.Black);
+
             WeaponSystem.Draw(scene);
             SublightEngine.Draw(scene.GameLayer.DebugSystem, this, scene);
             DefenseSystem.DrawShields(this);
-        }
-
-        public void Explode(Scene scene)
-        {
-            IsDestroyed = true;
-            Velocity = 0;
-
-            var shakeamount = (500000 - Vector2.Distance(scene.Camera2D.Position, Position)) / 500000;
-            if (shakeamount < 0) shakeamount = 0;
-            ExplosionEffect.ShipDestroyed(Position, scene.ParticleManager);
-
-            scene.GameLayer.CurrentSystem.GameObjects.AddObj(ItemFactory.Get(ItemID.Iron, MovingDirection, Position));
-            scene.GameLayer.CurrentSystem.GameObjects.AddObj(ItemFactory.Get(ItemID.Gold, MovingDirection, Position));
-            scene.GameLayer.CurrentSystem.GameObjects.AddObj(ItemFactory.Get(ItemID.Titanium, MovingDirection, Position));
-            scene.GameLayer.CurrentSystem.GameObjects.AddObj(ItemFactory.Get(ItemID.Platin, MovingDirection, Position));
-            scene.GameLayer.CurrentSystem.GameObjects.AddObj(ItemFactory.Get(ItemID.QuantumCrystals, MovingDirection, Position));
-            scene.GameLayer.CurrentSystem.GameObjects.AddObj(ItemFactory.Get(ItemID.DarkMatter, MovingDirection, Position));
-
-            return;
         }
     }
 }

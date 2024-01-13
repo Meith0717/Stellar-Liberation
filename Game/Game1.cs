@@ -11,8 +11,6 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Layers;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace StellarLiberation
 {
@@ -51,7 +49,7 @@ namespace StellarLiberation
         {
             mSpriteBatch = new SpriteBatch(GraphicsDevice);
             ContentLoader.PreLoad(Content, mSpriteBatch);
-            ContentLoader.LoadAsync(Content, mSpriteBatch, () => mLayerManager.AddLayer(new MainMenueLayer()), null);
+            ContentLoader.LoadAsync(Content, mSpriteBatch, () => mLayerManager.AddLayer(new MainMenueLayer()),(ex) => throw ex);
         }
 
         protected override void Update(GameTime gameTime)
