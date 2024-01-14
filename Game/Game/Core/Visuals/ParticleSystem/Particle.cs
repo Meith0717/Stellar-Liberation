@@ -24,7 +24,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
-            GameObject2DMover.Move(gameTime, this, scene);
+            GameObject2DMover.Move(gameTime, this);
             base.Update(gameTime, inputState, scene);
         }
 

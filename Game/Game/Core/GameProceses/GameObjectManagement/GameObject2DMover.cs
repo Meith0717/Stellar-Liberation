@@ -15,5 +15,10 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             gameObject2D.Position += gameObject2D.MovingDirection * gameObject2D.Velocity * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             gameObject2D.AddToSpatialHashing(scene);
         }
+
+        public static void Move(GameTime gameTime, GameObject2D gameObject2D)
+        {
+            gameObject2D.Position += gameObject2D.MovingDirection * gameObject2D.Velocity * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+        }
     }
 }

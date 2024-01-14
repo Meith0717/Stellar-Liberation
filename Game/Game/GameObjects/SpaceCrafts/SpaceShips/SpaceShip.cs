@@ -51,7 +51,6 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
-
             HyperDrive.Update(gameTime, this, scene);
             if (!HyperDrive.IsActive) SublightEngine.Update(gameTime, this);
 

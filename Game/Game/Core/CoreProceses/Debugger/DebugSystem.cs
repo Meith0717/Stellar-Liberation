@@ -142,7 +142,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
         {
             if (!ShowSensorRadius) { return; }
             CircleF box = new(center, radius);
-            TextureManager.Instance.DrawAdaptiveCircle(box.Position, box.Radius, Color.Red, 2, (int)TextureManager.Instance.MaxLayerDepth,
+            TextureManager.Instance.DrawAdaptiveCircle(box.Position, box.Radius, Color.LightBlue, 2, (int)TextureManager.Instance.MaxLayerDepth,
                 scene.Camera2D.Zoom);
         }
     }

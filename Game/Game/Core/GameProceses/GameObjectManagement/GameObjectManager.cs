@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
+using StellarLiberation.Game.Core.Visuals.Rendering;
 using System;
 using System.Collections.Generic;
 
@@ -25,14 +26,14 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             foreach (GameObject2D obj in values) AddObj(obj);
         }
 
-        public virtual bool RemobeObj(GameObject2D onj)
+        public bool RemobeObj(GameObject2D onj)
         {
             if (!Objects.Contains(onj)) return false;
             mRemovedObjects.Add(onj);
             return true;
         }
 
-        public virtual void Update(GameTime gameTime, InputState inputState, Scene scene)
+        public void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
             Objects.AddRange(mAddedObjects);
             mAddedObjects.Clear();
@@ -53,6 +54,15 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
                 item.RemoveFromSpatialHashing(scene);
             }
             mRemovedObjects.Clear();
+        }
+
+        public void Draw(Scene scene)
+        {
+            foreach (var obj in Objects)
+            {
+                if (!scene.Camera2D.Intersects(obj.BoundedBox)) return;
+                obj.Draw(scene);
+            }
         }
     }
 }

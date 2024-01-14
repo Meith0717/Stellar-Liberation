@@ -22,7 +22,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.SceneManagement
 
         public Vector2 WorldMousePosition { get; private set; }
         public readonly SpatialHashing<GameObject2D> SpatialHashing;
-        public readonly ParticleManager ParticleManager;
+        public readonly GameObjectManager ParticleManager;
         public readonly Camera2D Camera2D;
         public readonly GameLayer GameLayer;
         public readonly UiFrame PopupLayer;
@@ -63,6 +63,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.SceneManagement
             spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: mViewTransformationMatrix, samplerState: SamplerState.PointClamp);
             DrawOnWorldView(sceneManagerLayer, spriteBatch);
             Camera2D.Draw(this);
+            ParticleManager.Draw(this);
             PopupLayer.Draw();
             sceneManagerLayer.DebugSystem.DrawOnScene(this);
             spriteBatch.End();
