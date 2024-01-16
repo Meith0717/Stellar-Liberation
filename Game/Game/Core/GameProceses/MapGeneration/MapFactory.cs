@@ -14,8 +14,8 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
 {
     public static class MapFactory
     {
-        public readonly static int mSectorCountWidth = 70;
-        public readonly static int mSectorCountHeight = 70;
+        public readonly static int mSectorCountWidth = 10;
+        public readonly static int mSectorCountHeight = 10;
         public readonly static int MapScale = 100;
         public readonly static int ViewScale = 1000000;
 

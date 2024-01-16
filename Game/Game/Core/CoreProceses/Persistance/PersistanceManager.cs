@@ -49,6 +49,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Persistance
                 }
                 catch (Exception ex)
                 {
+                    throw ex;
                     onError?.Invoke(ex);
                 }
             });

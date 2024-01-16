@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
         [JsonProperty] public float Velocity { get; set; }
 
         // Texture Stuff
-        [JsonProperty] public Color TextureColor = Color.White;
+        [JsonProperty] public Color TextureColor;
         [JsonProperty] public float TextureScale;
         [JsonProperty] public readonly string TextureId;
         [JsonProperty] public readonly int TextureDepth;
@@ -49,6 +49,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             TextureId = textureId;
             TextureScale = textureScale;
             TextureDepth = textureDepth;
+            TextureColor = Color.White;
 
             mTextureWidth = TextureManager.Instance.GetTexture(textureId).Width;
             mTextureHeight = TextureManager.Instance.GetTexture(textureId).Height;
