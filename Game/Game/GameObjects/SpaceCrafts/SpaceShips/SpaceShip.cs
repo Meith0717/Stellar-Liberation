@@ -62,7 +62,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             HasProjectileHit(gameTime, scene);
             DefenseSystem.Update(gameTime);
             SensorArray.Scan(Position, Fraction, scene);
-            WeaponSystem.Update(gameTime, this, scene.GameLayer.CurrentSystem.GameObjects);
+            WeaponSystem.Update(gameTime, this, scene.GameLayer.CurrentSystem.GameObjectManager);
             mUtilityAi.Update(gameTime, this, scene);
 
             if (DefenseSystem.HullPercentage > 0) return;

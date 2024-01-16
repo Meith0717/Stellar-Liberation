@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
-using StellarLiberation.Game.Core.Visuals.Rendering;
 using System;
 using System.Collections.Generic;
 
@@ -26,7 +25,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             foreach (GameObject2D obj in values) AddObj(obj);
         }
 
-        public bool RemobeObj(GameObject2D onj)
+        public bool RemoveObj(GameObject2D onj)
         {
             if (!Objects.Contains(onj)) return false;
             mRemovedObjects.Add(onj);

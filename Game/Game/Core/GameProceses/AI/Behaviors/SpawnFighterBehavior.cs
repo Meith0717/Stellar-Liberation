@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
                 var fighter = EnemyFactory.Get(EnemyId.EnemyFighter, position);
                 var target = ExtendetRandom.GetRandomElement(spaceShip.SensorArray.OpponentsInRannge);
                 fighter.WeaponSystem.AimShip(target);
-                scene.GameLayer.CurrentSystem.GameObjects.AddObj(fighter);
+                scene.GameLayer.CurrentSystem.GameObjectManager.AddObj(fighter);
                 mSpawnCoolDown = 0;
             }
         }

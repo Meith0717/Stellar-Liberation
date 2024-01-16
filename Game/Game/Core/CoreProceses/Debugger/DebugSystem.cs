@@ -65,7 +65,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
             inputState.DoAction(ActionType.F9, () => SpawnCarrior = true);
         }
 
-        public void CheckForSpawn(PlanetSystem planetSystem, Scene scene)
+        public void CheckForSpawn(PlanetSystemInstance planetSystem, Scene scene)
         {
             if (SpawnBattleShip) planetSystem.GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyBattleShip, scene.Camera2D.Position));
             if (SpawnBomber) planetSystem.GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyBomber, scene.Camera2D.Position));

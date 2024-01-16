@@ -1,4 +1,4 @@
-﻿// NewCamera2D.cs 
+﻿// Camera2D.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 

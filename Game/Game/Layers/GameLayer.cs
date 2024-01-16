@@ -14,6 +14,7 @@ using StellarLiberation.Game.Core.GameProceses.MapGeneration;
 using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
+using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Allies;
 using StellarLiberation.Game.Layers.Scenes;
 using System;
@@ -47,8 +48,8 @@ namespace StellarLiberation.Game.Layers
 
             // Add Main Scene
             CurrentSystem = PlanetSystems.First();
-            Player.Position = ExtendetRandom.NextVectorInCircle(CurrentSystem.SystemBounding);
-            mPlanetSystemScene = new(this, CurrentSystem, 1);
+            Player.Position = Vector2.Zero;
+            mPlanetSystemScene = new(this, CurrentSystem.GetInstance(), 1);
             HudLayer = new(mPlanetSystemScene);
         }
 
@@ -87,12 +88,12 @@ namespace StellarLiberation.Game.Layers
 
         public void ChangePlanetSystem(PlanetSystem planetSystem)
         {
+            CurrentSystem.ClearInstance();
             CurrentSystem = planetSystem;
             var zoom = mPlanetSystemScene.Camera2D.Zoom;
             RemoveScene(mPlanetSystemScene);
-            mPlanetSystemScene = new PlanetSystemScene(this, CurrentSystem, zoom);
+            mPlanetSystemScene = new PlanetSystemScene(this, CurrentSystem.GetInstance(), zoom);
             AddScene(mPlanetSystemScene);
-            Player.Position = ExtendetRandom.NextVectorInCircle(CurrentSystem.SystemBounding);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// TextureRegistries.cs 
+﻿// GameSpriteRegistries.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 

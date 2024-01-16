@@ -1,4 +1,4 @@
-﻿// Camera2DController.cs 
+﻿// Camera2DMover.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 

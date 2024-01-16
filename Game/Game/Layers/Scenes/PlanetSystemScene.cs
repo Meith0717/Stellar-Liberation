@@ -6,16 +6,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
-using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.GridSystem;
-using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Allies;
-using System.IO.IsolatedStorage;
 
 namespace StellarLiberation.Game.Layers.Scenes
 {
@@ -23,10 +19,10 @@ namespace StellarLiberation.Game.Layers.Scenes
     {
         private readonly UiFrame mBackgroundLayer;
 
-        private readonly PlanetSystem mPlanetSystem;
+        private readonly PlanetSystemInstance mPlanetSystem;
         private readonly Grid mGrid;
 
-        public PlanetSystemScene(GameLayer gameLayer, PlanetSystem currentPlanetSystem, float camZoom) : base(gameLayer, 50000)
+        public PlanetSystemScene(GameLayer gameLayer, PlanetSystemInstance currentPlanetSystem, float camZoom) : base(gameLayer, 50000)
         {
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn };
             mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
@@ -43,7 +39,7 @@ namespace StellarLiberation.Game.Layers.Scenes
 
             mPlanetSystem.UpdateObjects(gameTime, inputState, this);
             GameLayer.Player.Update(gameTime, inputState, this);
-            GameLayer.DebugSystem.CheckForSpawn(GameLayer.CurrentSystem, this);
+            GameLayer.DebugSystem.CheckForSpawn(GameLayer.CurrentSystem.GetInstance(), this);
 
             Camera2D.Position = GameLayer.Player.Position;
             Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, .001f, 1);

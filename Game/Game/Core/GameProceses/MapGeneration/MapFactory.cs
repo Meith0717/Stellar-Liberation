@@ -2,8 +2,8 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using MathNet.Numerics.Random;
 using Microsoft.Xna.Framework;
-using StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGeneration;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
@@ -14,8 +14,8 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
 {
     public static class MapFactory
     {
-        public readonly static int mSectorCountWidth = 10;
-        public readonly static int mSectorCountHeight = 10;
+        public readonly static int mSectorCountWidth = 100;
+        public readonly static int mSectorCountHeight = 100;
         public readonly static int MapScale = 100;
         public readonly static int ViewScale = 1000000;
 
@@ -31,8 +31,7 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
 
             foreach( var position in positions )
             {
-                var planetSystem = new PlanetSystem(position, Danger.None);
-                planetSystem.SetObjects(StarGenerator.Generat(seededRandom));
+                var planetSystem = new PlanetSystem(position, seededRandom.NextFullRangeInt32());
                 planetSystems.Add(planetSystem);
             }
         }
