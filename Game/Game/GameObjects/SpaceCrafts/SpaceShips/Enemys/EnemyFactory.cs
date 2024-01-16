@@ -13,9 +13,9 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys
 
     public static class EnemyFactory
     {
-        private class Carrior : EnemyShip
+        internal class Carrior : EnemyShip
         {
-            internal Carrior(Vector2 position)
+            public Carrior(Vector2 position)
                 : base(position, GameSpriteRegistries.destroyer, 4, new(80000), new(1f, 0.01f), new(1000, new(255, 4, 0), 1, 1, 10000), new(100, 100, 0))
             {
                 WeaponSystem.PlaceTurret(new(new(1100, 600), 1, TextureDepth + 1));
