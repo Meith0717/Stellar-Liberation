@@ -6,9 +6,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.Utilitys;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 {
@@ -21,7 +19,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
         private readonly List<SoundEffect> mMusics = new();
         private SoundEffectInstance mMusicInstance;
         private bool mLoadet;
-        public float OverallVolume = 1f;
+        public float OverallVolume = 0f;
 
         public void LoadRegistries(ContentManager content, List<Registry> registries)
         {

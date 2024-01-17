@@ -54,43 +54,5 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
 
             return asteroids;
         }
-
-        private static Danger GetDanger(int x, int y) => Hash(x, y) switch
-        {
-            > 0.8 => Danger.None,
-            > 0.6 => Danger.Moderate,
-            > 0.4 => Danger.Medium,
-            _ => Danger.High
-        };
-
-        private static double Hash(int x, int y)
-        {
-            var centerX = mSectorCountWidth / 2;
-            var centerY = mSectorCountHeight / 2;
-            var center = new Vector2(centerX, centerY);
-            var distance = Vector2.Distance(center, new(x, y));
-            return distance / Math.Min(centerX, centerY);
-        }
-
-        public static Vector2 GetScalingPosition(int x, int y, int scaling)
-        {
-            var sectorBegin = new Vector2(x, y) * scaling + new Vector2(scaling, scaling) * 0.2f;
-            return sectorBegin;
-        }
-
-        public static Planet GetPlanet(Vector2 orbitCenter, int oribitRadius, int orbitNumber) => orbitNumber switch
-        {
-            1 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Warm(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
-            2 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Warm(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
-            3 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Tessatial(orbitCenter, oribitRadius), new PlanetTypes.Dry(orbitCenter, oribitRadius) }),
-            4 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Dry(orbitCenter, oribitRadius), new PlanetTypes.Tessatial(orbitCenter, oribitRadius) }),
-            5 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Tessatial(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
-            6 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Stone(orbitCenter, oribitRadius), new PlanetTypes.Gas(orbitCenter, oribitRadius) }),
-            7 => new PlanetTypes.Gas(orbitCenter, oribitRadius),
-            8 => new PlanetTypes.Gas(orbitCenter, oribitRadius),
-            9 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Cold(orbitCenter, oribitRadius), new PlanetTypes.Gas(orbitCenter, oribitRadius) }),
-            10 => new PlanetTypes.Cold(orbitCenter, oribitRadius),
-            _ => null
-        };
     }
 }

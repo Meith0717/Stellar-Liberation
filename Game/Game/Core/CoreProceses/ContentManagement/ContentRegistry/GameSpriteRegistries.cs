@@ -63,16 +63,9 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegi
         public readonly static Registry planetShadow = new(planets, "planetShadow");
 
         private readonly static string stars = @"textures\gameSprites\gameobjects\astronomicalbodys\stars";
-        public readonly static Registry starA = new(stars, "A");
-        public readonly static Registry starB = new(stars, "B");
-        public readonly static Registry starF = new(stars, "F");
-        public readonly static Registry starG = new(stars, "G");
-        public readonly static Registry starK = new(stars, "K");
-        public readonly static Registry starM = new(stars, "M");
-        public readonly static Registry starO = new(stars, "O");
         public readonly static Registry starBH = new(stars, "BH");
-        public readonly static Registry starLightAlpha = new(stars, "StarLightAlpha");
         public readonly static Registry star = new(stars, "star");
+        public readonly static Registry starLightAlpha = new(stars, "StarLightAlpha");
 
         private readonly static string asteroids = @"textures\gameSprites\gameobjects\astronomicalbodys\asteroids";
         public readonly static Registry asteroid1 = new(asteroids, "asteroid1");

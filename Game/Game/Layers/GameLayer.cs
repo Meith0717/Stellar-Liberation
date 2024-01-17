@@ -40,7 +40,7 @@ namespace StellarLiberation.Game.Layers
         [JsonIgnore]
         private PlanetSystemScene mPlanetSystemScene;
         [JsonIgnore]
-        public readonly HudLayer HudLayer;
+        public HudLayer HudLayer;
 
         public GameLayer() : base()
         {
@@ -49,13 +49,13 @@ namespace StellarLiberation.Game.Layers
             // Add Main Scene
             CurrentSystem = PlanetSystems.First();
             Player.Position = Vector2.Zero;
-            mPlanetSystemScene = new(this, CurrentSystem.GetInstance(), 1);
-            HudLayer = new(mPlanetSystemScene);
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager)
         {
             base.Initialize(game1, layerManager, graphicsDevice, persistanceManager);
+            mPlanetSystemScene = new(this, CurrentSystem.GetInstance(), 1);
+            HudLayer = new(mPlanetSystemScene);
             LayerManager.AddLayer(HudLayer);
             AddScene(mPlanetSystemScene);
         }

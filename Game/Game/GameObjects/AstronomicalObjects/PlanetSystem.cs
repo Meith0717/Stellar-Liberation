@@ -37,8 +37,9 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             var star = StarGenerator.Generat(seededRandom);
             TextureColor = star.TextureColor;
 
-            astronomicalObjsManager.AddObj(star);
 
+            astronomicalObjsManager.AddObj(star);
+            for (int i = 0; i < 5; i++) astronomicalObjsManager.AddObj(PlanetTypes.GetPlanet(Position, (i * 5000) + 20000));
             mInstance = new(GameObjectManager, astronomicalObjsManager);
             return mInstance;
         }
