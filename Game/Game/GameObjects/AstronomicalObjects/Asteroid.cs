@@ -18,16 +18,15 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
     [Collidable]
     public class Asteroid : GameObject2D
     {
-        public Asteroid(Vector2 position)
-            : base(position, GameSpriteRegistries.asteroid1, 5f, 50) { }
+        public Asteroid(Vector2 position, string textureID, float textureScale)
+            : base(position, textureID, textureScale, 50) { }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
-            RemoveFromSpatialHashing(scene);
             base.Update(gameTime, inputState, scene);
             Rotation += .01f;
             CheckForHit(gameTime, scene);
-            AddToSpatialHashing(scene);
+            GameObject2DMover.Move(gameTime, this, scene);
         }
 
         private void CheckForHit(GameTime gameTime, Scene scene)
