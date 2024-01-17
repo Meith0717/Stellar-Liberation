@@ -28,10 +28,10 @@ jobs:
       
     - name: Set release tag
       run: |
-        $latestTag = git tag -l 'v*' | ForEach-Object { [int]($_ -replace '^v') } | Sort-Object -Descending | Select-Object -First 1
-        $newTag = "v$($latestTag + 1)"
-        echo "RELEASE_TAG=$newTag" >> $env:GITHUB_ENV  
-
+        latestTag=$(git tag -l 'v*' | sed 's/^v//' | awk '{print int($0)}' | sort -nr | head -n 1)
+        newTag="v$((latestTag + 1))"
+        echo "RELEASE_TAG=$newTag" >> $GITHUB_ENV
+        
     - name: Create game release
       id: create_release
       uses: softprops/action-gh-release@v1
