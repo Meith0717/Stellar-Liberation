@@ -26,7 +26,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
 
         public static void Buckets(Scene scene, Vector2 mousePosition)
         {
-            var screen = scene.ViewFrustumFilter.WorldFrustum;
+            var screen = scene.Camera2D.Bounds;
             var size = scene.SpatialHashing.CellSize;
             var depth = (int)TextureManager.Instance.MaxLayerDepth;
 

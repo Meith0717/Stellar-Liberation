@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems
@@ -86,7 +86,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems
 
         public void DrawShields(SpaceShip spaceShip)
         {
-            var color = new Color((int)(87 * mShieldDrawAlpha), (int)(191 * mShieldDrawAlpha), (int)(255 * mShieldDrawAlpha), (int)(255 * mShieldDrawAlpha));
+            var color = new Color((int)(255 * mShieldDrawAlpha), (int)(255 * mShieldDrawAlpha), (int)(255 * mShieldDrawAlpha), (int)(255 * mShieldDrawAlpha));
             TextureManager.Instance.Draw($"{spaceShip.TextureId}Shield", spaceShip.Position, spaceShip.TextureScale, spaceShip.Rotation, spaceShip.TextureDepth + 1, color);
         }
     }

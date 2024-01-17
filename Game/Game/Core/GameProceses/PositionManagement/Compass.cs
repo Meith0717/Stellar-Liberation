@@ -3,9 +3,10 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.GameObjectManagement;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.ProjectileManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem;
@@ -20,15 +21,15 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
         private readonly Dictionary<Vector2, string> mKeyValuePairs = new();
         private CircleF mCompass;
 
-        public void Update(Vector2 position, ViewFrustumFilter viewFrustumFilter, List<GameObject2D> objects)
+        public void Update(Vector2 position, GraphicsDevice graphicsDevice, List<GameObject2D> objects)
         {
             mKeyValuePairs.Clear();
-            mCompass = new CircleF(viewFrustumFilter.ViewFrustum.Center, MathF.Min(viewFrustumFilter.ViewFrustum.Width, viewFrustumFilter.ViewFrustum.Height) * 0.45f);
+            mCompass = new CircleF(graphicsDevice.Viewport.Bounds.Center, MathF.Min(graphicsDevice.Viewport.Width, graphicsDevice.Viewport.Height) * 0.45f);
             foreach (var obj in objects)
             {
-                if (viewFrustumFilter.CircleOnWorldView(obj.BoundedBox)) continue;
+                if (graphicsDevice.Viewport.Bounds.Intersects(obj.BoundedBox)) continue;
                 if (obj is Projectile || obj is Particle || obj is Asteroid) continue;
-                var rectangle = viewFrustumFilter.ViewFrustum;
+                var rectangle = graphicsDevice.Viewport.Bounds;
                 rectangle.Inflate(-25, -25);
                 var pos = Geometry.GetPointOnCircle(mCompass, Geometry.AngleBetweenVectors(position, obj.Position));
                 mKeyValuePairs[pos] = obj.TextureId;

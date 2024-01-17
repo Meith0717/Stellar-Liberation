@@ -4,13 +4,14 @@
 
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
 
 namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
 {
     public class HyperDriveEffect
     {
-        public static void Charge(Vector2 position, ParticleManager particleManager)
+        public static void Charge(Vector2 position, GameObjectManager particleManager)
         {
             var size = ExtendetRandom.Random.Next(1, 10) * 0.01f;
 
@@ -21,11 +22,11 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
                 var velocity = ExtendetRandom.Random.Next(50, 100) * .01f;
 
                 var particle = new Particle(spawnPos, direction, size, velocity, new(214, 234, 248), ExtendetRandom.Random.Next(50, 800));
-                particleManager.AddParticle(particle);
+                particleManager.AddObj(particle);
             }
         }
 
-        public static void Stop(Vector2 position, ParticleManager particleManager)
+        public static void Stop(Vector2 position, GameObjectManager particleManager)
         {
             var size = ExtendetRandom.Random.Next(1, 10) * 0.01f;
 
@@ -35,7 +36,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
                 var velocity = ExtendetRandom.Random.Next(50, 100) * .01f;
 
                 var particle = new Particle(position, direction, size, velocity, new(214, 234, 248), ExtendetRandom.Random.Next(50, 800));
-                particleManager.AddParticle(particle);
+                particleManager.AddObj(particle);
             }
         }
     }

@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,23 +16,25 @@ public class LayerManager
 {
     private readonly Game1 mGame1;
     private readonly GraphicsDevice mGraphicsDevice;
-    private readonly Serialize mSerialize;
+    private readonly PersistanceManager mPersistanceManager;
+    public readonly ResolutionManager ResolutionManager;
 
     // layer stack
-    private readonly LinkedList<Layer> mLayerStack = new LinkedList<Layer>();
+    private readonly LinkedList<Layer> mLayerStack = new();
 
-    public LayerManager(Game1 game1, GraphicsDevice graphicsDevice, Serialize serialize)
+    public LayerManager(Game1 game1, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, ResolutionManager resolutionManager)
     {
         mGame1 = game1;
         mGraphicsDevice = graphicsDevice;
-        mSerialize = serialize;
+        ResolutionManager = resolutionManager;
+        mPersistanceManager = persistanceManager;
     }
 
     // add and remove layers from stack
     public void AddLayer(Layer layer)
     {
         mLayerStack.AddLast(layer);
-        layer.Initialize(mGame1, this, mGraphicsDevice, mSerialize);
+        layer.Initialize(mGame1, this, mGraphicsDevice, mPersistanceManager);
     }
 
     public void PopLayer()
@@ -46,7 +49,10 @@ public class LayerManager
     // update layers
     public void Update(GameTime gameTime, InputState inputState)
     {
-        foreach (Layer layer in mLayerStack.Reverse())
+        if (ResolutionManager.WasResized) OnResolutionChanged();
+
+        var reversedStack = mLayerStack.Reverse();
+        foreach (Layer layer in reversedStack)
         {
             layer.Update(gameTime, inputState);
             if (!layer.UpdateBelow) break;
@@ -56,7 +62,7 @@ public class LayerManager
     // draw layers
     public void Draw(SpriteBatch spriteBatch)
     {
-        foreach (Layer layer in mLayerStack)
+        foreach (Layer layer in mLayerStack.ToList())
         {
             layer.Draw(spriteBatch);
         }
@@ -65,24 +71,15 @@ public class LayerManager
     // lifecycle methods
     public void Exit()
     {
-        foreach (Layer layer in mLayerStack)
-        {
-            layer.Destroy();
-        }
+        foreach (Layer layer in mLayerStack) layer.Destroy();
         mGame1.Exit();
     }
 
     // fullscreen stuff
-    public void OnResolutionChanged()
+    private void OnResolutionChanged()
     {
-        foreach (Layer layer in mLayerStack.ToArray())
-        {
-            layer.OnResolutionChanged();
-        }
+        foreach (Layer layer in mLayerStack.ToArray()) layer.OnResolutionChanged();
     }
 
-    public bool ContainsLayer(Layer layer)
-    {
-        return mLayerStack.Contains(layer);
-    }
+    public bool ContainsLayer(Layer layer) => mLayerStack.Contains(layer);
 }

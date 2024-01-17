@@ -8,8 +8,9 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
-using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
+using StellarLiberation.Game.Core.UserInterface.UiElements;
 using StellarLiberation.Game.Core.Utilitys;
 using System;
 
@@ -53,7 +54,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         public override void Draw(Scene scene)
         {
             base.Draw(scene);
-            TextureManager.Instance.Draw(TextureRegistries.planetShadow, Position, TextureOffset, TextureScale * 1.05f, mShadowRotation, TextureDepth + 1, Color.White);
+            TextureManager.Instance.Draw(GameSpriteRegistries.planetShadow, Position, TextureOffset, TextureScale * 1.05f, mShadowRotation, TextureDepth + 1, Color.White);
             TextureManager.Instance.DrawGameObject(this);
         }
     }

@@ -14,22 +14,20 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 [Serializable]
 public abstract class Layer
 {
-    protected Game1 mGame1;
-    protected LayerManager mLayerManager;
-    protected GraphicsDevice mGraphicsDevice;
-    protected Serialize mSerialize;
-
-    [JsonProperty]
-    public bool UpdateBelow { get; private set; }
+    [JsonIgnore] public readonly bool UpdateBelow ;
+    [JsonIgnore] public LayerManager LayerManager { get; private set; } 
+    [JsonIgnore] protected Game1 mGame1;
+    [JsonIgnore] protected GraphicsDevice mGraphicsDevice;
+    [JsonIgnore] protected PersistanceManager mPersistanceManager;
 
     protected Layer(bool updateBelow) { UpdateBelow = updateBelow; }
 
-    public virtual void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
+    public virtual void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager)
     {
         mGame1 = game1;
-        mLayerManager = layerManager;
+        LayerManager = layerManager;
         mGraphicsDevice = graphicsDevice;
-        mSerialize = serialize;
+        mPersistanceManager = persistanceManager;
     }
 
     public abstract void Update(GameTime gameTime, InputState inputState);

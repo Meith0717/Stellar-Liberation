@@ -28,6 +28,13 @@
 /processorParam:TextureFormat=Compressed
 /build:fonts/debugFont.spritefont
 
+#begin fonts/descriptionFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:fonts/descriptionFont.spritefont
+
 #begin fonts/subTitleFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -49,23 +56,29 @@
 /processorParam:TextureFormat=Compressed
 /build:fonts/titleFont.spritefont
 
-#begin music/bgMusicGame.wav
+#begin music/Sci-Fi 1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:music/bgMusicGame.wav
+/build:music/Sci-Fi 1.wav
 
-#begin music/bgMusicMenue.wav
+#begin music/Sci-fi 2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:music/bgMusicMenue.wav
+/build:music/Sci-fi 2.wav
 
-#begin music/DeepSpace10(loop).wav
+#begin music/Sci-Fi 3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:music/DeepSpace10(loop).wav
+/build:music/Sci-Fi 3.wav
+
+#begin music/Sci-Fi 4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:music/Sci-Fi 4.wav
 
 #begin music/Sci-Fi 5.wav
 /importer:WavImporter
@@ -73,11 +86,23 @@
 /processorParam:Quality=Best
 /build:music/Sci-Fi 5.wav
 
-#begin music/ShoulderOfOrion(loop).wav
+#begin music/Sci-Fi 6.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:music/ShoulderOfOrion(loop).wav
+/build:music/Sci-Fi 6.wav
+
+#begin music/Sci-Fi 7.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:music/Sci-Fi 7.wav
+
+#begin music/Sci-Fi 8.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:music/Sci-Fi 8.wav
 
 #begin sounds/chargeHyperdrive.wav
 /importer:WavImporter
@@ -133,7 +158,7 @@
 /processorParam:Quality=Best
 /build:sounds/torpedoHit.wav
 
-#begin textures/animations/explosion.png
+#begin textures/gameSprites/animations/explosion.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -143,9 +168,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/animations/explosion.png
+/build:textures/gameSprites/animations/explosion.png
 
-#begin textures/background/gameBackground.png
+#begin textures/gameSprites/background/gameBackground.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -155,9 +180,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/background/gameBackground.png
+/build:textures/gameSprites/background/gameBackground.png
 
-#begin textures/background/gameBackgroundParlax.png
+#begin textures/gameSprites/background/mapBackground.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -167,9 +192,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/background/gameBackgroundParlax.png
+/build:textures/gameSprites/background/mapBackground.png
 
-#begin textures/background/gameBackgroundParlax2.png
+#begin textures/gameSprites/crosshair/selectCrosshait.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -179,9 +204,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/background/gameBackgroundParlax2.png
+/build:textures/gameSprites/crosshair/selectCrosshait.png
 
-#begin textures/background/gameBackgroundParlax3.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -191,9 +216,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/background/gameBackgroundParlax3.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid1.png
 
-#begin textures/background/gameBackgroundParlax4.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid10.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -203,9 +228,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/background/gameBackgroundParlax4.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid10.png
 
-#begin textures/background/mapBackground.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid11.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -215,9 +240,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/background/mapBackground.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid11.png
 
-#begin textures/crosshair/dot.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid12.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -227,9 +252,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/crosshair/dot.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid12.png
 
-#begin textures/crosshair/selectCrosshait.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid13.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -239,9 +264,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/crosshair/selectCrosshait.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid13.png
 
-#begin textures/crosshair/targetCrosshair.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid14.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -251,9 +276,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/crosshair/targetCrosshair.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid14.png
 
-#begin textures/cursor.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid15.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -263,9 +288,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/cursor.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid15.png
 
-#begin textures/gameobjects/astronomicalbodys/asteroids/asteroid1.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -275,9 +300,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/asteroids/asteroid1.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid2.png
 
-#begin textures/gameobjects/astronomicalbodys/asteroids/asteroid10.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -287,9 +312,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/asteroids/asteroid10.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid3.png
 
-#begin textures/gameobjects/astronomicalbodys/asteroids/asteroid11.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -299,9 +324,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/asteroids/asteroid11.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid4.png
 
-#begin textures/gameobjects/astronomicalbodys/asteroids/asteroid12.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid5.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -311,9 +336,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/asteroids/asteroid12.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid5.png
 
-#begin textures/gameobjects/astronomicalbodys/asteroids/asteroid13.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -323,9 +348,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/asteroids/asteroid13.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid6.png
 
-#begin textures/gameobjects/astronomicalbodys/asteroids/asteroid14.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid7.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -335,9 +360,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/asteroids/asteroid14.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid7.png
 
-#begin textures/gameobjects/astronomicalbodys/asteroids/asteroid15.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid8.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -347,9 +372,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/asteroids/asteroid15.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid8.png
 
-#begin textures/gameobjects/astronomicalbodys/asteroids/asteroid2.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid9.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -359,9 +384,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/asteroids/asteroid2.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/asteroids/asteroid9.png
 
-#begin textures/gameobjects/astronomicalbodys/asteroids/asteroid3.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/cold1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -371,9 +396,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/asteroids/asteroid3.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/cold1.png
 
-#begin textures/gameobjects/astronomicalbodys/asteroids/asteroid4.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/cold2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -383,9 +408,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/asteroids/asteroid4.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/cold2.png
 
-#begin textures/gameobjects/astronomicalbodys/asteroids/asteroid5.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/cold3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -395,9 +420,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/asteroids/asteroid5.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/cold3.png
 
-#begin textures/gameobjects/astronomicalbodys/asteroids/asteroid6.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/cold4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -407,9 +432,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/asteroids/asteroid6.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/cold4.png
 
-#begin textures/gameobjects/astronomicalbodys/asteroids/asteroid7.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/dry1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -419,9 +444,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/asteroids/asteroid7.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/dry1.png
 
-#begin textures/gameobjects/astronomicalbodys/asteroids/asteroid8.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/dry2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -431,9 +456,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/asteroids/asteroid8.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/dry2.png
 
-#begin textures/gameobjects/astronomicalbodys/asteroids/asteroid9.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/dry3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -443,9 +468,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/asteroids/asteroid9.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/dry3.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/cold1.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/dry4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -455,9 +480,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/cold1.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/dry4.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/cold2.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/dry5.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -467,9 +492,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/cold2.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/dry5.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/cold3.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/dry6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -479,9 +504,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/cold3.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/dry6.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/cold4.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/gas1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -491,9 +516,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/cold4.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/gas1.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/dry1.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/gas2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -503,9 +528,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/dry1.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/gas2.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/dry2.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/gas3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -515,9 +540,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/dry2.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/gas3.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/dry3.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/gas4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -527,9 +552,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/dry3.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/gas4.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/dry4.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/cold1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -539,9 +564,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/dry4.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/cold1.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/dry5.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/cold2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -551,9 +576,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/dry5.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/cold2.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/dry6.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/cold3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -563,9 +588,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/dry6.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/cold3.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/gas1.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/cold4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -575,9 +600,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/gas1.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/cold4.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/gas2.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/dry1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -587,9 +612,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/gas2.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/dry1.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/gas3.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/dry2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -599,9 +624,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/gas3.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/dry2.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/gas4.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/dry3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -611,9 +636,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/gas4.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/dry3.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/planetShadow.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/dry4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -623,9 +648,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/planetShadow.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/dry4.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/stone1.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/dry5.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -635,9 +660,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/stone1.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/dry5.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/stone2.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/dry6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -647,9 +672,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/stone2.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/dry6.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/stone3.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/gas1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -659,9 +684,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/stone3.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/gas1.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/stone4.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/gas2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -671,9 +696,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/stone4.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/gas2.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/stone5.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/gas3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -683,9 +708,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/stone5.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/gas3.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/stone6.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/gas4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -695,9 +720,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/stone6.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/gas4.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/terrestrial1.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/stone1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -707,9 +732,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/terrestrial1.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/stone1.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/terrestrial2.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/stone2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -719,9 +744,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/terrestrial2.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/stone2.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/terrestrial3.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/stone3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -731,9 +756,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/terrestrial3.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/stone3.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/terrestrial4.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/stone4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -743,9 +768,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/terrestrial4.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/stone4.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/terrestrial5.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/stone5.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -755,9 +780,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/terrestrial5.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/stone5.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/terrestrial6.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/stone6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -767,9 +792,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/terrestrial6.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/stone6.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/terrestrial7.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/terrestrial1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -779,9 +804,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/terrestrial7.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/terrestrial1.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/terrestrial8.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/terrestrial2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -791,9 +816,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/terrestrial8.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/terrestrial2.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/warm1.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/terrestrial3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -803,9 +828,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/warm1.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/terrestrial3.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/warm2.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/terrestrial4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -815,9 +840,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/warm2.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/terrestrial4.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/warm3.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/terrestrial5.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -827,9 +852,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/warm3.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/terrestrial5.png
 
-#begin textures/gameobjects/astronomicalbodys/planets/warm4.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/terrestrial6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -839,9 +864,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/planets/warm4.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/terrestrial6.png
 
-#begin textures/gameobjects/astronomicalbodys/stars/A.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/terrestrial7.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -851,9 +876,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/stars/A.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/terrestrial7.png
 
-#begin textures/gameobjects/astronomicalbodys/stars/B.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/terrestrial8.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -863,9 +888,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/stars/B.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/terrestrial8.png
 
-#begin textures/gameobjects/astronomicalbodys/stars/BH.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/warm1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -875,9 +900,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/stars/BH.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/warm1.png
 
-#begin textures/gameobjects/astronomicalbodys/stars/F.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/warm3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -887,9 +912,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/stars/F.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/warm3.png
 
-#begin textures/gameobjects/astronomicalbodys/stars/G.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/warm4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -899,9 +924,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/stars/G.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/Old/warm4.png
 
-#begin textures/gameobjects/astronomicalbodys/stars/K.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/planetShadow.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -911,9 +936,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/stars/K.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/planetShadow.png
 
-#begin textures/gameobjects/astronomicalbodys/stars/M.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/stone1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -923,9 +948,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/stars/M.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/stone1.png
 
-#begin textures/gameobjects/astronomicalbodys/stars/O.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/stone2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -935,9 +960,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/stars/O.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/stone2.png
 
-#begin textures/gameobjects/astronomicalbodys/stars/StarLightAlpha.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/stone3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -947,9 +972,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/astronomicalbodys/stars/StarLightAlpha.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/stone3.png
 
-#begin textures/gameobjects/items/metall.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/stone4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -959,9 +984,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/items/metall.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/stone4.png
 
-#begin textures/gameobjects/items/odyssyum.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/stone5.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -971,9 +996,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/items/odyssyum.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/stone5.png
 
-#begin textures/gameobjects/items/postyum.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/stone6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -983,9 +1008,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/items/postyum.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/stone6.png
 
-#begin textures/gameobjects/spacecrafts/EnemyBattleShip.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/terrestrial1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -995,9 +1020,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/spacecrafts/EnemyBattleShip.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/terrestrial1.png
 
-#begin textures/gameobjects/spacecrafts/enemyBattleShipShield.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/terrestrial2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1007,9 +1032,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/spacecrafts/enemyBattleShipShield.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/terrestrial2.png
 
-#begin textures/gameobjects/spacecrafts/enemyBomber.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/terrestrial3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1019,9 +1044,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/spacecrafts/enemyBomber.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/terrestrial3.png
 
-#begin textures/gameobjects/spacecrafts/enemyBomberShield.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/terrestrial4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1031,9 +1056,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/spacecrafts/enemyBomberShield.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/terrestrial4.png
 
-#begin textures/gameobjects/spacecrafts/enemyCarrior.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/terrestrial5.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1043,9 +1068,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/spacecrafts/enemyCarrior.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/terrestrial5.png
 
-#begin textures/gameobjects/spacecrafts/enemyCarriorShield.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/terrestrial6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1055,9 +1080,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/spacecrafts/enemyCarriorShield.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/terrestrial6.png
 
-#begin textures/gameobjects/spacecrafts/enemyFighter.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/terrestrial7.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1067,9 +1092,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/spacecrafts/enemyFighter.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/terrestrial7.png
 
-#begin textures/gameobjects/spacecrafts/enemyFighterShield.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/terrestrial8.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1079,9 +1104,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/spacecrafts/enemyFighterShield.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/terrestrial8.png
 
-#begin textures/gameobjects/spacecrafts/player.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/warm1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1091,9 +1116,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/spacecrafts/player.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/warm1.png
 
-#begin textures/gameobjects/spacecrafts/playerShield.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/warm2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1103,9 +1128,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/spacecrafts/playerShield.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/warm2.png
 
-#begin textures/gameobjects/spacecrafts/unkownObj.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/warm3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1115,9 +1140,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/spacecrafts/unkownObj.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/warm3.png
 
-#begin textures/gameobjects/weapons/projectile.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/planets/warm4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1127,9 +1152,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/weapons/projectile.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/planets/warm4.png
 
-#begin textures/gameobjects/weapons/turette.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/stars/A.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1139,9 +1164,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/gameobjects/weapons/turette.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/stars/A.png
 
-#begin textures/menueBackground.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/stars/B.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1151,9 +1176,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/menueBackground.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/stars/B.png
 
-#begin textures/particle.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/stars/BH.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1163,9 +1188,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/particle.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/stars/BH.png
 
-#begin textures/pixle.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/stars/F.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1175,9 +1200,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/pixle.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/stars/F.png
 
-#begin textures/placeHolder.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/stars/G.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1187,9 +1212,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/placeHolder.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/stars/G.png
 
-#begin textures/title.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/stars/K.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1199,9 +1224,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/title.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/stars/K.png
 
-#begin textures/userInterface/arrowL.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/stars/M.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1211,9 +1236,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/arrowL.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/stars/M.png
 
-#begin textures/userInterface/arrowR.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/stars/O.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1223,9 +1248,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/arrowR.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/stars/O.png
 
-#begin textures/userInterface/bar/barHorizontalLeft.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/stars/Old/A.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1235,9 +1260,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/barHorizontalLeft.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/stars/Old/A.png
 
-#begin textures/userInterface/bar/barHorizontalMid.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/stars/Old/B.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1247,9 +1272,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/barHorizontalMid.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/stars/Old/B.png
 
-#begin textures/userInterface/bar/barHorizontalRight.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/stars/Old/F.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1259,9 +1284,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/barHorizontalRight.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/stars/Old/F.png
 
-#begin textures/userInterface/bar/barHorizontalShadowLeft.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/stars/Old/G.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1271,9 +1296,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/barHorizontalShadowLeft.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/stars/Old/G.png
 
-#begin textures/userInterface/bar/barHorizontalShadowMid.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/stars/Old/K.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1283,9 +1308,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/barHorizontalShadowMid.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/stars/Old/K.png
 
-#begin textures/userInterface/bar/barHorizontalShadowRight.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/stars/Old/M.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1295,9 +1320,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/barHorizontalShadowRight.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/stars/Old/M.png
 
-#begin textures/userInterface/bar/barVerticalBottom.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/stars/Old/O.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1307,9 +1332,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/barVerticalBottom.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/stars/Old/O.png
 
-#begin textures/userInterface/bar/barVerticalMid.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/stars/star.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1319,9 +1344,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/barVerticalMid.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/stars/star.png
 
-#begin textures/userInterface/bar/barVerticalShadowBottom.png
+#begin textures/gameSprites/gameObjects/astronomicalbodys/stars/StarLightAlpha.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1331,9 +1356,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/barVerticalShadowBottom.png
+/build:textures/gameSprites/gameObjects/astronomicalbodys/stars/StarLightAlpha.png
 
-#begin textures/userInterface/bar/barVerticalShadowMid.png
+#begin textures/gameSprites/gameObjects/items/darkMatter.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1343,9 +1368,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/barVerticalShadowMid.png
+/build:textures/gameSprites/gameObjects/items/darkMatter.png
 
-#begin textures/userInterface/bar/barVerticalShadowTop.png
+#begin textures/gameSprites/gameObjects/items/gold.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1355,9 +1380,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/barVerticalShadowTop.png
+/build:textures/gameSprites/gameObjects/items/gold.png
 
-#begin textures/userInterface/bar/barVerticalTop.png
+#begin textures/gameSprites/gameObjects/items/iron.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1367,9 +1392,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/barVerticalTop.png
+/build:textures/gameSprites/gameObjects/items/iron.png
 
-#begin textures/userInterface/bar/propulsion.png
+#begin textures/gameSprites/gameObjects/items/platin.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1379,9 +1404,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/propulsion.png
+/build:textures/gameSprites/gameObjects/items/platin.png
 
-#begin textures/userInterface/bar/shield.png
+#begin textures/gameSprites/gameObjects/items/quantumCrystals.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1391,9 +1416,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/shield.png
+/build:textures/gameSprites/gameObjects/items/quantumCrystals.png
 
-#begin textures/userInterface/bar/ship.png
+#begin textures/gameSprites/gameObjects/items/titan.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1403,9 +1428,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/bar/ship.png
+/build:textures/gameSprites/gameObjects/items/titan.png
 
-#begin textures/userInterface/buttons/button.png
+#begin textures/gameSprites/gameObjects/particle.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1415,9 +1440,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/buttons/button.png
+/build:textures/gameSprites/gameObjects/particle.png
 
-#begin textures/userInterface/buttons/copyrightButton.png
+#begin textures/gameSprites/gameObjects/placeHolder.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1427,9 +1452,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/buttons/copyrightButton.png
+/build:textures/gameSprites/gameObjects/placeHolder.png
 
-#begin textures/userInterface/buttons/menuButton.png
+#begin textures/gameSprites/gameObjects/spacecrafts/scienceStation.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1439,9 +1464,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/buttons/menuButton.png
+/build:textures/gameSprites/gameObjects/spacecrafts/scienceStation.png
 
-#begin textures/userInterface/buttons/pauseButton.png
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomber.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1451,9 +1476,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/buttons/pauseButton.png
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomber.png
 
-#begin textures/userInterface/layer/circle.png
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomberBorders.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1463,9 +1488,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/layer/circle.png
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomberBorders.png
 
-#begin textures/userInterface/layer/layer.png
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomberBorders.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1475,9 +1500,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/layer/layer.png
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomberBorders.png
 
-#begin textures/userInterface/layer/layer1.png
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomberFrame.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1487,9 +1512,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/layer/layer1.png
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomberFrame.png
 
-#begin textures/userInterface/SliderDot.png
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomberFrame.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1499,5 +1524,1205 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/userInterface/SliderDot.png
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomberFrame.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomberHull.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomberHull.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomberHull.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomberHull.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomberShield.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomberShield.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomberShield.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomberShield.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomberStructure.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomberStructure.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomberStructure.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/bomberStructure.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargo.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargoBorders.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargoBorders.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargoBorders.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargoBorders.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargoFrame.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargoFrame.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargoFrame.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargoFrame.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargoHull.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargoHull.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargoHull.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargoHull.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargoShield.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargoShield.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargoShield.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargoShield.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargoStructure.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargoStructure.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargoStructure.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargoStructure.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvette.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvette.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteBorders.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteBorders.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteBorders.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteBorders.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteFrame.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteFrame.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteFrame.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteFrame.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteHull.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteHull.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteHull.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteHull.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteShield.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteShield.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteShield.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteShield.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteStructure.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteStructure.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteStructure.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteStructure.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiser.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiser.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiserBorders.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiserBorders.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiserBorders.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiserBorders.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiserFrame.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiserFrame.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiserFrame.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiserFrame.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiserHull.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiserHull.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiserHull.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiserHull.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiserShield.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiserShield.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiserShield.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiserShield.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiserStructure.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiserStructure.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiserStructure.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiserStructure.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyer.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyer.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyerBorders.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyerBorders.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyerBorders.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyerBorders.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyerFrame.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyerFrame.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyerFrame.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyerFrame.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyerHull.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyerHull.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyerHull.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyerHull.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyerShield.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyerShield.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyerShield.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyerShield.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyerStructure.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyerStructure.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyerStructure.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/destroyerStructure.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighter.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighter.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighterBorders.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighterBorders.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighterBorders.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighterBorders.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighterFrame.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighterFrame.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighterFrame.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighterFrame.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighterHull.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighterHull.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighterHull.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighterHull.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighterShield.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighterShield.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighterShield.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighterShield.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighterStructure.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighterStructure.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighterStructure.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighterStructure.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/unkownObj.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/unkownObj.png
+
+#begin textures/gameSprites/gameObjects/weapons/photonTorpedo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/weapons/photonTorpedo.png
+
+#begin textures/gameSprites/gameObjects/weapons/projectile.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/weapons/projectile.png
+
+#begin textures/gameSprites/gameObjects/weapons/turette.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/weapons/turette.png
+
+#begin textures/gameSprites/parlaxBackground/gameBackgroundParlax.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/parlaxBackground/gameBackgroundParlax.png
+
+#begin textures/gameSprites/parlaxBackground/gameBackgroundParlax2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/parlaxBackground/gameBackgroundParlax2.png
+
+#begin textures/gameSprites/parlaxBackground/gameBackgroundParlax3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/parlaxBackground/gameBackgroundParlax3.png
+
+#begin textures/gameSprites/parlaxBackground/gameBackgroundParlax4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/parlaxBackground/gameBackgroundParlax4.png
+
+#begin textures/menueSprites/bar/barHorizontalLeft.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/bar/barHorizontalLeft.png
+
+#begin textures/menueSprites/bar/barHorizontalMid.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/bar/barHorizontalMid.png
+
+#begin textures/menueSprites/bar/barHorizontalRight.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/bar/barHorizontalRight.png
+
+#begin textures/menueSprites/bar/barHorizontalShadowLeft.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/bar/barHorizontalShadowLeft.png
+
+#begin textures/menueSprites/bar/barHorizontalShadowMid.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/bar/barHorizontalShadowMid.png
+
+#begin textures/menueSprites/bar/barHorizontalShadowRight.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/bar/barHorizontalShadowRight.png
+
+#begin textures/menueSprites/bar/barVerticalBottom.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/bar/barVerticalBottom.png
+
+#begin textures/menueSprites/bar/barVerticalMid.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/bar/barVerticalMid.png
+
+#begin textures/menueSprites/bar/barVerticalShadowBottom.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/bar/barVerticalShadowBottom.png
+
+#begin textures/menueSprites/bar/barVerticalShadowMid.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/bar/barVerticalShadowMid.png
+
+#begin textures/menueSprites/bar/barVerticalShadowTop.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/bar/barVerticalShadowTop.png
+
+#begin textures/menueSprites/bar/barVerticalTop.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/bar/barVerticalTop.png
+
+#begin textures/menueSprites/buttons/arrowL.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/buttons/arrowL.png
+
+#begin textures/menueSprites/buttons/arrowR.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/buttons/arrowR.png
+
+#begin textures/menueSprites/buttons/button.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/buttons/button.png
+
+#begin textures/menueSprites/buttons/button1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/buttons/button1.png
+
+#begin textures/menueSprites/buttons/copyright.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/buttons/copyright.png
+
+#begin textures/menueSprites/buttons/dot.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/buttons/dot.png
+
+#begin textures/menueSprites/buttons/menu.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/buttons/menu.png
+
+#begin textures/menueSprites/buttons/pause.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/buttons/pause.png
+
+#begin textures/menueSprites/buttons/xMark.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/buttons/xMark.png
+
+#begin textures/menueSprites/layer/edge0.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/layer/edge0.png
+
+#begin textures/menueSprites/layer/edge1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/layer/edge1.png
+
+#begin textures/menueSprites/layer/edge2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/layer/edge2.png
+
+#begin textures/menueSprites/layer/edge3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/layer/edge3.png
+
+#begin textures/menueSprites/textures/cursor.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/textures/cursor.png
+
+#begin textures/menueSprites/textures/loading.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/textures/loading.png
+
+#begin textures/menueSprites/textures/menueBackground.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/textures/menueBackground.png
+
+#begin textures/menueSprites/textures/propulsion.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/textures/propulsion.png
+
+#begin textures/menueSprites/textures/shield.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/textures/shield.png
+
+#begin textures/menueSprites/textures/ship.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/textures/ship.png
 

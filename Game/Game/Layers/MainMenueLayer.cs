@@ -8,49 +8,41 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.Core.CoreProceses.Persistance;
+using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 
 namespace StellarLiberation.Game.Layers
 {
-    internal class MainMenueLayer : Layer
+    public class MainMenueLayer : Layer
     {
-        private UiLayer mFrame;
-        private ButtonInputTracer mButtonHoverTracer;
+        private UiFrame mFrame;
 
         public MainMenueLayer() : base(false)
         {
-            MusicManager.Instance.PlayMusic(MusicRegistries.bgMusicMenue);
-
-            mButtonHoverTracer = new();
             mFrame = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
-            mFrame.AddChild(new UiSprite(TextureRegistries.gameBackground) { FillScale = FillScale.Both });
+            mFrame.AddChild(new UiSprite(MenueSpriteRegistries.menueBackground) { FillScale = FillScale.FillIn, Anchor = Anchor.Center });
 
-            mFrame.AddChild(new UiText(FontRegistries.titleFont, "Stellar\nLiberation") { Anchor = Anchor.NW, HSpace = 20, VSpace = 20 });
+            mFrame.AddChild(new UiText(FontRegistries.titleFont, "Stellar\nLiberation") { Anchor = Anchor.NW, HSpace = 50, VSpace = 50 });
 
-            var newGame = new UiButton(TextureRegistries.button, "New Game") { VSpace = 20, HSpace = 20, RelY = .5f, OnClickAction = StartGame };
-            var _continue = new UiButton(TextureRegistries.button, "Continue") { VSpace = 20, HSpace = 20, RelY = .6f, OnClickAction = null };
-            var settings = new UiButton(TextureRegistries.button, "Settings") { VSpace = 20, HSpace = 20, RelY = .7f, OnClickAction = () => mLayerManager.AddLayer(new SettingsLayer(true)) };
-            var copyright = new UiButton(TextureRegistries.copyrightButton, "") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = null };
-            var exitGame = new UiButton(TextureRegistries.button, "Exit Game") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => mLayerManager.Exit() };
+            mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "New Game") { VSpace = 20, HSpace = 20, RelY = .5f, OnClickAction = () => LayerManager.AddLayer(new GameLayer()) });
 
-            mFrame.AddChild(newGame); mButtonHoverTracer.AddButton(newGame);
-            mFrame.AddChild(_continue); mButtonHoverTracer.AddButton(_continue);
-            mFrame.AddChild(settings); mButtonHoverTracer.AddButton(settings);
-            mFrame.AddChild(exitGame); mButtonHoverTracer.AddButton(exitGame);
-            mFrame.AddChild(copyright); mButtonHoverTracer.AddButton(copyright);
-        }
+            mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Continue") { VSpace = 20, HSpace = 20, RelY = .6f, OnClickAction = () => 
+            {
+                LayerManager.AddLayer(new LoadingLayer());
+                mPersistanceManager.LoadGameLayerAsync((gL) => { LayerManager.PopLayer(); LayerManager.AddLayer(gL); }, (ex) => LayerManager.PopLayer());
+            }
+            });
 
-        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
-        {
-            base.Initialize(game1, layerManager, graphicsDevice, serialize);
-            mFrame.Initialize(mGraphicsDevice.Viewport.Bounds);
+            mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Settings") { VSpace = 20, HSpace = 20, RelY = .7f, OnClickAction = () => LayerManager.AddLayer(new SettingsLayer(true)) });
+
+            mFrame.AddChild(new UiButton(MenueSpriteRegistries.copyright, "") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = null });
+
+            mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Exit Game") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => LayerManager.Exit() });
         }
 
         public override void Destroy()
         {
             SoundEffectManager.Instance.StopAllSounds();
-            MusicManager.Instance.StopAllMusics();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -60,22 +52,17 @@ namespace StellarLiberation.Game.Layers
             spriteBatch.End();
         }
 
-        public override void OnResolutionChanged()
-        {
-            mFrame.OnResolutionChanged(mGraphicsDevice.Viewport.Bounds);
-        }
+        public override void OnResolutionChanged() { }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            inputState.DoAction(ActionType.ESC, mLayerManager.Exit);
-            mButtonHoverTracer.Trace(inputState);
-            mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds);
+            inputState.DoAction(ActionType.ESC, LayerManager.Exit);
+            mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
         }
 
         private void StartGame()
         {
-            MusicManager.Instance.StopAllMusics();
-            mLayerManager.AddLayer(new GameLayer());
+            LayerManager.AddLayer(new GameLayer());
         }
     }
 }

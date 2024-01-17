@@ -5,7 +5,7 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System;
 using System.Collections.Generic;
 
@@ -15,14 +15,13 @@ namespace StellarLiberation.Game.Core.GameProceses.AI
     {
         private Behavior mCurrentBehavior;
         private Behavior mLastBehavior;
-        private readonly HashSet<Behavior> mBehaviors;
+        private readonly HashSet<Behavior> mBehaviors = new();
         public bool Debug = false;
 
         private int mCoolDown;
 
-        public UtilityAi(HashSet<Behavior> behaviors)
+        public UtilityAi()
         {
-            mBehaviors = behaviors;
             mCoolDown = ExtendetRandom.Random.Next(500);
         }
 
@@ -56,7 +55,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI
                 System.Diagnostics.Debug.WriteLineIf(Debug, $"{item.GetType().Name}: {Math.Round(score, 5)}");
                 behaviors.Enqueue(item, -score);
             }
-            if (!behaviors.TryPeek(out var behavior, out var priority)) return null;
+            if (!behaviors.TryPeek(out var behavior, out var _)) return null;
             System.Diagnostics.Debug.WriteLineIf(Debug, $"_____________");
             return behavior;
         }

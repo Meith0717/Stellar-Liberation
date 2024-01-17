@@ -4,49 +4,37 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.Core.CoreProceses.Persistance;
+using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 
 namespace StellarLiberation.Game.Layers
 {
     public class PauseLayer : Layer
     {
-        private UiLayer mBackgroundLayer;
-        private ButtonInputTracer mButtonInputTracer;
+        private UiFrame mBackgroundLayer;
 
-        public PauseLayer()
+        public PauseLayer(GameLayer gameLayer)
             : base(false)
         {
-            mBackgroundLayer = new() { RelHeight = 1, RelWidth = 1, Color = Color.Black, Alpha = .8f };
-            mButtonInputTracer = new();
+            mBackgroundLayer = new() { RelHeight = 1, RelWidth = 1, Color = Color.Transparent };
 
-            var buttonFrame = new UiLayer() { Anchor = Anchor.Center, Height = 300, Width = 300, HSpace = 20, VSpace = 20, Alpha = 0 };
+            var buttonFrame = new UiFrame() { Anchor = Anchor.Center, Height = 500, Width = 400 };
             mBackgroundLayer.AddChild(buttonFrame);
 
-            var _continue = new UiButton(TextureRegistries.button, "Resume") { Anchor = Anchor.N, FillScale = FillScale.X, OnClickAction = () => mLayerManager.PopLayer(), TextAllign = TextAllign.Center };
-            var save = new UiButton(TextureRegistries.button, "Save") { RelY = .27f, FillScale = FillScale.X, OnClickAction = null, TextAllign = TextAllign.Center };
-            var settings = new UiButton(TextureRegistries.button, "Settings") { RelY = .55f, FillScale = FillScale.X, OnClickAction = () => mLayerManager.AddLayer(new SettingsLayer(false)), TextAllign = TextAllign.Center };
-            var menue = new UiButton(TextureRegistries.button, "Menue") { Anchor = Anchor.S, FillScale = FillScale.X, OnClickAction = Menue, TextAllign = TextAllign.Center };
-
-            buttonFrame.AddChild(_continue); mButtonInputTracer.AddButton(_continue); ;
-            buttonFrame.AddChild(save); mButtonInputTracer.AddButton(save);
-            buttonFrame.AddChild(settings); mButtonInputTracer.AddButton(settings);
-            buttonFrame.AddChild(menue); mButtonInputTracer.AddButton(menue);
+            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Save Game") { Anchor = Anchor.CenterV, RelY = .05f, RelWidth = .8f, OnClickAction = () => {
+                LayerManager.AddLayer(new LoadingLayer(false));
+                mPersistanceManager.SaveGameLayerAsync(gameLayer, () =>  LayerManager.PopLayer(), (ex) => throw ex);
+            }, TextAllign = TextAllign.Center });
+            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Settings") { Anchor = Anchor.CenterV, RelY = .23f, RelWidth = .8f, OnClickAction = () => LayerManager.AddLayer(new SettingsLayer(false)), TextAllign = TextAllign.Center });
+            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Exit to Menue") { Anchor = Anchor.CenterV, RelY = .41f, RelWidth = .75f, OnClickAction = Menue, TextAllign = TextAllign.Center });
+            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Exit to Desktop") { Anchor = Anchor.CenterV, RelY = .59f, RelWidth = .8f, OnClickAction = () => LayerManager.Exit(), TextAllign = TextAllign.Center });
+            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Resume") { Anchor = Anchor.CenterV, RelY = .85f, RelWidth = .8f, OnClickAction = () => LayerManager.PopLayer(), TextAllign = TextAllign.Center });
         }
 
-        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
-        {
-            base.Initialize(game1, layerManager, graphicsDevice, serialize);
-            mBackgroundLayer.Initialize(mGraphicsDevice.Viewport.Bounds);
-        }
-
-        public override void Destroy()
-        {
-        }
+        public override void Destroy() { }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -55,25 +43,19 @@ namespace StellarLiberation.Game.Layers
             spriteBatch.End();
         }
 
-        public override void OnResolutionChanged()
-        {
-            mBackgroundLayer.OnResolutionChanged(mGraphicsDevice.Viewport.Bounds);
-        }
+        public override void OnResolutionChanged() { }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            inputState.DoAction(ActionType.ESC, () => mLayerManager.PopLayer());
-            mButtonInputTracer.Trace(inputState);
-            mBackgroundLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds);
+            inputState.DoAction(ActionType.ESC, () => LayerManager.PopLayer());
+            mBackgroundLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
         }
 
         private void Menue()
         {
-            mLayerManager.PopLayer(); // Pause Menue
-            mLayerManager.PopLayer(); // Hud
-            mLayerManager.PopLayer(); // Game
-            MusicManager.Instance.StopAllMusics();
-            MusicManager.Instance.PlayMusic(MusicRegistries.bgMusicMenue);
+            LayerManager.PopLayer(); // Pause Menue
+            LayerManager.PopLayer(); // Hud
+            LayerManager.PopLayer(); // Game
         }
     }
 }

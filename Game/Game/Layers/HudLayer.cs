@@ -7,11 +7,12 @@ using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
+using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
-using StellarLiberation.Game.Core.UserInterface.UiBar;
+using StellarLiberation.Game.Core.UserInterface.UiElements;
+using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Layers
 {
@@ -19,39 +20,32 @@ namespace StellarLiberation.Game.Layers
     {
         public bool Hide;
 
-        private Scene mScene;
-        private UiLayer mUiLayer;
+        private readonly UiFrame mUiLayer;
+        private readonly Scene mScene;
 
-        private UiHBar mShieldBar;
-        private UiHBar mHullBar;
-        private UiVBar mPropulsiondBar;
+        private readonly UiHBar mShieldBar;
+        private readonly UiHBar mHullBar;
+        private readonly UiVBar mPropulsiondBar;
 
-        private UiText mCargoHold;
-        private Compass mCompass = new();
+        private readonly Compass mCompass = new();
+        private readonly List<UiElement> mPopups = new();
 
         public HudLayer(Scene scene) : base(true)
         {
             mUiLayer = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
-            mShieldBar = new(new Color(135, 206, 235), TextureRegistries.shield) { RelHeight = .025f, RelWidth = .15f, RelX = .01f, RelY = .02f };
-            mHullBar = new(new Color(210, 105, 30), TextureRegistries.ship) { RelHeight = .025f, RelWidth = .15f, RelX = .01f, RelY = .05f };
-            mPropulsiondBar = new(new Color(241, 196, 15), TextureRegistries.propulsion) { RelHeight = .25f, RelWidth = .02f, Anchor = Anchor.SW, HSpace = 20, VSpace = 20 };
-            mCargoHold = new(FontRegistries.buttonFont, "test") { Anchor = Anchor.N, VSpace = 20 };
+            mShieldBar = new(new Color(135, 206, 235), MenueSpriteRegistries.shield) { RelHeight = .025f, RelWidth = .15f, RelX = .01f, RelY = .02f };
+            mHullBar = new(new Color(210, 105, 30), MenueSpriteRegistries.ship) { RelHeight = .025f, RelWidth = .15f, RelX = .01f, RelY = .05f };
+            mPropulsiondBar = new(new Color(241, 196, 15), MenueSpriteRegistries.propulsion) { RelHeight = .25f, RelWidth = .02f, Anchor = Anchor.SW, HSpace = 20, VSpace = 20 };
 
-            mUiLayer.AddChild(new UiButton(TextureRegistries.pauseButton, "") { Anchor = Anchor.NE, HSpace = 20, VSpace = 20, OnClickAction = () => mLayerManager.AddLayer(new PauseLayer()) });
+            mUiLayer.AddChild(new UiButton(MenueSpriteRegistries.pause, "") { Anchor = Anchor.NE, HSpace = 20, VSpace = 20, OnClickAction = () => LayerManager.AddLayer(new PauseLayer(scene.GameLayer)) });
             mUiLayer.AddChild(mShieldBar);
             mUiLayer.AddChild(mHullBar);
             mUiLayer.AddChild(mPropulsiondBar);
-            mUiLayer.AddChild(mCargoHold);
-            mUiLayer.AddChild(mCargoHold);
 
             mScene = scene;
         }
 
-        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
-        {
-            base.Initialize(game1, layerManager, graphicsDevice, serialize);
-            mUiLayer.Initialize(graphicsDevice.Viewport.Bounds);
-        }
+        public void AddPopup(UiElement uiElement) => mPopups.Add(uiElement);
 
         public override void Destroy() { }
 
@@ -60,23 +54,24 @@ namespace StellarLiberation.Game.Layers
             if (Hide) return;
             spriteBatch.Begin();
             mUiLayer.Draw();
-            mCompass.Draw();
+            foreach (var uiElement in mPopups)
+                uiElement.Draw();
+            // mCompass.Draw();
             spriteBatch.End();
         }
 
-        public override void OnResolutionChanged()
-        {
-            mUiLayer.OnResolutionChanged(mGraphicsDevice.Viewport.Bounds);
-        }
+        public override void OnResolutionChanged() { }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mUiLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds);
+            mUiLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
             mShieldBar.Percentage = mScene.GameLayer.Player.DefenseSystem.ShieldPercentage;
             mHullBar.Percentage = mScene.GameLayer.Player.DefenseSystem.HullPercentage;
             mPropulsiondBar.Percentage = (double)(mScene.GameLayer.Player.Velocity / mScene.GameLayer.Player.SublightEngine.MaxVelocity);
-            mCargoHold.Text = $"{mScene.GameLayer.Inventory.Count}/{mScene.GameLayer.Inventory.Capacity}";
-            mCompass.Update(mScene.GameLayer.Player.Position, mScene.ViewFrustumFilter, mScene.GameLayer.Player.SensorArray.LongRangeScan);
+            mCompass.Update(mScene.GameLayer.Player.Position, mGraphicsDevice, mScene.GameLayer.Player.SensorArray.LongRangeScan);
+            foreach (var uiElement in mPopups) 
+                uiElement.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
+            mPopups.Clear();
         }
     }
 }

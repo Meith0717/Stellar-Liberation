@@ -9,7 +9,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.Core.CoreProceses.Persistance;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Layers;
 
 namespace StellarLiberation
@@ -19,56 +19,46 @@ namespace StellarLiberation
         // Local Classes
         private readonly GraphicsDeviceManager mGraphicsManager;
         private readonly InputManager mInputManager;
-
-        // Global Classes
+        private readonly ResolutionManager ResolutionManager;
         private SpriteBatch mSpriteBatch;
-        public LayerManager mLayerManager;
-        public readonly Serialize mSerialize;
-
-        // Window attributes
-        private bool mResulutionWasResized;
+        private LayerManager mLayerManager;
 
         public Game1()
         {
             Content.RootDirectory = "Content";
             mGraphicsManager = new(this);
             mInputManager = new();
-            mSerialize = new Serialize();
+            ResolutionManager = new(mGraphicsManager);
 
             // Window properties
             IsMouseVisible = true;
-            Window.AllowUserResizing = true;
             Window.AllowAltF4 = false;
-            Window.ClientSizeChanged += delegate { mResulutionWasResized = true; };
-            mGraphicsManager.PreferredBackBufferWidth = 1920;
-            mGraphicsManager.PreferredBackBufferHeight = 1080;
-            ToggleFullscreen();
+            Window.AllowUserResizing = true;
         }
 
         protected override void Initialize()
         {
             base.Initialize();
-            mLayerManager = new(this, GraphicsDevice, mSerialize);
-            mLayerManager.AddLayer(new MainMenueLayer());
+            mLayerManager = new(this, GraphicsDevice, new(), ResolutionManager);
+            ResolutionManager.GetNativeResolution();
+            ResolutionManager.ToggleFullscreen();
+            mLayerManager.AddLayer(new LoadingLayer());
         }
 
         protected override void LoadContent()
         {
             mSpriteBatch = new SpriteBatch(GraphicsDevice);
-
-            TextureManager.Instance.SetSpriteBatch(mSpriteBatch);
-            TextureManager.Instance.LoadTextureRegistries(Content, Registries.GetRegistryList<TextureRegistries>());
-            TextureManager.Instance.LoadFontRegistries(Content, Registries.GetRegistryList<FontRegistries>());
-            SoundEffectManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<SoundEffectRegistries>());
-            MusicManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<MusicRegistries>());
+            ContentLoader.PreLoad(Content, mSpriteBatch);
+            ContentLoader.LoadAsync(Content, mSpriteBatch, () => mLayerManager.AddLayer(new MainMenueLayer()),(ex) => throw ex);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (mResulutionWasResized) mLayerManager.OnResolutionChanged();
-
             InputState inputState = mInputManager.Update();
-            inputState.DoAction(ActionType.ToggleFullscreen, ToggleFullscreen);
+            MusicManager.Instance.Update();
+            inputState.DoAction(ActionType.ToggleFullscreen, ResolutionManager.ToggleFullscreen);
+            inputState.DoAction(ActionType.IncreaseScaling, () => ResolutionManager.UiScaling += 0.01f);
+            inputState.DoAction(ActionType.DecreaseScaling, () => ResolutionManager.UiScaling -= 0.01f);
             mLayerManager.Update(gameTime, inputState);
             base.Update(gameTime);
         }
@@ -79,8 +69,6 @@ namespace StellarLiberation
             mLayerManager.Draw(mSpriteBatch);
             base.Draw(gameTime);
         }
-
-        private void ToggleFullscreen() => mGraphicsManager.ToggleFullScreen();
 
         public void SetCursorTexture(Registry registry) => Mouse.SetCursor(MouseCursor.FromTexture2D(Content.Load<Texture2D>(registry.FilePath), 0, 0));
     }

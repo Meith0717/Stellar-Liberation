@@ -6,16 +6,16 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
-using StellarLiberation.Game.Core.GameProceses.ItemManagement;
-using StellarLiberation.Game.Core.GameProceses.MapSystem;
+using StellarLiberation.Game.Core.GameProceses.MapGeneration;
+using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement;
+using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Allies;
 using StellarLiberation.Game.Layers.Scenes;
 using System;
 using System.Collections.Generic;
@@ -26,61 +26,73 @@ namespace StellarLiberation.Game.Layers
     [Serializable]
     public class GameLayer : SceneManagerLayer
     {
-        [JsonProperty] public readonly HashSet<PlanetSystem> PlanetSystems = new();
-        [JsonProperty] public readonly Player Player = new();
-        [JsonProperty] public readonly Inventory Inventory = new(500);
+        [JsonProperty]
+        public readonly HashSet<PlanetSystem> PlanetSystems = new();
+        [JsonProperty]
+        public readonly Player Player = new();
+        [JsonProperty]
+        public readonly Inventory Inventory = new();
+        [JsonProperty]
+        public readonly Wallet Wallet = new();
+        [JsonProperty]
+        public PlanetSystem CurrentSystem { get; set; }
 
-        [JsonIgnore] public PlanetSystem CurrentSystem { get; set; }
-        [JsonIgnore] private PlanetSystemScene mPlanetSystemScene;
-        [JsonIgnore] public readonly HudLayer HudLayer;
+        [JsonIgnore]
+        private PlanetSystemScene mPlanetSystemScene;
+        [JsonIgnore]
+        public readonly HudLayer HudLayer;
 
         public GameLayer() : base()
         {
             MapFactory.Generate(out PlanetSystems);
 
-            MusicManager.Instance.PlayMusic(MusicRegistries.bgMusicGame);
-
             // Add Main Scene
             CurrentSystem = PlanetSystems.First();
-            Player.Position = ExtendetRandom.NextVectorInCircle(CurrentSystem.SystemBounding);
-            mPlanetSystemScene = new(this, CurrentSystem, 1);
+            Player.Position = Vector2.Zero;
+            mPlanetSystemScene = new(this, CurrentSystem.GetInstance(), 1);
             HudLayer = new(mPlanetSystemScene);
         }
 
-        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, Serialize serialize)
+        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager)
         {
-            base.Initialize(game1, layerManager, graphicsDevice, serialize);
+            base.Initialize(game1, layerManager, graphicsDevice, persistanceManager);
+            LayerManager.AddLayer(HudLayer);
             AddScene(mPlanetSystemScene);
-            mLayerManager.AddLayer(HudLayer);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+
             // Check if mouse clicks outside window
-            if (!mGraphicsDevice.Viewport.Bounds.Contains(inputState.mMousePosition) && (inputState.HasAction(ActionType.LeftClick) || inputState.HasAction(ActionType.RightClick))) mLayerManager.AddLayer(new PauseLayer());
+            if (!mGraphicsDevice.Viewport.Bounds.Contains(inputState.mMousePosition) && (inputState.HasAction(ActionType.LeftClick) || inputState.HasAction(ActionType.RightClick))) LayerManager.AddLayer(new PauseLayer(this));
+
+            if (Player.DefenseSystem.HullForce == 0) LayerManager.PopLayer();
 
             // Update Top Scene
             base.Update(gameTime, inputState);
 
             // Check if pause is pressed
-            inputState.DoAction(ActionType.ESC, () => mLayerManager.AddLayer(new PauseLayer()));
+            inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this)));
+            inputState.DoAction(ActionType.Inventar, () => LayerManager.AddLayer(new InventoryLayer(Inventory, Wallet)));
+            inputState.DoAction(ActionType.Trading, () => LayerManager.AddLayer(new TradeLayer(Inventory, new(), Wallet)));
         }
 
         public override void Destroy()
         {
             SoundEffectManager.Instance.StopAllSounds();
-            MusicManager.Instance.StopAllMusics();
         }
 
         public override void OnResolutionChanged() { base.OnResolutionChanged(); }
 
         public void LoadMap() => AddScene(new MapScene(this, PlanetSystems.ToList(), CurrentSystem));
+
         public void ChangePlanetSystem(PlanetSystem planetSystem)
         {
+            CurrentSystem.ClearInstance();
             CurrentSystem = planetSystem;
             var zoom = mPlanetSystemScene.Camera2D.Zoom;
             RemoveScene(mPlanetSystemScene);
-            mPlanetSystemScene = new PlanetSystemScene(this, CurrentSystem, zoom);
+            mPlanetSystemScene = new PlanetSystemScene(this, CurrentSystem.GetInstance(), zoom);
             AddScene(mPlanetSystemScene);
         }
     }

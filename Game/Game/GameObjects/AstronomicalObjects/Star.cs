@@ -3,13 +3,12 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
-using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using System;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
@@ -18,13 +17,11 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
     [Collidable]
     public class Star : GameObject2D
     {
-        [JsonProperty]
-        public Color LightColor { get; private set; }
 
-        public Star(Vector2 position, string textureId, float textureScale, Color starColor)
-            : base(position, textureId, textureScale, 1)
+        public Star(float textureScale, Color starColor)
+            : base(Vector2.Zero, GameSpriteRegistries.star, textureScale * 5f, 1)
         {
-            LightColor = starColor;
+            TextureColor = starColor;
         }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
@@ -38,7 +35,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         {
             base.Draw(scene);
             TextureManager.Instance.DrawGameObject(this);
-            TextureManager.Instance.Draw(TextureRegistries.starLightAlpha.Name, Position, TextureOffset, TextureScale * 2f, Rotation, 3, LightColor);
+            TextureManager.Instance.Draw(GameSpriteRegistries.starLightAlpha.Name, Position, TextureOffset, TextureScale * 7f, Rotation, 3, TextureColor);
         }
     }
 }

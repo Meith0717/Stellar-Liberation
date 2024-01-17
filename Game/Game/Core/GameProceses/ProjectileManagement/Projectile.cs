@@ -7,9 +7,10 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
-using StellarLiberation.Game.Core.GameObjectManagement;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.WeaponSystem;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 
 namespace StellarLiberation.Game.Core.GameProceses.ProjectileManagement
 {
@@ -20,8 +21,8 @@ namespace StellarLiberation.Game.Core.GameProceses.ProjectileManagement
         public readonly float ShieldDamage;
         public readonly float HullDamage;
 
-        public Projectile(Vector2 startPosition, float rotation, Color color, float shieldDamage, float hullDamage, SpaceShip origine)
-            : base(startPosition, TextureRegistries.projectile, 1f, 15)
+        public Projectile(Vector2 position, float rotation, Color color, float shieldDamage, float hullDamage, SpaceShip origine)
+            : base(position, GameSpriteRegistries.projectile, 1f, 15)
         {
             MovingDirection = Geometry.CalculateDirectionVector(rotation);
             Rotation = rotation;
@@ -29,8 +30,8 @@ namespace StellarLiberation.Game.Core.GameProceses.ProjectileManagement
             ShieldDamage = shieldDamage;
             TextureColor = color;
             Origine = origine;
-            Velocity = 20 + (float)ExtendetRandom.Random.NextDouble();
-            DisposeTime = 5000;
+            Velocity = 15;
+            DisposeTime = 1500;
         }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
@@ -45,6 +46,13 @@ namespace StellarLiberation.Game.Core.GameProceses.ProjectileManagement
             TextureManager.Instance.DrawGameObject(this);
         }
 
-        public override void HasCollide() => Dispose = true;
+        public override void HasCollide(Vector2 position, Scene scene)
+        {
+            Dispose = true;
+            RemoveFromSpatialHashing(scene);
+            Position = position;
+            AddToSpatialHashing(scene);
+            Velocity = 0;
+        }
     }
 }

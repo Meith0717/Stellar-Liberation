@@ -7,9 +7,9 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
-using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.WeaponSystem
@@ -68,7 +68,6 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.W
         {
             StopFire();
             AimPosition(null);
-            inputState.DoAction(ActionType.RightClickHold, () => AimPosition(worldMousePosition));
             inputState.DoAction(ActionType.LeftClickHold, () => Fire());
         }
 

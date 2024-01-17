@@ -10,8 +10,8 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement;
-using StellarLiberation.Game.GameObjects.SpaceShips.Enemys;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys;
 using System;
 using System.Collections.Generic;
 
@@ -65,7 +65,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
             inputState.DoAction(ActionType.F9, () => SpawnCarrior = true);
         }
 
-        public void CheckForSpawn(PlanetSystem planetSystem, Scene scene)
+        public void CheckForSpawn(PlanetSystemInstance planetSystem, Scene scene)
         {
             if (SpawnBattleShip) planetSystem.GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyBattleShip, scene.Camera2D.Position));
             if (SpawnBomber) planetSystem.GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyBomber, scene.Camera2D.Position));
@@ -108,10 +108,10 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 50), "F3 - Show Hit Box", 1, ShowHitBoxes ? Color.GreenYellow : Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 75), "F4 - Show Sensor Radius", 1, ShowSensorRadius ? Color.GreenYellow : Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 100), "F5 - Show Paths", 1, ShowPaths ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 120), "F6 - Spawn Fighter", 1, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 125), "F6 - Spawn Fighter", 1, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 150), "F7 - Spawn Bomber", 1, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 175), "F8 - Spawn Battle Ship", 1, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 100), "F9 - Spawn Carrior", 1, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 200), "F9 - Spawn Carrior", 1, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 225), "F10 - none", 1, false ? Color.GreenYellow : Color.White);
 
             List<string> debug = new() {
@@ -142,7 +142,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
         {
             if (!ShowSensorRadius) { return; }
             CircleF box = new(center, radius);
-            TextureManager.Instance.DrawAdaptiveCircle(box.Position, box.Radius, Color.Red, 2, (int)TextureManager.Instance.MaxLayerDepth,
+            TextureManager.Instance.DrawAdaptiveCircle(box.Position, box.Radius, Color.LightBlue, 2, (int)TextureManager.Instance.MaxLayerDepth,
                 scene.Camera2D.Zoom);
         }
     }

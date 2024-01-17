@@ -12,7 +12,7 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
-using StellarLiberation.Game.Core.GameObjectManagement;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;

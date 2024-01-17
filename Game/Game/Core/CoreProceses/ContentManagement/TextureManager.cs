@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
-using StellarLiberation.Game.Core.GameObjectManagement;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using System;
 using System.Collections.Generic;
 
@@ -97,8 +97,14 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 
         public void Draw(string id, Vector2 position, float width, float height)
         {
-            SpriteBatch.Draw(GetTexture(id), new RectangleF(position.X, position.Y, width, height).ToRectangle(), Color.White);
+            SpriteBatch.Draw(GetTexture(id), new RectangleF(position.X, position.Y, width, height).ToRectangle(), null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 1);
         }
+
+        public void Draw(string id, Vector2 position, float width, float height, Vector2 offset, float rotation)
+        {
+            SpriteBatch.Draw(GetTexture(id), new RectangleF(position.X + offset.X, position.Y + offset.Y, width, height).ToRectangle(), null, Color.White, rotation, new(GetTexture(id).Width / 2, GetTexture(id).Height / 2), SpriteEffects.None, 1);
+        }
+
         public void Draw(string id, Vector2 position, float width, float height, Color color)
         {
             SpriteBatch.Draw(GetTexture(id), new RectangleF(position.X, position.Y, width, height).ToRectangle(), color);
@@ -167,7 +173,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
         {
             SpriteBatch.DrawLine(start, length, 0, color, thickness, GetDepth(depth));
         }
-
 
         public void DrawAdaptiveLine(Vector2 start, Vector2 end, Color color, float thickness, int depth, float zoom)
         {

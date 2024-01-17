@@ -5,9 +5,9 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
-using StellarLiberation.Game.Core.GameObjectManagement;
-using StellarLiberation.Game.GameObjects.AstronomicalObjects;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,7 +29,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems
         {
             var planetSystem = scene.GameLayer.CurrentSystem;
             LongRangeScan.Clear();
-            LongRangeScan.AddRange(planetSystem.GameObjects.Objects);
+            LongRangeScan.AddRange(planetSystem.GameObjectManager.Objects);
 
             ShortRangeScan.Clear();
             ShortRangeScan.AddRange(scene.SpatialHashing.GetObjectsInRadius<GameObject2D>(spaceShipPosition, ShortRangeScanDistance));

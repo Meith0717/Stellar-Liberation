@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
-using StellarLiberation.Game.Core.GameObjectManagement;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 
 namespace StellarLiberation.Game.Core.Visuals.ParticleSystem
 {
@@ -24,7 +24,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
-            GameObject2DMover.Move(gameTime, this, scene);
+            GameObject2DMover.Move(gameTime, this);
             base.Update(gameTime, inputState, scene);
         }
 

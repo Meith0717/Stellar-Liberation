@@ -5,8 +5,8 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement;
-using StellarLiberation.Game.GameObjects.SpaceShips.Enemys;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys;
 using System.Linq;
 
 namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
                 var fighter = EnemyFactory.Get(EnemyId.EnemyFighter, position);
                 var target = ExtendetRandom.GetRandomElement(spaceShip.SensorArray.OpponentsInRannge);
                 fighter.WeaponSystem.AimShip(target);
-                scene.GameLayer.CurrentSystem.GameObjects.AddObj(fighter);
+                scene.GameLayer.CurrentSystem.GameObjectManager.AddObj(fighter);
                 mSpawnCoolDown = 0;
             }
         }

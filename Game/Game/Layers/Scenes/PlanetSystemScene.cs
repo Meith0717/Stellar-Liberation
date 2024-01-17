@@ -7,8 +7,9 @@ using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
-using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.Core.Visuals.ParallaxSystem;
+using StellarLiberation.Game.Core.GameProceses.GridSystem;
+using StellarLiberation.Game.Core.Objects.UiElements;
+using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 
@@ -16,38 +17,44 @@ namespace StellarLiberation.Game.Layers.Scenes
 {
     internal class PlanetSystemScene : Scene
     {
+        private readonly UiFrame mBackgroundLayer;
 
-        private readonly ParallaxController mParlaxManager;
-        private readonly PlanetSystem mPlanetSystem;
+        private readonly PlanetSystemInstance mPlanetSystem;
+        private readonly Grid mGrid;
 
-        public PlanetSystemScene(GameLayer gameLayer, PlanetSystem currentPlanetSystem, float camZoom) : base(gameLayer, 50000, 0.001f, 1, false)
+        public PlanetSystemScene(GameLayer gameLayer, PlanetSystemInstance currentPlanetSystem, float camZoom) : base(gameLayer, 50000)
         {
+            mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn };
+            mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
+            
             Camera2D.Zoom = camZoom;
             mPlanetSystem = currentPlanetSystem;
-            gameLayer.Player.Position = ExtendetRandom.NextVectorInCircle(currentPlanetSystem.SystemBounding);
-            mParlaxManager = new();
-            mParlaxManager.Add(new(TextureRegistries.gameBackground, 0));
-            mParlaxManager.Add(new(TextureRegistries.gameBackgroundParlax4, .1f));
-            mParlaxManager.Add(new(TextureRegistries.gameBackgroundParlax3, .05f));
-            mParlaxManager.Add(new(TextureRegistries.gameBackgroundParlax2, .01f));
-            mParlaxManager.Add(new(TextureRegistries.gameBackgroundParlax1, .001f));
+            mGrid = new(10000);
         }
 
         public override void UpdateObj(GameTime gameTime, InputState inputState)
         {
+            mBackgroundLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, 1);
             inputState.DoAction(ActionType.ToggleHyperMap, () => GameLayer.LoadMap());
 
-            mParlaxManager.Update(Camera2D.Movement, Camera2D.Zoom);
-            GameLayer.Player.Update(gameTime, inputState, this);
             mPlanetSystem.UpdateObjects(gameTime, inputState, this);
-            GameLayer.DebugSystem.CheckForSpawn(GameLayer.CurrentSystem, this);
-            Camera2DController.Track(GameLayer.Player, this);
+            GameLayer.Player.Update(gameTime, inputState, this);
+            GameLayer.DebugSystem.CheckForSpawn(GameLayer.CurrentSystem.GetInstance(), this);
+
+            Camera2D.Position = GameLayer.Player.Position;
+            Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, .001f, 1);
         }
 
         public override void DrawOnScreenView(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch)
         {
             base.DrawOnScreenView(sceneManagerLayer, spriteBatch);
-            mParlaxManager.Draw();
+            mBackgroundLayer.Draw();
+        }
+
+        public override void DrawOnWorldView(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch)
+        {
+            base.DrawOnWorldView(sceneManagerLayer, spriteBatch);
+            mGrid.Draw(this);
         }
 
         public override void OnResolutionChanged() { base.OnResolutionChanged(); }

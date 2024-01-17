@@ -27,6 +27,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement.Peripheral
             mActionOnPressed = new()
             {
                 { Keys.M, ActionType.ToggleHyperMap },
+                { Keys.I, ActionType.Inventar },
+                { Keys.T, ActionType.Trading },
                 { Keys.Escape, ActionType.ESC },
                 { Keys.F1, ActionType.F1 },
                 { Keys.F2, ActionType.F2 },
@@ -38,6 +40,9 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement.Peripheral
                 { Keys.F8, ActionType.F8 },
                 { Keys.F9, ActionType.F9 },
                 { Keys.F10, ActionType.F10 },
+                { Keys.O, ActionType.DecreaseScaling },
+                { Keys.P, ActionType.IncreaseScaling },
+                { Keys.C, ActionType.ToggleCameraMode },
             };
 
             mActionOnHold = new()
@@ -47,7 +52,11 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement.Peripheral
                 { Keys.W, ActionType.Accelerate },
                 { Keys.S, ActionType.Break },
                 { Keys.Q, ActionType.CameraZoomIn },
-                { Keys.E, ActionType.CameraZoomOut }
+                { Keys.E, ActionType.CameraZoomOut },
+                { Keys.Left, ActionType.MoveCameraLeft },
+                { Keys.Right, ActionType.MoveCameraRight },
+                { Keys.Up, ActionType.MoveCameraUp },
+                { Keys.Down, ActionType.MoveCameraDown },
             };
             mKeysKeyEventTypes = new();
         }

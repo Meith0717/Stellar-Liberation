@@ -7,8 +7,8 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
-using StellarLiberation.Game.Core.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.ProjectileManagement;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
     public class Asteroid : GameObject2D
     {
         public Asteroid(Vector2 position)
-            : base(position, TextureRegistries.asteroid1, 5f, 50) { }
+            : base(position, GameSpriteRegistries.asteroid1, 5f, 50) { }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
@@ -39,7 +39,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             foreach (var projectile in projectileInRange)
             {
                 if (!ContinuousCollisionDetection.HasCollide(gameTime, projectile, this, out position)) continue;
-                projectile.HasCollide();
+                projectile.HasCollide(Position, scene);
                 gotHit = true;
             }
             if (!gotHit) return;

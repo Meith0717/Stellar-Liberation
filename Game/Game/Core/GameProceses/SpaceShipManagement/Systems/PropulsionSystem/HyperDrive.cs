@@ -8,7 +8,8 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
-using StellarLiberation.Game.GameObjects.SpaceShipManagement;
+using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PropulsionSystem
 {
