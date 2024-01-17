@@ -29,30 +29,11 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
             BinaryMapGenerator.ScaleVector2s(ref positions, MapScale);
             BinaryMapGenerator.ShiftVector2s(ref positions, 35, seededRandom);
 
-            foreach( var position in positions )
+            foreach (var position in positions)
             {
                 var planetSystem = new PlanetSystem(position, seededRandom.NextFullRangeInt32());
                 planetSystems.Add(planetSystem);
             }
-        }
-
-        public static List<Asteroid> GetAsteroidsRing(int numAsteroids, Vector2 center, float radiusMin, float radiusMax)
-        {
-            List<Asteroid> asteroids = new();
-            Random random = ExtendetRandom.Random;
-
-            for (int i = 0; i < numAsteroids; i++)
-            {
-                float angle = (float)random.NextDouble() * 2f * MathF.PI;
-                float radius = (float)(random.NextDouble() * (radiusMax - radiusMin) + radiusMin);
-
-                float x = center.X + radius * MathF.Cos(angle);
-                float y = center.Y + radius * MathF.Sin(angle);
-
-                asteroids.Add(new(new(x, y)));
-            }
-
-            return asteroids;
         }
 
         private static Danger GetDanger(int x, int y) => Hash(x, y) switch

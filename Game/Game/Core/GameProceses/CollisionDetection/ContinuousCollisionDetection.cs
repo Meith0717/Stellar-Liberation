@@ -56,16 +56,16 @@ namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection
         {
             var objts = spatialHashing.GetObjectsInRadius<GameObject2D>(gameObject2D.Position, gameObject2D.BoundedBox.Diameter);
             objts.Remove(gameObject2D);
-            foreach (var obj in objts)
+            foreach (var collidingObject in objts)
             {
-                Type type = obj.GetType();
+                Type type = collidingObject.GetType();
                 CollidableAttribute collidableAttribute = (CollidableAttribute)Attribute.GetCustomAttribute(type, typeof(CollidableAttribute));
                 if (collidableAttribute is null) continue;
-                if (HasCollide(gameTime, gameObject2D, obj, out var _))
+                if (HasCollide(gameTime, gameObject2D, collidingObject, out var _))
                 {
-                    var rotationToObj = Geometry.AngleBetweenVectors(gameObject2D.Position, obj.Position);
+                    var rotationToObj = Geometry.AngleBetweenVectors(collidingObject.Position, gameObject2D.Position);
                     var pushDir = -Geometry.CalculateDirectionVector(rotationToObj);
-                    gameObject2D.MovingDirection += pushDir;
+                    collidingObject.MovingDirection += pushDir;
                 }
             }
         }

@@ -38,6 +38,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             TextureColor = star.TextureColor;
 
             astronomicalObjsManager.AddObj(star);
+            astronomicalObjsManager.AddRange(AsteroidGenerator.GetAsteroidsRing(Position, 100000));
 
             mInstance = new(GameObjectManager, astronomicalObjsManager);
             return mInstance;
