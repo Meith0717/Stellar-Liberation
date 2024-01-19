@@ -3,6 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
@@ -17,11 +18,13 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
     [Collidable]
     public class Star : GameObject2D
     {
+        [JsonProperty] public readonly int Temperature;
 
-        public Star(float textureScale, Color starColor)
-            : base(Vector2.Zero, GameSpriteRegistries.star, textureScale * 5f, 1)
+        public Star(float textureScale, int temperature, Color color)
+            : base(Vector2.Zero, GameSpriteRegistries.star, textureScale, 1)
         {
-            TextureColor = starColor;
+            Temperature = temperature;
+            TextureColor = color;
         }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)

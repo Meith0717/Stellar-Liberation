@@ -14,10 +14,11 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGenerati
         {
             var temperature = seededRandom.Next(2000, 50000);
             var color = GetStarColor(temperature);
-            return new((float)seededRandom.NextDouble() * 10, color);
+            var size = 10f * (float)seededRandom.NextDouble();
+            return new(size, temperature, color);
         }
 
-        private static Color GetStarColor(float temperature)
+        public static Color GetStarColor(float temperature)
         {
             int threshold1 = 16000;
             int threshold2 = 33000;

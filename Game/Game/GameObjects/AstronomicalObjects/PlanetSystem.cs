@@ -41,7 +41,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             astronomicalObjsManager.AddObj(star);
             astronomicalObjsManager.AddRange(AsteroidGenerator.GetAsteroidsRing(Position, 100000));
 
-            mInstance = new(GameObjectManager, astronomicalObjsManager);
+            mInstance = new(GameObjectManager, astronomicalObjsManager, star);
             return mInstance;
         }
 
