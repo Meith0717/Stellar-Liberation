@@ -53,8 +53,9 @@ namespace StellarLiberation.Game.Layers.Scenes
 
         public override void DrawOnWorldView(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch)
         {
-            base.DrawOnWorldView(sceneManagerLayer, spriteBatch);
+            mPlanetSystem.Draw();
             mGrid.Draw(this);
+            base.DrawOnWorldView(sceneManagerLayer, spriteBatch);
         }
 
         public override void OnResolutionChanged() { base.OnResolutionChanged(); }

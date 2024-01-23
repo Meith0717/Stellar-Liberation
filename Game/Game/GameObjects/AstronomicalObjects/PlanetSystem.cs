@@ -11,6 +11,8 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGeneration;
+using StellarLiberation.Game.Core.Utilitys;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys;
 using System;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
@@ -18,14 +20,20 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
     [Serializable]
     public class PlanetSystem : GameObject2D
     {
+        [JsonIgnore] public GameObjectManager AstronomicalObjsManager { get; private set; }
+        [JsonIgnore] private PlanetSystemInstance mInstance;
+
         [JsonProperty] public readonly GameObjectManager GameObjectManager;
         [JsonProperty] private readonly int mSeed;
-        [JsonIgnore] private PlanetSystemInstance mInstance;
 
         public PlanetSystem(Vector2 position, int seed) : base(position, GameSpriteRegistries.star, .01f, 1)
         {
             mSeed = seed;
             GameObjectManager = new();
+
+            for (int i = 0; i < 5; i++) GameObjectManager.AddObj(EnemyFactory.Get(EnemyId.EnemyBattleShip, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000))));
+            for (int i = 0; i < 4; i++) GameObjectManager.AddObj(EnemyFactory.Get(EnemyId.EnemyBomber, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000))));
+             for (int i = 0; i < 1; i++) GameObjectManager.AddObj(EnemyFactory.Get(EnemyId.EnemyCarrior, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000))));
         }
 
         public PlanetSystemInstance GetInstance()
@@ -33,23 +41,23 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             if (mInstance is not null) return mInstance;
 
             var seededRandom = new Random(mSeed);
-            var astronomicalObjsManager = new GameObjectManager();
+            AstronomicalObjsManager = new GameObjectManager();
 
             var star = StarGenerator.Generat(seededRandom);
             TextureColor = star.TextureColor;
 
-            astronomicalObjsManager.AddObj(star);
+            AstronomicalObjsManager.AddObj(star);
             var distanceToStar = (int)star.BoundedBox.Radius;
             var amount = Triangular.Sample(seededRandom, 1, 10, 7);
             for (int i = 1; i <= amount; i++)
             {
                 distanceToStar += seededRandom.Next(40000, 80000);
-                astronomicalObjsManager.AddObj(PlanetGenerator.GetPlanet(seededRandom, star.Kelvin, distanceToStar));
+                AstronomicalObjsManager.AddObj(PlanetGenerator.GetPlanet(seededRandom, star.Kelvin, distanceToStar));
             }
             distanceToStar += 50000;
 
-            astronomicalObjsManager.AddRange(AsteroidGenerator.GetAsteroidsRing(Position, distanceToStar));
-            mInstance = new(GameObjectManager, astronomicalObjsManager, star);
+            AstronomicalObjsManager.AddRange(AsteroidGenerator.GetAsteroidsRing(Position, distanceToStar));
+            mInstance = new(GameObjectManager, AstronomicalObjsManager, star);
             return mInstance;
         }
 
