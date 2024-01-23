@@ -15,7 +15,7 @@ using System.Linq;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
-    [Collidable]
+    [Collidable(50)]
     public class Asteroid : GameObject2D
     {
         public Asteroid(Vector2 position, string textureID, float textureScale)
@@ -26,6 +26,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             base.Update(gameTime, inputState, scene);
             Rotation += .01f;
             CheckForHit(gameTime, scene);
+            Physics.HandleCollision(gameTime, this, scene.SpatialHashing);
             GameObject2DMover.Move(gameTime, this, scene);
         }
 

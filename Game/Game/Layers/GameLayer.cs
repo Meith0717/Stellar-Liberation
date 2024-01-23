@@ -12,8 +12,6 @@ using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration;
 using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
-using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Allies;
 using StellarLiberation.Game.Layers.Scenes;
@@ -48,7 +46,7 @@ namespace StellarLiberation.Game.Layers
 
             // Add Main Scene
             CurrentSystem = PlanetSystems.First();
-            Player.Position = Vector2.Zero;
+            Player.Position = new Vector2(100000, 100000);
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager)

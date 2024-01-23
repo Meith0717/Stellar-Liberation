@@ -26,7 +26,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
     public enum Fractions { Enemys, Allies }
 
     [Serializable]
-    [Collidable]
+    [Collidable (5f)]
     public abstract class SpaceShip : GameObject2D
     {
         [JsonIgnore] protected readonly UtilityAi mUtilityAi;
@@ -59,7 +59,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             if (!HyperDrive.IsActive) SublightEngine.Update(gameTime, this);
 
             MovingDirection = Geometry.CalculateDirectionVector(Rotation);
-            ContinuousCollisionDetection.ManageColisions(gameTime, this, scene.SpatialHashing);
+            Physics.HandleCollision(gameTime, this, scene.SpatialHashing);
             GameObject2DMover.Move(gameTime, this, scene);
             base.Update(gameTime, inputState, scene);
 

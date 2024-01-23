@@ -48,26 +48,7 @@ namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection
                     return true;
                 }
             }
-
             return false;
-        }
-
-        public static void ManageColisions(GameTime gameTime, GameObject2D gameObject2D, SpatialHashing<GameObject2D> spatialHashing)
-        {
-            var objts = spatialHashing.GetObjectsInRadius<GameObject2D>(gameObject2D.Position, gameObject2D.BoundedBox.Diameter);
-            objts.Remove(gameObject2D);
-            foreach (var collidingObject in objts)
-            {
-                Type type = collidingObject.GetType();
-                CollidableAttribute collidableAttribute = (CollidableAttribute)Attribute.GetCustomAttribute(type, typeof(CollidableAttribute));
-                if (collidableAttribute is null) continue;
-                if (HasCollide(gameTime, gameObject2D, collidingObject, out var _))
-                {
-                    var rotationToObj = Geometry.AngleBetweenVectors(collidingObject.Position, gameObject2D.Position);
-                    var pushDir = -Geometry.CalculateDirectionVector(rotationToObj);
-                    collidingObject.MovingDirection += pushDir;
-                }
-            }
         }
     }
 }
