@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Allies
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
             SublightEngine.ControlByInput(this, inputState, scene.WorldMousePosition);
-            WeaponSystem.AimShip(SensorArray.GetAimingShip(Position, Fraction));
+            WeaponSystem.AimShip(SensorArray.GetAimingShip(Position));
             WeaponSystem.ControlByInput(inputState, scene.WorldMousePosition);
             foreach(EnemyShip enemy in SensorArray.OpponentsInRannge.Cast<EnemyShip>()) { enemy.IsSpotted = true; }
             base.Update(gameTime, inputState, scene);

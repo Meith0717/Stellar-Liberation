@@ -21,7 +21,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys
         [JsonIgnore] private readonly RadarPing mRadarPing;
 
         protected EnemyShip(Vector2 position, string textureId, float textureScale, SensorSystem sensorArray, SublightDrive sublightEngine, TurretSystem weaponSystem, DefenseSystem defenseSystem)
-            : base(position, textureId, textureScale, sensorArray, sublightEngine, weaponSystem, defenseSystem, Fractions.Enemys)
+            : base(position, textureId, textureScale, sensorArray, sublightEngine, weaponSystem, defenseSystem, Fractions.Enemys, Color.Red, new(66, 73, 73))
         {
             mRadarPing = new();
         }

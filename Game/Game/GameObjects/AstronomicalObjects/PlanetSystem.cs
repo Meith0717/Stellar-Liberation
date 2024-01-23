@@ -34,6 +34,11 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             for (int i = 0; i < 5; i++) GameObjectManager.AddObj(EnemyFactory.Get(EnemyId.EnemyBattleShip, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000))));
             for (int i = 0; i < 4; i++) GameObjectManager.AddObj(EnemyFactory.Get(EnemyId.EnemyBomber, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000))));
              for (int i = 0; i < 1; i++) GameObjectManager.AddObj(EnemyFactory.Get(EnemyId.EnemyCarrior, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000))));
+
+            for (int i = 0; i < 10; i++) GameObjectManager.AddObj(AlliedFactory.Get(AlliedId.AlliedBattleShip, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000))));
+            //for (int i = 0; i < 4; i++) GameObjectManager.AddObj(AlliedFactory.Get(AlliedId.AlliedBomber, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000))));
+            //for (int i = 0; i < 1; i++) GameObjectManager.AddObj(AlliedFactory.Get(AlliedId.AlliedCarrior, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000))));
+
         }
 
         public PlanetSystemInstance GetInstance()

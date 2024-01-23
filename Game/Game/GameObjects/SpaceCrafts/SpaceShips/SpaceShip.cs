@@ -36,8 +36,10 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
         [JsonIgnore] public readonly TurretSystem WeaponSystem;
         [JsonIgnore] public readonly DefenseSystem DefenseSystem;
         [JsonIgnore] public readonly Fractions Fraction;
+        [JsonIgnore] private readonly Color mHullColor;
+        [JsonIgnore] private readonly Color mBorderColor;
 
-        public SpaceShip(Vector2 position, string TextureID, float textureScale, SensorSystem sensorArray, SublightDrive sublightEngine, TurretSystem weaponSystem, DefenseSystem defenseSystem, Fractions fractions)
+        public SpaceShip(Vector2 position, string TextureID, float textureScale, SensorSystem sensorArray, SublightDrive sublightEngine, TurretSystem weaponSystem, DefenseSystem defenseSystem, Fractions fractions, Color borderColor, Color hullColor)
             : base(position, TextureID, textureScale, 10)
         {
             mUtilityAi = new();
@@ -47,6 +49,8 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             WeaponSystem = weaponSystem;
             DefenseSystem = defenseSystem;
             Fraction = fractions;
+            mHullColor = hullColor;
+            mBorderColor = borderColor;
         }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
@@ -95,10 +99,10 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 
             scene.GameLayer.DebugSystem.DrawSensorRadius(Position, SensorArray.ShortRangeScanDistance, scene);
 
-            TextureManager.Instance.Draw($"{TextureId}Borders", Position, TextureScale, Rotation, TextureDepth, Color.MonoGameOrange);
-            TextureManager.Instance.Draw($"{TextureId}Frame", Position, TextureScale, Rotation, TextureDepth, Color.White);
-            TextureManager.Instance.Draw($"{TextureId}Hull", Position, TextureScale, Rotation, TextureDepth, Color.LightGray);
-            TextureManager.Instance.Draw($"{TextureId}Structure", Position, TextureScale, Rotation, TextureDepth, Color.Black);
+            TextureManager.Instance.Draw($"{TextureId}Borders", Position, TextureScale, Rotation, TextureDepth, mBorderColor);
+            TextureManager.Instance.Draw($"{TextureId}Frame", Position, TextureScale, Rotation, TextureDepth, Color.Black);
+            TextureManager.Instance.Draw($"{TextureId}Hull", Position, TextureScale, Rotation, TextureDepth, mHullColor);
+            TextureManager.Instance.Draw($"{TextureId}Structure", Position, TextureScale, Rotation, TextureDepth, new(27, 38, 49));
 
             WeaponSystem.Draw(scene);
             SublightEngine.Draw(scene.GameLayer.DebugSystem, this, scene);

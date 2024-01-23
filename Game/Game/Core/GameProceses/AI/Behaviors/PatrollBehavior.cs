@@ -28,7 +28,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
         {
             spaceShip.SublightEngine.SetVelocity(.5f);
 
-            var aimingShip = spaceShip.SensorArray.GetAimingShip(spaceShip.Position, spaceShip.Fraction);
+            var aimingShip = spaceShip.SensorArray.GetAimingShip(spaceShip.Position);
             spaceShip.WeaponSystem.AimShip(aimingShip);
 
 

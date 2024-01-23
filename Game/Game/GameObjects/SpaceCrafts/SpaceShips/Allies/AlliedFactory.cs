@@ -17,7 +17,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys
         private class Carrior : AlliedShip
         {
             internal Carrior(Vector2 position)
-                : base(position, GameSpriteRegistries.destroyer, 4, new(80000), new(1f, 0.01f), new(1000, new(255, 4, 0), 1, 1, 10000), new(100, 100, 0), new(5000))
+                : base(position, GameSpriteRegistries.destroyer, 4, new(80000), new(1f, 0.01f), new(1000, new(120, 200, 240), 1, 1, 10000), new(100, 100, 0), new(5000))
             {
                 WeaponSystem.PlaceTurret(new(new(1100, 600), 1, TextureDepth + 1));
                 WeaponSystem.PlaceTurret(new(new(975, 600), 1, TextureDepth + 1));
@@ -56,7 +56,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys
         internal class BattleShip : AlliedShip
         {
             public BattleShip(Vector2 position)
-                : base(position, GameSpriteRegistries.cruiser, 1, new(50000), new(2f, 0.01f), new(1000, Color.IndianRed, 1, 1, 10000), new(100, 100, 0), new(5000))
+                : base(position, GameSpriteRegistries.cruiser, 1, new(50000), new(2f, 0.01f), new(1000, new(120, 200, 240), 1, 1, 10000), new(100, 100, 0), new(5000))
             {
                 WeaponSystem.PlaceTurret(new(new(110, 35), 1, TextureDepth + 1));
                 WeaponSystem.PlaceTurret(new(new(110, -35), 1, TextureDepth + 1));
@@ -74,7 +74,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys
         internal class Bomber : AlliedShip
         {
             public Bomber(Vector2 position)
-                : base(position, GameSpriteRegistries.bomber, 0.7f, new(20000), new(3f, 0.01f), new(1000, Color.IndianRed, 1, 1, 10000), new(100, 100, 0), new(5000))
+                : base(position, GameSpriteRegistries.bomber, 0.7f, new(20000), new(3f, 0.01f), new(1000, new(120, 200, 240), 1, 1, 10000), new(100, 100, 0), new(5000))
             {
                 WeaponSystem.PlaceTurret(new(new(-50, 106), 1, TextureDepth + 1));
                 WeaponSystem.PlaceTurret(new(new(-50, -106), 1, TextureDepth + 1));
@@ -90,7 +90,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys
         internal class Fighter : AlliedShip
         {
             public Fighter(Vector2 position)
-                : base(position, GameSpriteRegistries.fighter, 0.2f, new(10000), new(4f, 0.2f), new(1000, Color.IndianRed, 1, 1, 10000), new(20, 20, 0), new(5000))
+                : base(position, GameSpriteRegistries.fighter, 0.2f, new(10000), new(4f, 0.2f), new(1000, new(120, 200, 240), 1, 1, 10000), new(20, 20, 0), new(5000))
             {
                 WeaponSystem.PlaceTurret(new(new(0, 0), 1, TextureDepth + 1));
 

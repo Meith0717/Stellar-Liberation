@@ -43,12 +43,12 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems
 
         public void Draw(SpaceShip spaceShip, Scene scene) => TextureManager.Instance.DrawAdaptiveCircle(spaceShip.Position, ShortRangeScanDistance, new(50, 50, 50, 50), 2.5f, spaceShip.TextureDepth, scene.Camera2D.Zoom);
 
-        public SpaceShip GetAimingShip(Vector2 spaceShipPosition, Fractions fraction)
+        public SpaceShip GetAimingShip(Vector2 spaceShipPosition)
         {
-            SpaceShip spaceShip = null;
             PriorityQueue<SpaceShip, double> q = new();
-            foreach (var spaceShip1 in OpponentsInRannge) q.Enqueue(spaceShip1, -GetAimingScore(spaceShipPosition, spaceShip1));
-            q.TryDequeue(out spaceShip, out var _);
+            foreach (var spaceShip1 in OpponentsInRannge) 
+                q.Enqueue(spaceShip1, - GetAimingScore(spaceShipPosition, spaceShip1));
+            q.TryDequeue(out var spaceShip, out var _);
             return spaceShip;
         }
 
