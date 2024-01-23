@@ -26,7 +26,7 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGenerati
 
         private readonly static List<Registry> Tropical = new() { GameSpriteRegistries.tropical1, GameSpriteRegistries.tropical2, GameSpriteRegistries.tropical3, GameSpriteRegistries.tropical3 };
 
-        public static double GetTemperature(int starTemp, int distanceToStar) => starTemp / Math.Sqrt(distanceToStar/70d);
+        public static double GetTemperature(int starTemp, int distanceToStar) => starTemp / Math.Pow(distanceToStar/5000d, 1.2);
 
         public static Planet GetPlanet(Random seededRandom, int starTemp, int distanceToStar)
         {
@@ -43,7 +43,7 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGenerati
                 < 1000 => StoneTextures[seededRandom.Next(3)],
                 _ => WarmTextures[seededRandom.Next(3)]
             };
-            return new(distanceToStar, angle, texture, 10);
+            return new(distanceToStar, angle, texture, seededRandom.Next(5, 20));
         }
     }
 }

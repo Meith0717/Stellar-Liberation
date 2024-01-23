@@ -2,7 +2,7 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using MathNet.Numerics.Random;
+using MathNet.Numerics.Distributions;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
@@ -40,7 +40,8 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
 
             astronomicalObjsManager.AddObj(star);
             var distanceToStar = (int)star.BoundedBox.Radius;
-            for (int i = 1; i <= 8; i++)
+            var amount = Triangular.Sample(seededRandom, 1, 10, 7);
+            for (int i = 1; i <= amount; i++)
             {
                 distanceToStar += seededRandom.Next(40000, 80000);
                 astronomicalObjsManager.AddObj(PlanetGenerator.GetPlanet(seededRandom, star.Kelvin, distanceToStar));

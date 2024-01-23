@@ -38,7 +38,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
                     TextureManager.Instance.LoadTextureRegistries(Content, Registries.GetRegistryList<GameSpriteRegistries>());
                     SoundEffectManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<SoundEffectRegistries>());
                     MusicManager.Instance.LoadRegistries(Content, Registries.GetRegistryList<MusicRegistries>());
-
+                    Thread.Sleep(33);
                     onLoadComplete?.Invoke();
                 }
                 catch (Exception ex)

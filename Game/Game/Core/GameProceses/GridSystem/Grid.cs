@@ -22,7 +22,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GridSystem
             var screen = scene.Camera2D.Bounds;
             var depth = (int)TextureManager.Instance.MaxLayerDepth;
 
-            var alpha = 9;
+            var alpha = MathHelper.Clamp(5 * scene.Camera2D.Zoom, 0, 5);
             var color = new Color(alpha, alpha, alpha, alpha);
 
             for (int x = 0; x < screen.Right; x += gridSize)

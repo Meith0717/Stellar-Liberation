@@ -21,7 +21,7 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGenerati
             List<Asteroid> asteroids = new();
             var circle = new CircleF(centerPosition, orbitRadius - mMargin);
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 500; i++)
             {
                 var position = ExtendetRandom.NextVectorOnBorder(circle);
                 circle.Radius += i;
