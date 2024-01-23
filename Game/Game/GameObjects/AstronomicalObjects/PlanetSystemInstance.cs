@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 
         public void UpdateObjects(GameTime gameTime, InputState inputState, Scene scene)
         {
-            inputState.DoAction(ActionType.LeftClick, () => System.Diagnostics.Debug.WriteLine(PlanetGenerator.GetTemperature(mStar.Temperature, (int)Vector2.Distance(scene.WorldMousePosition, mStar.Position)) - 273));
+            inputState.DoAction(ActionType.LeftClick, () => System.Diagnostics.Debug.WriteLine(PlanetGenerator.GetTemperature(mStar.Kelvin, (int)Vector2.Distance(scene.WorldMousePosition, mStar.Position))));
 
             GameObjects.Update(gameTime, inputState, scene);
             AstronomicalObjects.Update(gameTime, inputState, scene);

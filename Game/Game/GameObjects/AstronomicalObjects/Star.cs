@@ -18,12 +18,12 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
     [Collidable]
     public class Star : GameObject2D
     {
-        [JsonProperty] public readonly int Temperature;
+        [JsonProperty] public readonly int Kelvin;
 
         public Star(float textureScale, int temperature, Color color)
             : base(Vector2.Zero, GameSpriteRegistries.star, textureScale, 1)
         {
-            Temperature = temperature;
+            Kelvin = temperature;
             TextureColor = color;
         }
 

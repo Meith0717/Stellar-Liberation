@@ -19,24 +19,20 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
     [Collidable]
     public class Planet : GameObject2D
     {
-        [JsonProperty]
-        public Vector2 OrbitCenter { get; private set; }
-        [JsonProperty]
-        public int OrbitRadius { get; private set; }
-        [JsonProperty]
-        public float OrbitRadians { get; private set; }
-        [JsonIgnore]
-        private float mShadowRotation;
+        [JsonProperty] public float OrbitRadians;
+        [JsonIgnore] private float mShadowRotation;
+        [JsonProperty] private readonly int OrbitRadius;
+        [JsonIgnore] private readonly Vector2 mMainBodyPosition;
 
-        public Planet(Vector2 orbitCenter, int orbitRadius, string textureId, float textureScale)
+        public Planet(int distanceToStar, float orbitAnle, string textureId, float textureScale)
             : base(Vector2.Zero, textureId, textureScale, 1)
         {
-            OrbitCenter = orbitCenter;
-            OrbitRadius = orbitRadius;
-            OrbitRadians = ExtendetRandom.Random.NextSingle() * (MathF.PI * 2);
+            mMainBodyPosition = Vector2.Zero;
+            OrbitRadius = distanceToStar;
+            OrbitRadians = orbitAnle;
 
-            Position = Geometry.GetPointOnCircle(OrbitCenter, OrbitRadius, OrbitRadians);
-            mShadowRotation = Geometry.AngleBetweenVectors(Position, OrbitCenter) + MathF.PI;
+            Position = Geometry.GetPointOnCircle(mMainBodyPosition, OrbitRadius, OrbitRadians);
+            mShadowRotation = Geometry.AngleBetweenVectors(Position, mMainBodyPosition) + MathF.PI;
         }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
@@ -44,8 +40,8 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             base.Update(gameTime, inputState, scene);
             RemoveFromSpatialHashing(scene);
             OrbitRadians -= 0.00001f;
-            Position = Geometry.GetPointOnCircle(OrbitCenter, OrbitRadius, OrbitRadians);
-            mShadowRotation = Geometry.AngleBetweenVectors(Position, OrbitCenter) + MathF.PI;
+            Position = Geometry.GetPointOnCircle(mMainBodyPosition, OrbitRadius, OrbitRadians);
+            mShadowRotation = Geometry.AngleBetweenVectors(Position, mMainBodyPosition) + MathF.PI;
             Rotation -= 0.0001f;
             AddToSpatialHashing(scene);
         }

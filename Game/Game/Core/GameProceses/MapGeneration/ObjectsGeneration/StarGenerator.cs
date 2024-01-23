@@ -12,30 +12,30 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGenerati
     {
         public static Star Generat(Random seededRandom)
         {
-            var temperature = seededRandom.Next(2000, 50000);
-            var color = GetStarColor(temperature);
-            var size = 10f * (float)seededRandom.NextDouble();
-            return new(size, temperature, color);
+            var kelvin = seededRandom.Next(2000, 50000);
+            var color = GetStarColor(kelvin);
+            var size = seededRandom.Next(20, 50);
+            return new(size, kelvin, color);
         }
 
-        public static Color GetStarColor(float temperature)
+        public static Color GetStarColor(float kelvin)
         {
             int threshold1 = 16000;
             int threshold2 = 33000;
 
-            if (temperature < threshold1)
+            if (kelvin < threshold1)
             {
-                float t1 = MathHelper.Clamp((temperature - 3000) / (threshold1 - 1000), 0, 1);
+                float t1 = MathHelper.Clamp((kelvin - 3000) / (threshold1 - 1000), 0, 1);
                 return Color.Lerp(Color.Red, Color.Orange, t1);
             }
 
-            if (temperature < threshold2)
+            if (kelvin < threshold2)
             {
-                float t2 = MathHelper.Clamp((-threshold1 + (temperature - 3000)) / (threshold2 - 1000), 0, 1);
+                float t2 = MathHelper.Clamp((-threshold1 + (kelvin - 3000)) / (threshold2 - 1000), 0, 1);
                 return Color.Lerp(Color.Orange, Color.LightYellow, t2);
             }
 
-            float t3 = MathHelper.Clamp((-threshold2 + (temperature - 3000)) / (30000 - 1000), 0, 1);
+            float t3 = MathHelper.Clamp((-threshold2 + (kelvin - 3000)) / (30000 - 1000), 0, 1);
             return Color.Lerp(Color.LightYellow, Color.Blue, t3);
         }
     }

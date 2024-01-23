@@ -22,7 +22,7 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
         public static void Generate(out HashSet<PlanetSystem> planetSystems)
         {
             planetSystems = new();
-            var seededRandom = new Random(6464733);
+            var seededRandom = new Random(5423);
 
             var noiseMap = BinaryMapGenerator.Generate(mSectorCountWidth, mSectorCountHeight, seededRandom);
             var positions = BinaryMapGenerator.GetVector2sFormBinaryMap(noiseMap);
@@ -58,20 +58,5 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
             var sectorBegin = new Vector2(x, y) * scaling + new Vector2(scaling, scaling) * 0.2f;
             return sectorBegin;
         }
-
-        public static Planet GetPlanet(Vector2 orbitCenter, int oribitRadius, int orbitNumber) => orbitNumber switch
-        {
-            1 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Warm(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
-            2 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Warm(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
-            3 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Tessatial(orbitCenter, oribitRadius), new PlanetTypes.Dry(orbitCenter, oribitRadius) }),
-            4 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Dry(orbitCenter, oribitRadius), new PlanetTypes.Tessatial(orbitCenter, oribitRadius) }),
-            5 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Tessatial(orbitCenter, oribitRadius), new PlanetTypes.Stone(orbitCenter, oribitRadius) }),
-            6 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Stone(orbitCenter, oribitRadius), new PlanetTypes.Gas(orbitCenter, oribitRadius) }),
-            7 => new PlanetTypes.Gas(orbitCenter, oribitRadius),
-            8 => new PlanetTypes.Gas(orbitCenter, oribitRadius),
-            9 => ExtendetRandom.GetRandomElement<Planet>(new() { new PlanetTypes.Cold(orbitCenter, oribitRadius), new PlanetTypes.Gas(orbitCenter, oribitRadius) }),
-            10 => new PlanetTypes.Cold(orbitCenter, oribitRadius),
-            _ => null
-        };
     }
 }
