@@ -11,6 +11,7 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Layers;
+using System;
 
 namespace StellarLiberation
 {
@@ -22,6 +23,7 @@ namespace StellarLiberation
         private readonly ResolutionManager ResolutionManager;
         private SpriteBatch mSpriteBatch;
         private LayerManager mLayerManager;
+        private bool IAmActive;
 
         public Game1()
         {
@@ -29,6 +31,10 @@ namespace StellarLiberation
             mGraphicsManager = new(this);
             mInputManager = new();
             ResolutionManager = new(mGraphicsManager);
+
+            Activated += ActivateMyGame;
+            Deactivated += DeactivateMyGame;
+            this.IAmActive = false;
 
             // Window properties
             IsMouseVisible = true;
@@ -54,12 +60,15 @@ namespace StellarLiberation
 
         protected override void Update(GameTime gameTime)
         {
-            InputState inputState = mInputManager.Update();
-            MusicManager.Instance.Update();
-            inputState.DoAction(ActionType.ToggleFullscreen, ResolutionManager.ToggleFullscreen);
-            inputState.DoAction(ActionType.IncreaseScaling, () => ResolutionManager.UiScaling += 0.01f);
-            inputState.DoAction(ActionType.DecreaseScaling, () => ResolutionManager.UiScaling -= 0.01f);
-            mLayerManager.Update(gameTime, inputState);
+            if (IAmActive)
+            {
+                InputState inputState = mInputManager.Update();
+                MusicManager.Instance.Update();
+                inputState.DoAction(ActionType.ToggleFullscreen, ResolutionManager.ToggleFullscreen);
+                inputState.DoAction(ActionType.IncreaseScaling, () => ResolutionManager.UiScaling += 0.01f);
+                inputState.DoAction(ActionType.DecreaseScaling, () => ResolutionManager.UiScaling -= 0.01f);
+                mLayerManager.Update(gameTime, inputState);
+            }
             base.Update(gameTime);
         }
 
@@ -69,6 +78,10 @@ namespace StellarLiberation
             mLayerManager.Draw(mSpriteBatch);
             base.Draw(gameTime);
         }
+
+        public void ActivateMyGame(object sendet, EventArgs args) => IAmActive = true;
+
+        public void DeactivateMyGame(object sendet, EventArgs args) => IAmActive = false;
 
         public void SetCursorTexture(Registry registry) => Mouse.SetCursor(MouseCursor.FromTexture2D(Content.Load<Texture2D>(registry.FilePath), 0, 0));
     }
