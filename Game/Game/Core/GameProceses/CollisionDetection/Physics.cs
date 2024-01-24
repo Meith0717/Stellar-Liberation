@@ -6,15 +6,26 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Allies;
 using System;
 
 namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection
 {
     public class Physics
     {
-        private static float MomentumConservation(float mass1, float mass2, float velocity2) 
-            => float.IsInfinity(mass2) ? 0 : mass2 * velocity2 / mass1;
+        private static bool TryMomentumConservation(float m1, float m2, float v1, float v2, out float v) 
+        {
+            v = 0;
+            if (float.IsInfinity(m1) || float.IsInfinity(m2)) return false;
+            if (v1 == 0 && v2 == 0) return false;
+            v = ((m1*v1) + (m2*v2)) / (m1 + m2);
+            return true;
+        }
+
+        private static float PushOutVelocity(Vector2 position, float maxVelocity, CircleF boundBox)
+        {
+            var distance = Vector2.Distance(boundBox.Position, position);
+            return maxVelocity * ((1 + MathF.Cos(distance * MathF.PI / boundBox.Diameter)) / 2);
+        }
 
         private static bool TryGetGetMass(GameObject2D gameObject2D, out float mass)
         {
@@ -35,14 +46,15 @@ namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection
             {
                 if (!TryGetGetMass(obj, out var m2)) return;
                 if (!ContinuousCollisionDetection.HasCollide(gameTime, gameObject2D, obj, out var _)) return;
-                var v2 = obj.Velocity;
                 var pushDir = - Vector2.Normalize(obj.Position - gameObject2D.Position);
-
-                if (obj is Player)
-                    System.Diagnostics.Debug.WriteLine("");
-
-                gameObject2D.Velocity = MomentumConservation(m1, m2, v2);
                 gameObject2D.MovingDirection += pushDir.IsNaN() ? Vector2.UnitX : pushDir;
+                if (TryMomentumConservation(m1, m2, gameObject2D.Velocity, obj.Velocity, out var v))
+                {
+                    gameObject2D.Velocity = v;
+                    return;
+                }
+                if (!ContinuousCollisionDetection.IsInside(gameObject2D, obj)) return;
+                gameObject2D.Velocity = PushOutVelocity(gameObject2D.Position, 10, obj.BoundedBox);
             }
         }
     }

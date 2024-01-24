@@ -8,7 +8,6 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System;
 
@@ -19,7 +18,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
         public bool IsMoving { get; private set; }
 
         public float MaxVelocity { get; }
-        private float mVelocity;
+        private float mTargetVelocity;
         private readonly float Maneuverability;
 
         private Vector2? mDirection;
@@ -64,8 +63,8 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
 
             var targetVelocity = relRotation switch
             {
-                < 0.7f => mVelocity * rotationScore,
-                >= 0.7f => mVelocity * relRotation,
+                < 0.7f => mTargetVelocity * rotationScore,
+                >= 0.7f => mTargetVelocity * relRotation,
                 float.NaN => 0
             };
             spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, targetVelocity, MaxVelocity / 100f);
@@ -77,7 +76,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
             var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, Geometry.GetPointInDirection(spaceShip.Position, (Vector2)mDirection, 1)); spaceShip.Rotation += rotationUpdate * Maneuverability;
         }
 
-        public void SetVelocity(float percentage) => mVelocity = MaxVelocity * percentage;
+        public void SetVelocity(float percentage) => mTargetVelocity = MaxVelocity * percentage;
 
         public void MoveInDirection(Vector2 direction)
         {
@@ -113,8 +112,8 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
 
         public void ControlByInput(SpaceShip spaceShip, InputState inputState, Vector2 worldMousePosition)
         {
-            inputState.DoAction(ActionType.Accelerate, () => mVelocity = MathHelper.Clamp(mVelocity + .1f, 0, MaxVelocity));
-            inputState.DoAction(ActionType.Break, () => mVelocity = MathHelper.Clamp(mVelocity - .1f, 0, MaxVelocity));
+            inputState.DoAction(ActionType.Accelerate, () => mTargetVelocity = MathHelper.Clamp(mTargetVelocity + .1f, 0, MaxVelocity));
+            inputState.DoAction(ActionType.Break, () => mTargetVelocity = MathHelper.Clamp(mTargetVelocity - .1f, 0, MaxVelocity));
 
             MoveInDirection(Vector2.Normalize(worldMousePosition - spaceShip.Position));
         }

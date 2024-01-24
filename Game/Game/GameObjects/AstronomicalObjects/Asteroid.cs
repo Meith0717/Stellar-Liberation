@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
@@ -25,6 +24,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         {
             base.Update(gameTime, inputState, scene);
             Rotation += .01f;
+            Velocity = MathHelper.Clamp(Velocity - 0.001f, 0, float.PositiveInfinity);
             CheckForHit(gameTime, scene);
             Physics.HandleCollision(gameTime, this, scene.SpatialHashing);
             GameObject2DMover.Move(gameTime, this, scene);

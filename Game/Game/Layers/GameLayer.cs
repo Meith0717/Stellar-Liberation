@@ -46,7 +46,7 @@ namespace StellarLiberation.Game.Layers
 
             // Add Main Scene
             CurrentSystem = PlanetSystems.First();
-            Player.Position = new Vector2(100000, 100000);
+            Player.Position = Vector2.Zero;
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager)

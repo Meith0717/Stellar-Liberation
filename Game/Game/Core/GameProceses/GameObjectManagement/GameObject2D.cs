@@ -23,7 +23,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
     public abstract class GameObject2D
     {
         // Phisics Stuff
-        public CircleF BoundedBox => new(Position, MathF.Max(mTextureHeight, mTextureWidth) / 2 * TextureScale * 0.85f);
+        public CircleF BoundedBox => new(Position, MathF.Max(mTextureHeight, mTextureWidth) / 2 * TextureScale);
         [JsonProperty] public Vector2 Position { get; set; }
         [JsonProperty] public float Rotation { get; set; }
         [JsonProperty] public Vector2 MovingDirection { get; set; }
