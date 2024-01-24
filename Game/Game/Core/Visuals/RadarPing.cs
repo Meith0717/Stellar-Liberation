@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.Core.Visuals
         public void Draw(Scene scene)
         {
             int getColor(int a) => (int)(a * mAlpha);
-            var color = new Color(getColor(22), getColor(160), getColor(0), getColor(255));
+            var color = new Color(getColor(200), getColor(200), getColor(255), getColor(255));
             TextureManager.Instance.DrawAdaptiveCircle(mPosition, mRadius * 10000, color, 200, 1, 1);
         }
     }

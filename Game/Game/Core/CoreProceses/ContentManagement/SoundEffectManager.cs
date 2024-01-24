@@ -2,6 +2,7 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
@@ -32,7 +33,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
             };
         }
 
-        public void PlaySound(string soundId, bool allowInterrupt = false)
+        public void PlaySound(string soundId, bool allowInterrupt = false, float volume = 1f, float pan = 0f)
         {
             if (!SoundEffectInstances.ContainsKey(soundId)) throw new Exception("SoundId not found!");
 
@@ -45,44 +46,45 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
             {
                 case 0 when allowInterrupt:
                     instance = soundEffectInstances.First();
-                    instance.Volume = OverallVolume;
+                    instance.Volume = OverallVolume * volume;
+                    instance.Pan = MathHelper.Clamp(pan, -1f, 1f); ;
                     instance.Stop();
                     instance.Play();
                     break;
                 case > 0:
                     instance = stopedSoundEffectInstances.First();
-                    instance.Volume = OverallVolume;
+                    instance.Volume = OverallVolume * volume;
+                    instance.Pan = MathHelper.Clamp(pan, -1f, 1f); ;
                     instance.Play();
                     break;
             }
         }
 
+        private void IterateThroughInstances(Action<SoundEffectInstance> action)
+        {
+            foreach (var instances in SoundEffectInstances.Values)
+            {
+                foreach (var instance in instances) action.Invoke(instance);
+            }
+        }
+
+        public void PauseAllSounds() => IterateThroughInstances((instance) => { instance.Pause(); });
+        public void ResumeAllSounds() => IterateThroughInstances((instance) => { instance.Resume(); });
 
         public void StopAllSounds()
         {
-            foreach (string soundEffect in SoundEffectInstances.Keys)
+            IterateThroughInstances((instance) =>
             {
-                if (!SoundEffectInstances.ContainsKey(soundEffect)) return;
-
-                var instances = SoundEffectInstances[soundEffect];
-
-                foreach (var instance in instances!.Where(instance => instance.State != SoundState.Stopped))
-                {
-                    instance.IsLooped = false;
-                    instance.Stop();
-                }
-            }
+                instance.IsLooped = false;
+                instance.Stop();
+            });
         }
 
         internal void ChangeOverallVolume(float sliderValue)
         {
-            foreach (var instances in SoundEffectInstances.Values)
-            {
-                foreach (var instance in instances)
-                {
-                    if (sliderValue >= 0 && sliderValue <= 1) instance.Volume = sliderValue;
-                }
-            }
+            IterateThroughInstances((instance) => {
+                if (sliderValue >= 0 && sliderValue <= 1) instance.Volume = sliderValue;
+            });
             OverallVolume = sliderValue;
         }
     }

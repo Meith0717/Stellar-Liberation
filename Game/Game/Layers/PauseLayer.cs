@@ -4,6 +4,7 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
@@ -31,7 +32,8 @@ namespace StellarLiberation.Game.Layers
             buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Settings") { Anchor = Anchor.CenterV, RelY = .23f, RelWidth = .8f, OnClickAction = () => LayerManager.AddLayer(new SettingsLayer(false)), TextAllign = TextAllign.Center });
             buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Exit to Menue") { Anchor = Anchor.CenterV, RelY = .41f, RelWidth = .75f, OnClickAction = Menue, TextAllign = TextAllign.Center });
             buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Exit to Desktop") { Anchor = Anchor.CenterV, RelY = .59f, RelWidth = .8f, OnClickAction = () => LayerManager.Exit(), TextAllign = TextAllign.Center });
-            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Resume") { Anchor = Anchor.CenterV, RelY = .85f, RelWidth = .8f, OnClickAction = () => LayerManager.PopLayer(), TextAllign = TextAllign.Center });
+            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Resume") { Anchor = Anchor.CenterV, RelY = .85f, RelWidth = .8f, OnClickAction = () => { LayerManager.PopLayer(); SoundEffectManager.Instance.ResumeAllSounds(); }, TextAllign = TextAllign.Center });
+            SoundEffectManager.Instance.PauseAllSounds();
         }
 
         public override void Destroy() { }

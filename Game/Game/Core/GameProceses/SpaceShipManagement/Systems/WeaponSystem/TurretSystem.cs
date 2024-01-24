@@ -46,7 +46,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.W
         public void Fire() => mFire = true;
         public void StopFire() => mFire = false;
 
-        public void Update(GameTime gameTime, SpaceShip origin, GameObjectManager objManager)
+        public void Update(GameTime gameTime, SpaceShip origin, Scene scene)
         {
             mFireCoolDown += gameTime.ElapsedGameTime.Milliseconds;
             var hasFired = false;
@@ -56,11 +56,11 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.W
                 turret.GetPosition(origin.Position, origin.Rotation);
                 turret.RotateToTArget(origin.Rotation, position);
                 if (!mFire || mFireCoolDown < mMaxFireCoolDown) continue;
-                turret.Fire(objManager, origin, mParticleColor, mShielDamage, mHullDamage);
+                turret.Fire(scene.ParticleManager, origin, mParticleColor, mShielDamage, mHullDamage);
                 hasFired = true;
             }
-
-            if (hasFired) SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.torpedoFire);
+             
+            if (hasFired) SoundEffectSystem.PlaySound(SoundEffectRegistries.torpedoFire, scene.Camera2D, origin.Position);
             if (hasFired) mFireCoolDown = 0;
         }
 

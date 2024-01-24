@@ -59,7 +59,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
         {
             foreach (var obj in Objects)
             {
-                if (!scene.Camera2D.Intersects(obj.BoundedBox)) return;
+                // if (!scene.Camera2D.Intersects(obj.BoundedBox)) return;
                 obj.Draw(scene);
             }
         }

@@ -128,12 +128,6 @@
 /processorParam:Quality=Best
 /build:sounds/coolHyperdrive.wav
 
-#begin sounds/CourseSet.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sounds/CourseSet.wav
-
 #begin sounds/engineSound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

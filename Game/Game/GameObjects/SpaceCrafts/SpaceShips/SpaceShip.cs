@@ -8,6 +8,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
+using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.AI;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
@@ -66,7 +67,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             HasProjectileHit(gameTime, scene);
             DefenseSystem.Update(gameTime);
             SensorArray.Scan(Position, Fraction, scene);
-            WeaponSystem.Update(gameTime, this, scene.GameLayer.CurrentSystem.GameObjectManager);
+            WeaponSystem.Update(gameTime, this, scene);
             mUtilityAi.Update(gameTime, this, scene);
 
             if (DefenseSystem.HullPercentage > 0) return;
@@ -90,7 +91,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                 hit = true;
             }
             if (!hit) return;
-            SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.torpedoHit);
+            SoundEffectSystem.PlaySound(SoundEffectRegistries.torpedoHit, scene.Camera2D, Position);
         }
 
         public override void Draw(Scene scene)

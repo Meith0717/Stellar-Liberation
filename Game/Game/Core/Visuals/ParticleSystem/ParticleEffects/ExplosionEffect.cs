@@ -14,7 +14,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
 
         public static void ShipDestroyed(Vector2 position, GameObjectManager particleManager)
         {
-            var size = ExtendetRandom.Random.Next(5, 15) * 0.01f;
+            var size = ExtendetRandom.Random.Next(15, 30) * 0.01f;
             
             for (int i = 0; i < ExtendetRandom.Random.Next(20, 60); i++)
             {
