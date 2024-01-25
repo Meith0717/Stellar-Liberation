@@ -9,6 +9,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Layers;
 using System;
@@ -20,7 +21,9 @@ namespace StellarLiberation
         // Local Classes
         private readonly GraphicsDeviceManager mGraphicsManager;
         private readonly InputManager mInputManager;
-        private readonly ResolutionManager ResolutionManager;
+        private readonly ResolutionManager mResolutionManager;
+        private readonly PersistanceManager mPersistanceManager;
+        private GameSettings mGameSettings;
         private SpriteBatch mSpriteBatch;
         private LayerManager mLayerManager;
         private bool IAmActive;
@@ -30,7 +33,8 @@ namespace StellarLiberation
             Content.RootDirectory = "Content";
             mGraphicsManager = new(this);
             mInputManager = new();
-            ResolutionManager = new(mGraphicsManager);
+            mResolutionManager = new(mGraphicsManager);
+            mPersistanceManager = new();
 
             Activated += ActivateMyGame;
             Deactivated += DeactivateMyGame;
@@ -45,14 +49,15 @@ namespace StellarLiberation
         protected override void Initialize()
         {
             base.Initialize();
-            mLayerManager = new(this, GraphicsDevice, new(), ResolutionManager);
-            ResolutionManager.GetNativeResolution();
-            ResolutionManager.ToggleFullscreen();
+            mLayerManager = new(this, GraphicsDevice, mPersistanceManager, mResolutionManager);
+            mResolutionManager.GetNativeResolution();
+            mResolutionManager.ToggleFullscreen();
             mLayerManager.AddLayer(new LoadingLayer());
         }
 
         protected override void LoadContent()
         {
+            mPersistanceManager.LoadAsync<GameSettings>(PersistanceManager.SettingsSaveFilePath, (s) => mGameSettings = s, (_) => mGameSettings = new());
             mSpriteBatch = new SpriteBatch(GraphicsDevice);
             ContentLoader.PreLoad(Content, mSpriteBatch);
             ContentLoader.LoadAsync(Content, mSpriteBatch, () => mLayerManager.AddLayer(new MainMenueLayer()),(ex) => throw ex);
@@ -64,9 +69,9 @@ namespace StellarLiberation
             {
                 InputState inputState = mInputManager.Update();
                 MusicManager.Instance.Update();
-                inputState.DoAction(ActionType.ToggleFullscreen, ResolutionManager.ToggleFullscreen);
-                inputState.DoAction(ActionType.IncreaseScaling, () => ResolutionManager.UiScaling += 0.01f);
-                inputState.DoAction(ActionType.DecreaseScaling, () => ResolutionManager.UiScaling -= 0.01f);
+                inputState.DoAction(ActionType.ToggleFullscreen, mResolutionManager.ToggleFullscreen);
+                inputState.DoAction(ActionType.IncreaseScaling, () => mResolutionManager.UiScaling += 0.01f);
+                inputState.DoAction(ActionType.DecreaseScaling, () => mResolutionManager.UiScaling -= 0.01f);
                 mLayerManager.Update(gameTime, inputState);
             }
             base.Update(gameTime);

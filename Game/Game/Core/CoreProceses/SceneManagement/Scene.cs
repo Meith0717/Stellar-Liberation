@@ -10,7 +10,6 @@ using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.Core.Visuals.ParticleSystem;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.Layers;
 

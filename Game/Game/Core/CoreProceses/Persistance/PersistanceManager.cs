@@ -2,7 +2,6 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using StellarLiberation.Game.Layers;
 using System;
 using System.IO;
 using System.Threading;
@@ -12,9 +11,10 @@ namespace StellarLiberation.Game.Core.CoreProceses.Persistance
     public class PersistanceManager
     {
         private readonly Serializer mSerializer;
-        public readonly string GameSaveDirectory = "gameSave";
+        private static readonly string GameSaveDirectory = "gameSave";
 
-        public string GameSaveFilePath => Path.Combine(GameSaveDirectory, "save");
+        public static string GameSaveFilePath => Path.Combine(GameSaveDirectory, "save");
+        public static string SettingsSaveFilePath => Path.Combine(GameSaveDirectory, "settings");
 
         public PersistanceManager()
         {
@@ -22,59 +22,43 @@ namespace StellarLiberation.Game.Core.CoreProceses.Persistance
             mSerializer.CreateFolder(GameSaveDirectory);
         }
 
-        public GameLayer LoadGameLayer()
+        public void LoadAsync<Object>(string path, Action<Object> onLoadComplete, Action<Exception> onError) where Object : new()
         {
-            if (!mSerializer.FileExist(GameSaveFilePath)) throw new FileNotFoundException();
-            var gameLayer = new GameLayer();
-            return (GameLayer)mSerializer.PopulateObject(gameLayer, GameSaveFilePath);
-        }
-
-        public void SaveGameLayer(GameLayer gameLayer)
-        {
-            if (gameLayer is null) throw new System.Exception();
-            mSerializer.SerializeObject(gameLayer, GameSaveFilePath);
-        }
-
-        public void LoadGameLayerAsync(Action<GameLayer> onLoadComplete, Action<Exception> onError)
-        {
-            Thread loadThread = new Thread(() =>
-            {
-                try
+                Thread loadThread = new(() =>
                 {
-                    if (!mSerializer.FileExist(GameSaveFilePath)) throw new FileNotFoundException();
-                    var gameLayer = new GameLayer();
-                    gameLayer = (GameLayer)mSerializer.PopulateObject(gameLayer, GameSaveFilePath);
-
-                    onLoadComplete?.Invoke(gameLayer);
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                    onError?.Invoke(ex);
-                }
-            });
+                    try
+                    {
+                        Object @object = new();
+                        @object = (Object)mSerializer.PopulateObject(@object, path);
+                        onLoadComplete?.Invoke(@object);
+                    }
+                    catch (Exception e)
+                    {
+                        onError?.Invoke(e);
+                    }
+                });
 
             loadThread.Start();
         }
 
-        public void SaveGameLayerAsync(GameLayer gameLayer, Action onSaveComplete, Action<Exception> onError)
+        public void SaveAsync(string path, Object @object, Action onSaveComplete, Action<Exception> onError)
         {
-            Thread saveThread = new Thread(() =>
+            Thread saveThread = new(() =>
             {
                 try
                 {
-                    if (gameLayer is null) throw new Exception();
-                    mSerializer.SerializeObject(gameLayer, GameSaveFilePath);
-
+                    if (@object is null) throw new Exception();
+                    mSerializer.SerializeObject(@object, path);
                     onSaveComplete?.Invoke();
                 }
-                catch (Exception ex)
+                catch (Exception e)
                 {
-                    onError?.Invoke(ex);
+                    onError?.Invoke(e);
                 }
             });
 
             saveThread.Start();
         }
     }
+
 }

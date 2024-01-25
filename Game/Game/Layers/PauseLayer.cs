@@ -8,6 +8,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 
@@ -27,7 +28,7 @@ namespace StellarLiberation.Game.Layers
 
             buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Save Game") { Anchor = Anchor.CenterV, RelY = .05f, RelWidth = .8f, OnClickAction = () => {
                 LayerManager.AddLayer(new LoadingLayer(false));
-                mPersistanceManager.SaveGameLayerAsync(gameLayer, () =>  LayerManager.PopLayer(), (ex) => throw ex);
+                mPersistanceManager.SaveAsync(PersistanceManager.GameSaveFilePath, gameLayer, () =>  LayerManager.PopLayer(), (ex) => throw ex);
             }, TextAllign = TextAllign.Center });
             buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Settings") { Anchor = Anchor.CenterV, RelY = .23f, RelWidth = .8f, OnClickAction = () => LayerManager.AddLayer(new SettingsLayer(false)), TextAllign = TextAllign.Center });
             buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Exit to Menue") { Anchor = Anchor.CenterV, RelY = .41f, RelWidth = .75f, OnClickAction = Menue, TextAllign = TextAllign.Center });

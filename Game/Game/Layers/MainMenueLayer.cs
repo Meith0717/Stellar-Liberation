@@ -8,6 +8,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 
@@ -29,7 +30,7 @@ namespace StellarLiberation.Game.Layers
             mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Continue") { VSpace = 20, HSpace = 20, RelY = .6f, OnClickAction = () => 
             {
                 LayerManager.AddLayer(new LoadingLayer());
-                mPersistanceManager.LoadGameLayerAsync((gL) => { LayerManager.PopLayer(); LayerManager.AddLayer(gL); }, (ex) => LayerManager.PopLayer());
+                mPersistanceManager.LoadAsync<GameLayer>(PersistanceManager.GameSaveFilePath, (gL) => { LayerManager.PopLayer(); LayerManager.AddLayer(gL); }, (ex) => LayerManager.PopLayer());
             }
             });
 

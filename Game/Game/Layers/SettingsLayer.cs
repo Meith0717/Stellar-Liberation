@@ -49,7 +49,10 @@ namespace StellarLiberation.Game.Layers
             grid.Set(1, 2, mSfxSlider);
             grid.Set(3, 1, mResolutionSelector);
 
-            mMainFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => LayerManager.PopLayer() });
+            mMainFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = () => 
+            { 
+                LayerManager.PopLayer(); 
+            } });
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager)

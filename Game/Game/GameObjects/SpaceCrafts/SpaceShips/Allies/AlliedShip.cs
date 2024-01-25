@@ -8,6 +8,8 @@ using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PropulsionSystem;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.WeaponSystem;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys;
+using System.Linq;
 
 namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Allies
 {
@@ -21,6 +23,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Allies
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
             base.Update(gameTime, inputState, scene);
+            foreach (EnemyShip enemy in SensorArray.OpponentsInRannge.Cast<EnemyShip>()) { enemy.IsSpotted = true; }
             mTractorBeam.Pull(gameTime, this, scene);
         }
 

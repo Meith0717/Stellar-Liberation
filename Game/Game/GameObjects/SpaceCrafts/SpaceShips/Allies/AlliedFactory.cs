@@ -90,7 +90,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys
         internal class Fighter : AlliedShip
         {
             public Fighter(Vector2 position)
-                : base(position, GameSpriteRegistries.fighter, 0.2f, new(10000), new(4f, 0.2f), new(1000, new(120, 200, 240), 1, 1, 10000), new(20, 20, 0), new(5000))
+                : base(position, GameSpriteRegistries.fighter, 0.5f, new(10000), new(4f, 0.2f), new(1000, new(120, 200, 240), 1, 1, 10000), new(20, 20, 0), new(5000))
             {
                 WeaponSystem.PlaceTurret(new(new(0, 0), 1, TextureDepth + 1));
 
