@@ -22,10 +22,9 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public float Value => mSliderValue;
 
-        public UiSlider(float val)
-        {
-            mSliderValue = val;
-        }
+        public UiSlider(float val) => mSliderValue = val;
+
+        public UiSlider(ref float val) => mSliderValue = val;
 
         public override void Update(InputState inputState, Rectangle root, float uiScaling)
         {

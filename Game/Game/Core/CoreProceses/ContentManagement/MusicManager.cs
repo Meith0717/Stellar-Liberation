@@ -2,6 +2,7 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
@@ -19,7 +20,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
         private readonly List<SoundEffect> mMusics = new();
         private SoundEffectInstance mMusicInstance;
         private bool mLoadet;
-        public float OverallVolume = 0f;
+        public float OverallVolume;
 
         public void LoadRegistries(ContentManager content, List<Registry> registries)
         {
@@ -30,6 +31,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
             };
             mLoadet = true;
         }
+
+        public void SetVolume(float master, float volume) => OverallVolume = MathHelper.Clamp(volume, 0f, 1f) * MathHelper.Clamp(master, 0f, 1f);
 
         public void Pause() => mMusicInstance.Pause();
         public void Resume() => mMusicInstance.Resume();
@@ -51,10 +54,10 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
             mMusicInstance = null;
         }
 
-        public void ChangeOverallVolume(float sliderValue)
+        public void ChangeOverallVolume(float master, float volume)
         {
-            if (sliderValue >= 0 && sliderValue <= 1) mMusicInstance.Volume = sliderValue;
-            OverallVolume = sliderValue;
+            SetVolume(master, volume);
+            mMusicInstance.Volume = OverallVolume;
         }
     }
 }

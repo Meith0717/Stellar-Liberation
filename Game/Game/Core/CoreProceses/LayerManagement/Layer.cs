@@ -19,15 +19,17 @@ public abstract class Layer
     [JsonIgnore] protected Game1 mGame1;
     [JsonIgnore] protected GraphicsDevice mGraphicsDevice;
     [JsonIgnore] protected PersistanceManager mPersistanceManager;
+    [JsonIgnore] protected GameSettings mGameSettings;
 
     protected Layer(bool updateBelow) { UpdateBelow = updateBelow; }
 
-    public virtual void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager)
+    public virtual void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, GameSettings gameSettings)
     {
         mGame1 = game1;
         LayerManager = layerManager;
         mGraphicsDevice = graphicsDevice;
         mPersistanceManager = persistanceManager;
+        mGameSettings = gameSettings;
     }
 
     public abstract void Update(GameTime gameTime, InputState inputState);

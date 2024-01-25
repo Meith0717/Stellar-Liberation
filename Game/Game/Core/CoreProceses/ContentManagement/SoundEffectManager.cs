@@ -18,7 +18,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
         public static SoundEffectManager Instance { get { return mInstance ??= new(); } }
         private readonly Dictionary<string, List<SoundEffectInstance>> SoundEffectInstances = new();
         private readonly int MaxSoundEffectInstances = new();
-        public float OverallVolume = 1.0f;
+        public float OverallVolume;
 
         public SoundEffectManager(int maxSoundEffectInstances = 20) => MaxSoundEffectInstances = maxSoundEffectInstances;
 
@@ -32,6 +32,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
                 SoundEffectInstances[reg.Name] = sfxInstances;
             };
         }
+
+        public void SetVolume(float master, float volume) => OverallVolume = MathHelper.Clamp(volume, 0f, 1f) * MathHelper.Clamp(master, 0f, 1f);
 
         public void PlaySound(string soundId, bool allowInterrupt = false, float volume = 1f, float pan = 0f)
         {
@@ -80,12 +82,12 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
             });
         }
 
-        internal void ChangeOverallVolume(float sliderValue)
+        internal void ChangeOverallVolume(float master, float volume)
         {
+            SetVolume(master, volume);
             IterateThroughInstances((instance) => {
-                if (sliderValue >= 0 && sliderValue <= 1) instance.Volume = sliderValue;
+                 instance.Volume = OverallVolume;
             });
-            OverallVolume = sliderValue;
         }
     }
 }

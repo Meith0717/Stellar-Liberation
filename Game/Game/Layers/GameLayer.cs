@@ -49,9 +49,9 @@ namespace StellarLiberation.Game.Layers
             Player.Position = Vector2.Zero;
         }
 
-        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager)
+        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, GameSettings gameSettings)
         {
-            base.Initialize(game1, layerManager, graphicsDevice, persistanceManager);
+            base.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings);
             mPlanetSystemScene = new(this, CurrentSystem.GetInstance(), 1);
             HudLayer = new(mPlanetSystemScene);
             LayerManager.AddLayer(HudLayer);

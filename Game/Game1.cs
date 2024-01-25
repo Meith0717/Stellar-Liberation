@@ -49,15 +49,28 @@ namespace StellarLiberation
         protected override void Initialize()
         {
             base.Initialize();
-            mLayerManager = new(this, GraphicsDevice, mPersistanceManager, mResolutionManager);
-            mResolutionManager.GetNativeResolution();
+            mLayerManager = new(this, GraphicsDevice, mPersistanceManager, mResolutionManager, mGameSettings);
+
+            switch (mGameSettings.Resolution)
+            {
+                case null:
+                    mResolutionManager.GetNativeResolution();
+                    break;
+                case not null:
+                    mResolutionManager.Apply(mGameSettings.Resolution);
+                    break;
+            }
             mResolutionManager.ToggleFullscreen();
             mLayerManager.AddLayer(new LoadingLayer());
         }
 
         protected override void LoadContent()
         {
-            mPersistanceManager.LoadAsync<GameSettings>(PersistanceManager.SettingsSaveFilePath, (s) => mGameSettings = s, (_) => mGameSettings = new());
+            mPersistanceManager.Load<GameSettings>(PersistanceManager.SettingsSaveFilePath, (s) => mGameSettings = s, (_) => mGameSettings = new());
+
+            SoundEffectManager.Instance.SetVolume(mGameSettings.MasterVolume, mGameSettings.SoundEffectsVolume);
+            MusicManager.Instance.SetVolume(mGameSettings.MusicVolume, mGameSettings.MusicVolume);
+
             mSpriteBatch = new SpriteBatch(GraphicsDevice);
             ContentLoader.PreLoad(Content, mSpriteBatch);
             ContentLoader.LoadAsync(Content, mSpriteBatch, () => mLayerManager.AddLayer(new MainMenueLayer()),(ex) => throw ex);
@@ -70,8 +83,8 @@ namespace StellarLiberation
                 InputState inputState = mInputManager.Update();
                 MusicManager.Instance.Update();
                 inputState.DoAction(ActionType.ToggleFullscreen, mResolutionManager.ToggleFullscreen);
-                inputState.DoAction(ActionType.IncreaseScaling, () => mResolutionManager.UiScaling += 0.01f);
-                inputState.DoAction(ActionType.DecreaseScaling, () => mResolutionManager.UiScaling -= 0.01f);
+                inputState.DoAction(ActionType.IncreaseScaling, () => mResolutionManager.UiScaling += 0.1f);
+                inputState.DoAction(ActionType.DecreaseScaling, () => mResolutionManager.UiScaling -= 0.1f);
                 mLayerManager.Update(gameTime, inputState);
             }
             base.Update(gameTime);

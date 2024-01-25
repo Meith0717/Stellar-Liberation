@@ -14,7 +14,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Persistance
 
         public Serializer(string gameName)
         {
-            string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             RootPath = Path.Combine(AppDataPath, gameName);
             CreateFolder(RootPath);
         }

@@ -13,11 +13,11 @@ namespace StellarLiberation.Game.Core.CoreProceses.Persistance
     public class GameSettings 
     {
         // Sound Settings
-        [JsonProperty] public static float MasterVolume = 1f;
-        [JsonProperty] public static float SoundEffectsVolume = 1f;
-        [JsonProperty] public static float MusicVolume = 1f;
+        [JsonProperty] public float MasterVolume = 1f;
+        [JsonProperty] public float SoundEffectsVolume = 1f;
+        [JsonProperty] public float MusicVolume = 1f;
 
         // Visual settings
-        [JsonProperty] public static Resolution? Resolution = null;
+        [JsonProperty] public string Resolution = null;
     }
 }

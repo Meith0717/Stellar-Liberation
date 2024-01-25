@@ -18,13 +18,13 @@ namespace StellarLiberation.Game.Core.UserInterface
         private readonly UiButton mRightArrow;
         private readonly UiText mVariable;
         private int mIndex;
-        public Action OnClickAction = () => throw new NotImplementedException();
+        public Action OnClickAction;
 
         public UiVariableSelector(List<T> variables)
         {
             mVariables = variables;
-            mLeftArrow = new(MenueSpriteRegistries.arrowL, "") { Anchor = Anchor.W, OnClickAction = () => { DecrementIndex(); OnClickAction(); } };
-            mRightArrow = new(MenueSpriteRegistries.arrowR, "") { Anchor = Anchor.E, OnClickAction = () => { IncrementIndex(); OnClickAction(); } };
+            mLeftArrow = new(MenueSpriteRegistries.arrowL, "") { Anchor = Anchor.W, OnClickAction = () => { DecrementIndex(); OnClickAction?.Invoke(); } };
+            mRightArrow = new(MenueSpriteRegistries.arrowR, "") { Anchor = Anchor.E, OnClickAction = () => { IncrementIndex(); OnClickAction?.Invoke(); } };
             mVariable = new(FontRegistries.textFont, "N.A") { Anchor = Anchor.Center };
         }
 
