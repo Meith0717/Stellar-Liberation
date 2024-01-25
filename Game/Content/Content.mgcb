@@ -1736,6 +1736,18 @@
 /processorParam:TextureFormat=Color
 /build:textures/menueSprites/textures/menueBackground.png
 
+#begin textures/menueSprites/textures/planet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/textures/planet.png
+
 #begin textures/menueSprites/textures/propulsion.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1771,4 +1783,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/menueSprites/textures/ship.png
+
+#begin textures/menueSprites/textures/temperature-high (1).png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/textures/temperature-high (1).png;textures/menueSprites/textures/temperature.png
 

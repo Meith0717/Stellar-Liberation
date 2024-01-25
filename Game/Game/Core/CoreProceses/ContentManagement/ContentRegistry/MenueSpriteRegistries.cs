@@ -43,5 +43,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegi
         public readonly static Registry propulsion = new(textures, "propulsion");
         public readonly static Registry shield = new(textures, "shield");
         public readonly static Registry ship = new(textures, "ship");
+        public readonly static Registry planet = new(textures, "planet");
+        public readonly static Registry temperature = new(textures, "temperature");
     }
 }

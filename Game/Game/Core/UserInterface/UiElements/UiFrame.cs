@@ -17,7 +17,7 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
     {
         public Color Color = new(30, 34, 34);
         public double Alpha = .92f;
-        private readonly float mBorder;
+        private float mBorder;
         private readonly LinkedList<UiElement> mChildren = new();
 
         public UiFrame(int border = 16)

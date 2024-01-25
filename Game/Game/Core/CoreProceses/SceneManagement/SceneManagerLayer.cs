@@ -39,7 +39,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.SceneManagement
         public override void Update(GameTime gameTime, InputState inputState)
         {
             DebugSystem.Update(gameTime, inputState);
-            foreach (Scene scene in Scenes.Reverse()) scene.Update(gameTime, inputState);
+            Scenes.Last().Update(gameTime, inputState);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

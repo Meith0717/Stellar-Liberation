@@ -13,8 +13,7 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
     {
         public readonly static int mSectorCountWidth = 50;
         public readonly static int mSectorCountHeight = 50;
-        public readonly static int MapScale = 100;
-        public readonly static int ViewScale = 1000000;
+        public readonly static int MapScale = 1000;
 
         public static void Generate(out HashSet<PlanetSystem> planetSystems)
         {
@@ -24,7 +23,7 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
             var noiseMap = BinaryMapGenerator.Generate(mSectorCountWidth, mSectorCountHeight, seededRandom);
             var positions = BinaryMapGenerator.GetVector2sFormBinaryMap(noiseMap);
             BinaryMapGenerator.ScaleVector2s(ref positions, MapScale);
-            BinaryMapGenerator.ShiftVector2s(ref positions, 35, seededRandom);
+            BinaryMapGenerator.ShiftVector2s(ref positions, 350, seededRandom);
 
             foreach (var position in positions)
             {

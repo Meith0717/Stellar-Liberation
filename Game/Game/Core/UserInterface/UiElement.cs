@@ -20,6 +20,8 @@ namespace StellarLiberation.Game.Core.UserInterface
         // Position propeties
         public float RelX { set => Canvas.RelativeX = value; }
         public float RelY { set => Canvas.RelativeY = value; }
+        public int X { set => Canvas.X = value; }
+        public int Y { set => Canvas.Y = value; }
 
         // Dimension propeties
         public float RelWidth { set => Canvas.RelWidth = value; }
