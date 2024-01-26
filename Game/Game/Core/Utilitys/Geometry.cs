@@ -46,32 +46,8 @@ namespace StellarLiberation.Game.Core.Utilitys
             return MathF.Acos(Vector2.Dot(new Vector2(1, 0), direction));
         }
 
-        public static Vector2 GetRelativePosition(Vector2 absolutePosition, Rectangle rectangle)
-        {
-            float relativeX = absolutePosition.X - rectangle.X;
-            float relativeY = absolutePosition.Y - rectangle.Y;
-
-            return new Vector2(relativeX, relativeY);
-        }
-
-        public static Vector2 GetPoitOnRectangle(RectangleF rectangle, float angle)
-        {
-            float halfWidth = rectangle.Width / 2;
-            float halfHeight = rectangle.Height / 2;
-
-            float x = halfWidth * (float)Math.Cos(angle);
-            float y = halfHeight * (float)Math.Sin(angle);
-
-            return Vector2.Add(new Vector2(x, y), rectangle.Center);
-        }
-
-
-        public static float RadToDeg(float rad) => rad * (360f / (2f * MathF.PI));
-
-        public static float DegToRad(float deg) => deg * (2f * MathF.PI / 360f);
-
         public static float AngleDegDelta(float degCurrent, float degTarget) => (degTarget - degCurrent + 540f) % 360f - 180f;
 
-        public static float AngleRadDelta(float radCurrent, float radTarget) => (RadToDeg(radTarget) - RadToDeg(radCurrent) + 540f) % 360f - 180f;
+        public static float AngleRadDelta(float radCurrent, float radTarget) => AngleDegDelta(MathHelper.ToDegrees(radTarget), MathHelper.ToDegrees(radCurrent));
     }
 }

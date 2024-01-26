@@ -11,7 +11,6 @@ using StellarLiberation.Game.Core.GameProceses.MapGeneration;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Visuals.Rendering;
-using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using System.Collections.Generic;
 
@@ -25,9 +24,10 @@ namespace StellarLiberation.Game.Layers.Scenes
         private readonly PlanetSystem mCurrentSystem;
 
         public MapScene(GameLayer gameLayer, List<PlanetSystem> planetSystems, PlanetSystem currentSystem)
-            : base(gameLayer, MapFactory.MapScale)
+            : base(gameLayer, MapFactory.MapScale * 3)
         {
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn, Alpha = 1 };
+            mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
 
             gameLayer.HudLayer.Hide = true;
             mCurrentSystem = currentSystem;
@@ -47,10 +47,7 @@ namespace StellarLiberation.Game.Layers.Scenes
 
             mBackgroundLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, 1);
             inputState.DoAction(ActionType.ToggleHyperMap, () => { GameLayer.HudLayer.Hide = false; GameLayer.PopScene(); });
-            foreach (var system in mPlanetSystems)
-            {
-                system.Update(gameTime, inputState, this);
-            }
+            foreach (var system in mPlanetSystems) system.Update(gameTime, inputState, this);
         }
 
         public override void DrawOnScreenView(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch)

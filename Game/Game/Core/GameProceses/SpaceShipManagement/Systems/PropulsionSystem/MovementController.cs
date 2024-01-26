@@ -14,8 +14,8 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
         public static float GetRotationUpdate(float currentRotation, Vector2 currentPosition, Vector2 targetPosition)
         {
             var targetRotation = Geometry.AngleBetweenVectors(currentPosition, targetPosition);
-            float delta = Geometry.AngleDegDelta(Geometry.RadToDeg(currentRotation), Geometry.RadToDeg(targetRotation));
-            delta = Geometry.DegToRad(delta);
+            float delta = Geometry.AngleDegDelta(MathHelper.ToDegrees(currentRotation), MathHelper.ToDegrees(targetRotation));
+            delta = MathHelper.ToRadians(delta);
             return delta switch
             {
                 float.NaN => 0,
@@ -25,8 +25,8 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
 
         public static float GetRotationUpdate(float currentRotation, float targetRotation, float rotationSmoothingFactor)
         {
-            float delta = Geometry.AngleDegDelta(Geometry.RadToDeg(currentRotation), Geometry.RadToDeg(targetRotation));
-            delta = Geometry.DegToRad(delta);
+            float delta = Geometry.AngleDegDelta(MathHelper.ToDegrees(currentRotation), MathHelper.ToDegrees(targetRotation));
+            delta = MathHelper.ToRadians(delta);
             return delta switch
             {
                 float.NaN => 0,

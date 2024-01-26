@@ -10,6 +10,7 @@ using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.Propu
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.WeaponSystem;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys;
 using System.Linq;
+using StellarLiberation.Game.Core.GameProceses;
 
 namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Allies
 {
@@ -18,7 +19,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Allies
 
         private readonly TractorBeam mTractorBeam;
 
-        public AlliedShip(Vector2 position, string textureId, float textureScale, SensorSystem sensorArray, SublightDrive sublightEngine, TurretSystem weaponSystem, DefenseSystem defenseSystem, TractorBeam tractorBeam) : base(position, textureId, textureScale, sensorArray, sublightEngine, weaponSystem, defenseSystem, Fractions.Allies, Color.LightSkyBlue, Color.Green) => mTractorBeam = tractorBeam;
+        public AlliedShip(Vector2 position, string textureId, float textureScale, SensorSystem sensorArray, SublightDrive sublightEngine, TurretSystem weaponSystem, DefenseSystem defenseSystem, TractorBeam tractorBeam) : base(position, textureId, textureScale, sensorArray, sublightEngine, weaponSystem, defenseSystem, Fractions.Allied, Color.LightSkyBlue, Color.Green) => mTractorBeam = tractorBeam;
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {

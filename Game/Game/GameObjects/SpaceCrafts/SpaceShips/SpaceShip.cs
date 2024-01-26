@@ -3,6 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
@@ -18,14 +19,13 @@ using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.Propu
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.WeaponSystem;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
+using StellarLiberation.Game.GameObjects.Recources.Items;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys;
 using System;
 using System.Linq;
 
 namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 {
-    public enum Fractions { Enemys, Allies }
-
     [Serializable]
     [Collidable (5f)]
     public abstract class SpaceShip : GameObject2D
@@ -73,6 +73,11 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             if (DefenseSystem.HullPercentage > 0) return;
             ExplosionEffect.ShipDestroyed(Position, scene.ParticleManager);
             Dispose = true;
+            for (int i = 0; i < ExtendetRandom.Random.Next(0, 5); i++)
+            {
+                ExtendetRandom.Random.NextUnitVector(out var vector);
+                scene.GameLayer.CurrentSystem.GameObjectManager.AddObj(ItemFactory.Get(ItemID.Iron, MovingDirection + vector * 5, Position));
+            }
         }
 
         private void HasProjectileHit(GameTime gameTime, Scene scene)

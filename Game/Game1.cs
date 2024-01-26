@@ -69,7 +69,7 @@ namespace StellarLiberation
             mPersistanceManager.Load<GameSettings>(PersistanceManager.SettingsSaveFilePath, (s) => mGameSettings = s, (_) => mGameSettings = new());
 
             SoundEffectManager.Instance.SetVolume(mGameSettings.MasterVolume, mGameSettings.SoundEffectsVolume);
-            MusicManager.Instance.SetVolume(mGameSettings.MusicVolume, mGameSettings.MusicVolume);
+            MusicManager.Instance.SetVolume(mGameSettings.MasterVolume, mGameSettings.MusicVolume);
 
             mSpriteBatch = new SpriteBatch(GraphicsDevice);
             ContentLoader.PreLoad(Content, mSpriteBatch);
