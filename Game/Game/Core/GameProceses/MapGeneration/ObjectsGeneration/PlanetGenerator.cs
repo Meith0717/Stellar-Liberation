@@ -1,4 +1,4 @@
-﻿// PlanetGeneration.cs 
+﻿// PlanetGenerator.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
@@ -26,7 +26,7 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGenerati
 
         private readonly static List<Registry> Tropical = new() { GameSpriteRegistries.tropical1, GameSpriteRegistries.tropical2, GameSpriteRegistries.tropical3, GameSpriteRegistries.tropical3 };
 
-        public static double GetTemperature(int starTemp, int distanceToStar) => starTemp / Math.Pow(distanceToStar/5000d, 1.2);
+        public static double GetTemperature(int starTemp, int distanceToStar) => starTemp / Math.Pow(distanceToStar / 5000d, 1.2);
 
         public static Planet GetPlanet(Random seededRandom, int starTemp, int distanceToStar)
         {

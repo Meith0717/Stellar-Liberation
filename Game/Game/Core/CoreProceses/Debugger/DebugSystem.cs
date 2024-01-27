@@ -11,7 +11,6 @@ using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys;
 using System;
 using System.Collections.Generic;
 
@@ -67,10 +66,10 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
 
         public void CheckForSpawn(PlanetSystemInstance planetSystem, Scene scene)
         {
-            if (SpawnBattleShip) planetSystem.GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyBattleShip, scene.Camera2D.Position));
-            if (SpawnBomber) planetSystem.GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyBomber, scene.Camera2D.Position));
-            if (SpawnFighter) planetSystem.GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyFighter, scene.Camera2D.Position));
-            if (SpawnCarrior) planetSystem.GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyCarrior, scene.Camera2D.Position));
+            // if (SpawnBattleShip) planetSystem.GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyBattleShip, scene.Camera2D.Position));
+            // if (SpawnBomber) planetSystem.GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyBomber, scene.Camera2D.Position));
+            // if (SpawnFighter) planetSystem.GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyFighter, scene.Camera2D.Position));
+            // if (SpawnCarrior) planetSystem.GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyCarrior, scene.Camera2D.Position));
             SpawnFighter = SpawnBattleShip = SpawnBomber = SpawnCarrior = false;
         }
 

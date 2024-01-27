@@ -37,17 +37,17 @@ namespace StellarLiberation.Game.Core.CoreProceses.Persistance
 
         public void LoadAsync<Object>(string path, Action<Object> onLoadComplete, Action<Exception> onError, Action onAllways = null) where Object : new()
         {
-                Thread loadThread = new(() =>
+            Thread loadThread = new(() =>
+            {
+                try
                 {
-                    try
-                    {
-                        Object @object = new();
-                        @object = (Object)mSerializer.PopulateObject(@object, path);
-                        onLoadComplete?.Invoke(@object);
-                    }
-                    catch (Exception e) { onError?.Invoke(e); }
-                    onAllways?.Invoke();
-                });
+                    Object @object = new();
+                    @object = (Object)mSerializer.PopulateObject(@object, path);
+                    onLoadComplete?.Invoke(@object);
+                }
+                catch (Exception e) { onError?.Invoke(e); }
+                onAllways?.Invoke();
+            });
 
             loadThread.Start();
         }

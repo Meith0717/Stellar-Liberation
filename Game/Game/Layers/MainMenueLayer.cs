@@ -27,7 +27,12 @@ namespace StellarLiberation.Game.Layers
 
             mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "New Game") { VSpace = 20, HSpace = 20, RelY = .5f, OnClickAction = () => LayerManager.AddLayer(new GameLayer()) });
 
-            mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Continue") { VSpace = 20, HSpace = 20, RelY = .6f, OnClickAction = () => 
+            mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Continue")
+            {
+                VSpace = 20,
+                HSpace = 20,
+                RelY = .6f,
+                OnClickAction = () =>
             {
                 LayerManager.AddLayer(new LoadingLayer());
                 mPersistanceManager.LoadAsync<GameLayer>(PersistanceManager.GameSaveFilePath, (gL) => { LayerManager.PopLayer(); LayerManager.AddLayer(gL); }, (ex) => LayerManager.PopLayer());

@@ -3,7 +3,6 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 
 namespace StellarLiberation.Game.Core.UserInterface

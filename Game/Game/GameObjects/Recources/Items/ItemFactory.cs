@@ -9,7 +9,6 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
-using System.Collections.Generic;
 namespace StellarLiberation.Game.GameObjects.Recources.Items
 {
     public enum ItemID { Iron, Titanium, Gold, Platin, QuantumCrystals, DarkMatter, }

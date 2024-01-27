@@ -92,7 +92,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegi
         public readonly static Registry unkownObj = new(spacecrafts, "unkownObj");
         public readonly static Registry scienceStation = new(spacecrafts, "scienceStation");
 
-        private readonly static string spaceShips= @"textures\gameSprites\gameobjects\spacecrafts\spaceShips";
+        private readonly static string spaceShips = @"textures\gameSprites\gameobjects\spacecrafts\spaceShips";
         // cargo
         public readonly static Registry cargo = new(spaceShips, "cargo");
         public readonly static Registry cargoBorders = new(spaceShips, "cargoBorders");

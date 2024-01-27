@@ -18,7 +18,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Persistance
             RootPath = Path.Combine(AppDataPath, gameName);
             CreateFolder(RootPath);
         }
-         
+
         public void CreateFolder(string relativePath)
         {
             DirectoryInfo createFDirectoryInfo = new(Path.Combine(RootPath, relativePath));

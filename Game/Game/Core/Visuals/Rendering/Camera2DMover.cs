@@ -3,9 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
-using System.Net;
 
 namespace StellarLiberation.Game.Core.Visuals.Rendering
 {
@@ -27,14 +25,14 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
         private static Vector2 lastMousePosition;
 
         public static bool UpdateCameraByMouseDrag(InputState inputState, Camera2D camera)
-        { 
+        {
             var wasMoved = false;
             if (inputState.HasAction(ActionType.LeftClickHold))
             {
                 Vector2 delta = inputState.mMousePosition - lastMousePosition;
                 camera.Position -= delta / camera.Zoom;
                 wasMoved = true;
-             
+
             }
 
             lastMousePosition = inputState.mMousePosition;
@@ -45,7 +43,7 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
         {
             var x = 0;
             var y = 0;
-            inputState.DoAction(ActionType.MoveCameraLeft, () => x-= 100);
+            inputState.DoAction(ActionType.MoveCameraLeft, () => x -= 100);
             inputState.DoAction(ActionType.MoveCameraRight, () => x += 100);
             inputState.DoAction(ActionType.MoveCameraUp, () => y -= 100);
             inputState.DoAction(ActionType.MoveCameraDown, () => y += 100);

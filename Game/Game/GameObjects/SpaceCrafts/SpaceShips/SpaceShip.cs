@@ -14,50 +14,68 @@ using StellarLiberation.Game.Core.GameProceses.AI;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.ProjectileManagement;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PropulsionSystem;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.WeaponSystem;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.GameObjects.Recources.Items;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys;
 using System;
 using System.Linq;
 
 namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 {
     [Serializable]
-    [Collidable (5f)]
-    public abstract class SpaceShip : GameObject2D
+    [Collidable(5f)]
+    public class SpaceShip : GameObject2D
     {
-        [JsonIgnore] protected readonly UtilityAi mUtilityAi;
-        [JsonIgnore] public readonly SensorSystem SensorArray;
-        [JsonIgnore] public readonly SublightDrive SublightEngine;
-        [JsonIgnore] public readonly HyperDrive HyperDrive;
+        [JsonIgnore] protected readonly UtilityAi mUtilityAi = new();
+        [JsonIgnore] public readonly HyperDrive HyperDrive = new();
+
+        [JsonIgnore] public readonly Fractions Fraction;
+        [JsonIgnore] public readonly SensorSystem SensorSystem;
+        [JsonIgnore] public readonly SublightDrive SublightDrive;
         [JsonIgnore] public readonly TurretSystem WeaponSystem;
         [JsonIgnore] public readonly DefenseSystem DefenseSystem;
-        [JsonIgnore] public readonly Fractions Fraction;
-        [JsonIgnore] private readonly Color mHullColor;
         [JsonIgnore] private readonly Color mBorderColor;
+
+        public SpaceShip(Vector2 position, SpaceShipConfig config)
+            : base(position, config.TextureID, config.TextureScale, 10)
+        {
+            Fraction = config.Fraction;
+            var accentCoor = Fraction switch
+            {
+                Fractions.Allied => Color.LightBlue,
+                Fractions.Enemys => Color.MonoGameOrange,
+                Fractions.Neutral => throw new NotImplementedException(),
+                _ => throw new NotImplementedException()
+            };
+            SensorSystem = new(config.SensorRange);
+            SublightDrive = new(config.Velocity, 0.1f);
+            WeaponSystem = new(config.TurretCoolDown, accentCoor, 10, 10, 10000);
+            DefenseSystem = new(config.ShieldForce, config.HullForce, 10);
+            mBorderColor = accentCoor;
+            foreach (var pos in config.WeaponsPositions)
+                WeaponSystem.PlaceTurret(new(pos, 1, TextureDepth + 1));
+            mUtilityAi = new();
+        }
 
         public SpaceShip(Vector2 position, string TextureID, float textureScale, SensorSystem sensorArray, SublightDrive sublightEngine, TurretSystem weaponSystem, DefenseSystem defenseSystem, Fractions fractions, Color borderColor, Color hullColor)
             : base(position, TextureID, textureScale, 10)
         {
-            mUtilityAi = new();
-            SensorArray = sensorArray;
-            SublightEngine = sublightEngine;
-            HyperDrive = new(500);
+            SensorSystem = sensorArray;
+            SublightDrive = sublightEngine;
             WeaponSystem = weaponSystem;
             DefenseSystem = defenseSystem;
             Fraction = fractions;
-            mHullColor = hullColor;
             mBorderColor = borderColor;
         }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
         {
             HyperDrive.Update(gameTime, this, scene);
-            if (!HyperDrive.IsActive) SublightEngine.Update(gameTime, this);
+            if (!HyperDrive.IsActive) SublightDrive.Update(gameTime, this);
 
             MovingDirection = Geometry.CalculateDirectionVector(Rotation);
             Physics.HandleCollision(gameTime, this, scene.SpatialHashing);
@@ -66,7 +84,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 
             HasProjectileHit(gameTime, scene);
             DefenseSystem.Update(gameTime);
-            SensorArray.Scan(Position, Fraction, scene);
+            SensorSystem.Scan(Position, Fraction, scene);
             WeaponSystem.Update(gameTime, this, scene);
             mUtilityAi.Update(gameTime, this, scene);
 
@@ -87,7 +105,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             var hit = false;
             foreach (var projectile in projectileInRange)
             {
-                if (projectile.Origine is EnemyShip && this is EnemyShip) continue;
+                if (projectile.Origine.Fraction == Fraction) continue;
                 if (projectile.Origine == this) return;
                 if (!ContinuousCollisionDetection.HasCollide(gameTime, projectile, this, out var position)) continue;
 
@@ -103,15 +121,15 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
         {
             base.Draw(scene);
 
-            scene.GameLayer.DebugSystem.DrawSensorRadius(Position, SensorArray.ShortRangeScanDistance, scene);
+            scene.GameLayer.DebugSystem.DrawSensorRadius(Position, SensorSystem.ShortRangeScanDistance, scene);
 
             TextureManager.Instance.Draw($"{TextureId}Borders", Position, TextureScale, Rotation, TextureDepth, mBorderColor);
             TextureManager.Instance.Draw($"{TextureId}Frame", Position, TextureScale, Rotation, TextureDepth, Color.Black);
-            TextureManager.Instance.Draw($"{TextureId}Hull", Position, TextureScale, Rotation, TextureDepth, mHullColor);
+            TextureManager.Instance.Draw($"{TextureId}Hull", Position, TextureScale, Rotation, TextureDepth, new(30, 30, 30));
             TextureManager.Instance.Draw($"{TextureId}Structure", Position, TextureScale, Rotation, TextureDepth, new(27, 38, 49));
 
             WeaponSystem.Draw(scene);
-            SublightEngine.Draw(scene.GameLayer.DebugSystem, this, scene);
+            SublightDrive.Draw(scene.GameLayer.DebugSystem, this, scene);
             DefenseSystem.DrawShields(this);
         }
     }

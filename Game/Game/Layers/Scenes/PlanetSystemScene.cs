@@ -26,7 +26,7 @@ namespace StellarLiberation.Game.Layers.Scenes
         {
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn };
             mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
-            
+
             Camera2D.Zoom = camZoom;
             mPlanetSystem = currentPlanetSystem;
             mGrid = new(10000);

@@ -14,8 +14,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 [Serializable]
 public abstract class Layer
 {
-    [JsonIgnore] public readonly bool UpdateBelow ;
-    [JsonIgnore] public LayerManager LayerManager { get; private set; } 
+    [JsonIgnore] public readonly bool UpdateBelow;
+    [JsonIgnore] public LayerManager LayerManager { get; private set; }
     [JsonIgnore] protected Game1 mGame1;
     [JsonIgnore] protected GraphicsDevice mGraphicsDevice;
     [JsonIgnore] protected PersistanceManager mPersistanceManager;

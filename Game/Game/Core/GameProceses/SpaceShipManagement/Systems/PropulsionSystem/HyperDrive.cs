@@ -7,7 +7,6 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
-using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 
@@ -15,18 +14,14 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
 {
     public class HyperDrive
     {
+        private const int CoolDown = 500;
         public bool IsActive { get; private set; }
         private PlanetSystem TargetPlanetSystem;
-        private float mChargingTime;
         private float mActualChargingTime;
         private float mEngineCoolDownTime;
         private float mActualEngineCoolDownTime;
 
-        public HyperDrive(float engineCoolDownTime)
-        {
-            mEngineCoolDownTime = mActualEngineCoolDownTime = engineCoolDownTime;
-            mChargingTime = 6000;
-        }
+        public HyperDrive() => mEngineCoolDownTime = mActualEngineCoolDownTime = CoolDown;
 
         public double ActualCharging => mActualEngineCoolDownTime / mEngineCoolDownTime;
 
@@ -46,12 +41,11 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
 
             if (TargetPlanetSystem is null) return;
             HyperDriveEffect.Charge(operatingShip.Position, scene.ParticleManager);
-            if (mChargingTime > mActualChargingTime) return;
+            if (CoolDown > mActualChargingTime) return;
             SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.CoolHyperdrive);
             scene.GameLayer.ChangePlanetSystem(TargetPlanetSystem);
             TargetPlanetSystem = null;
             IsActive = false;
         }
-
     }
 }

@@ -15,7 +15,7 @@ using StellarLiberation.Game.Core.GameProceses.MapGeneration;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGeneration;
 using StellarLiberation.Game.Core.GameProceses.SectorManagement;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using StellarLiberation.Game.Layers;
 using System;
 
@@ -37,7 +37,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
         [JsonProperty] public Fractions Occupier = Fractions.Enemys;
 
         public PlanetSystem(Vector2 position, int seed) : base(position, GameSpriteRegistries.star, .1f, 1)
-        { 
+        {
             mSeed = seed;
             GameObjectManager = new();
 
@@ -45,13 +45,13 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             var rand = new Random(mSeed);
             for (var i = 0; i < 10; i++) Name += rand.Next(0, 9);
 
-            mSector = new(position - (new Vector2(MapFactory.MapScale)/2), MapFactory.MapScale, MapFactory.MapScale); 
+            mSector = new(position - (new Vector2(MapFactory.MapScale) / 2), MapFactory.MapScale, MapFactory.MapScale);
 
-            for (int i = 0; i < 5; i++) GameObjectManager.AddObj(EnemyFactory.Get(EnemyId.EnemyBattleShip, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000))));
-            for (int i = 0; i < 4; i++) GameObjectManager.AddObj(EnemyFactory.Get(EnemyId.EnemyBomber, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000))));
-            for (int i = 0; i < 1; i++) GameObjectManager.AddObj(EnemyFactory.Get(EnemyId.EnemyCarrior, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000))));
-
-            for (int i = 0; i < 10; i++) GameObjectManager.AddObj(AlliedFactory.Get(AlliedId.AlliedBattleShip, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000))));
+            for (int i = 0; i < 5; i++) GameObjectManager.AddObj(SpaceShipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000)), ShipID.Bomber, Fractions.Enemys));
+            for (int i = 0; i < 5; i++) GameObjectManager.AddObj(SpaceShipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000)), ShipID.Cargo, Fractions.Enemys));
+            for (int i = 0; i < 5; i++) GameObjectManager.AddObj(SpaceShipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000)), ShipID.Cuiser, Fractions.Enemys));
+            for (int i = 0; i < 5; i++) GameObjectManager.AddObj(SpaceShipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000)), ShipID.Destroyer, Fractions.Enemys));
+            for (int i = 0; i < 5; i++) GameObjectManager.AddObj(SpaceShipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000)), ShipID.Corvette, Fractions.Enemys));
         }
 
         public PlanetSystemInstance GetInstance()
@@ -89,12 +89,12 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
 
             void LeftPressAction()
             {
-                scene.GameLayer.LayerManager.AddLayer(new EventPopup($"Do you want to travel to\n{Name}?", () =>
-                {
-                    scene.GameLayer.HudLayer.Hide = false;
-                    scene.GameLayer.PopScene();
-                    scene.GameLayer.Player.HyperDrive.SetTarget(this);
-                }, null));
+                // scene.GameLayer.LayerManager.AddLayer(new EventPopup($"Do you want to travel to\n{Name}?", () =>
+                // {
+                //     scene.GameLayer.HudLayer.Hide = false;
+                //     scene.GameLayer.PopScene();
+                //     scene.GameLayer.Player.HyperDrive.SetTarget(this);
+                // }, null));
             };
 
             mSector.Update(Occupier);
@@ -118,7 +118,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             TextureManager.Instance.DrawString(FontRegistries.titleFont, BoundedBox.ToRectangleF().BottomRight + new Vector2(8, 20), Temperature is null ? "?" : $"{Temperature} K", 0.1f, color);
 
             TextureManager.Instance.Draw(MenueSpriteRegistries.planet, BoundedBox.ToRectangleF().BottomRight + new Vector2(0, 40), 0.2f, 0, 1, color);
-            TextureManager.Instance.DrawString(FontRegistries.titleFont, BoundedBox.ToRectangleF().BottomRight + new Vector2(8, 40) , PlanetCount is null ? "?" : PlanetCount.ToString(), 0.1f, color);
+            TextureManager.Instance.DrawString(FontRegistries.titleFont, BoundedBox.ToRectangleF().BottomRight + new Vector2(8, 40), PlanetCount is null ? "?" : PlanetCount.ToString(), 0.1f, color);
 
             mSector.Draw();
         }

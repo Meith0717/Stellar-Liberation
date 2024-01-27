@@ -51,7 +51,7 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGenerati
                 15 => GameSpriteRegistries.asteroid15,
                 _ => throw new NotImplementedException()
             };
- 
+
             return new(position, textureID, ExtendetRandom.Random.Next(10, 50) / 10f);
         }
     }

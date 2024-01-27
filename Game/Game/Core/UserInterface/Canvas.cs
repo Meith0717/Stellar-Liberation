@@ -3,7 +3,6 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 
 namespace StellarLiberation.Game.Core.UserInterface
 {
@@ -37,7 +36,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             var x = X ?? root.X + (int)(root.Width * RelativeX);
             var y = Y ?? root.Y + (int)(root.Height * RelativeY);
 
-            var width = (int)( Width * uiScale ?? root.Width * RelWidth);
+            var width = (int)(Width * uiScale ?? root.Width * RelWidth);
             var height = (int)(Height * uiScale ?? root.Height * RelHeight);
 
             ManageFillScale(root, ref x, ref y, ref width, ref height);
@@ -68,17 +67,17 @@ namespace StellarLiberation.Game.Core.UserInterface
                     width = root.Width;
                     break;
                 case FillScale.FillIn:
-                    if (aspectRatio > rootAspectRatio) 
+                    if (aspectRatio > rootAspectRatio)
                     {
                         height = root.Height;
                         width = (int)(height * aspectRatio);
                     }
-                    if (aspectRatio < rootAspectRatio) 
+                    if (aspectRatio < rootAspectRatio)
                     {
                         width = root.Width;
                         height = (int)(width / aspectRatio);
                     }
-                    if (aspectRatio == rootAspectRatio) 
+                    if (aspectRatio == rootAspectRatio)
                     {
                         x = root.X; y = root.Y;
                         height = root.Height;

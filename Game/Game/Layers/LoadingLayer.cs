@@ -10,11 +10,10 @@ using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
-using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Layers
 {
-    public class LoadingLayer: Layer
+    public class LoadingLayer : Layer
     {
         private readonly UiFrame mFrame;
         private readonly UiLoadingCircle mLoadingCircle;
@@ -28,7 +27,7 @@ namespace StellarLiberation.Game.Layers
         }
 
         public override void Destroy()
-        {}
+        { }
 
         public override void Draw(SpriteBatch spriteBatch)
         {

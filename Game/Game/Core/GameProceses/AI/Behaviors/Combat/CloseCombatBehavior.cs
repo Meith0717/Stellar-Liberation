@@ -21,8 +21,8 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors.Combat
             {
                 case true:
                     // Check for breaking reorientation
-                    if (!spaceShip.SublightEngine.IsMoving) mReorienting = false;
-                    spaceShip.SublightEngine.SetVelocity(1f);
+                    if (!spaceShip.SublightDrive.IsMoving) mReorienting = false;
+                    spaceShip.SublightDrive.SetVelocity(1f);
                     break;
 
                 case false:
@@ -31,14 +31,14 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors.Combat
                     {
                         mReorienting = true;
                         // Set course to reorientation Position
-                        spaceShip.SublightEngine.MoveInDirection(GetReorientingDirection(spaceShip));
+                        spaceShip.SublightDrive.MoveInDirection(GetReorientingDirection(spaceShip));
                         break;
                     }
 
-                    spaceShip.SublightEngine.Standstill();
+                    spaceShip.SublightDrive.Standstill();
                     // Set course to attac target
                     if (mDistance < spaceShip.WeaponSystem.Range) spaceShip.WeaponSystem.Fire();
-                    spaceShip.SublightEngine.FollowSpaceShip(spaceShip.WeaponSystem.AimingShip);
+                    spaceShip.SublightDrive.FollowSpaceShip(spaceShip.WeaponSystem.AimingShip);
                     break;
             }
         }

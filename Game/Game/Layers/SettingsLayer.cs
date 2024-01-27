@@ -31,7 +31,7 @@ namespace StellarLiberation.Game.Layers
             if (showBgImage) mMainFrame.AddChild(new UiSprite(MenueSpriteRegistries.menueBackground) { FillScale = FillScale.FillIn, Anchor = Anchor.Center });
 
 
-            var settingsFrame = new UiFrame() { Width = 1800, Height = 900, Anchor = Anchor.Center};
+            var settingsFrame = new UiFrame() { Width = 1800, Height = 900, Anchor = Anchor.Center };
             mMainFrame.AddChild(settingsFrame);
 
             mSettingsGrid = new UiGrid(4, 15) { RelHeight = .9f, RelWidth = .9f, Anchor = Anchor.Center };
@@ -44,7 +44,7 @@ namespace StellarLiberation.Game.Layers
             mSettingsGrid.Set(2, 0, new UiText(FontRegistries.subTitleFont, "Video") { Anchor = Anchor.Center });
             mSettingsGrid.Set(2, 1, new UiText(FontRegistries.textFont, "Resolution") { Anchor = Anchor.Center });
 
-            mMainFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = Exit});
+            mMainFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Back") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = Exit });
             mMainFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Apply") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = Apply });
         }
 

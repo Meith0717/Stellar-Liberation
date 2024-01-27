@@ -82,11 +82,12 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
             });
         }
 
-        public void ChangeOverallVolume(float master, float volume)
+        internal void ChangeOverallVolume(float master, float volume)
         {
             SetVolume(master, volume);
-            IterateThroughInstances((instance) => {
-                 instance.Volume = OverallVolume;
+            IterateThroughInstances((instance) =>
+            {
+                instance.Volume = OverallVolume;
             });
         }
     }

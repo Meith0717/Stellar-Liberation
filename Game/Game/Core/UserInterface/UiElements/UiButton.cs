@@ -3,7 +3,6 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
@@ -34,7 +33,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Draw()
         {
-            var color = IsDisabled ? Color.DarkGray : IsHover ?  new(51, 204, 204) : new(128, 128, 128);
+            var color = IsDisabled ? Color.DarkGray : IsHover ? new(51, 204, 204) : new(128, 128, 128);
             TextureManager.Instance.Draw(mSpriteId, Canvas.Position, Canvas.Bounds.Width, Canvas.Bounds.Height, color);
             TextureManager.Instance.DrawString(FontRegistries.buttonFont, TextPosition, mText, mTextScale, color);
             Canvas.Draw();
@@ -52,8 +51,8 @@ namespace StellarLiberation.Game.Core.UserInterface
             IsHover = Canvas.Contains(inputState.mMousePosition);
             if (IsHover && !IsDisabled && IsHover != mLastHoverState) SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.hover);
             mLastHoverState = IsHover;
-            if (IsHover) 
-            {                
+            if (IsHover)
+            {
                 inputState.DoAction(ActionType.Select, Click);
             }
             var textHeight = Canvas.Center.Y - (stringDim.Y * uiScaling / 2 * mTextScale);

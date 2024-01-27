@@ -12,7 +12,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors.Combat
     {
         public override void Execute(GameTime gameTime, SpaceShip spaceShip, Scene scene)
         {
-            spaceShip.SublightEngine.SetVelocity(.1f);
+            spaceShip.SublightDrive.SetVelocity(.1f);
             spaceShip.WeaponSystem.StopFire();
             if (mDistance <= spaceShip.WeaponSystem.Range) spaceShip.WeaponSystem.Fire();
         }

@@ -3,7 +3,6 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 
@@ -17,7 +16,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SectorManagement
         private readonly Rectangle mBounds;
         private Color mColor;
 
-        public Sector(Vector2 position, int width, int height) 
+        public Sector(Vector2 position, int width, int height)
         {
             mAlliedColor = new(0, 45, 50, 10);
             mEnemyCollor = new(50, 0, 0, 10);

@@ -15,31 +15,31 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
         public static void ShipDestroyed(Vector2 position, GameObjectManager particleManager)
         {
             var size = ExtendetRandom.Random.Next(15, 30) * 0.01f;
-            
+
             for (int i = 0; i < ExtendetRandom.Random.Next(20, 60); i++)
             {
                 ExtendetRandom.Random.NextUnitVector(out var dir);
-            
+
                 var velocity = ExtendetRandom.Random.Next(10, 200) * .01f;
                 var particle = new Particle(position, dir, size, velocity, new(189, 195, 199), ExtendetRandom.Random.Next(50, 2000));
-                 particleManager.AddObj(particle);
-             }
-             
+                particleManager.AddObj(particle);
+            }
+
             for (int i = 0; i < ExtendetRandom.Random.Next(300, 500); i++)
             {
                 ExtendetRandom.Random.NextUnitVector(out var dir);
-            
+
                 var velocity = ExtendetRandom.Random.Next(10, 300) * .01f;
-                var particle = new Particle(position, dir, size, velocity, new(255,  175, 25), ExtendetRandom.Random.Next(50, 2000));
+                var particle = new Particle(position, dir, size, velocity, new(255, 175, 25), ExtendetRandom.Random.Next(50, 2000));
                 particleManager.AddObj(particle);
             }
-             
+
             for (int i = 0; i < ExtendetRandom.Random.Next(100, 300); i++)
             {
                 ExtendetRandom.Random.NextUnitVector(out var dir);
-            
+
                 var velocity = ExtendetRandom.Random.Next(100, 500) * .01f;
-                var particle = new Particle(position, dir, size, velocity, new(255, 42,25), ExtendetRandom.Random.Next(50, 2000));
+                var particle = new Particle(position, dir, size, velocity, new(255, 42, 25), ExtendetRandom.Random.Next(50, 2000));
                 particleManager.AddObj(particle);
             }
         }

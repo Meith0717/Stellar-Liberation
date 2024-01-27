@@ -7,7 +7,6 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips.Enemys;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -46,8 +45,8 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems
         public SpaceShip GetAimingShip(Vector2 spaceShipPosition)
         {
             PriorityQueue<SpaceShip, double> q = new();
-            foreach (var spaceShip1 in OpponentsInRannge) 
-                q.Enqueue(spaceShip1, - GetAimingScore(spaceShipPosition, spaceShip1));
+            foreach (var spaceShip1 in OpponentsInRannge)
+                q.Enqueue(spaceShip1, -GetAimingScore(spaceShipPosition, spaceShip1));
             q.TryDequeue(out var spaceShip, out var _);
             return spaceShip;
         }

@@ -67,7 +67,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
                 if (Count >= Capacity) break;
 
                 var newStack = itemStack.Split(CapacityPerStack);
-                hashItems.Add(newStack);                                
+                hashItems.Add(newStack);
                 ItemStacks.Add(newStack);
                 continue;
             }
@@ -136,7 +136,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
         }
 
         public bool HasSpace(ItemID itemID, int amount = 1) => FreeSpace(itemID) >= amount;
-            
+
         private int FreeSpace(ItemID itemID)
         {
             keyValuePairs.TryGetValue(itemID, out var itemStacks);

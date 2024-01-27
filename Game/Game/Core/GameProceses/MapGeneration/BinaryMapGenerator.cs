@@ -62,7 +62,7 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
             for (int i = 0; i < list.Count; i++)
             {
                 seededRandom.NextUnitVector(out var shiftingDirection);
-                list[i] += shiftingDirection * shiftLength ;
+                list[i] += shiftingDirection * shiftLength;
             }
         }
     }

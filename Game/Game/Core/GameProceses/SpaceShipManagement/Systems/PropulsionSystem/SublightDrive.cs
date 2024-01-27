@@ -33,7 +33,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
 
         public void Update(GameTime gameTime, SpaceShip spaceShip)
         {
-            var position = mVectorTarget ?? CollisionPredictor.PredictPosition(gameTime, spaceShip.Position, spaceShip.SublightEngine.MaxVelocity, mShipTarget);
+            var position = mVectorTarget ?? CollisionPredictor.PredictPosition(gameTime, spaceShip.Position, spaceShip.SublightDrive.MaxVelocity, mShipTarget);
 
             mDirection ??= (position is null) ? null : Vector2.Normalize((Vector2)position - spaceShip.Position);
 

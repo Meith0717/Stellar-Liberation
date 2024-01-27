@@ -24,12 +24,12 @@ namespace StellarLiberation.Game.GameObjects.Recources.Items
         public int Amount;
 
         protected Item(ItemID itemID, string textureId, float textureScale, bool isCollectable = true, bool isStackable = true)
-            : base(Vector2.Zero, textureId, textureScale, 30) 
+            : base(Vector2.Zero, textureId, textureScale, 30)
         {
             Amount = 1;
-            IsCollectable = isCollectable; 
+            IsCollectable = isCollectable;
             IsStakable = isStackable;
-            ItemID = itemID; 
+            ItemID = itemID;
         }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)

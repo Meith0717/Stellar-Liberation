@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -85,7 +84,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
         public void ToggleFullscreen()
         {
             mGraphicsManager.ToggleFullScreen();
-            mWasResized = true;            
+            mWasResized = true;
         }
     }
 }

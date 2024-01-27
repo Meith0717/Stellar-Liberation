@@ -3,7 +3,6 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 
@@ -25,7 +24,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             FontID = fontID;
         }
 
-        public UiText(string fontID,ref string text)
+        public UiText(string fontID, ref string text)
         {
             Color = new(192, 192, 192);
             Text = text;

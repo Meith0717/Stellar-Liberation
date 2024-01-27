@@ -15,14 +15,21 @@ namespace StellarLiberation.Game.Core.GameProceses.AI
     {
         private Behavior mCurrentBehavior;
         private Behavior mLastBehavior;
-        private readonly HashSet<Behavior> mBehaviors = new();
+        private readonly List<Behavior> mBehaviors;
         public bool Debug = false;
 
         private int mCoolDown;
 
+        public UtilityAi(List<Behavior> behaviors)
+        {
+            mCoolDown = ExtendetRandom.Random.Next(500);
+            mBehaviors = behaviors;
+        }
+
         public UtilityAi()
         {
             mCoolDown = ExtendetRandom.Random.Next(500);
+            mBehaviors = new();
         }
 
         public void AddBehavior(Behavior behavior)

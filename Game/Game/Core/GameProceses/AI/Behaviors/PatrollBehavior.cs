@@ -18,7 +18,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
         public override double GetScore(GameTime gameTime, SpaceShip spaceShip, Scene scene)
         {
             var shielHhullScore = spaceShip.DefenseSystem.ShieldPercentage * 0.5 + spaceShip.DefenseSystem.HullPercentage * 0.5;
-            var hasNoAimingShip = !spaceShip.SensorArray.OpponentsInRannge.Any() ? 1 : 0;
+            var hasNoAimingShip = !spaceShip.SensorSystem.OpponentsInRannge.Any() ? 1 : 0;
 
             var score = shielHhullScore * hasNoAimingShip;
             return score;
@@ -26,9 +26,9 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
         public override void Execute(GameTime gameTime, SpaceShip spaceShip, Scene scene)
         {
-            spaceShip.SublightEngine.SetVelocity(.5f);
+            spaceShip.SublightDrive.SetVelocity(.5f);
 
-            var aimingShip = spaceShip.SensorArray.GetAimingShip(spaceShip.Position);
+            var aimingShip = spaceShip.SensorSystem.GetAimingShip(spaceShip.Position);
             spaceShip.WeaponSystem.AimShip(aimingShip);
 
 
@@ -36,7 +36,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
             {
                 case null:
                     // Get Planets in Radius
-                    var patrolTargets = spaceShip.SensorArray.LongRangeScan.OfType<Planet>().ToList();
+                    var patrolTargets = spaceShip.SensorSystem.LongRangeScan.OfType<Planet>().ToList();
                     if (!patrolTargets.Any()) break;
 
                     // Get Random Target
@@ -46,7 +46,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
                     mPatrolTarget = target;
 
                     // Send Ship to Target
-                    spaceShip.SublightEngine.MoveInDirection(Vector2.Normalize(target - spaceShip.Position));
+                    spaceShip.SublightDrive.MoveInDirection(Vector2.Normalize(target - spaceShip.Position));
                     break;
                 case not null:
                     // Check if Target is Reached

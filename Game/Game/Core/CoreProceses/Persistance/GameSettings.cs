@@ -1,16 +1,14 @@
-﻿// Settings.cs 
+﻿// GameSettings.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
-using MonoGame.Extended.Content;
-using System;
 using Newtonsoft.Json;
+using System;
 
 namespace StellarLiberation.Game.Core.CoreProceses.Persistance
 {
     [Serializable]
-    public class GameSettings 
+    public class GameSettings
     {
         // Sound Settings
         [JsonProperty] public float MasterVolume = 1f;

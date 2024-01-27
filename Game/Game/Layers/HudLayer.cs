@@ -67,9 +67,9 @@ namespace StellarLiberation.Game.Layers
             mUiLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
             mShieldBar.Percentage = mScene.GameLayer.Player.DefenseSystem.ShieldPercentage;
             mHullBar.Percentage = mScene.GameLayer.Player.DefenseSystem.HullPercentage;
-            mPropulsiondBar.Percentage = (double)(mScene.GameLayer.Player.Velocity / mScene.GameLayer.Player.SublightEngine.MaxVelocity);
-            mCompass.Update(mScene.GameLayer.Player.Position, mGraphicsDevice, mScene.GameLayer.Player.SensorArray.LongRangeScan);
-            foreach (var uiElement in mPopups) 
+            mPropulsiondBar.Percentage = (double)(mScene.GameLayer.Player.Velocity / mScene.GameLayer.Player.SublightDrive.MaxVelocity);
+            mCompass.Update(mScene.GameLayer.Player.Position, mGraphicsDevice, mScene.GameLayer.Player.SensorSystem.LongRangeScan);
+            foreach (var uiElement in mPopups)
                 uiElement.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
             mPopups.Clear();
         }
