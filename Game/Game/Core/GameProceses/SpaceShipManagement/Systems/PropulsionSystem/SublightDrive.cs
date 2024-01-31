@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.Debugger;
-using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.Utilitys;
@@ -46,7 +45,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
             SetVelocity(0);
         }
 
-        public void UpdateVelocity(SpaceShip spaceShip)
+        private void UpdateVelocity(SpaceShip spaceShip)
         {
             if (!IsMoving)
             {
@@ -108,14 +107,6 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.P
             mVectorTarget = null;
             mDirection = null;
             IsMoving = false;
-        }
-
-        public void ControlByInput(SpaceShip spaceShip, InputState inputState, Vector2 worldMousePosition)
-        {
-            inputState.DoAction(ActionType.Accelerate, () => mTargetVelocity = MathHelper.Clamp(mTargetVelocity + .1f, 0, MaxVelocity));
-            inputState.DoAction(ActionType.Break, () => mTargetVelocity = MathHelper.Clamp(mTargetVelocity - .1f, 0, MaxVelocity));
-
-            MoveInDirection(Vector2.Normalize(worldMousePosition - spaceShip.Position));
         }
 
         public void Draw(DebugSystem debugSystem, SpaceShip spaceShip, Scene scene) => debugSystem.DrawMovingDir(mDirection, spaceShip, scene);

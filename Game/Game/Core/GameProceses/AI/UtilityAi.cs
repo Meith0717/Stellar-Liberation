@@ -17,6 +17,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI
         private Behavior mLastBehavior;
         private readonly List<Behavior> mBehaviors;
         public bool Debug = false;
+        public string DebugMessage { get; private set; } = "";
 
         private int mCoolDown;
 
@@ -55,15 +56,15 @@ namespace StellarLiberation.Game.Core.GameProceses.AI
 
         private Behavior SelectBehavior(GameTime gameTime, SpaceShip spaceShip, Scene scene)
         {
+            DebugMessage = "";
             PriorityQueue<Behavior, double> behaviors = new();
             foreach (var item in mBehaviors)
             {
                 var score = item.GetScore(gameTime, spaceShip, scene);
-                System.Diagnostics.Debug.WriteLineIf(Debug, $"{item.GetType().Name}: {Math.Round(score, 5)}");
+                DebugMessage += $"{item.GetType().Name}: {Math.Round(score, 5)}\n";
                 behaviors.Enqueue(item, -score);
             }
             if (!behaviors.TryPeek(out var behavior, out var _)) return null;
-            System.Diagnostics.Debug.WriteLineIf(Debug, $"_____________");
             return behavior;
         }
     }

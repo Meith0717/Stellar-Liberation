@@ -59,6 +59,8 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             foreach (var pos in config.WeaponsPositions)
                 WeaponSystem.PlaceTurret(new(pos, 1, TextureDepth + 1));
             mUtilityAi = new();
+            foreach (var beh in config.AIBehaviors)
+                mUtilityAi.AddBehavior(beh);
         }
 
         public SpaceShip(Vector2 position, string TextureID, float textureScale, SensorSystem sensorArray, SublightDrive sublightEngine, TurretSystem weaponSystem, DefenseSystem defenseSystem, Fractions fractions, Color borderColor, Color hullColor)
@@ -125,8 +127,10 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 
             TextureManager.Instance.Draw($"{TextureId}Borders", Position, TextureScale, Rotation, TextureDepth, mBorderColor);
             TextureManager.Instance.Draw($"{TextureId}Frame", Position, TextureScale, Rotation, TextureDepth, Color.Black);
-            TextureManager.Instance.Draw($"{TextureId}Hull", Position, TextureScale, Rotation, TextureDepth, new(30, 30, 30));
-            TextureManager.Instance.Draw($"{TextureId}Structure", Position, TextureScale, Rotation, TextureDepth, new(27, 38, 49));
+            TextureManager.Instance.Draw($"{TextureId}Hull", Position, TextureScale, Rotation, TextureDepth, new(10, 10, 10));
+            TextureManager.Instance.Draw($"{TextureId}Structure", Position, TextureScale, Rotation, TextureDepth, new(20, 30, 40));
+
+            scene.GameLayer.DebugSystem.DrawAiDebug(BoundedBox, mUtilityAi.DebugMessage, scene.Camera2D.Zoom);
 
             WeaponSystem.Draw(scene);
             SublightDrive.Draw(scene.GameLayer.DebugSystem, this, scene);

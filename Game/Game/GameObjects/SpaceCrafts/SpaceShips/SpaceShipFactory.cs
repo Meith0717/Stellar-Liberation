@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.AI.Behaviors;
+using StellarLiberation.Game.Core.GameProceses.AI.Behaviors.Combat;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement;
 
 namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
@@ -35,6 +36,8 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                     aiBehaviors: new()
                     {
                         new PatrollBehavior(),
+                        new FarCombatBehavior(),
+                        new InterceptBehavior(),
                     }
                 ),
                 ShipID.Cargo => new(

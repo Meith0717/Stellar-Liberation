@@ -4,6 +4,7 @@
 
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
+using MonoGame.Extended.Collections;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
@@ -31,6 +32,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
         private bool ShowHitBoxes;
         private bool ShowSensorRadius;
         private bool ShowPaths;
+        private bool ShowAi;
 
         private bool SpawnFighter;
         private bool SpawnBomber;
@@ -62,6 +64,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
             inputState.DoAction(ActionType.F7, () => SpawnBomber = true);
             inputState.DoAction(ActionType.F8, () => SpawnBattleShip = true);
             inputState.DoAction(ActionType.F9, () => SpawnCarrior = true);
+            inputState.DoAction(ActionType.F10, () => ShowAi = !ShowAi);
         }
 
         public void CheckForSpawn(PlanetSystemInstance planetSystem, Scene scene)
@@ -111,7 +114,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 150), "F7 - Spawn Bomber", 1, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 175), "F8 - Spawn Battle Ship", 1, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 200), "F9 - Spawn Carrior", 1, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 225), "F10 - none", 1, false ? Color.GreenYellow : Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 225), "F10 - Shwo Ai", 1, ShowAi ? Color.GreenYellow : Color.White);
 
             List<string> debug = new() {
                 $"FPS - {Math.Round(mCurrentFramesPerSecond)}", $"Render Latency - {mFrameDuration} ms",
@@ -143,6 +146,12 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
             CircleF box = new(center, radius);
             TextureManager.Instance.DrawAdaptiveCircle(box.Position, box.Radius, Color.LightBlue, 2, (int)TextureManager.Instance.MaxLayerDepth,
                 scene.Camera2D.Zoom);
+        }
+
+        public void DrawAiDebug(CircleF circle, string message, float camZoom)
+        {
+            if (!ShowAi) return;
+            TextureManager.Instance.DrawString(FontRegistries.subTitleFont, circle.ToRectangleF().TopRight, message, 0.2f/camZoom, Color.White);
         }
     }
 }
