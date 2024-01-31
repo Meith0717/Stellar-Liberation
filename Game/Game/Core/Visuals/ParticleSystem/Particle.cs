@@ -14,7 +14,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem
     {
 
         public Particle(Vector2 position, Vector2 movementDirection, float textureScale, float velocity, Color startColor, double dispodeTime)
-            : base(position, "particle", textureScale, 1)
+            : base(position, "particle", textureScale, 9)
         {
             MovingDirection = movementDirection;
             Velocity = velocity;

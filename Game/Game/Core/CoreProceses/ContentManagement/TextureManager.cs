@@ -33,7 +33,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
             }
         }
 
-        public float MaxLayerDepth = 10000f;
+        public readonly static int MaxLayerDepth = 10000;
 
         private readonly Dictionary<string, Texture2D> mTextures = new();
         private readonly Dictionary<string, SpriteFont> mSpriteFonts = new();
@@ -88,7 +88,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 
         private float GetDepth(int textureDepth)
         {
-            var depth = textureDepth / MaxLayerDepth;
+            var depth = textureDepth / (float)MaxLayerDepth;
             if (depth > 1) throw new Exception();
             return depth;
         }

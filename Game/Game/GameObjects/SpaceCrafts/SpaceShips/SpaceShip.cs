@@ -38,7 +38,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
         [JsonIgnore] public readonly SublightDrive SublightDrive;
         [JsonIgnore] public readonly TurretSystem WeaponSystem;
         [JsonIgnore] public readonly DefenseSystem DefenseSystem;
-        [JsonIgnore] private readonly Color mBorderColor;
+        [JsonIgnore] private readonly Color mAccentColor;
 
         public SpaceShip(Vector2 position, SpaceShipConfig config)
             : base(position, config.TextureID, config.TextureScale, 10)
@@ -55,7 +55,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             SublightDrive = new(config.Velocity, 0.1f);
             WeaponSystem = new(config.TurretCoolDown, accentCoor, 10, 10, 10000);
             DefenseSystem = new(config.ShieldForce, config.HullForce, 10);
-            mBorderColor = accentCoor;
+            mAccentColor = accentCoor;
             foreach (var pos in config.WeaponsPositions)
                 WeaponSystem.PlaceTurret(new(pos, 1, TextureDepth + 1));
             mUtilityAi = new();
@@ -71,7 +71,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             WeaponSystem = weaponSystem;
             DefenseSystem = defenseSystem;
             Fraction = fractions;
-            mBorderColor = borderColor;
+            mAccentColor = borderColor;
         }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)
@@ -89,6 +89,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             SensorSystem.Scan(Position, Fraction, scene);
             WeaponSystem.Update(gameTime, this, scene);
             mUtilityAi.Update(gameTime, this, scene);
+            TrailEffect.Show(Transformations.Rotation(Position, new(-100, 0), Rotation), MovingDirection, Velocity, gameTime, mAccentColor, scene.ParticleManager);
 
             if (DefenseSystem.HullPercentage > 0) return;
             ExplosionEffect.ShipDestroyed(Position, scene.ParticleManager);
@@ -125,7 +126,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 
             scene.GameLayer.DebugSystem.DrawSensorRadius(Position, SensorSystem.ShortRangeScanDistance, scene);
 
-            TextureManager.Instance.Draw($"{TextureId}Borders", Position, TextureScale, Rotation, TextureDepth, mBorderColor);
+            TextureManager.Instance.Draw($"{TextureId}Borders", Position, TextureScale, Rotation, TextureDepth, mAccentColor);
             TextureManager.Instance.Draw($"{TextureId}Frame", Position, TextureScale, Rotation, TextureDepth, Color.Black);
             TextureManager.Instance.Draw($"{TextureId}Hull", Position, TextureScale, Rotation, TextureDepth, new(10, 10, 10));
             TextureManager.Instance.Draw($"{TextureId}Structure", Position, TextureScale, Rotation, TextureDepth, new(20, 30, 40));

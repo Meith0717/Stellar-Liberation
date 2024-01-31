@@ -130,7 +130,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
         public void DrawHitbox(CircleF box, Scene scene)
         {
             if (!ShowHitBoxes) { return; }
-            TextureManager.Instance.DrawAdaptiveCircle(box.Position, box.Radius, Color.Red, 2, (int)TextureManager.Instance.MaxLayerDepth,
+            TextureManager.Instance.DrawAdaptiveCircle(box.Position, box.Radius, Color.Red, 2, (int)TextureManager.MaxLayerDepth,
                 scene.Camera2D.Zoom);
         }
 
@@ -144,7 +144,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
         {
             if (!ShowSensorRadius) { return; }
             CircleF box = new(center, radius);
-            TextureManager.Instance.DrawAdaptiveCircle(box.Position, box.Radius, Color.LightBlue, 2, (int)TextureManager.Instance.MaxLayerDepth,
+            TextureManager.Instance.DrawAdaptiveCircle(box.Position, box.Radius, Color.LightBlue, 2, (int)TextureManager.MaxLayerDepth,
                 scene.Camera2D.Zoom);
         }
 

@@ -20,7 +20,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GridSystem
         public void Draw(Scene scene)
         {
             var screen = scene.Camera2D.Bounds;
-            var depth = (int)TextureManager.Instance.MaxLayerDepth;
+            var depth = (int)TextureManager.MaxLayerDepth;
 
             var alpha = MathHelper.Clamp(5 * scene.Camera2D.Zoom, 0, 5);
             var color = new Color(alpha, alpha, alpha, alpha);

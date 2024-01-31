@@ -20,7 +20,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
                 var obj = GameObjects[i];
                 if (i > 0) color = Color.Blue;
                 TextureManager.Instance.DrawAdaptiveLine(scene.WorldMousePosition, obj.Position, color,
-                    2, (int)TextureManager.Instance.MaxLayerDepth, scene.Camera2D.Zoom);
+                    2, (int)TextureManager.MaxLayerDepth, scene.Camera2D.Zoom);
             }
         }
 
@@ -28,7 +28,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
         {
             var screen = scene.Camera2D.Bounds;
             var size = scene.SpatialHashing.CellSize;
-            var depth = (int)TextureManager.Instance.MaxLayerDepth;
+            var depth = (int)TextureManager.MaxLayerDepth;
 
             for (int x = 0; x < screen.Right; x += size)
             {
