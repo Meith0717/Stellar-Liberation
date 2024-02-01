@@ -12,7 +12,7 @@ using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 
-namespace StellarLiberation.Game.Layers
+namespace StellarLiberation.Game.Layers.MenueLayers
 {
     public class PauseLayer : Layer
     {

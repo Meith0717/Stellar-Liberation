@@ -14,7 +14,7 @@ using MonoGame.Extended;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
-using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
+using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using System;
 
 namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement

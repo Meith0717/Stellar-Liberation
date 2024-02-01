@@ -1,4 +1,4 @@
-﻿// PlanetSystemScene.cs 
+﻿// PlanetSystemLayer.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
@@ -7,23 +7,24 @@ using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
+using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.GridSystem;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
+using StellarLiberation.Game.Layers.MenueLayers;
 
-namespace StellarLiberation.Game.Layers.Scenes
+namespace StellarLiberation.Game.Layers.GameLayers
 {
-    internal class PlanetSystemScene : GameLayer
+    internal class PlanetSystemLayer : GameLayer
     {
         private readonly UiFrame mBackgroundLayer;
 
         private readonly PlanetSystemInstance mPlanetSystem;
         private readonly Grid mGrid;
 
-        public PlanetSystemScene(GameState gameLayer, PlanetSystemInstance currentPlanetSystem, float camZoom) : base(gameLayer, 50000)
+        public PlanetSystemLayer(GameState gameLayer, PlanetSystemInstance currentPlanetSystem, float camZoom) : base(gameLayer, 50000)
         {
             HUDLayer = new HudLayer(this);
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn };

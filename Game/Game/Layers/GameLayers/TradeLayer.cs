@@ -13,7 +13,7 @@ using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
 using System.Linq;
 
-namespace StellarLiberation.Game.Layers
+namespace StellarLiberation.Game.Layers.GameLayers
 {
     public class TradeLayer : Layer
     {
@@ -142,7 +142,7 @@ namespace StellarLiberation.Game.Layers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             var balance = mTradingSystem.GetBalance();
-            mUiBalance.Text = (balance > 0) ? $"Balance: +{balance}" : $"Balance: {balance}";
+            mUiBalance.Text = balance > 0 ? $"Balance: +{balance}" : $"Balance: {balance}";
             mUIWallet.Text = mWallet.Balance.ToString();
 
             inputState.DoAction(ActionType.ESC, LayerManager.PopLayer);

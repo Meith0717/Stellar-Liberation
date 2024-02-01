@@ -7,14 +7,14 @@ using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
+using StellarLiberation.Game.Layers.MenueLayers;
 using System.Collections.Generic;
 
-namespace StellarLiberation.Game.Layers
+namespace StellarLiberation.Game.Layers.GameLayers
 {
     public class HudLayer : Layer
     {

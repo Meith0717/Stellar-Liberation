@@ -3,7 +3,7 @@
 // All rights reserved.
 
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
-using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
+using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using System;
 
 namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement

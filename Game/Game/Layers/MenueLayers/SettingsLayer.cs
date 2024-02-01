@@ -13,7 +13,7 @@ using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
 
-namespace StellarLiberation.Game.Layers
+namespace StellarLiberation.Game.Layers.MenueLayers
 {
     public class SettingsLayer : Layer
     {

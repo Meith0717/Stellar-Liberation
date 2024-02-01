@@ -3,7 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
+using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 
 namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
 {

@@ -11,12 +11,13 @@ using StellarLiberation.Game.Core.GameProceses.MapGeneration;
 using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
-using StellarLiberation.Game.Layers.Scenes;
+using StellarLiberation.Game.Layers.GameLayers;
+using StellarLiberation.Game.Layers.MenueLayers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StellarLiberation.Game.Layers
+namespace StellarLiberation.Game.Core.GameProceses
 {
     [Serializable]
     public class GameState
@@ -29,7 +30,7 @@ namespace StellarLiberation.Game.Layers
         [JsonProperty] public readonly Wallet Wallet = new();
         [JsonProperty] public PlanetSystem CurrentSystem { get; set; }
 
-        [JsonIgnore] private PlanetSystemScene mPlanetSystemScene;
+        [JsonIgnore] private PlanetSystemLayer mPlanetSystemScene;
 
         public GameState() : base()
         {

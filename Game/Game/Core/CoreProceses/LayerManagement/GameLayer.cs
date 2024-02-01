@@ -5,15 +5,14 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
-using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
+using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.Rendering;
-using StellarLiberation.Game.Layers;
 
-namespace StellarLiberation.Game.Core.CoreProceses.SceneManagement
+namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
 {
     public abstract class GameLayer : Layer
     {
