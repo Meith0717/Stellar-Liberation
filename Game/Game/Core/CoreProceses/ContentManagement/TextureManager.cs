@@ -68,6 +68,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 
         public Texture2D GetTexture(string id)
         {
+            if (id is null) return null;
             Texture2D texture = mTextures[id];
             if (texture == null)
             {

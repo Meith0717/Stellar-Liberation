@@ -35,7 +35,7 @@ namespace StellarLiberation.Game.Layers
                 OnClickAction = () =>
             {
                 LayerManager.AddLayer(new LoadingLayer());
-                mPersistanceManager.LoadAsync<GameLayer>(PersistanceManager.GameSaveFilePath, (gL) => { LayerManager.PopLayer(); LayerManager.AddLayer(gL); }, (ex) => LayerManager.PopLayer());
+                mPersistanceManager.LoadAsync<GameLayer>(PersistanceManager.GameSaveFilePath, (gL) => { LayerManager.PopLayer(); LayerManager.AddLayer(gL); }, (ex) => { throw ex; });
             }
             });
 

@@ -10,7 +10,7 @@ using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System.Collections.Generic;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PhaserSystem
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PhaserSystem
 {
     public class PhaserCannons
     {

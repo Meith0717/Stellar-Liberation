@@ -14,9 +14,9 @@ using StellarLiberation.Game.Core.GameProceses.AI;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PropulsionSystem;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PhaserSystem;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PropulsionSystem;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PhaserSystem;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.GameObjects.Recources.Items;
@@ -60,17 +60,6 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             mUtilityAi = new();
             foreach (var beh in config.AIBehaviors)
                 mUtilityAi.AddBehavior(beh);
-        }
-
-        public SpaceShip(Vector2 position, string TextureID, float textureScale, SensorSystem sensorArray, SublightDrive sublightEngine, PhaserCannons weaponSystem, DefenseSystem defenseSystem, Fractions fractions, Color borderColor, Color hullColor)
-            : base(position, TextureID, textureScale, 10)
-        {
-            SensorSystem = sensorArray;
-            SublightDrive = sublightEngine;
-            WeaponSystem = weaponSystem;
-            DefenseSystem = defenseSystem;
-            Fraction = fractions;
-            mAccentColor = borderColor;
         }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)

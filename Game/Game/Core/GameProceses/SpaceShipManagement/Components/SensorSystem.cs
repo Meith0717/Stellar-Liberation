@@ -10,7 +10,7 @@ using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components
 {
     public class SensorSystem
     {

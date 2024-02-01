@@ -13,7 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components
 {
     [Serializable]
     public class TractorBeam

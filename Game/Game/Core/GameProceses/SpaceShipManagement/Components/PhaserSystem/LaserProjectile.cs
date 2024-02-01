@@ -11,7 +11,7 @@ using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PhaserSystem
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PhaserSystem
 {
     public class LaserProjectile : GameObject2D
     {

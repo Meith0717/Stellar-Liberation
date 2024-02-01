@@ -10,7 +10,7 @@ using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components
 {
     [Serializable]
     public class DefenseSystem

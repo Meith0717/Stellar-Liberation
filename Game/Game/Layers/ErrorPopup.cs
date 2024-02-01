@@ -12,14 +12,16 @@ using StellarLiberation.Game.Core.UserInterface;
 
 namespace StellarLiberation.Game.Layers
 {
-    internal class EventPopup : Layer
+    internal class ErrorPopup : Layer
     {
-        private UiFrame mUiFrame;
+        private readonly UiFrame mUiFrame;
 
-        public EventPopup(string message) : base(false)
+        public ErrorPopup(string title, string message) : base(false)
         {
-            mUiFrame = new() { RelHeight = .2f, RelWidth = .2f, Color = Color.DarkGray, Anchor = Anchor.Center };
-            mUiFrame.AddChild(new UiText(FontRegistries.subTitleFont, message) { Anchor = Anchor.Center });
+            mUiFrame = new() { Height = 800, Width = 1500, Anchor = Anchor.Center };
+            mUiFrame.AddChild(new UiText(FontRegistries.subTitleFont, title) { Anchor = Anchor.NW, HSpace = 20, VSpace = 20 });
+            mUiFrame.AddChild(new UiText(FontRegistries.debugFont, message) { Anchor = Anchor.Center });
+            //mUiFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Ok") { OnClickAction = LayerManager.PopLayer, Anchor = Anchor.SW, HSpace = 20, VSpace = 20});
         }
 
         public override void Destroy() { }

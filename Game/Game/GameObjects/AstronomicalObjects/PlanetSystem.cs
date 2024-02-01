@@ -89,12 +89,9 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
 
             void LeftPressAction()
             {
-                // scene.GameLayer.LayerManager.AddLayer(new EventPopup($"Do you want to travel to\n{Name}?", () =>
-                // {
-                //     scene.GameLayer.HudLayer.Hide = false;
-                //     scene.GameLayer.PopScene();
-                //     scene.GameLayer.Player.HyperDrive.SetTarget(this);
-                // }, null));
+                scene.GameLayer.HudLayer.Hide = false;
+                scene.GameLayer.PopScene();
+                scene.GameLayer.Player.HyperDrive.SetTarget(this);
             };
 
             mSector.Update(Occupier);

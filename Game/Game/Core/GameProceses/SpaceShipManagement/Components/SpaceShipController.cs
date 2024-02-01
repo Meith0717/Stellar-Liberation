@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components
 {
     public class SpaceShipController
     {

@@ -8,9 +8,11 @@ using System;
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement
 {
     [Serializable]
-    public abstract class SystemComponent
+    public abstract class UpgradableComponent
     {
         [JsonProperty] public int Level { get; private set; } = 1;
+
+        protected UpgradableComponent(int level) => Level = level;
 
         public void IncrementLevel() => Level++;
 

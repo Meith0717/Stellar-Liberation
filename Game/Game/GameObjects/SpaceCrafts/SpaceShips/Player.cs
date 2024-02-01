@@ -7,7 +7,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components;
 using System;
 
 namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips

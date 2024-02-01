@@ -8,7 +8,7 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PhaserSystem;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PhaserSystem;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using System.Linq;
 
