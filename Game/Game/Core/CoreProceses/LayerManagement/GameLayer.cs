@@ -7,11 +7,12 @@ using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
-using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.Rendering;
+using StellarLiberation.Game.Layers;
+using System.Diagnostics.Contracts;
 
 namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
 {
@@ -21,15 +22,17 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         public readonly SpatialHashing<GameObject2D> SpatialHashing;
         public readonly GameObjectManager ParticleManager;
         public readonly Camera2D Camera2D;
-        public readonly GameState GameState;
+        public readonly Camera2DShaker CameraShaker;
+        public readonly GameStateLayer GameState;
         private Matrix mViewTransformationMatrix;
         protected Layer HUDLayer;
 
-        public GameLayer(GameState gameState, int spatialHashingCellSize) : base(false)
+        public GameLayer(GameStateLayer gameState, int spatialHashingCellSize) : base(false)
         {
             SpatialHashing = new(spatialHashingCellSize);
             ParticleManager = new();
             Camera2D = new();
+            CameraShaker = new();
             GameState = gameState;
         }
 
@@ -43,6 +46,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         {
             HUDLayer?.Update(gameTime, inputState);
             ParticleManager.Update(gameTime, inputState, this);
+            CameraShaker.Update(Camera2D, gameTime);
             Camera2D.Update(GraphicsDevice, this);
             mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera2D.Position, Camera2D.Zoom, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
             WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, inputState.mMousePosition);
@@ -64,8 +68,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
             HUDLayer?.Draw(spriteBatch);
         }
 
-        public abstract void DrawOnScreenView(GameState gameState, SpriteBatch spriteBatch);
-        public abstract void DrawOnWorldView(GameState gameState, SpriteBatch spriteBatch);
+        public abstract void DrawOnScreenView(GameStateLayer gameState, SpriteBatch spriteBatch);
+        public abstract void DrawOnWorldView(GameStateLayer gameState, SpriteBatch spriteBatch);
 
         public override void OnResolutionChanged() { }
 

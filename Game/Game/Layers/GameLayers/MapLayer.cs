@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
@@ -25,7 +24,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
         private readonly List<PlanetSystem> mPlanetSystems;
         private readonly PlanetSystem mCurrentSystem;
 
-        public MapLayer(GameState gameState)
+        public MapLayer(GameStateLayer gameState)
             : base(gameState, MapFactory.MapScale * 3)
         {
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn, Alpha = 1 };
@@ -52,9 +51,9 @@ namespace StellarLiberation.Game.Layers.GameLayers
             base.Update(gameTime, inputState);
         }
 
-        public override void DrawOnScreenView(GameState gameState, SpriteBatch spriteBatch) => mBackgroundLayer.Draw();
+        public override void DrawOnScreenView(GameStateLayer gameState, SpriteBatch spriteBatch) => mBackgroundLayer.Draw();
 
-        public override void DrawOnWorldView(GameState gameState, SpriteBatch spriteBatch) {; }
+        public override void DrawOnWorldView(GameStateLayer gameState, SpriteBatch spriteBatch) {; }
 
         public override void OnResolutionChanged() { base.OnResolutionChanged(); }
 

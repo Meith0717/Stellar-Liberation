@@ -9,7 +9,6 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
-using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 
@@ -26,7 +25,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
 
             mFrame.AddChild(new UiText(FontRegistries.titleFont, "Stellar\nLiberation") { Anchor = Anchor.NW, HSpace = 50, VSpace = 50 });
 
-            mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "New Game") { VSpace = 20, HSpace = 20, RelY = .5f, OnClickAction = () => LayerManager.AddLayer(new GameState()) });
+            mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "New Game") { VSpace = 20, HSpace = 20, RelY = .5f, OnClickAction = () => LayerManager.AddLayer(new GameStateLayer()) });
 
             mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Continue")
             {
@@ -36,7 +35,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
                 OnClickAction = () =>
             {
                 LayerManager.AddLayer(new LoadingLayer(false));
-                PersistanceManager.LoadAsync<GameState>(PersistanceManager.GameSaveFilePath, (gameState) => { LayerManager.PopLayer(); LayerManager.AddLayer(gameState); }, (ex) => { throw ex; });
+                PersistanceManager.LoadAsync<GameStateLayer>(PersistanceManager.GameSaveFilePath, (gameState) => { LayerManager.PopLayer(); LayerManager.AddLayer(gameState); }, (ex) => { throw ex; });
             }
             });
 

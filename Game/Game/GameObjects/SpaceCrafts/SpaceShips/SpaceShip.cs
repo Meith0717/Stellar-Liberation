@@ -62,30 +62,34 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                 mUtilityAi.AddBehavior(beh);
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
+        public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer)
         {
-            HyperDrive.Update(gameTime, this, scene);
+            HyperDrive.Update(gameTime, this, gameLayer);
             if (!HyperDrive.IsActive) SublightDrive.Update(gameTime, this);
 
             MovingDirection = Geometry.CalculateDirectionVector(Rotation);
-            Physics.HandleCollision(gameTime, this, scene.SpatialHashing);
-            GameObject2DMover.Move(gameTime, this, scene);
-            base.Update(gameTime, inputState, scene);
+            Physics.HandleCollision(gameTime, this, gameLayer.SpatialHashing);
+            GameObject2DMover.Move(gameTime, this, gameLayer);
+            base.Update(gameTime, inputState, gameLayer);
 
-            HasProjectileHit(gameTime, scene);
+            HasProjectileHit(gameTime, gameLayer);
             DefenseSystem.Update(gameTime);
-            SensorSystem.Scan(Position, Fraction, scene);
-            WeaponSystem.Update(gameTime, this, scene);
-            mUtilityAi.Update(gameTime, this, scene);
-            TrailEffect.Show(Transformations.Rotation(Position, new(-100, 0), Rotation), MovingDirection, Velocity, gameTime, mAccentColor, scene.ParticleManager);
+            SensorSystem.Scan(Position, Fraction, gameLayer);
+            WeaponSystem.Update(gameTime, this, gameLayer);
+            mUtilityAi.Update(gameTime, this, gameLayer);
+            TrailEffect.Show(Transformations.Rotation(Position, new(-100, 0), Rotation), MovingDirection, Velocity, gameTime, mAccentColor, gameLayer.ParticleManager);
 
             if (DefenseSystem.HullPercentage > 0) return;
-            ExplosionEffect.ShipDestroyed(Position, scene.ParticleManager);
+            ExplosionEffect.ShipDestroyed(Position, gameLayer.ParticleManager);
             Dispose = true;
+            var distance = Vector2.Distance(gameLayer.Camera2D.Position, Position);
+            var threshold = MathHelper.Clamp(1 - (distance / 7500), 0, 1);
+            gameLayer.CameraShaker.Shake(1000 * threshold, 1);
+
             for (int i = 0; i < ExtendetRandom.Random.Next(0, 5); i++)
             {
                 ExtendetRandom.Random.NextUnitVector(out var vector);
-                scene.GameState.CurrentSystem.GameObjectManager.AddObj(ItemFactory.Get(ItemID.Iron, MovingDirection + vector * 5, Position));
+                gameLayer.GameState.CurrentSystem.GameObjectManager.AddObj(ItemFactory.Get(ItemID.Iron, MovingDirection + vector * 5, Position));
             }
         }
 
@@ -117,6 +121,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             TextureManager.Instance.Draw($"{TextureId}Frame", Position, TextureScale, Rotation, TextureDepth, Color.Black);
             TextureManager.Instance.Draw($"{TextureId}Hull", Position, TextureScale, Rotation, TextureDepth, new(10, 10, 10));
             TextureManager.Instance.Draw($"{TextureId}Structure", Position, TextureScale, Rotation, TextureDepth, new(20, 30, 40));
+            TextureManager.Instance.Draw(GameSpriteRegistries.radar, Position, .03f / scene.Camera2D.Zoom, 0, TextureDepth + 1,  Fraction == Fractions.Enemys ? Color.Red : Color.LightGreen);
 
             scene.GameState.DebugSystem.DrawAiDebug(BoundedBox, mUtilityAi.DebugMessage, scene.Camera2D.Zoom);
 

@@ -9,7 +9,6 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
-using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 
@@ -19,7 +18,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
     {
         private readonly UiFrame mBackgroundLayer;
 
-        public PauseLayer(GameState gameState)
+        public PauseLayer(GameStateLayer gameState)
             : base(false)
         {
             mBackgroundLayer = new() { RelHeight = 1, RelWidth = 1, Color = Color.Transparent };

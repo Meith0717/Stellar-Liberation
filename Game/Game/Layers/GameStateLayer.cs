@@ -20,10 +20,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StellarLiberation.Game.Core.GameProceses
+namespace StellarLiberation.Game.Layers
 {
     [Serializable]
-    public class GameState : Layer
+    public class GameStateLayer : Layer
     {
         [JsonIgnore] public readonly DebugSystem DebugSystem = new();
         [JsonIgnore] private readonly LinkedList<Layer> mLayers = new();
@@ -33,7 +33,7 @@ namespace StellarLiberation.Game.Core.GameProceses
         [JsonProperty] public readonly Inventory Inventory = new();
         [JsonProperty] public readonly Wallet Wallet = new();
 
-        public GameState() : base(false)
+        public GameStateLayer() : base(false)
         {
             MapFactory.Generate(out PlanetSystems);
             CurrentSystem = PlanetSystems.First();
