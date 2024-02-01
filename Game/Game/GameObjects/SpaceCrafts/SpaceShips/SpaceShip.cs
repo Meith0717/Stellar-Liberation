@@ -13,11 +13,10 @@ using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.AI;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
-using StellarLiberation.Game.Core.GameProceses.ProjectileManagement;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PropulsionSystem;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.WeaponSystem;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PhaserSystem;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.GameObjects.Recources.Items;
@@ -36,7 +35,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
         [JsonIgnore] public readonly Fractions Fraction;
         [JsonIgnore] public readonly SensorSystem SensorSystem;
         [JsonIgnore] public readonly SublightDrive SublightDrive;
-        [JsonIgnore] public readonly TurretSystem WeaponSystem;
+        [JsonIgnore] public readonly PhaserCannons WeaponSystem;
         [JsonIgnore] public readonly DefenseSystem DefenseSystem;
         [JsonIgnore] private readonly Color mAccentColor;
 
@@ -63,7 +62,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                 mUtilityAi.AddBehavior(beh);
         }
 
-        public SpaceShip(Vector2 position, string TextureID, float textureScale, SensorSystem sensorArray, SublightDrive sublightEngine, TurretSystem weaponSystem, DefenseSystem defenseSystem, Fractions fractions, Color borderColor, Color hullColor)
+        public SpaceShip(Vector2 position, string TextureID, float textureScale, SensorSystem sensorArray, SublightDrive sublightEngine, PhaserCannons weaponSystem, DefenseSystem defenseSystem, Fractions fractions, Color borderColor, Color hullColor)
             : base(position, TextureID, textureScale, 10)
         {
             SensorSystem = sensorArray;
@@ -103,13 +102,12 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 
         private void HasProjectileHit(GameTime gameTime, Scene scene)
         {
-            var projectileInRange = scene.SpatialHashing.GetObjectsInRadius<Projectile>(Position, (int)BoundedBox.Radius * 10);
+            var projectileInRange = scene.SpatialHashing.GetObjectsInRadius<LaserProjectile>(Position, (int)BoundedBox.Radius * 10);
             if (!projectileInRange.Any()) return;
             var hit = false;
             foreach (var projectile in projectileInRange)
             {
-                if (projectile.Origine.Fraction == Fraction) continue;
-                if (projectile.Origine == this) return;
+                if (projectile.Fraction == Fraction) continue;
                 if (!ContinuousCollisionDetection.HasCollide(gameTime, projectile, this, out var position)) continue;
 
                 projectile.HasCollide((Vector2)position, scene);

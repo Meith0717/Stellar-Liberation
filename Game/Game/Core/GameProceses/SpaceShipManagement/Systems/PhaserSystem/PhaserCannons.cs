@@ -10,11 +10,11 @@ using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System.Collections.Generic;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.WeaponSystem
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PhaserSystem
 {
-    public class TurretSystem
+    public class PhaserCannons
     {
-        private readonly List<Turret> mTurrets = new();
+        private readonly List<PhaserCannon> mCannons = new();
         private readonly int mMaxFireCoolDown;
         private float mFireCoolDown;
         private Color mParticleColor;
@@ -26,7 +26,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.W
         private Vector2? mAimingPos;
         private bool mFire;
 
-        public TurretSystem(int fireCoolDown, Color particleColor, int hullDamage, int shieldDamage, float range)
+        public PhaserCannons(int fireCoolDown, Color particleColor, int hullDamage, int shieldDamage, float range)
         {
             mMaxFireCoolDown = fireCoolDown;
             mFireCoolDown = fireCoolDown;
@@ -36,7 +36,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.W
             Range = range;
         }
 
-        public void PlaceTurret(Turret turret) => mTurrets.Add(turret);
+        public void PlaceTurret(PhaserCannon turret) => mCannons.Add(turret);
 
         public SpaceShip AimingShip => mAimingShip;
         public void AimShip(SpaceShip spaceShip) => mAimingShip = spaceShip;
@@ -48,13 +48,13 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.W
         {
             mFireCoolDown += gameTime.ElapsedGameTime.Milliseconds;
             var hasFired = false;
-            foreach (var turret in mTurrets)
+            foreach (var cannon in mCannons)
             {
                 var position = mAimingPos ?? CollisionPredictor.PredictPosition(gameTime, origin.Position, 15, mAimingShip);
-                turret.GetPosition(origin.Position, origin.Rotation);
-                turret.RotateToTArget(origin.Rotation, position);
+                cannon.GetPosition(origin.Position, origin.Rotation);
+                cannon.RotateToTArget(origin.Rotation, position);
                 if (!mFire || mFireCoolDown < mMaxFireCoolDown) continue;
-                turret.Fire(scene.ParticleManager, origin, mParticleColor, mShielDamage, mHullDamage);
+                cannon.Fire(scene.ParticleManager, origin, mParticleColor, mShielDamage, mHullDamage);
                 hasFired = true;
             }
 
@@ -76,6 +76,6 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.W
             mFireCoolDown -= mFireCoolDown * fireCoolDownPercentage;
         }
 
-        public void Draw(Scene sceme) { foreach (var weapon in mTurrets) weapon.Draw(sceme); }
+        public void Draw(Scene sceme) { foreach (var weapon in mCannons ) weapon.Draw(sceme); }
     }
 }

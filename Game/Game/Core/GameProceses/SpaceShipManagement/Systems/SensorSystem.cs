@@ -15,8 +15,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems
     public class SensorSystem
     {
         public int ShortRangeScanDistance { get; private set; }
-
-        // Scan result
+        public GameObject2D FocusObject { get; private set; }
         public readonly List<GameObject2D> LongRangeScan = new();
         public readonly List<GameObject2D> ShortRangeScan = new();
         public readonly List<SpaceShip> OpponentsInRannge = new();

@@ -11,16 +11,16 @@ using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 
-namespace StellarLiberation.Game.Core.GameProceses.ProjectileManagement
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PhaserSystem
 {
-    public class Projectile : GameObject2D
+    public class LaserProjectile : GameObject2D
     {
-        public SpaceShip Origine { get; private set; }
+        public readonly Fractions Fraction;
 
         public readonly float ShieldDamage;
         public readonly float HullDamage;
 
-        public Projectile(Vector2 position, float rotation, Color color, float shieldDamage, float hullDamage, SpaceShip origine)
+        public LaserProjectile(Vector2 position, float rotation, Color color, float shieldDamage, float hullDamage, Fractions fraction)
             : base(position, GameSpriteRegistries.projectile, 1f, 15)
         {
             MovingDirection = Geometry.CalculateDirectionVector(rotation);
@@ -28,9 +28,9 @@ namespace StellarLiberation.Game.Core.GameProceses.ProjectileManagement
             HullDamage = hullDamage;
             ShieldDamage = shieldDamage;
             TextureColor = color;
-            Origine = origine;
+            Fraction = fraction;
             Velocity = 15;
-            DisposeTime = 1500;
+            DisposeTime = 2000;
         }
 
         public override void Update(GameTime gameTime, InputState inputState, Scene scene)

@@ -8,7 +8,7 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
-using StellarLiberation.Game.Core.GameProceses.ProjectileManagement;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PhaserSystem;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using System.Linq;
 
@@ -32,7 +32,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 
         private void CheckForHit(GameTime gameTime, Scene scene)
         {
-            var projectileInRange = scene.SpatialHashing.GetObjectsInRadius<Projectile>(Position, (int)BoundedBox.Diameter);
+            var projectileInRange = scene.SpatialHashing.GetObjectsInRadius<LaserProjectile>(Position, (int)BoundedBox.Diameter);
             if (!projectileInRange.Any()) return;
             var gotHit = false;
             Vector2? position = null;

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
-using StellarLiberation.Game.Core.GameProceses.ProjectileManagement;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Systems.PhaserSystem;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
@@ -28,7 +28,7 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
             foreach (var obj in objects)
             {
                 if (graphicsDevice.Viewport.Bounds.Intersects(obj.BoundedBox)) continue;
-                if (obj is Projectile || obj is Particle || obj is Asteroid) continue;
+                if (obj is LaserProjectile || obj is Particle || obj is Asteroid) continue;
                 var rectangle = graphicsDevice.Viewport.Bounds;
                 rectangle.Inflate(-25, -25);
                 var pos = Geometry.GetPointOnCircle(mCompass, Geometry.AngleBetweenVectors(position, obj.Position));
