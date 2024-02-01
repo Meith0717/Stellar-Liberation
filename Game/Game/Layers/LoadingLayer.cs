@@ -22,7 +22,7 @@ namespace StellarLiberation.Game.Layers
         {
             mFrame = new() { FillScale = FillScale.Both, Alpha = 0 };
             mLoadingCircle = new() { Width = 100, Height = 100, Anchor = Anchor.SE, HSpace = 10, VSpace = 10 };
-            if (hasBackground) mFrame.AddChild(new UiSprite(MenueSpriteRegistries.menueBackground) { FillScale = FillScale.FillIn, Anchor = Anchor.Center });
+            if (hasBackground) mFrame.AddChild(new UiText(FontRegistries.titleFont, "Stellar\nLieberation") { Anchor = Anchor.Center });
             mFrame.AddChild(mLoadingCircle);
         }
 

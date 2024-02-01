@@ -55,7 +55,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
                 DrawBuckets = ShowObjectsInBucket = ShowHitBoxes = ShowSensorRadius = ShowPaths = false;
                 return;
             }
-            inputState.DoAction(ActionType.F1, () => DrawBuckets = !DrawBuckets);
+            inputState.DoAction(ActionType.HideHud, () => DrawBuckets = !DrawBuckets);
             inputState.DoAction(ActionType.F2, () => ShowObjectsInBucket = !ShowObjectsInBucket);
             inputState.DoAction(ActionType.F3, () => ShowHitBoxes = !ShowHitBoxes);
             inputState.DoAction(ActionType.F4, () => ShowSensorRadius = !ShowSensorRadius);

@@ -73,6 +73,7 @@ namespace StellarLiberation.Game.Layers
             inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this)));
             inputState.DoAction(ActionType.Inventar, () => LayerManager.AddLayer(new InventoryLayer(Inventory, Wallet)));
             inputState.DoAction(ActionType.Trading, () => LayerManager.AddLayer(new TradeLayer(Inventory, new(), Wallet)));
+            inputState.DoAction(ActionType.HideHud, () => HudLayer.Hide = !HudLayer.Hide);
         }
 
         public override void Destroy()
