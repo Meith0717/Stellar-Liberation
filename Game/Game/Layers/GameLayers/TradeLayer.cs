@@ -147,7 +147,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
             inputState.DoAction(ActionType.ESC, LayerManager.PopLayer);
             inputState.DoAction(ActionType.Trading, LayerManager.PopLayer);
-            mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
+            mFrame.Update(inputState, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
         }
     }
 }

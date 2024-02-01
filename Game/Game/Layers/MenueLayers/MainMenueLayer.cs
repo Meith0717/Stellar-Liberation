@@ -26,7 +26,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
 
             mFrame.AddChild(new UiText(FontRegistries.titleFont, "Stellar\nLiberation") { Anchor = Anchor.NW, HSpace = 50, VSpace = 50 });
 
-            mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "New Game") { VSpace = 20, HSpace = 20, RelY = .5f, OnClickAction = () => { mGame1.GameState = new(); mGame1.GameState.Initialize(LayerManager); } });
+            mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "New Game") { VSpace = 20, HSpace = 20, RelY = .5f, OnClickAction = () => LayerManager.AddLayer(new GameState()) });
 
             mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Continue")
             {
@@ -36,7 +36,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
                 OnClickAction = () =>
             {
                 LayerManager.AddLayer(new LoadingLayer(false));
-                mPersistanceManager.LoadAsync<GameState>(PersistanceManager.GameSaveFilePath, (gameState) => { LayerManager.PopLayer(); mGame1.GameState = gameState; gameState.Initialize(LayerManager); }, (ex) => { throw ex; });
+                PersistanceManager.LoadAsync<GameState>(PersistanceManager.GameSaveFilePath, (gameState) => { LayerManager.PopLayer(); LayerManager.AddLayer(gameState); }, (ex) => { throw ex; });
             }
             });
 
@@ -64,7 +64,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             inputState.DoAction(ActionType.ESC, LayerManager.Exit);
-            mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
+            mFrame.Update(inputState, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
         }
     }
 }

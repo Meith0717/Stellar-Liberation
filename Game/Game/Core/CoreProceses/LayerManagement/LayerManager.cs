@@ -17,7 +17,7 @@ public class LayerManager
     private readonly Game1 mGame1;
     private readonly GraphicsDevice mGraphicsDevice;
     private readonly PersistanceManager mPersistanceManager;
-    public readonly ResolutionManager ResolutionManager;
+    private readonly ResolutionManager mResolutionManager;
     private readonly GameSettings mGameSettings;
 
     // layer stack
@@ -27,7 +27,7 @@ public class LayerManager
     {
         mGame1 = game1;
         mGraphicsDevice = graphicsDevice;
-        ResolutionManager = resolutionManager;
+        mResolutionManager = resolutionManager;
         mPersistanceManager = persistanceManager;
         mGameSettings = gameSettings;
     }
@@ -36,7 +36,7 @@ public class LayerManager
     public void AddLayer(Layer layer)
     {
         mLayerStack.AddLast(layer);
-        layer.Initialize(mGame1, this, mGraphicsDevice, mPersistanceManager, mGameSettings);
+        layer.Initialize(mGame1, this, mGraphicsDevice, mPersistanceManager, mGameSettings, mResolutionManager);
     }
 
     public void PopLayer()
@@ -51,7 +51,7 @@ public class LayerManager
     // update layers
     public void Update(GameTime gameTime, InputState inputState)
     {
-        if (ResolutionManager.WasResized) OnResolutionChanged();
+        if (mResolutionManager.WasResized) OnResolutionChanged();
 
         var reversedStack = mLayerStack.Reverse();
         foreach (Layer layer in reversedStack)

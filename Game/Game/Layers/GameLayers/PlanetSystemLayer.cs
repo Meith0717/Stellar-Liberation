@@ -13,7 +13,6 @@ using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
-using StellarLiberation.Game.Layers.MenueLayers;
 
 namespace StellarLiberation.Game.Layers.GameLayers
 {
@@ -24,23 +23,23 @@ namespace StellarLiberation.Game.Layers.GameLayers
         private readonly PlanetSystemInstance mPlanetSystem;
         private readonly Grid mGrid;
 
-        public PlanetSystemLayer(GameState gameLayer, PlanetSystemInstance currentPlanetSystem, float camZoom) : base(gameLayer, 50000)
+        public PlanetSystemLayer(GameState gameLayer, float camZoom) : base(gameLayer, 50000)
         {
             HUDLayer = new HudLayer(this);
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn };
             mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
 
             Camera2D.Zoom = camZoom;
-            mPlanetSystem = currentPlanetSystem;
+            mPlanetSystem = gameLayer.CurrentSystem.GetInstance();
             mGrid = new(10000);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer()));
+            inputState.DoAction(ActionType.ToggleHyperMap, () => GameState.AddLayer(new MapLayer(GameState)));
+            inputState.DoAction(ActionType.Inventar, () => LayerManager.AddLayer(new InventoryLayer(GameState.Inventory, GameState.Wallet)));
 
-            mBackgroundLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, 1);
-            inputState.DoAction(ActionType.ToggleHyperMap, () => GameState.LoadMap());
+            mBackgroundLayer.Update(inputState, GraphicsDevice.Viewport.Bounds, 1);
 
             mPlanetSystem.UpdateObjects(gameTime, inputState, this);
             GameState.Player.Update(gameTime, inputState, this);

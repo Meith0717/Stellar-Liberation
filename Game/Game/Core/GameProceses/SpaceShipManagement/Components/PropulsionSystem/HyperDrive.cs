@@ -43,7 +43,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             HyperDriveEffect.Charge(operatingShip.Position, scene.ParticleManager);
             if (CoolDown > mActualChargingTime) return;
             SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.CoolHyperdrive);
-            scene.GameState.ChangePlanetSystem(TargetPlanetSystem);
+            // TODO scene.GameState.ChangePlanetSystem(TargetPlanetSystem);
             TargetPlanetSystem = null;
             IsActive = false;
         }

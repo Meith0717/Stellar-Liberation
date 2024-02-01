@@ -9,6 +9,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
@@ -48,14 +49,14 @@ namespace StellarLiberation.Game.Layers.MenueLayers
             mMainFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Apply") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = Apply });
         }
 
-        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, GameSettings gameSettings)
+        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, GameSettings gameSettings, ResolutionManager resolutionManager)
         {
-            base.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings);
+            base.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings, resolutionManager);
 
-            mMasterSlider = new(mGameSettings.MasterVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
-            mMusicSlider = new(mGameSettings.MusicVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
-            mSfxSlider = new(mGameSettings.SoundEffectsVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
-            mResolutionSelector = new UiVariableSelector<string>(LayerManager.ResolutionManager.Resolutions) { RelWidth = 1, Anchor = Anchor.CenterH };
+            mMasterSlider = new(GameSettings.MasterVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
+            mMusicSlider = new(GameSettings.MusicVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
+            mSfxSlider = new(GameSettings.SoundEffectsVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
+            mResolutionSelector = new UiVariableSelector<string>(resolutionManager.Resolutions) { RelWidth = 1, Anchor = Anchor.CenterH };
 
             mSettingsGrid.Set(1, 1, mMasterSlider);
             mSettingsGrid.Set(1, 2, mMusicSlider);
@@ -77,27 +78,27 @@ namespace StellarLiberation.Game.Layers.MenueLayers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             inputState.DoAction(ActionType.ESC, Exit);
-            mMainFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
+            mMainFrame.Update(inputState, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
 
-            mGameSettings.MasterVolume = mMasterSlider.Value;
-            mGameSettings.MusicVolume = mMusicSlider.Value;
-            mGameSettings.SoundEffectsVolume = mSfxSlider.Value;
+            GameSettings.MasterVolume = mMasterSlider.Value;
+            GameSettings.MusicVolume = mMusicSlider.Value;
+            GameSettings.SoundEffectsVolume = mSfxSlider.Value;
 
-            MusicManager.Instance.ChangeOverallVolume(mGameSettings.MasterVolume, mGameSettings.MusicVolume);
-            SoundEffectManager.Instance.ChangeOverallVolume(mGameSettings.MasterVolume, mGameSettings.SoundEffectsVolume);
+            MusicManager.Instance.ChangeOverallVolume(GameSettings.MasterVolume, GameSettings.MusicVolume);
+            SoundEffectManager.Instance.ChangeOverallVolume(GameSettings.MasterVolume, GameSettings.SoundEffectsVolume);
         }
 
         private void Apply()
         {
-            mGameSettings.Resolution = mResolutionSelector.Value;
-            LayerManager.ResolutionManager.Apply(mGameSettings.Resolution);
+            GameSettings.Resolution = mResolutionSelector.Value;
+            ResolutionManager.Apply(GameSettings.Resolution);
         }
 
         private void Exit()
         {
             LayerManager.PopLayer();
             LayerManager.AddLayer(new LoadingLayer());
-            mPersistanceManager.SaveAsync(PersistanceManager.SettingsSaveFilePath, mGameSettings, () => LayerManager.PopLayer(), (e) => throw e);
+            PersistanceManager.SaveAsync(PersistanceManager.SettingsSaveFilePath, GameSettings, () => LayerManager.PopLayer(), (e) => throw e);
         }
     }
 }

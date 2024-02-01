@@ -30,19 +30,19 @@ namespace StellarLiberation.Game.Layers.GameLayers
         private readonly Compass mCompass = new();
         private readonly List<UiElement> mPopups = new();
 
-        public HudLayer(GameLayer scene) : base(true)
+        public HudLayer(GameLayer gameLayer) : base(true)
         {
             mUiLayer = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
             mShieldBar = new(new Color(135, 206, 235), MenueSpriteRegistries.shield) { RelHeight = .025f, RelWidth = .15f, RelX = .01f, RelY = .02f };
             mHullBar = new(new Color(210, 105, 30), MenueSpriteRegistries.ship) { RelHeight = .025f, RelWidth = .15f, RelX = .01f, RelY = .05f };
             mPropulsiondBar = new(new Color(241, 196, 15), MenueSpriteRegistries.propulsion) { RelHeight = .25f, RelWidth = .02f, Anchor = Anchor.SW, HSpace = 20, VSpace = 20 };
 
-            mUiLayer.AddChild(new UiButton(MenueSpriteRegistries.pause, "") { Anchor = Anchor.NE, HSpace = 20, VSpace = 20, OnClickAction = () => LayerManager.AddLayer(new PauseLayer()) });
+            mUiLayer.AddChild(new UiButton(MenueSpriteRegistries.pause, "") { Anchor = Anchor.NE, HSpace = 20, VSpace = 20, OnClickAction = () => LayerManager.AddLayer(new PauseLayer(gameLayer.GameState)) });
             mUiLayer.AddChild(mShieldBar);
             mUiLayer.AddChild(mHullBar);
             mUiLayer.AddChild(mPropulsiondBar);
 
-            mScene = scene;
+            mScene = gameLayer;
         }
 
         public void AddPopup(UiElement uiElement) => mPopups.Add(uiElement);
@@ -64,13 +64,13 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mUiLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
+            mUiLayer.Update(inputState, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
             mShieldBar.Percentage = mScene.GameState.Player.DefenseSystem.ShieldPercentage;
             mHullBar.Percentage = mScene.GameState.Player.DefenseSystem.HullPercentage;
             mPropulsiondBar.Percentage = (double)(mScene.GameState.Player.Velocity / mScene.GameState.Player.SublightDrive.MaxVelocity);
-            mCompass.Update(mScene.GameState.Player.Position, mGraphicsDevice, mScene.GameState.Player.SensorSystem.LongRangeScan);
+            mCompass.Update(mScene.GameState.Player.Position, GraphicsDevice, mScene.GameState.Player.SensorSystem.LongRangeScan);
             foreach (var uiElement in mPopups)
-                uiElement.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
+                uiElement.Update(inputState, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
             mPopups.Clear();
         }
     }

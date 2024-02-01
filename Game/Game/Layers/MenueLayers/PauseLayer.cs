@@ -9,6 +9,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
+using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 
@@ -16,9 +17,9 @@ namespace StellarLiberation.Game.Layers.MenueLayers
 {
     public class PauseLayer : Layer
     {
-        private UiFrame mBackgroundLayer;
+        private readonly UiFrame mBackgroundLayer;
 
-        public PauseLayer()
+        public PauseLayer(GameState gameState)
             : base(false)
         {
             mBackgroundLayer = new() { RelHeight = 1, RelWidth = 1, Color = Color.Transparent };
@@ -34,7 +35,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
                 OnClickAction = () =>
                 {
                     LayerManager.AddLayer(new LoadingLayer(false));
-                    mPersistanceManager.SaveAsync(PersistanceManager.GameSaveFilePath, mGame1.GameState, () => LayerManager.PopLayer(), (ex) => throw ex);
+                    PersistanceManager.SaveAsync(PersistanceManager.GameSaveFilePath, gameState, () => LayerManager.PopLayer(), (ex) => throw ex);
                 },
                 TextAllign = TextAllign.Center
             });
@@ -59,13 +60,12 @@ namespace StellarLiberation.Game.Layers.MenueLayers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             inputState.DoAction(ActionType.ESC, () => LayerManager.PopLayer());
-            mBackgroundLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
+            mBackgroundLayer.Update(inputState, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
         }
 
         private void Menue()
         {
             LayerManager.PopLayer(); // Pause Menue
-            LayerManager.PopLayer(); // Hud
             LayerManager.PopLayer(); // Game
         }
     }

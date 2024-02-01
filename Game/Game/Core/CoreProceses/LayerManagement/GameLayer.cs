@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
@@ -24,26 +25,26 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         private Matrix mViewTransformationMatrix;
         protected Layer HUDLayer;
 
-        public GameLayer(GameState gameLayer, int spatialHashingCellSize) : base(false)
+        public GameLayer(GameState gameState, int spatialHashingCellSize) : base(false)
         {
             SpatialHashing = new(spatialHashingCellSize);
             ParticleManager = new();
             Camera2D = new();
-            GameState = gameLayer;
+            GameState = gameState;
         }
 
-        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, GameSettings gameSettings)
+        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, GameSettings gameSettings, ResolutionManager resolutionManager)
         {
-            base.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings);
-            HUDLayer?.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings);
+            base.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings, resolutionManager);
+            HUDLayer?.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings, resolutionManager);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
             HUDLayer?.Update(gameTime, inputState);
             ParticleManager.Update(gameTime, inputState, this);
-            Camera2D.Update(mGraphicsDevice, this);
-            mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera2D.Position, Camera2D.Zoom, 0, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
+            Camera2D.Update(GraphicsDevice, this);
+            mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera2D.Position, Camera2D.Zoom, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
             WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, inputState.mMousePosition);
         }
 

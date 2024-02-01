@@ -11,7 +11,6 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
-using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Layers;
 using StellarLiberation.Game.Layers.MenueLayers;
 using System;
@@ -28,7 +27,6 @@ namespace StellarLiberation
         private GameSettings mGameSettings;
         private SpriteBatch mSpriteBatch;
         private LayerManager mLayerManager;
-        public GameState GameState;
         private bool IAmActive;
 
         public Game1()
@@ -76,7 +74,7 @@ namespace StellarLiberation
 
             mSpriteBatch = new SpriteBatch(GraphicsDevice);
             ContentLoader.PreLoad(Content, mSpriteBatch);
-            ContentLoader.LoadAsync(Content, mSpriteBatch, () => mLayerManager.AddLayer(new MainMenueLayer()), (ex) => throw ex);
+            ContentLoader.LoadAsync(Content, mSpriteBatch, () => { mLayerManager.PopLayer(); mLayerManager.AddLayer(new MainMenueLayer()); }, (ex) => throw ex);
         }
 
         protected override void Update(GameTime gameTime)
@@ -88,7 +86,6 @@ namespace StellarLiberation
                 inputState.DoAction(ActionType.ToggleFullscreen, mResolutionManager.ToggleFullscreen);
                 inputState.DoAction(ActionType.IncreaseScaling, () => mResolutionManager.UiScaling += 0.1f);
                 inputState.DoAction(ActionType.DecreaseScaling, () => mResolutionManager.UiScaling -= 0.1f);
-                GameState?.Update(inputState);
                 mLayerManager.Update(gameTime, inputState);
             }
             base.Update(gameTime);
