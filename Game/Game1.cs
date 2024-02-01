@@ -26,6 +26,7 @@ namespace StellarLiberation
         private GameSettings mGameSettings;
         private SpriteBatch mSpriteBatch;
         private LayerManager mLayerManager;
+        public GameState GameState;
         private bool IAmActive;
 
         public Game1()
@@ -38,7 +39,7 @@ namespace StellarLiberation
 
             Activated += ActivateMyGame;
             Deactivated += DeactivateMyGame;
-            this.IAmActive = false;
+            IAmActive = false;
 
             // Window properties
             IsMouseVisible = true;
@@ -85,6 +86,7 @@ namespace StellarLiberation
                 inputState.DoAction(ActionType.ToggleFullscreen, mResolutionManager.ToggleFullscreen);
                 inputState.DoAction(ActionType.IncreaseScaling, () => mResolutionManager.UiScaling += 0.1f);
                 inputState.DoAction(ActionType.DecreaseScaling, () => mResolutionManager.UiScaling -= 0.1f);
+                GameState?.Update(inputState);
                 mLayerManager.Update(gameTime, inputState);
             }
             base.Update(gameTime);

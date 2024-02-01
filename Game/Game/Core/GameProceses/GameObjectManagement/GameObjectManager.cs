@@ -32,7 +32,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             return true;
         }
 
-        public void Update(GameTime gameTime, InputState inputState, Scene scene)
+        public void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
             Objects.AddRange(mAddedObjects);
             mAddedObjects.Clear();
@@ -55,7 +55,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             mRemovedObjects.Clear();
         }
 
-        public void Draw(Scene scene)
+        public void Draw(GameLayer scene)
         {
             foreach (var obj in Objects)
             {

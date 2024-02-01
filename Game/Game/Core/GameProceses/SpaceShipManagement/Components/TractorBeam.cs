@@ -23,9 +23,9 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
 
         public TractorBeam(float pullRadius) => mPullRadius = pullRadius;
 
-        public void Pull(GameTime gameTime, SpaceShip spaceShip, Scene scene)
+        public void Pull(GameTime gameTime, SpaceShip spaceShip, GameLayer scene)
         {
-            var inventory = scene.GameLayer.Inventory;
+            var inventory = scene.GameState.Inventory;
 
             mItemsInRange.Clear();
             var position = spaceShip.Position;

@@ -31,7 +31,7 @@ namespace StellarLiberation.Game.Core.Visuals
             mVariance = ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 5000));
         }
 
-        public void Draw(Scene scene)
+        public void Draw(GameLayer scene)
         {
             int getColor(int a) => (int)(a * mAlpha);
             var color = new Color(getColor(200), getColor(200), getColor(255), getColor(255));

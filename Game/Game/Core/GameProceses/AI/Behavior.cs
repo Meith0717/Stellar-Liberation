@@ -10,8 +10,8 @@ namespace StellarLiberation.Game.Core.GameProceses.AI
 {
     public abstract class Behavior
     {
-        public abstract double GetScore(GameTime gameTime, SpaceShip spaceShip, Scene scene);
-        public abstract void Execute(GameTime gameTime, SpaceShip spaceShip, Scene scene);
+        public abstract double GetScore(GameTime gameTime, SpaceShip spaceShip, GameLayer scene);
+        public abstract void Execute(GameTime gameTime, SpaceShip spaceShip, GameLayer scene);
         public abstract void Reset(SpaceShip spaceShip);
     }
 }

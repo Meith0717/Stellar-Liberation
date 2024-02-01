@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
-using MonoGame.Extended.Collections;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
@@ -67,7 +66,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
             inputState.DoAction(ActionType.F10, () => ShowAi = !ShowAi);
         }
 
-        public void CheckForSpawn(PlanetSystemInstance planetSystem, Scene scene)
+        public void CheckForSpawn(PlanetSystemInstance planetSystem, GameLayer scene)
         {
             // if (SpawnBattleShip) planetSystem.GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyBattleShip, scene.Camera2D.Position));
             // if (SpawnBomber) planetSystem.GameObjects.AddObj(EnemyFactory.Get(EnemyId.EnemyBomber, scene.Camera2D.Position));
@@ -96,7 +95,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
             ShowInfo(new(10, 120));
         }
 
-        public void DrawOnScene(Scene scene)
+        public void DrawOnScene(GameLayer scene)
         {
             if (!IsDebug) return;
             if (DrawBuckets) DebugSpatialHashing.Buckets(scene, scene.WorldMousePosition);
@@ -127,20 +126,20 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
             }
         }
 
-        public void DrawHitbox(CircleF box, Scene scene)
+        public void DrawHitbox(CircleF box, GameLayer scene)
         {
             if (!ShowHitBoxes) { return; }
             TextureManager.Instance.DrawAdaptiveCircle(box.Position, box.Radius, Color.Red, 2, (int)TextureManager.MaxLayerDepth,
                 scene.Camera2D.Zoom);
         }
 
-        public void DrawMovingDir(Vector2? target, SpaceShip spaceShip, Scene scene)
+        public void DrawMovingDir(Vector2? target, SpaceShip spaceShip, GameLayer scene)
         {
             if (target is null | !ShowPaths) return;
             TextureManager.Instance.DrawAdaptiveLine(spaceShip.Position, Geometry.GetPointInDirection(spaceShip.Position, spaceShip.MovingDirection, spaceShip.Velocity * 100), Color.LightBlue, 2, spaceShip.TextureDepth - 1, scene.Camera2D.Zoom);
         }
 
-        public void DrawSensorRadius(Vector2 center, float radius, Scene scene)
+        public void DrawSensorRadius(Vector2 center, float radius, GameLayer scene)
         {
             if (!ShowSensorRadius) { return; }
             CircleF box = new(center, radius);
@@ -151,7 +150,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
         public void DrawAiDebug(CircleF circle, string message, float camZoom)
         {
             if (!ShowAi) return;
-            TextureManager.Instance.DrawString(FontRegistries.subTitleFont, circle.ToRectangleF().TopRight, message, 0.2f/camZoom, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.subTitleFont, circle.ToRectangleF().TopRight, message, 0.2f / camZoom, Color.White);
         }
     }
 }

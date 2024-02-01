@@ -35,7 +35,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             mShadowRotation = Geometry.AngleBetweenVectors(Position, mMainBodyPosition) + MathF.PI;
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
             base.Update(gameTime, inputState, scene);
             RemoveFromSpatialHashing(scene);
@@ -46,7 +46,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             AddToSpatialHashing(scene);
         }
 
-        public override void Draw(Scene scene)
+        public override void Draw(GameLayer scene)
         {
             base.Draw(scene);
             TextureManager.Instance.Draw(GameSpriteRegistries.planetShadow, Position, TextureOffset, TextureScale * 1.05f, mShadowRotation, TextureDepth + 1, Color.White);

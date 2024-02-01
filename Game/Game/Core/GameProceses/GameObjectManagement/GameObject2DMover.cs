@@ -9,7 +9,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
 {
     public static class GameObject2DMover
     {
-        public static void Move(GameTime gameTime, GameObject2D gameObject2D, Scene scene)
+        public static void Move(GameTime gameTime, GameObject2D gameObject2D, GameLayer scene)
         {
             gameObject2D.RemoveFromSpatialHashing(scene);
             gameObject2D.Position += gameObject2D.MovingDirection * gameObject2D.Velocity * (float)gameTime.ElapsedGameTime.TotalMilliseconds;

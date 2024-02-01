@@ -53,7 +53,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             mActualShieldForce += mRegenerationPerSecond / gameTime.ElapsedGameTime.Milliseconds;
         }
 
-        public void GotHit(Vector2 position, float shieldDamage, float hullDamage, Scene scene)
+        public void GotHit(Vector2 position, float shieldDamage, float hullDamage, GameLayer scene)
         {
             ShieldRegenerateCoolDown = 5000;
             if (mActualShieldForce > 0)

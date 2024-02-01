@@ -16,20 +16,19 @@ using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Layers.Scenes
 {
-    internal class MapScene : Scene
+    internal class MapScene : GameLayer
     {
         private readonly UiFrame mBackgroundLayer;
 
         private readonly List<PlanetSystem> mPlanetSystems;
         private readonly PlanetSystem mCurrentSystem;
 
-        public MapScene(GameLayer gameLayer, List<PlanetSystem> planetSystems, PlanetSystem currentSystem)
+        public MapScene(GameState gameLayer, List<PlanetSystem> planetSystems, PlanetSystem currentSystem)
             : base(gameLayer, MapFactory.MapScale * 3)
         {
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn, Alpha = 1 };
             mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
 
-            gameLayer.HudLayer.Hide = true;
             mCurrentSystem = currentSystem;
             Camera2D.Position = mCurrentSystem.Position;
             mPlanetSystems = planetSystems;
@@ -39,23 +38,38 @@ namespace StellarLiberation.Game.Layers.Scenes
             }
         }
 
-        public override void UpdateObj(GameTime gameTime, InputState inputState)
+        public override void Update(GameTime gameTime, InputState inputState)
         {
+            inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer()));
+
             Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, 0.1f, 5);
             Camera2DMover.UpdateCameraByMouseDrag(inputState, Camera2D);
             Camera2DMover.MoveByKeys(inputState, Camera2D);
 
             mBackgroundLayer.Update(inputState, mGraphicsDevice.Viewport.Bounds, 1);
-            inputState.DoAction(ActionType.ToggleHyperMap, () => { GameLayer.HudLayer.Hide = false; GameLayer.PopScene(); });
+            inputState.DoAction(ActionType.ToggleHyperMap, LayerManager.PopLayer);
             foreach (var system in mPlanetSystems) system.Update(gameTime, inputState, this);
+            base.Update(gameTime, inputState);
         }
 
-        public override void DrawOnScreenView(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch)
+        public override void DrawOnScreenView(GameState gameState, SpriteBatch spriteBatch)
         {
-            base.DrawOnScreenView(sceneManagerLayer, spriteBatch);
             mBackgroundLayer.Draw();
         }
 
+        public override void DrawOnWorldView(GameState gameState, SpriteBatch spriteBatch) {; }
+
         public override void OnResolutionChanged() { base.OnResolutionChanged(); }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Destroy()
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 }

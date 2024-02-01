@@ -18,7 +18,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceStations
         public ScienceStation(Vector2 position)
             : base(position, GameSpriteRegistries.scienceStation, 1, 20) { }
 
-        public override void Update(GameTime gameTime, InputState inputState, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
             RemoveFromSpatialHashing(scene);
             base.Update(gameTime, inputState, scene);
@@ -26,7 +26,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceStations
             GameObject2DInteractionManager.Manage(inputState, this, scene, null, null, null);
         }
 
-        public override void Draw(Scene scene)
+        public override void Draw(GameLayer scene)
         {
             base.Draw(scene);
             TextureManager.Instance.DrawGameObject(this);

@@ -10,7 +10,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
 {
     public static class GameObject2DInteractionManager
     {
-        public static void Manage(InputState inputState, GameObject2D gameObject2D, Scene scene, Action LeftPressAction, Action RightPressAction, Action hoverAction)
+        public static void Manage(InputState inputState, GameObject2D gameObject2D, GameLayer scene, Action LeftPressAction, Action RightPressAction, Action hoverAction)
         {
             var isHover = gameObject2D.BoundedBox.Contains(scene.WorldMousePosition);
 

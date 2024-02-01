@@ -12,7 +12,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors.Combat
     {
         private bool mReorienting;
 
-        public override void Execute(GameTime gameTime, SpaceShip spaceShip, Scene scene)
+        public override void Execute(GameTime gameTime, SpaceShip spaceShip, GameLayer scene)
         {
             if (spaceShip.WeaponSystem.AimingShip is null) return;
             mDistance = Vector2.Distance(spaceShip.Position, spaceShip.WeaponSystem.AimingShip.Position);

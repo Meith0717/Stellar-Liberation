@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
         /// <summary>
         /// Renders the filtered 2D game objects in a given scene.
         /// </summary>
-        public void RenderFiltredObjs(Scene scene)
+        public void RenderFiltredObjs(GameLayer scene)
         {
             foreach (var obj in mObjects) obj.Draw(scene);
         }

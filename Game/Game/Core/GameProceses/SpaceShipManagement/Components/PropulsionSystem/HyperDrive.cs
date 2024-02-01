@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             TargetPlanetSystem = planetSystem;
         }
 
-        public void Update(GameTime gameTime, SpaceShip operatingShip, Scene scene)
+        public void Update(GameTime gameTime, SpaceShip operatingShip, GameLayer scene)
         {
             mActualEngineCoolDownTime += gameTime.ElapsedGameTime.Milliseconds;
             mActualChargingTime += gameTime.ElapsedGameTime.Milliseconds;
@@ -43,7 +43,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             HyperDriveEffect.Charge(operatingShip.Position, scene.ParticleManager);
             if (CoolDown > mActualChargingTime) return;
             SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.CoolHyperdrive);
-            scene.GameLayer.ChangePlanetSystem(TargetPlanetSystem);
+            scene.GameState.ChangePlanetSystem(TargetPlanetSystem);
             TargetPlanetSystem = null;
             IsActive = false;
         }

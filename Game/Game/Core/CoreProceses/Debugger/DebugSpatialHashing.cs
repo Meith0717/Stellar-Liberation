@@ -11,7 +11,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
 {
     internal static class DebugSpatialHashing
     {
-        public static void ObjectsInBucket(Scene scene)
+        public static void ObjectsInBucket(GameLayer scene)
         {
             var GameObjects = scene.SpatialHashing.GetObjectsInBucket((int)scene.WorldMousePosition.X, (int)scene.WorldMousePosition.Y);
             Color color = Color.Green;
@@ -24,7 +24,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugger
             }
         }
 
-        public static void Buckets(Scene scene, Vector2 mousePosition)
+        public static void Buckets(GameLayer scene, Vector2 mousePosition)
         {
             var screen = scene.Camera2D.Bounds;
             var size = scene.SpatialHashing.CellSize;

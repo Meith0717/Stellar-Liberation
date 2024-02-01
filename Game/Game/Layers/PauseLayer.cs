@@ -18,7 +18,7 @@ namespace StellarLiberation.Game.Layers
     {
         private UiFrame mBackgroundLayer;
 
-        public PauseLayer(GameLayer gameLayer)
+        public PauseLayer()
             : base(false)
         {
             mBackgroundLayer = new() { RelHeight = 1, RelWidth = 1, Color = Color.Transparent };
@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.Layers
                 OnClickAction = () =>
                 {
                     LayerManager.AddLayer(new LoadingLayer(false));
-                    mPersistanceManager.SaveAsync(PersistanceManager.GameSaveFilePath, gameLayer, () => LayerManager.PopLayer(), (ex) => throw ex);
+                    mPersistanceManager.SaveAsync(PersistanceManager.GameSaveFilePath, mGame1.GameState, () => LayerManager.PopLayer(), (ex) => throw ex);
                 },
                 TextAllign = TextAllign.Center
             });

@@ -32,7 +32,7 @@ namespace StellarLiberation.Game.GameObjects.Recources.Items
             ItemID = itemID;
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
             Velocity = MovementController.GetVelocity(Velocity, 0, ExtendetRandom.Random.Next(5, 10) / 1000f);
             GameObject2DMover.Move(gameTime, this, scene);
@@ -54,7 +54,7 @@ namespace StellarLiberation.Game.GameObjects.Recources.Items
             Velocity = ExtendetRandom.Random.Next(10, 25) / 10;
         }
 
-        public override void Draw(Scene scene)
+        public override void Draw(GameLayer scene)
         {
             base.Draw(scene);
             TextureManager.Instance.DrawGameObject(this);

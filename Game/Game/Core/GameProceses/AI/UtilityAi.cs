@@ -38,7 +38,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI
             mBehaviors.Add(behavior);
         }
 
-        public void Update(GameTime gameTime, SpaceShip spaceShip, Scene scene)
+        public void Update(GameTime gameTime, SpaceShip spaceShip, GameLayer scene)
         {
             mCoolDown -= gameTime.ElapsedGameTime.Milliseconds;
             if (mCoolDown > 0) return;
@@ -54,7 +54,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI
             mLastBehavior = mCurrentBehavior;
         }
 
-        private Behavior SelectBehavior(GameTime gameTime, SpaceShip spaceShip, Scene scene)
+        private Behavior SelectBehavior(GameTime gameTime, SpaceShip spaceShip, GameLayer scene)
         {
             DebugMessage = "";
             PriorityQueue<Behavior, double> behaviors = new();

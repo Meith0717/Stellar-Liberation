@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
             mRenderPipeline = new();
         }
 
-        public void Update(GraphicsDevice graphicsDevice, Scene scene)
+        public void Update(GraphicsDevice graphicsDevice, GameLayer scene)
         {
             var transformationMatrix = Transformations.CreateViewTransformationMatrix(Position, Zoom, Rotation, graphicsDevice.Viewport.Width, graphicsDevice.Viewport.Height);
             Bounds = FrustumCuller.GetFrustum(graphicsDevice, transformationMatrix);
@@ -43,7 +43,7 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
 
         public bool Intersects(RectangleF rectangle) => Bounds.Intersects(rectangle);
 
-        public void Draw(Scene scene)
+        public void Draw(GameLayer scene)
         {
             mRenderPipeline.RenderFiltredObjs(scene);
         }

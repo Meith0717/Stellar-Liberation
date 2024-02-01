@@ -1,4 +1,4 @@
-﻿// Turret.cs 
+﻿// PhaserCannon.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             not null => MovementController.GetRotationUpdate(Rotation, Position, (Vector2)targetPosition) * 0.5f,
         };
 
-        public override void Draw(Scene scene)
+        public override void Draw(GameLayer scene)
         {
             base.Draw(scene);
             TextureManager.Instance.DrawGameObject(this);

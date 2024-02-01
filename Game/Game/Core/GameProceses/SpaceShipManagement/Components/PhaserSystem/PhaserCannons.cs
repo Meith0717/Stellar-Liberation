@@ -1,4 +1,4 @@
-﻿// TurretSystem.cs 
+﻿// PhaserCannons.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
@@ -44,7 +44,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
         public void Fire() => mFire = true;
         public void StopFire() => mFire = false;
 
-        public void Update(GameTime gameTime, SpaceShip origin, Scene scene)
+        public void Update(GameTime gameTime, SpaceShip origin, GameLayer scene)
         {
             mFireCoolDown += gameTime.ElapsedGameTime.Milliseconds;
             var hasFired = false;
@@ -76,6 +76,6 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             mFireCoolDown -= mFireCoolDown * fireCoolDownPercentage;
         }
 
-        public void Draw(Scene sceme) { foreach (var weapon in mCannons ) weapon.Draw(sceme); }
+        public void Draw(GameLayer sceme) { foreach (var weapon in mCannons) weapon.Draw(sceme); }
     }
 }

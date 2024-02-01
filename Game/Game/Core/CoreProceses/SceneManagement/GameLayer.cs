@@ -1,10 +1,12 @@
-﻿// Scene.cs 
+﻿// GameLayer.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.Utilitys;
@@ -13,61 +15,59 @@ using StellarLiberation.Game.Layers;
 
 namespace StellarLiberation.Game.Core.CoreProceses.SceneManagement
 {
-    public abstract class Scene
+    public abstract class GameLayer : Layer
     {
-        protected GraphicsDevice mGraphicsDevice;
-
         public Vector2 WorldMousePosition { get; private set; }
         public readonly SpatialHashing<GameObject2D> SpatialHashing;
         public readonly GameObjectManager ParticleManager;
         public readonly Camera2D Camera2D;
-        public readonly GameLayer GameLayer;
+        public readonly GameState GameState;
         private Matrix mViewTransformationMatrix;
+        protected Layer HUDLayer;
 
-        public Scene(GameLayer gameLayer, int spatialHashingCellSize)
+        public GameLayer(GameState gameLayer, int spatialHashingCellSize) : base(false)
         {
             SpatialHashing = new(spatialHashingCellSize);
             ParticleManager = new();
             Camera2D = new();
-            GameLayer = gameLayer;
+            GameState = gameLayer;
         }
 
-        public void Initialize(GraphicsDevice graphicsDevice)
+        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, GameSettings gameSettings)
         {
-            mGraphicsDevice = graphicsDevice;
+            base.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings);
+            HUDLayer?.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings);
         }
 
-        public void Update(GameTime gameTime, InputState inputState)
+        public override void Update(GameTime gameTime, InputState inputState)
         {
-            UpdateObj(gameTime, inputState);
+            HUDLayer?.Update(gameTime, inputState);
             ParticleManager.Update(gameTime, inputState, this);
             Camera2D.Update(mGraphicsDevice, this);
             mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera2D.Position, Camera2D.Zoom, 0, mGraphicsDevice.Viewport.Width, mGraphicsDevice.Viewport.Height);
             WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, inputState.mMousePosition);
         }
 
-        public abstract void UpdateObj(GameTime gameTime, InputState inputState);
-
-        public void Draw(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            DrawOnScreenView(sceneManagerLayer, spriteBatch);
+            DrawOnScreenView(GameState, spriteBatch);
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: mViewTransformationMatrix, samplerState: SamplerState.PointClamp);
-            DrawOnWorldView(sceneManagerLayer, spriteBatch);
+            DrawOnWorldView(GameState, spriteBatch);
             Camera2D.Draw(this);
             ParticleManager.Draw(this);
-            sceneManagerLayer.DebugSystem.DrawOnScene(this);
+            GameState.DebugSystem.DrawOnScene(this);
             spriteBatch.End();
+
+            HUDLayer?.Draw(spriteBatch);
         }
 
-        public virtual void DrawOnScreenView(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch) { }
-        public virtual void DrawOnWorldView(SceneManagerLayer sceneManagerLayer, SpriteBatch spriteBatch) { }
+        public abstract void DrawOnScreenView(GameState gameState, SpriteBatch spriteBatch);
+        public abstract void DrawOnWorldView(GameState gameState, SpriteBatch spriteBatch);
 
-        public virtual void OnResolutionChanged()
-        {
-        }
+        public override void OnResolutionChanged() { }
 
     }
 }

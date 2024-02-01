@@ -23,9 +23,9 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
 
         public SensorSystem(int shortRangeScanDistance) => ShortRangeScanDistance = shortRangeScanDistance;
 
-        public void Scan(Vector2 spaceShipPosition, Fractions fraction, Scene scene)
+        public void Scan(Vector2 spaceShipPosition, Fractions fraction, GameLayer scene)
         {
-            var planetSystem = scene.GameLayer.CurrentSystem;
+            var planetSystem = scene.GameState.CurrentSystem;
             LongRangeScan.Clear();
             LongRangeScan.AddRange(planetSystem.AstronomicalObjsManager.Objects);
 
@@ -39,7 +39,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             AlliesInRannge.AddRange(ShortRangeScan.OfType<SpaceShip>().ToList().Where((spaceShip) => spaceShip.Fraction == fraction));
         }
 
-        public void Draw(SpaceShip spaceShip, Scene scene) => TextureManager.Instance.DrawAdaptiveCircle(spaceShip.Position, ShortRangeScanDistance, new(50, 50, 50, 50), 2.5f, spaceShip.TextureDepth, scene.Camera2D.Zoom);
+        public void Draw(SpaceShip spaceShip, GameLayer scene) => TextureManager.Instance.DrawAdaptiveCircle(spaceShip.Position, ShortRangeScanDistance, new(50, 50, 50, 50), 2.5f, spaceShip.TextureDepth, scene.Camera2D.Zoom);
 
         public SpaceShip GetAimingShip(Vector2 spaceShipPosition)
         {

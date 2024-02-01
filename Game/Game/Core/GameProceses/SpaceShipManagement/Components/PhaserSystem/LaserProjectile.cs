@@ -1,4 +1,4 @@
-﻿// Projectile.cs 
+﻿// LaserProjectile.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
@@ -9,7 +9,6 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.SceneManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PhaserSystem
 {
@@ -33,19 +32,19 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             DisposeTime = 2000;
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
             GameObject2DMover.Move(gameTime, this, scene);
             base.Update(gameTime, inputState, scene);
         }
 
-        public override void Draw(Scene scene)
+        public override void Draw(GameLayer scene)
         {
             base.Draw(scene);
             TextureManager.Instance.DrawGameObject(this);
         }
 
-        public override void HasCollide(Vector2 position, Scene scene)
+        public override void HasCollide(Vector2 position, GameLayer scene)
         {
             Dispose = true;
             RemoveFromSpatialHashing(scene);

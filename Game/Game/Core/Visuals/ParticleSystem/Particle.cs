@@ -22,13 +22,13 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem
             DisposeTime = dispodeTime;
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
             GameObject2DMover.Move(gameTime, this);
             base.Update(gameTime, inputState, scene);
         }
 
-        public override void Draw(Scene scene)
+        public override void Draw(GameLayer scene)
         {
             base.Draw(scene);
             TextureManager.Instance.DrawGameObject(this);

@@ -27,14 +27,14 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             TextureColor = color;
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
             RemoveFromSpatialHashing(scene);
             base.Update(gameTime, inputState, scene);
             AddToSpatialHashing(scene);
         }
 
-        public override void Draw(Scene scene)
+        public override void Draw(GameLayer scene)
         {
             base.Draw(scene);
             TextureManager.Instance.DrawGameObject(this);

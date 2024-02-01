@@ -17,7 +17,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GridSystem
             gridSize = size;
         }
 
-        public void Draw(Scene scene)
+        public void Draw(GameLayer scene)
         {
             var screen = scene.Camera2D.Bounds;
             var depth = (int)TextureManager.MaxLayerDepth;

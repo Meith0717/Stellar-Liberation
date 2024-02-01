@@ -20,7 +20,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         public Asteroid(Vector2 position, string textureID, float textureScale)
             : base(position, textureID, textureScale, 50) { }
 
-        public override void Update(GameTime gameTime, InputState inputState, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
             base.Update(gameTime, inputState, scene);
             Rotation += .01f;
@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             GameObject2DMover.Move(gameTime, this, scene);
         }
 
-        private void CheckForHit(GameTime gameTime, Scene scene)
+        private void CheckForHit(GameTime gameTime, GameLayer scene)
         {
             var projectileInRange = scene.SpatialHashing.GetObjectsInRadius<LaserProjectile>(Position, (int)BoundedBox.Diameter);
             if (!projectileInRange.Any()) return;
@@ -50,7 +50,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             ExplosionEffect.AsteroidHit((Vector2)position, momentum, scene.ParticleManager);
         }
 
-        public override void Draw(Scene scene)
+        public override void Draw(GameLayer scene)
         {
             base.Draw(scene);
             TextureManager.Instance.DrawGameObject(this);

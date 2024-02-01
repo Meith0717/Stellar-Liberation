@@ -16,7 +16,6 @@ using StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGeneration;
 using StellarLiberation.Game.Core.GameProceses.SectorManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
-using StellarLiberation.Game.Layers;
 using System;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
@@ -84,14 +83,13 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
 
         public void ClearInstance() => mInstance = null;
 
-        public override void Update(GameTime gameTime, InputState inputState, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
 
             void LeftPressAction()
             {
-                scene.GameLayer.HudLayer.Hide = false;
-                scene.GameLayer.PopScene();
-                scene.GameLayer.Player.HyperDrive.SetTarget(this);
+                scene.LayerManager.PopLayer();
+                scene.GameState.Player.HyperDrive.SetTarget(this);
             };
 
             mSector.Update(Occupier);
@@ -101,7 +99,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             GameObject2DInteractionManager.Manage(inputState, this, scene, LeftPressAction, null, () => mIsHovered = true); ;
         }
 
-        public override void Draw(Scene scene)
+        public override void Draw(GameLayer scene)
         {
             base.Draw(scene);
             var color = mIsHovered ? Color.DarkGray : TextureColor;

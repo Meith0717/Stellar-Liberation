@@ -25,7 +25,7 @@ namespace StellarLiberation.Game.Layers
 
             mFrame.AddChild(new UiText(FontRegistries.titleFont, "Stellar\nLiberation") { Anchor = Anchor.NW, HSpace = 50, VSpace = 50 });
 
-            mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "New Game") { VSpace = 20, HSpace = 20, RelY = .5f, OnClickAction = () => LayerManager.AddLayer(new GameLayer()) });
+            mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "New Game") { VSpace = 20, HSpace = 20, RelY = .5f, OnClickAction = () => { mGame1.GameState = new(); mGame1.GameState.Initialize(LayerManager); } });
 
             mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Continue")
             {
@@ -35,7 +35,7 @@ namespace StellarLiberation.Game.Layers
                 OnClickAction = () =>
             {
                 LayerManager.AddLayer(new LoadingLayer(false));
-                mPersistanceManager.LoadAsync<GameLayer>(PersistanceManager.GameSaveFilePath, (gL) => { LayerManager.PopLayer(); LayerManager.AddLayer(gL); }, (ex) => { throw ex; });
+                mPersistanceManager.LoadAsync<GameState>(PersistanceManager.GameSaveFilePath, (gameState) => { LayerManager.PopLayer(); mGame1.GameState = gameState; gameState.Initialize(LayerManager); }, (ex) => { throw ex; });
             }
             });
 
@@ -64,11 +64,6 @@ namespace StellarLiberation.Game.Layers
         {
             inputState.DoAction(ActionType.ESC, LayerManager.Exit);
             mFrame.Update(inputState, mGraphicsDevice.Viewport.Bounds, LayerManager.ResolutionManager.UiScaling);
-        }
-
-        private void StartGame()
-        {
-            LayerManager.AddLayer(new GameLayer());
         }
     }
 }

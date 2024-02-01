@@ -109,6 +109,6 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             IsMoving = false;
         }
 
-        public void Draw(DebugSystem debugSystem, SpaceShip spaceShip, Scene scene) => debugSystem.DrawMovingDir(mDirection, spaceShip, scene);
+        public void Draw(DebugSystem debugSystem, SpaceShip spaceShip, GameLayer scene) => debugSystem.DrawMovingDir(mDirection, spaceShip, scene);
     }
 }

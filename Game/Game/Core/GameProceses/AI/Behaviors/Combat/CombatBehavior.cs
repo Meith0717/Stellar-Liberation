@@ -12,7 +12,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors.Combat
     {
         protected float mDistance;
 
-        public override double GetScore(GameTime gameTime, SpaceShip spaceShip, Scene scene)
+        public override double GetScore(GameTime gameTime, SpaceShip spaceShip, GameLayer scene)
         {
             var shielHhullScore = spaceShip.DefenseSystem.ShieldPercentage * 0.4 + spaceShip.DefenseSystem.HullPercentage * 0.6;
 

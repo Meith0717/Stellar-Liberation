@@ -10,7 +10,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors.Combat
 {
     internal class FarCombatBehavior : CombatBehavior
     {
-        public override void Execute(GameTime gameTime, SpaceShip spaceShip, Scene scene)
+        public override void Execute(GameTime gameTime, SpaceShip spaceShip, GameLayer scene)
         {
             spaceShip.SublightDrive.SetVelocity(.1f);
             spaceShip.WeaponSystem.StopFire();

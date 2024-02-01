@@ -15,8 +15,8 @@ using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PropulsionSystem;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PhaserSystem;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PropulsionSystem;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.GameObjects.Recources.Items;
@@ -62,7 +62,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                 mUtilityAi.AddBehavior(beh);
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
             HyperDrive.Update(gameTime, this, scene);
             if (!HyperDrive.IsActive) SublightDrive.Update(gameTime, this);
@@ -85,11 +85,11 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             for (int i = 0; i < ExtendetRandom.Random.Next(0, 5); i++)
             {
                 ExtendetRandom.Random.NextUnitVector(out var vector);
-                scene.GameLayer.CurrentSystem.GameObjectManager.AddObj(ItemFactory.Get(ItemID.Iron, MovingDirection + vector * 5, Position));
+                scene.GameState.CurrentSystem.GameObjectManager.AddObj(ItemFactory.Get(ItemID.Iron, MovingDirection + vector * 5, Position));
             }
         }
 
-        private void HasProjectileHit(GameTime gameTime, Scene scene)
+        private void HasProjectileHit(GameTime gameTime, GameLayer scene)
         {
             var projectileInRange = scene.SpatialHashing.GetObjectsInRadius<LaserProjectile>(Position, (int)BoundedBox.Radius * 10);
             if (!projectileInRange.Any()) return;
@@ -107,21 +107,21 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             SoundEffectSystem.PlaySound(SoundEffectRegistries.torpedoHit, scene.Camera2D, Position);
         }
 
-        public override void Draw(Scene scene)
+        public override void Draw(GameLayer scene)
         {
             base.Draw(scene);
 
-            scene.GameLayer.DebugSystem.DrawSensorRadius(Position, SensorSystem.ShortRangeScanDistance, scene);
+            scene.GameState.DebugSystem.DrawSensorRadius(Position, SensorSystem.ShortRangeScanDistance, scene);
 
             TextureManager.Instance.Draw($"{TextureId}Borders", Position, TextureScale, Rotation, TextureDepth, mAccentColor);
             TextureManager.Instance.Draw($"{TextureId}Frame", Position, TextureScale, Rotation, TextureDepth, Color.Black);
             TextureManager.Instance.Draw($"{TextureId}Hull", Position, TextureScale, Rotation, TextureDepth, new(10, 10, 10));
             TextureManager.Instance.Draw($"{TextureId}Structure", Position, TextureScale, Rotation, TextureDepth, new(20, 30, 40));
 
-            scene.GameLayer.DebugSystem.DrawAiDebug(BoundedBox, mUtilityAi.DebugMessage, scene.Camera2D.Zoom);
+            scene.GameState.DebugSystem.DrawAiDebug(BoundedBox, mUtilityAi.DebugMessage, scene.Camera2D.Zoom);
 
             WeaponSystem.Draw(scene);
-            SublightDrive.Draw(scene.GameLayer.DebugSystem, this, scene);
+            SublightDrive.Draw(scene.GameState.DebugSystem, this, scene);
             DefenseSystem.DrawShields(this);
         }
     }

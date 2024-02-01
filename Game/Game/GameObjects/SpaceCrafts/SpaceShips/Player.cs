@@ -37,10 +37,10 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                     aiBehaviors: new()
                 ))
         {
-            mSpaceShipController = new(); 
+            mSpaceShipController = new();
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, Scene scene)
+        public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
             mSpaceShipController.Controll(this, inputState, scene.WorldMousePosition);
             WeaponSystem.AimShip(SensorSystem.GetAimingShip(Position));

@@ -57,24 +57,24 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             DisposeTime = double.PositiveInfinity;
         }
 
-        public virtual void Update(GameTime gameTime, InputState inputState, Scene scene)
+        public virtual void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
             LiveTime32 += gameTime.ElapsedGameTime.TotalMilliseconds;
             Dispose = LiveTime32 > DisposeTime || Dispose;
             if (LiveTime32 > 4294967296) LiveTime32 = 0;
-            scene.GameLayer.DebugSystem.UpdateObjectCount += 1;
+            scene.GameState.DebugSystem.UpdateObjectCount += 1;
         }
 
-        internal void AddToSpatialHashing(Scene scene) => scene.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
+        internal void AddToSpatialHashing(GameLayer scene) => scene.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
 
-        internal void RemoveFromSpatialHashing(Scene scene) => scene.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
+        internal void RemoveFromSpatialHashing(GameLayer scene) => scene.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
 
-        public virtual void Draw(Scene scene)
+        public virtual void Draw(GameLayer scene)
         {
-            scene.GameLayer.DebugSystem.DrawnObjectCount += 1;
-            scene.GameLayer.DebugSystem.DrawHitbox(BoundedBox, scene);
+            scene.GameState.DebugSystem.DrawnObjectCount += 1;
+            scene.GameState.DebugSystem.DrawHitbox(BoundedBox, scene);
         }
 
-        public virtual void HasCollide(Vector2 position, Scene scene) { }
+        public virtual void HasCollide(Vector2 position, GameLayer scene) { }
     }
 }

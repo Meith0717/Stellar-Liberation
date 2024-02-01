@@ -14,7 +14,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
     {
         private Vector2? mFleePosition;
 
-        public override double GetScore(GameTime gameTime, SpaceShip spaceShip, Scene scene)
+        public override double GetScore(GameTime gameTime, SpaceShip spaceShip, GameLayer scene)
         {
             var shielHhullScore = spaceShip.DefenseSystem.ShieldPercentage * 0.01 + spaceShip.DefenseSystem.HullPercentage * 0.99;
 
@@ -26,7 +26,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
             return score;
         }
 
-        public override void Execute(GameTime gameTime, SpaceShip spaceShip, Scene scene)
+        public override void Execute(GameTime gameTime, SpaceShip spaceShip, GameLayer scene)
         {
             spaceShip.SublightDrive.SetVelocity(1f);
             mFleePosition ??= spaceShip.SensorSystem.LongRangeScan.OfType<Planet>().Last().Position;

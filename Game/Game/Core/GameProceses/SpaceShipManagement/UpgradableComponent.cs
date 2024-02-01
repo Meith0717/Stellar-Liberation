@@ -1,4 +1,4 @@
-﻿// SystemComponent.cs 
+﻿// UpgradableComponent.cs 
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 

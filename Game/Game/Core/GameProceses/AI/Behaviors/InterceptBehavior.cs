@@ -10,7 +10,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 {
     internal class InterceptBehavior : Behavior
     {
-        public override double GetScore(GameTime gameTime, SpaceShip spaceShip, Scene scene)
+        public override double GetScore(GameTime gameTime, SpaceShip spaceShip, GameLayer scene)
         {
             var shielHhullScore = spaceShip.DefenseSystem.ShieldPercentage * 0.2 + spaceShip.DefenseSystem.HullPercentage * 0.8;
 
@@ -20,7 +20,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
             return score;
         }
 
-        public override void Execute(GameTime gameTime, SpaceShip spaceShip, Scene scene)
+        public override void Execute(GameTime gameTime, SpaceShip spaceShip, GameLayer scene)
         {
             spaceShip.SublightDrive.SetVelocity(1);
             spaceShip.SublightDrive.FollowSpaceShip(spaceShip.WeaponSystem.AimingShip);
