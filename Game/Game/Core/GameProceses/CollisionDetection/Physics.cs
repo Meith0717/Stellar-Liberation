@@ -44,16 +44,16 @@ namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection
             objts.Remove(gameObject2D);
             foreach (var obj in objts)
             {
-                if (!TryGetGetMass(obj, out var m2)) return;
-                if (!ContinuousCollisionDetection.HasCollide(gameTime, gameObject2D, obj, out var _)) return;
+                if (!TryGetGetMass(obj, out var m2)) continue;
+                if (!ContinuousCollisionDetection.HasCollide(gameTime, gameObject2D, obj, out var _)) continue;
                 var pushDir = -Vector2.Normalize(obj.Position - gameObject2D.Position);
                 gameObject2D.MovingDirection += pushDir.IsNaN() ? Vector2.UnitX : pushDir;
                 if (TryMomentumConservation(m1, m2, gameObject2D.Velocity, obj.Velocity, out var v))
                 {
                     gameObject2D.Velocity = v;
-                    return;
+                    continue;
                 }
-                if (!ContinuousCollisionDetection.IsInside(gameObject2D, obj)) return;
+                if (!ContinuousCollisionDetection.IsInside(gameObject2D, obj)) continue;
                 gameObject2D.Velocity = PushOutVelocity(gameObject2D.Position, 10, obj.BoundedBox);
             }
         }

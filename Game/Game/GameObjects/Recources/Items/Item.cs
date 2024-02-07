@@ -35,7 +35,7 @@ namespace StellarLiberation.Game.GameObjects.Recources.Items
         public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
             Velocity = MovementController.GetVelocity(Velocity, 0, ExtendetRandom.Random.Next(5, 10) / 1000f);
-            GameObject2DMover.Move(gameTime, this, scene);
+            GameObject2DMover.Move(gameTime, this, scene.SpatialHashing);
             base.Update(gameTime, inputState, scene);
         }
 

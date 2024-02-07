@@ -19,11 +19,11 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
     {
         public readonly Danger Danger;
         public CircleF SystemBounding;
-        public readonly GameObjectManager GameObjects;
-        private readonly GameObjectManager AstronomicalObjects;
+        public readonly GameObject2DManager GameObjects;
+        private readonly GameObject2DManager AstronomicalObjects;
         private readonly Star mStar;
 
-        public PlanetSystemInstance(GameObjectManager gameObjectManager, GameObjectManager astronomicalObjs, Star star)
+        public PlanetSystemInstance(GameObject2DManager gameObjectManager, GameObject2DManager astronomicalObjs, Star star)
         {
             GameObjects = gameObjectManager;
             AstronomicalObjects = astronomicalObjs;
@@ -40,7 +40,6 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 
         public void Draw()
         {
-            TextureManager.Instance.Draw(GameSpriteRegistries.starLightAlpha.Name, Vector2.Zero, mStar.TextureOffset, 300f, 0, 3, mStar.TextureColor);
         }
     }
 }

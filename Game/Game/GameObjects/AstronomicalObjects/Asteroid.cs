@@ -8,7 +8,6 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PhaserSystem;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using System.Linq;
 
@@ -27,7 +26,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             Velocity = MathHelper.Clamp(Velocity - 0.001f, 0, float.PositiveInfinity);
             CheckForHit(gameTime, scene);
             Physics.HandleCollision(gameTime, this, scene.SpatialHashing);
-            GameObject2DMover.Move(gameTime, this, scene);
+            GameObject2DMover.Move(gameTime, this, scene.SpatialHashing);
         }
 
         private void CheckForHit(GameTime gameTime, GameLayer scene)

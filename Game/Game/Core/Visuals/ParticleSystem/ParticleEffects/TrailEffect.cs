@@ -10,7 +10,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
 {
     public class TrailEffect
     {
-        public static void Show(Vector2 position, Vector2 movingDir, float velocity, GameTime gameTime, Color color, GameObjectManager particleManager)
+        public static void Show(Vector2 position, Vector2 movingDir, float velocity, GameTime gameTime, Color color, GameObject2DManager particleManager)
         {
             var size = .1f;
 
@@ -18,7 +18,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
             {
                 var spawnPos = Geometry.GetPointInDirection(position, movingDir, -i);
                 var particle = new Particle(spawnPos, Vector2.Zero, size, 0, color, ExtendetRandom.Random.Next(20, 60));
-                particleManager.AddObj(particle);
+                particleManager.SpawnGameObject2D(particle, false);
             }
         }
     }

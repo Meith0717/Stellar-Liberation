@@ -69,7 +69,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 
             MovingDirection = Geometry.CalculateDirectionVector(Rotation);
             Physics.HandleCollision(gameTime, this, gameLayer.SpatialHashing);
-            GameObject2DMover.Move(gameTime, this, gameLayer);
+            GameObject2DMover.Move(gameTime, this, gameLayer.SpatialHashing);
             base.Update(gameTime, inputState, gameLayer);
 
             HasProjectileHit(gameTime, gameLayer);
@@ -89,7 +89,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             for (int i = 0; i < ExtendetRandom.Random.Next(0, 5); i++)
             {
                 ExtendetRandom.Random.NextUnitVector(out var vector);
-                gameLayer.GameState.CurrentSystem.GameObjectManager.AddObj(ItemFactory.Get(ItemID.Iron, MovingDirection + vector * 5, Position));
+                gameLayer.GameState.CurrentSystem.GameObjects.Add(ItemFactory.Get(ItemID.Iron, MovingDirection + vector * 5, Position));
             }
         }
 

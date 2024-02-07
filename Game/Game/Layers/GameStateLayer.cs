@@ -43,7 +43,7 @@ namespace StellarLiberation.Game.Layers
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, GameSettings gameSettings, ResolutionManager resolutionManager)
         {
             base.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings, resolutionManager);
-            AddLayer(new PlanetSystemLayer(this, 1));
+            AddLayer(new PlanetSystemLayer(this, CurrentSystem.GetAstronomicalObjects(), CurrentSystem.GameObjects,  1));
         }
 
         public void AddLayer(Layer layer)
@@ -60,6 +60,7 @@ namespace StellarLiberation.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            DebugSystem.Update(gameTime, inputState);
             inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this)));
             mLayers.Last.Value.Update(gameTime, inputState);
         }
@@ -68,6 +69,9 @@ namespace StellarLiberation.Game.Layers
         {
             GraphicsDevice.Clear(Color.Black);
             mLayers.Last.Value.Draw(spriteBatch);
+            spriteBatch.Begin();
+            DebugSystem.DrawOnScreen();
+            spriteBatch.End();
         }
 
         public override void Destroy()

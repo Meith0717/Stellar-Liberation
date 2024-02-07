@@ -4,32 +4,38 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.GridSystem;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Visuals.Rendering;
-using StellarLiberation.Game.GameObjects.AstronomicalObjects;
+using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Layers.GameLayers
 {
     internal class PlanetSystemLayer : GameLayer
     {
-        private readonly UiFrame mBackgroundLayer;
+        private readonly GameObject2DManager mUnsavedObjects;
+        private readonly GameObject2DManager mSavedObjects;
 
-        private readonly PlanetSystemInstance mPlanetSystem;
+        private readonly UiFrame mBackgroundLayer;
         private readonly Grid mGrid;
 
-        public PlanetSystemLayer(GameStateLayer gameLayer, float camZoom) : base(gameLayer, 50000)
+        public PlanetSystemLayer(GameStateLayer gameState, List<GameObject2D> unsavedObjects, List<GameObject2D> savedObjects, float camZoom) : base(gameState, 50000)
         {
-            HUDLayer = new HudLayer(this);
+            mUnsavedObjects = new(unsavedObjects, this, SpatialHashing);
+            mSavedObjects = new(savedObjects, this, SpatialHashing);
+
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn };
             mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
 
+            HUDLayer = new HudLayer(this);
+
             Camera2D.Zoom = camZoom;
-            mPlanetSystem = gameLayer.CurrentSystem.GetInstance();
             mGrid = new(10000);
         }
 
@@ -40,24 +46,23 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
             mBackgroundLayer.Update(inputState, GraphicsDevice.Viewport.Bounds, 1);
 
-            mPlanetSystem.UpdateObjects(gameTime, inputState, this);
+            mUnsavedObjects.Update(gameTime, inputState, this);
+            mSavedObjects.Update(gameTime, inputState, this);
+
             GameState.Player.Update(gameTime, inputState, this);
-            GameState.DebugSystem.CheckForSpawn(GameState.CurrentSystem.GetInstance(), this);
+            //GameState.DebugSystem.CheckForSpawn(GameState.CurrentSystem.GetAstronomicalObjects(this, SpatialHashing), this);
 
             Camera2D.Position = GameState.Player.Position;
             Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, .001f, 1);
             base.Update(gameTime, inputState);
         }
 
-        public override void DrawOnScreenView(GameStateLayer gameState, SpriteBatch spriteBatch)
-        {
-            mBackgroundLayer.Draw();
-        }
+        public override void DrawOnScreenView(GameStateLayer gameState, SpriteBatch spriteBatch) => mBackgroundLayer.Draw();
 
         public override void DrawOnWorldView(GameStateLayer gameState, SpriteBatch spriteBatch)
         {
-            mPlanetSystem.Draw();
             mGrid.Draw(this);
+            //TextureManager.Instance.Draw(GameSpriteRegistries.starLightAlpha.Name, Vector2.Zero, mStar.TextureOffset, 300f, 0, 3, mStar.TextureColor);
         }
 
         public override void OnResolutionChanged() { base.OnResolutionChanged(); }

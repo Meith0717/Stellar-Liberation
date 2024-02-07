@@ -43,25 +43,16 @@ namespace StellarLiberation
             // Window properties
             IsMouseVisible = true;
             Window.AllowAltF4 = false;
-            Window.AllowUserResizing = true;
+            Window.AllowUserResizing = false;
         }
 
         protected override void Initialize()
         {
             base.Initialize();
             mLayerManager = new(this, GraphicsDevice, mPersistanceManager, mResolutionManager, mGameSettings);
-
-            switch (mGameSettings.Resolution)
-            {
-                case null:
-                    mResolutionManager.GetNativeResolution();
-                    break;
-                case not null:
-                    mResolutionManager.Apply(mGameSettings.Resolution);
-                    break;
-            }
-            mResolutionManager.ToggleFullscreen();
             mLayerManager.AddLayer(new LoadingLayer());
+            mResolutionManager.Apply(mGameSettings.Resolution);
+            mResolutionManager.ToggleFullscreen(mGameSettings.Resolution);
         }
 
         protected override void LoadContent()
@@ -82,7 +73,7 @@ namespace StellarLiberation
             {
                 InputState inputState = mInputManager.Update();
                 MusicManager.Instance.Update();
-                inputState.DoAction(ActionType.ToggleFullscreen, mResolutionManager.ToggleFullscreen);
+                inputState.DoAction(ActionType.ToggleFullscreen, () => mResolutionManager.ToggleFullscreen(mGameSettings.Resolution));
                 inputState.DoAction(ActionType.IncreaseScaling, () => mResolutionManager.UiScaling += 0.1f);
                 inputState.DoAction(ActionType.DecreaseScaling, () => mResolutionManager.UiScaling -= 0.1f);
                 mLayerManager.Update(gameTime, inputState);

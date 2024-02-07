@@ -7,10 +7,11 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PhaserSystem
+namespace StellarLiberation.Game.GameObjects
 {
     public class LaserProjectile : GameObject2D
     {
@@ -34,7 +35,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
-            GameObject2DMover.Move(gameTime, this, scene);
+            GameObject2DMover.Move(gameTime, this, scene.SpatialHashing);
             base.Update(gameTime, inputState, scene);
         }
 
@@ -47,9 +48,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
         public override void HasCollide(Vector2 position, GameLayer scene)
         {
             Dispose = true;
-            RemoveFromSpatialHashing(scene);
             Position = position;
-            AddToSpatialHashing(scene);
             Velocity = 0;
         }
     }

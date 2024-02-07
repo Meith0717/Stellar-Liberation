@@ -27,7 +27,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
         {
             var planetSystem = scene.GameState.CurrentSystem;
             LongRangeScan.Clear();
-            LongRangeScan.AddRange(planetSystem.AstronomicalObjsManager.Objects);
+            LongRangeScan.AddRange(planetSystem.AstronomicalObjs);
 
             ShortRangeScan.Clear();
             ShortRangeScan.AddRange(scene.SpatialHashing.GetObjectsInRadius<GameObject2D>(spaceShipPosition, ShortRangeScanDistance));

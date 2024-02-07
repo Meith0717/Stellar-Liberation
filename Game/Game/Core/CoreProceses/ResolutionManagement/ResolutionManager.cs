@@ -5,6 +5,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
@@ -12,6 +13,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
     public class ResolutionManager
     {
         public float UiScaling = 1;
+        private bool mIsFullScreen;
         private readonly GraphicsDeviceManager mGraphicsManager;
         public readonly Dictionary<string, Resolution> mResolutions = new();
 
@@ -20,6 +22,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
             mGraphicsManager = graphicsManager;
             var lst = new List<Resolution>()
             {
+                new(800, 480, 0.5f),         // Default
                 new(1024, 768, 4.25f),       // 4:3      XGA
                 new(1280, 720, 0.8333f),     // 16:9     HD
                 new(1280, 800, 1.25f),       // 8:5      WXGA
@@ -36,7 +39,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
                 new(3440, 1440, 0.8478f),    // 21:9     UltraWide QHD
                 new(3840, 2160, 1.5f)        // 16:9     4K UHD
             };
-
 
             foreach (var resolution in lst) mResolutions[resolution.ToString()] = resolution;
         }
@@ -81,8 +83,17 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
             }
         }
 
-        public void ToggleFullscreen()
+        public void ToggleFullscreen(string resolutionId)
         {
+            mIsFullScreen = !mIsFullScreen;
+            if (mIsFullScreen)
+            {
+                Apply(resolutionId);
+            }
+            else
+            {
+                Apply("800x480");
+            }
             mGraphicsManager.ToggleFullScreen();
             mWasResized = true;
         }

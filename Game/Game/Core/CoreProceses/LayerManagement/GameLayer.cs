@@ -20,7 +20,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
     {
         public Vector2 WorldMousePosition { get; private set; }
         public readonly SpatialHashing<GameObject2D> SpatialHashing;
-        public readonly GameObjectManager ParticleManager;
+        public readonly GameObject2DManager ParticleManager;
         public readonly Camera2D Camera2D;
         public readonly Camera2DShaker CameraShaker;
         public readonly GameStateLayer GameState;
@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         public GameLayer(GameStateLayer gameState, int spatialHashingCellSize) : base(false)
         {
             SpatialHashing = new(spatialHashingCellSize);
-            ParticleManager = new();
+            ParticleManager = new(this, SpatialHashing);
             Camera2D = new();
             CameraShaker = new();
             GameState = gameState;

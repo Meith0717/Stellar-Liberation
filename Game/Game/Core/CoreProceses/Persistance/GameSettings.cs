@@ -16,6 +16,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.Persistance
         [JsonProperty] public float MusicVolume = 1f;
 
         // Visual settings
-        [JsonProperty] public string Resolution = null;
+        [JsonProperty] public string Resolution = "800x480";
     }
 }

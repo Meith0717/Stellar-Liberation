@@ -11,7 +11,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
 {
     public class HyperDriveEffect
     {
-        public static void Charge(Vector2 position, GameObjectManager particleManager)
+        public static void Charge(Vector2 position, GameObject2DManager particleManager)
         {
             var size = ExtendetRandom.Random.Next(1, 10) * 0.01f;
 
@@ -22,11 +22,11 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
                 var velocity = ExtendetRandom.Random.Next(50, 100) * .01f;
 
                 var particle = new Particle(spawnPos, direction, size, velocity, new(214, 234, 248), ExtendetRandom.Random.Next(50, 800));
-                particleManager.AddObj(particle);
+                particleManager.SpawnGameObject2D(particle, false);
             }
         }
 
-        public static void Stop(Vector2 position, GameObjectManager particleManager)
+        public static void Stop(Vector2 position, GameObject2DManager particleManager)
         {
             var size = ExtendetRandom.Random.Next(1, 10) * 0.01f;
 
@@ -36,7 +36,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
                 var velocity = ExtendetRandom.Random.Next(50, 100) * .01f;
 
                 var particle = new Particle(position, direction, size, velocity, new(214, 234, 248), ExtendetRandom.Random.Next(50, 800));
-                particleManager.AddObj(particle);
+                particleManager.SpawnGameObject2D(particle, false);
             }
         }
     }

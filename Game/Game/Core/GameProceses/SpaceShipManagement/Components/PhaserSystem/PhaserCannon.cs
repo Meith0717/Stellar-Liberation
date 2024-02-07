@@ -9,6 +9,7 @@ using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PropulsionSystem;
 using StellarLiberation.Game.Core.Utilitys;
+using StellarLiberation.Game.GameObjects;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PhaserSystem
@@ -20,7 +21,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
         public PhaserCannon(Vector2 relativePosition, float textureScale, int textureDepth)
         : base(Vector2.Zero, GameSpriteRegistries.turette, textureScale, textureDepth) => mRelativePosition = relativePosition;
 
-        public void Fire(GameObjectManager objManager, SpaceShip origin, Color particleColor, float shieldDamage, float hullDamage) => objManager.AddObj(new LaserProjectile(this.Position, Rotation, particleColor, shieldDamage, hullDamage, origin.Fraction));
+        public void Fire(GameObject2DManager objManager, SpaceShip origin, Color particleColor, float shieldDamage, float hullDamage) => objManager.SpawnGameObject2D(new LaserProjectile(Position, Rotation, particleColor, shieldDamage, hullDamage, origin.Fraction));
 
         public void GetPosition(Vector2 originPosition, float originRotation) => Position = Transformations.Rotation(originPosition, mRelativePosition, originRotation);
 

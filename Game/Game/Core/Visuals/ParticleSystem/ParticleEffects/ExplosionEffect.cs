@@ -12,7 +12,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
     public static class ExplosionEffect
     {
 
-        public static void ShipDestroyed(Vector2 position, GameObjectManager particleManager)
+        public static void ShipDestroyed(Vector2 position, GameObject2DManager particleManager)
         {
             var size = ExtendetRandom.Random.Next(15, 30) * 0.01f;
 
@@ -22,7 +22,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
 
                 var velocity = ExtendetRandom.Random.Next(10, 200) * .01f;
                 var particle = new Particle(position, dir, size, velocity, new(189, 195, 199), ExtendetRandom.Random.Next(50, 2000));
-                particleManager.AddObj(particle);
+                particleManager.SpawnGameObject2D(particle, false);
             }
 
             for (int i = 0; i < ExtendetRandom.Random.Next(300, 500); i++)
@@ -31,7 +31,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
 
                 var velocity = ExtendetRandom.Random.Next(10, 300) * .01f;
                 var particle = new Particle(position, dir, size, velocity, new(255, 175, 25), ExtendetRandom.Random.Next(50, 2000));
-                particleManager.AddObj(particle);
+                particleManager.SpawnGameObject2D(particle, false);
             }
 
             for (int i = 0; i < ExtendetRandom.Random.Next(100, 300); i++)
@@ -40,11 +40,11 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
 
                 var velocity = ExtendetRandom.Random.Next(100, 500) * .01f;
                 var particle = new Particle(position, dir, size, velocity, new(255, 42, 25), ExtendetRandom.Random.Next(50, 2000));
-                particleManager.AddObj(particle);
+                particleManager.SpawnGameObject2D(particle, false);
             }
         }
 
-        public static void ShipHit(Vector2 position, Vector2 momentum, GameObjectManager particleManager)
+        public static void ShipHit(Vector2 position, Vector2 momentum, GameObject2DManager particleManager)
         {
             var size = ExtendetRandom.Random.Next(1, 10) * 0.01f;
 
@@ -55,11 +55,11 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
 
                 var velocity = ExtendetRandom.Random.Next(50, 100) * .01f;
                 var particle = new Particle(position, direction, size, velocity, new(189, 195, 199), ExtendetRandom.Random.Next(50, 2000));
-                particleManager.AddObj(particle);
+                particleManager.SpawnGameObject2D(particle, false);
             }
         }
 
-        public static void AsteroidHit(Vector2 position, Vector2 momentum, GameObjectManager particleManager)
+        public static void AsteroidHit(Vector2 position, Vector2 momentum, GameObject2DManager particleManager)
         {
             var size = ExtendetRandom.Random.Next(1, 10) * 0.01f;
 
@@ -70,7 +70,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
 
                 var velocity = ExtendetRandom.Random.Next(50, 100) * .01f;
                 var particle = new Particle(position, direction, size, velocity, new(189, 195, 199), ExtendetRandom.Random.Next(50, 2000));
-                particleManager.AddObj(particle);
+                particleManager.SpawnGameObject2D(particle, false);
             }
         }
     }
