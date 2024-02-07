@@ -80,7 +80,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             TrailEffect.Show(Transformations.Rotation(Position, new(-100, 0), Rotation), MovingDirection, Velocity, gameTime, mAccentColor, gameLayer.ParticleManager);
 
             if (DefenseSystem.HullPercentage > 0) return;
-            ExplosionEffect.ShipDestroyed(Position, gameLayer.ParticleManager);
+            ExplosionEffect.ShipDestroyed(Position, MovingDirection, gameLayer.ParticleManager, gameLayer.GameSettings.ParticlesMultiplier);
             Dispose = true;
             var distance = Vector2.Distance(gameLayer.Camera2D.Position, Position);
             var threshold = MathHelper.Clamp(1 - (distance / 7500), 0, 1);

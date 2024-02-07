@@ -20,7 +20,7 @@ public abstract class Layer
     [JsonIgnore] protected Game1 Game1 { get; private set; }
     [JsonIgnore] protected GraphicsDevice GraphicsDevice { get; private set; }
     [JsonIgnore] protected PersistanceManager PersistanceManager { get; private set; }
-    [JsonIgnore] protected GameSettings GameSettings { get; private set; }
+    [JsonIgnore] public GameSettings GameSettings { get; private set; }
     [JsonIgnore] protected ResolutionManager ResolutionManager { get; private set; }
 
     protected Layer(bool updateBelow) { UpdateBelow = updateBelow; }

@@ -17,5 +17,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.Persistance
 
         // Visual settings
         [JsonProperty] public string Resolution = "800x480";
+        [JsonProperty] public float ParticlesMultiplier = 1f;
     }
 }

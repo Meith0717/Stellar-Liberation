@@ -29,16 +29,16 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             GameObject2DMover.Move(gameTime, this, scene.SpatialHashing);
         }
 
-        private void CheckForHit(GameTime gameTime, GameLayer scene)
+        private void CheckForHit(GameTime gameTime, GameLayer gameLayer)
         {
-            var projectileInRange = scene.SpatialHashing.GetObjectsInRadius<LaserProjectile>(Position, (int)BoundedBox.Diameter);
+            var projectileInRange = gameLayer.SpatialHashing.GetObjectsInRadius<LaserProjectile>(Position, (int)BoundedBox.Diameter);
             if (!projectileInRange.Any()) return;
             var gotHit = false;
             Vector2? position = null;
             foreach (var projectile in projectileInRange)
             {
                 if (!ContinuousCollisionDetection.HasCollide(gameTime, projectile, this, out position)) continue;
-                projectile.HasCollide(Position, scene);
+                projectile.HasCollide(Position, gameLayer);
                 gotHit = true;
             }
             if (!gotHit) return;
@@ -46,7 +46,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             if (TextureScale < 0.2f) Dispose = true;
             if (position is null) return;
             var momentum = Vector2.Normalize((Vector2)position - Position);
-            ExplosionEffect.AsteroidHit((Vector2)position, momentum, scene.ParticleManager);
+            ExplosionEffect.AsteroidHit((Vector2)position, momentum, gameLayer.ParticleManager, gameLayer.GameSettings.ParticlesMultiplier);
         }
 
         public override void Draw(GameLayer scene)
