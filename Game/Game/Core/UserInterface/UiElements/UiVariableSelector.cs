@@ -19,9 +19,11 @@ namespace StellarLiberation.Game.Core.UserInterface
         private int mIndex;
         public Action OnClickAction;
 
-        public UiVariableSelector(List<T> variables)
+        public UiVariableSelector(List<T> variables, T initalValue)
         {
             mVariables = variables;
+            mIndex = variables.IndexOf(initalValue);
+            if (mIndex < 0) mIndex = 0;
             mLeftArrow = new(MenueSpriteRegistries.arrowL, "") { Anchor = Anchor.W, OnClickAction = () => { DecrementIndex(); OnClickAction?.Invoke(); } };
             mRightArrow = new(MenueSpriteRegistries.arrowR, "") { Anchor = Anchor.E, OnClickAction = () => { IncrementIndex(); OnClickAction?.Invoke(); } };
             mVariable = new(FontRegistries.textFont, "N.A") { Anchor = Anchor.Center };

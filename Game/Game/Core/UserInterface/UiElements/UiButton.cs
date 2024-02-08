@@ -33,9 +33,10 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Draw()
         {
-            var color = IsDisabled ? Color.DarkGray : IsHover ? new(51, 204, 204) : new(128, 128, 128);
-            TextureManager.Instance.Draw(mSpriteId, Canvas.Position, Canvas.Bounds.Width, Canvas.Bounds.Height, color);
-            TextureManager.Instance.DrawString(FontRegistries.buttonFont, TextPosition, mText, mTextScale, color);
+            var textColor = IsDisabled ? Color.Transparent : IsHover ? new(51, 204, 204) : new(128, 128, 128);
+            var boxColor = IsDisabled ? Color.Transparent : new Color(100, 100, 100, 10);
+            TextureManager.Instance.Draw(mSpriteId, Canvas.Position, Canvas.Bounds.Width, Canvas.Bounds.Height, textColor);
+            TextureManager.Instance.DrawString(FontRegistries.buttonFont, TextPosition, mText, mTextScale, boxColor);
             Canvas.Draw();
         }
 
@@ -68,7 +69,6 @@ namespace StellarLiberation.Game.Core.UserInterface
                     TextPosition = new Vector2(Canvas.Center.X - (stringDim.X * uiScaling / 2), textHeight);
                     break;
             }
-
         }
 
         private void Click()

@@ -13,7 +13,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
     {
         public static void ShipDestroyed(Vector2 position, Vector2 momentum, GameObject2DManager particleManager, float multiplier)
         {
-            var size = ExtendetRandom.Random.Next(15, 30) * 0.01f;
+            var size = ExtendetRandom.Random.Next(15, 30) * 0.007f;
 
             momentum = momentum * (float)ExtendetRandom.Random.NextDouble();
 
@@ -22,7 +22,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
                 ExtendetRandom.Random.NextUnitVector(out var dir);
 
                 var velocity = ExtendetRandom.Random.Next(10, 200) * .01f;
-                var particle = new Particle(position, dir + momentum, size, velocity, new(189, 195, 199), ExtendetRandom.Random.Next(50, 2000));
+                var particle = new Particle(position, dir + momentum, size, velocity, new(189, 195, 199), ExtendetRandom.Random.Next(50, 1000));
                 particleManager.SpawnGameObject2D(particle, false);
             }
 
@@ -31,7 +31,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
                 ExtendetRandom.Random.NextUnitVector(out var dir);
 
                 var velocity = ExtendetRandom.Random.Next(10, 300) * .01f;
-                var particle = new Particle(position, dir + momentum, size, velocity, new(255, 175, 25), ExtendetRandom.Random.Next(50, 2000));
+                var particle = new Particle(position, dir + momentum, size, velocity, new(255, 175, 25), ExtendetRandom.Random.Next(150, 2000));
                 particleManager.SpawnGameObject2D(particle, false);
             }
 
@@ -40,7 +40,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
                 ExtendetRandom.Random.NextUnitVector(out var dir);
 
                 var velocity = ExtendetRandom.Random.Next(100, 500) * .01f;
-                var particle = new Particle(position, dir + momentum, size, velocity, new(255, 42, 25), ExtendetRandom.Random.Next(50, 2000));
+                var particle = new Particle(position, dir + momentum, size, velocity, new(255, 42, 25), ExtendetRandom.Random.Next(250, 3000));
                 particleManager.SpawnGameObject2D(particle, false);
             }
         }

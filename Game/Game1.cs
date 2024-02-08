@@ -20,7 +20,7 @@ namespace StellarLiberation
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         private readonly ResolutionManager mResolutionManager;
-        private readonly GraphicsDeviceManager mGraphicsManager;
+        public readonly GraphicsDeviceManager GraphicsManager;
         private readonly InputManager mInputManager;
         private readonly PersistanceManager mPersistanceManager;
         private GameSettings mGameSettings;
@@ -31,9 +31,9 @@ namespace StellarLiberation
         public Game1()
         {
             Content.RootDirectory = "Content";
-            mGraphicsManager = new(this);
+            GraphicsManager = new(this);
             mInputManager = new();
-            mResolutionManager = new(mGraphicsManager);
+            mResolutionManager = new(GraphicsManager);
             mPersistanceManager = new();
 
             Activated += ActivateMyGame;
@@ -53,6 +53,12 @@ namespace StellarLiberation
             mLayerManager.AddLayer(new LoadingLayer());
             mResolutionManager.Apply(mGameSettings.Resolution);
             mResolutionManager.ToggleFullscreen(mGameSettings.Resolution);
+
+            IsFixedTimeStep = false;
+            GraphicsManager.SynchronizeWithVerticalRetrace = mGameSettings.Vsync;
+            GraphicsManager.PreferMultiSampling = true;
+            TimeSpan.FromTicks(TimeSpan.TicksPerSecond / mGameSettings.RefreshRate);
+            GraphicsManager.ApplyChanges();
         }
 
         protected override void LoadContent()

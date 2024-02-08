@@ -60,6 +60,7 @@ namespace StellarLiberation.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            if (Player.DefenseSystem.HullPercentage == 0) LayerManager.PopLayer();
             DebugSystem.Update(gameTime, inputState);
             inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this)));
             mLayers.Last.Value.Update(gameTime, inputState);
@@ -67,6 +68,7 @@ namespace StellarLiberation.Game.Layers
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            DebugSystem.UpdateFrameCounting();
             GraphicsDevice.Clear(Color.Black);
             mLayers.Last.Value.Draw(spriteBatch);
             spriteBatch.Begin();
