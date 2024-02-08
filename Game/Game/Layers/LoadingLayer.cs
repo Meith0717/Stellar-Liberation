@@ -40,7 +40,7 @@ namespace StellarLiberation.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mFrame.Update(inputState, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
+            mFrame.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
         }
     }
 }

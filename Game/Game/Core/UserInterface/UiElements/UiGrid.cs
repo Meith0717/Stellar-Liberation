@@ -4,6 +4,7 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using System;
 using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.UserInterface.UiElements
@@ -17,10 +18,10 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
 
             public override void Draw() { UiElement?.Draw(); Canvas.Draw(); }
 
-            public override void Update(InputState inputState, Rectangle root, float uiScaling)
+            public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
             {
                 Canvas.UpdateFrame(root, uiScaling);
-                UiElement?.Update(inputState, Bounds, uiScaling);
+                UiElement?.Update(inputState, gameTime, Bounds, uiScaling);
             }
         }
 
@@ -42,6 +43,29 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
                 }
             }
         }
+        public UiGrid(List<float> row, List<float> columns)
+        {
+            float cumulativeX = 0;
+            int x = 0;
+            foreach (var r in row)
+            {
+                int y = 0;
+                float cumulativeY = 0;
+                foreach (var c in columns)
+                {
+                    var relX = cumulativeX;
+                    var relY = cumulativeY;
+                    var width = r;
+                    var height = c;
+                    var grid = new UiGridElement { RelX = relX, RelY = relY, RelWidth = width, RelHeight = height };
+                    mGrid.Add(new(x, y), grid);
+                    cumulativeY += c;
+                    y++;
+                }
+                cumulativeX += r;
+                x++;
+            }
+        }
 
         public bool Set(int i, int j, UiElement uiElement)
         {
@@ -50,10 +74,10 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             return true;
         }
 
-        public override void Update(InputState inputState, Rectangle root, float uiScaling)
+        public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
         {
             Canvas.UpdateFrame(root, uiScaling);
-            foreach (var elem in mGrid.Values) elem.Update(inputState, Canvas.Bounds, uiScaling);
+            foreach (var elem in mGrid.Values) elem.Update(inputState, gameTime, Canvas.Bounds, uiScaling);
         }
 
         public override void Draw()

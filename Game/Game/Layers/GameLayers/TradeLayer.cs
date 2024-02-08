@@ -54,7 +54,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
             var bottomGrid = new UiGrid(1, 2) { Anchor = Anchor.Center, FillScale = FillScale.Both };
             centerGrid.Set(0, 4, bottomGrid);
 
-            bottomGrid.Set(0, 1, new UiButton(MenueSpriteRegistries.button, "Trade") { Anchor = Anchor.Center, TextAllign = TextAllign.Center, OnClickAction = () => Trade(wallet) });
+            bottomGrid.Set(0, 1, new UiButton(MenueSpriteRegistries.button, "Trade") { Anchor = Anchor.Center, OnClickAction = () => Trade(wallet) });
             bottomGrid.Set(0, 0, mUiBalance = new UiText(FontRegistries.textFont, "Balance: n.a") { Anchor = Anchor.Center });
 
             // Player Inventory
@@ -147,7 +147,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
             inputState.DoAction(ActionType.ESC, LayerManager.PopLayer);
             inputState.DoAction(ActionType.Trading, LayerManager.PopLayer);
-            mFrame.Update(inputState, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
+            mFrame.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
         }
     }
 }

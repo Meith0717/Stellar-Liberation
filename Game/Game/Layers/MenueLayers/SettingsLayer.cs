@@ -14,6 +14,9 @@ using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace StellarLiberation.Game.Layers.MenueLayers
 {
@@ -26,36 +29,29 @@ namespace StellarLiberation.Game.Layers.MenueLayers
         private UiSlider mSfxSlider;
         private UiVariableSelector<string> mResolutionSelector;
         private UiVariableSelector<float> mParticleMultiplier;
-        private UiVariableSelector<bool> mLimitRefreshRate;
-        private UiVariableSelector<long> mRefreshRate;
+        private UiVariableSelector<string> mRefreshRate;
         private UiVariableSelector<bool> mVsync;
 
-        public SettingsLayer(bool showBgImage) : base(false)
+        public SettingsLayer() : base(false)
         {
             mMainFrame = new() { FillScale = FillScale.Both, Color = Color.Transparent };
-            if (showBgImage) mMainFrame.Alpha = .8f;
-            if (showBgImage) mMainFrame.AddChild(new UiSprite(MenueSpriteRegistries.menueBackground) { FillScale = FillScale.FillIn, Anchor = Anchor.Center });
 
-
-            var settingsFrame = new UiFrame() { Width = 1800, Height = 900, Anchor = Anchor.Center };
-            mMainFrame.AddChild(settingsFrame);
-
-            mSettingsGrid = new UiGrid(4, 15) { RelHeight = .9f, RelWidth = .9f, Anchor = Anchor.Center };
-            settingsFrame.AddChild(mSettingsGrid);
+            UiFrame settingsFrame; mMainFrame.AddChild(settingsFrame = new() { Width = 1000, Height = 900, Anchor = Anchor.Center });
+            settingsFrame.AddChild(new UiText(FontRegistries.subTitleFont, "Settings") { Anchor = Anchor.NW, HSpace = 20, VSpace = 20 });
+            settingsFrame.AddChild(mSettingsGrid = new UiGrid(new List<float>() { 0.3f, 0.7f }, Enumerable.Repeat(1f/15, 15).ToList()) { RelHeight = .9f, RelWidth = .9f, Anchor = Anchor.S, VSpace = 10 });
 
             mSettingsGrid.Set(0, 0, new UiText(FontRegistries.subTitleFont, "Audio") { Anchor = Anchor.Center });
             mSettingsGrid.Set(0, 1, new UiText(FontRegistries.textFont, "Master") { Anchor = Anchor.E, HSpace = 20 });
             mSettingsGrid.Set(0, 2, new UiText(FontRegistries.textFont, "Music") { Anchor = Anchor.E, HSpace = 20 });
             mSettingsGrid.Set(0, 3, new UiText(FontRegistries.textFont, "SFX") { Anchor = Anchor.E, HSpace = 20 });
-            mSettingsGrid.Set(2, 0, new UiText(FontRegistries.subTitleFont, "Video") { Anchor = Anchor.Center });
-            mSettingsGrid.Set(2, 1, new UiText(FontRegistries.textFont, "Resolution") { Anchor = Anchor.E, HSpace = 20 });
-            mSettingsGrid.Set(2, 2, new UiText(FontRegistries.textFont, "Limit Refresh Rate") { Anchor = Anchor.E, HSpace = 20 });
-            mSettingsGrid.Set(2, 3, new UiText(FontRegistries.textFont, "Refresh Rate") { Anchor = Anchor.E, HSpace = 20 });
-            mSettingsGrid.Set(2, 4, new UiText(FontRegistries.textFont, "Vsync") { Anchor = Anchor.E, HSpace = 20 });
-            mSettingsGrid.Set(2, 6, new UiText(FontRegistries.subTitleFont, "Graphics") { Anchor = Anchor.Center });
-            mSettingsGrid.Set(2, 7, new UiText(FontRegistries.textFont, "Particle Multiplier") { Anchor = Anchor.E, HSpace = 20 });
+            mSettingsGrid.Set(0, 4, new UiText(FontRegistries.subTitleFont, "Video") { Anchor = Anchor.Center });
+            mSettingsGrid.Set(0, 5, new UiText(FontRegistries.textFont, "Resolution") { Anchor = Anchor.E, HSpace = 20 });
+            mSettingsGrid.Set(0, 6, new UiText(FontRegistries.textFont, "Refresh Rate") { Anchor = Anchor.E, HSpace = 20 });
+            mSettingsGrid.Set(0, 7, new UiText(FontRegistries.textFont, "Vsync") { Anchor = Anchor.E, HSpace = 20 });
+            mSettingsGrid.Set(0, 9, new UiText(FontRegistries.subTitleFont, "Graphics") { Anchor = Anchor.Center });
+            mSettingsGrid.Set(0, 10, new UiText(FontRegistries.textFont, "Particle Multiplier") { Anchor = Anchor.E, HSpace = 20 });
 
-            mMainFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Back & Save") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = Exit });
+            settingsFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Back & Save") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = Exit });
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, GameSettings gameSettings, ResolutionManager resolutionManager)
@@ -67,19 +63,17 @@ namespace StellarLiberation.Game.Layers.MenueLayers
             mSfxSlider = new(GameSettings.SoundEffectsVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
             mResolutionSelector = new UiVariableSelector<string>(resolutionManager.Resolutions, GameSettings.Resolution) { RelWidth = 1, Anchor = Anchor.CenterH };
             mParticleMultiplier = new UiVariableSelector<float>(new() { 0, 0.2f, 0.5f, 1f, 2f }, GameSettings.ParticlesMultiplier) { RelWidth = 1, Anchor = Anchor.CenterH };
-            mLimitRefreshRate = new(new() { true, false}, false) { RelWidth = 1, Anchor = Anchor.CenterH };
-            mRefreshRate = new UiVariableSelector<long>(new() { 30, 60, 120 }, GameSettings.RefreshRate) { RelWidth = 1, Anchor = Anchor.CenterH};
+            mRefreshRate = new UiVariableSelector<string>(new() { "30", "60", "75", "120", "Unlimit" }, GameSettings.RefreshRate.ToString()) { RelWidth = 1, Anchor = Anchor.CenterH};
             mVsync = new UiVariableSelector<bool>(new() { true, false}, GameSettings.Vsync) { RelWidth = 1, Anchor = Anchor.CenterH };
 
             mSettingsGrid.Set(1, 1, mMasterSlider);
             mSettingsGrid.Set(1, 2, mMusicSlider);
             mSettingsGrid.Set(1, 3, mSfxSlider);
-            mSettingsGrid.Set(3, 1, mResolutionSelector);
-            mSettingsGrid.Set(3, 2, mLimitRefreshRate);
-            mSettingsGrid.Set(3, 3, mRefreshRate);
-            mSettingsGrid.Set(3, 4, mVsync);
-            mSettingsGrid.Set(3, 5, new UiButton(MenueSpriteRegistries.button, "Apply Video") { Anchor = Anchor.Center, TextAllign = TextAllign.Center, OnClickAction = ApplyVideo});
-            mSettingsGrid.Set(3, 6, mParticleMultiplier);
+            mSettingsGrid.Set(1, 5, mResolutionSelector);
+            mSettingsGrid.Set(1, 6, mRefreshRate);
+            mSettingsGrid.Set(1, 7, mVsync);
+            mSettingsGrid.Set(1, 8, new UiButton(MenueSpriteRegistries.button, "Apply Video") { Anchor = Anchor.Center, OnClickAction = ApplyVideo});
+            mSettingsGrid.Set(1, 10, mParticleMultiplier);
         }
 
         public override void Destroy() { }
@@ -96,7 +90,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             inputState.DoAction(ActionType.ESC, Exit);
-            mMainFrame.Update(inputState, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
+            mMainFrame.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
 
             GameSettings.MasterVolume = mMasterSlider.Value;
             GameSettings.MusicVolume = mMusicSlider.Value;
@@ -110,13 +104,12 @@ namespace StellarLiberation.Game.Layers.MenueLayers
         private void ApplyVideo()
         {
             GameSettings.Resolution = mResolutionSelector.Value;
-            GameSettings.LimitRefreshRate = mLimitRefreshRate.Value;
             GameSettings.RefreshRate = mRefreshRate.Value;
             GameSettings.Vsync = mVsync.Value;
 
             ResolutionManager.Apply(GameSettings.Resolution);
-            Game1.IsFixedTimeStep = GameSettings.LimitRefreshRate;
-            Game1.TargetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / GameSettings.RefreshRate);
+            if (Game1.IsFixedTimeStep = long.TryParse(GameSettings.RefreshRate, out long rate))
+                Game1.TargetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / rate);
             Game1.GraphicsManager.SynchronizeWithVerticalRetrace = GameSettings.Vsync;
             Game1.GraphicsManager.ApplyChanges();
         }

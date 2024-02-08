@@ -20,11 +20,12 @@ namespace StellarLiberation.Game.Core.UserInterface
         public UiText(string fontID, string text)
         {
             Color = new(192, 192, 192);
-            Text = text == "∞" ? "Infinity" : text;
+            Text = text;
             FontID = fontID;
         }
 
-        private Vector2 GetTextDimension(string fontID, string text) => TextureManager.Instance.GetFont(fontID).MeasureString(text);
+        private static Vector2 GetTextDimension(string fontID, string text) 
+            => TextureManager.Instance.GetFont(fontID).MeasureString(text);
 
         public override void Draw()
         {
@@ -32,7 +33,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             Canvas.Draw();
         }
 
-        public override void Update(InputState inputState, Rectangle root, float uiScaling)
+        public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
         {
             mUiScaling = uiScaling;
             mTextDim = GetTextDimension(FontID, Text);

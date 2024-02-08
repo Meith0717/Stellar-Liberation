@@ -22,12 +22,12 @@ namespace StellarLiberation.Game.Core.UserInterface
             mText = new(FontRegistries.buttonFont, text) { Anchor = Anchor.W };
         }
 
-        public override void Update(InputState inputState, Rectangle root, float uiScaling)
+        public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
         {
             Canvas.UpdateFrame(root, uiScaling);
             mUiElement.Height = Canvas.Bounds.Height;
-            mUiElement.Update(inputState, Canvas.Bounds, uiScaling);
-            mText.Update(inputState, Canvas.Bounds, uiScaling);
+            mUiElement.Update(inputState, gameTime, Canvas.Bounds, uiScaling);
+            mText.Update(inputState, gameTime, Canvas.Bounds, uiScaling);
         }
 
         public override void Draw()

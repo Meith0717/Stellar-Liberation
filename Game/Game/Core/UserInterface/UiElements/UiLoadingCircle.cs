@@ -17,11 +17,11 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
         {
             mCircle = new(MenueSpriteRegistries.loading) { FillScale = FillScale.FillIn, Anchor = Anchor.Center };
         }
-        public override void Update(InputState inputState, Rectangle root, float uiScaling)
+        public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
         {
             Canvas.UpdateFrame(root, uiScaling);
             mCircle.Rotation += .1f;
-            mCircle.Update(inputState, Canvas.Bounds, uiScaling);
+            mCircle.Update(inputState, gameTime, Canvas.Bounds, uiScaling);
         }
 
         public override void Draw()

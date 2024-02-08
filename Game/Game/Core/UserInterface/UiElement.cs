@@ -12,7 +12,7 @@ namespace StellarLiberation.Game.Core.UserInterface
         protected Canvas Canvas;
 
         public UiElement() => Canvas = new Canvas();
-        public abstract void Update(InputState inputState, Rectangle root, float uiScaling);
+        public abstract void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling);
         public abstract void Draw();
         public Rectangle Bounds => Canvas.Bounds;
 

@@ -64,13 +64,13 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mUiLayer.Update(inputState, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
+            mUiLayer.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
             mShieldBar.Percentage = mScene.GameState.Player.DefenseSystem.ShieldPercentage;
             mHullBar.Percentage = mScene.GameState.Player.DefenseSystem.HullPercentage;
             mPropulsiondBar.Percentage = (double)(mScene.GameState.Player.Velocity / mScene.GameState.Player.SublightDrive.MaxVelocity);
             mCompass.Update(mScene.GameState.Player.Position, GraphicsDevice, mScene.GameState.Player.SensorSystem.LongRangeScan);
             foreach (var uiElement in mPopups)
-                uiElement.Update(inputState, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
+                uiElement.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
             mPopups.Clear();
         }
     }

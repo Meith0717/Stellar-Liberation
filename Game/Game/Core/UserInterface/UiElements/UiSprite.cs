@@ -9,11 +9,12 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 
 namespace StellarLiberation.Game.Core.UserInterface
 {
-    internal class UiSprite : UiElement
+    public class UiSprite : UiElement
     {
         protected string mSpriteId;
         public float Rotation;
         public float Scale;
+        public Color Color = Color.White;
 
         public UiSprite(string SpriteId, float scale = 1)
         {
@@ -23,7 +24,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Draw()
         {
-            TextureManager.Instance.Draw(mSpriteId, Canvas.Position, Canvas.Bounds.Width, Canvas.Bounds.Height);
+            TextureManager.Instance.Draw(mSpriteId, Canvas.Position, Canvas.Bounds.Width, Canvas.Bounds.Height, Color);
             Canvas.Draw();
         }
 
@@ -33,7 +34,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             Canvas.Draw();
         }
 
-        public override void Update(InputState inputState, Rectangle root, float uiScaling)
+        public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
         {
             var texture = TextureManager.Instance.GetTexture(mSpriteId);
             Width = (int)(texture.Width * Scale);

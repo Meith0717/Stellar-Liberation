@@ -17,8 +17,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Persistance
 
         // Video settings
         [JsonProperty] public string Resolution = "800x480";
-        [JsonProperty] public bool LimitRefreshRate = true;
-        [JsonProperty] public long RefreshRate = 60;
+        [JsonProperty] public string RefreshRate = "60";
         [JsonProperty] public bool Vsync = false;
 
         // Graphics settings

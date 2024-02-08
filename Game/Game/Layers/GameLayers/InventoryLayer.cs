@@ -44,7 +44,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
         {
             inputState.DoAction(ActionType.ESC, LayerManager.PopLayer);
             inputState.DoAction(ActionType.Inventar, LayerManager.PopLayer);
-            mFrame.Update(inputState, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
+            mFrame.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
         }
     }
 }

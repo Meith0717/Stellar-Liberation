@@ -16,7 +16,7 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
     public class UiFrame : UiElement
     {
         public Color Color = new(30, 34, 34);
-        public double Alpha = .92f;
+        public double Alpha = .95f;
         private float mBorder;
         private readonly LinkedList<UiElement> mChildren = new();
 
@@ -64,10 +64,10 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
             Canvas.Draw();
         }
 
-        public override void Update(InputState inputState, Rectangle root, float uiScaling)
+        public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
         {
             Canvas.UpdateFrame(root, uiScaling);
-            foreach (var child in mChildren) child.Update(inputState, Canvas.Bounds, uiScaling);
+            foreach (var child in mChildren) child.Update(inputState, gameTime, Canvas.Bounds, uiScaling);
         }
 
     }

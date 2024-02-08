@@ -57,7 +57,8 @@ namespace StellarLiberation
             IsFixedTimeStep = false;
             GraphicsManager.SynchronizeWithVerticalRetrace = mGameSettings.Vsync;
             GraphicsManager.PreferMultiSampling = true;
-            TimeSpan.FromTicks(TimeSpan.TicksPerSecond / mGameSettings.RefreshRate);
+            if (IsFixedTimeStep = long.TryParse(mGameSettings.RefreshRate, out long rate))
+                TargetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / rate);
             GraphicsManager.ApplyChanges();
         }
 

@@ -32,9 +32,9 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             AddChild(new UiText(FontRegistries.textFont, itemStack.Amount.ToString()) { Anchor = Anchor.SE, HSpace = 5, VSpace = 5 });
         }
 
-        public override void Update(InputState inputState, Rectangle root, float uiScaling)
+        public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
         {
-            base.Update(inputState, root, uiScaling);
+            base.Update(inputState, gameTime, root, uiScaling);
             Color = new(5, 5, 5);
             if (!AnyChild()) return;
             if (!Canvas.Contains(inputState.mMousePosition)) return;

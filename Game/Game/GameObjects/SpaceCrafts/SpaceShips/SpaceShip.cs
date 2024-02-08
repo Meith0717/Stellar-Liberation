@@ -77,7 +77,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             SensorSystem.Scan(Position, Fraction, gameLayer);
             WeaponSystem.Update(gameTime, this, gameLayer);
             mUtilityAi.Update(gameTime, this, gameLayer);
-            TrailEffect.Show(Transformations.Rotation(Position, new(-100, 0), Rotation), MovingDirection, Velocity, gameTime, mAccentColor, gameLayer.ParticleManager);
+            TrailEffect.Show(Transformations.Rotation(Position, new(-100, 0), Rotation), MovingDirection, Velocity, gameTime, mAccentColor, gameLayer.ParticleManager, gameLayer.GameSettings.ParticlesMultiplier);
 
             if (DefenseSystem.HullPercentage > 0) return;
             ExplosionEffect.ShipDestroyed(Position, MovingDirection, gameLayer.ParticleManager, gameLayer.GameSettings.ParticlesMultiplier);

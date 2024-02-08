@@ -44,7 +44,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
             inputState.DoAction(ActionType.ToggleHyperMap, () => GameState.AddLayer(new MapLayer(GameState)));
             inputState.DoAction(ActionType.Inventar, () => LayerManager.AddLayer(new InventoryLayer(GameState.Inventory, GameState.Wallet)));
 
-            mBackgroundLayer.Update(inputState, GraphicsDevice.Viewport.Bounds, 1);
+            mBackgroundLayer.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, 1);
 
             mUnsavedObjects.Update(gameTime, inputState, this);
             mSavedObjects.Update(gameTime, inputState, this);

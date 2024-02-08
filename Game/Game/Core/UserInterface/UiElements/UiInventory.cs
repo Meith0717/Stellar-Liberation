@@ -33,7 +33,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             mGrid.Draw();
         }
 
-        public override void Update(InputState inputState, Rectangle root, float uiScaling)
+        public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
         {
             var i = 0;
             for (int y = 0; y < J; y++)
@@ -50,7 +50,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             }
 
             Canvas.UpdateFrame(root, uiScaling);
-            mGrid.Update(inputState, Bounds, uiScaling);
+            mGrid.Update(inputState, gameTime, Bounds, uiScaling);
         }
     }
 }
