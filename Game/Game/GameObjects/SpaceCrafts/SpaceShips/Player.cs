@@ -3,7 +3,6 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
@@ -17,7 +16,6 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
     public class Player : SpaceShip
     {
         private readonly SpaceShipController mSpaceShipController;
-        private readonly TractorBeam mBeam;
 
         public Player() : base(Vector2.Zero, new(
                     textureID: GameSpriteRegistries.destroyer,
@@ -40,7 +38,6 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                 ))
         {
             mSpaceShipController = new();
-            mBeam = new(5000);
         }
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
@@ -50,14 +47,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             WeaponSystem.AimShip(SensorSystem.GetAimingShip(Position));
             WeaponSystem.ControlByInput(inputState, scene.WorldMousePosition);
             scene.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
-            mBeam.Pull(gameTime, this, scene);
             base.Update(gameTime, inputState, scene);
-        }
-
-        public override void Draw(GameLayer scene)
-        {
-            base.Draw(scene);
-            mBeam.Draw(this);
         }
     }
 }

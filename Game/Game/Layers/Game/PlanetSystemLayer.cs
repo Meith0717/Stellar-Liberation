@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
@@ -14,7 +13,7 @@ using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
-using System.Collections.Generic;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 
 namespace StellarLiberation.Game.Layers.GameLayers
 {
@@ -27,11 +26,12 @@ namespace StellarLiberation.Game.Layers.GameLayers
         private readonly UiFrame mBackgroundLayer;
         private readonly Grid mGrid;
 
-        public PlanetSystemLayer(GameStateLayer gameState, PlanetSystem planetSystem, float camZoom) : base(gameState, 50000)
+        public PlanetSystemLayer(GameLayerManager gameState, PlanetSystem planetSystem, float camZoom) : base(gameState, 50000)
         {
             mPlanetSystem = planetSystem;
             mUnsavedObjects = new(mPlanetSystem.GameObjects, this, SpatialHashing);
             mSavedObjects = new(mPlanetSystem.GetAstronomicalObjects(), this, SpatialHashing);
+            gameState.Player.PlanetSystem = planetSystem;
 
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn };
             mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
@@ -45,7 +45,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             inputState.DoAction(ActionType.ToggleHyperMap, () => GameState.AddLayer(new MapLayer(GameState)));
-            inputState.DoAction(ActionType.Inventar, () => LayerManager.AddLayer(new InventoryLayer(GameState.Inventory, GameState.Wallet)));
+            inputState.DoAction(ActionType.Inventar, () => LayerManager.AddLayer(new InventoryLayer(GameState.Player.Inventory, GameState.Wallet)));
 
             mBackgroundLayer.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, 1);
 
@@ -53,7 +53,6 @@ namespace StellarLiberation.Game.Layers.GameLayers
             mSavedObjects.Update(gameTime, inputState, this);
 
             GameState.Player.Update(gameTime, inputState, this);
-            //GameState.DebugSystem.CheckForSpawn(GameState.CurrentSystem.GetAstronomicalObjects(this, SpatialHashing), this);
 
             Camera2D.Position = GameState.Player.Position;
             Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, .001f, 1);

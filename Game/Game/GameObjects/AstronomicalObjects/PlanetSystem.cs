@@ -45,12 +45,10 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             for (var i = 0; i < 10; i++) Name += rand.Next(0, 9);
 
             mSector = new(position - (new Vector2(MapFactory.MapScale) / 2), MapFactory.MapScale, MapFactory.MapScale);
+            
+            for (int i = 0; i < 50; i++) SpaceShipFactory.Spawn(this, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000)), ShipID.Bomber, Fractions.Enemys, out var _);
+            for (int i = 0; i < 50; i++) SpaceShipFactory.Spawn(this, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000)), ShipID.Bomber, Fractions.Allied, out var _);
 
-            for (int i = 0; i < 100; i++) GameObjects.Add(SpaceShipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000)), ShipID.Bomber, Fractions.Enemys));
-            //for (int i = 0; i < 5; i++) GameObjectManager.AddObj(SpaceShipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000)), ShipID.Cargo, Fractions.Enemys));
-            //for (int i = 0; i < 5; i++) GameObjectManager.AddObj(SpaceShipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000)), ShipID.Cuiser, Fractions.Enemys));
-            //for (int i = 0; i < 5; i++) GameObjectManager.AddObj(SpaceShipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000)), ShipID.Destroyer, Fractions.Enemys));
-            //for (int i = 0; i < 5; i++) GameObjectManager.AddObj(SpaceShipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000)), ShipID.Corvette, Fractions.Enemys));
         }
 
         public List<GameObject2D> GetAstronomicalObjects()

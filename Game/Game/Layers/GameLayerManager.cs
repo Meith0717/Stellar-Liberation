@@ -23,27 +23,26 @@ using System.Linq;
 namespace StellarLiberation.Game.Layers
 {
     [Serializable]
-    public class GameStateLayer : Layer
+    public class GameLayerManager : Layer
     {
         [JsonIgnore] public readonly DebugSystem DebugSystem = new();
         [JsonIgnore] private readonly LinkedList<Layer> mLayers = new();
-        [JsonProperty] public PlanetSystem CurrentSystem { get; set; }
+        [JsonProperty] private readonly MapConfig mMapConfig;
         [JsonProperty] public readonly HashSet<PlanetSystem> PlanetSystems = new();
         [JsonProperty] public readonly Player Player = new();
-        [JsonProperty] public readonly Inventory Inventory = new();
         [JsonProperty] public readonly Wallet Wallet = new();
 
-        public GameStateLayer() : base(false)
+        public GameLayerManager() : base(false)
         {
-            MapFactory.Generate(out PlanetSystems);
-            CurrentSystem = PlanetSystems.First();
+            mMapConfig = new(50, 50, 42);
+            MapFactory.Generate(out PlanetSystems, mMapConfig);
             Player.Position = Vector2.Zero;
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, GameSettings gameSettings, ResolutionManager resolutionManager)
         {
             base.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings, resolutionManager);
-            AddLayer(new PlanetSystemLayer(this, CurrentSystem,  1));
+            AddLayer(new PlanetSystemLayer(this, PlanetSystems.First(),  1));
         }
 
         public void AddLayer(Layer layer)

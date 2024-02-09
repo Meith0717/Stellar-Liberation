@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
+using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,9 +24,8 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
 
         public SensorSystem(int shortRangeScanDistance) => ShortRangeScanDistance = shortRangeScanDistance;
 
-        public void Scan(Vector2 spaceShipPosition, Fractions fraction, GameLayer scene)
+        public void Scan(PlanetSystem planetSystem, Vector2 spaceShipPosition, Fractions fraction, GameLayer scene)
         {
-            var planetSystem = scene.GameState.CurrentSystem;
             LongRangeScan.Clear();
             LongRangeScan.AddRange(planetSystem.AstronomicalObjs);
 

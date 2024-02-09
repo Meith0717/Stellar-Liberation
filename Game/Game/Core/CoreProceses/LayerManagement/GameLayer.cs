@@ -22,11 +22,11 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         public readonly GameObject2DManager ParticleManager;
         public readonly Camera2D Camera2D;
         public readonly Camera2DShaker CameraShaker;
-        public GameStateLayer GameState { get; set; }
+        public GameLayerManager GameState { get; set; }
         private Matrix mViewTransformationMatrix;
         protected Layer HUDLayer;
 
-        public GameLayer(GameStateLayer gameState, int spatialHashingCellSize) : base(false)
+        public GameLayer(GameLayerManager gameState, int spatialHashingCellSize) : base(false)
         {
             SpatialHashing = new(spatialHashingCellSize);
             ParticleManager = new(this, SpatialHashing);

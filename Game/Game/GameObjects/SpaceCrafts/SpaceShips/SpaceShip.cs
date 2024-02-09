@@ -13,12 +13,14 @@ using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.AI;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
+using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PhaserSystem;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PropulsionSystem;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
+using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.Recources.Items;
 using System;
 using System.Linq;
@@ -31,13 +33,15 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
     {
         [JsonIgnore] protected readonly UtilityAi mUtilityAi = new();
         [JsonIgnore] public readonly HyperDrive HyperDrive = new();
-
-        [JsonIgnore] public readonly Fractions Fraction;
         [JsonIgnore] public readonly SensorSystem SensorSystem;
         [JsonIgnore] public readonly SublightDrive SublightDrive;
         [JsonIgnore] public readonly PhaserCannons WeaponSystem;
         [JsonIgnore] public readonly DefenseSystem DefenseSystem;
+        [JsonIgnore] public readonly Fractions Fraction;
+        [JsonProperty] public readonly Inventory Inventory;
+        [JsonIgnore] private readonly TractorBeam mTractorBeam;
         [JsonIgnore] private readonly Color mAccentColor;
+        [JsonProperty] public PlanetSystem PlanetSystem;
 
         public SpaceShip(Vector2 position, SpaceShipConfig config)
             : base(position, config.TextureID, config.TextureScale, 10)
@@ -54,6 +58,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             SublightDrive = new(config.Velocity, 0.1f);
             WeaponSystem = new(config.TurretCoolDown, accentCoor, 10, 10, 10000);
             DefenseSystem = new(config.ShieldForce, config.HullForce, 10);
+            mTractorBeam = new(2000);
             mAccentColor = accentCoor;
             foreach (var pos in config.WeaponsPositions)
                 WeaponSystem.PlaceTurret(new(pos, 1, TextureDepth + 1));
@@ -74,9 +79,10 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 
             HasProjectileHit(gameTime, gameLayer);
             DefenseSystem.Update(gameTime);
-            SensorSystem.Scan(Position, Fraction, gameLayer);
+            SensorSystem.Scan(PlanetSystem, Position, Fraction, gameLayer);
             WeaponSystem.Update(gameTime, this, gameLayer);
             mUtilityAi.Update(gameTime, this, gameLayer);
+            mTractorBeam.Pull(gameTime, this, gameLayer);
             TrailEffect.Show(Transformations.Rotation(Position, new(-100, 0), Rotation), MovingDirection, Velocity, gameTime, mAccentColor, gameLayer.ParticleManager, gameLayer.GameSettings.ParticlesMultiplier);
 
             if (DefenseSystem.HullPercentage > 0) return;
@@ -89,7 +95,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             for (int i = 0; i < ExtendetRandom.Random.Next(0, 5); i++)
             {
                 ExtendetRandom.Random.NextUnitVector(out var vector);
-                gameLayer.GameState.CurrentSystem.GameObjects.Add(ItemFactory.Get(ItemID.Iron, MovingDirection + vector * 5, Position));
+                PlanetSystem.GameObjects.Add(ItemFactory.Get(ItemID.Iron, MovingDirection + vector * 5, Position));
             }
         }
 
@@ -123,6 +129,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             TextureManager.Instance.Draw($"{TextureId}Structure", Position, TextureScale, Rotation, TextureDepth, new(20, 30, 40));
             TextureManager.Instance.Draw(GameSpriteRegistries.radar, Position, .04f / scene.Camera2D.Zoom, 0, TextureDepth + 1,  Fraction == Fractions.Enemys ? Color.Red : Color.LightGreen);
 
+            mTractorBeam.Draw(this);
             scene.GameState.DebugSystem.DrawAiDebug(BoundedBox, mUtilityAi.DebugMessage, scene.Camera2D.Zoom);
 
             WeaponSystem.Draw(scene);

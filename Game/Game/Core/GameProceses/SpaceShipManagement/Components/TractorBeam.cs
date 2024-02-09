@@ -25,7 +25,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
 
         public void Pull(GameTime gameTime, SpaceShip spaceShip, GameLayer scene)
         {
-            var inventory = scene.GameState.Inventory;
+            var inventory = spaceShip.Inventory;
 
             mItemsInRange.Clear();
             var position = spaceShip.Position;

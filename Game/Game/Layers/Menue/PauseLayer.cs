@@ -19,7 +19,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
     {
         private readonly UiFrame mBackgroundLayer;
 
-        public PauseLayer(GameStateLayer gameState)
+        public PauseLayer(GameLayerManager gameState)
             : base(false)
         {
             mBackgroundLayer = new() { RelHeight = 1, RelWidth = 1, Color = Color.Transparent };

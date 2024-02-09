@@ -9,6 +9,7 @@ using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.AI.Behaviors;
 using StellarLiberation.Game.Core.GameProceses.AI.Behaviors.Combat;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement;
+using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 
 namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 {
@@ -16,6 +17,13 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 
     public class SpaceShipFactory
     {
+        public static void Spawn(PlanetSystem planetSystem, Vector2 position, ShipID shipID, Fractions fraction, out SpaceShip spaceShip)
+        {
+            spaceShip = Get(position, shipID, fraction);
+            spaceShip.PlanetSystem = planetSystem;
+            planetSystem.GameObjects.Add(spaceShip);
+        }
+
         public static SpaceShip Get(Vector2 position, ShipID shipID, Fractions fraction)
         {
             SpaceShipConfig config = shipID switch
@@ -132,7 +140,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                 ),
                 _ => throw new System.NotImplementedException()
             };
-            return new(position, config);
+            return new SpaceShip(position, config);
         }
     }
 }

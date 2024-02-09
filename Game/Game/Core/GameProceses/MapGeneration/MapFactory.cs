@@ -11,16 +11,14 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
 {
     public static class MapFactory
     {
-        public readonly static int mSectorCountWidth = 50;
-        public readonly static int mSectorCountHeight = 50;
         public readonly static int MapScale = 1000;
 
-        public static void Generate(out HashSet<PlanetSystem> planetSystems)
+        public static void Generate(out HashSet<PlanetSystem> planetSystems, MapConfig mapConfig)
         {
             planetSystems = new();
-            var seededRandom = new Random(42);
+            var seededRandom = new Random(mapConfig.Seed);
 
-            var noiseMap = BinaryMapGenerator.Generate(mSectorCountWidth, mSectorCountHeight, seededRandom);
+            var noiseMap = BinaryMapGenerator.Generate(mapConfig.SectorCountWidth, mapConfig.SectorCountHeight, seededRandom);
             var positions = BinaryMapGenerator.GetVector2sFormBinaryMap(noiseMap);
             BinaryMapGenerator.ScaleVector2s(ref positions, MapScale);
             BinaryMapGenerator.ShiftVector2s(ref positions, 350, seededRandom);
