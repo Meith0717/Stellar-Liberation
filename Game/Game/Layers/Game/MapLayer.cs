@@ -51,9 +51,9 @@ namespace StellarLiberation.Game.Layers.GameLayers
             base.Update(gameTime, inputState);
         }
 
-        public override void DrawOnScreenView(GameStateLayer gameState, SpriteBatch spriteBatch) => mBackgroundLayer.Draw();
+        public override void DrawOnScreenView(SpriteBatch spriteBatch) => mBackgroundLayer.Draw();
 
-        public override void DrawOnWorldView(GameStateLayer gameState, SpriteBatch spriteBatch) {; }
+        public override void DrawOnWorldView(SpriteBatch spriteBatch) {; }
 
         public override void OnResolutionChanged() { base.OnResolutionChanged(); }
 

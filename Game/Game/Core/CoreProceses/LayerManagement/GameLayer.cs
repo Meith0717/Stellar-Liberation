@@ -12,7 +12,6 @@ using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.Layers;
-using System.Diagnostics.Contracts;
 
 namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
 {
@@ -23,7 +22,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         public readonly GameObject2DManager ParticleManager;
         public readonly Camera2D Camera2D;
         public readonly Camera2DShaker CameraShaker;
-        public readonly GameStateLayer GameState;
+        public GameStateLayer GameState { get; set; }
         private Matrix mViewTransformationMatrix;
         protected Layer HUDLayer;
 
@@ -55,11 +54,11 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            DrawOnScreenView(GameState, spriteBatch);
+            DrawOnScreenView(spriteBatch);
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: mViewTransformationMatrix, samplerState: SamplerState.PointClamp);
-            DrawOnWorldView(GameState, spriteBatch);
+            DrawOnWorldView(spriteBatch);
             Camera2D.Draw(this);
             ParticleManager.Draw(this);
             GameState.DebugSystem.DrawOnScene(this);
@@ -68,8 +67,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
             HUDLayer?.Draw(spriteBatch);
         }
 
-        public abstract void DrawOnScreenView(GameStateLayer gameState, SpriteBatch spriteBatch);
-        public abstract void DrawOnWorldView(GameStateLayer gameState, SpriteBatch spriteBatch);
+        public abstract void DrawOnScreenView(SpriteBatch spriteBatch);
+        public abstract void DrawOnWorldView(SpriteBatch spriteBatch);
 
         public override void OnResolutionChanged() { }
 

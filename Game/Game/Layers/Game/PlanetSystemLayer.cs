@@ -13,22 +13,25 @@ using StellarLiberation.Game.Core.GameProceses.GridSystem;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Visuals.Rendering;
+using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Layers.GameLayers
 {
     internal class PlanetSystemLayer : GameLayer
     {
+        private readonly PlanetSystem mPlanetSystem;
         private readonly GameObject2DManager mUnsavedObjects;
         private readonly GameObject2DManager mSavedObjects;
 
         private readonly UiFrame mBackgroundLayer;
         private readonly Grid mGrid;
 
-        public PlanetSystemLayer(GameStateLayer gameState, List<GameObject2D> unsavedObjects, List<GameObject2D> savedObjects, float camZoom) : base(gameState, 50000)
+        public PlanetSystemLayer(GameStateLayer gameState, PlanetSystem planetSystem, float camZoom) : base(gameState, 50000)
         {
-            mUnsavedObjects = new(unsavedObjects, this, SpatialHashing);
-            mSavedObjects = new(savedObjects, this, SpatialHashing);
+            mPlanetSystem = planetSystem;
+            mUnsavedObjects = new(mPlanetSystem.GameObjects, this, SpatialHashing);
+            mSavedObjects = new(mPlanetSystem.GetAstronomicalObjects(), this, SpatialHashing);
 
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn };
             mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
@@ -57,9 +60,9 @@ namespace StellarLiberation.Game.Layers.GameLayers
             base.Update(gameTime, inputState);
         }
 
-        public override void DrawOnScreenView(GameStateLayer gameState, SpriteBatch spriteBatch) => mBackgroundLayer.Draw();
+        public override void DrawOnScreenView(SpriteBatch spriteBatch) => mBackgroundLayer.Draw();
 
-        public override void DrawOnWorldView(GameStateLayer gameState, SpriteBatch spriteBatch)
+        public override void DrawOnWorldView(SpriteBatch spriteBatch)
         {
             mGrid.Draw(this);
             //TextureManager.Instance.Draw(GameSpriteRegistries.starLightAlpha.Name, Vector2.Zero, mStar.TextureOffset, 300f, 0, 3, mStar.TextureColor);

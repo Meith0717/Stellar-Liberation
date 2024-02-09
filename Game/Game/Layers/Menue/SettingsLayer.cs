@@ -52,6 +52,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
             mSettingsGrid.Set(0, 10, new UiText(FontRegistries.textFont, "Particle Multiplier") { Anchor = Anchor.E, HSpace = 20 });
 
             settingsFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Back & Save") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = Exit });
+            settingsFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Start Benchmark") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = () => { LayerManager.PopLayer(); } });
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, GameSettings gameSettings, ResolutionManager resolutionManager)
