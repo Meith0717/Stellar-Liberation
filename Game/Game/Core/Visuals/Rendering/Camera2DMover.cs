@@ -18,7 +18,7 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
             inputState.DoAction(ActionType.CameraZoomOut, () => zoom -= 15);
             inputState.DoAction(ActionType.CtrlLeft, () => multiplier = 5);
 
-            camera2D.Zoom *= 1 + (zoom * multiplier) * 0.001f * gameTime.ElapsedGameTime.Milliseconds;
+            camera2D.Zoom *= 1 + (zoom * multiplier) * (float)(0.001 * gameTime.ElapsedGameTime.TotalMilliseconds);
             camera2D.Zoom = MathHelper.Clamp(camera2D.Zoom, minZoom, maxZoom);
         }
 

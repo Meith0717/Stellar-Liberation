@@ -38,10 +38,10 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
             base.Update(gameTime, inputState, scene);
-            OrbitRadians -= 0.00001f;
+            OrbitRadians -= (float)(0.000005 * gameTime.ElapsedGameTime.TotalMilliseconds);
             Position = Geometry.GetPointOnCircle(mMainBodyPosition, OrbitRadius, OrbitRadians);
             mShadowRotation = Geometry.AngleBetweenVectors(Position, mMainBodyPosition) + MathF.PI;
-            Rotation -= 0.0001f;
+            Rotation -= (float)(0.000005 * gameTime.ElapsedGameTime.TotalMilliseconds);
         }
 
         public override void Draw(GameLayer scene)

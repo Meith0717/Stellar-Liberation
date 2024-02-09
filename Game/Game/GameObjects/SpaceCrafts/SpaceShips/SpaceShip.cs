@@ -38,7 +38,8 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
         [JsonIgnore] public readonly PhaserCannons WeaponSystem;
         [JsonIgnore] public readonly DefenseSystem DefenseSystem;
         [JsonIgnore] public readonly Fractions Fraction;
-        [JsonProperty] public readonly Inventory Inventory;
+        [JsonProperty] public readonly Inventory Inventory = new();
+
         [JsonIgnore] private readonly TractorBeam mTractorBeam;
         [JsonIgnore] private readonly Color mAccentColor;
         [JsonProperty] public PlanetSystem PlanetSystem;

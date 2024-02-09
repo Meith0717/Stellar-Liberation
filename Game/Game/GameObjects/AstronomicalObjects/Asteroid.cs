@@ -22,7 +22,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
             base.Update(gameTime, inputState, scene);
-            Rotation += .01f;
+            Rotation -= (float)(0.00001 * gameTime.ElapsedGameTime.TotalMilliseconds);
             Velocity = MathHelper.Clamp(Velocity - 0.001f, 0, float.PositiveInfinity);
             CheckForHit(gameTime, scene);
             Physics.HandleCollision(gameTime, this, scene.SpatialHashing);
