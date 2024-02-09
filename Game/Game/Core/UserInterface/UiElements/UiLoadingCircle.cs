@@ -20,7 +20,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
         public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
         {
             Canvas.UpdateFrame(root, uiScaling);
-            mCircle.Rotation += .1f;
+            mCircle.Rotation += (float)(.005 * gameTime.ElapsedGameTime.TotalMilliseconds);
             mCircle.Update(inputState, gameTime, Canvas.Bounds, uiScaling);
         }
 

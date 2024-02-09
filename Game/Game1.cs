@@ -54,9 +54,8 @@ namespace StellarLiberation
             mResolutionManager.Apply(mGameSettings.Resolution);
             mResolutionManager.ToggleFullscreen(mGameSettings.Resolution);
 
-            IsFixedTimeStep = false;
-            GraphicsManager.SynchronizeWithVerticalRetrace = mGameSettings.Vsync;
             GraphicsManager.PreferMultiSampling = true;
+            GraphicsManager.SynchronizeWithVerticalRetrace = mGameSettings.Vsync;
             if (IsFixedTimeStep = long.TryParse(mGameSettings.RefreshRate, out long rate))
                 TargetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / rate);
             GraphicsManager.ApplyChanges();
@@ -76,10 +75,10 @@ namespace StellarLiberation
 
         protected override void Update(GameTime gameTime)
         {
+            MusicManager.Instance.Update();
             if (IAmActive)
             {
                 InputState inputState = mInputManager.Update();
-                MusicManager.Instance.Update();
                 inputState.DoAction(ActionType.ToggleFullscreen, () => mResolutionManager.ToggleFullscreen(mGameSettings.Resolution));
                 inputState.DoAction(ActionType.IncreaseScaling, () => mResolutionManager.UiScaling += 0.1f);
                 inputState.DoAction(ActionType.DecreaseScaling, () => mResolutionManager.UiScaling -= 0.1f);

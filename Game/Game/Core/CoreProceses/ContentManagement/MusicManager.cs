@@ -43,6 +43,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
             if (mMusicInstance is null)
             {
                 var music = ExtendetRandom.GetRandomElement(mMusics);
+                System.Diagnostics.Debug.WriteLine(music.Name);
                 mMusicInstance = music.CreateInstance();
                 mMusicInstance.Volume = OverallVolume;
                 mMusicInstance.Play();
@@ -57,6 +58,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
         public void ChangeOverallVolume(float master, float volume)
         {
             SetVolume(master, volume);
+            if (mMusicInstance is null) return;
             mMusicInstance.Volume = OverallVolume;
         }
     }
