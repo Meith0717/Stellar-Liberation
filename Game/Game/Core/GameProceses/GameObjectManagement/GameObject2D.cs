@@ -64,13 +64,13 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
         {
             DisposeTime -= gameTime.ElapsedGameTime.TotalMilliseconds;
             Dispose = double.IsNegative(DisposeTime - 1) | Dispose;
-            scene.GameState.DebugSystem.UpdateObjectCount += 1;
+            scene.DebugSystem.UpdateObjectCount += 1;
         }
 
         public virtual void Draw(GameLayer scene)
         {
-            scene.GameState.DebugSystem.DrawnObjectCount += 1;
-            scene.GameState.DebugSystem.DrawHitbox(BoundedBox, scene);
+            scene.DebugSystem.DrawnObjectCount += 1;
+            scene.DebugSystem.DrawHitbox(BoundedBox, scene);
         }
 
         public virtual void HasCollide(Vector2 position, GameLayer scene) { }

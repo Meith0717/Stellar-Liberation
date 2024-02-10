@@ -75,7 +75,7 @@ namespace StellarLiberation.Game.Layers
              GraphicsDevice.Clear(Color.Black);
             mLayers.Last.Value.Draw(spriteBatch);
             spriteBatch.Begin();
-            DebugSystem.DrawOnScreen();
+            DebugSystem.ShowInfo(new(10, 10));
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(1, 1), $"{MathF.Round(mFrameCounter.CurrentFramesPerSecond)} fps", 0.75f, Color.White);
             spriteBatch.End();
         }

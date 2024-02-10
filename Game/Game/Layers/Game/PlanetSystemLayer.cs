@@ -45,16 +45,16 @@ namespace StellarLiberation.Game.Layers.GameLayers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             inputState.DoAction(ActionType.ToggleHyperMap, () => GameState.AddLayer(new MapLayer(GameState)));
-            inputState.DoAction(ActionType.Inventar, () => LayerManager.AddLayer(new InventoryLayer(GameState.Player.Inventory, GameState.Wallet)));
+            inputState.DoAction(ActionType.Inventar, () => LayerManager.AddLayer(new InventoryLayer(Player.Inventory, GameState.Wallet)));
 
             mBackgroundLayer.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, 1);
 
             mUnsavedObjects.Update(gameTime, inputState, this);
             mSavedObjects.Update(gameTime, inputState, this);
 
-            GameState.Player.Update(gameTime, inputState, this);
+            Player.Update(gameTime, inputState, this);
 
-            Camera2D.Position = GameState.Player.Position;
+            Camera2D.Position = Player.Position;
             Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, .001f, 1);
             base.Update(gameTime, inputState);
         }

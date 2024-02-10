@@ -48,12 +48,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.DebugSystem
             inputState.DoAction(ActionType.F10, () => ShowAi = !ShowAi);
         }
 
-        public void DrawOnScreen()
-        {
-            if (!IsDebug) return;
-            ShowInfo(new(10, 120));
-        }
-
         public void DrawOnScene(GameLayer scene)
         {
             if (!IsDebug) return;
@@ -61,8 +55,9 @@ namespace StellarLiberation.Game.Core.CoreProceses.DebugSystem
             if (ShowObjectsInBucket) DebugSpatialHashing.ObjectsInBucket(scene);
         }
 
-        private void ShowInfo(Vector2 position)
+        public void ShowInfo(Vector2 position)
         {
+            if (!IsDebug) return;
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 0), "F1 - Draw Spatial Hashing Grid", 1, DrawBuckets ? Color.GreenYellow : Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 25), "F2 - Draw Objects in Bucket", 1, ShowObjectsInBucket ? Color.GreenYellow : Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 50), "F3 - Show Hit Box", 1, ShowHitBoxes ? Color.GreenYellow : Color.White);

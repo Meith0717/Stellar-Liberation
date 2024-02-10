@@ -27,6 +27,7 @@ namespace StellarLiberation.Game.Layers.Benchmark
         public BenchmarkLayer()
             : base(new(), 50000)
         {
+            DebugSystem = new();
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn };
             mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
 
@@ -40,6 +41,7 @@ namespace StellarLiberation.Game.Layers.Benchmark
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            DebugSystem.Update(inputState);
             mFrameCounter.Update(gameTime);
             inputState.DoAction(ActionType.ESC, LayerManager.PopLayer);
             base.Update(gameTime, inputState);
@@ -63,6 +65,7 @@ namespace StellarLiberation.Game.Layers.Benchmark
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 85), $"", .75f, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 100),$"Objects:    {SpatialHashing.Count}", .75f, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 115),$"Particles:  {ParticleManager.GameObjects2Ds.Count}", .75f, Color.White);
+            DebugSystem.ShowInfo(new Vector2(100, 10));
             spriteBatch.End();
         }
 

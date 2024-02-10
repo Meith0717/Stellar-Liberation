@@ -122,7 +122,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
         {
             base.Draw(scene);
 
-            scene.GameState.DebugSystem.DrawSensorRadius(Position, SensorSystem.ShortRangeScanDistance, scene);
+            scene.DebugSystem.DrawSensorRadius(Position, SensorSystem.ShortRangeScanDistance, scene);
 
             TextureManager.Instance.Draw($"{TextureId}Borders", Position, TextureScale, Rotation, TextureDepth, mAccentColor);
             TextureManager.Instance.Draw($"{TextureId}Frame", Position, TextureScale, Rotation, TextureDepth, Color.Black);
@@ -131,10 +131,10 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             TextureManager.Instance.Draw(GameSpriteRegistries.radar, Position, .04f / scene.Camera2D.Zoom, 0, TextureDepth + 1,  Fraction == Fractions.Enemys ? Color.Red : Color.LightGreen);
 
             mTractorBeam.Draw(this);
-            scene.GameState.DebugSystem.DrawAiDebug(BoundedBox, mUtilityAi.DebugMessage, scene.Camera2D.Zoom);
+            scene.DebugSystem.DrawAiDebug(BoundedBox, mUtilityAi.DebugMessage, scene.Camera2D.Zoom);
 
             WeaponSystem.Draw(scene);
-            SublightDrive.Draw(scene.GameState.DebugSystem, this, scene);
+            SublightDrive.Draw(scene.DebugSystem, this, scene);
             DefenseSystem.DrawShields(this);
         }
     }
