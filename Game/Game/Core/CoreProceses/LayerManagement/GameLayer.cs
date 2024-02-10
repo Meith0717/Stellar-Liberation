@@ -18,7 +18,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
     public abstract class GameLayer : Layer
     {
         public Vector2 WorldMousePosition { get; private set; }
-        public readonly SpatialHashing<GameObject2D> SpatialHashing;
+        public readonly SpatialHashing SpatialHashing;
         public readonly GameObject2DManager ParticleManager;
         public readonly Camera2D Camera2D;
         public readonly Camera2DShaker CameraShaker;

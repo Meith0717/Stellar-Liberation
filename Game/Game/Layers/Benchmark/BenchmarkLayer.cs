@@ -33,7 +33,7 @@ namespace StellarLiberation.Game.Layers.Benchmark
             mFrameCounter = new(200);
 
             var planetSystem = new PlanetSystem(Vector2.Zero, 2);
-            var objs = planetSystem.GameObjects.ToList();
+            var objs = planetSystem.GameObjects;
             objs.AddRange(planetSystem.GetAstronomicalObjects());
             mGameObject2DManager = new(objs, this, SpatialHashing);
         }

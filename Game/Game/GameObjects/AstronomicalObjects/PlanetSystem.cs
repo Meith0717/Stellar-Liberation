@@ -24,14 +24,14 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
     [Serializable]
     public class PlanetSystem : GameObject2D
     {
-        [JsonIgnore] public readonly List<GameObject2D> AstronomicalObjs = new();
+        [JsonIgnore] public readonly GameObject2DTypeList AstronomicalObjs = new();
         [JsonIgnore] private bool mIsHovered;
 
         [JsonIgnore] private readonly Sector mSector;
         [JsonIgnore] private readonly string Name;
         [JsonProperty] private int? PlanetCount;
         [JsonProperty] private int? Temperature;
-        [JsonProperty] public readonly List<GameObject2D> GameObjects;
+        [JsonProperty] public readonly GameObject2DTypeList GameObjects;
         [JsonProperty] private readonly int mSeed;
         [JsonProperty] public Fractions Occupier = Fractions.Enemys;
 
@@ -45,13 +45,12 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             for (var i = 0; i < 10; i++) Name += rand.Next(0, 9);
 
             mSector = new(position - (new Vector2(MapFactory.MapScale) / 2), MapFactory.MapScale, MapFactory.MapScale);
-            
-            for (int i = 0; i < 250; i++) SpaceShipFactory.Spawn(this, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 250000)), ShipID.Bomber, Fractions.Enemys, out var _);
-            for (int i = 0; i < 250; i++) SpaceShipFactory.Spawn(this, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 250000)), ShipID.Bomber, Fractions.Allied, out var _);
+            for (int i = 0; i < 50; i++) SpaceShipFactory.Spawn(this, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 250000)), ShipID.Bomber, Fractions.Enemys, out var _);
+            for (int i = 0; i < 50; i++) SpaceShipFactory.Spawn(this, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 250000)), ShipID.Bomber, Fractions.Allied, out var _);
 
         }
 
-        public List<GameObject2D> GetAstronomicalObjects()
+        public GameObject2DTypeList GetAstronomicalObjects()
         {
             Occupier = Fractions.Allied;
             var seededRandom = new Random(mSeed);

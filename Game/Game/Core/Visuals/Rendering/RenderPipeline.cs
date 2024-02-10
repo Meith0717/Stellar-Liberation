@@ -14,21 +14,21 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
     /// <summary>
     /// A generic class managing a list of 2D game objects and providing rendering functionality.
     /// </summary>
-    public class RenderPipeline<T> where T : GameObject2D
+    public class RenderPipeline
     {
         /// <summary>
         /// List of 2D game objects managed by the render pipeline.
         /// </summary>
-        private List<T> mObjects = new();
+        private List<GameObject2D> mObjects = new();
 
         /// <summary>
         /// Filters 2D game objects based on a specified view frustum using spatial hashing.
         /// </summary>
-        public void FilterObjs(RectangleF viewFrustum, SpatialHashing<T> spatialHashing)
+        public void FilterObjs(RectangleF viewFrustum, SpatialHashing spatialHashing)
         {
             var space = viewFrustum.ToRectangle();
             var edgeDistance = Vector2.Distance(space.Center.ToVector2(), space.Location.ToVector2());
-            mObjects = spatialHashing.GetObjectsInRadius<T>(space.Center.ToVector2(), (int)edgeDistance);
+            mObjects = spatialHashing.GetObjectsInRadius<GameObject2D>(space.Center.ToVector2(), (int)edgeDistance);
         }
 
         /// <summary>

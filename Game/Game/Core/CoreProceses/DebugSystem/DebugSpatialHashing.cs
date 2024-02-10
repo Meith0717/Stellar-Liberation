@@ -17,7 +17,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.DebugSystem
             Color color = Color.Green;
             for (int i = 0; i < GameObjects.Count; i++)
             {
-                var obj = GameObjects[i];
+                var obj = GameObjects.ToList()[i];
                 if (i > 0) color = Color.Blue;
                 TextureManager.Instance.DrawAdaptiveLine(scene.WorldMousePosition, obj.Position, color,
                     2, (int)TextureManager.MaxLayerDepth, scene.Camera2D.Zoom);

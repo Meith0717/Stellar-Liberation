@@ -19,7 +19,7 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
         public float Rotation;
 
         public RectangleF Bounds { get; private set; }
-        private readonly RenderPipeline<GameObject2D> mRenderPipeline;
+        private readonly RenderPipeline mRenderPipeline;
 
         public Camera2D()
         {

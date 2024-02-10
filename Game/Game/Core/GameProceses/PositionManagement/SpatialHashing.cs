@@ -2,13 +2,6 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-/*
- *  SpatialHashing.cs
- *
- *  Copyright (c) 2023 Thierry Meiers
- *  All rights reserved.
- */
-
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
@@ -23,11 +16,11 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
     /// Represents a spatial hashing data structure for efficient object retrieval based on their coordinates.
     /// </summary>
     /// <typeparam name="T">The type of objects stored in the spatial hashing structure.</typeparam>
-    public class SpatialHashing<T> where T : GameObject2D
+    public class SpatialHashing
     {
         public int Count { get; private set; }
         public readonly int mCellSize;
-        private readonly Dictionary<int, HashSet<T>> mSpatialGrids = new();
+        private readonly Dictionary<int, GameObject2DTypeList> mSpatialGrids = new();
 
         public SpatialHashing(int cellSize) => mCellSize = cellSize;
 
@@ -49,19 +42,19 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
             return adjustedX / mCellSize * shiftingFactor + adjustedY / mCellSize;
         }
 
-        public void InsertObject(T obj, int x, int y)
+        public void InsertObject(GameObject2D obj, int x, int y)
         {
             var hash = Hash(x, y);
             if (!mSpatialGrids.TryGetValue(hash, out var objectBucket))
             {
-                objectBucket = new HashSet<T>();
+                objectBucket = new();
                 mSpatialGrids[hash] = objectBucket;
             }
             objectBucket.Add(obj);
             Count++;
         }
 
-        public void RemoveObject(T obj, int x, int y)
+        public void RemoveObject(GameObject2D obj, int x, int y)
         {
             var hash = Hash(x, y);
             if (!mSpatialGrids.TryGetValue(hash, out var objectBucket)) return;
@@ -73,10 +66,10 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
 
         public void ClearBuckets() => mSpatialGrids.Clear();
 
-        public List<T> GetObjectsInBucket(int x, int y)
+        public GameObject2DTypeList GetObjectsInBucket(int x, int y)
         {
             var hash = Hash(x, y);
-            return mSpatialGrids.TryGetValue(hash, out var objectsInBucket) ? objectsInBucket.ToList() : new List<T>();
+            return mSpatialGrids.TryGetValue(hash, out var objectsInBucket) ? objectsInBucket : new();
         }
 
         public List<T> GetObjectsInRadius<T>(Vector2 position, float radius, bool sortedByDistance = true) where T : GameObject2D
@@ -87,17 +80,18 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
             var startY = (int)Math.Floor((position.Y - radius) / mCellSize);
             var endY = (int)Math.Ceiling((position.Y + radius) / mCellSize);
 
-            List<T> objectsInRadius = new List<T>();
+            List<T> objectsInRadius = new();
 
             foreach (var x in Enumerable.Range(startX, endX - startX + 1))
             {
                 foreach (var y in Enumerable.Range(startY, endY - startY + 1))
                 {
-                    var objectsInBucket = GetObjectsInBucket(x * mCellSize, y * mCellSize);
-                    foreach (var gameObject in objectsInBucket.OfType<T>())
+                    var objectsInBucket = GetObjectsInBucket(x * mCellSize, y * mCellSize).OfType(typeof(T));
+                    foreach (GameObject2D gameObject in objectsInBucket)
                     {
                         var circle = new CircleF(position, radius);
-                        if (CircleF.Intersects(circle, gameObject.BoundedBox)) objectsInRadius.Add(gameObject);
+                        if (CircleF.Intersects(circle, gameObject.BoundedBox)) 
+                            objectsInRadius.Add((T)gameObject);
                     }
                 }
             }

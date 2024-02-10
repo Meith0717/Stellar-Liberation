@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
-using StellarLiberation.Game.Core.CoreProceses.DebugSystem;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
@@ -16,17 +15,17 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
     [Serializable]
     public class GameObject2DManager
     {
-        [JsonProperty] public readonly List<GameObject2D> GameObjects2Ds = new();
+        [JsonProperty] public readonly GameObject2DTypeList GameObjects2Ds = new();
         [JsonIgnore] private readonly GameLayer mGameLayer;
-        [JsonIgnore] private readonly SpatialHashing<GameObject2D> mSpatialHashing;
+        [JsonIgnore] private readonly SpatialHashing mSpatialHashing;
 
-        public GameObject2DManager(GameLayer gameLayer, SpatialHashing<GameObject2D> spatialHashing)
+        public GameObject2DManager(GameLayer gameLayer, SpatialHashing spatialHashing)
         {
             mGameLayer = gameLayer;
             mSpatialHashing = spatialHashing;
         }
 
-        public GameObject2DManager(List<GameObject2D> gameObject2Ds, GameLayer gameLayer, SpatialHashing<GameObject2D> spatialHashing)
+        public GameObject2DManager(GameObject2DTypeList gameObject2Ds, GameLayer gameLayer, SpatialHashing spatialHashing)
         {
             GameObjects2Ds = gameObject2Ds;
             mGameLayer = gameLayer;
@@ -61,7 +60,11 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
 
         public void Draw(GameLayer scene)
         {
-            foreach (var obj in GameObjects2Ds) obj.Draw(scene);
+            foreach (var obj in GameObjects2Ds)
+            {
+                if (!scene.Camera2D.Bounds.Intersects(obj.BoundedBox)) continue;
+                obj.Draw(scene);
+            }
         }
     }
 }
