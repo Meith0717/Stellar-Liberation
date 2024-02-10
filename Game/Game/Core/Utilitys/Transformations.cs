@@ -60,15 +60,16 @@ namespace StellarLiberation.Game.Core.Utilitys
             return Vector2.Transform(position, ViewTransformationMatrix);
         }
 
-        public static Vector2 Rotation(Vector2 rotationCenter, Vector2 rotatetVector, float angleRad)
+        public static Vector2 RotateVector(Vector2 vector, float angle)
         {
-            float cosTheta = (float)MathF.Cos(angleRad);
-            float sinTheta = (float)MathF.Sin(angleRad);
-            Vector2 rotatedVector = new Vector2(
-                rotatetVector.X * cosTheta - rotatetVector.Y * sinTheta,
-                rotatetVector.X * sinTheta + rotatetVector.Y * cosTheta
+            float cosTheta = (float)MathF.Cos(angle);
+            float sinTheta = (float)MathF.Sin(angle);
+            return new Vector2(
+                vector.X * cosTheta - vector.Y * sinTheta,
+                vector.X * sinTheta + vector.Y * cosTheta
             );
-            return rotatedVector + rotationCenter;
         }
+
+        public static Vector2 Rotation(Vector2 rotationCenter, Vector2 rotatetVector, float angleRad) =>  RotateVector(rotatetVector, angleRad) + rotationCenter;
     }
 }

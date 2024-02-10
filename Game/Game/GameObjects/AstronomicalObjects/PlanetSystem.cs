@@ -17,7 +17,6 @@ using StellarLiberation.Game.Core.GameProceses.SectorManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System;
-using System.Collections.Generic;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
 {

@@ -12,7 +12,7 @@ using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System.Collections.Generic;
 
-namespace StellarLiberation.Game.Core.CoreProceses.DebugSystem
+namespace StellarLiberation.Game.Core.CoreProceses.Debugging
 {
     public class DebugSystem
     {
@@ -29,8 +29,9 @@ namespace StellarLiberation.Game.Core.CoreProceses.DebugSystem
         private bool ShowPaths;
         private bool ShowAi;
 
-        public DebugSystem() 
+        public DebugSystem(bool isActive = false) 
         {
+            IsDebug = isActive;
             debugActions = new()
             {
                 new("Spatial Hashing Grid", ActionType.F1, () => DrawBuckets = !DrawBuckets),
@@ -71,8 +72,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.DebugSystem
             if (!IsDebug) return;
             foreach (var action in debugActions) 
             {
-                action.DrawInfo(position, false);
-                position.X += 15;
+                action.DrawInfo(position);
+                position.Y += 15;
             } 
 
         }
@@ -101,7 +102,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.DebugSystem
         public void DrawAiDebug(CircleF circle, string message, float camZoom)
         {
             if (!ShowAi) return;
-            TextureManager.Instance.DrawString(FontRegistries.subTitleFont, circle.ToRectangleF().TopRight, message, 0.2f / camZoom, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.subTitleFont, circle.ToRectangleF().TopRight, message, 0.3f / camZoom, Color.White);
         }
     }
 }

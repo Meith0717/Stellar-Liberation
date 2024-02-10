@@ -11,7 +11,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Persistance
     public class PersistanceManager
     {
         private readonly Serializer mSerializer;
-        private static readonly string GameSaveDirectory = "gameSave";
+        private static readonly string GameSaveDirectory = "save";
         private static readonly string DataSaveDirectory = "data";
 
         public static string GameSaveFilePath => Path.Combine(GameSaveDirectory, "save");
@@ -23,6 +23,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.Persistance
             mSerializer.CreateFolder(GameSaveDirectory);
             mSerializer.CreateFolder(DataSaveDirectory);
         }
+
+        public Serializer GetSerializer() => mSerializer;
 
         public void Load<Object>(string path, Action<Object> onLoadComplete, Action<Exception> onError) where Object : new()
         {

@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StellarLiberation.Game.Core.CoreProceses.DebugSystem
+namespace StellarLiberation.Game.Core.CoreProceses.Debugging
 {
     public class FrameCounter
     {

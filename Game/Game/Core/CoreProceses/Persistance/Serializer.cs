@@ -36,6 +36,11 @@ namespace StellarLiberation.Game.Core.CoreProceses.Persistance
             return true;
         }
 
+        public StreamWriter GetStreamWriter(string relativePath)
+        {
+            return new StreamWriter(Path.Combine(RootPath, relativePath));
+        }
+
         public void SerializeObject(object obj, string relativePath)
         {
             JsonSerializerSettings jsonSerializerSettings = new()

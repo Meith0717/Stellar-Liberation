@@ -2,13 +2,6 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-/*
- *  Transformations.cs
- *
- *  Copyright (c) 2023 Thierry Meiers
- *  All rights reserved.
- */
-
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
