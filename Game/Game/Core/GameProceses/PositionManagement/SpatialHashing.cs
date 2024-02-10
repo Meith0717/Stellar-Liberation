@@ -23,13 +23,13 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
     /// Represents a spatial hashing data structure for efficient object retrieval based on their coordinates.
     /// </summary>
     /// <typeparam name="T">The type of objects stored in the spatial hashing structure.</typeparam>
-    [Serializable]
     public class SpatialHashing<T> where T : GameObject2D
     {
-        [JsonProperty] public int CellSize;
-        [JsonProperty] private Dictionary<int, HashSet<T>> mSpatialGrids = new();
+        public int Count { get; private set; }
+        public readonly int mCellSize;
+        private readonly Dictionary<int, HashSet<T>> mSpatialGrids = new();
 
-        public SpatialHashing(int cellSize) => CellSize = cellSize;
+        public SpatialHashing(int cellSize) => mCellSize = cellSize;
 
         public int Hash(int xCoordinate, int yCoordinate)
         {
@@ -46,9 +46,8 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
             if (adjustedX < 0) adjustedX += WorldWidth;
             if (adjustedY < 0) adjustedY += WorldHeight;
 
-            return adjustedX / CellSize * shiftingFactor + adjustedY / CellSize;
+            return adjustedX / mCellSize * shiftingFactor + adjustedY / mCellSize;
         }
-
 
         public void InsertObject(T obj, int x, int y)
         {
@@ -59,13 +58,15 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
                 mSpatialGrids[hash] = objectBucket;
             }
             objectBucket.Add(obj);
+            Count++;
         }
 
         public void RemoveObject(T obj, int x, int y)
         {
             var hash = Hash(x, y);
             if (!mSpatialGrids.TryGetValue(hash, out var objectBucket)) return;
-            objectBucket.Remove(obj);
+            if (!objectBucket.Remove(obj)) return;
+            Count--;
             mSpatialGrids[hash] = objectBucket;
             if (objectBucket.Count == 0) mSpatialGrids.Remove(hash);
         }
@@ -81,10 +82,10 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
         public List<T> GetObjectsInRadius<T>(Vector2 position, float radius, bool sortedByDistance = true) where T : GameObject2D
         {
             // Determine the range of bucket indices that fall within the radius.
-            var startX = (int)Math.Floor((position.X - radius) / CellSize);
-            var endX = (int)Math.Ceiling((position.X + radius) / CellSize);
-            var startY = (int)Math.Floor((position.Y - radius) / CellSize);
-            var endY = (int)Math.Ceiling((position.Y + radius) / CellSize);
+            var startX = (int)Math.Floor((position.X - radius) / mCellSize);
+            var endX = (int)Math.Ceiling((position.X + radius) / mCellSize);
+            var startY = (int)Math.Floor((position.Y - radius) / mCellSize);
+            var endY = (int)Math.Ceiling((position.Y + radius) / mCellSize);
 
             List<T> objectsInRadius = new List<T>();
 
@@ -92,7 +93,7 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
             {
                 foreach (var y in Enumerable.Range(startY, endY - startY + 1))
                 {
-                    var objectsInBucket = GetObjectsInBucket(x * CellSize, y * CellSize);
+                    var objectsInBucket = GetObjectsInBucket(x * mCellSize, y * mCellSize);
                     foreach (var gameObject in objectsInBucket.OfType<T>())
                     {
                         var circle = new CircleF(position, radius);

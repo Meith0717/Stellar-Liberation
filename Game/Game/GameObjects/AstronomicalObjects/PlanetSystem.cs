@@ -46,8 +46,8 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
 
             mSector = new(position - (new Vector2(MapFactory.MapScale) / 2), MapFactory.MapScale, MapFactory.MapScale);
             
-            for (int i = 0; i < 50; i++) SpaceShipFactory.Spawn(this, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000)), ShipID.Bomber, Fractions.Enemys, out var _);
-            for (int i = 0; i < 50; i++) SpaceShipFactory.Spawn(this, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 100000)), ShipID.Bomber, Fractions.Allied, out var _);
+            for (int i = 0; i < 250; i++) SpaceShipFactory.Spawn(this, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 250000)), ShipID.Bomber, Fractions.Enemys, out var _);
+            for (int i = 0; i < 250; i++) SpaceShipFactory.Spawn(this, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 250000)), ShipID.Bomber, Fractions.Allied, out var _);
 
         }
 

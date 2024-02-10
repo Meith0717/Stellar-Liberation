@@ -5,6 +5,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.DebugSystem;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
@@ -25,6 +27,7 @@ namespace StellarLiberation.Game.Layers
     [Serializable]
     public class GameLayerManager : Layer
     {
+        [JsonIgnore] private readonly FrameCounter mFrameCounter = new(1000);
         [JsonIgnore] public readonly DebugSystem DebugSystem = new();
         [JsonIgnore] private readonly LinkedList<Layer> mLayers = new();
         [JsonProperty] private readonly MapConfig mMapConfig;
@@ -59,19 +62,21 @@ namespace StellarLiberation.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            mFrameCounter.Update(gameTime);
             if (Player.DefenseSystem.HullPercentage == 0) LayerManager.PopLayer();
-            DebugSystem.Update(gameTime, inputState);
+            DebugSystem.Update(inputState);
             inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this)));
             mLayers.Last.Value.Update(gameTime, inputState);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            DebugSystem.UpdateFrameCounting();
-            GraphicsDevice.Clear(Color.Black);
+            mFrameCounter.UpdateFrameCouning();
+             GraphicsDevice.Clear(Color.Black);
             mLayers.Last.Value.Draw(spriteBatch);
             spriteBatch.Begin();
             DebugSystem.DrawOnScreen();
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(1, 1), $"{MathF.Round(mFrameCounter.CurrentFramesPerSecond)} fps", 0.75f, Color.White);
             spriteBatch.End();
         }
 

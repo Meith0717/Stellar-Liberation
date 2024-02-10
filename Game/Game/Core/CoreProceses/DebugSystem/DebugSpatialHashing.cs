@@ -27,7 +27,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.DebugSystem
         public static void Buckets(GameLayer scene, Vector2 mousePosition)
         {
             var screen = scene.Camera2D.Bounds;
-            var size = scene.SpatialHashing.CellSize;
+            var size = scene.SpatialHashing.mCellSize;
             var depth = (int)TextureManager.MaxLayerDepth;
 
             for (int x = 0; x < screen.Right; x += size)

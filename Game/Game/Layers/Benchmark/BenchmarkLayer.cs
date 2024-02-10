@@ -55,11 +55,14 @@ namespace StellarLiberation.Game.Layers.Benchmark
             mFrameCounter.UpdateFrameCouning();
             base.Draw(spriteBatch);
             spriteBatch.Begin();
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 10), $"FPS:     {mFrameCounter.CurrentFramesPerSecond} ", 1, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 40), $"Average: {mFrameCounter.AverageFramesPerSecond} ", 1, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 70), $"Min FPS: {mFrameCounter.MinFramesPerSecond} ", 1, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 100), $"Max FPS: {mFrameCounter.MaxFramesPerSecond} ", 1, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 130), $"Frame:   {mFrameCounter.FrameDuration} ms", 1, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 10), $"FPS:        {mFrameCounter.CurrentFramesPerSecond} ", .75f, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 25), $"Average:    {mFrameCounter.AverageFramesPerSecond} ", .75f, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 40), $"Min FPS:    {mFrameCounter.MinFramesPerSecond} ", .75f, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 55), $"Max FPS:    {mFrameCounter.MaxFramesPerSecond} ", .75f, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 70), $"Frame:      {mFrameCounter.FrameDuration} ms", .75f, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 85), $"", .75f, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 100),$"Objects:    {SpatialHashing.Count}", .75f, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 115),$"Particles:  {ParticleManager.GameObjects2Ds.Count}", .75f, Color.White);
             spriteBatch.End();
         }
 

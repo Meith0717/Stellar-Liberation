@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
+using StellarLiberation.Game.Core.CoreProceses.DebugSystem;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
