@@ -7,7 +7,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 
-namespace StellarLiberation.Game.Core.CoreProceses.Debugger
+namespace StellarLiberation.Game.Core.CoreProceses.DebugSystem
 {
     internal static class DebugSpatialHashing
     {

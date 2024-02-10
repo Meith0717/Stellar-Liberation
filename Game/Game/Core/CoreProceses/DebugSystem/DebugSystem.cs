@@ -14,7 +14,7 @@ using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System;
 using System.Collections.Generic;
 
-namespace StellarLiberation.Game.Core.CoreProceses.Debugger
+namespace StellarLiberation.Game.Core.CoreProceses.DebugSystem
 {
     public class DebugSystem
     {
