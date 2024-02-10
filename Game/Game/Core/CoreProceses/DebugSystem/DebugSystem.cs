@@ -10,6 +10,7 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
+using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.CoreProceses.DebugSystem
 {
@@ -18,6 +19,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.DebugSystem
         public float DrawnObjectCount;
         public float UpdateObjectCount;
 
+        private List<DebugAction> debugActions;
+
         private bool IsDebug;
         private bool DrawBuckets;
         private bool ShowObjectsInBucket;
@@ -25,6 +28,23 @@ namespace StellarLiberation.Game.Core.CoreProceses.DebugSystem
         private bool ShowSensorRadius;
         private bool ShowPaths;
         private bool ShowAi;
+
+        public DebugSystem() 
+        {
+            debugActions = new()
+            {
+                new("Spatial Hashing Grid", ActionType.F1, () => DrawBuckets = !DrawBuckets),
+                new("Objects in Bucket", ActionType.F2, () => ShowObjectsInBucket = !ShowObjectsInBucket),
+                new("Hit Box", ActionType.F3, () => ShowHitBoxes = !ShowHitBoxes),
+                new("Sensor Radius", ActionType.F4, () => ShowSensorRadius = !ShowSensorRadius),
+                new("Moving Direction", ActionType.F5, () => ShowPaths = !ShowPaths),
+                new("AI", ActionType.F6, () => ShowAi = !ShowAi),
+                new("N.A", ActionType.F7, null),
+                new("N.A", ActionType.F8, null),
+                new("N.A", ActionType.F9, null),
+                new("N.A", ActionType.F10, null),
+            };
+        }
 
         public void Update(InputState inputState)
         {
@@ -36,16 +56,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.DebugSystem
                 DrawBuckets = ShowObjectsInBucket = ShowHitBoxes = ShowSensorRadius = ShowPaths = false;
                 return;
             }
-            inputState.DoAction(ActionType.HideHud, () => DrawBuckets = !DrawBuckets);
-            inputState.DoAction(ActionType.F2, () => ShowObjectsInBucket = !ShowObjectsInBucket);
-            inputState.DoAction(ActionType.F3, () => ShowHitBoxes = !ShowHitBoxes);
-            inputState.DoAction(ActionType.F4, () => ShowSensorRadius = !ShowSensorRadius);
-            inputState.DoAction(ActionType.F5, () => ShowPaths = !ShowPaths);
-            inputState.DoAction(ActionType.F6, null);
-            inputState.DoAction(ActionType.F7, null);
-            inputState.DoAction(ActionType.F8, null);
-            inputState.DoAction(ActionType.F9, null);
-            inputState.DoAction(ActionType.F10, () => ShowAi = !ShowAi);
+            foreach (var action in debugActions) action.Update(inputState);
         }
 
         public void DrawOnScene(GameLayer scene)
@@ -58,16 +69,12 @@ namespace StellarLiberation.Game.Core.CoreProceses.DebugSystem
         public void ShowInfo(Vector2 position)
         {
             if (!IsDebug) return;
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 0), "F1 - Draw Spatial Hashing Grid", 1, DrawBuckets ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 25), "F2 - Draw Objects in Bucket", 1, ShowObjectsInBucket ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 50), "F3 - Show Hit Box", 1, ShowHitBoxes ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 75), "F4 - Show Sensor Radius", 1, ShowSensorRadius ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 100), "F5 - Show Paths", 1, ShowPaths ? Color.GreenYellow : Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 125), "N.A", 1, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 150), "N.A", 1, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 175), "N.A", 1, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 200), "N.A", 1, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, position + new Vector2(0, 225), "F10 - Shwo Ai", 1, ShowAi ? Color.GreenYellow : Color.White);
+            foreach (var action in debugActions) 
+            {
+                action.DrawInfo(position, false);
+                position.X += 15;
+            } 
+
         }
 
         public void DrawHitbox(CircleF box, GameLayer scene)

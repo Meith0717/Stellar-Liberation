@@ -12,7 +12,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.DebugSystem
 {
     public class DebugAction
     {
-        public bool IsActive { get; private set; }  
         private readonly string mDescription;
         private readonly ActionType mActionType;
         private readonly Action mUpdateAction;
@@ -24,13 +23,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.DebugSystem
             mUpdateAction = updateAction;
         }
 
-        public void Update(GameTime gameTime, InputState inputState) 
-        {
-            inputState.DoAction(mActionType, () => IsActive = !IsActive);
-            if (!IsActive) return;
-            mUpdateAction?.Invoke();
-        }
+        public void Update(InputState inputState)  => inputState.DoAction(mActionType, mUpdateAction);
 
-        public void DrawInfo(Vector2 position) => TextureManager.Instance.DrawString(FontRegistries.debugFont, position, mDescription, .75f, IsActive ? Color.LightGreen : Color.White);
+        public void DrawInfo(Vector2 position, bool isActive) => TextureManager.Instance.DrawString(FontRegistries.debugFont, position, mDescription, .75f, isActive ? Color.LightGreen : Color.White);
     }
 }

@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement.Peripheral
                 { Keys.I, ActionType.Inventar },
                 { Keys.T, ActionType.Trading },
                 { Keys.Escape, ActionType.ESC },
-                { Keys.F1, ActionType.HideHud },
+                { Keys.F1, ActionType.F1 },
                 { Keys.F2, ActionType.F2 },
                 { Keys.F3, ActionType.F3 },
                 { Keys.F4, ActionType.F4 },
