@@ -19,7 +19,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
     public abstract class GameLayer : Layer
     {
         public readonly Player Player;
-        public DebugSystem.DebugSystem DebugSystem { get; protected set; }
+        public Debugging.DebugSystem DebugSystem { get; protected set; }
         public Vector2 WorldMousePosition { get; private set; }
         public readonly SpatialHashing SpatialHashing;
         public readonly GameObject2DManager ParticleManager;

@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using StellarLiberation.Game.Core.Extensions;
 
 namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
 {
@@ -63,18 +64,5 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
         public IEnumerator<GameObject2D> GetEnumerator() => mValues.GetEnumerator();
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
-    }
-
-    public static class DictionaryExtensions
-    {
-        public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Func<TValue> valueFactory)
-        {
-            if (dictionary.TryGetValue(key, out var value))
-                return value;
-
-            value = valueFactory();
-            dictionary[key] = value;
-            return value;
-        }
     }
 }

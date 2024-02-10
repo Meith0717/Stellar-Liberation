@@ -7,19 +7,17 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 
-namespace StellarLiberation.Game.Core.CoreProceses.DebugSystem
+namespace StellarLiberation.Game.Core.CoreProceses.Debugging
 {
     internal static class DebugSpatialHashing
     {
         public static void ObjectsInBucket(GameLayer scene)
         {
             var GameObjects = scene.SpatialHashing.GetObjectsInBucket((int)scene.WorldMousePosition.X, (int)scene.WorldMousePosition.Y);
-            Color color = Color.Green;
             for (int i = 0; i < GameObjects.Count; i++)
             {
                 var obj = GameObjects.ToList()[i];
-                if (i > 0) color = Color.Blue;
-                TextureManager.Instance.DrawAdaptiveLine(scene.WorldMousePosition, obj.Position, color,
+                TextureManager.Instance.DrawAdaptiveLine(scene.WorldMousePosition, obj.Position, Color.Blue,
                     2, (int)TextureManager.MaxLayerDepth, scene.Camera2D.Zoom);
             }
         }
@@ -48,7 +46,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.DebugSystem
             }
 
             var hash = scene.SpatialHashing.Hash((int)mousePosition.X, (int)mousePosition.Y);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, mousePosition + new Vector2(1, -5) * 5 / scene.Camera2D.Zoom, hash.ToString(), 1 / scene.Camera2D.Zoom, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, mousePosition + new Vector2(1, -5) * 5 / scene.Camera2D.Zoom, $"ID: {hash}", .7f / scene.Camera2D.Zoom, Color.White);
         }
     }
 }

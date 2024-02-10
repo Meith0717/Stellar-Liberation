@@ -2,6 +2,7 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
+using MathNet.Numerics;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
@@ -19,28 +20,26 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
     [Collidable]
     public class Planet : GameObject2D
     {
-        [JsonProperty] public float OrbitRadians;
+        [JsonIgnore] private readonly Vector2 MainBodyPosition = Vector2.Zero;
         [JsonIgnore] private float mShadowRotation;
         [JsonProperty] private readonly int OrbitRadius;
-        [JsonIgnore] private readonly Vector2 mMainBodyPosition;
 
         public Planet(int distanceToStar, float orbitAnle, string textureId, float textureScale)
             : base(Vector2.Zero, textureId, textureScale, 1)
         {
-            mMainBodyPosition = Vector2.Zero;
             OrbitRadius = distanceToStar;
-            OrbitRadians = orbitAnle;
+            Velocity = (float)(Constants.GravitationalConstant * Math.Pow(10, 16)/distanceToStar);
 
-            Position = Geometry.GetPointOnCircle(mMainBodyPosition, OrbitRadius, OrbitRadians);
-            mShadowRotation = Geometry.AngleBetweenVectors(Position, mMainBodyPosition) + MathF.PI;
+            Position = Geometry.GetPointOnCircle(MainBodyPosition, OrbitRadius, orbitAnle);
+            mShadowRotation = Geometry.AngleBetweenVectors(Position, MainBodyPosition) + MathF.PI;
         }
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
             base.Update(gameTime, inputState, scene);
-            OrbitRadians -= (float)(0.000005 * gameTime.ElapsedGameTime.TotalMilliseconds);
-            Position = Geometry.GetPointOnCircle(mMainBodyPosition, OrbitRadius, OrbitRadians);
-            mShadowRotation = Geometry.AngleBetweenVectors(Position, mMainBodyPosition) + MathF.PI;
+            MovingDirection = Transformations.RotateVector(Vector2.Normalize(MainBodyPosition - Position), MathHelper.Pi / 2);
+            GameObject2DMover.Move(gameTime, this, scene.SpatialHashing);
+            mShadowRotation = Geometry.AngleBetweenVectors(Position, MainBodyPosition) + MathF.PI;
             Rotation -= (float)(0.000005 * gameTime.ElapsedGameTime.TotalMilliseconds);
         }
 
