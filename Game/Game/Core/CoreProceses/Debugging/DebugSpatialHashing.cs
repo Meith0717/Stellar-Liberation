@@ -3,6 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
@@ -14,6 +15,14 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugging
     {
         public static void ObjectsInBucket(GameLayer scene)
         {
+            RectangleF rectangle = new(scene.WorldMousePosition, new(10000, 10000));
+            TextureManager.Instance.DrawAdaptiveRectangleF(rectangle, Color.Orange, 1, 1, scene.Camera2D.Zoom);
+            var GameObjects1 = scene.SpatialHashing.GetObjectsInRectangle<GameObject2D>(rectangle);
+            foreach (var obj in GameObjects1)
+            {
+                TextureManager.Instance.DrawAdaptiveLine(scene.WorldMousePosition, obj.Position, Color.Orange,
+                    2, TextureManager.MaxLayerDepth, scene.Camera2D.Zoom);
+            }
             TextureManager.Instance.DrawAdaptiveCircle(scene.WorldMousePosition, 10000, Color.Blue, 1 , 1, scene.Camera2D.Zoom);
             var GameObjects = scene.SpatialHashing.GetObjectsInRadius<GameObject2D>(scene.WorldMousePosition, 10000);
             foreach (var obj in GameObjects)
