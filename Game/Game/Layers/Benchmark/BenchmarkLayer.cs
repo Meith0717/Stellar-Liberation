@@ -15,16 +15,21 @@ using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.Core.CoreProceses.Profiling;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
+using StellarLiberation.Game.Core.Utilitys;
+using System;
 
 namespace StellarLiberation.Game.Layers.Benchmark
 {
     internal class BenchmarkLayer : GameLayer
     {
+        private readonly PlanetSystem mPlanetSystem;
         private readonly GameObject2DManager mGameObject2DManager;
         private readonly FrameCounter mFrameCounter;
         private readonly UiFrame mBackgroundLayer;
         private readonly DataCollector mDataCollector = new(4, ["fps", "renderLatency", "object count", "particle count"]);
         private float CoolDown;
+        private float mRunTime = 180000;
 
         public BenchmarkLayer()
             : base(new(), 50000)
@@ -33,19 +38,25 @@ namespace StellarLiberation.Game.Layers.Benchmark
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn };
             mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
 
-            mFrameCounter = new(200);
+            mFrameCounter = new(100);
 
-            var planetSystem = new PlanetSystem(Vector2.Zero, 2);
-            var objs = planetSystem.GameObjects;
-            objs.AddRange(planetSystem.GetAstronomicalObjects());
-            mGameObject2DManager = new(objs, this, SpatialHashing);
+            mPlanetSystem = new PlanetSystem(Vector2.Zero, 42);
+            mPlanetSystem.GameObjects.AddRange(mPlanetSystem.GetAstronomicalObjects());
+            mGameObject2DManager = new(mPlanetSystem.GameObjects, this, SpatialHashing);
             Camera2D.Zoom = .002f;
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            if (CoolDown < 0) CoolDown = 500;
+            if (mRunTime < 0) End();
+            if (CoolDown < 0) 
+            {
+                CoolDown = 100;
+                SpaceShipFactory.Spawn(mPlanetSystem, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Enemys, out var _);
+                SpaceShipFactory.Spawn(mPlanetSystem, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Allied, out var _);
+            }
             CoolDown -= gameTime.ElapsedGameTime.Milliseconds;
+            mRunTime -= gameTime.ElapsedGameTime.Milliseconds;
 
             DebugSystem.Update(inputState);
             mFrameCounter.Update(gameTime);
@@ -70,7 +81,9 @@ namespace StellarLiberation.Game.Layers.Benchmark
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 70), $"Frame:      {mFrameCounter.FrameDuration} ms", .75f, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 85), $"", .75f, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 100),$"Objects:    {SpatialHashing.Count}", .75f, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 115),$"Particles:  {ParticleManager.GameObjects2Ds.Count}", .75f, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 115), $"Particles:  {ParticleManager.GameObjects2Ds.Count}", .75f, Color.White);
+            TimeSpan timeSpan = TimeSpan.FromMilliseconds(mRunTime);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 150), $"{timeSpan.Minutes} min {timeSpan.Seconds}s ESC => Quit", .75f, Color.White);
             if (CoolDown < 0) mDataCollector.AddData([mFrameCounter.CurrentFramesPerSecond, mFrameCounter.FrameDuration, SpatialHashing.Count, ParticleManager.GameObjects2Ds.Count]);
             DebugSystem.ShowInfo(new Vector2(200, 10));
             spriteBatch.End();

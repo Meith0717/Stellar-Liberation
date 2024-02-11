@@ -24,6 +24,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
 
         public SensorSystem(int shortRangeScanDistance) => ShortRangeScanDistance = shortRangeScanDistance;
 
+        // OPTIMIZE
         public void Scan(PlanetSystem planetSystem, Vector2 spaceShipPosition, Fractions fraction, GameLayer scene)
         {
             LongRangeScan.Clear();

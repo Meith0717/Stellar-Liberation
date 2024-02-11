@@ -14,8 +14,6 @@ using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGeneration;
 using StellarLiberation.Game.Core.GameProceses.SectorManagement;
-using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
@@ -44,9 +42,6 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             for (var i = 0; i < 10; i++) Name += rand.Next(0, 9);
 
             mSector = new(position - (new Vector2(MapFactory.MapScale) / 2), MapFactory.MapScale, MapFactory.MapScale);
-            for (int i = 0; i < 50; i++) SpaceShipFactory.Spawn(this, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 250000)), ShipID.Bomber, Fractions.Enemys, out var _);
-            for (int i = 0; i < 50; i++) SpaceShipFactory.Spawn(this, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 250000)), ShipID.Bomber, Fractions.Allied, out var _);
-
         }
 
         public GameObject2DTypeList GetAstronomicalObjects()

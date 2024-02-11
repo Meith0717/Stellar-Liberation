@@ -16,7 +16,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Profiling
         {
             serializer.CreateFolder(BenchmatksSaveDirectory);
             DateTime currentDateTime = DateTime.Now;
-            var fileName = $"{currentDateTime.ToString("yyyyMMddHHmmss")}.csv";
+            var fileName = $"{currentDateTime.ToString("yyyyMMdd_HHmmss")}.csv";
             var path = Path.Combine(BenchmatksSaveDirectory, fileName);
             using StreamWriter fileWriter = serializer.GetStreamWriter(path);
             // Write header row with data descriptions
