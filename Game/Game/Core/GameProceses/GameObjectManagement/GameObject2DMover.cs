@@ -13,6 +13,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
         {
             spatialHashing?.RemoveObject(gameObject2D, (int)gameObject2D.Position.X, (int)gameObject2D.Position.Y);
             gameObject2D.Position += gameObject2D.MovingDirection * gameObject2D.Velocity * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            gameObject2D.BoundedBox.Position = gameObject2D.Position;
             spatialHashing?.InsertObject(gameObject2D, (int)gameObject2D.Position.X, (int)gameObject2D.Position.Y);
         }
     }
