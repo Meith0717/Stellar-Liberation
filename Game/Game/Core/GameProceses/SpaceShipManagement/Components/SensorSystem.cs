@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
+using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System.Collections.Generic;
@@ -15,29 +16,40 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
 {
     public class SensorSystem
     {
+        private const int MaxCoolDown = 500;
+
         public int ShortRangeScanDistance { get; private set; }
         public GameObject2D FocusObject { get; private set; }
-        public readonly List<GameObject2D> LongRangeScan = new();
-        public readonly List<GameObject2D> ShortRangeScan = new();
-        public readonly List<SpaceShip> OpponentsInRannge = new();
-        public readonly List<SpaceShip> AlliesInRannge = new();
+        public List<GameObject2D> LongRangeScan => mLongRangeScan;
+        public List<SpaceShip> OpponentsInRannge => mOpponentsInRannge;
+        public List<SpaceShip> AlliesInRannge => mAlliesInRannge;
 
-        public SensorSystem(int shortRangeScanDistance) => ShortRangeScanDistance = shortRangeScanDistance;
+        private List<GameObject2D> mLongRangeScan = new();
+        private List<SpaceShip> mOpponentsInRannge = new();
+        private List<SpaceShip> mAlliesInRannge = new();
+
+        private int mCoolDown;
+
+        public SensorSystem(int shortRangeScanDistance)
+        {
+            mCoolDown = ExtendetRandom.Random.Next(MaxCoolDown);
+            ShortRangeScanDistance = shortRangeScanDistance;
+        }
 
         // OPTIMIZE
-        public void Scan(PlanetSystem planetSystem, Vector2 spaceShipPosition, Fractions fraction, GameLayer scene)
+        public void Scan(GameTime gameTime, PlanetSystem planetSystem, Vector2 spaceShipPosition, Fractions fraction, GameLayer scene)
         {
-            LongRangeScan.Clear();
-            LongRangeScan.AddRange(planetSystem.AstronomicalObjs);
+            mCoolDown -= gameTime.ElapsedGameTime.Milliseconds;
+            if (mCoolDown > 0) return;
+            mCoolDown = MaxCoolDown;
 
-            ShortRangeScan.Clear();
-            ShortRangeScan.AddRange(scene.SpatialHashing.GetObjectsInRadius<GameObject2D>(spaceShipPosition, ShortRangeScanDistance));
+            mLongRangeScan = planetSystem.AstronomicalObjs.ToList();
 
-            OpponentsInRannge.Clear();
-            OpponentsInRannge.AddRange(ShortRangeScan.OfType<SpaceShip>().ToList().Where((spaceShip) => spaceShip.Fraction != fraction));
+            List<SpaceShip> shortRangeScan = new();
+            scene.SpatialHashing.GetObjectsInRadius(spaceShipPosition, ShortRangeScanDistance, ref shortRangeScan);
 
-            AlliesInRannge.Clear();
-            AlliesInRannge.AddRange(ShortRangeScan.OfType<SpaceShip>().ToList().Where((spaceShip) => spaceShip.Fraction == fraction));
+            mOpponentsInRannge = shortRangeScan.Where((spaceShip) => spaceShip.Fraction != fraction).ToList();
+            mAlliesInRannge = shortRangeScan.Where((spaceShip) => spaceShip.Fraction == fraction).ToList();
         }
 
         public void Draw(SpaceShip spaceShip, GameLayer scene) => TextureManager.Instance.DrawAdaptiveCircle(spaceShip.Position, ShortRangeScanDistance, new(50, 50, 50, 50), 2.5f, spaceShip.TextureDepth, scene.Camera2D.Zoom);
@@ -45,7 +57,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
         public SpaceShip GetAimingShip(Vector2 spaceShipPosition)
         {
             PriorityQueue<SpaceShip, double> q = new();
-            foreach (var spaceShip1 in OpponentsInRannge)
+            foreach (var spaceShip1 in mOpponentsInRannge)
                 q.Enqueue(spaceShip1, -GetAimingScore(spaceShipPosition, spaceShip1));
             q.TryDequeue(out var spaceShip, out var _);
             return spaceShip;

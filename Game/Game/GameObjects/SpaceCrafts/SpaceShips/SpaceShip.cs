@@ -80,7 +80,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 
             HasProjectileHit(gameTime, gameLayer);
             DefenseSystem.Update(gameTime);
-            SensorSystem.Scan(PlanetSystem, Position, Fraction, gameLayer);
+            SensorSystem.Scan(gameTime, PlanetSystem, Position, Fraction, gameLayer);
             WeaponSystem.Update(gameTime, this, gameLayer);
             mUtilityAi.Update(gameTime, this, gameLayer);
             mTractorBeam.Pull(gameTime, this, gameLayer);
