@@ -26,9 +26,8 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
         /// </summary>
         public void FilterObjs(RectangleF viewFrustum, SpatialHashing spatialHashing)
         {
-            var space = viewFrustum.ToRectangle();
-            var edgeDistance = Vector2.Distance(space.Center.ToVector2(), space.Location.ToVector2());
-            mObjects = spatialHashing.GetObjectsInRadius<GameObject2D>(space.Center.ToVector2(), (int)edgeDistance);
+            mObjects.Clear();
+            spatialHashing.GetObjectsInRectangle(viewFrustum, ref mObjects);
         }
 
         /// <summary>

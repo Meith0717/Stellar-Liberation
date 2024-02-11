@@ -65,7 +65,7 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
 
         public void ClearBuckets() => mSpatialGrids.Clear();
 
-        public GameObject2DTypeList GetObjectsInBucket(int x, int y) => mSpatialGrids.TryGetValue(Hash(x, y), out var objectsInBucket) ? objectsInBucket : new();
+        public bool TryGetObjectsInBucket(int x, int y, out GameObject2DTypeList object2Ds) => mSpatialGrids.TryGetValue(Hash(x, y), out object2Ds);
 
         public void GetObjectsInRadius<T>(Vector2 position, float radius, ref List<T> objectsInRadius, bool sortedByDistance = true) where T : GameObject2D
         {
@@ -81,8 +81,8 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
             {
                 foreach (var y in yRange)
                 {
-                    var objectsInBucket = GetObjectsInBucket(x * mCellSize, y * mCellSize).OfType(typeof(T));
-                    foreach (GameObject2D gameObject in objectsInBucket)
+                    if (!TryGetObjectsInBucket(x * mCellSize, y * mCellSize,out var objectsInBucket)) continue;
+                    foreach (GameObject2D gameObject in objectsInBucket.OfType(typeof(T)))
                     {
                         if (!CircleF.Intersects(lookUpCircle, gameObject.BoundedBox)) continue;
                         objectsInRadius.Add((T)gameObject);
@@ -103,6 +103,38 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
         {
             var objectsInRadius = new List<T>();
             GetObjectsInRadius<T>(position, radius, ref objectsInRadius, sortedByDistance);
+            return objectsInRadius;
+        }
+
+        public void GetObjectsInRectangle<T>(RectangleF searchRectangle, ref List<T> objectsInRectangle) where T : GameObject2D
+        {
+            var startX = (int)Math.Floor(searchRectangle.Left / mCellSize);
+            var endX = (int)Math.Ceiling(searchRectangle.Right / mCellSize);
+            var startY = (int)Math.Floor(searchRectangle.Top / mCellSize);
+            var endY = (int)Math.Ceiling(searchRectangle.Bottom / mCellSize);
+            var xRange = Enumerable.Range(startX, endX - startX + 1);
+            var yRange = Enumerable.Range(startY, endY - startY + 1);
+
+            foreach (var x in xRange)
+            {
+                foreach (var y in yRange)
+                {
+                    if (!TryGetObjectsInBucket(x * mCellSize, y * mCellSize, out var objectsInBucket)) continue;
+                    foreach (GameObject2D gameObject in objectsInBucket.OfType(typeof(T)))
+                    {
+                        if (!searchRectangle.Intersects(gameObject.BoundedBox))
+                            continue;
+
+                        objectsInRectangle.Add((T)gameObject);
+                    }
+                }
+            }
+        }
+
+        public List<T> GetObjectsInRectangle<T>(RectangleF searchRectangle) where T : GameObject2D
+        {
+            var objectsInRadius = new List<T>();
+            GetObjectsInRectangle<T>(searchRectangle, ref objectsInRadius);
             return objectsInRadius;
         }
     }

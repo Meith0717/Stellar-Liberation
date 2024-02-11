@@ -32,7 +32,7 @@ namespace StellarLiberation.Game.Layers.Benchmark
         private float mRunTime = 180000;
 
         public BenchmarkLayer()
-            : base(new(), 50000)
+            : base(new(), 22000)
         {
             DebugSystem = new(true);
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn };
@@ -43,7 +43,7 @@ namespace StellarLiberation.Game.Layers.Benchmark
             mPlanetSystem = new PlanetSystem(Vector2.Zero, 42);
             mPlanetSystem.GameObjects.AddRange(mPlanetSystem.GetAstronomicalObjects());
             mGameObject2DManager = new(mPlanetSystem.GameObjects, this, SpatialHashing);
-            Camera2D.Zoom = .002f;
+            Camera2D.Zoom = 0.002f;
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
@@ -88,7 +88,6 @@ namespace StellarLiberation.Game.Layers.Benchmark
             DebugSystem.ShowInfo(new Vector2(200, 10));
             spriteBatch.End();
         }
-
 
         public override void DrawOnScreenView(SpriteBatch spriteBatch) => mBackgroundLayer.Draw();
         public override void Destroy() { ; }
