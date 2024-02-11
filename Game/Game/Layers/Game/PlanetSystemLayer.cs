@@ -26,7 +26,8 @@ namespace StellarLiberation.Game.Layers.GameLayers
         private readonly UiFrame mBackgroundLayer;
         private readonly Grid mGrid;
 
-        public PlanetSystemLayer(GameLayerManager gameState, PlanetSystem planetSystem, float camZoom) : base(gameState, 50000)
+        public PlanetSystemLayer(GameLayerManager gameState, PlanetSystem planetSystem, float camZoom) 
+            : base(gameState, 22000)
         {
             mPlanetSystem = planetSystem;
             mUnsavedObjects = new(mPlanetSystem.GameObjects, this, SpatialHashing);
