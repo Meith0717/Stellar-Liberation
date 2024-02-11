@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
-using Newtonsoft.Json;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using System;
 using System.Collections.Generic;
@@ -66,46 +65,44 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
 
         public void ClearBuckets() => mSpatialGrids.Clear();
 
-        public GameObject2DTypeList GetObjectsInBucket(int x, int y)
-        {
-            var hash = Hash(x, y);
-            return mSpatialGrids.TryGetValue(hash, out var objectsInBucket) ? objectsInBucket : new();
-        }
+        public GameObject2DTypeList GetObjectsInBucket(int x, int y) => mSpatialGrids.TryGetValue(Hash(x, y), out var objectsInBucket) ? objectsInBucket : new();
 
-        public List<T> GetObjectsInRadius<T>(Vector2 position, float radius, bool sortedByDistance = true) where T : GameObject2D
+        public void GetObjectsInRadius<T>(Vector2 position, float radius, ref List<T> objectsInRadius, bool sortedByDistance = true) where T : GameObject2D
         {
-            // Determine the range of bucket indices that fall within the radius.
             var startX = (int)Math.Floor((position.X - radius) / mCellSize);
             var endX = (int)Math.Ceiling((position.X + radius) / mCellSize);
             var startY = (int)Math.Floor((position.Y - radius) / mCellSize);
             var endY = (int)Math.Ceiling((position.Y + radius) / mCellSize);
+            var xRange = Enumerable.Range(startX, endX - startX + 1);
+            var yRange = Enumerable.Range(startY, endY - startY + 1);
+            var lookUpCircle = new CircleF(position, radius);
 
-            List<T> objectsInRadius = new();
-
-            foreach (var x in Enumerable.Range(startX, endX - startX + 1))
+            foreach (var x in xRange)
             {
-                foreach (var y in Enumerable.Range(startY, endY - startY + 1))
+                foreach (var y in yRange)
                 {
                     var objectsInBucket = GetObjectsInBucket(x * mCellSize, y * mCellSize).OfType(typeof(T));
                     foreach (GameObject2D gameObject in objectsInBucket)
                     {
-                        var circle = new CircleF(position, radius);
-                        if (CircleF.Intersects(circle, gameObject.BoundedBox)) 
-                            objectsInRadius.Add((T)gameObject);
+                        if (!CircleF.Intersects(lookUpCircle, gameObject.BoundedBox)) continue;
+                        objectsInRadius.Add((T)gameObject);
                     }
                 }
             }
 
-            if (!sortedByDistance) return objectsInRadius;
-
-            // Sort the objects by distance to the specified position
+            if (!sortedByDistance) return;
             objectsInRadius.Sort((obj1, obj2) =>
             {
                 var distance1 = Vector2.DistanceSquared(position, obj1.Position);
                 var distance2 = Vector2.DistanceSquared(position, obj2.Position);
                 return distance1.CompareTo(distance2);
             });
+        }
 
+        public List<T> GetObjectsInRadius<T>(Vector2 position, float radius, bool sortedByDistance = true) where T : GameObject2D
+        {
+            var objectsInRadius = new List<T>();
+            GetObjectsInRadius<T>(position, radius, ref objectsInRadius, sortedByDistance);
             return objectsInRadius;
         }
     }
