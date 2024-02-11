@@ -15,7 +15,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
     {
         [JsonProperty] public int Count => mValues.Count;
         [JsonProperty] private readonly Dictionary<Type, HashSet<GameObject2D>> mKeyValuePairs;
-        [JsonProperty] private readonly HashSet<GameObject2D> mValues;
+        [JsonProperty] private readonly List<GameObject2D> mValues;
 
         public GameObject2DTypeList()
         {
@@ -32,9 +32,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
 
         public void AddRange(IEnumerable<GameObject2D> gameObjects)
         {
-            if (gameObjects == null)
-                throw new ArgumentNullException(nameof(gameObjects));
-
+            ArgumentNullException.ThrowIfNull(gameObjects);
             foreach (var gameObject in gameObjects) Add(gameObject);
         }
 
@@ -49,17 +47,16 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             return true;
         }
 
-        public HashSet<GameObject2D> OfType(Type type)
+        public IEnumerable<GameObject2D> OfType(Type type)
         {
-            if (type == null)
-                throw new ArgumentNullException(nameof(type));
+            ArgumentNullException.ThrowIfNull(type);
             if (type == typeof(GameObject2D))
                 return mValues;
 
             return mKeyValuePairs.TryGetValue(type, out var list) ? list : new();
         }
 
-        public List<GameObject2D> ToList() => mValues.ToList();
+        public List<GameObject2D> ToList() => mValues;
 
         public IEnumerator<GameObject2D> GetEnumerator() => mValues.GetEnumerator();
 

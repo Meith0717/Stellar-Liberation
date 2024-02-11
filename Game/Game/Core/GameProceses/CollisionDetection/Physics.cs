@@ -31,7 +31,7 @@ namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection
         {
             mass = 0;
             var type = gameObject2D.GetType();
-            var collisionAttribute = (CollidableAttribute)Attribute.GetCustomAttribute(type, typeof(CollidableAttribute));
+            var collisionAttribute = (CollidableAttribute)Attribute.GetCustomAttribute(type, typeof(CollidableAttribute)); // BAD
             if (collisionAttribute == null) return false;
             mass = collisionAttribute.Mass;
             return true;
