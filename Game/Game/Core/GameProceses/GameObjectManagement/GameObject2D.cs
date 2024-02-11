@@ -18,7 +18,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
         [JsonIgnore] protected GameLayer GameLayer { get; private set; }
 
         // Phisics Stuff
-        public CircleF BoundedBox => new(Position, MathF.Max(mTextureHeight, mTextureWidth) / 2 * TextureScale);
+        [JsonProperty] public CircleF BoundedBox;
         [JsonProperty] public Vector2 Position;
         [JsonProperty] public float Rotation;
         [JsonProperty] public Vector2 MovingDirection;
@@ -26,10 +26,10 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
 
         // Texture Stuff
         [JsonProperty] public Color TextureColor;
-        [JsonProperty] public float TextureScale;
         [JsonProperty] public readonly string TextureId;
         [JsonProperty] public readonly int TextureDepth;
         [JsonProperty] public readonly Vector2 TextureOffset;
+        [JsonProperty] public readonly float TextureScale;
         [JsonProperty] private readonly int mTextureWidth;
         [JsonProperty] private readonly int mTextureHeight;
 
@@ -51,7 +51,10 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             TextureOffset = Vector2.Divide(new(mTextureWidth, mTextureHeight), 2);
             DisposeTime = double.PositiveInfinity;
             UpdatePosition = updatePosition;
+            UpdateScale(TextureScale);
         }
+
+        public void UpdateScale(float scale) => BoundedBox = new(Position, MathF.Max(mTextureHeight, mTextureWidth) / 2 * scale);
 
         public virtual void Initialize(GameLayer gameLayer, bool addToSpatialHash = true)
         {

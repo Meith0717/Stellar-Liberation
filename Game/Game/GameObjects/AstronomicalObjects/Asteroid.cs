@@ -42,7 +42,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
                 gotHit = true;
             }
             if (!gotHit) return;
-            TextureScale -= 0.05f;
+            UpdateScale(TextureScale - 0.05f);
             if (TextureScale < 0.2f) Dispose = true;
             if (position is null) return;
             var momentum = Vector2.Normalize((Vector2)position - Position);
