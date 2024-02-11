@@ -24,6 +24,7 @@ namespace StellarLiberation.Game.Layers.Benchmark
         private readonly FrameCounter mFrameCounter;
         private readonly UiFrame mBackgroundLayer;
         private readonly DataCollector mDataCollector = new(4, ["fps", "renderLatency", "object count", "particle count"]);
+        private float CoolDown;
 
         public BenchmarkLayer()
             : base(new(), 50000)
@@ -43,6 +44,9 @@ namespace StellarLiberation.Game.Layers.Benchmark
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            if (CoolDown < 0) CoolDown = 500;
+            CoolDown -= gameTime.ElapsedGameTime.Milliseconds;
+
             DebugSystem.Update(inputState);
             mFrameCounter.Update(gameTime);
             inputState.DoAction(ActionType.ESC, End);
@@ -67,7 +71,7 @@ namespace StellarLiberation.Game.Layers.Benchmark
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 85), $"", .75f, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 100),$"Objects:    {SpatialHashing.Count}", .75f, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 115),$"Particles:  {ParticleManager.GameObjects2Ds.Count}", .75f, Color.White);
-            mDataCollector.AddData([mFrameCounter.CurrentFramesPerSecond, mFrameCounter.FrameDuration, SpatialHashing.Count, ParticleManager.GameObjects2Ds.Count]);
+            if (CoolDown < 0) mDataCollector.AddData([mFrameCounter.CurrentFramesPerSecond, mFrameCounter.FrameDuration, SpatialHashing.Count, ParticleManager.GameObjects2Ds.Count]);
             DebugSystem.ShowInfo(new Vector2(200, 10));
             spriteBatch.End();
         }

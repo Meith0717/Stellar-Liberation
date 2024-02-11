@@ -26,6 +26,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Profiling
         {
             if (frameData.Count != mRecordCount) throw new System.ArgumentException();
             Data.Add(frameData);
+            System.Diagnostics.Debug.Write("Data Collect");
         }
     }
 }
