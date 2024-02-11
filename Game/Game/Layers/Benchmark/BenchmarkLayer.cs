@@ -60,7 +60,7 @@ namespace StellarLiberation.Game.Layers.Benchmark
 
             DebugSystem.Update(inputState);
             mFrameCounter.Update(gameTime);
-            inputState.DoAction(ActionType.ESC, End);
+            inputState.DoAction(ActionType.ESC, LayerManager.PopLayer);
             base.Update(gameTime, inputState);
             Camera2DMover.UpdateCameraByMouseDrag(inputState, Camera2D);
             Camera2DMover.MoveByKeys(inputState, Camera2D);
