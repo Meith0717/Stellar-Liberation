@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 
 namespace StellarLiberation.Game.Core.CoreProceses.Debugging
 {
@@ -13,12 +14,12 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugging
     {
         public static void ObjectsInBucket(GameLayer scene)
         {
-            var GameObjects = scene.SpatialHashing.GetObjectsInBucket((int)scene.WorldMousePosition.X, (int)scene.WorldMousePosition.Y);
-            for (int i = 0; i < GameObjects.Count; i++)
+            TextureManager.Instance.DrawAdaptiveCircle(scene.WorldMousePosition, 10000, Color.Blue, 1 , 1, scene.Camera2D.Zoom);
+            var GameObjects = scene.SpatialHashing.GetObjectsInRadius<GameObject2D>(scene.WorldMousePosition, 10000);
+            foreach (var obj in GameObjects)
             {
-                var obj = GameObjects.ToList()[i];
                 TextureManager.Instance.DrawAdaptiveLine(scene.WorldMousePosition, obj.Position, Color.Blue,
-                    2, (int)TextureManager.MaxLayerDepth, scene.Camera2D.Zoom);
+                    2, TextureManager.MaxLayerDepth, scene.Camera2D.Zoom);
             }
         }
 
