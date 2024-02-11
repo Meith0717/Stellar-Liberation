@@ -10,10 +10,9 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugging
 {
     public class FrameCounter
     {
-        private const int MaximumSamples = 1000;
-        private readonly Queue<float> mSampleBuffer = new();
+        private int mSamples;
+        private float mSummedFps;
         private GameTime mGameTime;
-        private double mStartTime, mEndTime;
         private readonly int mMaxCoolDown;
         private int mCoolDown;
 
@@ -36,19 +35,19 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugging
 
         public void UpdateFrameCouning()
         {
+            TotalFrames++;
             if (mGameTime == null) { return; }
             if (mCoolDown > 0) { return; }
-            mStartTime = mGameTime.ElapsedGameTime.TotalMilliseconds;
+
+            mSamples++;
             float deltaTime = (float)(mGameTime.ElapsedGameTime.TotalMilliseconds / 1000);
             FrameDuration = mGameTime.ElapsedGameTime.Milliseconds;
             CurrentFramesPerSecond = 1.0f / deltaTime;
+            mSummedFps += CurrentFramesPerSecond;
             MinFramesPerSecond = MathHelper.Min(CurrentFramesPerSecond, MinFramesPerSecond);
             MaxFramesPerSecond = MathHelper.Max(CurrentFramesPerSecond, MaxFramesPerSecond);
-            mSampleBuffer.Enqueue(CurrentFramesPerSecond);
-            if (mSampleBuffer.Count > MaximumSamples) mSampleBuffer.Dequeue();
-            AverageFramesPerSecond = mSampleBuffer.Average(i => i);
+            AverageFramesPerSecond = mSummedFps / mSamples;
             TotalSeconds += (float)mGameTime.ElapsedGameTime.TotalSeconds;
-            TotalFrames++;
         }
     }
 }
