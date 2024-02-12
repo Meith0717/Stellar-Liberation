@@ -88,7 +88,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 
             if (DefenseSystem.HullPercentage > 0) return;
             ExplosionEffect.ShipDestroyed(Position, MovingDirection, gameLayer.ParticleManager, gameLayer.GameSettings.ParticlesMultiplier);
-            Dispose = true;
+            IsDisposed = true;
             var distance = Vector2.Distance(gameLayer.Camera2D.Position, Position);
             var threshold = MathHelper.Clamp(1 - (distance / 7500), 0, 1);
             gameLayer.CameraShaker.Shake(200 * threshold, 1);

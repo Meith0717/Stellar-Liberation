@@ -47,7 +47,7 @@ namespace StellarLiberation.Game.GameObjects
 
         public override void HasCollide(Vector2 position, GameLayer scene)
         {
-            Dispose = true;
+            IsDisposed = true;
             Position = position;
             Velocity = 0;
         }

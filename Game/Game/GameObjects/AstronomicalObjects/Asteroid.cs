@@ -43,7 +43,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             }
             if (!gotHit) return;
             UpdateScale(TextureScale - 0.05f);
-            if (TextureScale < 0.2f) Dispose = true;
+            if (TextureScale < 0.2f) IsDisposed = true;
             if (position is null) return;
             var momentum = Vector2.Normalize((Vector2)position - Position);
             ExplosionEffect.AsteroidHit((Vector2)position, momentum, gameLayer.ParticleManager, gameLayer.GameSettings.ParticlesMultiplier);

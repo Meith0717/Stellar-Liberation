@@ -29,7 +29,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
 
         public void Add(Item item)
         {
-            item.Dispose = true;
+            item.IsDisposed = true;
 
             if (!keyValuePairs.TryGetValue(item.ItemID, out var hashItems))
                 keyValuePairs[item.ItemID] = hashItems = new();
