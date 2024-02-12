@@ -13,8 +13,10 @@ using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceStations
 {
     [Collidable]
-    public class ScienceStation : GameObject2D
+    public class ScienceStation : GameObject2D, ICollidable
     {
+        public float Mass =>float.PositiveInfinity;
+
         public ScienceStation(Vector2 position)
             : base(position, GameSpriteRegistries.scienceStation, 1, 20) { }
 

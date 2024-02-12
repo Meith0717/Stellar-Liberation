@@ -18,11 +18,13 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
     [Serializable]
     [Collidable]
-    public class Planet : GameObject2D
+    public class Planet : GameObject2D, ICollidable
     {
         [JsonIgnore] private readonly Vector2 MainBodyPosition = Vector2.Zero;
         [JsonIgnore] private float mShadowRotation;
         [JsonProperty] private readonly int OrbitRadius;
+
+        public float Mass => float.PositiveInfinity;
 
         public Planet(int distanceToStar, float orbitAnle, string textureId, float textureScale)
             : base(Vector2.Zero, textureId, textureScale, 1)

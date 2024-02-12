@@ -30,17 +30,16 @@ namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection
         private static bool TryGetGetMass(GameObject2D gameObject2D, out float mass)
         {
             mass = 0;
-            var type = gameObject2D.GetType();
-            var collisionAttribute = (CollidableAttribute)Attribute.GetCustomAttribute(type, typeof(CollidableAttribute)); // BAD
-            if (collisionAttribute == null) return false;
-            mass = collisionAttribute.Mass;
+            if (gameObject2D is not ICollidable) return false;
+            var collidable = (ICollidable)gameObject2D;
+            mass = collidable.Mass;
             return true;
         }
 
         public static void HandleCollision(GameTime gameTime, GameObject2D gameObject2D, SpatialHashing spatialHashing)
         {
             if (!TryGetGetMass(gameObject2D, out var m1)) return;
-            var objts = spatialHashing.GetObjectsInRadius<GameObject2D>(gameObject2D.Position, gameObject2D.BoundedBox.Diameter);
+            var objts = spatialHashing.GetCollidabelInRadius(gameObject2D.Position, gameObject2D.BoundedBox.Radius);
             objts.Remove(gameObject2D);
             foreach (var obj in objts)
             {

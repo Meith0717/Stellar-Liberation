@@ -29,7 +29,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 {
     [Serializable]
     [Collidable(5f)]
-    public class SpaceShip : GameObject2D
+    public class SpaceShip : GameObject2D, ICollidable
     {
         [JsonIgnore] protected readonly UtilityAi mUtilityAi = new();
         [JsonIgnore] public readonly HyperDrive HyperDrive = new();
@@ -43,6 +43,8 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
         [JsonIgnore] private readonly TractorBeam mTractorBeam;
         [JsonIgnore] private readonly Color mAccentColor;
         [JsonProperty] public PlanetSystem PlanetSystem;
+
+        public float Mass { get => 5; } 
 
         public SpaceShip(Vector2 position, SpaceShipConfig config)
             : base(position, config.TextureID, config.TextureScale, 10)

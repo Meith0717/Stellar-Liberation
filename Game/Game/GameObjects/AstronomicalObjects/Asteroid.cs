@@ -14,8 +14,10 @@ using System.Linq;
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
     [Collidable(50)]
-    public class Asteroid : GameObject2D
+    public class Asteroid : GameObject2D, ICollidable
     {
+        public float Mass { get => 50; }
+
         public Asteroid(Vector2 position, string textureID, float textureScale)
             : base(position, textureID, textureScale, 50) { }
 
