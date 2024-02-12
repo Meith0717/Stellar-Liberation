@@ -32,7 +32,7 @@ namespace StellarLiberation.Game.Layers.Benchmark
         private float mRunTime = 180000;
 
         public BenchmarkLayer()
-            : base(new(), 22000)
+            : base(new(), 10000)
         {
             DebugSystem = new(true);
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn };
@@ -52,8 +52,8 @@ namespace StellarLiberation.Game.Layers.Benchmark
             if (CoolDown < 0) 
             {
                 CoolDown = 100;
-                SpaceShipFactory.Spawn(mPlanetSystem, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Enemys, out var _);
-                SpaceShipFactory.Spawn(mPlanetSystem, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Allied, out var _);
+                SpaceShipFactory.Spawn(mPlanetSystem, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Bomber, Core.GameProceses.Fractions.Enemys, out var _);
+                SpaceShipFactory.Spawn(mPlanetSystem, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Bomber, Core.GameProceses.Fractions.Allied, out var _);
             }
             CoolDown -= gameTime.ElapsedGameTime.Milliseconds;
             mRunTime -= gameTime.ElapsedGameTime.Milliseconds;
@@ -71,6 +71,7 @@ namespace StellarLiberation.Game.Layers.Benchmark
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            GraphicsDevice.Clear(Color.Black);
             mFrameCounter.UpdateFrameCouning();
             base.Draw(spriteBatch);
             spriteBatch.Begin();

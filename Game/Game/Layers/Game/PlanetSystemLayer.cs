@@ -27,11 +27,11 @@ namespace StellarLiberation.Game.Layers.GameLayers
         private readonly Grid mGrid;
 
         public PlanetSystemLayer(GameLayerManager gameState, PlanetSystem planetSystem, float camZoom) 
-            : base(gameState, 22000)
+            : base(gameState, 10000)
         {
             mPlanetSystem = planetSystem;
-            mUnsavedObjects = new(mPlanetSystem.GameObjects, this, SpatialHashing);
-            mSavedObjects = new(mPlanetSystem.GetAstronomicalObjects(), this, SpatialHashing);
+            mUnsavedObjects = new(mPlanetSystem.GetAstronomicalObjects(), this, SpatialHashing);
+            mSavedObjects = new(mPlanetSystem.GameObjects, this, SpatialHashing);
             gameState.Player.PlanetSystem = planetSystem;
 
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn };
