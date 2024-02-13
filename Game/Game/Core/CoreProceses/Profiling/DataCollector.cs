@@ -12,19 +12,19 @@ namespace StellarLiberation.Game.Core.CoreProceses.Profiling
     {
         public readonly List<string> Lables;
         public readonly List<List<float>> Data;
-        private readonly int mRecordCount;
+        private readonly int mDataSetCount;
 
         public DataCollector(int recordCount, List<string> lables) 
         {
             if (lables.Count != recordCount) throw new System.ArgumentException();
-            mRecordCount = recordCount;
+            mDataSetCount = recordCount;
             Lables = lables;
             Data = new();
         }
 
         public void AddData(List<float> frameData)
         {
-            if (frameData.Count != mRecordCount) throw new System.ArgumentException();
+            if (frameData.Count != mDataSetCount) throw new System.ArgumentException();
             Data.Add(frameData);
             System.Diagnostics.Debug.Write("Data Collect");
         }

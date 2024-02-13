@@ -37,7 +37,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
                 OnClickAction = () =>
             {
                 LayerManager.AddLayer(new LoadingLayer(false));
-                PersistanceManager.LoadAsync<GameLayerManager>(PersistanceManager.GameSaveFilePath, (gameState) => { LayerManager.PopLayer(); LayerManager.AddLayer(gameState); }, (ex) => { throw ex; });
+                PersistanceManager.LoadAsync<GameLayerManager>(PersistanceManager.GameSaveFilePath, (gameState) => { LayerManager.PopLayer(); LayerManager.AddLayer(gameState); }, (ex) => { LayerManager.PopLayer(); });
             }
             });
 
