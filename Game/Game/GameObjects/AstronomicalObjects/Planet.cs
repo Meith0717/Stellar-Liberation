@@ -1,5 +1,5 @@
 ﻿// Planet.cs 
-// Copyright (c) 2023 Thierry Meiers 
+// Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using MathNet.Numerics;
@@ -18,13 +18,11 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
     [Serializable]
     [Collidable]
-    public class Planet : GameObject2D, ICollidable
+    public class Planet : GameObject2D
     {
         [JsonIgnore] private readonly Vector2 MainBodyPosition = Vector2.Zero;
         [JsonIgnore] private float mShadowRotation;
         [JsonProperty] private readonly int OrbitRadius;
-
-        public float Mass => float.PositiveInfinity;
 
         public Planet(int distanceToStar, float orbitAnle, string textureId, float textureScale)
             : base(Vector2.Zero, textureId, textureScale, 1)

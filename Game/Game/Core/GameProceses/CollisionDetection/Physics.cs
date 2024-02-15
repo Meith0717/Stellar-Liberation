@@ -1,5 +1,5 @@
 ﻿// Physics.cs 
-// Copyright (c) 2023 Thierry Meiers 
+// Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
@@ -30,16 +30,17 @@ namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection
         private static bool TryGetGetMass(GameObject2D gameObject2D, out float mass)
         {
             mass = 0;
-            if (gameObject2D is not ICollidable) return false;
-            var collidable = (ICollidable)gameObject2D;
-            mass = collidable.Mass;
+            var type = gameObject2D.GetType();
+            var collisionAttribute = (CollidableAttribute)Attribute.GetCustomAttribute(type, typeof(CollidableAttribute)); // BAD
+            if (collisionAttribute == null) return false;
+            mass = collisionAttribute.Mass;
             return true;
         }
 
         public static void HandleCollision(GameTime gameTime, GameObject2D gameObject2D, SpatialHashing spatialHashing)
         {
             if (!TryGetGetMass(gameObject2D, out var m1)) return;
-            var objts = spatialHashing.GetCollidabelInRadius(gameObject2D.Position, gameObject2D.BoundedBox.Radius);
+            var objts = spatialHashing.GetObjectsInRadius<GameObject2D>(gameObject2D.Position, gameObject2D.BoundedBox.Diameter);
             objts.Remove(gameObject2D);
             foreach (var obj in objts)
             {

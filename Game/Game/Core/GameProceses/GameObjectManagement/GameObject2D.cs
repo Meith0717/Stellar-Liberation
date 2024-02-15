@@ -1,5 +1,5 @@
 ﻿// GameObject2D.cs 
-// Copyright (c) 2023 Thierry Meiers 
+// Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
@@ -15,6 +15,8 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
     [Serializable]
     public abstract class GameObject2D
     {
+        [JsonIgnore] protected GameLayer GameLayer { get; private set; }
+
         // Phisics Stuff
         [JsonProperty] public CircleF BoundedBox;
         [JsonProperty] public Vector2 Position;
@@ -28,13 +30,15 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
         [JsonProperty] public readonly int TextureDepth;
         [JsonProperty] public readonly Vector2 TextureOffset;
         [JsonProperty] public readonly float TextureScale;
-        [JsonProperty] private readonly float mMaxTextureDimension;
+        [JsonProperty] private readonly int mTextureWidth;
+        [JsonProperty] private readonly int mTextureHeight;
 
         // Managing Stuff
-        [JsonProperty] public double DisposeTime;
-        [JsonIgnore] public bool IsDisposed;
+        [JsonIgnore] public bool Dispose;
+        [JsonIgnore] public double DisposeTime;
+        [JsonIgnore] public readonly bool UpdatePosition;
 
-        internal GameObject2D(Vector2 position, string textureId, float textureScale, int textureDepth)
+        internal GameObject2D(Vector2 position, string textureId, float textureScale, int textureDepth, bool updatePosition = true)
         {
             Position = position;
             TextureId = textureId;
@@ -42,23 +46,27 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             TextureDepth = textureDepth;
             TextureColor = Color.White;
 
-            var texture = TextureManager.Instance.GetTexture(TextureId);
-            mMaxTextureDimension = MathF.Max(texture.Width, texture.Height);
-            TextureOffset = Vector2.Divide(new(texture.Width, texture.Height), 2);
+            mTextureWidth = TextureManager.Instance.GetTexture(textureId).Width;
+            mTextureHeight = TextureManager.Instance.GetTexture(textureId).Height;
+            TextureOffset = Vector2.Divide(new(mTextureWidth, mTextureHeight), 2);
             DisposeTime = double.PositiveInfinity;
+            UpdatePosition = updatePosition;
             UpdateScale(TextureScale);
         }
 
-        public void UpdateScale(float scale)
+        public void UpdateScale(float scale) => BoundedBox = new(Position, MathF.Max(mTextureHeight, mTextureWidth) / 2 * scale);
+
+        public virtual void Initialize(GameLayer gameLayer, bool addToSpatialHash = true)
         {
-            BoundedBox.Position = Position;
-            BoundedBox.Radius = mMaxTextureDimension / 2 * scale;
+            GameLayer = gameLayer;
+            if (!addToSpatialHash) return;
+            GameLayer.SpatialHashing?.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
 
         public virtual void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
             DisposeTime -= gameTime.ElapsedGameTime.TotalMilliseconds;
-            IsDisposed = double.IsNegative(DisposeTime - 1) | IsDisposed;
+            Dispose = double.IsNegative(DisposeTime - 1) | Dispose;
             scene.DebugSystem.UpdateObjectCount += 1;
         }
 

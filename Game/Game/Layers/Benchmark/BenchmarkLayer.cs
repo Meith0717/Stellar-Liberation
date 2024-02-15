@@ -1,5 +1,5 @@
-﻿// BenchmarkSetupLayer.cs 
-// Copyright (c) 2023 Thierry Meiers 
+﻿// BenchmarkLayer.cs 
+// Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
@@ -27,7 +27,7 @@ namespace StellarLiberation.Game.Layers.Benchmark
         private readonly GameObject2DManager mGameObject2DManager;
         private readonly FrameCounter mFrameCounter;
         private readonly UiFrame mBackgroundLayer;
-        private readonly DataCollector mDataCollector = new(4, ["fps", "renderLatency", "object count", "particle count"]);
+        private readonly DataCollector mDataCollector = new(4, ["fps", "render time", "object count", "particle count"]);
         private float CoolDown;
         private float mRunTime = 180000;
 
@@ -52,8 +52,9 @@ namespace StellarLiberation.Game.Layers.Benchmark
             if (CoolDown < 0) 
             {
                 CoolDown = 100;
-                SpaceShipFactory.Spawn(mPlanetSystem, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Bomber, Core.GameProceses.Fractions.Enemys, out var _);
-                SpaceShipFactory.Spawn(mPlanetSystem, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Bomber, Core.GameProceses.Fractions.Allied, out var _);
+                SpaceShipFactory.Spawn(mPlanetSystem, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Enemys, out var _);
+                SpaceShipFactory.Spawn(mPlanetSystem, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Allied, out var _);
+                mDataCollector.AddData([mFrameCounter.CurrentFramesPerSecond, mFrameCounter.FrameDuration, SpatialHashing.Count, ParticleManager.GameObjects2Ds.Count]);
             }
             CoolDown -= gameTime.ElapsedGameTime.Milliseconds;
             mRunTime -= gameTime.ElapsedGameTime.Milliseconds;
@@ -85,7 +86,6 @@ namespace StellarLiberation.Game.Layers.Benchmark
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 115), $"Particles:  {ParticleManager.GameObjects2Ds.Count}", .75f, Color.White);
             TimeSpan timeSpan = TimeSpan.FromMilliseconds(mRunTime);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 150), $"{timeSpan.Minutes} min {timeSpan.Seconds}s ESC => Quit", .75f, Color.White);
-            if (CoolDown < 0) mDataCollector.AddData([mFrameCounter.CurrentFramesPerSecond, mFrameCounter.FrameDuration, SpatialHashing.Count, ParticleManager.GameObjects2Ds.Count]);
             DebugSystem.ShowInfo(new Vector2(200, 10));
             spriteBatch.End();
         }

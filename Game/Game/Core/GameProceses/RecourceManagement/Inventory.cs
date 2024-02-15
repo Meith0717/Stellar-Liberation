@@ -1,5 +1,5 @@
 ﻿// Inventory.cs 
-// Copyright (c) 2023 Thierry Meiers 
+// Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using Newtonsoft.Json;
@@ -29,7 +29,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
 
         public void Add(Item item)
         {
-            item.IsDisposed = true;
+            item.Dispose = true;
 
             if (!keyValuePairs.TryGetValue(item.ItemID, out var hashItems))
                 keyValuePairs[item.ItemID] = hashItems = new();

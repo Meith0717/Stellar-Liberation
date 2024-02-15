@@ -1,5 +1,5 @@
 ﻿// SpaceShip.cs 
-// Copyright (c) 2023 Thierry Meiers 
+// Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
@@ -29,7 +29,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 {
     [Serializable]
     [Collidable(5f)]
-    public class SpaceShip : GameObject2D, ICollidable
+    public class SpaceShip : GameObject2D
     {
         [JsonIgnore] protected readonly UtilityAi mUtilityAi = new();
         [JsonIgnore] public readonly HyperDrive HyperDrive = new();
@@ -43,8 +43,6 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
         [JsonIgnore] private readonly TractorBeam mTractorBeam;
         [JsonIgnore] private readonly Color mAccentColor;
         [JsonProperty] public PlanetSystem PlanetSystem;
-
-        public float Mass { get => 5; } 
 
         public SpaceShip(Vector2 position, SpaceShipConfig config)
             : base(position, config.TextureID, config.TextureScale, 10)
@@ -90,7 +88,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 
             if (DefenseSystem.HullPercentage > 0) return;
             ExplosionEffect.ShipDestroyed(Position, MovingDirection, gameLayer.ParticleManager, gameLayer.GameSettings.ParticlesMultiplier);
-            IsDisposed = true;
+            Dispose = true;
             var distance = Vector2.Distance(gameLayer.Camera2D.Position, Position);
             var threshold = MathHelper.Clamp(1 - (distance / 7500), 0, 1);
             gameLayer.CameraShaker.Shake(200 * threshold, 1);
