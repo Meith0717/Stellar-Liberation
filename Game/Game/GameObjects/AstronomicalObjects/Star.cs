@@ -14,7 +14,6 @@ using System;
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
     [Serializable]
-    [Collidable]
     public class Star : GameObject2D, ICollidable
     {
         [JsonProperty] public readonly int Kelvin;

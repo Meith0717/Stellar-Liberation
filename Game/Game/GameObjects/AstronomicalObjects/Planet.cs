@@ -17,7 +17,6 @@ using System;
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
     [Serializable]
-    [Collidable]
     public class Planet : GameObject2D, ICollidable
     {
         [JsonIgnore] private readonly Vector2 MainBodyPosition = Vector2.Zero;

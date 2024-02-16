@@ -13,7 +13,6 @@ using System.Linq;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
-    [Collidable(50)]
     public class Asteroid : GameObject2D, ICollidable
     {
         public float Mass { get => 50; }

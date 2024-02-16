@@ -28,7 +28,6 @@ using System.Linq;
 namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 {
     [Serializable]
-    [Collidable(5f)]
     public class SpaceShip : GameObject2D, ICollidable
     {
         [JsonIgnore] protected readonly UtilityAi mUtilityAi = new();
