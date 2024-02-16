@@ -1,5 +1,5 @@
-﻿// BenchmarkSetupLayer.cs 
-// Copyright (c) 2023 Thierry Meiers 
+﻿// BenchmarkLayer.cs 
+// Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
