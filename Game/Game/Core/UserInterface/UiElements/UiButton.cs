@@ -1,5 +1,5 @@
-﻿// UiButton.cs 
-// Copyright (c) 2023-2024 Thierry Meiers 
+﻿// NewUiButton.cs 
+// Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
@@ -7,7 +7,6 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using System;
-using System.Runtime.CompilerServices;
 
 namespace StellarLiberation.Game.Core.UserInterface.UiElements
 {
@@ -42,7 +41,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             IsHover = Canvas.Contains(inputState.mMousePosition);
             if (IsHover && !IsDisabled && IsHover != mLastHoverState) SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.hover);
             mLastHoverState = IsHover;
-            if (IsHover & !IsDisabled)
+            if (IsHover)
             {
                 mScaling += (float)(0.01d * gameTime.ElapsedGameTime.TotalMilliseconds);
                 inputState.DoAction(ActionType.Select, () => { OnClickAction?.Invoke(); IsHover = false; mScaling = 1; });
@@ -51,10 +50,9 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
                 mScaling -= (float)(0.01d * gameTime.ElapsedGameTime.TotalMilliseconds);
             }
             mScaling = MathHelper.Clamp(mScaling, 1, 1.05f);
-            Color = IsDisabled ? new(20, 20, 20, 20) : IsHover ? new(51, 204, 204) : Color.White;
+            Color = IsDisabled ? Color.Transparent : IsHover ? new(51, 204, 204) : new(128, 128, 128);
 
             base.Update(inputState, gameTime, root, uiScaling * mScaling);
-            mText.Color = Color;
             mText?.Update(inputState, gameTime, Bounds, uiScaling * mScaling);
         }
 

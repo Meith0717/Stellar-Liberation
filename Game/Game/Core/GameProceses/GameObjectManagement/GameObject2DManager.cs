@@ -1,5 +1,5 @@
-﻿// GameObject2DManager.cs 
-// Copyright (c) 2023-2024 Thierry Meiers 
+﻿// GameObjectManager.cs 
+// Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
@@ -30,13 +30,13 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             GameObjects2Ds = gameObject2Ds;
             mGameLayer = gameLayer;
             mSpatialHashing = spatialHashing;
-            foreach (var obj in gameObject2Ds) obj.Initialize(mGameLayer);
+            foreach (var obj in gameObject2Ds) mSpatialHashing.InsertObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
         }
 
         public void SpawnGameObject2D(GameObject2D obj, bool addToSpatialHash = true)
         {
             GameObjects2Ds.Add(obj);
-            obj.Initialize(mGameLayer, addToSpatialHash);
+            mSpatialHashing.InsertObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
         }
 
         public bool DespawnGameObject(GameObject2D obj)
@@ -53,7 +53,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             {
                 obj.Update(gameTime, inputState, gameLayer);
 
-                if (!obj.Dispose) continue;
+                if (!obj.IsDisposed) continue;
                 DespawnGameObject(obj);
             }
         }

@@ -1,5 +1,5 @@
 ﻿// GameSpriteRegistries.cs 
-// Copyright (c) 2023-2024 Thierry Meiers 
+// Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
 namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry

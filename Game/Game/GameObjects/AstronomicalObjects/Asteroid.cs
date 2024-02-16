@@ -1,5 +1,5 @@
 ﻿// Asteroid.cs 
-// Copyright (c) 2023-2024 Thierry Meiers 
+// Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
@@ -14,8 +14,10 @@ using System.Linq;
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
     [Collidable(50)]
-    public class Asteroid : GameObject2D
+    public class Asteroid : GameObject2D, ICollidable
     {
+        public float Mass { get => 50; }
+
         public Asteroid(Vector2 position, string textureID, float textureScale)
             : base(position, textureID, textureScale, 50) { }
 
@@ -43,7 +45,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             }
             if (!gotHit) return;
             UpdateScale(TextureScale - 0.05f);
-            if (TextureScale < 0.2f) Dispose = true;
+            if (TextureScale < 0.2f) IsDisposed = true;
             if (position is null) return;
             var momentum = Vector2.Normalize((Vector2)position - Position);
             ExplosionEffect.AsteroidHit((Vector2)position, momentum, gameLayer.ParticleManager, gameLayer.GameSettings.ParticlesMultiplier);

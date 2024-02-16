@@ -1,5 +1,5 @@
-﻿// GameLayerManager.cs 
-// Copyright (c) 2023-2024 Thierry Meiers 
+﻿// GameState.cs 
+// Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
