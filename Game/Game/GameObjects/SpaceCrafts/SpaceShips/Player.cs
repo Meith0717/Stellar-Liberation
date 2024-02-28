@@ -7,6 +7,8 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
+using StellarLiberation.Game.Core.GameProceses.AI.Behaviors.Combat;
+using StellarLiberation.Game.Core.GameProceses.AI.Behaviors;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components;
 using System;
 
@@ -35,6 +37,12 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                         new(-150, 0)
                     },
                     aiBehaviors: new()
+                    {
+                        new IdleBehavior(),
+                        new PatrollBehavior(),
+                        new InterceptBehavior(),
+                        new FarCombatBehavior(),
+                    }
                 ))
         {
             mSpaceShipController = new();
@@ -43,9 +51,9 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
         public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
             scene.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
-            mSpaceShipController.Controll(this, inputState, scene.WorldMousePosition);
-            WeaponSystem.AimShip(SensorSystem.GetAimingShip(Position));
-            WeaponSystem.ControlByInput(inputState, scene.WorldMousePosition);
+            //mSpaceShipController.Controll(this, inputState, scene.WorldMousePosition);
+            //WeaponSystem.AimShip(SensorSystem.GetAimingShip(Position));
+            //WeaponSystem.ControlByInput(inputState, scene.WorldMousePosition);
             scene.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
             base.Update(gameTime, inputState, scene);
         }

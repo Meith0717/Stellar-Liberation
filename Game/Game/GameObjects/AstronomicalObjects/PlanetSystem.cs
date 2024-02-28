@@ -14,6 +14,8 @@ using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGeneration;
 using StellarLiberation.Game.Core.GameProceses.SectorManagement;
+using StellarLiberation.Game.Core.Utilitys;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
@@ -26,6 +28,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
 
         [JsonIgnore] private readonly Sector mSector;
         [JsonIgnore] private readonly string Name;
+        [JsonIgnore] public int SystemRadius { get; private set; }
         [JsonProperty] private int? PlanetCount;
         [JsonProperty] private int? Temperature;
         [JsonProperty] public readonly GameObject2DTypeList GameObjects;
@@ -40,6 +43,8 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             Name = $"SL-";
             var rand = new Random(mSeed);
             for (var i = 0; i < 10; i++) Name += rand.Next(0, 9);
+
+            for (int i = 0; i < 20; i++) SpaceShipFactory.Spawn(this, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 150000)), ShipID.Bomber, Fractions.Enemys, out var _);
 
             mSector = new(position - (new Vector2(MapFactory.MapScale) / 2), MapFactory.MapScale, MapFactory.MapScale);
         }
@@ -63,6 +68,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             }
 
             distanceToStar += 50000;
+            SystemRadius = distanceToStar;
 
             AstronomicalObjs.AddRange(AsteroidGenerator.GetAsteroidsRing(Position, distanceToStar));
             return AstronomicalObjs;

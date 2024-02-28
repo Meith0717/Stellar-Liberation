@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             : base(Vector2.Zero, textureId, textureScale, 1)
         {
             OrbitRadius = distanceToStar;
-            Velocity = (float)(Constants.GravitationalConstant * Math.Pow(10, 16)/distanceToStar);
+            Velocity = (float)(Constants.GravitationalConstant * Math.Pow(10, 16)/distanceToStar) * 0.01f;
 
             Position = Geometry.GetPointOnCircle(MainBodyPosition, OrbitRadius, orbitAnle);
             mShadowRotation = Geometry.AngleBetweenVectors(Position, MainBodyPosition) + MathF.PI;

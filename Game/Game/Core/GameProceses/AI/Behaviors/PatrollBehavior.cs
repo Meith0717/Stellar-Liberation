@@ -7,6 +7,8 @@ using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
@@ -14,33 +16,28 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
     public class PatrollBehavior : Behavior
     {
         private Vector2? mPatrolTarget;
+        private List<Planet> mPatrolTargets;
 
         public override double GetScore(GameTime gameTime, SpaceShip spaceShip, GameLayer scene)
         {
-            var shielHhullScore = spaceShip.DefenseSystem.ShieldPercentage * 0.5 + spaceShip.DefenseSystem.HullPercentage * 0.5;
-            var hasNoAimingShip = !spaceShip.SensorSystem.OpponentsInRannge.Any() ? 1 : 0;
-
-            var score = shielHhullScore * hasNoAimingShip;
-            return score;
-        }
+            mPatrolTargets = spaceShip.SensorSystem.LongRangeScan.OfType<Planet>().ToList();
+            return MathF.Min(mPatrolTargets.Count, 1) * 0.1f;
+        } 
 
         public override void Execute(GameTime gameTime, SpaceShip spaceShip, GameLayer scene)
         {
-            spaceShip.SublightDrive.SetVelocity(.5f);
+            // Set velocity to 100%
+            spaceShip.SublightDrive.SetVelocity(1f);
 
-            var aimingShip = spaceShip.SensorSystem.GetAimingShip(spaceShip.Position);
-            spaceShip.WeaponSystem.AimShip(aimingShip);
-
-
+            // Move to Patrol Target
             switch (mPatrolTarget)
             {
-                case null:
-                    // Get Planets in Radius
-                    var patrolTargets = spaceShip.SensorSystem.LongRangeScan.OfType<Planet>().ToList();
-                    if (!patrolTargets.Any()) break;
+                case null: // Get new Patrol Target
+
+                    if (mPatrolTargets.Count == 0) break;
 
                     // Get Random Target
-                    var randomPlanet = ExtendetRandom.GetRandomElement(patrolTargets);
+                    var randomPlanet = ExtendetRandom.GetRandomElement(mPatrolTargets);
                     var angleBetweenTargetAndShip = Geometry.AngleBetweenVectors(randomPlanet.Position, spaceShip.Position);
                     var target = Geometry.GetPointOnCircle(randomPlanet.BoundedBox, angleBetweenTargetAndShip);
                     mPatrolTarget = target;
@@ -48,8 +45,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
                     // Send Ship to Target
                     spaceShip.SublightDrive.MoveInDirection(Vector2.Normalize(target - spaceShip.Position));
                     break;
-                case not null:
-                    // Check if Target is Reached
+                case not null: // Check if Patrol Target is reached
                     if (Vector2.Distance((Vector2)mPatrolTarget, spaceShip.Position) < 10000) mPatrolTarget = null;
                     break;
             }
