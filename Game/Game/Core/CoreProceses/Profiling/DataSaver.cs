@@ -2,6 +2,7 @@
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
+using StellarLiberation.Game.Core.CoreProceses.Debugging;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using System;
 using System.IO;
@@ -12,23 +13,31 @@ namespace StellarLiberation.Game.Core.CoreProceses.Profiling
     {
         private static readonly string BenchmatksSaveDirectory = "benchmarks";
 
-        public static void SaveToCsv(Serializer serializer, DataCollector dataCollector)
+        public static void SaveToCsv(Serializer serializer, DataCollector dataCollector, FrameCounter frameCounter, int cellSize)
         {
             serializer.CreateFolder(BenchmatksSaveDirectory);
             DateTime currentDateTime = DateTime.Now;
-            var fileName = $"{currentDateTime.ToString("yyyyMMdd_HHmmss")}.csv";
-            var path = Path.Combine(BenchmatksSaveDirectory, fileName);
-            using StreamWriter fileWriter = serializer.GetStreamWriter(path);
-            // Write header row with data descriptions
-            fileWriter.WriteLine("step," + string.Join(",", dataCollector.Lables));
+            var directoryName = $"{currentDateTime.ToString("yyyyMMdd_HHmmss")}";
+            var directoryPath = Path.Combine(BenchmatksSaveDirectory, directoryName);
+            serializer.CreateFolder(directoryPath);
+            var dataPath = Path.Combine(directoryPath, "benchmark_data.csv");
 
-            // Write data row with corresponding values
+            using StreamWriter dataWriter = serializer.GetStreamWriter(dataPath);
+            dataWriter.WriteLine("step," + string.Join(",", dataCollector.Lables));
             var counter = 0;
             foreach (var entry in dataCollector.Data)
             {
-                fileWriter.WriteLine($"{counter}," + string.Join(",", entry));
+                dataWriter.WriteLine($"{counter}," + string.Join(",", entry));
                 counter++;
             }
+
+            var summaryPath = Path.Combine(directoryPath, "benchmark_summary.txt");
+            using StreamWriter summaryWriter = serializer.GetStreamWriter(summaryPath);
+            summaryWriter.WriteLine($"Min fps: {frameCounter.MinFramesPerSecond}\n" +
+                $"Max fps: {frameCounter.MaxFramesPerSecond}\n" +
+                $"Avg fps: {frameCounter.AverageFramesPerSecond}\n" +
+                $"Cell Size: {cellSize}");
+
         }
     }
 }
