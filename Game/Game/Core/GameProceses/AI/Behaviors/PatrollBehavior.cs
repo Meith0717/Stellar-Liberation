@@ -3,7 +3,6 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
@@ -18,16 +17,20 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
         private Vector2? mPatrolTarget;
         private List<Planet> mPatrolTargets;
 
-        public override double GetScore(GameTime gameTime, SpaceShip spaceShip, GameLayer scene)
+        private readonly SpaceShip mSpaceShip;
+
+        public PatrollBehavior(SpaceShip spaceShip) => mSpaceShip = spaceShip;
+
+        public override double GetScore()
         {
-            mPatrolTargets = spaceShip.SensorSystem.LongRangeScan.OfType<Planet>().ToList();
+            mPatrolTargets = mSpaceShip.SensorSystem.LongRangeScan.OfType<Planet>().ToList();
             return MathF.Min(mPatrolTargets.Count, 1) * 0.1f;
         } 
 
-        public override void Execute(GameTime gameTime, SpaceShip spaceShip, GameLayer scene)
+        public override void Execute()
         {
             // Set velocity to 100%
-            spaceShip.SublightDrive.SetVelocity(1f);
+            mSpaceShip.SublightDrive.SetVelocity(1f);
 
             // Move to Patrol Target
             switch (mPatrolTarget)
@@ -38,19 +41,19 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
                     // Get Random Target
                     var randomPlanet = ExtendetRandom.GetRandomElement(mPatrolTargets);
-                    var angleBetweenTargetAndShip = Geometry.AngleBetweenVectors(randomPlanet.Position, spaceShip.Position);
+                    var angleBetweenTargetAndShip = Geometry.AngleBetweenVectors(randomPlanet.Position, mSpaceShip.Position);
                     var target = Geometry.GetPointOnCircle(randomPlanet.BoundedBox, angleBetweenTargetAndShip);
                     mPatrolTarget = target;
 
                     // Send Ship to Target
-                    spaceShip.SublightDrive.MoveInDirection(Vector2.Normalize(target - spaceShip.Position));
+                    mSpaceShip.SublightDrive.MoveToTarget(target);
                     break;
+
                 case not null: // Check if Patrol Target is reached
-                    if (Vector2.Distance((Vector2)mPatrolTarget, spaceShip.Position) < 10000) mPatrolTarget = null;
+                    if (!mSpaceShip.SublightDrive.IsMoving) 
+                        mPatrolTarget = null;
                     break;
             }
         }
-
-        public override void Reset(SpaceShip spaceShip) => mPatrolTarget = null;
     }
 }

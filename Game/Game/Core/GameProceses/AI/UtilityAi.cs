@@ -3,9 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System;
 using System.Collections.Generic;
 
@@ -14,7 +12,6 @@ namespace StellarLiberation.Game.Core.GameProceses.AI
     public class UtilityAi
     {
         private Behavior mCurrentBehavior;
-        private Behavior mLastBehavior;
         private readonly List<Behavior> mBehaviors;
         public bool Debug = false;
         public string DebugMessage { get; private set; } = "";
@@ -38,29 +35,26 @@ namespace StellarLiberation.Game.Core.GameProceses.AI
             mBehaviors.Add(behavior);
         }
 
-        public void Update(GameTime gameTime, SpaceShip spaceShip, GameLayer scene)
+        public void Update(GameTime gameTime)
         {
             mCoolDown -= gameTime.ElapsedGameTime.Milliseconds;
             if (mCoolDown > 0) return;
             mCoolDown = 500;
 
             // Auswahl des Verhaltens basierend auf Prioritäten und Spielsituation
-            mCurrentBehavior = SelectBehavior(gameTime, spaceShip, scene);
-
-            if (mCurrentBehavior != mLastBehavior) mLastBehavior?.Reset(spaceShip);
+            mCurrentBehavior = SelectBehavior();
 
             // Ausführung des ausgewählten Verhaltens
-            mCurrentBehavior?.Execute(gameTime, spaceShip, scene);
-            mLastBehavior = mCurrentBehavior;
+            mCurrentBehavior?.Execute();
         }
 
-        private Behavior SelectBehavior(GameTime gameTime, SpaceShip spaceShip, GameLayer scene)
+        private Behavior SelectBehavior()
         {
             DebugMessage = "";
             PriorityQueue<Behavior, double> behaviors = new();
             foreach (var item in mBehaviors)
             {
-                var score = item.GetScore(gameTime, spaceShip, scene);
+                var score = item.GetScore();
                 DebugMessage += $"{item.GetType().Name}: {Math.Round(score, 5)}\n";
                 behaviors.Enqueue(item, -score);
             }

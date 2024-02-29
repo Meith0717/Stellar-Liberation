@@ -83,7 +83,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             DefenseSystem.Update(gameTime);
             SensorSystem.Scan(gameTime, PlanetSystem, Position, Fraction, gameLayer);
             WeaponSystem.Update(gameTime, this, gameLayer);
-            mUtilityAi.Update(gameTime, this, gameLayer);
+            mUtilityAi.Update(gameTime);
             mTractorBeam.Pull(gameTime, this, gameLayer);
             TrailEffect.Show(Transformations.Rotation(Position, new(-100, 0), Rotation), MovingDirection, Velocity, gameTime, mAccentColor, gameLayer.ParticleManager, gameLayer.GameSettings.ParticlesMultiplier);
 

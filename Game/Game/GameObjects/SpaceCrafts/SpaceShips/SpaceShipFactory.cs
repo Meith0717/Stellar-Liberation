@@ -6,8 +6,6 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameProceses;
-using StellarLiberation.Game.Core.GameProceses.AI.Behaviors;
-using StellarLiberation.Game.Core.GameProceses.AI.Behaviors.Combat;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 
@@ -35,18 +33,13 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                     velocity: 1,
                     turretCoolDown: 500,
                     shieldForce: 100,
-                    hullForce: 100,
+                    hullForce: 300,
                     fraction: fraction,
                     turretPositions: new()
                     {
                         Vector2.Zero
                     },
                     aiBehaviors: new()
-                    {
-                        new PatrollBehavior(),
-                        new FarCombatBehavior(),
-                        new InterceptBehavior(),
-                    }
                 ),
                 ShipID.Cargo => new(
                     textureID: GameSpriteRegistries.cargo,
@@ -62,9 +55,6 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                         Vector2.Zero
                     },
                     aiBehaviors: new()
-                    {
-                        new PatrollBehavior(),
-                    }
                 ),
                 ShipID.Corvette => new(
                     textureID: GameSpriteRegistries.corvette,
@@ -80,9 +70,6 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                         Vector2.Zero
                     },
                     aiBehaviors: new()
-                    {
-                        new PatrollBehavior(),
-                    }
                 ),
                 ShipID.Cuiser => new(
                     textureID: GameSpriteRegistries.cruiser,
@@ -98,9 +85,6 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                         Vector2.Zero
                     },
                     aiBehaviors: new()
-                    {
-                        new PatrollBehavior(),
-                    }
                 ),
                 ShipID.Destroyer => new(
                     textureID: GameSpriteRegistries.destroyer,
@@ -116,9 +100,6 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                         Vector2.Zero
                     },
                     aiBehaviors: new()
-                    {
-                        new PatrollBehavior(),
-                    }
                 ),
                 ShipID.Fighter => new(
                     textureID: GameSpriteRegistries.fighter,
@@ -134,9 +115,6 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                         Vector2.Zero
                     },
                     aiBehaviors: new()
-                    {
-                        new PatrollBehavior(),
-                    }
                 ),
                 _ => throw new System.NotImplementedException()
             };

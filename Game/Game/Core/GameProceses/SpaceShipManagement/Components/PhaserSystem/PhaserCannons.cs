@@ -41,6 +41,12 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
         public SpaceShip AimingShip => mAimingShip;
         public void AimShip(SpaceShip spaceShip) => mAimingShip = spaceShip;
         public void AimPosition(Vector2? position) => mAimingPos = position;
+        public void ClearAiming()
+        {
+            mAimingPos = null;
+            mAimingShip = null;
+        }
+
         public void Fire() => mFire = true;
         public void StopFire() => mFire = false;
 

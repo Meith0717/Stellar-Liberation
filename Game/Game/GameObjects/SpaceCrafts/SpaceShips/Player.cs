@@ -7,7 +7,6 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
-using StellarLiberation.Game.Core.GameProceses.AI.Behaviors.Combat;
 using StellarLiberation.Game.Core.GameProceses.AI.Behaviors;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components;
 using System;
@@ -37,13 +36,11 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                         new(-150, 0)
                     },
                     aiBehaviors: new()
-                    {
-                        new IdleBehavior(),
-                        new PatrollBehavior(),
-                        new SelectTargetBehavior(),
-                    }
                 ))
         {
+            mUtilityAi.AddBehavior(new IdleBehavior(SublightDrive));
+            mUtilityAi.AddBehavior(new PatrollBehavior(this));
+            mUtilityAi.AddBehavior(new CombatBehavior(this));
             mSpaceShipController = new();
         }
 

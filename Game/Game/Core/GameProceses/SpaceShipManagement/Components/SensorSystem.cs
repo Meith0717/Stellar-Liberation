@@ -19,7 +19,6 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
         private const int MaxCoolDown = 500;
 
         public int ShortRangeScanDistance { get; private set; }
-        public GameObject2D FocusObject { get; private set; }
         public List<GameObject2D> LongRangeScan => mLongRangeScan;
         public List<SpaceShip> OpponentsInRannge => mOpponentsInRannge;
         public List<SpaceShip> AlliesInRannge => mAlliesInRannge;
@@ -48,21 +47,18 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             List<SpaceShip> shortRangeScan = new();
             scene.SpatialHashing.GetObjectsInRadius(spaceShipPosition, ShortRangeScanDistance, ref shortRangeScan);
 
-            FocusObject = (shortRangeScan.Contains(FocusObject)) ? FocusObject : null;
-
             mOpponentsInRannge = shortRangeScan.Where((spaceShip) => spaceShip.Fraction != fraction).ToList();
             mAlliesInRannge = shortRangeScan.Where((spaceShip) => spaceShip.Fraction == fraction).ToList();
         }
 
         public void Draw(SpaceShip spaceShip, GameLayer scene) => TextureManager.Instance.DrawAdaptiveCircle(spaceShip.Position, ShortRangeScanDistance, new(50, 50, 50, 50), 2.5f, spaceShip.TextureDepth, scene.Camera2D.Zoom);
 
-        public SpaceShip GetAimingShip(Vector2 spaceShipPosition)
+        public bool TryGetAimingShip(Vector2 spaceShipPosition, out SpaceShip spaceShip)
         {
             PriorityQueue<SpaceShip, double> q = new();
             foreach (var spaceShip1 in mOpponentsInRannge)
                 q.Enqueue(spaceShip1, -GetAimingScore(spaceShipPosition, spaceShip1));
-            q.TryDequeue(out var spaceShip, out var _);
-            return spaceShip;
+            return q.TryDequeue(out spaceShip, out var _);
         }
 
         private double GetAimingScore(Vector2 position, SpaceShip spaceShip)
