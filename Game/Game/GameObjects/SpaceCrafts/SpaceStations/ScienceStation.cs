@@ -1,5 +1,5 @@
 ﻿// ScienceStation.cs 
-// Copyright (c) 2023 Thierry Meiers 
+// Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
@@ -12,7 +12,6 @@ using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 
 namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceStations
 {
-    [Collidable]
     public class ScienceStation : GameObject2D, ICollidable
     {
         public float Mass =>float.PositiveInfinity;

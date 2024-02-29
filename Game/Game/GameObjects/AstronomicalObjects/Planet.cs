@@ -1,5 +1,5 @@
 ﻿// Planet.cs 
-// Copyright (c) 2023 Thierry Meiers 
+// Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using MathNet.Numerics;
@@ -17,7 +17,6 @@ using System;
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
     [Serializable]
-    [Collidable]
     public class Planet : GameObject2D, ICollidable
     {
         [JsonIgnore] private readonly Vector2 MainBodyPosition = Vector2.Zero;

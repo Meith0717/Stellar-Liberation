@@ -1,5 +1,5 @@
 ﻿// Star.cs 
-// Copyright (c) 2023 Thierry Meiers 
+// Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
@@ -14,7 +14,6 @@ using System;
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
     [Serializable]
-    [Collidable]
     public class Star : GameObject2D, ICollidable
     {
         [JsonProperty] public readonly int Kelvin;

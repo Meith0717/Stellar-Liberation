@@ -1,5 +1,5 @@
 ﻿// DebugSpatialHashing.cs 
-// Copyright (c) 2023 Thierry Meiers 
+// Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
@@ -35,7 +35,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugging
         public static void Buckets(GameLayer scene, Vector2 mousePosition)
         {
             var screen = scene.Camera2D.Bounds;
-            var size = scene.SpatialHashing.mCellSize;
+            var size = scene.SpatialHashing.CellSize;
             var depth = (int)TextureManager.MaxLayerDepth;
 
             for (int x = 0; x < screen.Right; x += size)

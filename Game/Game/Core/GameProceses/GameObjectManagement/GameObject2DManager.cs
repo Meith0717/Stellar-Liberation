@@ -1,5 +1,5 @@
-﻿// GameObjectManager.cs 
-// Copyright (c) 2023 Thierry Meiers 
+﻿// GameObject2DManager.cs 
+// Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;

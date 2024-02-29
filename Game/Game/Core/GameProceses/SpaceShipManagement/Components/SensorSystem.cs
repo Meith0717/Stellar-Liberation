@@ -1,5 +1,5 @@
 ﻿// SensorSystem.cs 
-// Copyright (c) 2023 Thierry Meiers 
+// Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
@@ -43,7 +43,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             if (mCoolDown > 0) return;
             mCoolDown = MaxCoolDown;
 
-            mLongRangeScan = planetSystem.AstronomicalObjs.ToList();
+            mLongRangeScan = planetSystem.AstronomicalObjs.ToList<GameObject2D>();
 
             List<SpaceShip> shortRangeScan = new();
             scene.SpatialHashing.GetObjectsInRadius(spaceShipPosition, ShortRangeScanDistance, ref shortRangeScan);

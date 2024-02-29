@@ -1,5 +1,5 @@
-﻿// BenchmarkSetupLayer.cs 
-// Copyright (c) 2023 Thierry Meiers 
+﻿// BenchmarkLayer.cs 
+// Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
@@ -27,7 +27,7 @@ namespace StellarLiberation.Game.Layers.Benchmark
         private readonly GameObject2DManager mGameObject2DManager;
         private readonly FrameCounter mFrameCounter;
         private readonly UiFrame mBackgroundLayer;
-        private readonly DataCollector mDataCollector = new(4, ["fps", "renderLatency", "object count", "particle count"]);
+        private readonly DataCollector mDataCollector = new(4, ["fps", "render time", "object count", "particle count"]);
         private float CoolDown;
         private float mRunTime = 180000;
 
@@ -49,11 +49,12 @@ namespace StellarLiberation.Game.Layers.Benchmark
         public override void Update(GameTime gameTime, InputState inputState)
         {
             if (mRunTime < 0) End();
-            if (CoolDown < 0) 
+            if (CoolDown < 0)
             {
                 CoolDown = 100;
-                SpaceShipFactory.Spawn(mPlanetSystem, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Bomber, Core.GameProceses.Fractions.Enemys, out var _);
-                SpaceShipFactory.Spawn(mPlanetSystem, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Bomber, Core.GameProceses.Fractions.Allied, out var _);
+                SpaceShipFactory.Spawn(mPlanetSystem, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Enemys, out var _);
+                SpaceShipFactory.Spawn(mPlanetSystem, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Allied, out var _);
+                mDataCollector.AddData([mFrameCounter.CurrentFramesPerSecond, mFrameCounter.FrameDuration, SpatialHashing.Count, ParticleManager.GameObjects2Ds.Count]);
             }
             CoolDown -= gameTime.ElapsedGameTime.Milliseconds;
             mRunTime -= gameTime.ElapsedGameTime.Milliseconds;
@@ -81,22 +82,21 @@ namespace StellarLiberation.Game.Layers.Benchmark
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 55), $"Max FPS:    {mFrameCounter.MaxFramesPerSecond} ", .75f, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 70), $"Frame:      {mFrameCounter.FrameDuration} ms", .75f, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 85), $"", .75f, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 100),$"Objects:    {SpatialHashing.Count}", .75f, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 100), $"Objects:    {SpatialHashing.Count}", .75f, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 115), $"Particles:  {ParticleManager.GameObjects2Ds.Count}", .75f, Color.White);
             TimeSpan timeSpan = TimeSpan.FromMilliseconds(mRunTime);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 150), $"{timeSpan.Minutes} min {timeSpan.Seconds}s ESC => Quit", .75f, Color.White);
-            if (CoolDown < 0) mDataCollector.AddData([mFrameCounter.CurrentFramesPerSecond, mFrameCounter.FrameDuration, SpatialHashing.Count, ParticleManager.GameObjects2Ds.Count]);
             DebugSystem.ShowInfo(new Vector2(200, 10));
             spriteBatch.End();
         }
 
         public override void DrawOnScreenView(SpriteBatch spriteBatch) => mBackgroundLayer.Draw();
-        public override void Destroy() { ; }
+        public override void Destroy() {; }
         public override void DrawOnWorldView(SpriteBatch spriteBatch) { DebugSystem.DrawOnScene(this); }
 
         private void End()
         {
-            DataSaver.SaveToCsv(PersistanceManager.GetSerializer(), mDataCollector);
+            DataSaver.SaveToCsv(PersistanceManager.GetSerializer(), mDataCollector, mFrameCounter, SpatialHashing.CellSize);
             LayerManager.PopLayer();
         }
     }

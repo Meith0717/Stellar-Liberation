@@ -1,10 +1,9 @@
 ﻿// GameObject2DTypeList.cs 
-// Copyright (c) 2023 Thierry Meiers 
+// Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.Extensions;
-using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,25 +13,22 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
     [Serializable]
     public class GameObject2DTypeList : IEnumerable<GameObject2D>
     {
-        [JsonProperty] public int Count => mValues.Count;
-        [JsonProperty] private readonly Dictionary<Type, HashSet<GameObject2D>> mKeyValuePairs;
-        [JsonProperty] private readonly List<GameObject2D> mCollidables;
-        [JsonProperty] private readonly List<GameObject2D> mValues;
+        [JsonProperty] private readonly Dictionary<Type, List<GameObject2D>> mTypeDict;
+        [JsonProperty] private readonly List<GameObject2D> AllObjects;
+
+        public int Count => AllObjects.Count;
 
         public GameObject2DTypeList()
         {
-            mKeyValuePairs = new();
-            mValues = new();
-            mCollidables = new();
+            mTypeDict = new();
+            AllObjects = new();
         }
 
         public void Add(GameObject2D gameObject2D)
         {
             var type = gameObject2D.GetType();
-            mKeyValuePairs.GetOrAdd(type, () => new()).Add(gameObject2D);
-            if (gameObject2D is ICollidable)
-                mCollidables.Add(gameObject2D);
-            mValues.Add(gameObject2D);
+            mTypeDict.GetOrAdd(type, () => new()).Add(gameObject2D);
+            AllObjects.Add(gameObject2D);
         }
 
         public void AddRange(IEnumerable<GameObject2D> gameObjects)
@@ -47,26 +43,33 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
                 return false;
 
             var type = gameObject2D.GetType();
-            if (!(mKeyValuePairs.TryGetValue(type, out var list) && list.Remove(gameObject2D))) return false;
-            mCollidables.Remove(gameObject2D);
-            mValues.Remove(gameObject2D);
+            if (!(mTypeDict.TryGetValue(type, out var list) && list.Remove(gameObject2D))) return false;
+            AllObjects.Remove(gameObject2D);
             return true;
         }
 
-        public IEnumerable<GameObject2D> OfType(Type type)
+        public List<T> ToList<T>() where T : GameObject2D
         {
+            var type = typeof(T);
             ArgumentNullException.ThrowIfNull(type);
             if (type == typeof(GameObject2D))
-                return mValues;
-            if (type == typeof(ICollidable))
-                return mCollidables;
-
-            return mKeyValuePairs.TryGetValue(type, out var list) ? list : new();
+                return AllObjects.OfType<T>().ToList();
+            return mTypeDict.TryGetValue(type, out var list) ? list.OfType<T>().ToList(): new();
         }
 
-        public List<GameObject2D> ToList() => mValues;
+        public void Sort(Comparison<GameObject2D> comparison)
+        {
+            foreach (var list in mTypeDict.Values)
+                list.Sort(comparison);
+        }
 
-        public IEnumerator<GameObject2D> GetEnumerator() => mValues.GetEnumerator();
+        public void Clear()
+        {
+            mTypeDict.Clear();
+            AllObjects.Clear();
+        }
+
+        public IEnumerator<GameObject2D> GetEnumerator() => AllObjects.GetEnumerator();
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
     }

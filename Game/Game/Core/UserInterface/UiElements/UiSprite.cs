@@ -1,6 +1,5 @@
-﻿
-// UiSprite.cs 
-// Copyright (c) 2023 Thierry Meiers 
+﻿// UiSprite.cs 
+// Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
