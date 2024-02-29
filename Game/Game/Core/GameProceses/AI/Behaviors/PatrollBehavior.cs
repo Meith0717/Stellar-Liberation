@@ -19,7 +19,10 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
         private readonly SpaceShip mSpaceShip;
 
-        public PatrollBehavior(SpaceShip spaceShip) => mSpaceShip = spaceShip;
+        public PatrollBehavior(SpaceShip spaceShip)
+        {
+            mSpaceShip = spaceShip;
+        }
 
         public override double GetScore()
         {
@@ -54,6 +57,14 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
                         mPatrolTarget = null;
                     break;
             }
+
+            mSpaceShip.SensorSystem.TryGetAimingShip(mSpaceShip.Position, out var aimingTarget);
+            mSpaceShip.WeaponSystem.AimShip(aimingTarget);
+        }
+
+        public override void Recet()
+        {
+            mPatrolTarget = null;
         }
     }
 }

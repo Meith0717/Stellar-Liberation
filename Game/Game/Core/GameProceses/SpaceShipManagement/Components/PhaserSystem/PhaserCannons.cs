@@ -41,12 +41,6 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
         public SpaceShip AimingShip => mAimingShip;
         public void AimShip(SpaceShip spaceShip) => mAimingShip = spaceShip;
         public void AimPosition(Vector2? position) => mAimingPos = position;
-        public void ClearAiming()
-        {
-            mAimingPos = null;
-            mAimingShip = null;
-        }
-
         public void Fire() => mFire = true;
         public void StopFire() => mFire = false;
 
@@ -54,6 +48,16 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
         {
             mFireCoolDown += gameTime.ElapsedGameTime.Milliseconds;
             var hasFired = false;
+
+            if (mAimingShip is not null)
+            {
+                if (mAimingShip.IsDisposed)
+                {
+                    mAimingShip = null;
+                    mFire = false;
+                }
+            }
+
             foreach (var cannon in mCannons)
             {
                 var position = mAimingPos ?? CollisionPredictor.PredictPosition(gameTime, origin.Position, 15, mAimingShip);

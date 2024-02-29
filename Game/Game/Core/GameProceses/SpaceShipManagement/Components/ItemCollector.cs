@@ -16,21 +16,18 @@ using System.Linq;
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components
 {
     [Serializable]
-    public class TractorBeam
+    public class ItemCollector
     {
-        [JsonProperty] private float mPullRadius;
         [JsonIgnore] private List<Item> mItemsInRange = new();
 
-        public TractorBeam(float pullRadius) => mPullRadius = pullRadius;
-
-        public void Pull(GameTime gameTime, SpaceShip spaceShip, GameLayer scene)
+        public void Collect(GameTime gameTime, SpaceShip spaceShip, GameLayer scene)
         {
             var inventory = spaceShip.Inventory;
 
             mItemsInRange.Clear();
             var position = spaceShip.Position;
 
-            mItemsInRange = scene.SpatialHashing.GetObjectsInRadius<Item>(position, (int)mPullRadius)
+            mItemsInRange = scene.SpatialHashing.GetObjectsInRadius<Item>(position, spaceShip.BoundedBox.Radius)
                 .Where((item) => inventory.HasSpace(item.ItemID))
                 .ToList();
 
@@ -42,7 +39,5 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
                 System.Diagnostics.Debug.WriteLine(inventory.ToString());
             }
         }
-
-        public void Draw(SpaceShip space) { foreach (var item in mItemsInRange) TextureManager.Instance.DrawLine(space.Position, item.Position, Color.Purple, 4, space.TextureDepth - 1); }
     }
 }

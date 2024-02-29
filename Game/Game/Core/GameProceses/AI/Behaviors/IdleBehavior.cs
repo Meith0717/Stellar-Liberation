@@ -18,5 +18,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
         public override void Execute() => mSublightDrive.SetVelocity(0);
 
         public override double GetScore() => 0.01f;
+
+        public override void Recet() {; }
     }
 }

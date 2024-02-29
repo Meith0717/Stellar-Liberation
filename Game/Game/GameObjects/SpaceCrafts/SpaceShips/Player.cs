@@ -40,6 +40,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
         {
             mUtilityAi.AddBehavior(new IdleBehavior(SublightDrive));
             mUtilityAi.AddBehavior(new PatrollBehavior(this));
+            mUtilityAi.AddBehavior(new CollectItemsBehavior(this));
             mUtilityAi.AddBehavior(new CombatBehavior(this));
             mSpaceShipController = new();
         }

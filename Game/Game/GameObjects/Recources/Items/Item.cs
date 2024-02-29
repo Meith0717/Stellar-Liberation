@@ -43,7 +43,7 @@ namespace StellarLiberation.Game.GameObjects.Recources.Items
         {
             var angleToPosition = Geometry.AngleBetweenVectors(Position, position);
             MovingDirection = Geometry.CalculateDirectionVector(angleToPosition);
-            Velocity = MovementController.GetVelocity(Velocity, float.PositiveInfinity, 0.03f);
+            Velocity = MovementController.GetVelocity(Velocity, float.PositiveInfinity, 0.05f);
         }
 
         public void Throw(Vector2 momentum, Vector2 position)

@@ -12,6 +12,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI
     public class UtilityAi
     {
         private Behavior mCurrentBehavior;
+        private Behavior mLastBehavior;
         private readonly List<Behavior> mBehaviors;
         public bool Debug = false;
         public string DebugMessage { get; private set; } = "";
@@ -43,6 +44,11 @@ namespace StellarLiberation.Game.Core.GameProceses.AI
 
             // Auswahl des Verhaltens basierend auf Prioritäten und Spielsituation
             mCurrentBehavior = SelectBehavior();
+            if (mCurrentBehavior != mLastBehavior)
+            {
+                mLastBehavior = mCurrentBehavior;
+                mLastBehavior.Recet();
+            }
 
             // Ausführung des ausgewählten Verhaltens
             mCurrentBehavior?.Execute();

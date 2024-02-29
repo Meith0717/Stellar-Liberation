@@ -20,10 +20,12 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
 
         public int ShortRangeScanDistance { get; private set; }
         public List<GameObject2D> LongRangeScan => mLongRangeScan;
+        public List<GameObject2D> ShortRangeScan => mShortRangeScan;
         public List<SpaceShip> OpponentsInRannge => mOpponentsInRannge;
         public List<SpaceShip> AlliesInRannge => mAlliesInRannge;
 
         private List<GameObject2D> mLongRangeScan = new();
+        private List<GameObject2D> mShortRangeScan = new();
         private List<SpaceShip> mOpponentsInRannge = new();
         private List<SpaceShip> mAlliesInRannge = new();
 
@@ -44,11 +46,11 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
 
             mLongRangeScan = planetSystem.AstronomicalObjs.ToList<GameObject2D>();
 
-            List<SpaceShip> shortRangeScan = new();
-            scene.SpatialHashing.GetObjectsInRadius(spaceShipPosition, ShortRangeScanDistance, ref shortRangeScan);
+            mShortRangeScan.Clear();
+            scene.SpatialHashing.GetObjectsInRadius(spaceShipPosition, ShortRangeScanDistance, ref mShortRangeScan);
 
-            mOpponentsInRannge = shortRangeScan.Where((spaceShip) => spaceShip.Fraction != fraction).ToList();
-            mAlliesInRannge = shortRangeScan.Where((spaceShip) => spaceShip.Fraction == fraction).ToList();
+            mOpponentsInRannge = mShortRangeScan.OfType<SpaceShip>().Where((spaceShip) => spaceShip.Fraction != fraction).ToList();
+            mAlliesInRannge = mShortRangeScan.OfType<SpaceShip>().Where((spaceShip) => spaceShip.Fraction == fraction).ToList();
         }
 
         public void Draw(SpaceShip spaceShip, GameLayer scene) => TextureManager.Instance.DrawAdaptiveCircle(spaceShip.Position, ShortRangeScanDistance, new(50, 50, 50, 50), 2.5f, spaceShip.TextureDepth, scene.Camera2D.Zoom);
