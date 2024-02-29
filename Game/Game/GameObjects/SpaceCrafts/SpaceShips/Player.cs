@@ -40,8 +40,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                     {
                         new IdleBehavior(),
                         new PatrollBehavior(),
-                        new InterceptBehavior(),
-                        new FarCombatBehavior(),
+                        new SelectTargetBehavior(),
                     }
                 ))
         {

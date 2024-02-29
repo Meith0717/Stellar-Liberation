@@ -48,6 +48,8 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             List<SpaceShip> shortRangeScan = new();
             scene.SpatialHashing.GetObjectsInRadius(spaceShipPosition, ShortRangeScanDistance, ref shortRangeScan);
 
+            FocusObject = (shortRangeScan.Contains(FocusObject)) ? FocusObject : null;
+
             mOpponentsInRannge = shortRangeScan.Where((spaceShip) => spaceShip.Fraction != fraction).ToList();
             mAlliesInRannge = shortRangeScan.Where((spaceShip) => spaceShip.Fraction == fraction).ToList();
         }
