@@ -21,7 +21,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
         public Player() : base(Vector2.Zero, new(
                     textureID: GameSpriteRegistries.destroyer,
                     textureScale: 1,
-                    sensorRange: 15000,
+                    sensorRange: 10000,
                     velocity: 5,
                     turretCoolDown: 500,
                     shieldForce: 100,
@@ -38,19 +38,16 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                     aiBehaviors: new()
                 ))
         {
-            mUtilityAi.AddBehavior(new IdleBehavior(SublightDrive));
-            mUtilityAi.AddBehavior(new PatrollBehavior(this));
-            mUtilityAi.AddBehavior(new CollectItemsBehavior(this));
-            mUtilityAi.AddBehavior(new CombatBehavior(this));
             mSpaceShipController = new();
         }
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
             scene.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
-            //mSpaceShipController.Controll(this, inputState, scene.WorldMousePosition);
-            //WeaponSystem.AimShip(SensorSystem.GetAimingShip(Position));
-            //WeaponSystem.ControlByInput(inputState, scene.WorldMousePosition);
+            mSpaceShipController.Controll(this, inputState, scene.WorldMousePosition);
+            SensorSystem.TryGetAimingShip(Position, out var target);
+            PhaserCannaons.AimShip(target);
+            PhaserCannaons.ControlByInput(inputState, scene.WorldMousePosition);
             scene.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
             base.Update(gameTime, inputState, scene);
         }

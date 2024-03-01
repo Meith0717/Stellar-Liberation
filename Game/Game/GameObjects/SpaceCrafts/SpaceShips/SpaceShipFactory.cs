@@ -29,8 +29,8 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                 ShipID.Bomber => new(
                     textureID: GameSpriteRegistries.bomber,
                     textureScale: 1,
-                    sensorRange: 5000,
-                    velocity: 1,
+                    sensorRange: 10000,
+                    velocity: 5,
                     turretCoolDown: 500,
                     shieldForce: 100,
                     hullForce: 300,

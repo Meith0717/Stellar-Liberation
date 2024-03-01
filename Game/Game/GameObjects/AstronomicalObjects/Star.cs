@@ -13,10 +13,9 @@ using System;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
-    [Serializable]
     public class Star : GameObject2D, ICollidable
     {
-        [JsonProperty] public readonly int Kelvin;
+        public readonly int Kelvin;
         public float Mass => float.PositiveInfinity;
 
         public Star(float textureScale, int temperature, Color color)

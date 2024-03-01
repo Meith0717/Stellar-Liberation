@@ -50,10 +50,9 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
             mBackgroundLayer.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, 1);
 
-            mUnsavedObjects.Update(gameTime, inputState, this);
-            mSavedObjects.Update(gameTime, inputState, this);
-
             Player.Update(gameTime, inputState, this);
+            mSavedObjects.Update(gameTime, inputState, this);
+            mUnsavedObjects.Update(gameTime, inputState, this);
 
             Camera2D.Position = Player.Position;
             Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, .001f, 1);

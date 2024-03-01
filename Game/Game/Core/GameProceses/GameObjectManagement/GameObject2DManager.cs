@@ -16,19 +16,16 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
     public class GameObject2DManager
     {
         [JsonProperty] public readonly GameObject2DTypeList GameObjects2Ds = new();
-        [JsonIgnore] private readonly GameLayer mGameLayer;
         [JsonIgnore] private readonly SpatialHashing mSpatialHashing;
 
         public GameObject2DManager(GameLayer gameLayer, SpatialHashing spatialHashing)
         {
-            mGameLayer = gameLayer;
             mSpatialHashing = spatialHashing;
         }
 
         public GameObject2DManager(GameObject2DTypeList gameObject2Ds, GameLayer gameLayer, SpatialHashing spatialHashing)
         {
             GameObjects2Ds = gameObject2Ds;
-            mGameLayer = gameLayer;
             mSpatialHashing = spatialHashing;
             foreach (var obj in gameObject2Ds) mSpatialHashing.InsertObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
         }
@@ -36,6 +33,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
         public void SpawnGameObject2D(GameObject2D obj, bool addToSpatialHash = true)
         {
             GameObjects2Ds.Add(obj);
+            if (!addToSpatialHash) return;
             mSpatialHashing.InsertObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
         }
 

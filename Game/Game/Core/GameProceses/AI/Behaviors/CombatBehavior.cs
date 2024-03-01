@@ -25,27 +25,29 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
         public override double GetScore()
         {
-            if (mSpaceShip.WeaponSystem.AimingShip is null) return 0;
-            var target = mSpaceShip.WeaponSystem.AimingShip;
+            if (mSpaceShip.SensorSystem.OpponentsInRannge.Count <= 0) return 0;
+
+            mSpaceShip.SensorSystem.TryGetAimingShip(mSpaceShip.Position, out var aimingTarget);
+            mSpaceShip.PhaserCannaons.AimShip(aimingTarget);
 
             var shielHhullScore = mSpaceShip.DefenseSystem.ShieldPercentage * mBias1 + mSpaceShip.DefenseSystem.HullPercentage * (1 - mBias1);
-            var targetShielHhullScore = target.DefenseSystem.ShieldPercentage * mBias2 + target.DefenseSystem.HullPercentage * (1 - mBias2);
+            var targetShielHhullScore = aimingTarget.DefenseSystem.ShieldPercentage * mBias2 + aimingTarget.DefenseSystem.HullPercentage * (1 - mBias2);
 
             var score = shielHhullScore * mBias3 + (1 - targetShielHhullScore) * mBias3;
             return score;
         }
 
-
         public override void Execute()
         {
             mSpaceShip.SublightDrive.SetVelocity(.1f);
-            mSpaceShip.SublightDrive.FollowSpaceShip(mSpaceShip.WeaponSystem.AimingShip);
-            mSpaceShip.WeaponSystem.Fire();
+            mSpaceShip.SublightDrive.FollowSpaceShip(mSpaceShip.PhaserCannaons.AimingShip);
+            mSpaceShip.PhaserCannaons.Fire();
         }
 
         public override void Recet()
         {
-            mSpaceShip.WeaponSystem.StopFire();
+            mSpaceShip.PhaserCannaons.RecetAimingShip();
+            mSpaceShip.PhaserCannaons.StopFire();
             mBias1 = .4f + ExtendetRandom.Random.NextSingle() * .2f;
             mBias2 = .2f + ExtendetRandom.Random.NextSingle() * .2f;
             mBias3 = .3f + ExtendetRandom.Random.NextSingle() * .3f;

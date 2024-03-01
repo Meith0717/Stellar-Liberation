@@ -32,6 +32,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
         public override void Execute()
         {
+            mSpaceShip.PhaserCannaons.StopFire();
             // Set velocity to 100%
             mSpaceShip.SublightDrive.SetVelocity(1f);
 
@@ -57,9 +58,6 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
                         mPatrolTarget = null;
                     break;
             }
-
-            mSpaceShip.SensorSystem.TryGetAimingShip(mSpaceShip.Position, out var aimingTarget);
-            mSpaceShip.WeaponSystem.AimShip(aimingTarget);
         }
 
         public override void Recet()

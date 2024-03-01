@@ -16,12 +16,11 @@ using System;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
-    [Serializable]
     public class Planet : GameObject2D, ICollidable
     {
-        [JsonIgnore] private readonly Vector2 MainBodyPosition = Vector2.Zero;
-        [JsonIgnore] private float mShadowRotation;
-        [JsonProperty] private readonly int OrbitRadius;
+        private readonly Vector2 MainBodyPosition = Vector2.Zero;
+        private float mShadowRotation;
+        private readonly int OrbitRadius;
 
         public float Mass => float.PositiveInfinity;
 

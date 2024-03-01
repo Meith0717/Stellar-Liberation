@@ -5,6 +5,7 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
@@ -57,6 +58,8 @@ namespace StellarLiberation.Game.GameObjects.Recources.Items
         public override void Draw(GameLayer scene)
         {
             base.Draw(scene);
+            TextureManager.Instance.Draw(GameSpriteRegistries.radar, Position, .04f / scene.Camera2D.Zoom, 0, TextureDepth + 1, Color.LightGray);
+
             TextureManager.Instance.DrawGameObject(this);
         }
     }

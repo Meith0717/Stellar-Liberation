@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.GameObjects.Recources.Items;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
@@ -21,8 +22,16 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
         {
             mItems = mSpaceShip.SensorSystem.ShortRangeScan.OfType<Item>()
                 .Where((item) => mSpaceShip.Inventory.HasSpace(item.ItemID)).ToList();
-            if (mItems.Count > 0) return 1;
-            return 0;
+            if (mItems.Count <= 0) return 0;
+
+            var opponents = mSpaceShip.SensorSystem.OpponentsInRannge;
+            var opponentsInRageScore = 1 / (1d * opponents.Count + 1);
+            if (opponentsInRageScore == 1) return 1;
+
+            var shielHhullScore = mSpaceShip.DefenseSystem.ShieldPercentage * .8 + mSpaceShip.DefenseSystem.HullPercentage * .2;
+
+            var distanceToFirstOpponent = 1 - ( 1 / (1d * Vector2.Distance(mSpaceShip.Position, opponents.First().Position) + 1));
+            return opponentsInRageScore * distanceToFirstOpponent * shielHhullScore;    
         }
 
         public override void Execute()

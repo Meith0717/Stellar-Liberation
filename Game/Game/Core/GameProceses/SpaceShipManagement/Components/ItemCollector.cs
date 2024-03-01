@@ -4,9 +4,10 @@
 
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.GameObjects.Recources.Items;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System;
@@ -27,8 +28,8 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             mItemsInRange.Clear();
             var position = spaceShip.Position;
 
-            mItemsInRange = scene.SpatialHashing.GetObjectsInRadius<Item>(position, spaceShip.BoundedBox.Radius)
-                .Where((item) => inventory.HasSpace(item.ItemID))
+            mItemsInRange = scene.SpatialHashing.GetObjectsInRadius<GameObject2D>(position, spaceShip.BoundedBox.Radius)
+                .OfType<Item>()
                 .ToList();
 
             foreach (var item in mItemsInRange)
@@ -36,7 +37,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
                 item.Pull(position);
                 if (!ContinuousCollisionDetection.HasCollide(gameTime, item, spaceShip, out _)) continue;
                 inventory.Add(item);
-                System.Diagnostics.Debug.WriteLine(inventory.ToString());
+                SoundEffectSystem.PlaySound(SoundEffectRegistries.collect, scene.Camera2D, spaceShip.Position);
             }
         }
     }

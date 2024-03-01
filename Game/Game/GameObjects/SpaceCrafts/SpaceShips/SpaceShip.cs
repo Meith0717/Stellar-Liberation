@@ -11,6 +11,7 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.AI;
+using StellarLiberation.Game.Core.GameProceses.AI.Behaviors;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
@@ -34,7 +35,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
         [JsonIgnore] public readonly HyperDrive HyperDrive = new();
         [JsonIgnore] public readonly SensorSystem SensorSystem;
         [JsonIgnore] public readonly SublightDrive SublightDrive;
-        [JsonIgnore] public readonly PhaserCannons WeaponSystem;
+        [JsonIgnore] public readonly PhaserCannons PhaserCannaons;
         [JsonIgnore] public readonly DefenseSystem DefenseSystem;
         [JsonIgnore] public readonly Fractions Fraction;
         [JsonProperty] public readonly Inventory Inventory = new();
@@ -58,15 +59,18 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             };
             SensorSystem = new(config.SensorRange);
             SublightDrive = new(config.Velocity, 0.1f);
-            WeaponSystem = new(config.TurretCoolDown, accentCoor, 10, 10, 10000);
+            PhaserCannaons = new(config.TurretCoolDown, accentCoor, 10, 10, 10000);
             DefenseSystem = new(config.ShieldForce, config.HullForce, 10);
             mTractorBeam = new();
             mAccentColor = accentCoor;
             foreach (var pos in config.WeaponsPositions)
-                WeaponSystem.PlaceTurret(new(pos, 1, TextureDepth + 1));
+                PhaserCannaons.PlaceTurret(new(pos, 1, TextureDepth + 1));
             mUtilityAi = new();
-            foreach (var beh in config.AIBehaviors)
-                mUtilityAi.AddBehavior(beh);
+            mUtilityAi.AddBehavior(new IdleBehavior(SublightDrive));
+            mUtilityAi.AddBehavior(new PatrollBehavior(this));
+            mUtilityAi.AddBehavior(new CollectItemsBehavior(this));
+            mUtilityAi.AddBehavior(new CombatBehavior(this));
+            mUtilityAi.AddBehavior(new FleeBehavior(this));
         }
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer)
@@ -82,7 +86,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             HasProjectileHit(gameTime, gameLayer);
             DefenseSystem.Update(gameTime);
             SensorSystem.Scan(gameTime, PlanetSystem, Position, Fraction, gameLayer);
-            WeaponSystem.Update(gameTime, this, gameLayer);
+            PhaserCannaons.Update(gameTime, this, gameLayer);
             mUtilityAi.Update(gameTime);
             mTractorBeam.Collect(gameTime, this, gameLayer);
             TrailEffect.Show(Transformations.Rotation(Position, new(-100, 0), Rotation), MovingDirection, Velocity, gameTime, mAccentColor, gameLayer.ParticleManager, gameLayer.GameSettings.ParticlesMultiplier);
@@ -133,7 +137,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 
             scene.DebugSystem.DrawAiDebug(BoundedBox, mUtilityAi.DebugMessage, scene.Camera2D.Zoom);
 
-            WeaponSystem.Draw(scene);
+            PhaserCannaons.Draw(scene);
             SublightDrive.Draw(scene.DebugSystem, this, scene);
             DefenseSystem.DrawShields(this);
         }
