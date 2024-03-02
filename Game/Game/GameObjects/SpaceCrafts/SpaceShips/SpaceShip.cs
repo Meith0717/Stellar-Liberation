@@ -76,7 +76,8 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
         public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer)
         {
             HyperDrive.Update(gameTime, this, gameLayer);
-            if (!HyperDrive.IsActive) SublightDrive.Update(gameTime, this);
+            if (!HyperDrive.IsActive) 
+                SublightDrive.Update(this, DefenseSystem.HullPercentage);
 
             MovingDirection = Geometry.CalculateDirectionVector(Rotation);
             Physics.HandleCollision(gameTime, this, gameLayer.SpatialHashing);
