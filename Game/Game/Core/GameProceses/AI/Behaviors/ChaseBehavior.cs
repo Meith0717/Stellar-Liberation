@@ -6,27 +6,26 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 {
-    public class PatrollBehavior : Behavior
+    public class ChaseBehavior : Behavior
     {
         private SpaceShip mPatrolTarget;
-        private List<SpaceShip> mPatrolTargets;
-
         private readonly SpaceShip mSpaceShip;
 
-        public PatrollBehavior(SpaceShip spaceShip)
+        public ChaseBehavior(SpaceShip spaceShip)
         {
             mSpaceShip = spaceShip;
         }
 
         public override double GetScore()
         {
-            mPatrolTargets = mSpaceShip.SensorSystem.Opponents;
-            return MathF.Min(mPatrolTargets.Count, 1) * 0.1f;
+            var shialdHullScore = mSpaceShip.DefenseSystem.HullPercentage * 0.95 + mSpaceShip.DefenseSystem.ShieldPercentage * 0.05;
+            var targets = mSpaceShip.SensorSystem.Opponents;
+            var targetScore = MathF.Min(targets.Count, 1);
+            return targetScore * shialdHullScore * .1f;
         }
 
         public override void Execute()
@@ -37,10 +36,9 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
             switch (mPatrolTarget)
             {
                 case null: // Get new Patrol Target
-                    mSpaceShip.SublightDrive.SetVelocity(0);
-                    if (mPatrolTargets.Count == 0) break;
-                    mPatrolTarget = mPatrolTargets.First();
-                    mSpaceShip.SublightDrive.FollowSpaceShip(mPatrolTarget);
+                    var targets = mSpaceShip.SensorSystem.Opponents;
+                    mSpaceShip.SublightDrive.FollowSpaceShip(mPatrolTarget = targets.First());
+                    mSpaceShip.SublightDrive.SetVelocity(.2f);
                     break;
 
                 case not null: // Check if Patrol Target is reached

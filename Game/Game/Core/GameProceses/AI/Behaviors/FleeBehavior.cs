@@ -17,12 +17,18 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
         public override double GetScore()
         {
-            var opponents = mSpaceShip.SensorSystem.OpponentsInRannge;
-            if (opponents.Count <= 0) return 0;
-            var opponentsInRageScore = 2 - (2 / (opponents.Count + 2));
+            var shieldHullScore = 1 - (mSpaceShip.DefenseSystem.HullPercentage * 0.85 + mSpaceShip.DefenseSystem.ShieldPercentage * 0.15);
 
-            var hullScore = 1 - mSpaceShip.DefenseSystem.HullPercentage;
-            return hullScore * opponentsInRageScore;
+            var opponents = mSpaceShip.SensorSystem.OpponentsInRannge;
+            var opponentShieldHullScore = 0d;
+            foreach (var opponent in opponents)
+            {
+                opponentShieldHullScore += opponent.DefenseSystem.HullPercentage * 0.85 + mSpaceShip.DefenseSystem.ShieldPercentage * 0.15;
+            }
+            opponentShieldHullScore = opponents.Count == 0 ? 0 : opponentShieldHullScore / opponents.Count;
+            var opponentsScore = 1 - (1 / (.5 * opponentShieldHullScore + 1));
+
+            return shieldHullScore * opponentsScore;
         }
 
         public override void Execute()

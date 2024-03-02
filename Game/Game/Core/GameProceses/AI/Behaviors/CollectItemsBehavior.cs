@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.GameObjects.Recources.Items;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
@@ -40,7 +39,6 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
             mSpaceShip.SublightDrive.MoveInDirection(Vector2.Normalize(mItems.First().Position - mSpaceShip.Position));
             mSpaceShip.SublightDrive.SetVelocity(.3f);
         }
-
 
         public override void Recet()
         {

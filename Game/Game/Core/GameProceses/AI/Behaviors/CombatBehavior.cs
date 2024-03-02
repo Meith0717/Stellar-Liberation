@@ -2,18 +2,18 @@
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
+using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
+using System;
 
 namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 {
     public class CombatBehavior : Behavior
     {
         private readonly SpaceShip mSpaceShip;
-
+        private bool mReposition;
         private double mBias1;
-        private double mBias2;
-        private double mBias3;
 
         public CombatBehavior(SpaceShip spaceShip) 
         {
@@ -33,20 +33,33 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
         public override void Execute()
         {
-            mSpaceShip.SensorSystem.TryGetAimingShip(mSpaceShip.Position, out var aimingTarget);
-            mSpaceShip.PhaserCannaons.AimShip(aimingTarget);
+            mSpaceShip.SensorSystem.TryGetAimingShip(mSpaceShip.Position, out var target);
+            var distance = Vector2.Distance(target.Position, mSpaceShip.Position);
 
-            mSpaceShip.SublightDrive.SetVelocity(0f);
-            mSpaceShip.PhaserCannaons.Fire();
+            var dotProduct = Vector2.Dot(mSpaceShip.MovingDirection, target.MovingDirection);
+            var velocity = 0f;
+            switch (mReposition)
+            {
+                case false:
+                    mSpaceShip.PhaserCannaons.Fire();
+                    mSpaceShip.SublightDrive.MoveInDirection(Vector2.Normalize(target.Position - mSpaceShip.Position));
+                    velocity = (dotProduct + 1) / 2;
+                    if (distance <= mSpaceShip.BoundedBox.Diameter * 5) mReposition = true;
+                    break;
+                case true:
+                    mSpaceShip.PhaserCannaons.StopFire();
+                    mSpaceShip.SublightDrive.MoveInDirection(-Vector2.Normalize(target.Position - mSpaceShip.Position));
+                    velocity = (- dotProduct + 1) / 2;
+                    if (distance >= mSpaceShip.BoundedBox.Diameter * 30) mReposition = false;
+                    break;
+            }
+            mSpaceShip.SublightDrive.SetVelocity(MathHelper.Clamp(velocity, 0.2f, 1f));
         }
 
         public override void Recet()
         {
-            mSpaceShip.PhaserCannaons.RecetAimingShip();
             mSpaceShip.PhaserCannaons.StopFire();
             mBias1 = .4f + ExtendetRandom.Random.NextSingle() * .2f;
-            mBias2 = .2f + ExtendetRandom.Random.NextSingle() * .2f;
-            mBias3 = .3f + ExtendetRandom.Random.NextSingle() * .3f;
         }
     }
 }

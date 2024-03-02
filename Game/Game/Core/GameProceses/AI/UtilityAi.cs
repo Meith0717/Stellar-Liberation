@@ -39,16 +39,14 @@ namespace StellarLiberation.Game.Core.GameProceses.AI
         public void Update(GameTime gameTime)
         {
             mCoolDown -= gameTime.ElapsedGameTime.Milliseconds;
-            if (mCoolDown > 0) return;
-            mCoolDown = 500;
+            // if (mCoolDown > 0) return;
+            // mCoolDown = 500;
 
             // Auswahl des Verhaltens basierend auf Prioritäten und Spielsituation
             mCurrentBehavior = SelectBehavior();
-            if (mCurrentBehavior != mLastBehavior)
-            {
-                mLastBehavior = mCurrentBehavior;
-                mLastBehavior.Recet();
-            }
+            if (mCurrentBehavior != mLastBehavior) 
+                mLastBehavior?.Recet();
+            mLastBehavior = mCurrentBehavior;
 
             // Ausführung des ausgewählten Verhaltens
             mCurrentBehavior?.Execute();

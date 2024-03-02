@@ -15,7 +15,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
 {
     public class SensorSystem
     {
-        public const int ShortRangeScanDistance = 5000;
+        public const int ShortRangeScanDistance = 15000;
         private const int MaxCoolDown = 500;
 
         public List<GameObject2D> LongRangeScan => mLongRangeScan;

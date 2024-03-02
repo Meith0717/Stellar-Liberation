@@ -59,7 +59,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
             };
             SensorSystem = new();
             SublightDrive = new(config.Velocity, 0.1f);
-            PhaserCannaons = new(config.TurretCoolDown, accentCoor, 10, 10, 10000);
+            PhaserCannaons = new(config.TurretCoolDown, accentCoor, 10, 10);
             DefenseSystem = new(config.ShieldForce, config.HullForce, 10);
             mTractorBeam = new();
             mAccentColor = accentCoor;
@@ -67,7 +67,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                 PhaserCannaons.PlaceTurret(new(pos, 1, TextureDepth + 1));
             mUtilityAi = new();
             mUtilityAi.AddBehavior(new IdleBehavior(SublightDrive));
-            mUtilityAi.AddBehavior(new PatrollBehavior(this));
+            mUtilityAi.AddBehavior(new ChaseBehavior(this));
             mUtilityAi.AddBehavior(new CollectItemsBehavior(this));
             mUtilityAi.AddBehavior(new CombatBehavior(this));
             mUtilityAi.AddBehavior(new FleeBehavior(this));

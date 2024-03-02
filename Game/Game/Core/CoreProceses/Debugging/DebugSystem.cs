@@ -88,7 +88,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugging
         public void DrawMovingDir(Vector2? target, SpaceShip spaceShip, GameLayer scene)
         {
             if (target is null | !ShowPaths) return;
-            TextureManager.Instance.DrawAdaptiveLine(spaceShip.Position, Geometry.GetPointInDirection(spaceShip.Position, spaceShip.MovingDirection, spaceShip.Velocity * 100), Color.LightBlue, 2, spaceShip.TextureDepth - 1, scene.Camera2D.Zoom);
+            TextureManager.Instance.DrawAdaptiveLine(spaceShip.Position, Geometry.GetPointInDirection(spaceShip.Position, spaceShip.MovingDirection, spaceShip.Velocity * 500), Color.LightBlue, 2, spaceShip.TextureDepth - 1, scene.Camera2D.Zoom);
         }
 
         public void DrawSensorRadius(Vector2 center, float radius, GameLayer scene)
