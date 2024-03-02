@@ -18,7 +18,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
 {
     public abstract class GameLayer : Layer
     {
-        public readonly Player Player;
         public Debugging.DebugSystem DebugSystem { get; protected set; }
         public Vector2 WorldMousePosition { get; private set; }
         public readonly SpatialHashing SpatialHashing;
@@ -31,7 +30,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
 
         public GameLayer(GameLayerManager gameState, int spatialHashingCellSize) : base(false)
         {
-            Player = gameState.Player;
             DebugSystem = gameState.DebugSystem;
 
             SpatialHashing = new(spatialHashingCellSize);

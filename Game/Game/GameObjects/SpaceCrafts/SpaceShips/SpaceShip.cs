@@ -57,7 +57,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                 Fractions.Neutral => throw new NotImplementedException(),
                 _ => throw new NotImplementedException()
             };
-            SensorSystem = new(config.SensorRange);
+            SensorSystem = new();
             SublightDrive = new(config.Velocity, 0.1f);
             PhaserCannaons = new(config.TurretCoolDown, accentCoor, 10, 10, 10000);
             DefenseSystem = new(config.ShieldForce, config.HullForce, 10);

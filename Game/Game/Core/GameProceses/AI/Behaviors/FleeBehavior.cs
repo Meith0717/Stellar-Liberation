@@ -19,7 +19,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
         {
             var opponents = mSpaceShip.SensorSystem.OpponentsInRannge;
             if (opponents.Count <= 0) return 0;
-            var opponentsInRageScore = 2 - (1 / (0.1d * opponents.Count + 1));
+            var opponentsInRageScore = 2 - (2 / (opponents.Count + 2));
 
             var hullScore = 1 - mSpaceShip.DefenseSystem.HullPercentage;
             return hullScore * opponentsInRageScore;
@@ -32,8 +32,8 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
             var dir = Vector2.Zero;
             foreach (var opponent in opponents) dir -= Vector2.Subtract(opponent.Position, mSpaceShip.Position);
             dir.Normalize();
-            mSpaceShip.SublightDrive.MoveInDirection(dir);
             mSpaceShip.SublightDrive.SetVelocity(1);
+            mSpaceShip.SublightDrive.MoveInDirection(dir);
         }
 
         public override void Recet(){ }

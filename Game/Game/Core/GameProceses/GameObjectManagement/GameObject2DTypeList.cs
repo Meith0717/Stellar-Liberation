@@ -48,13 +48,13 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             return true;
         }
 
-        public List<T> ToList<T>() where T : GameObject2D
+        public IEnumerable<T> OfType<T>() where T : GameObject2D
         {
             var type = typeof(T);
             ArgumentNullException.ThrowIfNull(type);
             if (type == typeof(GameObject2D))
-                return AllObjects.OfType<T>().ToList();
-            return mTypeDict.TryGetValue(type, out var list) ? list.OfType<T>().ToList(): new();
+                return AllObjects.OfType<T>();
+            return mTypeDict.TryGetValue(type, out var list) ? list.OfType<T>() : new List<T>();
         }
 
         public void Sort(Comparison<GameObject2D> comparison)

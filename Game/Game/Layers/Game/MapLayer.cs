@@ -30,7 +30,6 @@ namespace StellarLiberation.Game.Layers.GameLayers
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn, Alpha = 1 };
             mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
 
-            mCurrentSystem = gameState.Player.PlanetSystem;
             Camera2D.Position = mCurrentSystem.Position;
             mPlanetSystems = gameState.PlanetSystems.ToList();
             foreach (var system in mPlanetSystems)

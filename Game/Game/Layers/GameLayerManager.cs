@@ -32,14 +32,12 @@ namespace StellarLiberation.Game.Layers
         [JsonIgnore] private readonly LinkedList<Layer> mLayers = new();
         [JsonProperty] private readonly MapConfig mMapConfig;
         [JsonProperty] public readonly HashSet<PlanetSystem> PlanetSystems = new();
-        [JsonProperty] public readonly Player Player = new();
         [JsonProperty] public readonly Wallet Wallet = new();
 
         public GameLayerManager() : base(false)
         {
             mMapConfig = new(50, 50, 42);
             MapFactory.Generate(out PlanetSystems, mMapConfig);
-            Player.Position = Vector2.Zero;
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, GameSettings gameSettings, ResolutionManager resolutionManager)
@@ -63,7 +61,6 @@ namespace StellarLiberation.Game.Layers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             mFrameCounter.Update(gameTime);
-            if (Player.DefenseSystem.HullPercentage == 0) LayerManager.PopLayer();
             DebugSystem.Update(inputState);
             inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this)));
             mLayers.Last.Value.Update(gameTime, inputState);

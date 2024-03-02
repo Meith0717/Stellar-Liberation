@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System;
 using System.Collections.Generic;
@@ -14,8 +13,8 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 {
     public class PatrollBehavior : Behavior
     {
-        private Vector2? mPatrolTarget;
-        private List<Planet> mPatrolTargets;
+        private SpaceShip mPatrolTarget;
+        private List<SpaceShip> mPatrolTargets;
 
         private readonly SpaceShip mSpaceShip;
 
@@ -26,36 +25,28 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
         public override double GetScore()
         {
-            mPatrolTargets = mSpaceShip.SensorSystem.LongRangeScan.OfType<Planet>().ToList();
+            mPatrolTargets = mSpaceShip.SensorSystem.Opponents;
             return MathF.Min(mPatrolTargets.Count, 1) * 0.1f;
-        } 
+        }
 
         public override void Execute()
         {
             mSpaceShip.PhaserCannaons.StopFire();
-            // Set velocity to 100%
-            mSpaceShip.SublightDrive.SetVelocity(1f);
 
             // Move to Patrol Target
             switch (mPatrolTarget)
             {
                 case null: // Get new Patrol Target
-
+                    mSpaceShip.SublightDrive.SetVelocity(0);
                     if (mPatrolTargets.Count == 0) break;
-
-                    // Get Random Target
-                    var randomPlanet = ExtendetRandom.GetRandomElement(mPatrolTargets);
-                    var angleBetweenTargetAndShip = Geometry.AngleBetweenVectors(randomPlanet.Position, mSpaceShip.Position);
-                    var target = Geometry.GetPointOnCircle(randomPlanet.BoundedBox, angleBetweenTargetAndShip);
-                    mPatrolTarget = target;
-
-                    // Send Ship to Target
-                    mSpaceShip.SublightDrive.MoveToTarget(target);
+                    mPatrolTarget = mPatrolTargets.First();
+                    mSpaceShip.SublightDrive.FollowSpaceShip(mPatrolTarget);
                     break;
 
                 case not null: // Check if Patrol Target is reached
-                    if (!mSpaceShip.SublightDrive.IsMoving) 
-                        mPatrolTarget = null;
+                    mSpaceShip.SublightDrive.SetVelocity(1f);
+                    if (mSpaceShip.SublightDrive.IsMoving) break;
+                    mPatrolTarget = null;
                     break;
             }
         }

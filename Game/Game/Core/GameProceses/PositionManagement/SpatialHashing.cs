@@ -83,7 +83,7 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
                 foreach (var y in yRange)
                 {
                     if (!TryGetObjectsInBucket(x * CellSize, y * CellSize,out var objectsInBucket)) continue;
-                    foreach (GameObject2D gameObject in objectsInBucket.ToList<T>())
+                    foreach (GameObject2D gameObject in objectsInBucket.OfType<T>())
                     {
                         if (!CircleF.Intersects(lookUpCircle, gameObject.BoundedBox)) continue;
                         objectsInRadius.Add((T)gameObject);
@@ -121,7 +121,7 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
                 foreach (var y in yRange)
                 {
                     if (!TryGetObjectsInBucket(x * CellSize, y * CellSize, out var objectsInBucket)) continue;
-                    foreach (GameObject2D gameObject in objectsInBucket.ToList<T>())
+                    foreach (GameObject2D gameObject in objectsInBucket.OfType<T>())
                     {
                         if (!searchRectangle.Intersects(gameObject.BoundedBox))
                             continue;

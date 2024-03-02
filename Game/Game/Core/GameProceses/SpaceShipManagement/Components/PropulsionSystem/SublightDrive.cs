@@ -23,6 +23,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
         private Vector2? mDirection;
         private Vector2? mVectorTarget;
         private SpaceShip mShipTarget;
+        private Vector2? mDirectionTarget;
 
         public SublightDrive(float maxVelocity, float maneuverability)
         {
@@ -32,9 +33,9 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
 
         public void Update(GameTime gameTime, SpaceShip spaceShip)
         {
-            var position = mVectorTarget ?? CollisionPredictor.PredictPosition(gameTime, spaceShip.Position, spaceShip.SublightDrive.MaxVelocity, mShipTarget);
+            var position = mVectorTarget ?? mShipTarget?.Position;
 
-            mDirection ??= (position is null) ? null : Vector2.Normalize((Vector2)position - spaceShip.Position);
+            mDirection = (position is null) ? mDirectionTarget : Vector2.Normalize((Vector2)position - spaceShip.Position);
 
             UpdateRotation(spaceShip);
             UpdateVelocity(spaceShip);
@@ -72,7 +73,8 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
         private void UpdateRotation(SpaceShip spaceShip)
         {
             if (mDirection is null) return;
-            var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, Geometry.GetPointInDirection(spaceShip.Position, (Vector2)mDirection, 1)); spaceShip.Rotation += rotationUpdate * Maneuverability;
+            var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, Geometry.GetPointInDirection(spaceShip.Position, (Vector2)mDirection, 1)); 
+            spaceShip.Rotation += rotationUpdate * Maneuverability;
         }
 
         public void SetVelocity(float percentage) => mTargetVelocity = MaxVelocity * percentage;
@@ -80,7 +82,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
         public void MoveInDirection(Vector2 direction)
         {
             mShipTarget = null;
-            mDirection = direction;
+            mDirectionTarget = direction;
             mVectorTarget = null;
             IsMoving = true;
         }
@@ -89,13 +91,13 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
         {
             mShipTarget = null;
             mVectorTarget = target;
-            mDirection = null;
+            mDirectionTarget = null;
             IsMoving = true;
         }
 
         public void FollowSpaceShip(SpaceShip spaceShip)
         {
-            mDirection = null;
+            mDirectionTarget = null;
             mVectorTarget = null;
             mShipTarget = spaceShip;
             IsMoving = true;
@@ -105,7 +107,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
         {
             mShipTarget = null;
             mVectorTarget = null;
-            mDirection = null;
+            mDirectionTarget = null;
             IsMoving = false;
         }
 

@@ -32,7 +32,6 @@ namespace StellarLiberation.Game.Layers.GameLayers
             mPlanetSystem = planetSystem;
             mUnsavedObjects = new(mPlanetSystem.GetAstronomicalObjects(), this, SpatialHashing);
             mSavedObjects = new(mPlanetSystem.GameObjects, this, SpatialHashing);
-            gameState.Player.PlanetSystem = planetSystem;
 
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn };
             mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
@@ -46,15 +45,14 @@ namespace StellarLiberation.Game.Layers.GameLayers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             inputState.DoAction(ActionType.ToggleHyperMap, () => GameState.AddLayer(new MapLayer(GameState)));
-            inputState.DoAction(ActionType.Inventar, () => LayerManager.AddLayer(new InventoryLayer(Player.Inventory, GameState.Wallet)));
 
             mBackgroundLayer.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, 1);
 
-            Player.Update(gameTime, inputState, this);
             mSavedObjects.Update(gameTime, inputState, this);
             mUnsavedObjects.Update(gameTime, inputState, this);
 
-            Camera2D.Position = Player.Position;
+            Camera2DMover.MoveByKeys(inputState, Camera2D);
+            Camera2DMover.UpdateCameraByMouseDrag(inputState, Camera2D);
             Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, .001f, 1);
             base.Update(gameTime, inputState);
         }
