@@ -58,7 +58,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                 Fractions.Neutral => throw new NotImplementedException(),
                 _ => throw new NotImplementedException()
             };
-            SublightDrive = new(config.Velocity, 0.1f);
+            SublightDrive = new(config.Velocity, 0.01f);
             PhaserCannaons = new(config.TurretCoolDown, accentCoor, 10, 10);
             DefenseSystem = new(config.ShieldForce, config.HullForce, 10);
             mAccentColor = accentCoor;
@@ -74,7 +74,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer)
         {
-            SublightDrive.Update(this, DefenseSystem.HullPercentage);
+            SublightDrive.Update(gameTime, this, DefenseSystem.HullPercentage);
 
             MovingDirection = Geometry.CalculateDirectionVector(Rotation);
             Physics.HandleCollision(gameTime, this, gameLayer.SpatialHashing);

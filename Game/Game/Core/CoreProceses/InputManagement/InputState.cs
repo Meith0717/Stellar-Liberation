@@ -26,7 +26,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement
         Load,
         Save,
         FireSecondaryWeapon,
-        FireInitialWeapon,
+        FireWeapon,
         ToggleHyperMap,
         F1, F2, F3, F4, F5, F6, F7, F8, F9, F10,
         Accelerate,

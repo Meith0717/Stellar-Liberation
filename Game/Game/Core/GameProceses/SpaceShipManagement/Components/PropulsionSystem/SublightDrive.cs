@@ -31,14 +31,14 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             Maneuverability = maneuverability;
         }
 
-        public void Update(SpaceShip spaceShip, double damage)
+        public void Update(GameTime gameTime, SpaceShip spaceShip, double damage)
         {
             var position = mVectorTarget ?? mShipTarget?.Position;
 
             mDirection = (position is null) ? mDirectionTarget : Vector2.Normalize((Vector2)position - spaceShip.Position);
 
-            UpdateRotation(spaceShip);
-            UpdateVelocity(spaceShip, damage);
+            UpdateRotation(gameTime, spaceShip);
+            UpdateVelocity(gameTime, spaceShip, damage);
 
             if (mVectorTarget is null) return;
             if (Vector2.Distance((Vector2)mVectorTarget, spaceShip.Position) > 1000) return;
@@ -46,11 +46,11 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             SetVelocity(0);
         }
 
-        private void UpdateVelocity(SpaceShip spaceShip, double damage)
+        private void UpdateVelocity(GameTime gameTime, SpaceShip spaceShip, double damage)
         {
             if (!IsMoving)
             {
-                spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, 0, MaxVelocity / 100f);
+                spaceShip.Velocity = MovementController.GetVelocity(gameTime, spaceShip.Velocity, 0, MaxVelocity / 100f);
                 return;
             }
 
@@ -68,14 +68,14 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
                 float.NaN => 0
             };
             targetVelocity *= (float)damage;
-            spaceShip.Velocity = MovementController.GetVelocity(spaceShip.Velocity, targetVelocity, MaxVelocity / 100f);
+            spaceShip.Velocity = MovementController.GetVelocity(gameTime, spaceShip.Velocity, targetVelocity, MaxVelocity / 100f);
         }
 
-        private void UpdateRotation(SpaceShip spaceShip)
+        private void UpdateRotation(GameTime gameTime, SpaceShip spaceShip)
         {
             if (mDirection is null) return;
             var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, Geometry.GetPointInDirection(spaceShip.Position, (Vector2)mDirection, 1)); 
-            spaceShip.Rotation += rotationUpdate * Maneuverability;
+            spaceShip.Rotation += rotationUpdate * Maneuverability * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
         public void SetVelocity(float percentage) => mTargetVelocity = MaxVelocity * percentage;

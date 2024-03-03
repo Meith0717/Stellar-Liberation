@@ -31,7 +31,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement.Peripheral
                 { Buttons.RightThumbstickDown, ActionType.CameraZoomIn },
                 { Buttons.RightTrigger, ActionType.Accelerate },
                 { Buttons.LeftTrigger, ActionType.Break },
-                { Buttons.A, ActionType.FireInitialWeapon },
+                { Buttons.A, ActionType.FireWeapon },
             };
         }
 

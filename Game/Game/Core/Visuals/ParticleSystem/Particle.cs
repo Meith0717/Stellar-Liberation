@@ -33,7 +33,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem
         public void Update(GameTime gameTime)
         {
             DisposeTime -= gameTime.ElapsedGameTime.Milliseconds;
-            Position += MovingDirection * Velocity;
+            Position += MovingDirection * Velocity * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
         public void Draw()

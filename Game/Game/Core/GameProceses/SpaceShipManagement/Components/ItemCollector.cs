@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
 
             foreach (var item in mItemsInRange)
             {
-                item.Pull(position);
+                item.Pull(gameTime, position);
                 if (!ContinuousCollisionDetection.HasCollide(gameTime, item, spaceShip, out _)) continue;
                 inventory.Add(item);
                 SoundEffectSystem.PlaySound(SoundEffectRegistries.collect, scene.Camera2D, spaceShip.Position);

@@ -47,12 +47,6 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             mFireCoolDown = mMaxFireCoolDown;
         }
 
-        public void ControlByInput(InputState inputState)
-        {
-            StopFire();
-            inputState.DoAction(ActionType.LeftClickHold, () => Fire());
-        }
-
         public void Draw(GameLayer sceme) { foreach (var weapon in mCannons) weapon.Draw(sceme); }
     }
 }

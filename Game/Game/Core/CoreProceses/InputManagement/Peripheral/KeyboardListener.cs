@@ -43,13 +43,14 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement.Peripheral
                 { Keys.O, ActionType.DecreaseScaling },
                 { Keys.P, ActionType.IncreaseScaling },
                 { Keys.C, ActionType.ToggleCameraMode },
+                { Keys.Space, ActionType.FireWeapon },
                 { Keys.RightControl, ActionType.BenchmarkPause },
             };
 
             mActionOnHold = new()
             {
                 { Keys.LeftControl, ActionType.CtrlLeft },
-                { Keys.Space, ActionType.FireInitialWeapon },
+                { Keys.Space, ActionType.FireWeapon },
                 { Keys.W, ActionType.Accelerate },
                 { Keys.S, ActionType.Break },
                 { Keys.Q, ActionType.CameraZoomIn },

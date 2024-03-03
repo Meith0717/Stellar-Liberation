@@ -35,16 +35,16 @@ namespace StellarLiberation.Game.GameObjects.Recources.Items
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
-            Velocity = MovementController.GetVelocity(Velocity, 0, ExtendetRandom.Random.Next(5, 10) / 1000f);
+            Velocity = MovementController.GetVelocity(gameTime, Velocity, 0, ExtendetRandom.Random.Next(5, 10) / 1000f);
             GameObject2DMover.Move(gameTime, this, scene.SpatialHashing);
             base.Update(gameTime, inputState, scene);
         }
 
-        public void Pull(Vector2 position)
+        public void Pull(GameTime gameTime, Vector2 position)
         {
             var angleToPosition = Geometry.AngleBetweenVectors(Position, position);
             MovingDirection = Geometry.CalculateDirectionVector(angleToPosition);
-            Velocity = MovementController.GetVelocity(Velocity, float.PositiveInfinity, 0.05f);
+            Velocity = MovementController.GetVelocity(gameTime, Velocity, float.PositiveInfinity, 0.05f);
         }
 
         public void Throw(Vector2 momentum, Vector2 position)

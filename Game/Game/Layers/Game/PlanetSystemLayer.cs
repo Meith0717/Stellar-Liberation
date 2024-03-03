@@ -46,7 +46,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
             mBackgroundLayer.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, 1);
 
-            spaceShipController.Controll(GameState.Player, inputState, this);
+            spaceShipController.Controll(gameTime, GameState.Player, inputState, this);
             PlanetSystem.GameObjects.Update(gameTime, inputState, this);
             PlanetSystem.AstronomicalObjs.Update(gameTime, inputState, this);
 

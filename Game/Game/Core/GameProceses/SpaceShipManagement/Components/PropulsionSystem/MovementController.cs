@@ -34,12 +34,12 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             };
         }
 
-        public static float GetVelocity(float currentVelocity, float targetVelocity, float acceleration)
+        public static float GetVelocity(GameTime gameTime, float currentVelocity, float targetVelocity, float acceleration)
         {
             var a = MathF.Abs(acceleration);
             if (targetVelocity < currentVelocity) a = -a;
 
-            var newVelocity = currentVelocity + a;
+            var newVelocity = currentVelocity + a * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
             return a switch
             {

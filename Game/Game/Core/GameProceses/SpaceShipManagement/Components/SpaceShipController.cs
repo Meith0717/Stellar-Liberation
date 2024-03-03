@@ -14,17 +14,18 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
     {
         private float mVelocityProcentage;
 
-        public void Controll(SpaceShip spaceShip, InputState inputState, GameLayer gameLayer)
+        public void Controll(GameTime gameTime, SpaceShip spaceShip, InputState inputState, GameLayer gameLayer)
         {
             if (spaceShip == null) return;
-            inputState.DoAction(ActionType.Accelerate, () => mVelocityProcentage = MathHelper.Clamp(mVelocityProcentage + .01f, 0, 1));
-            inputState.DoAction(ActionType.Break, () => mVelocityProcentage = MathHelper.Clamp(mVelocityProcentage - .01f, 0, 1));
+            spaceShip.PhaserCannaons.StopFire();
+            inputState.DoAction(ActionType.Accelerate, () => mVelocityProcentage = MathHelper.Clamp(mVelocityProcentage + .002f * (float)gameTime.ElapsedGameTime.TotalMilliseconds, 0, 1));
+            inputState.DoAction(ActionType.Break, () => mVelocityProcentage = MathHelper.Clamp(mVelocityProcentage - .002f * (float)gameTime.ElapsedGameTime.TotalMilliseconds, 0, 1));
             inputState.DoAction(ActionType.Inventar, () => gameLayer.LayerManager.AddLayer(new InventoryLayer(spaceShip.Inventory, gameLayer.GameState.Wallet)));
+            inputState.DoAction(ActionType.RightClickHold, () => spaceShip.PhaserCannaons.Fire());
 
             spaceShip.SublightDrive.SetVelocity(mVelocityProcentage);
             spaceShip.SublightDrive.MoveInDirection(Vector2.Normalize(gameLayer.WorldMousePosition - spaceShip.Position));
             spaceShip.SensorSystem.TryGetAimingShip(spaceShip.Position, out var target);
-            spaceShip.PhaserCannaons.ControlByInput(inputState);
             gameLayer.Camera2D.Position = spaceShip.Position;
         }
     }
