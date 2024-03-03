@@ -2,8 +2,6 @@
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
-using Microsoft.Xna.Framework;
-using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
 using System;
 using System.Linq;
@@ -43,7 +41,8 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
                 case not null: // Check if Patrol Target is reached
                     mSpaceShip.SublightDrive.SetVelocity(1f);
-                    if (mSpaceShip.SublightDrive.IsMoving) break;
+                    if (mSpaceShip.SublightDrive.IsMoving 
+                        && !mPatrolTarget.IsDisposed) break;
                     mPatrolTarget = null;
                     break;
             }

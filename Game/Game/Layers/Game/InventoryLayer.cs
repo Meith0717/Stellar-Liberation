@@ -18,7 +18,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
     {
         private readonly UiFrame mFrame;
 
-        public InventoryLayer(Inventory inventory, Wallet wallet) : base(false)
+        public InventoryLayer(Inventory inventory, Wallet wallet) : base(true)
         {
             mFrame = new() { Height = 800, Width = 550, Anchor = Anchor.Center };
             mFrame.AddChild(new UiText(FontRegistries.subTitleFont, "Inventory") { Anchor = Anchor.NW, HSpace = 50, VSpace = 50 });

@@ -22,15 +22,14 @@ namespace StellarLiberation.Game.Layers.GameLayers
         private readonly UiFrame mBackgroundLayer;
 
         private readonly List<PlanetSystem> mPlanetSystems;
-        private readonly PlanetSystem mCurrentSystem;
 
-        public MapLayer(GameLayerManager gameState)
+        public MapLayer(GameLayerManager gameState, PlanetSystem currentSystem)
             : base(gameState, MapFactory.MapScale * 3)
         {
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn, Alpha = 1 };
             mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
 
-            Camera2D.Position = mCurrentSystem.Position;
+            Camera2D.Position = currentSystem.Position;
             mPlanetSystems = gameState.PlanetSystems.ToList();
             foreach (var system in mPlanetSystems)
             {

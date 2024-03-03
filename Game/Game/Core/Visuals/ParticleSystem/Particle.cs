@@ -4,34 +4,39 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.InputManagement;
-using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 
 namespace StellarLiberation.Game.Core.Visuals.ParticleSystem
 {
-    public class Particle : GameObject2D
+    internal class Particle
     {
+        public Vector2 Position;
+        private Vector2 MovingDirection;
+        private float Velocity;
+        private Color Color;
+        private int DisposeTime;
 
-        public Particle(Vector2 position, Vector2 movementDirection, float textureScale, float velocity, Color startColor, double dispodeTime)
-            : base(position, "particle", textureScale, 9)
+        public bool IsDisposed => DisposeTime <= 0;
+
+        public Particle(Vector2 position, Vector2 movementDirection, float velocity, Color color, int dispodeTime) 
+            => Populate(position, movementDirection, velocity, color, dispodeTime);  
+
+        public void Populate(Vector2 position, Vector2 movementDirection, float velocity, Color color, int dispodeTime)
         {
+            Position = position;
             MovingDirection = movementDirection;
             Velocity = velocity;
-            TextureColor = startColor;
+            Color = color;
             DisposeTime = dispodeTime;
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
+        public void Update(GameTime gameTime)
         {
-            GameObject2DMover.Move(gameTime, this, null);
-            base.Update(gameTime, inputState, scene);
+            DisposeTime -= gameTime.ElapsedGameTime.Milliseconds;
+            Position += MovingDirection * Velocity;
         }
 
-        public override void Draw(GameLayer scene)
-        {
-            base.Draw(scene);
-            TextureManager.Instance.DrawGameObject(this);
-        }
+        public void Draw()
+            =>TextureManager.Instance.Draw(GameSpriteRegistries.particle, Position, .1f, 0f, 9, Color);
     }
 }

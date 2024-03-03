@@ -29,96 +29,78 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                 ShipID.Bomber => new(
                     textureID: GameSpriteRegistries.bomber,
                     textureScale: 1,
-                    sensorRange: 10000,
                     velocity: 5,
                     turretCoolDown: 500,
                     shieldForce: 100,
                     hullForce: 300,
-                    fraction: fraction,
                     turretPositions: new()
                     {
                         Vector2.Zero
-                    },
-                    aiBehaviors: new()
+                    }
                 ),
                 ShipID.Cargo => new(
                     textureID: GameSpriteRegistries.cargo,
                     textureScale: 1,
-                    sensorRange: 5000,
-                    velocity: 1,
+                    velocity: 5,
                     turretCoolDown: 500,
                     shieldForce: 100,
                     hullForce: 100,
-                    fraction: fraction,
                     turretPositions: new()
                     {
                         Vector2.Zero
-                    },
-                    aiBehaviors: new()
+                    }
                 ),
                 ShipID.Corvette => new(
                     textureID: GameSpriteRegistries.corvette,
                     textureScale: 1,
-                    sensorRange: 5000,
-                    velocity: 1,
+                    velocity: 5,
                     turretCoolDown: 500,
                     shieldForce: 100,
                     hullForce: 100,
-                    fraction: fraction,
                     turretPositions: new()
                     {
                         Vector2.Zero
-                    },
-                    aiBehaviors: new()
+                    }
                 ),
                 ShipID.Cuiser => new(
                     textureID: GameSpriteRegistries.cruiser,
                     textureScale: 1,
-                    sensorRange: 5000,
-                    velocity: 1,
+                    velocity: 5,
                     turretCoolDown: 500,
                     shieldForce: 100,
                     hullForce: 100,
-                    fraction: fraction,
                     turretPositions: new()
                     {
                         Vector2.Zero
-                    },
-                    aiBehaviors: new()
+                    }
                 ),
                 ShipID.Destroyer => new(
                     textureID: GameSpriteRegistries.destroyer,
                     textureScale: 1,
-                    sensorRange: 5000,
-                    velocity: 1,
-                    turretCoolDown: 500,
-                    shieldForce: 100,
-                    hullForce: 100,
-                    fraction: fraction,
+                    velocity: 5,
+                    turretCoolDown: 50,
+                    shieldForce: 10000,
+                    hullForce: 100000,
                     turretPositions: new()
                     {
                         Vector2.Zero
-                    },
-                    aiBehaviors: new()
+                    }
                 ),
                 ShipID.Fighter => new(
                     textureID: GameSpriteRegistries.fighter,
                     textureScale: 1,
-                    sensorRange: 5000,
-                    velocity: 1,
-                    turretCoolDown: 500,
+                    velocity: 5,
+                    turretCoolDown: 50,
                     shieldForce: 100,
                     hullForce: 100,
-                    fraction: fraction,
                     turretPositions: new()
                     {
                         Vector2.Zero
-                    },
-                    aiBehaviors: new()
+                    }
                 ),
                 _ => throw new System.NotImplementedException()
             };
-            return new SpaceShip(position, config);
+            return new SpaceShip(position, fraction, config);
         }
     }
 }

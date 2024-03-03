@@ -14,7 +14,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
 {
     public class HyperDrive
     {
-        private const int CoolDown = 500;
+        private const int CoolDown = 0;
         public bool IsActive { get; private set; }
         private PlanetSystem TargetPlanetSystem;
         private float mActualChargingTime;
@@ -42,8 +42,10 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             if (TargetPlanetSystem is null) return;
             HyperDriveEffect.Charge(operatingShip.Position, scene.ParticleManager);
             if (CoolDown > mActualChargingTime) return;
-            SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.CoolHyperdrive);
-            // TODO
+            //SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.CoolHyperdrive);
+            operatingShip.PlanetSystem.GameObjects.DespawnGameObject(operatingShip);
+            TargetPlanetSystem.GameObjects.Add(operatingShip);
+            operatingShip.PlanetSystem = TargetPlanetSystem;
             TargetPlanetSystem = null;
             IsActive = false;
         }

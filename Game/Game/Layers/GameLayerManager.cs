@@ -21,6 +21,7 @@ using StellarLiberation.Game.Layers.MenueLayers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using StellarLiberation.Game.Core.GameProceses;
 
 namespace StellarLiberation.Game.Layers
 {
@@ -30,20 +31,27 @@ namespace StellarLiberation.Game.Layers
         [JsonIgnore] private readonly FrameCounter mFrameCounter = new(1000);
         [JsonIgnore] public readonly DebugSystem DebugSystem = new();
         [JsonIgnore] private readonly LinkedList<Layer> mLayers = new();
+        [JsonIgnore] private PlanetSystemLayer mMainLayer;
         [JsonProperty] private readonly MapConfig mMapConfig;
         [JsonProperty] public readonly HashSet<PlanetSystem> PlanetSystems = new();
+        [JsonProperty] public readonly SpaceShip Player;
+        [JsonProperty] public readonly List<SpaceShip> spaceShips;
         [JsonProperty] public readonly Wallet Wallet = new();
 
         public GameLayerManager() : base(false)
         {
             mMapConfig = new(50, 50, 42);
             MapFactory.Generate(out PlanetSystems, mMapConfig);
+            Player = SpaceShipFactory.Get(Vector2.Zero, ShipID.Destroyer, Fractions.Allied);
+            mMainLayer = new PlanetSystemLayer(this, PlanetSystems.First(), 1);
+            Player.PlanetSystem = PlanetSystems.First();
+            PlanetSystems.First().GameObjects.Add(Player);
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, GameSettings gameSettings, ResolutionManager resolutionManager)
         {
             base.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings, resolutionManager);
-            AddLayer(new PlanetSystemLayer(this, PlanetSystems.First(),  1));
+            AddLayer(mMainLayer);
         }
 
         public void AddLayer(Layer layer)
@@ -62,8 +70,13 @@ namespace StellarLiberation.Game.Layers
         {
             mFrameCounter.Update(gameTime);
             DebugSystem.Update(inputState);
+            if (Player.IsDisposed) LayerManager.PopLayer();
             inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this)));
             mLayers.Last.Value.Update(gameTime, inputState);
+            if (mMainLayer.PlanetSystem == Player.PlanetSystem) return;
+            PopLayer();
+            mMainLayer = new PlanetSystemLayer(this, Player.PlanetSystem, 1);
+            AddLayer(mMainLayer);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -77,12 +90,8 @@ namespace StellarLiberation.Game.Layers
             spriteBatch.End();
         }
 
-        public override void Destroy()
-        {
-        }
+        public override void Destroy() { }
 
-        public override void OnResolutionChanged()
-        {
-        }
+        public override void OnResolutionChanged() { }
     }
 }

@@ -15,7 +15,6 @@ using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
 using StellarLiberation.Game.Layers.Benchmark;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -64,7 +63,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
             mMusicSlider = new(GameSettings.MusicVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
             mSfxSlider = new(GameSettings.SoundEffectsVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
             mResolutionSelector = new UiVariableSelector<string>(resolutionManager.Resolutions, GameSettings.Resolution) { RelWidth = 1, Anchor = Anchor.CenterH };
-            mParticleMultiplier = new UiVariableSelector<float>(new() { 0, 0.2f, 0.5f, 1f, 2f }, GameSettings.ParticlesMultiplier) { RelWidth = 1, Anchor = Anchor.CenterH };
+            mParticleMultiplier = new UiVariableSelector<float>(new() { 0, 0.2f, 0.5f, 1f, 2f}, GameSettings.ParticlesMultiplier) { RelWidth = 1, Anchor = Anchor.CenterH };
             mRefreshRate = new UiVariableSelector<string>(new() { "30", "60", "75", "120", "Unlimit" }, GameSettings.RefreshRate.ToString()) { RelWidth = 1, Anchor = Anchor.CenterH};
             mVsync = new UiVariableSelector<bool>(new() { true, false}, GameSettings.Vsync) { RelWidth = 1, Anchor = Anchor.CenterH };
 

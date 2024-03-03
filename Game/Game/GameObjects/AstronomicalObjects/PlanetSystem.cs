@@ -23,7 +23,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
     [Serializable]
     public class PlanetSystem : GameObject2D
     {
-        [JsonIgnore] public readonly GameObject2DTypeList AstronomicalObjs = new();
+        [JsonIgnore] public GameObject2DManager AstronomicalObjs { get; private set; }
         [JsonIgnore] private bool mIsHovered;
 
         [JsonIgnore] private readonly Sector mSector;
@@ -31,7 +31,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
         [JsonIgnore] public int SystemRadius { get; private set; }
         [JsonProperty] private int? PlanetCount;
         [JsonProperty] private int? Temperature;
-        [JsonProperty] public readonly GameObject2DTypeList GameObjects;
+        [JsonProperty] public GameObject2DManager GameObjects { get; private set; }
         [JsonProperty] private readonly int mSeed;
         [JsonProperty] public Fractions Occupier = Fractions.Enemys;
 
@@ -44,14 +44,16 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             var rand = new Random(mSeed);
             for (var i = 0; i < 10; i++) Name += rand.Next(0, 9);
 
-            for (int i = 0; i < 30; i++) SpaceShipFactory.Spawn(this, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 150000)), ShipID.Bomber, Fractions.Enemys, out var _);
-            for (int i = 0; i < 30; i++) SpaceShipFactory.Spawn(this, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 150000)), ShipID.Bomber, Fractions.Allied, out var _);
+            for (int i = 0; i < 50; i++) SpaceShipFactory.Spawn(this, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 250000)), ShipID.Bomber, Fractions.Enemys, out var _);
+            for (int i = 0; i < 50; i++) SpaceShipFactory.Spawn(this, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 250000)), ShipID.Bomber, Fractions.Allied, out var _);
 
             mSector = new(position - (new Vector2(MapFactory.MapScale) / 2), MapFactory.MapScale, MapFactory.MapScale);
         }
 
-        public GameObject2DTypeList GetAstronomicalObjects()
+        public void GenerateAstronomicalObjects()
         {
+            if (AstronomicalObjs is not null) return;
+            AstronomicalObjs = new();
             Occupier = Fractions.Allied;
             var seededRandom = new Random(mSeed);
 
@@ -72,7 +74,6 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             SystemRadius = distanceToStar;
 
             AstronomicalObjs.AddRange(AsteroidGenerator.GetAsteroidsRing(Position, distanceToStar));
-            return AstronomicalObjs;
         }
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer)
@@ -81,7 +82,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             void LeftPressAction()
             {
                 gameLayer.GameState.PopLayer();
-                //gameLayer.GameState.Player.HyperDrive.SetTarget(this);
+                gameLayer.GameState.Player.HyperDrive.SetTarget(this);
             };
 
             mSector.Update(Occupier);

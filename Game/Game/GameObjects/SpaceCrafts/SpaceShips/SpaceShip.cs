@@ -24,32 +24,33 @@ using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.Recources.Items;
 using System;
-using System.Linq;
 
 namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 {
     [Serializable]
     public class SpaceShip : GameObject2D, ICollidable
     {
-        [JsonIgnore] protected readonly UtilityAi mUtilityAi = new();
+        [JsonIgnore] private readonly ItemCollector mItemCollector = new();
+        [JsonIgnore] private readonly UtilityAi mUtilityAi = new();
+
+        [JsonIgnore] public readonly SensorSystem SensorSystem = new();
         [JsonIgnore] public readonly HyperDrive HyperDrive = new();
-        [JsonIgnore] public readonly SensorSystem SensorSystem;
         [JsonIgnore] public readonly SublightDrive SublightDrive;
         [JsonIgnore] public readonly PhaserCannons PhaserCannaons;
         [JsonIgnore] public readonly DefenseSystem DefenseSystem;
-        [JsonIgnore] public readonly Fractions Fraction;
-        [JsonProperty] public readonly Inventory Inventory = new();
 
-        [JsonIgnore] private readonly ItemCollector mTractorBeam;
-        [JsonIgnore] private readonly Color mAccentColor;
+        [JsonProperty] public readonly Fractions Fraction;
+        [JsonProperty] private readonly Color mAccentColor;
+        [JsonProperty] public readonly Inventory Inventory = new();
         [JsonProperty] public PlanetSystem PlanetSystem;
 
+        [JsonIgnore] public readonly SpaceShipController mSpaceShipController = new();
         public float Mass { get => 5; } 
 
-        public SpaceShip(Vector2 position, SpaceShipConfig config)
+        public SpaceShip(Vector2 position, Fractions fraction, SpaceShipConfig config)
             : base(position, config.TextureID, config.TextureScale, 10)
         {
-            Fraction = config.Fraction;
+            Fraction = fraction;
             var accentCoor = Fraction switch
             {
                 Fractions.Allied => Color.LightBlue,
@@ -57,15 +58,13 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                 Fractions.Neutral => throw new NotImplementedException(),
                 _ => throw new NotImplementedException()
             };
-            SensorSystem = new();
             SublightDrive = new(config.Velocity, 0.1f);
             PhaserCannaons = new(config.TurretCoolDown, accentCoor, 10, 10);
             DefenseSystem = new(config.ShieldForce, config.HullForce, 10);
-            mTractorBeam = new();
             mAccentColor = accentCoor;
             foreach (var pos in config.WeaponsPositions)
                 PhaserCannaons.PlaceTurret(new(pos, 1, TextureDepth + 1));
-            mUtilityAi = new();
+             
             mUtilityAi.AddBehavior(new IdleBehavior(SublightDrive));
             mUtilityAi.AddBehavior(new ChaseBehavior(this));
             mUtilityAi.AddBehavior(new CollectItemsBehavior(this));
@@ -75,25 +74,28 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer)
         {
-            HyperDrive.Update(gameTime, this, gameLayer);
-            if (!HyperDrive.IsActive) 
-                SublightDrive.Update(this, DefenseSystem.HullPercentage);
+            SublightDrive.Update(this, DefenseSystem.HullPercentage);
 
             MovingDirection = Geometry.CalculateDirectionVector(Rotation);
             Physics.HandleCollision(gameTime, this, gameLayer.SpatialHashing);
             GameObject2DMover.Move(gameTime, this, gameLayer.SpatialHashing);
             base.Update(gameTime, inputState, gameLayer);
-
-            HasProjectileHit(gameTime, gameLayer);
-            DefenseSystem.Update(gameTime);
-            SensorSystem.Scan(gameTime, PlanetSystem, Position, Fraction, gameLayer);
-            PhaserCannaons.Update(gameTime, this, gameLayer);
-            mUtilityAi.Update(gameTime);
-            mTractorBeam.Collect(gameTime, this, gameLayer);
             TrailEffect.Show(Transformations.Rotation(Position, new(-100, 0), Rotation), MovingDirection, Velocity, gameTime, mAccentColor, gameLayer.ParticleManager, gameLayer.GameSettings.ParticlesMultiplier);
 
-            if (DefenseSystem.HullPercentage > 0) return;
-            ExplosionEffect.ShipDestroyed(Position, MovingDirection, gameLayer.ParticleManager, gameLayer.GameSettings.ParticlesMultiplier);
+            SensorSystem.Scan(gameTime, PlanetSystem, Position, Fraction, gameLayer);
+            HasProjectileHit(gameTime, gameLayer);
+            HyperDrive.Update(gameTime, this, gameLayer);
+            DefenseSystem.Update(gameTime);
+            mItemCollector.Collect(gameTime, this, gameLayer);
+            PhaserCannaons.Update(gameTime, this, gameLayer);
+            mUtilityAi.Update(gameTime);
+
+            if (DefenseSystem.HullPercentage <= 0) Explode(gameLayer);
+        }
+
+        private void Explode(GameLayer gameLayer)
+        {
+            ExplosionEffect.ShipDestroyed(Position, gameLayer.ParticleManager, gameLayer.GameSettings.ParticlesMultiplier);
             IsDisposed = true;
             var distance = Vector2.Distance(gameLayer.Camera2D.Position, Position);
             var threshold = MathHelper.Clamp(1 - (distance / 7500), 0, 1);
@@ -109,7 +111,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
         private void HasProjectileHit(GameTime gameTime, GameLayer scene)
         {
             var projectileInRange = scene.SpatialHashing.GetObjectsInRadius<LaserProjectile>(Position, (int)BoundedBox.Radius * 10);
-            if (!projectileInRange.Any()) return;
+            if (projectileInRange.Count == 0) return;
             var hit = false;
             foreach (var projectile in projectileInRange)
             {

@@ -37,7 +37,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
         {
             if (mItems.Count <= 0) return;
             mSpaceShip.SublightDrive.MoveInDirection(Vector2.Normalize(mItems.First().Position - mSpaceShip.Position));
-            mSpaceShip.SublightDrive.SetVelocity(.3f);
+            mSpaceShip.SublightDrive.SetVelocity(1 - 1 / (.001f * Vector2.Distance(mItems.First().Position, mSpaceShip.Position) + 1));
         }
 
         public override void Recet()

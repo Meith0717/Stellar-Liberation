@@ -43,6 +43,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement
         MoveCameraDown,
         ToggleCameraMode,
         UiDebug,
+        BenchmarkPause,
 
         // Mouse
         LeftClick,

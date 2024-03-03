@@ -42,7 +42,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
                 cannon.GetPosition(origin.Position, origin.Rotation, origin.Rotation);
             if (!mFire || mFireCoolDown > 0) return;
             foreach (var cannon in mCannons)
-                cannon.Fire(scene.ParticleManager, origin, mParticleColor, mShielDamage, mHullDamage);
+                cannon.Fire(origin.PlanetSystem.GameObjects, origin, mParticleColor, mShielDamage, mHullDamage);
             SoundEffectSystem.PlaySound(SoundEffectRegistries.torpedoFire, scene.Camera2D, origin.Position);
             mFireCoolDown = mMaxFireCoolDown;
         }

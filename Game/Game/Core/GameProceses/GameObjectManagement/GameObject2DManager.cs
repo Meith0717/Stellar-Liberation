@@ -16,31 +16,35 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
     public class GameObject2DManager
     {
         [JsonProperty] public readonly GameObject2DTypeList GameObjects2Ds = new();
-        [JsonIgnore] private readonly SpatialHashing mSpatialHashing;
+        [JsonIgnore] private SpatialHashing mSpatialHashing;
 
-        public GameObject2DManager(GameLayer gameLayer, SpatialHashing spatialHashing)
-        {
-            mSpatialHashing = spatialHashing;
-        }
+        public GameObject2DManager() { }
 
-        public GameObject2DManager(GameObject2DTypeList gameObject2Ds, GameLayer gameLayer, SpatialHashing spatialHashing)
+        public GameObject2DManager(GameObject2DTypeList gameObject2Ds)
         {
             GameObjects2Ds = gameObject2Ds;
-            mSpatialHashing = spatialHashing;
-            foreach (var obj in gameObject2Ds) mSpatialHashing.InsertObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
         }
+
+        public void SetSpatialHashing(SpatialHashing spatialHashing)
+        {
+            mSpatialHashing = spatialHashing;
+            foreach (var obj in GameObjects2Ds) mSpatialHashing.InsertObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
+        }
+
+        public void Add(GameObject2D obj) => GameObjects2Ds.Add(obj);
+        public void AddRange(List<GameObject2D> objs) => GameObjects2Ds.AddRange(objs);
 
         public void SpawnGameObject2D(GameObject2D obj, bool addToSpatialHash = true)
         {
             GameObjects2Ds.Add(obj);
             if (!addToSpatialHash) return;
-            mSpatialHashing.InsertObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
+            mSpatialHashing?.InsertObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
         }
 
         public bool DespawnGameObject(GameObject2D obj)
         {
             if (!GameObjects2Ds.Remove(obj)) return false;
-            mSpatialHashing.RemoveObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
+            mSpatialHashing?.RemoveObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
             return true;
         }
 

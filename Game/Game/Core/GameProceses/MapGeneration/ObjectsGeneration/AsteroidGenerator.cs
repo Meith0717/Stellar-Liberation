@@ -5,6 +5,7 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using System;
@@ -16,9 +17,9 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGenerati
     {
         private const int mMargin = 1000;
 
-        public static List<Asteroid> GetAsteroidsRing(Vector2 centerPosition, float orbitRadius)
+        public static List<GameObject2D> GetAsteroidsRing(Vector2 centerPosition, float orbitRadius)
         {
-            List<Asteroid> asteroids = new();
+            List<GameObject2D> asteroids = new();
             var circle = new CircleF(centerPosition, orbitRadius - mMargin);
 
             for (int i = 0; i < 500; i++)
