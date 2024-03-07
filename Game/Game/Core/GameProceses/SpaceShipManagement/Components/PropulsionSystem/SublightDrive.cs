@@ -7,10 +7,10 @@ using StellarLiberation.Game.Core.CoreProceses.Debugging;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using System;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PropulsionSystem
+namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components.PropulsionSystem
 {
     public class SublightDrive
     {
@@ -22,7 +22,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
 
         private Vector2? mDirection;
         private Vector2? mVectorTarget;
-        private SpaceShip mShipTarget;
+        private Spaceship mShipTarget;
         private Vector2? mDirectionTarget;
 
         public SublightDrive(float maxVelocity, float maneuverability)
@@ -31,7 +31,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             Maneuverability = maneuverability;
         }
 
-        public void Update(GameTime gameTime, SpaceShip spaceShip, double damage)
+        public void Update(GameTime gameTime, Spaceship spaceShip, double damage)
         {
             var position = mVectorTarget ?? mShipTarget?.Position;
 
@@ -46,7 +46,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             SetVelocity(0);
         }
 
-        private void UpdateVelocity(GameTime gameTime, SpaceShip spaceShip, double damage)
+        private void UpdateVelocity(GameTime gameTime, Spaceship spaceShip, double damage)
         {
             if (!IsMoving)
             {
@@ -71,7 +71,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             spaceShip.Velocity = MovementController.GetVelocity(gameTime, spaceShip.Velocity, targetVelocity, MaxVelocity / 100f);
         }
 
-        private void UpdateRotation(GameTime gameTime, SpaceShip spaceShip)
+        private void UpdateRotation(GameTime gameTime, Spaceship spaceShip)
         {
             if (mDirection is null) return;
             var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, Geometry.GetPointInDirection(spaceShip.Position, (Vector2)mDirection, 1)); 
@@ -96,7 +96,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             IsMoving = true;
         }
 
-        public void FollowSpaceShip(SpaceShip spaceShip)
+        public void FollowSpaceship(Spaceship spaceShip)
         {
             mDirectionTarget = null;
             mVectorTarget = null;
@@ -112,7 +112,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             IsMoving = false;
         }
 
-        public void Draw(DebugSystem debugSystem, SpaceShip spaceShip, GameLayer scene) 
+        public void Draw(DebugSystem debugSystem, Spaceship spaceShip, GameLayer scene) 
             => debugSystem.DrawMovingDir(mDirection, spaceShip, scene);
     }
 }

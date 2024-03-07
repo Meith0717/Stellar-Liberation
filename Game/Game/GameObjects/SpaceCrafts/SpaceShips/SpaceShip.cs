@@ -1,4 +1,4 @@
-﻿// SpaceShip.cs 
+﻿// Spaceship.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
@@ -15,20 +15,20 @@ using StellarLiberation.Game.Core.GameProceses.AI.Behaviors;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PhaserSystem;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PropulsionSystem;
+using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement;
+using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components;
+using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components.PhaserSystem;
+using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components.PropulsionSystem;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.Recources.Items;
 using System;
 
-namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
+namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
 {
     [Serializable]
-    public class SpaceShip : GameObject2D, ICollidable
+    public class Spaceship : GameObject2D, ICollidable
     {
         [JsonIgnore] private readonly ItemCollector mItemCollector = new();
         [JsonIgnore] private readonly UtilityAi mUtilityAi = new();
@@ -44,10 +44,10 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
         [JsonProperty] public readonly Inventory Inventory = new();
         [JsonProperty] public PlanetSystem PlanetSystem;
 
-        [JsonIgnore] public readonly SpaceShipController mSpaceShipController = new();
+        [JsonIgnore] public readonly SpaceshipController mSpaceshipController = new();
         public float Mass { get => 5; } 
 
-        public SpaceShip(Vector2 position, Fractions fraction, SpaceShipConfig config)
+        public Spaceship(Vector2 position, Fractions fraction, SpaceshipConfig config)
             : base(position, config.TextureID, config.TextureScale, 10)
         {
             Fraction = fraction;

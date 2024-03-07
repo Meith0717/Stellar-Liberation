@@ -9,7 +9,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.CoreProceses.Debugging
@@ -85,7 +85,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugging
                 scene.Camera2D.Zoom);
         }
 
-        public void DrawMovingDir(Vector2? target, SpaceShip spaceShip, GameLayer scene)
+        public void DrawMovingDir(Vector2? target, Spaceship spaceShip, GameLayer scene)
         {
             if (target is null | !ShowPaths) return;
             TextureManager.Instance.DrawAdaptiveLine(spaceShip.Position, Geometry.GetPointInDirection(spaceShip.Position, spaceShip.MovingDirection, spaceShip.Velocity * 500), Color.LightBlue, 2, spaceShip.TextureDepth - 1, scene.Camera2D.Zoom);

@@ -6,10 +6,10 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using System.Collections.Generic;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PhaserSystem
+namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components.PhaserSystem
 {
     public class PhaserCannons
     {
@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
         public void Fire() => mFire = true;
         public void StopFire() => mFire = false;
 
-        public void Update(GameTime gameTime, SpaceShip origin, GameLayer scene)
+        public void Update(GameTime gameTime, Spaceship origin, GameLayer scene)
         {
             mFireCoolDown -= gameTime.ElapsedGameTime.Milliseconds;
 

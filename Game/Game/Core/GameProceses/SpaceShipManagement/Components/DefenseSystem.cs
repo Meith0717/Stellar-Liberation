@@ -7,10 +7,10 @@ using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using System;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components
+namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components
 {
     [Serializable]
     public class DefenseSystem
@@ -84,7 +84,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             mActualHullForce += amount;
         }
 
-        public void DrawShields(SpaceShip spaceShip)
+        public void DrawShields(Spaceship spaceShip)
         {
             var color = new Color((int)(255 * mShieldDrawAlpha), (int)(255 * mShieldDrawAlpha), (int)(255 * mShieldDrawAlpha), (int)(255 * mShieldDrawAlpha));
             TextureManager.Instance.Draw($"{spaceShip.TextureId}Shield", spaceShip.Position, spaceShip.TextureScale, spaceShip.Rotation, spaceShip.TextureDepth + 1, color);

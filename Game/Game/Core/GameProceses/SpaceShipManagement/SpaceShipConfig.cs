@@ -1,4 +1,4 @@
-﻿// SpaceShipConfig.cs 
+﻿// SpaceshipConfig.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
@@ -6,9 +6,9 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.GameProceses.AI;
 using System.Collections.Generic;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement
+namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement
 {
-    public readonly struct SpaceShipConfig
+    public readonly struct SpaceshipConfig
     {
         public readonly string TextureID;
         public readonly float TextureScale;
@@ -18,7 +18,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement
         public readonly int HullForce;
         public readonly List<Vector2> WeaponsPositions;
 
-        public SpaceShipConfig(
+        public SpaceshipConfig(
         string textureID,
         float textureScale,
         int velocity,

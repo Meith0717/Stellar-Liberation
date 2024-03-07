@@ -8,7 +8,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.GridSystem;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components;
+using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Visuals.ParallaxSystem;
@@ -20,7 +20,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
     internal class PlanetSystemLayer : GameLayer
     {
         public readonly PlanetSystem PlanetSystem;
-        private readonly SpaceShipController spaceShipController = new();
+        private readonly SpaceshipController spaceShipController = new();
 
         private readonly UiFrame mBackgroundLayer;
         private readonly ParallaxController mParallaxController;

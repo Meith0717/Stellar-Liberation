@@ -8,9 +8,9 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PropulsionSystem
+namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components.PropulsionSystem
 {
     public class HyperDrive
     {
@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Component
             TargetPlanetSystem = planetSystem;
         }
 
-        public void Update(GameTime gameTime, SpaceShip operatingShip, GameLayer scene)
+        public void Update(GameTime gameTime, Spaceship operatingShip, GameLayer scene)
         {
             mActualEngineCoolDownTime += gameTime.ElapsedGameTime.Milliseconds;
             mActualChargingTime += gameTime.ElapsedGameTime.Milliseconds;

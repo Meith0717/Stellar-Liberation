@@ -1,4 +1,4 @@
-﻿// SpaceShipFactory.cs 
+﻿// SpaceshipFactory.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
@@ -6,25 +6,25 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameProceses;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement;
+using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 
-namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
+namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
 {
     public enum ShipID { Bomber, Cargo, Corvette, Cuiser, Destroyer, Fighter }
 
-    public class SpaceShipFactory
+    public class SpaceshipFactory
     {
-        public static void Spawn(PlanetSystem planetSystem, Vector2 position, ShipID shipID, Fractions fraction, out SpaceShip spaceShip)
+        public static void Spawn(PlanetSystem planetSystem, Vector2 position, ShipID shipID, Fractions fraction, out Spaceship spaceShip)
         {
             spaceShip = Get(position, shipID, fraction);
             spaceShip.PlanetSystem = planetSystem;
             planetSystem.GameObjects.Add(spaceShip);
         }
 
-        public static SpaceShip Get(Vector2 position, ShipID shipID, Fractions fraction)
+        public static Spaceship Get(Vector2 position, ShipID shipID, Fractions fraction)
         {
-            SpaceShipConfig config = shipID switch
+            SpaceshipConfig config = shipID switch
             {
                 ShipID.Bomber => new(
                     textureID: GameSpriteRegistries.bomber,
@@ -100,7 +100,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips
                 ),
                 _ => throw new System.NotImplementedException()
             };
-            return new SpaceShip(position, fraction, config);
+            return new Spaceship(position, fraction, config);
         }
     }
 }

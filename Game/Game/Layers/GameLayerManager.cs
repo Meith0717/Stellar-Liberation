@@ -15,7 +15,7 @@ using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration;
 using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using StellarLiberation.Game.Layers.GameLayers;
 using StellarLiberation.Game.Layers.MenueLayers;
 using System;
@@ -34,15 +34,15 @@ namespace StellarLiberation.Game.Layers
         [JsonIgnore] private PlanetSystemLayer mMainLayer;
         [JsonProperty] private readonly MapConfig mMapConfig;
         [JsonProperty] public readonly HashSet<PlanetSystem> PlanetSystems = new();
-        [JsonProperty] public readonly SpaceShip Player;
-        [JsonProperty] public readonly List<SpaceShip> spaceShips;
+        [JsonProperty] public readonly Spaceship Player;
+        [JsonProperty] public readonly List<Spaceship> spaceShips;
         [JsonProperty] public readonly Wallet Wallet = new();
 
         public GameLayerManager() : base(false)
         {
             mMapConfig = new(50, 50, 42);
             MapFactory.Generate(out PlanetSystems, mMapConfig);
-            Player = SpaceShipFactory.Get(Vector2.Zero, ShipID.Destroyer, Fractions.Allied);
+            Player = SpaceshipFactory.Get(Vector2.Zero, ShipID.Destroyer, Fractions.Allied);
             mMainLayer = new PlanetSystemLayer(this, PlanetSystems.First(), 1);
             Player.PlanetSystem = PlanetSystems.First();
             PlanetSystems.First().GameObjects.Add(Player);

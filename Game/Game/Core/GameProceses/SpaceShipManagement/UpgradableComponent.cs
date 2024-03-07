@@ -5,7 +5,7 @@
 using Newtonsoft.Json;
 using System;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement
+namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement
 {
     [Serializable]
     public abstract class UpgradableComponent

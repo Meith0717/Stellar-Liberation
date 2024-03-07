@@ -8,19 +8,19 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 
 namespace StellarLiberation.Game.Core.GameProceses.WeaponElements
 {
     internal class WeaponProjectile : GameObject2D
     {
-        public readonly SpaceShip Shooter;
-        public readonly SpaceShip Target;
+        public readonly Spaceship Shooter;
+        public readonly Spaceship Target;
         public readonly bool mFollowTarget;
         public readonly float ShieldDamage;
         public readonly float HullDamage;
 
-        public WeaponProjectile(Vector2 startPosition, float shootRotation, SpaceShip shooter, SpaceShip target, float shieldDamage, float hullDamage, bool followTarget, string textureId, Color color)
+        public WeaponProjectile(Vector2 startPosition, float shootRotation, Spaceship shooter, Spaceship target, float shieldDamage, float hullDamage, bool followTarget, string textureId, Color color)
             : base(startPosition, textureId, 1f, 15)
         {
             Shooter = shooter;

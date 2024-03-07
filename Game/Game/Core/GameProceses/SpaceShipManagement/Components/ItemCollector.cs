@@ -9,19 +9,19 @@ using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.GameObjects.Recources.Items;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components
+namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components
 {
     [Serializable]
     public class ItemCollector
     {
         [JsonIgnore] private List<Item> mItemsInRange = new();
 
-        public void Collect(GameTime gameTime, SpaceShip spaceShip, GameLayer scene)
+        public void Collect(GameTime gameTime, Spaceship spaceShip, GameLayer scene)
         {
             var inventory = spaceShip.Inventory;
 

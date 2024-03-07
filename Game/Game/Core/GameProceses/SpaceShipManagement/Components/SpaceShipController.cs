@@ -1,20 +1,20 @@
-﻿// SpaceShipController.cs 
+﻿// SpaceshipController.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using StellarLiberation.Game.Layers.GameLayers;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components
+namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components
 {
-    public class SpaceShipController
+    public class SpaceshipController
     {
         private float mVelocityProcentage;
 
-        public void Controll(GameTime gameTime, SpaceShip spaceShip, InputState inputState, GameLayer gameLayer)
+        public void Controll(GameTime gameTime, Spaceship spaceShip, InputState inputState, GameLayer gameLayer)
         {
             if (spaceShip == null) return;
             spaceShip.PhaserCannaons.StopFire();

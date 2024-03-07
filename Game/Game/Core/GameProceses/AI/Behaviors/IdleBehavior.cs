@@ -4,8 +4,8 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PropulsionSystem;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceShips;
+using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components.PropulsionSystem;
+using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 
 namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 {

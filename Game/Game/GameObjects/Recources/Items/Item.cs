@@ -9,7 +9,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.Components.PropulsionSystem;
+using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components.PropulsionSystem;
 using StellarLiberation.Game.Core.Utilitys;
 using System;
 
