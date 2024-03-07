@@ -41,7 +41,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
         {
             Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, 0.1f, 5);
             Camera2DMover.UpdateCameraByMouseDrag(inputState, Camera2D);
-            Camera2DMover.MoveByKeys(inputState, Camera2D);
+            Camera2DMover.MoveByKeys(gameTime, inputState, Camera2D);
 
             mBackgroundLayer.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, 1);
             inputState.DoAction(ActionType.ToggleHyperMap, GameState.PopLayer);

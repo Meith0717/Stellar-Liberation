@@ -66,7 +66,7 @@ namespace StellarLiberation.Game.Layers.Benchmark
             inputState.DoAction(ActionType.BenchmarkPause, () => mIsPaused = !mIsPaused);
             base.Update(gameTime, inputState);
             Camera2DMover.UpdateCameraByMouseDrag(inputState, Camera2D);
-            Camera2DMover.MoveByKeys(inputState, Camera2D);
+            Camera2DMover.MoveByKeys(gameTime, inputState, Camera2D);
             Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, .002f, 1);
             mPlanetSystem.GameObjects.Update(gameTime, inputState, this);
             mPlanetSystem.AstronomicalObjs.Update(gameTime, inputState, this);

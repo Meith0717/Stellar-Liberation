@@ -14,8 +14,8 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
             var zoom = 0f;
             var multiplier = 1;
 
-            inputState.DoAction(ActionType.CameraZoomIn, () => zoom += 15);
-            inputState.DoAction(ActionType.CameraZoomOut, () => zoom -= 15);
+            inputState.DoAction(ActionType.CameraZoomIn, () => zoom += 100f / (float)gameTime.ElapsedGameTime.TotalMilliseconds);
+            inputState.DoAction(ActionType.CameraZoomOut, () => zoom -= 100f / (float)gameTime.ElapsedGameTime.TotalMilliseconds);
             inputState.DoAction(ActionType.CtrlLeft, () => multiplier = 5);
 
             camera2D.Zoom *= 1 + (zoom * multiplier) * (float)(0.001 * gameTime.ElapsedGameTime.TotalMilliseconds);
@@ -32,21 +32,20 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
                 Vector2 delta = inputState.mMousePosition - lastMousePosition;
                 camera.Position -= delta / camera.Zoom;
                 wasMoved = true;
-
             }
 
             lastMousePosition = inputState.mMousePosition;
             return wasMoved;
         }
 
-        public static bool MoveByKeys(InputState inputState, Camera2D camera)
+        public static bool MoveByKeys(GameTime gameTime, InputState inputState, Camera2D camera)
         {
-            var x = 0;
-            var y = 0;
-            inputState.DoAction(ActionType.MoveCameraLeft, () => x -= 100);
-            inputState.DoAction(ActionType.MoveCameraRight, () => x += 100);
-            inputState.DoAction(ActionType.MoveCameraUp, () => y -= 100);
-            inputState.DoAction(ActionType.MoveCameraDown, () => y += 100);
+            var x = 0f;
+            var y = 0f;
+            inputState.DoAction(ActionType.MoveCameraLeft, () => x -= (float)gameTime.ElapsedGameTime.TotalMilliseconds);
+            inputState.DoAction(ActionType.MoveCameraRight, () => x += (float)gameTime.ElapsedGameTime.TotalMilliseconds);
+            inputState.DoAction(ActionType.MoveCameraUp, () => y -= (float)gameTime.ElapsedGameTime.TotalMilliseconds);
+            inputState.DoAction(ActionType.MoveCameraDown, () => y += (float)gameTime.ElapsedGameTime.TotalMilliseconds);
 
             if (x == 0 && y == 0) return false;
 

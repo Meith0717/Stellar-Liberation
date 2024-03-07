@@ -34,59 +34,37 @@ namespace StellarLiberation.Game.Core.Visuals.ParallaxSystem
         public void Update(Vector2 movement)
         {
             if (mMovingScale <= 0) { return; }
-            ManagMovement(movement);
-            ManagerCorners();
+            mPosition1 -= movement * mMovingScale;
+
+            mPosition1.X %= mTextureWidth;
+            mPosition1.Y %= mTextureHeight;
+
+            mPosition2 = new Vector2(mPosition1.X - mTextureWidth, mPosition1.Y);
+            if (mPosition1.X < 0) mPosition2 = new Vector2(mPosition1.X + mTextureWidth, mPosition1.Y);
+
+            mPosition3 = new Vector2(mPosition1.X, mPosition1.Y - mTextureHeight);
+            if (mPosition1.Y < 0) mPosition3 = new Vector2(mPosition1.X, mPosition1.Y + mTextureHeight);
+
+            mPosition4 = new Vector2(mPosition1.X - mTextureWidth, mPosition1.Y - mTextureHeight);
+            if (mPosition1.X < 0 && mPosition1.Y < 0) mPosition4 = new Vector2(mPosition1.X + mTextureWidth, mPosition1.Y + mTextureHeight);
+
+            mPosition5 = new Vector2(mPosition1.X + mTextureWidth, mPosition1.Y - mTextureHeight);
+            if (mPosition1.Y < 0) mPosition5 = new Vector2(mPosition1.X - mTextureWidth, mPosition1.Y + mTextureHeight);
         }
 
         public void Draw()
         {
-            TextureManager.Instance.Draw(mTextureId, mPosition1, Vector2.Zero, 1, 0, 0, Color.White);
-            TextureManager.Instance.Draw(mTextureId, mPosition2, Vector2.Zero, 1, 0, 0, Color.White);
-            TextureManager.Instance.Draw(mTextureId, mPosition3, Vector2.Zero, 1, 0, 0, Color.White);
-            TextureManager.Instance.Draw(mTextureId, mPosition4, Vector2.Zero, 1, 0, 0, Color.White);
-            TextureManager.Instance.Draw(mTextureId, mPosition5, Vector2.Zero, 1, 0, 0, Color.White);
+            TextureManager.Instance.Draw(mTextureId, mPosition1, mTextureWidth, mTextureHeight, Color.White);
+            TextureManager.Instance.Draw(mTextureId, mPosition2, mTextureWidth, mTextureHeight, Color.White);
+            TextureManager.Instance.Draw(mTextureId, mPosition3, mTextureWidth, mTextureHeight, Color.White);
+            TextureManager.Instance.Draw(mTextureId, mPosition4, mTextureWidth, mTextureHeight, Color.White);
+            TextureManager.Instance.Draw(mTextureId, mPosition5, mTextureWidth, mTextureHeight, Color.White);
         }
 
         public void OnResolutionChanged(GraphicsDevice graphicsDevice)
         {
             mTextureWidth = graphicsDevice.Viewport.Width;
             mTextureHeight = graphicsDevice.Viewport.Height;
-        }
-
-        private void ManagMovement(Vector2 movement)
-        {
-            mPosition1 -= movement * mMovingScale;
-
-        }
-
-        private void ManagerCorners()
-        {
-            mPosition1.X %= mTextureWidth;
-            mPosition1.Y %= mTextureHeight;
-
-            mPosition2 = new Vector2(mPosition1.X - mTextureWidth, mPosition1.Y);
-            if (mPosition1.X < 0)
-            {
-                mPosition2 = new Vector2(mPosition1.X + mTextureWidth, mPosition1.Y);
-            }
-
-            mPosition3 = new Vector2(mPosition1.X, mPosition1.Y - mTextureHeight);
-            if (mPosition1.Y < 0)
-            {
-                mPosition3 = new Vector2(mPosition1.X, mPosition1.Y + mTextureHeight);
-            }
-
-            mPosition4 = new Vector2(mPosition1.X - mTextureWidth, mPosition1.Y - mTextureHeight);
-            if (mPosition1.X < 0 && mPosition1.Y < 0)
-            {
-                mPosition4 = new Vector2(mPosition1.X + mTextureWidth, mPosition1.Y + mTextureHeight);
-            }
-
-            mPosition5 = new Vector2(mPosition1.X + mTextureWidth, mPosition1.Y - mTextureHeight);
-            if (mPosition1.Y < 0)
-            {
-                mPosition5 = new Vector2(mPosition1.X - mTextureWidth, mPosition1.Y + mTextureHeight);
-            }
         }
     }
 }

@@ -4,6 +4,7 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using StellarLiberation.Game.Core.Visuals.Rendering;
 using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.Visuals.ParallaxSystem
@@ -11,12 +12,22 @@ namespace StellarLiberation.Game.Core.Visuals.ParallaxSystem
     internal class ParallaxController
     {
         private readonly List<ParllaxBackground> mBackdrounds = new();
+        private readonly Camera2D mCamera2D;
+        private Vector2 mLastPosition;
 
-        public void Update(Vector2 cameraMovement, float cameraZoom)
+        public ParallaxController(Camera2D camera2D) 
         {
+            mCamera2D = camera2D;
+            mLastPosition = mCamera2D.Position;
+        }
+
+        public void Update()
+        {
+            var movement = Vector2.Negate(mLastPosition - mCamera2D.Position);
+            mLastPosition = mCamera2D.Position;
             foreach (ParllaxBackground backdround in mBackdrounds)
             {
-                backdround.Update(cameraMovement * cameraZoom);
+                backdround.Update(movement * mCamera2D.Zoom);
             }
         }
 
@@ -28,10 +39,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParallaxSystem
             }
         }
 
-        public void Add(ParllaxBackground backdround)
-        {
-            mBackdrounds.Add(backdround);
-        }
+        public void Add(ParllaxBackground backdround) => mBackdrounds.Add(backdround);
 
         public void OnResolutionChanged(GraphicsDevice graphicsDevice)
         {
