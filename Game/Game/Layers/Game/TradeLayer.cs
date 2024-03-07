@@ -11,6 +11,7 @@ using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
+using StellarLiberation.Game.GameObjects.Recources.Items;
 using System.Linq;
 
 namespace StellarLiberation.Game.Layers.GameLayers
@@ -74,40 +75,40 @@ namespace StellarLiberation.Game.Layers.GameLayers
             traderSide.AddChild(new UiInventory(mTraderInventory, Buy) { Width = 500, Height = 600, Anchor = Anchor.Center });
         }
 
-        private void Sell(ItemStack itemStack)
+        private void Sell(Item item)
         {
-            if (!mSellInventory.HasSpace(itemStack.ItemID)) return;
-            if (!mTraderInventory.HasSpace(itemStack.ItemID)) return;
-            var newItemStack = itemStack.Split(1);
-            mTradingSystem.AddSellingItem(newItemStack);
+            if (!mSellInventory.HasSpace(item)) return;
+            if (!mTraderInventory.HasSpace(item)) return;
+            var newItemStack = item.Split(1);
+            mTradingSystem.AddSellingItem(item);
             mSellInventory.Add(newItemStack);
-            mPlayerInventory.CheckForEmptyStacks(itemStack.ItemID);
+            mPlayerInventory.CheckForEmptyStacks(item.ItemID);
         }
 
-        private void RedoSell(ItemStack itemStack)
+        private void RedoSell(Item item)
         {
-            var newItemStack = itemStack.Split(1);
-            mTradingSystem.RemoveSellingItem(newItemStack);
+            var newItemStack = item.Split(1);
+            mTradingSystem.RemoveSellingItem(item);
             mPlayerInventory.Add(newItemStack);
-            mSellInventory.CheckForEmptyStacks(itemStack.ItemID);
+            mSellInventory.CheckForEmptyStacks(item.ItemID);
         }
 
-        private void Buy(ItemStack itemStack)
+        private void Buy(Item item)
         {
-            if (!mBuyInventory.HasSpace(itemStack.ItemID)) return;
-            if (!mPlayerInventory.HasSpace(itemStack.ItemID)) return;
-            var newItemStack = itemStack.Split(1);
-            mTradingSystem.AddBuyingItem(newItemStack);
+            if (!mBuyInventory.HasSpace(item)) return;
+            if (!mPlayerInventory.HasSpace(item)) return;
+            var newItemStack = item.Split(1);
+            mTradingSystem.AddBuyingItem(item);
             mBuyInventory.Add(newItemStack);
-            mTraderInventory.CheckForEmptyStacks(itemStack.ItemID);
+            mTraderInventory.CheckForEmptyStacks(item.ItemID);
         }
 
-        private void RedoBuy(ItemStack itemStack)
+        private void RedoBuy(Item item)
         {
-            var newItemStack = itemStack.Split(1);
-            mTradingSystem.RemoveBuyingItem(newItemStack);
+            var newItemStack = item.Split(1);
+            mTradingSystem.RemoveBuyingItem(item);
             mTraderInventory.Add(newItemStack);
-            mBuyInventory.CheckForEmptyStacks(itemStack.ItemID);
+            mBuyInventory.CheckForEmptyStacks(item.ItemID);
         }
 
         private void Trade(Wallet wallet)

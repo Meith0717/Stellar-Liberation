@@ -5,6 +5,7 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
+using StellarLiberation.Game.GameObjects.Recources.Items;
 using System;
 
 namespace StellarLiberation.Game.Core.UserInterface.UiElements
@@ -13,12 +14,12 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
     {
         private readonly UiGrid mGrid;
         private readonly Inventory mInventory;
-        private readonly Action<ItemStack> mAction;
+        private readonly Action<Item> mAction;
 
         private readonly int I;
         private readonly int J;
 
-        public UiInventory(Inventory inventory, Action<ItemStack> action, int i = 5, int j = 6)
+        public UiInventory(Inventory inventory, Action<Item> action, int i = 5, int j = 6)
         {
             mGrid = new(i, j) { FillScale = FillScale.Both, Anchor = Anchor.Center };
             mInventory = inventory;

@@ -2,65 +2,40 @@
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
-using Microsoft.Xna.Framework;
-using MonoGame.Extended;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
-using StellarLiberation.Game.Core.CoreProceses.InputManagement;
-using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
-using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components.PropulsionSystem;
-using StellarLiberation.Game.Core.Utilitys;
+using Newtonsoft.Json;
 using System;
 
 namespace StellarLiberation.Game.GameObjects.Recources.Items
 {
     [Serializable]
-    public abstract class Item : GameObject2D
+    public class Item
     {
-        public readonly bool IsCollectable;
-        public readonly bool IsStakable;
+        [JsonProperty] public readonly ItemID ItemID;
+        [JsonProperty] public readonly string UiTextureId;
+        [JsonProperty] public readonly bool IsStakable;
+        [JsonProperty] public int Amount = 1;
 
-        public readonly ItemID ItemID;
-        public int Amount;
-
-        protected Item(ItemID itemID, string textureId, float textureScale, bool isCollectable = true, bool isStackable = true)
-            : base(Vector2.Zero, textureId, textureScale, 30)
+        public Item(ItemID itemID, string textureId, bool isStackable = false)
         {
-            Amount = 1;
-            IsCollectable = isCollectable;
-            IsStakable = isStackable;
             ItemID = itemID;
+            UiTextureId = textureId;
+            IsStakable = isStackable;
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
+        private Item(ItemID itemID, string textureId, bool isStackable, int amount)
         {
-            Velocity = MovementController.GetVelocity(gameTime, Velocity, 0, ExtendetRandom.Random.Next(5, 10) / 1000f);
-            GameObject2DMover.Move(gameTime, this, scene.SpatialHashing);
-            base.Update(gameTime, inputState, scene);
+            ItemID = itemID;
+            UiTextureId = textureId;
+            IsStakable = isStackable;
+            Amount = amount;
         }
 
-        public void Pull(GameTime gameTime, Vector2 position)
-        {
-            var angleToPosition = Geometry.AngleBetweenVectors(Position, position);
-            MovingDirection = Geometry.CalculateDirectionVector(angleToPosition);
-            Velocity = MovementController.GetVelocity(gameTime, Velocity, float.PositiveInfinity, 0.05f);
-        }
 
-        public void Throw(Vector2 momentum, Vector2 position)
+        public Item Split(int amount)
         {
-            Position = position;
-            ExtendetRandom.Random.NextUnitVector(out var direction);
-            MovingDirection = momentum + direction;
-            Velocity = ExtendetRandom.Random.Next(10, 25) / 10;
-        }
-
-        public override void Draw(GameLayer scene)
-        {
-            base.Draw(scene);
-            TextureManager.Instance.Draw(GameSpriteRegistries.radar, Position, .04f / scene.Camera2D.Zoom, 0, TextureDepth + 1, Color.LightGray);
-
-            TextureManager.Instance.DrawGameObject(this);
+            if (Amount < amount) amount = Amount;
+            Amount -= amount;
+            return new(ItemID, UiTextureId, IsStakable, amount);
         }
     }
 }

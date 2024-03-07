@@ -15,14 +15,14 @@ namespace StellarLiberation.Game.GameObjects.Recources.Items
 
     public static class ItemFactory
     {
-        private class Iron : Item { public Iron() : base(ItemID.Iron, GameSpriteRegistries.iron, .2f) => DisposeTime = 60000; }
-        private class Titanium : Item { public Titanium() : base(ItemID.Titanium, GameSpriteRegistries.titan, .2f) => DisposeTime = 60000; }
-        private class Gold : Item { public Gold() : base(ItemID.Gold, GameSpriteRegistries.gold, .2f) => DisposeTime = 60000; }
-        private class Platin : Item { public Platin() : base(ItemID.Platin, GameSpriteRegistries.platin, .2f) => DisposeTime = 60000; }
-        private class QuantumCrystals : Item { public QuantumCrystals() : base(ItemID.QuantumCrystals, GameSpriteRegistries.quantumCrystals, .2f) => DisposeTime = 60000; }
-        private class DarkMatter : Item { public DarkMatter() : base(ItemID.DarkMatter, GameSpriteRegistries.darkMatter, .2f) => DisposeTime = 60000; }
+        private class Iron : Item { public Iron() : base(ItemID.Iron, GameSpriteRegistries.iron) { } }
+        private class Titanium : Item { public Titanium() : base(ItemID.Titanium, GameSpriteRegistries.titan) { } }
+        private class Gold : Item { public Gold() : base(ItemID.Gold, GameSpriteRegistries.gold) { } }
+        private class Platin : Item { public Platin() : base(ItemID.Platin, GameSpriteRegistries.platin) { } }
+        private class QuantumCrystals : Item { public QuantumCrystals() : base(ItemID.QuantumCrystals, GameSpriteRegistries.quantumCrystals) { } }
+        private class DarkMatter : Item { public DarkMatter() : base(ItemID.DarkMatter, GameSpriteRegistries.darkMatter) { } }
 
-        public static Item Get(ItemID id, Vector2 momentum, Vector2 position)
+        public static Item Get(ItemID id)
         {
             Item item = id switch
             {
@@ -34,7 +34,6 @@ namespace StellarLiberation.Game.GameObjects.Recources.Items
                 ItemID.DarkMatter => new DarkMatter(),
                 _ => throw new System.NotImplementedException()
             };
-            item.Throw(momentum, position);
             return item;
         }
     }

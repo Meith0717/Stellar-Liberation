@@ -5,18 +5,18 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
-using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
 using StellarLiberation.Game.Core.Objects.UiElements;
+using StellarLiberation.Game.GameObjects.Recources.Items;
 using System;
 
 namespace StellarLiberation.Game.Core.UserInterface.UiElements
 {
     public class UiItemSlot : UiFrame
     {
-        private readonly Action<ItemStack> mOnPressAction;
-        public ItemStack ItemStack { get; private set; }
+        private readonly Action<Item> mOnPressAction;
+        public Item Item { get; private set; }
 
-        public UiItemSlot(Action<ItemStack> onPressAction)
+        public UiItemSlot(Action<Item> onPressAction)
         {
             RelHeight = .90f;
             RelWidth = .90f;
@@ -24,12 +24,13 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             mOnPressAction = onPressAction;
         }
 
-        public void SetItem(ItemStack itemStack)
+        public void SetItem(Item item)
         {
             ClearChilds();
-            ItemStack = itemStack;
-            AddChild(new UiSprite(itemStack.TextureID) { FillScale = FillScale.Fit, Anchor = Anchor.Center });
-            AddChild(new UiText(FontRegistries.textFont, itemStack.Amount.ToString()) { Anchor = Anchor.SE, HSpace = 5, VSpace = 5 });
+            Item = item;
+            AddChild(new UiSprite(item.UiTextureId) { FillScale = FillScale.Fit, Anchor = Anchor.Center });
+            if (item.IsStakable) 
+                AddChild(new UiText(FontRegistries.textFont, item.Amount.ToString()) { Anchor = Anchor.SE, HSpace = 5, VSpace = 5 });
         }
 
         public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
@@ -40,7 +41,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             if (!Canvas.Contains(inputState.mMousePosition)) return;
             Color = new(30, 30, 30);
             if (!inputState.HasAction(ActionType.LeftClick)) return;
-            mOnPressAction?.Invoke(ItemStack);
+            mOnPressAction?.Invoke(Item);
         }
     }
 }

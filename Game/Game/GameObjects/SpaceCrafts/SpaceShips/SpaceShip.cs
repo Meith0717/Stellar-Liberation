@@ -22,8 +22,10 @@ using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components.Pr
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
+using StellarLiberation.Game.GameObjects.Recources;
 using StellarLiberation.Game.GameObjects.Recources.Items;
 using System;
+using System.Collections.Generic;
 
 namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
 {
@@ -101,11 +103,14 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
             var threshold = MathHelper.Clamp(1 - (distance / 7500), 0, 1);
             gameLayer.CameraShaker.Shake(200 * threshold, 1);
 
-            for (int i = 0; i < ExtendetRandom.Random.Next(0, 5); i++)
+            var lst = new List<Item>()
             {
-                ExtendetRandom.Random.NextUnitVector(out var vector);
-                PlanetSystem.GameObjects.Add(ItemFactory.Get(ItemID.Iron, MovingDirection + vector * 5, Position));
-            }
+                 ItemFactory.Get(ItemID.Iron),
+                 ItemFactory.Get(ItemID.Iron),
+                 ItemFactory.Get(ItemID.Iron),
+                 ItemFactory.Get(ItemID.Iron)
+            };
+            PlanetSystem.GameObjects.SpawnGameObject2D(new Container(Position, lst));
         }
 
         private void HasProjectileHit(GameTime gameTime, GameLayer scene)

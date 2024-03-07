@@ -3,40 +3,37 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
-using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
-using StellarLiberation.Game.GameObjects.Recources.Items;
+using StellarLiberation.Game.GameObjects.Recources;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components
 {
-    [Serializable]
     public class ItemCollector
     {
-        [JsonIgnore] private List<Item> mItemsInRange = new();
+        private List<Container> mContainerInRange = new();
 
         public void Collect(GameTime gameTime, Spaceship spaceShip, GameLayer scene)
         {
             var inventory = spaceShip.Inventory;
 
-            mItemsInRange.Clear();
+            mContainerInRange.Clear();
             var position = spaceShip.Position;
 
-            mItemsInRange = scene.SpatialHashing.GetObjectsInRadius<GameObject2D>(position, spaceShip.BoundedBox.Radius)
-                .OfType<Item>()
-                .ToList();
+            mContainerInRange = scene.SpatialHashing.GetObjectsInRadius<Container>(position, spaceShip.BoundedBox.Radius);
 
-            foreach (var item in mItemsInRange)
+            foreach (var container in mContainerInRange)
             {
-                item.Pull(gameTime, position);
-                if (!ContinuousCollisionDetection.HasCollide(gameTime, item, spaceShip, out _)) continue;
-                inventory.Add(item);
+                container.IsDisposed = true;
+                if (!ContinuousCollisionDetection.HasCollide(gameTime, container, spaceShip, out _)) continue;
+                foreach (var item in  container.Items)
+                {
+                    if (!inventory.HasSpace(item)) continue;
+                    inventory.Add(item);
+                }
                 SoundEffectSystem.PlaySound(SoundEffectRegistries.collect, scene.Camera2D, spaceShip.Position);
             }
         }

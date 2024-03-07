@@ -27,6 +27,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegi
         public readonly static Registry particle = new(textures, "particle");
         public readonly static Registry placeHolder = new(textures, "placeHolder");
         public readonly static Registry radar = new(textures, "radar");
+        public readonly static Registry container = new(textures, "container");
 
         private readonly static string planets = @"textures\gameSprites\gameobjects\astronomicalbodys\planets";
         public readonly static Registry cold = new(planets, "cold0");
