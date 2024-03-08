@@ -36,14 +36,14 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
 
         public SensorSystem() => mCoolDown = ExtendetRandom.Random.Next(MaxCoolDown);
 
-        public void Scan(GameTime gameTime, PlanetSystem planetSystem, Vector2 spaceShipPosition, Fractions fraction, GameLayer scene)
+        public void Scan(GameTime gameTime, Vector2 spaceShipPosition, Fractions fraction, GameLayer scene)
         {
             mCoolDown -= gameTime.ElapsedGameTime.Milliseconds;
             if (mCoolDown > 0) return;
             mCoolDown = MaxCoolDown;
 
-            mOpponents = planetSystem.GameObjects.GameObjects2Ds.OfType<Spaceship>().Where((spaceShip) => spaceShip.Fraction != fraction).ToList();
-            mAllies = planetSystem.GameObjects.GameObjects2Ds.OfType<Spaceship>().Where((spaceShip) => spaceShip.Fraction == fraction).ToList();
+            mOpponents = scene.GameObjects.OfType<Spaceship>().Where((spaceShip) => spaceShip.Fraction != fraction).ToList();
+            mAllies = scene.GameObjects.OfType<Spaceship>().Where((spaceShip) => spaceShip.Fraction == fraction).ToList();
 
             mOpponents.Sort((obj1, obj2) =>
             {

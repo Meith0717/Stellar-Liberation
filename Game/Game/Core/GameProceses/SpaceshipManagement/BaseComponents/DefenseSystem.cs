@@ -27,8 +27,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
 
         public double ShieldPercentage => mActualShieldForce / mMaxShieldForce;
         public double HullPercentage => mActualHullForce / mMaxHullForce;
-        public double ShieldForce => mActualShieldForce;
-        public double HullForce => mActualHullForce;
+
 
         public DefenseSystem(float MaxShieldForce, float MaxHullForce, float regenerationPerSecond)
         {

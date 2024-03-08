@@ -15,13 +15,6 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
 
     public class SpaceshipFactory
     {
-        public static void Spawn(PlanetSystem planetSystem, Vector2 position, ShipID shipID, Fractions fraction, out Spaceship spaceShip)
-        {
-            spaceShip = Get(position, shipID, fraction);
-            spaceShip.PlanetSystem = planetSystem;
-            planetSystem.GameObjects.Add(spaceShip);
-        }
-
         public static Spaceship Get(Vector2 position, ShipID shipID, Fractions fraction)
         {
             SpaceshipConfig config = shipID switch
@@ -100,7 +93,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
                 ),
                 _ => throw new System.NotImplementedException()
             };
-            return new Spaceship(position, fraction, config);
+            return new Spaceship(position, fraction, config.TextureID, config.TextureScale);
         }
     }
 }

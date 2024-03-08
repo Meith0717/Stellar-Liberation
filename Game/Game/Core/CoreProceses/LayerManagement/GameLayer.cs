@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem;
@@ -19,6 +20,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
     {
         public Debugging.DebugSystem DebugSystem { get; protected set; }
         public Vector2 WorldMousePosition { get; private set; }
+        public GameObject2DTypeList GameObjects;
         public readonly SpatialHashing SpatialHashing;
         public readonly ParticleManager ParticleManager;
         public readonly Camera2D Camera2D;
@@ -32,6 +34,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
             DebugSystem = gameState.DebugSystem;
 
             SpatialHashing = new(spatialHashingCellSize);
+            GameObjects = new();
             ParticleManager = new();
             Camera2D = new();
             CameraShaker = new();
@@ -40,6 +43,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, GameSettings gameSettings, ResolutionManager resolutionManager)
         {
+            GameObject2DManager.SetSpatialHashing(SpatialHashing, ref GameObjects);
             base.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings, resolutionManager);
             HUDLayer?.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings, resolutionManager);
         }
@@ -52,6 +56,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
             Camera2D.Update(GraphicsDevice, this);
             mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera2D.Position, Camera2D.Zoom, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
             WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, inputState.mMousePosition);
+            GameObject2DManager.Update(gameTime, inputState, this, ref GameObjects);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

@@ -35,8 +35,8 @@ public class LayerManager
     // add and remove layers from stack
     public void AddLayer(Layer layer)
     {
-        mLayerStack.AddLast(layer);
         layer.Initialize(mGame1, this, mGraphicsDevice, mPersistanceManager, mGameSettings, mResolutionManager);
+        mLayerStack.AddLast(layer);
     }
 
     public void PopLayer()

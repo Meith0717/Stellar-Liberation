@@ -27,8 +27,8 @@ namespace StellarLiberation.Game.Core.Visuals.ParallaxSystem
             mTextureId = textureId;
             mMovingScale = movingScale;
             mPosition1 = Vector2.Zero;
-            mTextureWidth = 1920;
-            mTextureHeight = 1080;
+            mTextureWidth = 1920f;
+            mTextureHeight = 1080f;
         }
 
         public void Update(Vector2 movement)

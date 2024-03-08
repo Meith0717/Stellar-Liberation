@@ -15,7 +15,6 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
     /// <summary>
     /// Represents a spatial hashing data structure for efficient object retrieval based on their coordinates.
     /// </summary>
-    /// <typeparam name="T">The type of objects stored in the spatial hashing structure.</typeparam>
     public class SpatialHashing
     {
         public int Count { get; private set; }

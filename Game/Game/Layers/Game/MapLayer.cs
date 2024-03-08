@@ -12,16 +12,12 @@ using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace StellarLiberation.Game.Layers.GameLayers
 {
     internal class MapLayer : GameLayer
     {
         private readonly UiFrame mBackgroundLayer;
-
-        private readonly List<PlanetSystem> mPlanetSystems;
 
         public MapLayer(GameLayerManager gameState, PlanetSystem currentSystem)
             : base(gameState, MapFactory.MapScale * 3)
@@ -30,8 +26,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
             mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
 
             Camera2D.Position = currentSystem.Position;
-            mPlanetSystems = gameState.PlanetSystems.ToList();
-            foreach (var system in mPlanetSystems)
+            foreach (var system in gameState.mPlanetSystems)
             {
                 SpatialHashing.InsertObject(system, (int)system.Position.X, (int)system.Position.Y);
             }
@@ -45,7 +40,8 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
             mBackgroundLayer.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, 1);
             inputState.DoAction(ActionType.ToggleHyperMap, GameState.PopLayer);
-            foreach (var system in mPlanetSystems) system.Update(gameTime, inputState, this);
+            foreach (var system in GameState.mPlanetSystems) 
+                system.Update(gameTime, inputState, this);
             base.Update(gameTime, inputState);
         }
 

@@ -4,7 +4,6 @@
 
 using MathNet.Numerics.Distributions;
 using Microsoft.Xna.Framework;
-using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
@@ -14,71 +13,57 @@ using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGeneration;
 using StellarLiberation.Game.Core.GameProceses.SectorManagement;
-using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using System;
+using System.Collections.Generic;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
 {
-    [Serializable]
     public class PlanetSystem : GameObject2D
     {
-        [JsonIgnore] public GameObject2DManager AstronomicalObjs { get; private set; }
-        [JsonIgnore] private bool mIsHovered;
-
-        [JsonIgnore] private readonly Sector mSector;
-        [JsonIgnore] private readonly string Name;
-        [JsonIgnore] public int SystemRadius { get; private set; }
-        [JsonProperty] private int? PlanetCount;
-        [JsonProperty] private int? Temperature;
-        [JsonProperty] public GameObject2DManager GameObjects { get; private set; }
-        [JsonProperty] private readonly int mSeed;
-        [JsonProperty] public Fractions Occupier = Fractions.Enemys;
+        private bool mIsHovered;
+        public int SystemRadius;
+        private readonly Sector mSector;
+        public readonly string Name;
+        private int? PlanetCount;
+        private int? Temperature;
+        public readonly int Seed;
+        public Fractions Occupier = Fractions.Enemys;
 
         public PlanetSystem(Vector2 position, int seed) : base(position, GameSpriteRegistries.star, .1f, 1)
         {
-            mSeed = seed;
-            GameObjects = new();
-
-            Name = $"SL-";
-            var rand = new Random(mSeed);
-            for (var i = 0; i < 10; i++) Name += rand.Next(0, 9);
-
-            for (int i = 0; i <1; i++) SpaceshipFactory.Spawn(this, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 250000)), ShipID.Bomber, Fractions.Enemys, out var _);
-            for (int i = 0; i < 0; i++) SpaceshipFactory.Spawn(this, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 250000)), ShipID.Bomber, Fractions.Allied, out var _);
+            Seed = seed;
+            Name = $"SL {Seed}";
 
             mSector = new(position - (new Vector2(MapFactory.MapScale) / 2), MapFactory.MapScale, MapFactory.MapScale);
         }
 
-        public void GenerateAstronomicalObjects()
+        public List<GameObject2D> GetAstronomicalObjects()
         {
-            if (AstronomicalObjs is not null) return;
-            AstronomicalObjs = new();
-            Occupier = Fractions.Allied;
-            var seededRandom = new Random(mSeed);
+            var gameObjects = new List<GameObject2D>();
+            var seededRandom = new Random(Seed);
 
             var star = StarGenerator.Generat(seededRandom);
             TextureColor = star.TextureColor;
             Temperature = star.Kelvin;
 
-            AstronomicalObjs.Add(star);
+            gameObjects.Add(star);
             var distanceToStar = (int)star.BoundedBox.Radius;
             PlanetCount = (int)Triangular.Sample(seededRandom, 1, 10, 7);
             for (int i = 1; i <= PlanetCount; i++)
             {
                 distanceToStar += seededRandom.Next(40000, 80000);
-                AstronomicalObjs.Add(PlanetGenerator.GetPlanet(seededRandom, star.Kelvin, distanceToStar));
+                gameObjects.Add(PlanetGenerator.GetPlanet(seededRandom, star.Kelvin, distanceToStar));
             }
 
             distanceToStar += 50000;
             SystemRadius = distanceToStar;
 
-            AstronomicalObjs.AddRange(AsteroidGenerator.GetAsteroidsRing(Position, distanceToStar));
-        }
+            gameObjects.AddRange(AsteroidGenerator.GetAsteroidsRing(Position, distanceToStar));
+            return gameObjects;
+        }  
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer)
         {
-
             void LeftPressAction()
             {
                 gameLayer.GameState.PopLayer();
@@ -86,7 +71,6 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             };
 
             mSector.Update(Occupier);
-
             base.Update(gameTime, inputState, gameLayer);
             mIsHovered = false;
             GameObject2DInteractionManager.Manage(inputState, this, gameLayer, LeftPressAction, null, () => mIsHovered = true); ;

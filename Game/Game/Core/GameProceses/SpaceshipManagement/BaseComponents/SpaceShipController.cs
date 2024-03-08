@@ -18,8 +18,13 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
         {
             if (spaceShip == null) return;
             spaceShip.PhaserCannaons.StopFire();
-            inputState.DoAction(ActionType.Accelerate, () => mVelocityProcentage = MathHelper.Clamp(mVelocityProcentage + .002f * (float)gameTime.ElapsedGameTime.TotalMilliseconds, 0, 1));
-            inputState.DoAction(ActionType.Break, () => mVelocityProcentage = MathHelper.Clamp(mVelocityProcentage - .002f * (float)gameTime.ElapsedGameTime.TotalMilliseconds, 0, 1));
+            if (inputState.HasAction(ActionType.Accelerate))
+            {
+                mVelocityProcentage = MathHelper.Clamp(mVelocityProcentage + .002f * (float)gameTime.ElapsedGameTime.TotalMilliseconds, 0, 1);
+            } else
+            {
+                mVelocityProcentage = MathHelper.Clamp(mVelocityProcentage - .002f * (float)gameTime.ElapsedGameTime.TotalMilliseconds, 0, 1);
+            }
             inputState.DoAction(ActionType.Inventar, () => gameLayer.LayerManager.AddLayer(new InventoryLayer(spaceShip.Inventory, gameLayer.GameState.Wallet)));
             inputState.DoAction(ActionType.RightClickHold, () => spaceShip.PhaserCannaons.Fire());
 

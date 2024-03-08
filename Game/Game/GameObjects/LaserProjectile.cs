@@ -10,9 +10,11 @@ using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
+using System;
 
 namespace StellarLiberation.Game.GameObjects
 {
+    [Obsolete]
     public class LaserProjectile : GameObject2D
     {
         public readonly Fractions Fraction;

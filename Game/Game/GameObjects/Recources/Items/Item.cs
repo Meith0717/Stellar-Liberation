@@ -15,7 +15,7 @@ namespace StellarLiberation.Game.GameObjects.Recources.Items
         [JsonProperty] public readonly bool IsStakable;
         [JsonProperty] public int Amount = 1;
 
-        public Item(ItemID itemID, string textureId, bool isStackable = false)
+        public Item(ItemID itemID, string textureId, bool isStackable = true)
         {
             ItemID = itemID;
             UiTextureId = textureId;

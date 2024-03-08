@@ -7,10 +7,12 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
+using System;
 using System.Collections.Generic;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components.PhaserSystem
+namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.BaseComponents.PhaserSystem
 {
+    [Obsolete]
     public class PhaserCannons
     {
         private readonly List<PhaserCannon> mCannons = new();
@@ -42,7 +44,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
                 cannon.GetPosition(origin.Position, origin.Rotation, origin.Rotation);
             if (!mFire || mFireCoolDown > 0) return;
             foreach (var cannon in mCannons)
-                cannon.Fire(origin.PlanetSystem.GameObjects, origin, mParticleColor, mShielDamage, mHullDamage);
+                cannon.Fire(scene, origin, mParticleColor, mShielDamage, mHullDamage);
             SoundEffectSystem.PlaySound(SoundEffectRegistries.torpedoFire, scene.Camera2D, origin.Position);
             mFireCoolDown = mMaxFireCoolDown;
         }

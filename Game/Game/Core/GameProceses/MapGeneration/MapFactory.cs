@@ -3,6 +3,7 @@
 // All rights reserved.
 
 using MathNet.Numerics.Random;
+using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,9 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
     {
         public readonly static int MapScale = 1000;
 
-        public static void Generate(out HashSet<PlanetSystem> planetSystems, MapConfig mapConfig)
+        public static List<PlanetSystem> Generate(MapConfig mapConfig)
         {
-            planetSystems = new();
+            var planetSystems = new List<PlanetSystem>();
             var seededRandom = new Random(mapConfig.Seed);
 
             var noiseMap = BinaryMapGenerator.Generate(mapConfig.SectorCountWidth, mapConfig.SectorCountHeight, seededRandom);
@@ -25,9 +26,11 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
 
             foreach (var position in positions)
             {
-                var planetSystem = new PlanetSystem(position, seededRandom.NextFullRangeInt32());
+                var seed = seededRandom.NextFullRangeInt32();
+                var planetSystem = new PlanetSystem(position, seed);
                 planetSystems.Add(planetSystem);
             }
+            return planetSystems;
         }
     }
 }

@@ -11,18 +11,12 @@ using System.Linq;
 namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
 {
     [Serializable]
-    public class GameObject2DTypeList : IEnumerable<GameObject2D>
+    public class GameObject2DTypeList
     {
-        [JsonProperty] private readonly Dictionary<Type, List<GameObject2D>> mTypeDict;
-        [JsonProperty] private readonly List<GameObject2D> AllObjects;
+        [JsonProperty] private readonly Dictionary<Type, List<GameObject2D>> mTypeDict = new();
+        [JsonProperty] private readonly List<GameObject2D> AllObjects = new();
 
         public int Count => AllObjects.Count;
-
-        public GameObject2DTypeList()
-        {
-            mTypeDict = new();
-            AllObjects = new();
-        }
 
         public void Add(GameObject2D gameObject2D)
         {
@@ -70,7 +64,6 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
         }
 
         public IEnumerator<GameObject2D> GetEnumerator() => AllObjects.GetEnumerator();
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
+        public List<GameObject2D> ToList() => AllObjects;
     }
 }

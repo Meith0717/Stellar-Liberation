@@ -10,9 +10,9 @@ using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 
-namespace StellarLiberation.Game.Core.GameProceses.WeaponElements
+namespace StellarLiberation.Game.GameObjects.Recources.Weapons
 {
-    internal class WeaponProjectile : GameObject2D
+    public class WeaponProjectile : GameObject2D
     {
         public readonly Spaceship Shooter;
         public readonly Spaceship Target;
@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.Core.GameProceses.WeaponElements
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
-            if (mFollowTarget) Rotation = Geometry.AngleBetweenVectors(Position, Target.Position);
+            if (mFollowTarget && Target is not null) Rotation = Geometry.AngleBetweenVectors(Position, Target.Position);
             GameObject2DMover.Move(gameTime, this, scene.SpatialHashing);
             base.Update(gameTime, inputState, scene);
         }

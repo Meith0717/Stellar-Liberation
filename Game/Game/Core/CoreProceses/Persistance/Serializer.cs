@@ -62,9 +62,9 @@ namespace StellarLiberation.Game.Core.CoreProceses.Persistance
             var jsonSerializerSettings = new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.Objects,
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
                 ObjectCreationHandling = ObjectCreationHandling.Replace,
                 NullValueHandling = NullValueHandling.Ignore,
-                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
             };
             using StreamReader streamReader = new(filePath);
             string json = streamReader.ReadToEnd();

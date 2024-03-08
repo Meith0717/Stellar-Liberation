@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
-using StellarLiberation.Game.GameObjects.Recources;
+using StellarLiberation.Game.GameObjects;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using System.Collections.Generic;
 

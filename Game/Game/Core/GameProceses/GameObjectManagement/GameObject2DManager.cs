@@ -3,7 +3,6 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
@@ -13,59 +12,38 @@ using System.Collections.Generic;
 namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
 {
     [Serializable]
-    public class GameObject2DManager
+    public static class GameObject2DManager
     {
-        [JsonProperty] public readonly GameObject2DTypeList GameObjects2Ds = new();
-        [JsonIgnore] private SpatialHashing mSpatialHashing;
 
-        public GameObject2DManager() { }
-
-        public GameObject2DManager(GameObject2DTypeList gameObject2Ds)
+        public static void SetSpatialHashing(SpatialHashing spatialHashing, ref GameObject2DTypeList gameObject2Ds)
         {
-            GameObjects2Ds = gameObject2Ds;
+            foreach (var obj in gameObject2Ds) 
+                spatialHashing.InsertObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
         }
 
-        public void SetSpatialHashing(SpatialHashing spatialHashing)
+        public static void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, ref readonly GameObject2DTypeList gameObject2Ds)
         {
-            mSpatialHashing = spatialHashing;
-            foreach (var obj in GameObjects2Ds) mSpatialHashing.InsertObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
-        }
-
-        public void Add(GameObject2D obj) => GameObjects2Ds.Add(obj);
-        public void AddRange(List<GameObject2D> objs) => GameObjects2Ds.AddRange(objs);
-
-        public void SpawnGameObject2D(GameObject2D obj, bool addToSpatialHash = true)
-        {
-            GameObjects2Ds.Add(obj);
-            if (!addToSpatialHash) return;
-            mSpatialHashing?.InsertObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
-        }
-
-        public bool DespawnGameObject(GameObject2D obj)
-        {
-            if (!GameObjects2Ds.Remove(obj)) return false;
-            mSpatialHashing?.RemoveObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
-            return true;
-        }
-
-        public void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer)
-        {
-            var copyList = new List<GameObject2D>(GameObjects2Ds);
+            var copyList = new List<GameObject2D>(gameObject2Ds.ToList());
             foreach (var obj in copyList)
             {
                 obj.Update(gameTime, inputState, gameLayer);
 
                 if (!obj.IsDisposed) continue;
-                DespawnGameObject(obj);
+                if (!gameObject2Ds.Remove(obj)) return;
+                gameLayer.SpatialHashing.RemoveObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
             }
         }
 
-        public void Draw(GameLayer scene)
+        public static void Update<T>(GameTime gameTime, InputState inputState, GameLayer gameLayer, ref readonly List<T> gameObject2Ds) where T : GameObject2D
         {
-            foreach (var obj in GameObjects2Ds)
+            var copyList = new List<GameObject2D>(gameObject2Ds);
+            foreach (var obj in copyList)
             {
-                if (!scene.Camera2D.Bounds.Intersects(obj.BoundedBox)) continue;
-                obj.Draw(scene);
+                obj.Update(gameTime, inputState, gameLayer);
+
+                if (!obj.IsDisposed) continue;
+                if (!gameObject2Ds.Remove((T)obj)) return;
+                gameLayer.SpatialHashing.RemoveObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
             }
         }
     }

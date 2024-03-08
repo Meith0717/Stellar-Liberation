@@ -2,8 +2,8 @@
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
+using MathNet.Numerics.Random;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
@@ -15,14 +15,11 @@ using StellarLiberation.Game.Core.GameProceses.AI.Behaviors;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
-using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement;
+using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.BaseComponents.PhaserSystem;
 using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components;
-using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components.PhaserSystem;
 using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components.PropulsionSystem;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
-using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
-using StellarLiberation.Game.GameObjects.Recources;
 using StellarLiberation.Game.GameObjects.Recources.Items;
 using System;
 using System.Collections.Generic;
@@ -44,13 +41,13 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
         [JsonProperty] public readonly Fractions Fraction;
         [JsonProperty] private readonly Color mAccentColor;
         [JsonProperty] public readonly Inventory Inventory = new();
-        [JsonProperty] public PlanetSystem PlanetSystem;
+        [JsonProperty] public readonly int ID;
 
         [JsonIgnore] public readonly SpaceshipController mSpaceshipController = new();
         public float Mass { get => 5; } 
 
-        public Spaceship(Vector2 position, Fractions fraction, SpaceshipConfig config)
-            : base(position, config.TextureID, config.TextureScale, 10)
+        public Spaceship(Vector2 position, Fractions fraction, string textureID, float textureScale)
+            : base(position, textureID, textureScale, 10)
         {
             Fraction = fraction;
             var accentCoor = Fraction switch
@@ -60,18 +57,18 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
                 Fractions.Neutral => throw new NotImplementedException(),
                 _ => throw new NotImplementedException()
             };
-            SublightDrive = new(config.Velocity, 0.01f);
-            PhaserCannaons = new(config.TurretCoolDown, accentCoor, 10, 10);
-            DefenseSystem = new(config.ShieldForce, config.HullForce, 10);
+            SublightDrive = new(5, 0.01f);
+            PhaserCannaons = new(100, accentCoor, 10, 10);
+            DefenseSystem = new(100, 100, 10);
             mAccentColor = accentCoor;
-            foreach (var pos in config.WeaponsPositions)
-                PhaserCannaons.PlaceTurret(new(pos, 1, TextureDepth + 1));
+            PhaserCannaons.PlaceTurret(new(Vector2.Zero, 1, TextureDepth + 1));
              
             mUtilityAi.AddBehavior(new IdleBehavior(SublightDrive));
             mUtilityAi.AddBehavior(new ChaseBehavior(this));
             mUtilityAi.AddBehavior(new CollectItemsBehavior(this));
             mUtilityAi.AddBehavior(new CombatBehavior(this));
             mUtilityAi.AddBehavior(new FleeBehavior(this));
+            ID = ExtendetRandom.Random.NextFullRangeInt32();
         }
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer)
@@ -84,7 +81,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
             base.Update(gameTime, inputState, gameLayer);
             TrailEffect.Show(Transformations.Rotation(Position, new(-100, 0), Rotation), MovingDirection, Velocity, gameTime, mAccentColor, gameLayer.ParticleManager, gameLayer.GameSettings.ParticlesMultiplier);
 
-            SensorSystem.Scan(gameTime, PlanetSystem, Position, Fraction, gameLayer);
+            SensorSystem.Scan(gameTime, Position, Fraction, gameLayer);
             HasProjectileHit(gameTime, gameLayer);
             HyperDrive.Update(gameTime, this, gameLayer);
             DefenseSystem.Update(gameTime);
@@ -110,7 +107,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
                  ItemFactory.Get(ItemID.Iron),
                  ItemFactory.Get(ItemID.Iron)
             };
-            PlanetSystem.GameObjects.SpawnGameObject2D(new Container(Position, lst));
+            gameLayer.GameObjects.Add(new Container(Position, lst));
         }
 
         private void HasProjectileHit(GameTime gameTime, GameLayer scene)

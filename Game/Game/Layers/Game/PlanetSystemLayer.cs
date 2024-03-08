@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.GridSystem;
 using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components;
 using StellarLiberation.Game.Core.Objects.UiElements;
@@ -37,10 +38,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
             mGrid = new(10000);
 
             PlanetSystem = planetSystem;
-            PlanetSystem.GenerateAstronomicalObjects();
-
-            PlanetSystem.GameObjects.SetSpatialHashing(SpatialHashing);
-            PlanetSystem.AstronomicalObjs.SetSpatialHashing(SpatialHashing);
+            GameObjects.AddRange(PlanetSystem.GetAstronomicalObjects());
 
             mParallaxController = new(Camera2D);
             mParallaxController.Add(new(GameSpriteRegistries.gameBackgroundParlax1, .01f));
@@ -57,9 +55,8 @@ namespace StellarLiberation.Game.Layers.GameLayers
             mParallaxController.Update();
 
             spaceShipController.Controll(gameTime, GameState.Player, inputState, this);
-            PlanetSystem.GameObjects.Update(gameTime, inputState, this);
-            PlanetSystem.AstronomicalObjs.Update(gameTime, inputState, this);
-
+            var lst = GameState.mSpaceshipPSManager.GetSpaceshipsOfPlanetSystem(PlanetSystem);
+            GameObject2DManager.Update(gameTime, inputState, this, ref lst);
             Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, .001f, 1);
             base.Update(gameTime, inputState);
         }

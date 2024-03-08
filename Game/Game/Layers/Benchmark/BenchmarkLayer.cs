@@ -17,6 +17,7 @@ using StellarLiberation.Game.Core.CoreProceses.Profiling;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using StellarLiberation.Game.Core.Utilitys;
 using System;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 
 namespace StellarLiberation.Game.Layers.Benchmark
 {
@@ -40,10 +41,7 @@ namespace StellarLiberation.Game.Layers.Benchmark
             mFrameCounter = new(100);
 
             mPlanetSystem = new PlanetSystem(Vector2.Zero, 42);
-            mPlanetSystem.GenerateAstronomicalObjects();
-            mPlanetSystem.AstronomicalObjs.SetSpatialHashing(SpatialHashing);
-            mPlanetSystem.GameObjects.Add(mPlanetSystem);
-            mPlanetSystem.GameObjects.SetSpatialHashing(SpatialHashing);
+            GameObjects.Add(mPlanetSystem);
             Camera2D.Zoom = 0.002f;
         }
 
@@ -53,8 +51,8 @@ namespace StellarLiberation.Game.Layers.Benchmark
             if (CoolDown < 0 && !mIsPaused)
             {
                 CoolDown = 100;
-                SpaceshipFactory.Spawn(mPlanetSystem, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Enemys, out var _);
-                SpaceshipFactory.Spawn(mPlanetSystem, ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Allied, out var _);
+                GameObjects.Add(SpaceshipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Enemys));
+                GameObjects.Add(SpaceshipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Allied));
                 mDataCollector.AddData([mFrameCounter.CurrentFramesPerSecond, mFrameCounter.FrameDuration, SpatialHashing.Count, ParticleManager.Count]);
             }
             CoolDown -= gameTime.ElapsedGameTime.Milliseconds;
@@ -68,8 +66,6 @@ namespace StellarLiberation.Game.Layers.Benchmark
             Camera2DMover.UpdateCameraByMouseDrag(inputState, Camera2D);
             Camera2DMover.MoveByKeys(gameTime, inputState, Camera2D);
             Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, .002f, 1);
-            mPlanetSystem.GameObjects.Update(gameTime, inputState, this);
-            mPlanetSystem.AstronomicalObjs.Update(gameTime, inputState, this);
             mBackgroundLayer.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
         }
 

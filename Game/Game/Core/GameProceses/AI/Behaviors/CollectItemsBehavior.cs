@@ -3,7 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using StellarLiberation.Game.GameObjects.Recources;
+using StellarLiberation.Game.GameObjects;
 using StellarLiberation.Game.GameObjects.Recources.Items;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using System.Collections.Generic;
