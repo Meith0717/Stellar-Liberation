@@ -12,7 +12,6 @@ using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGeneration;
-using StellarLiberation.Game.Core.GameProceses.SectorManagement;
 using System;
 using System.Collections.Generic;
 
@@ -21,46 +20,41 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
     public class PlanetSystem : GameObject2D
     {
         private bool mIsHovered;
-        public int SystemRadius;
+        public Fractions Occupier = Fractions.Neutral;
+
+        public readonly List<GameObject2D> AstrononomicalObjects = new();
+        public readonly int SystemRadius;
         private readonly Sector mSector;
-        public readonly string Name;
-        private int? PlanetCount;
-        private int? Temperature;
+        private readonly int? PlanetCount;
+        private readonly int? Temperature;
         public readonly int Seed;
-        public Fractions Occupier = Fractions.Enemys;
 
         public PlanetSystem(Vector2 position, int seed) : base(position, GameSpriteRegistries.star, .1f, 1)
         {
             Seed = seed;
-            Name = $"SL {Seed}";
-
             mSector = new(position - (new Vector2(MapFactory.MapScale) / 2), MapFactory.MapScale, MapFactory.MapScale);
-        }
 
-        public List<GameObject2D> GetAstronomicalObjects()
-        {
-            var gameObjects = new List<GameObject2D>();
             var seededRandom = new Random(Seed);
 
             var star = StarGenerator.Generat(seededRandom);
             TextureColor = star.TextureColor;
             Temperature = star.Kelvin;
 
-            gameObjects.Add(star);
+            AstrononomicalObjects.Add(star);
             var distanceToStar = (int)star.BoundedBox.Radius;
             PlanetCount = (int)Triangular.Sample(seededRandom, 1, 10, 7);
             for (int i = 1; i <= PlanetCount; i++)
             {
                 distanceToStar += seededRandom.Next(40000, 80000);
-                gameObjects.Add(PlanetGenerator.GetPlanet(seededRandom, star.Kelvin, distanceToStar));
+                AstrononomicalObjects.Add(PlanetGenerator.GetPlanet(seededRandom, star.Kelvin, distanceToStar));
             }
 
             distanceToStar += 50000;
             SystemRadius = distanceToStar;
 
-            gameObjects.AddRange(AsteroidGenerator.GetAsteroidsRing(Position, distanceToStar));
-            return gameObjects;
-        }  
+            AstrononomicalObjects.AddRange(AsteroidGenerator.GetAsteroidsRing(Position, distanceToStar));
+
+        }
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer)
         {
@@ -84,7 +78,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             TextureManager.Instance.DrawGameObject(this);
             TextureManager.Instance.Draw(GameSpriteRegistries.starLightAlpha, Position, TextureOffset, TextureScale * 2f, Rotation, 0, color);
 
-            TextureManager.Instance.DrawString(FontRegistries.titleFont, BoundedBox.ToRectangleF().BottomRight, Name, 0.1f, color);
+            TextureManager.Instance.DrawString(FontRegistries.titleFont, BoundedBox.ToRectangleF().BottomRight, $"SL {Seed}", 0.1f, color);
 
             TextureManager.Instance.Draw(MenueSpriteRegistries.temperature, BoundedBox.ToRectangleF().BottomRight + new Vector2(0, 20), 0.2f, 0, 1, color);
             TextureManager.Instance.DrawString(FontRegistries.titleFont, BoundedBox.ToRectangleF().BottomRight + new Vector2(8, 20), Temperature is null ? "?" : $"{Temperature} K", 0.1f, color);

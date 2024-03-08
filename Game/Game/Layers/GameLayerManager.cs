@@ -16,6 +16,7 @@ using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
+using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using StellarLiberation.Game.Layers.GameLayers;
@@ -23,34 +24,35 @@ using StellarLiberation.Game.Layers.MenueLayers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Resources;
 
 namespace StellarLiberation.Game.Layers
 {
     [Serializable]
     public class GameLayerManager : Layer
     {
-        [JsonIgnore] private readonly FrameCounter mFrameCounter = new(1000);
+        [JsonIgnore] public List<PlanetSystem> mPlanetSystems { get; private set; }
+        [JsonIgnore] private PlanetSystemLayer mMainLayer;
         [JsonIgnore] public readonly DebugSystem DebugSystem = new();
         [JsonIgnore] private readonly LinkedList<Layer> mLayers = new();
-        [JsonIgnore] private PlanetSystemLayer mMainLayer;
-        [JsonIgnore] public List<PlanetSystem> mPlanetSystems { get; private set; }
-        [JsonProperty] public readonly PlanetsystemSpaceshipTracer mSpaceshipPSManager = new();
+        [JsonIgnore] private readonly FrameCounter mFrameCounter = new(1000);
+        [JsonProperty] public readonly SpaceshipTracer SpaceShips = new();
         [JsonProperty] private readonly MapConfig mMapConfig;
         [JsonProperty] public readonly Spaceship Player;
         [JsonProperty] public readonly Wallet Wallet = new();
 
         public GameLayerManager() : base(false)
         {
-            mMapConfig = new(3, 3, 0);
+            mMapConfig = new(50, 50, 0);
             Player = SpaceshipFactory.Get(Vector2.Zero, ShipID.Destroyer, Fractions.Allied);
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, GameSettings gameSettings, ResolutionManager resolutionManager)
         {
             mPlanetSystems = MapFactory.Generate(mMapConfig);
-            if (mSpaceshipPSManager.LocateSpaceShip(Player) is null)
-                mSpaceshipPSManager.AddSpaceShip(mPlanetSystems.First(), Player);
+            if (SpaceShips.LocateSpaceShip(Player) is null)
+                SpaceShips.AddSpaceShip(mPlanetSystems.First(), Player);
+            for (int i = 0; i < 2; i++)
+                SpaceShips.AddSpaceShip(mPlanetSystems.First(), SpaceshipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, mPlanetSystems.First().SystemRadius)), ShipID.Destroyer, Fractions.Enemys));
             base.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings, resolutionManager);
         }
 
@@ -74,8 +76,8 @@ namespace StellarLiberation.Game.Layers
             if (Player.IsDisposed) LayerManager.PopLayer();
             inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this)));
             mLayers.Last?.Value.Update(gameTime, inputState);
-            if (mMainLayer?.PlanetSystem == mSpaceshipPSManager.LocateSpaceShip(Player)) return;
-            mMainLayer = new(this, mSpaceshipPSManager.LocateSpaceShip(Player), mMainLayer?.Camera2D.Zoom is null ? 1 : mMainLayer.Camera2D.Zoom);
+            if (mMainLayer?.PlanetSystem == SpaceShips.LocateSpaceShip(Player)) return;
+            mMainLayer = new(this, SpaceShips.LocateSpaceShip(Player), mMainLayer?.Camera2D.Zoom is null ? 1 : mMainLayer.Camera2D.Zoom);
             PopLayer();
             AddLayer(mMainLayer);
         }

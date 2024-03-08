@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +35,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
 
         public SensorSystem() => mCoolDown = ExtendetRandom.Random.Next(MaxCoolDown);
 
-        public void Scan(GameTime gameTime, Vector2 spaceShipPosition, Fractions fraction, GameLayer scene)
+        public void Scan(GameTime gameTime, Spaceship spaceship, Fractions fraction, GameLayer scene)
         {
             mCoolDown -= gameTime.ElapsedGameTime.Milliseconds;
             if (mCoolDown > 0) return;
@@ -47,19 +46,19 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
 
             mOpponents.Sort((obj1, obj2) =>
             {
-                var distance1 = Vector2.DistanceSquared(spaceShipPosition, obj1.Position);
-                var distance2 = Vector2.DistanceSquared(spaceShipPosition, obj2.Position);
+                var distance1 = Vector2.DistanceSquared(spaceship.Position, obj1.Position);
+                var distance2 = Vector2.DistanceSquared(spaceship.Position, obj2.Position);
                 return distance1.CompareTo(distance2);
             });
             mAllies.Sort((obj1, obj2) =>
             {
-                var distance1 = Vector2.DistanceSquared(spaceShipPosition, obj1.Position);
-                var distance2 = Vector2.DistanceSquared(spaceShipPosition, obj2.Position);
+                var distance1 = Vector2.DistanceSquared(spaceship.Position, obj1.Position);
+                var distance2 = Vector2.DistanceSquared(spaceship.Position, obj2.Position);
                 return distance1.CompareTo(distance2);
             });
 
             mShortRangeScan.Clear();
-            scene.SpatialHashing.GetObjectsInRadius(spaceShipPosition, ShortRangeScanDistance, ref mShortRangeScan);
+            scene.SpatialHashing.GetObjectsInRadius(spaceship.Position, ShortRangeScanDistance, ref mShortRangeScan);
 
             mOpponentsInRannge = mShortRangeScan.OfType<Spaceship>().Where((spaceShip) => spaceShip.Fraction != fraction).ToList();
             mAlliesInRannge = mShortRangeScan.OfType<Spaceship>().Where((spaceShip) => spaceShip.Fraction == fraction).ToList();

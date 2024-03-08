@@ -28,7 +28,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
         public void SetTarget(PlanetSystem planetSystem)
         {
             if (mEngineCoolDownTime > mActualEngineCoolDownTime) return;
-            SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.ChargeHyperdrive);
+            // SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.ChargeHyperdrive);
             IsActive = true;
             mActualChargingTime = 0;
             TargetPlanetSystem = planetSystem;
@@ -42,7 +42,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
             if (TargetPlanetSystem is null) return;
             HyperDriveEffect.Charge(operatingShip.Position, scene.ParticleManager);
             if (CoolDown > mActualChargingTime) return;
-            scene.GameState.mSpaceshipPSManager.ChangePlanetSystem(scene.GameState.mSpaceshipPSManager.LocateSpaceShip(operatingShip), TargetPlanetSystem, operatingShip);
+            scene.GameState.SpaceShips.ChangePlanetSystem(scene.GameState.SpaceShips.LocateSpaceShip(operatingShip), TargetPlanetSystem, operatingShip);
             TargetPlanetSystem = null;
             IsActive = false;
         }

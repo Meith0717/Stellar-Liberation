@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
@@ -27,7 +26,6 @@ namespace StellarLiberation.Game.Layers.GameLayers
         private readonly UiHBar mHullBar;
         private readonly UiVBar mPropulsiondBar;
 
-        private readonly Compass mCompass = new();
         private readonly List<UiElement> mPopups = new();
 
         public HudLayer(GameLayer gameLayer) : base(true)
@@ -72,7 +70,6 @@ namespace StellarLiberation.Game.Layers.GameLayers
             mShieldBar.Percentage = mScene.GameState.Player.DefenseSystem.ShieldPercentage;
             mHullBar.Percentage = mScene.GameState.Player.DefenseSystem.HullPercentage;
             mPropulsiondBar.Percentage = (double)(mScene.GameState.Player.Velocity / mScene.GameState.Player.SublightDrive.MaxVelocity);
-            mCompass.Update(mScene.GameState.Player.Position, GraphicsDevice, mScene.GameState.Player.SensorSystem.LongRangeScan);
         }
     }
 }

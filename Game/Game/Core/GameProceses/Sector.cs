@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 
-namespace StellarLiberation.Game.Core.GameProceses.SectorManagement
+namespace StellarLiberation.Game.Core.GameProceses
 {
     public class Sector
     {

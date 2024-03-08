@@ -59,7 +59,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
             };
             SublightDrive = new(5, 0.01f);
             PhaserCannaons = new(100, accentCoor, 10, 10);
-            DefenseSystem = new(100, 100, 10);
+            DefenseSystem = new(1000, 100, 10);
             mAccentColor = accentCoor;
             PhaserCannaons.PlaceTurret(new(Vector2.Zero, 1, TextureDepth + 1));
              
@@ -81,7 +81,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
             base.Update(gameTime, inputState, gameLayer);
             TrailEffect.Show(Transformations.Rotation(Position, new(-100, 0), Rotation), MovingDirection, Velocity, gameTime, mAccentColor, gameLayer.ParticleManager, gameLayer.GameSettings.ParticlesMultiplier);
 
-            SensorSystem.Scan(gameTime, Position, Fraction, gameLayer);
+            SensorSystem.Scan(gameTime, this, Fraction, gameLayer);
             HasProjectileHit(gameTime, gameLayer);
             HyperDrive.Update(gameTime, this, gameLayer);
             DefenseSystem.Update(gameTime);

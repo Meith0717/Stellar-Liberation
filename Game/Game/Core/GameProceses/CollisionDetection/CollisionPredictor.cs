@@ -10,6 +10,8 @@ namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection
 {
     public class CollisionPredictor
     {
+
+        // TODO
         public static Vector2? PredictPosition(GameTime gameTime, Vector2 position, float speed, GameObject2D target)
         {
             if (target is null) return null;

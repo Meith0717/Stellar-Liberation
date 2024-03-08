@@ -24,8 +24,8 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
 
         // Texture Stuff
         [JsonProperty] public Color TextureColor;
-        [JsonIgnore] public readonly string TextureId;
-        [JsonIgnore] public readonly int TextureDepth;
+        [JsonProperty] public readonly string TextureId;
+        [JsonProperty] public readonly int TextureDepth;
         [JsonIgnore] public readonly Vector2 TextureOffset;
         [JsonIgnore] public readonly float TextureScale;
         [JsonIgnore] private readonly float mMaxTextureDimension;

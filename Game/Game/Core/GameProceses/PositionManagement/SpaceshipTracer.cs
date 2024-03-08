@@ -11,11 +11,10 @@ using System.Collections.Generic;
 namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
 {
     [Serializable]
-    public class PlanetsystemSpaceshipTracer
+    public class SpaceshipTracer
     {
         [JsonProperty] private readonly Dictionary<int, List<Spaceship>> mSystemShipTracer = new();
         [JsonProperty] private readonly Dictionary<int, PlanetSystem> mShipSystemTracer = new();
-
 
         public void AddSpaceShip(PlanetSystem planetSystem, Spaceship spaceship)
         {
@@ -51,6 +50,13 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
         public List<Spaceship> GetSpaceshipsOfPlanetSystem(PlanetSystem planetSystem) 
         {
             if (!mSystemShipTracer.TryGetValue(planetSystem.Seed, out var spaceships))
+                return new();
+            return spaceships;
+        }
+
+        public List<Spaceship> GetSpaceshipsInPlanetSystem(Spaceship spaceship)
+        {
+            if (!mSystemShipTracer.TryGetValue(LocateSpaceShip(spaceship).Seed, out var spaceships))
                 return new();
             return spaceships;
         }

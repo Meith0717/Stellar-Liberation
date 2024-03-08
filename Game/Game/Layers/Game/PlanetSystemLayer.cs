@@ -30,15 +30,24 @@ namespace StellarLiberation.Game.Layers.GameLayers
         public PlanetSystemLayer(GameLayerManager gameState, PlanetSystem planetSystem, float camZoom) 
             : base(gameState, 25000)
         {
-            mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn };
-            mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
-
-            HUDLayer = new HudLayer(this);
-            Camera2D.Zoom = camZoom;
             mGrid = new(10000);
+            HUDLayer = new HudLayer(this);
 
+            mBackgroundLayer = new() { 
+                Color = Color.Black, 
+                Anchor = Anchor.Center, 
+                FillScale = FillScale.FillIn 
+            };
+
+            mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { 
+                Anchor = Anchor.Center, 
+                FillScale = FillScale.FillIn
+            });
+
+            Camera2D.Zoom = camZoom;
             PlanetSystem = planetSystem;
-            GameObjects.AddRange(PlanetSystem.GetAstronomicalObjects());
+            GameObjects.AddRange(PlanetSystem.AstrononomicalObjects);
+            GameObjects.AddRange(GameState.SpaceShips.GetSpaceshipsOfPlanetSystem(PlanetSystem));
 
             mParallaxController = new(Camera2D);
             mParallaxController.Add(new(GameSpriteRegistries.gameBackgroundParlax1, .01f));
@@ -51,12 +60,9 @@ namespace StellarLiberation.Game.Layers.GameLayers
         {
             inputState.DoAction(ActionType.ToggleHyperMap, () => GameState.AddLayer(new MapLayer(GameState, PlanetSystem)));
 
-            mBackgroundLayer.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, 1);
             mParallaxController.Update();
-
+            mBackgroundLayer.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, 1);
             spaceShipController.Controll(gameTime, GameState.Player, inputState, this);
-            var lst = GameState.mSpaceshipPSManager.GetSpaceshipsOfPlanetSystem(PlanetSystem);
-            GameObject2DManager.Update(gameTime, inputState, this, ref lst);
             Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, .001f, 1);
             base.Update(gameTime, inputState);
         }
