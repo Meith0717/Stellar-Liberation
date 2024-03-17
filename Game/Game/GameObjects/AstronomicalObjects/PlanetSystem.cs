@@ -4,6 +4,7 @@
 
 using MathNet.Numerics.Distributions;
 using Microsoft.Xna.Framework;
+using Penumbra;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
@@ -19,7 +20,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
 {
     public class PlanetSystem : GameObject2D
     {
-        private bool mIsHovered;
+        public bool IsHovered;
         public Fractions Occupier = Fractions.Neutral;
 
         public readonly List<GameObject2D> AstrononomicalObjects = new();
@@ -58,22 +59,15 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer)
         {
-            void LeftPressAction()
-            {
-                gameLayer.GameState.PopLayer();
-                gameLayer.GameState.Player.HyperDrive.SetTarget(this);
-            };
-
             mSector.Update(Occupier);
             base.Update(gameTime, inputState, gameLayer);
-            mIsHovered = false;
-            GameObject2DInteractionManager.Manage(inputState, this, gameLayer, LeftPressAction, null, () => mIsHovered = true); ;
+            IsHovered = false;
         }
 
         public override void Draw(GameLayer scene)
         {
             base.Draw(scene);
-            var color = mIsHovered ? Color.DarkGray : TextureColor;
+            var color = IsHovered ? Color.DarkGray : TextureColor;
 
             TextureManager.Instance.DrawGameObject(this);
             TextureManager.Instance.Draw(GameSpriteRegistries.starLightAlpha, Position, TextureOffset, TextureScale * 2f, Rotation, 0, color);

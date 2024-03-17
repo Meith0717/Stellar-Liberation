@@ -4,6 +4,7 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Penumbra;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
@@ -20,6 +21,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
     {
         public Debugging.DebugSystem DebugSystem { get; protected set; }
         public Vector2 WorldMousePosition { get; private set; }
+        public PenumbraComponent Penumbra { get; private set; }
+        private GameTime GameTime;
         public GameObject2DTypeList GameObjects;
         public readonly SpatialHashing SpatialHashing;
         public readonly ParticleManager ParticleManager;
@@ -43,13 +46,18 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, GameSettings gameSettings, ResolutionManager resolutionManager)
         {
-            GameObject2DManager.SetSpatialHashing(SpatialHashing, ref GameObjects);
             base.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings, resolutionManager);
+            Penumbra = new(Game1);
+            GameObject2DManager.Initialize(SpatialHashing, ref GameObjects, this);
+            Penumbra.Debug = true;
+            Penumbra.AmbientColor = Color.Transparent;
+            Penumbra.Initialize();
             HUDLayer?.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings, resolutionManager);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            GameTime = gameTime;
             HUDLayer?.Update(gameTime, inputState);
             ParticleManager.Update(gameTime);
             CameraShaker.Update(Camera2D, gameTime);
@@ -57,13 +65,19 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
             mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera2D.Position, Camera2D.Zoom, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
             WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, inputState.mMousePosition);
             GameObject2DManager.Update(gameTime, inputState, this, ref GameObjects);
+            Penumbra.Transform = mViewTransformationMatrix;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
-            DrawOnScreenView(spriteBatch);
-            spriteBatch.End();
+            Penumbra.BeginDraw();
+            GraphicsDevice.Clear(Color.White);
+
+            //spriteBatch.Begin();
+            //DrawOnScreenView(spriteBatch);
+            //spriteBatch.End();
+
+            Penumbra.Draw(GameTime);
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: mViewTransformationMatrix, samplerState: SamplerState.PointClamp);
             DrawOnWorldView(spriteBatch);

@@ -28,7 +28,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
         [JsonProperty] public readonly int TextureDepth;
         [JsonIgnore] public readonly Vector2 TextureOffset;
         [JsonIgnore] public readonly float TextureScale;
-        [JsonIgnore] private readonly float mMaxTextureDimension;
+        [JsonIgnore] public readonly float MaxTextureSize;
 
         // Managing Stuff
         [JsonProperty] public double DisposeTime;
@@ -43,16 +43,18 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             TextureColor = Color.White;
 
             var texture = TextureManager.Instance.GetTexture(TextureId);
-            mMaxTextureDimension = MathF.Max(texture.Width, texture.Height);
+            MaxTextureSize = MathF.Max(texture.Width, texture.Height);
             TextureOffset = Vector2.Divide(new(texture.Width, texture.Height), 2);
             DisposeTime = double.PositiveInfinity;
             UpdateScale(TextureScale);
         }
 
+        public virtual void Initialize(GameLayer gameLayer){}
+
         public void UpdateScale(float scale)
         {
             BoundedBox.Position = Position;
-            BoundedBox.Radius = mMaxTextureDimension / 2 * scale;
+            BoundedBox.Radius = MaxTextureSize / 2 * scale;
         }
 
         public virtual void Update(GameTime gameTime, InputState inputState, GameLayer scene)

@@ -4,6 +4,7 @@
 
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
+using Penumbra;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
@@ -25,6 +26,19 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             TextureColor = color;
         }
 
+        public override void Initialize(GameLayer gameLayer)
+        {
+            var light = new PointLight
+            {
+                Scale = new Vector2(100000),
+                Color = TextureColor,
+                Intensity = .5f,
+                Radius = MaxTextureSize * TextureScale,
+                Position = Position,
+                ShadowType = ShadowType.Solid
+            };
+            gameLayer.Penumbra.Lights.Add(light);
+        }
 
         public override void Draw(GameLayer scene)
         {

@@ -15,10 +15,13 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
     public static class GameObject2DManager
     {
 
-        public static void SetSpatialHashing(SpatialHashing spatialHashing, ref GameObject2DTypeList gameObject2Ds)
+        public static void Initialize(SpatialHashing spatialHashing, ref GameObject2DTypeList gameObject2Ds, GameLayer gameLayer)
         {
-            foreach (var obj in gameObject2Ds) 
+            foreach (var obj in gameObject2Ds)
+            {
                 spatialHashing.InsertObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
+                obj.Initialize(gameLayer);
+            } 
         }
 
         public static void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, ref readonly GameObject2DTypeList gameObject2Ds)
