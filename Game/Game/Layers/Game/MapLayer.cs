@@ -55,7 +55,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
         {
             if (mCurrentSystem == planetSystem) return;
             GameState.PopLayer();
-            GameState.Player.HyperDrive.SetTarget(planetSystem);
+            GameState.AddLayer(new PlanetSystemLayer(GameState, planetSystem));
         }
 
 

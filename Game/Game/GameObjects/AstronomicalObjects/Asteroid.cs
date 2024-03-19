@@ -3,9 +3,11 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using Penumbra;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.Extensions;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
@@ -16,9 +18,19 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
     public class Asteroid : GameObject2D, ICollidable
     {
         public float Mass { get => 50; }
+        private readonly Hull mHull;
 
         public Asteroid(Vector2 position, string textureID, float textureScale)
-            : base(position, textureID, textureScale, 50) { }
+            : base(position, textureID, textureScale, 50) 
+        {
+            mHull = new(BoundedBox.GetPolygone());
+        }
+
+        public override void Initialize(GameLayer gameLayer)
+        {
+            base.Initialize(gameLayer);
+            gameLayer.Penumbra.Hulls.Add(mHull);
+        }
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
@@ -28,6 +40,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             CheckForHit(gameTime, scene);
             Physics.HandleCollision(gameTime, this, scene.SpatialHashing);
             GameObject2DMover.Move(gameTime, this, scene.SpatialHashing);
+            mHull.Position = Position;
         }
 
         private void CheckForHit(GameTime gameTime, GameLayer gameLayer)

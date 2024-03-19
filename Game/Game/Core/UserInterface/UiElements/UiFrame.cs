@@ -32,6 +32,8 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
 
         public bool AnyChild() => mChildren.Any();
 
+        #region Draw
+
         public override void Draw()
         {
             var innerColor = new Color((int)(Color.R * Alpha), (int)(Color.G * Alpha), (int)(Color.B * Alpha), (int)(Color.A * Alpha));
@@ -63,12 +65,19 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
             foreach (var child in mChildren) child.Draw();
             Canvas.Draw();
         }
+        #endregion
 
+        #region Update and Adapt to root
         public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
         {
             Canvas.UpdateFrame(root, uiScaling);
             foreach (var child in mChildren) child.Update(inputState, gameTime, Canvas.Bounds, uiScaling);
         }
 
+        public override void OnResolutionChanged()
+        {
+        }
+
+        #endregion
     }
 }

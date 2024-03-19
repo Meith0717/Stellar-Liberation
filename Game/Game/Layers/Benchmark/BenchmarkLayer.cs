@@ -40,7 +40,7 @@ namespace StellarLiberation.Game.Layers.Benchmark
             mFrameCounter = new(100);
 
             mPlanetSystem = new PlanetSystem(Vector2.Zero, 42);
-            GameObjects.Add(mPlanetSystem);
+            GameObjects.AddRange(mPlanetSystem.AstrononomicalObjects);
             Camera2D.Zoom = 0.002f;
         }
 
@@ -50,8 +50,12 @@ namespace StellarLiberation.Game.Layers.Benchmark
             if (CoolDown < 0 && !mIsPaused)
             {
                 CoolDown = 100;
-                GameObjects.Add(SpaceshipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Enemys));
-                GameObjects.Add(SpaceshipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Allied));
+                var enemy = SpaceshipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Enemys);
+                var allied = SpaceshipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Allied);
+                allied.Initialize(this);
+                enemy.Initialize(this);
+                GameObjects.Add(allied);
+                GameObjects.Add(enemy);
                 mDataCollector.AddData([mFrameCounter.CurrentFramesPerSecond, mFrameCounter.FrameDuration, SpatialHashing.Count, ParticleManager.Count]);
             }
             CoolDown -= gameTime.ElapsedGameTime.Milliseconds;
@@ -70,7 +74,6 @@ namespace StellarLiberation.Game.Layers.Benchmark
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            GraphicsDevice.Clear(Color.Black);
             mFrameCounter.UpdateFrameCouning();
             base.Draw(spriteBatch);
             spriteBatch.Begin();

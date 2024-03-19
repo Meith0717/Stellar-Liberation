@@ -3,20 +3,20 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using Newtonsoft.Json;
 using Penumbra;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
+using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
-using System;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
     public class Star : GameObject2D, ICollidable
     {
         public readonly int Kelvin;
+        private readonly Light mLight;
         public float Mass => float.PositiveInfinity;
 
         public Star(float textureScale, int temperature, Color color)
@@ -24,25 +24,30 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         {
             Kelvin = temperature;
             TextureColor = color;
+            mLight = new PointLight
+            {
+                Radius = BoundedBox.Radius,
+                ShadowType = ShadowType.Solid
+            };
         }
 
         public override void Initialize(GameLayer gameLayer)
         {
-            var light = new PointLight
-            {
-                Scale = new Vector2(100000),
-                Color = TextureColor,
-                Intensity = .5f,
-                Radius = MaxTextureSize * TextureScale,
-                Position = Position,
-                ShadowType = ShadowType.Solid
-            };
-            gameLayer.Penumbra.Lights.Add(light);
+            gameLayer.Penumbra.Lights.Add(mLight);
+        }
+
+        public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
+        {
+            base.Update(gameTime, inputState, scene);
+            mLight.Scale = new Vector2(3000000);
+            mLight.Position = Position;
+            mLight.Color = TextureColor * .5f;
         }
 
         public override void Draw(GameLayer scene)
         {
             base.Draw(scene);
+            TextureManager.Instance.Draw(GameSpriteRegistries.starLightAlpha, Position, TextureOffset, TextureScale * 1.5f, Rotation, 0, TextureColor);
             TextureManager.Instance.DrawGameObject(this);
         }
     }

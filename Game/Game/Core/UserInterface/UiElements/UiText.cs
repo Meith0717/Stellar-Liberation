@@ -33,6 +33,11 @@ namespace StellarLiberation.Game.Core.UserInterface
             Canvas.Draw();
         }
 
+        public override void OnResolutionChanged()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
         {
             mUiScaling = uiScaling;

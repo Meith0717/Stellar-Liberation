@@ -63,6 +63,10 @@ namespace StellarLiberation.Game.Core.UserInterface
             Canvas.Draw();
         }
 
+        public override void OnResolutionChanged()
+        {
+            throw new NotImplementedException();
+        }
 
         private Vector2 sliderPosition => new(Canvas.Bounds.Left + mSliderLength * mSliderValue, Canvas.Center.Y);
     }

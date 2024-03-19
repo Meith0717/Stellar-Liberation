@@ -68,5 +68,10 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             TextureManager.Instance.Draw(MenueSpriteRegistries.barVerticalMid, mMidFrame.Position, mMidFrame.Width, mMidFrame.Height, mColor);
             Canvas.Draw();
         }
+
+        public override void OnResolutionChanged()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

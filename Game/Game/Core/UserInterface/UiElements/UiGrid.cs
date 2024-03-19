@@ -18,6 +18,11 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
 
             public override void Draw() { UiElement?.Draw(); Canvas.Draw(); }
 
+            public override void OnResolutionChanged()
+            {
+                throw new NotImplementedException();
+            }
+
             public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
             {
                 Canvas.UpdateFrame(root, uiScaling);
@@ -86,5 +91,9 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             Canvas.Draw();
         }
 
+        public override void OnResolutionChanged()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

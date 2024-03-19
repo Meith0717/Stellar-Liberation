@@ -4,11 +4,15 @@
 
 using MathNet.Numerics.Random;
 using Microsoft.Xna.Framework;
+using MonoGame.Extended;
+using MonoGame.Extended.Shapes;
 using Newtonsoft.Json;
+using Penumbra;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.Extensions;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.AI;
 using StellarLiberation.Game.Core.GameProceses.AI.Behaviors;
@@ -44,6 +48,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
         [JsonProperty] public readonly int ID;
 
         [JsonIgnore] public readonly SpaceshipController mSpaceshipController = new();
+        [JsonIgnore] private readonly Hull mHull;
         public float Mass { get => 5; } 
 
         public Spaceship(Vector2 position, Fractions fraction, string textureID, float textureScale)
@@ -69,6 +74,12 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
             mUtilityAi.AddBehavior(new CombatBehavior(this));
             mUtilityAi.AddBehavior(new FleeBehavior(this));
             ID = ExtendetRandom.Random.NextFullRangeInt32();
+            mHull = new(BoundedBox.GetPolygone());
+        }
+
+        public override void Initialize(GameLayer gameLayer)
+        {
+            gameLayer.Penumbra.Hulls.Add(mHull);
         }
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer)
@@ -78,6 +89,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
             MovingDirection = Geometry.CalculateDirectionVector(Rotation);
             Physics.HandleCollision(gameTime, this, gameLayer.SpatialHashing);
             GameObject2DMover.Move(gameTime, this, gameLayer.SpatialHashing);
+            mHull.Position = Position;
             base.Update(gameTime, inputState, gameLayer);
             TrailEffect.Show(Transformations.Rotation(Position, new(-100, 0), Rotation), MovingDirection, Velocity, gameTime, mAccentColor, gameLayer.ParticleManager, gameLayer.GameSettings.ParticlesMultiplier);
 
@@ -108,6 +120,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
                  ItemFactory.Get(ItemID.Iron)
             };
             gameLayer.GameObjects.Add(new Container(Position, lst));
+            gameLayer.Penumbra.Hulls.Remove(mHull);
         }
 
         private void HasProjectileHit(GameTime gameTime, GameLayer scene)

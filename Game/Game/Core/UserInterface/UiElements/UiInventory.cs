@@ -34,6 +34,11 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             mGrid.Draw();
         }
 
+        public override void OnResolutionChanged()
+        {
+            throw new NotImplementedException();
+        }
+
         public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
         {
             var i = 0;

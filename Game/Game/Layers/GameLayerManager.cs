@@ -31,29 +31,25 @@ namespace StellarLiberation.Game.Layers
     public class GameLayerManager : Layer
     {
         [JsonIgnore] public List<PlanetSystem> mPlanetSystems { get; private set; }
-        [JsonIgnore] private PlanetSystemLayer mMainLayer;
         [JsonIgnore] public readonly DebugSystem DebugSystem = new();
         [JsonIgnore] private readonly LinkedList<Layer> mLayers = new();
         [JsonIgnore] private readonly FrameCounter mFrameCounter = new(1000);
         [JsonProperty] public readonly SpaceshipTracer SpaceShips = new();
         [JsonProperty] private readonly MapConfig mMapConfig;
-        [JsonProperty] public readonly Spaceship Player;
         [JsonProperty] public readonly Wallet Wallet = new();
 
         public GameLayerManager() : base(false)
         {
-            mMapConfig = new(50, 50, 0);
-            Player = SpaceshipFactory.Get(Vector2.Zero, ShipID.Destroyer, Fractions.Allied);
+            mMapConfig = new(50, 50, 42);
         }
 
         public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, GameSettings gameSettings, ResolutionManager resolutionManager)
         {
             mPlanetSystems = MapFactory.Generate(mMapConfig);
-            if (SpaceShips.LocateSpaceShip(Player) is null)
-                SpaceShips.AddSpaceShip(mPlanetSystems.First(), Player);
             for (int i = 0; i < 2; i++)
-                SpaceShips.AddSpaceShip(mPlanetSystems.First(), SpaceshipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, mPlanetSystems.First().SystemRadius)), ShipID.Destroyer, Fractions.Enemys));
+                SpaceShips.AddSpaceShip(mPlanetSystems.First(), SpaceshipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, mPlanetSystems.First().SystemRadius)), ShipID.Destroyer, Fractions.Allied));
             base.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings, resolutionManager);
+            AddLayer(new PlanetSystemLayer(this, mPlanetSystems.First()));
         }
 
         public void AddLayer(Layer layer)
@@ -73,13 +69,8 @@ namespace StellarLiberation.Game.Layers
         {
             mFrameCounter.Update(gameTime);
             DebugSystem.Update(inputState);
-            if (Player.IsDisposed) LayerManager.PopLayer();
             inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this)));
             mLayers.Last?.Value.Update(gameTime, inputState);
-            if (mMainLayer?.PlanetSystem == SpaceShips.LocateSpaceShip(Player)) return;
-            mMainLayer = new(this, SpaceShips.LocateSpaceShip(Player), mMainLayer?.Camera2D.Zoom is null ? 1 : mMainLayer.Camera2D.Zoom);
-            PopLayer();
-            AddLayer(mMainLayer);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

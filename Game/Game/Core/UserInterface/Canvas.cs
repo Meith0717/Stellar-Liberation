@@ -109,54 +109,46 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         private void ManageAnchor(Rectangle root, ref int x, ref int y, ref int width, ref int height)
         {
-            switch (Anchor)
+            x = Anchor switch
             {
-                case Anchor.NW:
-                    x = root.X; y = root.Y;
-                    break;
-                case Anchor.N:
-                    x = root.Center.X - (width / 2); y = root.Y;
-                    break;
-                case Anchor.NE:
-                    x = root.Right - width; y = root.Y;
-                    break;
-                case Anchor.E:
-                    x = root.Right - width; y = root.Center.Y - (height / 2);
-                    break;
-                case Anchor.SE:
-                    x = root.Right - width; y = root.Bottom - height;
-                    break;
-                case Anchor.S:
-                    x = root.Center.X - (width / 2); y = root.Bottom - height;
-                    break;
-                case Anchor.SW:
-                    x = root.X; y = root.Bottom - height;
-                    break;
-                case Anchor.W:
-                    x = root.X; y = root.Center.Y - (height / 2);
-                    break;
-                case Anchor.Center:
-                    x = root.Center.X - (width / 2); y = root.Center.Y - (height / 2);
-                    break;
-                case Anchor.Left:
-                    x = root.Left;
-                    break;
-                case Anchor.Right:
-                    x = root.Right - width;
-                    break;
-                case Anchor.Top:
-                    y = root.Top;
-                    break;
-                case Anchor.Bottom:
-                    y = root.Bottom - height;
-                    break;
-                case Anchor.CenterH:
-                    y = root.Center.Y - (height / 2);
-                    break;
-                case Anchor.CenterV:
-                    x = root.Center.X - (width / 2);
-                    break;
-            }
+                Anchor.NW => root.X,
+                Anchor.N => root.Center.X - (width / 2),
+                Anchor.NE => root.Right - width,
+                Anchor.E => root.Right - width,
+                Anchor.SE => root.Right - width,
+                Anchor.S => root.Center.X - (width / 2),
+                Anchor.SW => root.X,
+                Anchor.W => root.X,
+                Anchor.Center => root.Center.X - (width / 2),
+                Anchor.Left => root.Left,
+                Anchor.Right => root.Right - width,
+                Anchor.CenterV => root.Center.X - (width / 2),
+                Anchor.Top => x,
+                Anchor.Bottom => x,
+                Anchor.CenterH => x,
+                Anchor.None => x,
+                _ => throw new System.NotImplementedException()
+            };
+            y = Anchor switch
+            {
+                Anchor.NW => root.Y,
+                Anchor.N => root.Y,
+                Anchor.NE => root.Y,
+                Anchor.E => root.Center.Y - (height / 2),
+                Anchor.SE => root.Bottom - height,
+                Anchor.S => root.Bottom - height,
+                Anchor.SW => root.Bottom - height,
+                Anchor.W => root.Center.Y - (height / 2),
+                Anchor.Center => root.Center.Y - (height / 2),
+                Anchor.Top => root.Top,
+                Anchor.Bottom => root.Bottom - height,
+                Anchor.CenterH => root.Center.Y - (height / 2),
+                Anchor.Left => y,
+                Anchor.Right => y,
+                Anchor.CenterV => y,
+                Anchor.None => y,
+                _ => throw new System.NotImplementedException()
+            };
         }
 
         private void ManageSpacing(Rectangle root, ref int x, ref int y, ref int width, ref int height, float? hSpace, float? vSpace)
@@ -209,7 +201,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public void Draw()
         {
-            //TextureManager.Instance.DrawRectangleF(mCanvas, Color.Green, 2, 1);
+            TextureManager.Instance.DrawRectangleF(mCanvas, Color.Green, 2, 1);
         }
     }
 }

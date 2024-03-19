@@ -49,7 +49,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
             base.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings, resolutionManager);
             Penumbra = new(Game1);
             GameObject2DManager.Initialize(SpatialHashing, ref GameObjects, this);
-            Penumbra.Debug = true;
+            Penumbra.Debug = false;
             Penumbra.AmbientColor = Color.Transparent;
             Penumbra.Initialize();
             HUDLayer?.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings, resolutionManager);
@@ -73,15 +73,14 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
             Penumbra.BeginDraw();
             GraphicsDevice.Clear(Color.White);
 
-            //spriteBatch.Begin();
-            //DrawOnScreenView(spriteBatch);
-            //spriteBatch.End();
-
+            spriteBatch.Begin(blendState: BlendState.Additive);
+            DrawOnScreenView(spriteBatch);
             Penumbra.Draw(GameTime);
+            spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: mViewTransformationMatrix, samplerState: SamplerState.PointClamp);
-            DrawOnWorldView(spriteBatch);
             Camera2D.Draw(this);
+            DrawOnWorldView(spriteBatch);
             ParticleManager.Draw(Camera2D);
             GameState.DebugSystem.DrawOnScene(this);
             spriteBatch.End();

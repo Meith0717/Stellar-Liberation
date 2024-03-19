@@ -27,7 +27,7 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
         public static bool UpdateCameraByMouseDrag(InputState inputState, Camera2D camera)
         {
             var wasMoved = false;
-            if (inputState.HasAction(ActionType.LeftClickHold))
+            if (inputState.HasAction(ActionType.RightClickHold))
             {
                 Vector2 delta = inputState.mMousePosition - lastMousePosition;
                 camera.Position -= delta / camera.Zoom;

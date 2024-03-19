@@ -19,11 +19,11 @@ namespace StellarLiberation
 {
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        private readonly ResolutionManager mResolutionManager;
+        public GameSettings mGameSettings { get; private set; }
         public readonly GraphicsDeviceManager GraphicsManager;
+        public readonly PersistanceManager mPersistanceManager;
+        private readonly ResolutionManager mResolutionManager;
         private readonly InputManager mInputManager;
-        private readonly PersistanceManager mPersistanceManager;
-        private GameSettings mGameSettings;
         private SpriteBatch mSpriteBatch;
         private LayerManager mLayerManager;
         private bool IAmActive;

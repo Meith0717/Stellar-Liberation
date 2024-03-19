@@ -60,5 +60,10 @@ namespace StellarLiberation.Game.Core.UserInterface
             mVariable.Draw();
             Canvas.Draw();
         }
+
+        public override void OnResolutionChanged()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

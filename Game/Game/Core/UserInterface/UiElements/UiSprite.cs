@@ -40,5 +40,10 @@ namespace StellarLiberation.Game.Core.UserInterface
             Height = (int)(texture.Height * Scale);
             Canvas.UpdateFrame(root, uiScaling);
         }
+
+        public override void OnResolutionChanged()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
