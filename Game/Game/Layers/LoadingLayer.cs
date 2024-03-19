@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
@@ -38,11 +37,14 @@ namespace StellarLiberation.Game.Layers
             spriteBatch.End();
         }
 
-        public override void ApplyResolution() { }
+        public override void ApplyResolution() 
+        {
+            mFrame.ApplyResolution(GraphicsDevice.Viewport.Bounds, ResolutionManager.Resolution);
+        }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mFrame.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
+            mFrame.Update(inputState, gameTime);
         }
     }
 }

@@ -12,16 +12,17 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 
 namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
 {
     public static class FrustumCuller
     {
-        public static RectangleF GetFrustum(GraphicsDevice graphicsDevice, Matrix ViewTransformationMatrix)
+        public static RectangleF GetFrustum(Resolution resolution, Matrix ViewTransformationMatrix)
         {
-            var position = graphicsDevice.Viewport.Bounds.Location;
-            var screenWidth = graphicsDevice.Viewport.Width;
-            var screenHeight = graphicsDevice.Viewport.Height;
+            var position = resolution.Bounds.Location;
+            var screenWidth = resolution.Width;
+            var screenHeight = resolution.Height;
 
             Matrix inverse = Matrix.Invert(ViewTransformationMatrix);
             Vector2 LetfTopEdge = Vector2.Transform(position.ToVector2(), inverse);

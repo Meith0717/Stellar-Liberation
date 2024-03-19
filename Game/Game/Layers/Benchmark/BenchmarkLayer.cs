@@ -69,7 +69,7 @@ namespace StellarLiberation.Game.Layers.Benchmark
             Camera2DMover.UpdateCameraByMouseDrag(inputState, Camera2D);
             Camera2DMover.MoveByKeys(gameTime, inputState, Camera2D);
             Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, .002f, 1);
-            mBackgroundLayer.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
+            mBackgroundLayer.Update(inputState, gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

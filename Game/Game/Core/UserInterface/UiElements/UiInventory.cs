@@ -4,6 +4,7 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
 using StellarLiberation.Game.GameObjects.Recources.Items;
 using System;
@@ -34,12 +35,13 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             mGrid.Draw();
         }
 
-        public override void ApplyResolution()
+        public override void ApplyResolution(Rectangle root, Resolution resolution)
         {
-            throw new NotImplementedException();
+            Canvas.UpdateFrame(root, resolution.uiScaling);
+            mGrid.ApplyResolution(root, resolution);
         }
 
-        public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
+        public override void Update(InputState inputState, GameTime gameTime)
         {
             var i = 0;
             for (int y = 0; y < J; y++)
@@ -55,8 +57,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
                 }
             }
 
-            Canvas.UpdateFrame(root, uiScaling);
-            mGrid.Update(inputState, gameTime, Bounds, uiScaling);
+            mGrid.Update(inputState, gameTime);
         }
     }
 }

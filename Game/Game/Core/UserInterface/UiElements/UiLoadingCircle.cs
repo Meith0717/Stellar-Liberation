@@ -5,6 +5,7 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 
 namespace StellarLiberation.Game.Core.UserInterface.UiElements
 {
@@ -17,11 +18,10 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
         {
             mCircle = new(MenueSpriteRegistries.loading) { FillScale = FillScale.FillIn, Anchor = Anchor.Center };
         }
-        public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
+        public override void Update(InputState inputState, GameTime gameTime)
         {
-            Canvas.UpdateFrame(root, uiScaling);
             mCircle.Rotation += (float)(.005 * gameTime.ElapsedGameTime.TotalMilliseconds);
-            mCircle.Update(inputState, gameTime, Canvas.Bounds, uiScaling);
+            mCircle.Update(inputState, gameTime);
         }
 
         public override void Draw()
@@ -30,9 +30,10 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             Canvas.Draw();
         }
 
-        public override void ApplyResolution()
+        public override void ApplyResolution(Rectangle root, Resolution resolution)
         {
-            throw new System.NotImplementedException();
+            Canvas.UpdateFrame(root, resolution.uiScaling);
+            mCircle.ApplyResolution(Bounds, resolution);
         }
     }
 }

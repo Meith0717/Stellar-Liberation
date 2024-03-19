@@ -7,6 +7,7 @@ using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Core.UserInterface;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,17 +68,17 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
         }
         #endregion
 
-        #region Update and Adapt to root
-        public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
+        public override void Update(InputState inputState, GameTime gameTime)
         {
-            Canvas.UpdateFrame(root, uiScaling);
-            foreach (var child in mChildren) child.Update(inputState, gameTime, Canvas.Bounds, uiScaling);
+            foreach (var child in mChildren) 
+                child.Update(inputState, gameTime);
         }
 
-        public override void ApplyResolution()
+        public override void ApplyResolution(Rectangle root, Resolution resolution)
         {
+            Canvas.UpdateFrame(root, resolution.uiScaling);
+            foreach (var child in mChildren)
+                child.ApplyResolution(Bounds, resolution);
         }
-
-        #endregion
     }
 }

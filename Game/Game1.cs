@@ -81,8 +81,6 @@ namespace StellarLiberation
             {
                 InputState inputState = mInputManager.Update();
                 inputState.DoAction(ActionType.ToggleFullscreen, () => ResolutionManager.ToggleFullscreen(Settings.Resolution));
-                inputState.DoAction(ActionType.IncreaseScaling, () => ResolutionManager.UiScaling += 0.1f);
-                inputState.DoAction(ActionType.DecreaseScaling, () => ResolutionManager.UiScaling -= 0.1f);
                 LayerManager.Update(gameTime, inputState);
             }
             base.Update(gameTime);

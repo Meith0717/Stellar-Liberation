@@ -4,6 +4,7 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 
 namespace StellarLiberation.Game.Core.UserInterface
 {
@@ -12,10 +13,10 @@ namespace StellarLiberation.Game.Core.UserInterface
         protected Canvas Canvas;
 
         public UiElement() => Canvas = new Canvas();
-        public abstract void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling);
+        public abstract void Update(InputState inputState, GameTime gameTime);
         public abstract void Draw();
         public Rectangle Bounds => Canvas.Bounds;
-        public abstract void ApplyResolution();
+        public abstract void ApplyResolution(Rectangle root, Resolution resolution);
 
 
         // Position propeties

@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.Utilitys;
@@ -30,10 +31,10 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
             mRenderPipeline = new();
         }
 
-        public void Update(GraphicsDevice graphicsDevice, GameLayer scene)
+        public void ApplyResolution(Resolution resolution, GameLayer scene)
         {
-            var transformationMatrix = Transformations.CreateViewTransformationMatrix(Position, Zoom, Rotation, graphicsDevice.Viewport.Width, graphicsDevice.Viewport.Height);
-            Bounds = FrustumCuller.GetFrustum(graphicsDevice, transformationMatrix);
+            var transformationMatrix = Transformations.CreateViewTransformationMatrix(Position, Zoom, Rotation, resolution.Width, resolution.Height);
+            Bounds = FrustumCuller.GetFrustum(resolution, transformationMatrix);
             mRenderPipeline.FilterObjs(Bounds, scene.SpatialHashing);
         }
 

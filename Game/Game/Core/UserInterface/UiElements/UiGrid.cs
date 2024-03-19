@@ -4,7 +4,7 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
-using System;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.UserInterface.UiElements
@@ -18,16 +18,13 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
 
             public override void Draw() { UiElement?.Draw(); Canvas.Draw(); }
 
-            public override void ApplyResolution()
+            public override void ApplyResolution(Rectangle root, Resolution resolution)
             {
-                throw new NotImplementedException();
+                Canvas.UpdateFrame(root, resolution.uiScaling);
+                UiElement?.ApplyResolution(Bounds, resolution);
             }
 
-            public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
-            {
-                Canvas.UpdateFrame(root, uiScaling);
-                UiElement?.Update(inputState, gameTime, Bounds, uiScaling);
-            }
+            public override void Update(InputState inputState, GameTime gameTime) => UiElement?.Update(inputState, gameTime);
         }
 
         private readonly Dictionary<Vector2, UiGridElement> mGrid = new();
@@ -48,6 +45,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
                 }
             }
         }
+
         public UiGrid(List<float> row, List<float> columns)
         {
             float cumulativeX = 0;
@@ -79,10 +77,10 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             return true;
         }
 
-        public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
+        public override void Update(InputState inputState, GameTime gameTime)
         {
-            Canvas.UpdateFrame(root, uiScaling);
-            foreach (var elem in mGrid.Values) elem.Update(inputState, gameTime, Canvas.Bounds, uiScaling);
+            foreach (var child in mGrid.Values) 
+                child.Update(inputState, gameTime);
         }
 
         public override void Draw()
@@ -91,9 +89,11 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             Canvas.Draw();
         }
 
-        public override void ApplyResolution()
+        public override void ApplyResolution(Rectangle root, Resolution resolution)
         {
-            throw new NotImplementedException();
+            Canvas.UpdateFrame(root, resolution.uiScaling);
+            foreach (var child in mGrid.Values)
+                child.ApplyResolution(Bounds, resolution);
         }
     }
 }

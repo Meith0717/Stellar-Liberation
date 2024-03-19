@@ -11,7 +11,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
 {
     public class ResolutionManager
     {
-        public float UiScaling = 1;
+        public Resolution Resolution { get; private set; }
         private bool mIsFullScreen;
         private readonly GraphicsDeviceManager mGraphicsManager;
         public readonly Dictionary<string, Resolution> mResolutions = new();
@@ -22,7 +22,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
             var lst = new List<Resolution>()
             {
                 new(800, 480, 0.5f),         // Default
-                new(1024, 768, 4.25f),       // 4:3      XGA
+                new(1024, 768, 0.5f),       // 4:3      XGA
                 new(1280, 720, 0.8333f),     // 16:9     HD
                 new(1280, 800, 1.25f),       // 8:5      WXGA
                 new(1366, 768, 1.1842f),     // 16:9     HD
@@ -68,11 +68,10 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
         {
             try
             {
-                var resolution = mResolutions[resolutionId];
-                mGraphicsManager.PreferredBackBufferWidth = resolution.Width;
-                mGraphicsManager.PreferredBackBufferHeight = resolution.Height;
+                Resolution = mResolutions[resolutionId];
+                mGraphicsManager.PreferredBackBufferWidth = Resolution.Width;
+                mGraphicsManager.PreferredBackBufferHeight = Resolution.Height;
                 mGraphicsManager.ApplyChanges();
-                UiScaling = resolution.uiScaling;
                 mWasResized = true;
                 return true;
             }

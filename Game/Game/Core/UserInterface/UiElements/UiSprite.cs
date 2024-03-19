@@ -5,6 +5,7 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 
 namespace StellarLiberation.Game.Core.UserInterface
 {
@@ -33,17 +34,15 @@ namespace StellarLiberation.Game.Core.UserInterface
             Canvas.Draw();
         }
 
-        public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
+        public override void ApplyResolution(Rectangle root, Resolution resolution)
         {
             var texture = TextureManager.Instance.GetTexture(mSpriteId);
             Width = (int)(texture.Width * Scale);
             Height = (int)(texture.Height * Scale);
-            Canvas.UpdateFrame(root, uiScaling);
+            Canvas.UpdateFrame(root, resolution.uiScaling);
         }
 
-        public override void ApplyResolution()
-        {
-            throw new System.NotImplementedException();
-        }
+        public override void Update(InputState inputState, GameTime gameTime)
+        {; }
     }
 }

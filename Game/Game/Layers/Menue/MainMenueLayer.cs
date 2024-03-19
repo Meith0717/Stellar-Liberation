@@ -60,12 +60,15 @@ namespace StellarLiberation.Game.Layers.MenueLayers
             spriteBatch.End();
         }
 
-        public override void ApplyResolution() { }
+        public override void ApplyResolution() 
+        {
+            mFrame.ApplyResolution(GraphicsDevice.Viewport.Bounds, ResolutionManager.Resolution);
+        }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
             inputState.DoAction(ActionType.ESC, LayerManager.Exit);
-            mFrame.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
+            mFrame.Update(inputState, gameTime);
         }
     }
 }

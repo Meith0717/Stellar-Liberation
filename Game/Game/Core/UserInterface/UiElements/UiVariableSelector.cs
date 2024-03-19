@@ -5,6 +5,7 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
 using System;
 using System.Collections.Generic;
@@ -36,20 +37,13 @@ namespace StellarLiberation.Game.Core.UserInterface
         private void DecrementIndex() => mIndex -= (mIndex > 0) ? 1 : 0;
         public T Value => mVariables[mIndex];
 
-        public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
+        public override void Update(InputState inputState, GameTime gameTime)
         {
-            Canvas.UpdateFrame(root, uiScaling);
             mVariable.Text = mVariables[mIndex].ToString();
-            mVariable.Update(inputState, gameTime, Canvas.Bounds, uiScaling);
-
-            mLeftArrow.Width = mVariable.Bounds.Width;
-            mLeftArrow.Height = mVariable.Bounds.Height;
-            mLeftArrow.Update(inputState, gameTime, Canvas.Bounds, uiScaling);
+            mVariable.Update(inputState, gameTime);
+            mLeftArrow.Update(inputState, gameTime);
             mLeftArrow.IsDisabled = mIndex == 0;
-
-            mRightArrow.Width = mVariable.Bounds.Width;
-            mRightArrow.Height = mVariable.Bounds.Height;
-            mRightArrow.Update(inputState, gameTime, Canvas.Bounds, uiScaling);
+            mRightArrow.Update(inputState, gameTime);
             mRightArrow.IsDisabled = mIndex == (mVariables.Count - 1);
         }
 
@@ -61,9 +55,19 @@ namespace StellarLiberation.Game.Core.UserInterface
             Canvas.Draw();
         }
 
-        public override void ApplyResolution()
+        public override void ApplyResolution(Rectangle root, Resolution resolution)
         {
-            throw new NotImplementedException();
+            Canvas.UpdateFrame(root, resolution.uiScaling);
+            mVariable.ApplyResolution(Bounds, resolution);
+
+            mLeftArrow.Width = mVariable.Bounds.Width;
+            mLeftArrow.Height = mVariable.Bounds.Height;
+            mLeftArrow.ApplyResolution(Bounds, resolution);
+            mLeftArrow.IsDisabled = mIndex == 0;
+
+            mRightArrow.Width = mVariable.Bounds.Width;
+            mRightArrow.Height = mVariable.Bounds.Height;
+            mRightArrow.ApplyResolution(Bounds, resolution);
         }
     }
 }

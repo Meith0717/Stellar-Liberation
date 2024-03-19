@@ -56,7 +56,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
             HUDLayer?.Update(gameTime, inputState);
             ParticleManager.Update(gameTime);
             CameraShaker.Update(Camera2D, gameTime);
-            Camera2D.Update(GraphicsDevice, this);
+            Camera2D.ApplyResolution(ResolutionManager.Resolution, this);
             mViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera2D.Position, Camera2D.Zoom, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
             WorldMousePosition = Transformations.ScreenToWorld(mViewTransformationMatrix, inputState.mMousePosition);
             GameObject2DManager.Update(gameTime, inputState, this, ref GameObjects);
@@ -86,7 +86,11 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         public abstract void DrawOnScreenView(SpriteBatch spriteBatch);
         public abstract void DrawOnWorldView(SpriteBatch spriteBatch);
 
-        public override void ApplyResolution() { }
+        public override void ApplyResolution() 
+        {
+            HUDLayer.ApplyResolution();
+            Camera2D.ApplyResolution(ResolutionManager.Resolution, this);
+        }
 
     }
 }

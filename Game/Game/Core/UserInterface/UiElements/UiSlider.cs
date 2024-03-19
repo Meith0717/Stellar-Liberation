@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using System;
 
 namespace StellarLiberation.Game.Core.UserInterface
@@ -25,10 +26,8 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public UiSlider(ref float val) => mSliderValue = val;
 
-        public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
+        public override void Update(InputState inputState, GameTime gameTime)
         {
-            Height = 25;
-            Canvas.UpdateFrame(root, uiScaling);
             mSliderLength = MathF.Abs(Canvas.Bounds.Left - Canvas.Bounds.Right);
 
             mSliderDotPosition = sliderPosition;
@@ -63,9 +62,10 @@ namespace StellarLiberation.Game.Core.UserInterface
             Canvas.Draw();
         }
 
-        public override void ApplyResolution()
+        public override void ApplyResolution(Rectangle root, Resolution resolution)
         {
-            throw new NotImplementedException();
+            Height = 25;
+            Canvas.UpdateFrame(root, resolution.uiScaling);
         }
 
         private Vector2 sliderPosition => new(Canvas.Bounds.Left + mSliderLength * mSliderValue, Canvas.Center.Y);

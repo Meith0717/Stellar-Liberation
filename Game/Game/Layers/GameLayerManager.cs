@@ -45,11 +45,11 @@ namespace StellarLiberation.Game.Layers
             for (int i = 0; i < 2; i++)
                 SpaceShips.AddSpaceShip(mPlanetSystems.First(), SpaceshipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, mPlanetSystems.First().SystemRadius)), ShipID.Destroyer, Fractions.Allied));
             AddLayer(new PlanetSystemLayer(this, mPlanetSystems.First(), game1));
-
         }
 
         public void AddLayer(Layer layer)
         {
+            layer.ApplyResolution();
             mLayers.AddLast(layer);
         }
 
@@ -79,8 +79,9 @@ namespace StellarLiberation.Game.Layers
             spriteBatch.End();
         }
 
-        public override void Destroy() { }
+        public override void Destroy() {; }
 
-        public override void ApplyResolution() { }
+        public override void ApplyResolution() 
+        {; }
     }
 }

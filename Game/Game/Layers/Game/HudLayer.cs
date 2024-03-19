@@ -48,13 +48,16 @@ namespace StellarLiberation.Game.Layers.GameLayers
             spriteBatch.End();
         }
 
-        public override void ApplyResolution() { }
+        public override void ApplyResolution() 
+        {
+            mUiLayer.ApplyResolution(GraphicsDevice.Viewport.Bounds, ResolutionManager.Resolution);
+        }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mUiLayer.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
+            mUiLayer.Update(inputState, gameTime);
             foreach (var uiElement in mPopups)
-                uiElement.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
+                uiElement.Update(inputState, gameTime);
             mPopups.Clear();
         }
     }

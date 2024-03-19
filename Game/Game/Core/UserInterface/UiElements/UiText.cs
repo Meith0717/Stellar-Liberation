@@ -5,6 +5,7 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 
 namespace StellarLiberation.Game.Core.UserInterface
 {
@@ -33,18 +34,15 @@ namespace StellarLiberation.Game.Core.UserInterface
             Canvas.Draw();
         }
 
-        public override void ApplyResolution()
+        public override void ApplyResolution(Rectangle root, Resolution resolution)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
-        {
-            mUiScaling = uiScaling;
             mTextDim = GetTextDimension(FontID, Text);
             Height = (int)mTextDim.Y;
             Width = (int)mTextDim.X;
-            Canvas.UpdateFrame(root, uiScaling);
+            Canvas.UpdateFrame(root, mUiScaling = resolution.uiScaling);
         }
+
+        public override void Update(InputState inputState, GameTime gameTime)
+        {; }
     }
 }

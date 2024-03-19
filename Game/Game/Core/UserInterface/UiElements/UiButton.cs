@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using System;
 
 namespace StellarLiberation.Game.Core.UserInterface.UiElements
@@ -36,7 +37,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             };
         }
 
-        public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
+        public override void Update(InputState inputState, GameTime gameTime)
         {
             IsHover = Canvas.Contains(inputState.mMousePosition);
             if (IsHover && !IsDisabled && IsHover != mLastHoverState) SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.hover);
@@ -52,8 +53,13 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             mScaling = MathHelper.Clamp(mScaling, 1, 1.05f);
             Color = IsDisabled ? Color.Transparent : IsHover ? new(51, 204, 204) : new(128, 128, 128);
 
-            base.Update(inputState, gameTime, root, uiScaling * mScaling);
-            mText?.Update(inputState, gameTime, Bounds, uiScaling * mScaling);
+            base.Update(inputState, gameTime);
+        }
+
+        public override void ApplyResolution(Rectangle root, Resolution resolution)
+        {
+            base.ApplyResolution(root, resolution);
+            mText.ApplyResolution(Bounds, resolution);
         }
 
         public override void Draw()

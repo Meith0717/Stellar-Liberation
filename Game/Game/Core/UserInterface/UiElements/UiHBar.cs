@@ -7,6 +7,7 @@ using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 
 namespace StellarLiberation.Game.Core.UserInterface.UiElements
 {
@@ -34,10 +35,9 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             mColor = color;
         }
 
-        public override void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling)
+        public override void Update(InputState inputState, GameTime gameTime)
         {
             var ratio = 26 / 6f;
-            Canvas.UpdateFrame(root, uiScaling);
 
             mTextureFrame = new(Canvas.Position.X, Canvas.Position.Y, Canvas.Bounds.Height, Canvas.Bounds.Height);
 
@@ -69,9 +69,9 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             Canvas.Draw();
         }
 
-        public override void ApplyResolution()
+        public override void ApplyResolution(Rectangle root, Resolution resolution)
         {
-            throw new System.NotImplementedException();
+            Canvas.UpdateFrame(root, resolution.uiScaling);
         }
     }
 }

@@ -69,7 +69,6 @@ namespace StellarLiberation.Game.Layers.MenueLayers
             mSettingsGrid.Set(1, 7, mVsync);
             mSettingsGrid.Set(1, 8, new UiButton(MenueSpriteRegistries.button, "Apply Video") { Anchor = Anchor.Center, OnClickAction = ApplyVideo });
             mSettingsGrid.Set(1, 10, mParticleMultiplier);
-
         }
 
         public override void Destroy() { }
@@ -81,12 +80,15 @@ namespace StellarLiberation.Game.Layers.MenueLayers
             spriteBatch.End();
         }
 
-        public override void ApplyResolution() { }
+        public override void ApplyResolution() 
+        {
+            mMainFrame.ApplyResolution(GraphicsDevice.Viewport.Bounds, ResolutionManager.Resolution);
+        }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
             inputState.DoAction(ActionType.ESC, Exit);
-            mMainFrame.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, ResolutionManager.UiScaling);
+            mMainFrame.Update(inputState, gameTime);
 
             GameSettings.MasterVolume = mMasterSlider.Value;
             GameSettings.MusicVolume = mMusicSlider.Value;

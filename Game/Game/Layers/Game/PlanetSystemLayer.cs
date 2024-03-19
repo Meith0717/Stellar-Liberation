@@ -60,7 +60,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
             inputState.DoAction(ActionType.ToggleHyperMap, () => GameState.AddLayer(new MapLayer(GameState, PlanetSystem, Game1)));
 
             mParallaxController.Update();
-            mBackgroundLayer.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, 1);
+            mBackgroundLayer.Update(inputState, gameTime);
             Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, .0001f, 1);
             Camera2DMover.UpdateCameraByMouseDrag(inputState, Camera2D);
             base.Update(gameTime, inputState);
