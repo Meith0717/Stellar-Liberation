@@ -4,10 +4,10 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Penumbra;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.GridSystem;
 using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components;
 using StellarLiberation.Game.Core.Objects.UiElements;
@@ -21,17 +21,15 @@ namespace StellarLiberation.Game.Layers.GameLayers
     internal class PlanetSystemLayer : GameLayer
     {
         public readonly PlanetSystem PlanetSystem;
-        private readonly SpaceshipController spaceShipController = new();
-
         private readonly UiFrame mBackgroundLayer;
         private readonly ParallaxController mParallaxController;
         private readonly Grid mGrid;
 
-        public PlanetSystemLayer(GameLayerManager gameState, PlanetSystem planetSystem) 
-            : base(gameState, 25000)
+        public PlanetSystemLayer(GameLayerManager gameState, PlanetSystem planetSystem, Game1 game1) 
+            : base(gameState, 25000, game1)
         {
             mGrid = new(10000);
-            HUDLayer = new HudLayer(this);
+            HUDLayer = new HudLayer(this, game1);
 
             mBackgroundLayer = new() { 
                 Color = Color.Black, 
@@ -48,6 +46,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
             PlanetSystem = planetSystem;
             GameObjects.AddRange(PlanetSystem.AstrononomicalObjects);
             GameObjects.AddRange(GameState.SpaceShips.GetSpaceshipsOfPlanetSystem(PlanetSystem));
+            GameObject2DManager.Initialize(SpatialHashing, ref GameObjects, this);
 
             mParallaxController = new(Camera2D);
             mParallaxController.Add(new(GameSpriteRegistries.gameBackgroundParlax1, .01f));
@@ -58,7 +57,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            inputState.DoAction(ActionType.ToggleHyperMap, () => GameState.AddLayer(new MapLayer(GameState, PlanetSystem)));
+            inputState.DoAction(ActionType.ToggleHyperMap, () => GameState.AddLayer(new MapLayer(GameState, PlanetSystem, Game1)));
 
             mParallaxController.Update();
             mBackgroundLayer.Update(inputState, gameTime, GraphicsDevice.Viewport.Bounds, 1);
@@ -75,7 +74,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
         public override void DrawOnWorldView(SpriteBatch spriteBatch) => mGrid.Draw(this);
 
-        public override void OnResolutionChanged() { base.OnResolutionChanged(); }
+        public override void ApplyResolution() { base.ApplyResolution(); }
 
         public override void Destroy() {; }
     }

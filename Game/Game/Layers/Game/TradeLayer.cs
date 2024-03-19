@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.CoreProceses.Persistance;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
@@ -29,8 +31,8 @@ namespace StellarLiberation.Game.Layers.GameLayers
         private readonly UiText mUiBalance;
         private readonly UiText mUIWallet;
 
-        public TradeLayer(Inventory playerInventory, Inventory traderInventory, Wallet wallet)
-            : base(false)
+        public TradeLayer(Inventory playerInventory, Inventory traderInventory, Wallet wallet, Game1 game1)
+            : base(game1, false)
         {
             mWallet = wallet;
             mTradingSystem = new();
@@ -138,7 +140,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
             spriteBatch.End();
         }
 
-        public override void OnResolutionChanged() { }
+        public override void ApplyResolution() { }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {

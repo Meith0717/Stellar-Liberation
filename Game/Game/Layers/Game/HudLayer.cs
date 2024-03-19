@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.CoreProceses.Persistance;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
@@ -24,11 +26,11 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
         private readonly List<UiElement> mPopups = new();
 
-        public HudLayer(GameLayer gameLayer) : base(true)
+        public HudLayer(GameLayer gameLayer, Game1 game1) : base(game1, true)
         {
             mUiLayer = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
 
-            mUiLayer.AddChild(new UiButton(MenueSpriteRegistries.pause, "") { Anchor = Anchor.NE, HSpace = 20, VSpace = 20, OnClickAction = () => LayerManager.AddLayer(new PauseLayer(gameLayer.GameState)) });
+            mUiLayer.AddChild(new UiButton(MenueSpriteRegistries.pause, "") { Anchor = Anchor.NE, HSpace = 20, VSpace = 20, OnClickAction = () => LayerManager.AddLayer(new PauseLayer(gameLayer.GameState, Game1)) });
             mScene = gameLayer;
         }
 
@@ -46,7 +48,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
             spriteBatch.End();
         }
 
-        public override void OnResolutionChanged() { }
+        public override void ApplyResolution() { }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {

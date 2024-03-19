@@ -20,14 +20,14 @@ namespace StellarLiberation.Game.Layers.MenueLayers
     {
         private UiFrame mFrame;
 
-        public MainMenueLayer() : base(false)
+        public MainMenueLayer(Game1 game1) : base(game1, false)
         {
             mFrame = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
             mFrame.AddChild(new UiSprite(MenueSpriteRegistries.menueBackground) { FillScale = FillScale.FillIn, Anchor = Anchor.Center });
 
             mFrame.AddChild(new UiText(FontRegistries.titleFont, "Stellar\nLiberation") { Anchor = Anchor.NW, HSpace = 50, VSpace = 50 });
 
-            mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "New Game") { VSpace = 20, HSpace = 20, RelY = .5f, OnClickAction = () => LayerManager.AddLayer(new GameLayerManager()) });
+            mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "New Game") { VSpace = 20, HSpace = 20, RelY = .5f, OnClickAction = () => LayerManager.AddLayer(new GameLayerManager(Game1)) });
 
             mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Continue")
             {
@@ -36,12 +36,12 @@ namespace StellarLiberation.Game.Layers.MenueLayers
                 RelY = .6f,
                 OnClickAction = () =>
             {
-                LayerManager.AddLayer(new LoadingLayer(false));
-                PersistanceManager.LoadAsync<GameLayerManager>(PersistanceManager.GameSaveFilePath, (gameState) => { LayerManager.PopLayer(); LayerManager.AddLayer(gameState); }, (ex) => throw ex);
+                LayerManager.AddLayer(new LoadingLayer(Game1, false));
+                PersistanceManager.LoadAsync(new GameLayerManager(Game1), PersistanceManager.GameSaveFilePath, (gameState) => { LayerManager.PopLayer(); LayerManager.AddLayer(gameState); }, (ex) => throw ex);
             }
             });
 
-            mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Settings") { VSpace = 20, HSpace = 20, RelY = .7f, OnClickAction = () => LayerManager.AddLayer(new SettingsLayer()) });
+            mFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Settings") { VSpace = 20, HSpace = 20, RelY = .7f, OnClickAction = () => LayerManager.AddLayer(new SettingsLayer(Game1)) });
 
             mFrame.AddChild(new UiButton(MenueSpriteRegistries.copyright, "") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = null });
 
@@ -60,7 +60,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
             spriteBatch.End();
         }
 
-        public override void OnResolutionChanged() { }
+        public override void ApplyResolution() { }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {

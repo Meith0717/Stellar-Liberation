@@ -23,16 +23,15 @@ public abstract class Layer
     [JsonIgnore] public GameSettings GameSettings { get; private set; }
     [JsonIgnore] protected ResolutionManager ResolutionManager { get; private set; }
 
-    protected Layer(bool updateBelow) { UpdateBelow = updateBelow; }
-
-    public virtual void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, GameSettings gameSettings, ResolutionManager resolutionManager)
+    protected Layer(Game1 game1, bool updateBelow) 
     {
         Game1 = game1;
-        LayerManager = layerManager;
-        GraphicsDevice = graphicsDevice;
-        PersistanceManager = persistanceManager;
-        GameSettings = gameSettings;
-        ResolutionManager = resolutionManager;
+        LayerManager = game1.LayerManager;
+        GraphicsDevice = game1.GraphicsDevice;
+        PersistanceManager = game1.PersistanceManager;
+        GameSettings = game1.Settings;
+        ResolutionManager = game1.ResolutionManager;
+        UpdateBelow = updateBelow; 
     }
 
     public abstract void Update(GameTime gameTime, InputState inputState);
@@ -41,6 +40,6 @@ public abstract class Layer
 
     public abstract void Destroy();
 
-    public abstract void OnResolutionChanged();
+    public abstract void ApplyResolution();
 
 }

@@ -21,8 +21,8 @@ namespace StellarLiberation.Game.Layers.GameLayers
         private readonly UiFrame mBackgroundLayer;
         private readonly PlanetSystem mCurrentSystem;
 
-        public MapLayer(GameLayerManager gameState, PlanetSystem currentSystem)
-            : base(gameState, MapFactory.MapScale * 3)
+        public MapLayer(GameLayerManager gameState, PlanetSystem currentSystem, Game1 game1)
+            : base(gameState, MapFactory.MapScale * 3, game1)
         {
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn, Alpha = 1 };
             mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
@@ -55,7 +55,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
         {
             if (mCurrentSystem == planetSystem) return;
             GameState.PopLayer();
-            GameState.AddLayer(new PlanetSystemLayer(GameState, planetSystem));
+            GameState.AddLayer(new PlanetSystemLayer(GameState, planetSystem, Game1));
         }
 
 
@@ -63,7 +63,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
         public override void DrawOnWorldView(SpriteBatch spriteBatch) {; }
 
-        public override void OnResolutionChanged() { base.OnResolutionChanged(); }
+        public override void ApplyResolution() { base.ApplyResolution(); }
 
         public override void Destroy() { }
     }

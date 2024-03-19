@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.CoreProceses.Persistance;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
@@ -18,7 +20,7 @@ namespace StellarLiberation.Game.Layers
         private readonly UiFrame mFrame;
         private readonly UiLoadingCircle mLoadingCircle;
 
-        public LoadingLayer(bool hasBackground = true) : base(false)
+        public LoadingLayer(Game1 game1, bool hasBackground = true) : base(game1, false)
         {
             mFrame = new() { FillScale = FillScale.Both, Alpha = 0 };
             mLoadingCircle = new() { Width = 100, Height = 100, Anchor = Anchor.SE, HSpace = 10, VSpace = 10 };
@@ -36,7 +38,7 @@ namespace StellarLiberation.Game.Layers
             spriteBatch.End();
         }
 
-        public override void OnResolutionChanged() { }
+        public override void ApplyResolution() { }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {

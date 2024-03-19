@@ -38,24 +38,19 @@ namespace StellarLiberation.Game.Layers
         [JsonProperty] private readonly MapConfig mMapConfig;
         [JsonProperty] public readonly Wallet Wallet = new();
 
-        public GameLayerManager() : base(false)
+        public GameLayerManager(Game1 game1) : base(game1, false)
         {
             mMapConfig = new(50, 50, 42);
-        }
-
-        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, GameSettings gameSettings, ResolutionManager resolutionManager)
-        {
             mPlanetSystems = MapFactory.Generate(mMapConfig);
             for (int i = 0; i < 2; i++)
                 SpaceShips.AddSpaceShip(mPlanetSystems.First(), SpaceshipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, mPlanetSystems.First().SystemRadius)), ShipID.Destroyer, Fractions.Allied));
-            base.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings, resolutionManager);
-            AddLayer(new PlanetSystemLayer(this, mPlanetSystems.First()));
+            AddLayer(new PlanetSystemLayer(this, mPlanetSystems.First(), game1));
+
         }
 
         public void AddLayer(Layer layer)
         {
             mLayers.AddLast(layer);
-            layer.Initialize(Game1, LayerManager, GraphicsDevice, PersistanceManager, GameSettings, ResolutionManager);
         }
 
         public void PopLayer()
@@ -69,7 +64,7 @@ namespace StellarLiberation.Game.Layers
         {
             mFrameCounter.Update(gameTime);
             DebugSystem.Update(inputState);
-            inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this)));
+            inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this, Game1)));
             mLayers.Last?.Value.Update(gameTime, inputState);
         }
 
@@ -86,6 +81,6 @@ namespace StellarLiberation.Game.Layers
 
         public override void Destroy() { }
 
-        public override void OnResolutionChanged() { }
+        public override void ApplyResolution() { }
     }
 }

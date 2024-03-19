@@ -74,7 +74,7 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
             foreach (var child in mChildren) child.Update(inputState, gameTime, Canvas.Bounds, uiScaling);
         }
 
-        public override void OnResolutionChanged()
+        public override void ApplyResolution()
         {
         }
 

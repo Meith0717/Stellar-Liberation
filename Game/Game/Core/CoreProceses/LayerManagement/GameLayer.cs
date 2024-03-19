@@ -2,6 +2,7 @@
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
+using MathNet.Numerics.Distributions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Penumbra;
@@ -32,7 +33,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         private Matrix mViewTransformationMatrix;
         protected Layer HUDLayer;
 
-        public GameLayer(GameLayerManager gameState, int spatialHashingCellSize) : base(false)
+        public GameLayer(GameLayerManager gameState, int spatialHashingCellSize, Game1 game1) : base(game1, false)
         {
             DebugSystem = gameState.DebugSystem;
 
@@ -42,17 +43,11 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
             Camera2D = new();
             CameraShaker = new();
             GameState = gameState;
-        }
-
-        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, GameSettings gameSettings, ResolutionManager resolutionManager)
-        {
-            base.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings, resolutionManager);
             Penumbra = new(Game1);
             GameObject2DManager.Initialize(SpatialHashing, ref GameObjects, this);
             Penumbra.Debug = false;
             Penumbra.AmbientColor = Color.Transparent;
             Penumbra.Initialize();
-            HUDLayer?.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings, resolutionManager);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
@@ -91,7 +86,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         public abstract void DrawOnScreenView(SpriteBatch spriteBatch);
         public abstract void DrawOnWorldView(SpriteBatch spriteBatch);
 
-        public override void OnResolutionChanged() { }
+        public override void ApplyResolution() { }
 
     }
 }

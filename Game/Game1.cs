@@ -12,6 +12,7 @@ using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Layers;
+using StellarLiberation.Game;
 using StellarLiberation.Game.Layers.MenueLayers;
 using System;
 
@@ -19,13 +20,14 @@ namespace StellarLiberation
 {
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        public GameSettings mGameSettings { get; private set; }
+        public GameSettings Settings { get; private set; }
+        public LayerManager LayerManager { get; private set; }
         public readonly GraphicsDeviceManager GraphicsManager;
-        public readonly PersistanceManager mPersistanceManager;
-        private readonly ResolutionManager mResolutionManager;
+        public readonly PersistanceManager PersistanceManager;
+        public readonly ResolutionManager ResolutionManager;
+
         private readonly InputManager mInputManager;
         private SpriteBatch mSpriteBatch;
-        private LayerManager mLayerManager;
         private bool IAmActive;
 
         public Game1()
@@ -33,8 +35,8 @@ namespace StellarLiberation
             Content.RootDirectory = "Content";
             GraphicsManager = new(this);
             mInputManager = new();
-            mResolutionManager = new(GraphicsManager);
-            mPersistanceManager = new();
+            ResolutionManager = new(GraphicsManager);
+            PersistanceManager = new();
 
             Activated += ActivateMyGame;
             Deactivated += DeactivateMyGame;
@@ -49,28 +51,27 @@ namespace StellarLiberation
         protected override void Initialize()
         {
             base.Initialize();
-            mLayerManager = new(this, GraphicsDevice, mPersistanceManager, mResolutionManager, mGameSettings);
-            mLayerManager.AddLayer(new LoadingLayer());
-            mResolutionManager.Apply(mGameSettings.Resolution);
-            mResolutionManager.ToggleFullscreen(mGameSettings.Resolution);
+            LayerManager = new(this, GraphicsDevice, PersistanceManager, ResolutionManager, Settings);
+            LayerManager.AddLayer(new LoadingLayer(this));
+            ResolutionManager.Apply(Settings.Resolution);
 
             GraphicsManager.PreferMultiSampling = true;
-            GraphicsManager.SynchronizeWithVerticalRetrace = mGameSettings.Vsync;
-            if (IsFixedTimeStep = long.TryParse(mGameSettings.RefreshRate, out long rate))
+            GraphicsManager.SynchronizeWithVerticalRetrace = Settings.Vsync;
+            if (IsFixedTimeStep = long.TryParse(Settings.RefreshRate, out long rate))
                 TargetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / rate);
             GraphicsManager.ApplyChanges();
         }
 
         protected override void LoadContent()
         {
-            mPersistanceManager.Load<GameSettings>(PersistanceManager.SettingsSaveFilePath, (s) => mGameSettings = s, (_) => mGameSettings = new());
+            PersistanceManager.Load<GameSettings>(PersistanceManager.SettingsSaveFilePath, (s) => Settings = s, (_) => Settings = new());
 
-            SoundEffectManager.Instance.SetVolume(mGameSettings.MasterVolume, mGameSettings.SoundEffectsVolume);
-            MusicManager.Instance.SetVolume(mGameSettings.MasterVolume, mGameSettings.MusicVolume);
+            SoundEffectManager.Instance.SetVolume(Settings.MasterVolume, Settings.SoundEffectsVolume);
+            MusicManager.Instance.SetVolume(Settings.MasterVolume, Settings.MusicVolume);
 
             mSpriteBatch = new SpriteBatch(GraphicsDevice);
             ContentLoader.PreLoad(Content, mSpriteBatch);
-            ContentLoader.LoadAsync(Content, mSpriteBatch, () => { mLayerManager.PopLayer(); mLayerManager.AddLayer(new MainMenueLayer()); }, (ex) => throw ex);
+            ContentLoader.LoadAsync(Content, mSpriteBatch, () => { LayerManager.PopLayer(); LayerManager.AddLayer(new MainMenueLayer(this)); }, (ex) => throw ex);
         }
 
         protected override void Update(GameTime gameTime)
@@ -79,10 +80,10 @@ namespace StellarLiberation
             if (IAmActive)
             {
                 InputState inputState = mInputManager.Update();
-                inputState.DoAction(ActionType.ToggleFullscreen, () => mResolutionManager.ToggleFullscreen(mGameSettings.Resolution));
-                inputState.DoAction(ActionType.IncreaseScaling, () => mResolutionManager.UiScaling += 0.1f);
-                inputState.DoAction(ActionType.DecreaseScaling, () => mResolutionManager.UiScaling -= 0.1f);
-                mLayerManager.Update(gameTime, inputState);
+                inputState.DoAction(ActionType.ToggleFullscreen, () => ResolutionManager.ToggleFullscreen(Settings.Resolution));
+                inputState.DoAction(ActionType.IncreaseScaling, () => ResolutionManager.UiScaling += 0.1f);
+                inputState.DoAction(ActionType.DecreaseScaling, () => ResolutionManager.UiScaling -= 0.1f);
+                LayerManager.Update(gameTime, inputState);
             }
             base.Update(gameTime);
         }
@@ -90,7 +91,7 @@ namespace StellarLiberation
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Transparent);
-            mLayerManager.Draw(mSpriteBatch);
+            LayerManager.Draw(mSpriteBatch);
             base.Draw(gameTime);
         }
 

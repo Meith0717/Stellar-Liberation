@@ -35,7 +35,6 @@ public class LayerManager
     // add and remove layers from stack
     public void AddLayer(Layer layer)
     {
-        layer.Initialize(mGame1, this, mGraphicsDevice, mPersistanceManager, mGameSettings, mResolutionManager);
         mLayerStack.AddLast(layer);
     }
 
@@ -80,7 +79,7 @@ public class LayerManager
     // fullscreen stuff
     private void OnResolutionChanged()
     {
-        foreach (Layer layer in mLayerStack.ToArray()) layer.OnResolutionChanged();
+        foreach (Layer layer in mLayerStack.ToArray()) layer.ApplyResolution();
     }
 
     public bool ContainsLayer(Layer layer) => mLayerStack.Contains(layer);

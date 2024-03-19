@@ -30,8 +30,8 @@ namespace StellarLiberation.Game.Layers.Benchmark
         private float mRunTime = 180000;
         private bool mIsPaused;
 
-        public BenchmarkLayer()
-            : base(new(), 10000)
+        public BenchmarkLayer(Game1 game1)
+            : base(new(game1), 10000, game1)
         {
             DebugSystem = new(true);
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn };

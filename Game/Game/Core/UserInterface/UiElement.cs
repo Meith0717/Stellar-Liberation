@@ -15,7 +15,7 @@ namespace StellarLiberation.Game.Core.UserInterface
         public abstract void Update(InputState inputState, GameTime gameTime, Rectangle root, float uiScaling);
         public abstract void Draw();
         public Rectangle Bounds => Canvas.Bounds;
-        public abstract void OnResolutionChanged();
+        public abstract void ApplyResolution();
 
 
         // Position propeties

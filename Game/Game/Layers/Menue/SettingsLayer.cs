@@ -32,7 +32,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
         private UiVariableSelector<string> mRefreshRate;
         private UiVariableSelector<bool> mVsync;
 
-        public SettingsLayer() : base(false)
+        public SettingsLayer(Game1 game1) : base(game1, false)
         {
             mMainFrame = new() { FillScale = FillScale.Both, Color = Color.Transparent };
 
@@ -52,20 +52,14 @@ namespace StellarLiberation.Game.Layers.MenueLayers
             mSettingsGrid.Set(0, 10, new UiText(FontRegistries.textFont, "Particle Multiplier") { Anchor = Anchor.E, HSpace = 20 });
 
             settingsFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Back & Save") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = Exit });
-            settingsFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Start Benchmark") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = () =>  LayerManager.AddLayer(new BenchmarkLayer()) });
-        }
-
-        public override void Initialize(Game1 game1, LayerManager layerManager, GraphicsDevice graphicsDevice, PersistanceManager persistanceManager, GameSettings gameSettings, ResolutionManager resolutionManager)
-        {
-            base.Initialize(game1, layerManager, graphicsDevice, persistanceManager, gameSettings, resolutionManager);
-
+            settingsFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Start Benchmark") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = () =>  LayerManager.AddLayer(new BenchmarkLayer(Game1)) });
             mMasterSlider = new(GameSettings.MasterVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
             mMusicSlider = new(GameSettings.MusicVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
             mSfxSlider = new(GameSettings.SoundEffectsVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
-            mResolutionSelector = new UiVariableSelector<string>(resolutionManager.Resolutions, GameSettings.Resolution) { RelWidth = 1, Anchor = Anchor.CenterH };
-            mParticleMultiplier = new UiVariableSelector<float>(new() { 0, 0.2f, 0.5f, 1f, 2f}, GameSettings.ParticlesMultiplier) { RelWidth = 1, Anchor = Anchor.CenterH };
-            mRefreshRate = new UiVariableSelector<string>(new() { "30", "60", "75", "120", "Unlimit" }, GameSettings.RefreshRate.ToString()) { RelWidth = 1, Anchor = Anchor.CenterH};
-            mVsync = new UiVariableSelector<bool>(new() { true, false}, GameSettings.Vsync) { RelWidth = 1, Anchor = Anchor.CenterH };
+            mResolutionSelector = new UiVariableSelector<string>(ResolutionManager.Resolutions, GameSettings.Resolution) { RelWidth = 1, Anchor = Anchor.CenterH };
+            mParticleMultiplier = new UiVariableSelector<float>(new() { 0, 0.2f, 0.5f, 1f, 2f }, GameSettings.ParticlesMultiplier) { RelWidth = 1, Anchor = Anchor.CenterH };
+            mRefreshRate = new UiVariableSelector<string>(new() { "30", "60", "75", "120", "Unlimit" }, GameSettings.RefreshRate.ToString()) { RelWidth = 1, Anchor = Anchor.CenterH };
+            mVsync = new UiVariableSelector<bool>(new() { true, false }, GameSettings.Vsync) { RelWidth = 1, Anchor = Anchor.CenterH };
 
             mSettingsGrid.Set(1, 1, mMasterSlider);
             mSettingsGrid.Set(1, 2, mMusicSlider);
@@ -73,8 +67,9 @@ namespace StellarLiberation.Game.Layers.MenueLayers
             mSettingsGrid.Set(1, 5, mResolutionSelector);
             mSettingsGrid.Set(1, 6, mRefreshRate);
             mSettingsGrid.Set(1, 7, mVsync);
-            mSettingsGrid.Set(1, 8, new UiButton(MenueSpriteRegistries.button, "Apply Video") { Anchor = Anchor.Center, OnClickAction = ApplyVideo});
+            mSettingsGrid.Set(1, 8, new UiButton(MenueSpriteRegistries.button, "Apply Video") { Anchor = Anchor.Center, OnClickAction = ApplyVideo });
             mSettingsGrid.Set(1, 10, mParticleMultiplier);
+
         }
 
         public override void Destroy() { }
@@ -86,7 +81,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
             spriteBatch.End();
         }
 
-        public override void OnResolutionChanged() { }
+        public override void ApplyResolution() { }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
@@ -118,7 +113,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
         private void Exit()
         {
             LayerManager.PopLayer();
-            LayerManager.AddLayer(new LoadingLayer());
+            LayerManager.AddLayer(new LoadingLayer(Game1));
             PersistanceManager.SaveAsync(PersistanceManager.SettingsSaveFilePath, GameSettings, () => LayerManager.PopLayer(), (e) => throw e);
         }
     }

@@ -25,8 +25,6 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
             {
                 mVelocityProcentage = MathHelper.Clamp(mVelocityProcentage - .002f * (float)gameTime.ElapsedGameTime.TotalMilliseconds, 0, 1);
             }
-            inputState.DoAction(ActionType.Inventar, () => gameLayer.LayerManager.AddLayer(new InventoryLayer(spaceShip.Inventory, gameLayer.GameState.Wallet)));
-            inputState.DoAction(ActionType.RightClickHold, () => spaceShip.PhaserCannaons.Fire());
 
             spaceShip.SublightDrive.SetVelocity(mVelocityProcentage);
             spaceShip.SublightDrive.MoveInDirection(Vector2.Normalize(gameLayer.WorldMousePosition - spaceShip.Position));
