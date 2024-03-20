@@ -60,5 +60,11 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem
                particle.Draw();
             }
         }
+
+        public void Clear()
+        {
+            mParticles.Clear();
+            mCachedParticles.Clear();
+        }
     }
 }

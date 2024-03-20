@@ -33,14 +33,13 @@ namespace StellarLiberation.Game.Layers.Benchmark
         public BenchmarkLayer(Game1 game1)
             : base(new(game1), 10000, game1)
         {
-            DebugSystem = new(true);
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn };
             mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
 
             mFrameCounter = new(100);
 
             mPlanetSystem = new PlanetSystem(Vector2.Zero, 42);
-            GameObjects.AddRange(mPlanetSystem.AstrononomicalObjects);
+            GameObjectsManager.AddRange(mPlanetSystem.AstrononomicalObjects);
             Camera2D.Zoom = 0.002f;
         }
 
@@ -52,10 +51,8 @@ namespace StellarLiberation.Game.Layers.Benchmark
                 CoolDown = 100;
                 var enemy = SpaceshipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Enemys);
                 var allied = SpaceshipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Allied);
-                allied.Initialize(this);
-                enemy.Initialize(this);
-                GameObjects.Add(allied);
-                GameObjects.Add(enemy);
+                GameObjectsManager.Add(allied);
+                GameObjectsManager.Add(enemy);
                 mDataCollector.AddData([mFrameCounter.CurrentFramesPerSecond, mFrameCounter.FrameDuration, SpatialHashing.Count, ParticleManager.Count]);
             }
             CoolDown -= gameTime.ElapsedGameTime.Milliseconds;
@@ -75,7 +72,13 @@ namespace StellarLiberation.Game.Layers.Benchmark
         public override void Draw(SpriteBatch spriteBatch)
         {
             mFrameCounter.UpdateFrameCouning();
+
+            spriteBatch.Begin();
+            mBackgroundLayer.Draw();
+            spriteBatch.End();
+
             base.Draw(spriteBatch);
+
             spriteBatch.Begin();
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 10), $"FPS:        {mFrameCounter.CurrentFramesPerSecond} ", .75f, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 25), $"Average:    {mFrameCounter.AverageFramesPerSecond} ", .75f, Color.White);
@@ -89,12 +92,9 @@ namespace StellarLiberation.Game.Layers.Benchmark
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 150), $"{timeSpan.Minutes} min {timeSpan.Seconds}s ESC => Quit", .75f, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 165), $"Left control => Pause Spawning", .75f, mIsPaused ? Color.LightGreen : Color.White);
             DebugSystem.ShowInfo(new Vector2(200, 10));
+            DebugSystem.DrawOnScene(this);
             spriteBatch.End();
         }
-
-        public override void DrawOnScreenView(SpriteBatch spriteBatch) => mBackgroundLayer.Draw();
-        public override void Destroy() {; }
-        public override void DrawOnWorldView(SpriteBatch spriteBatch) { DebugSystem.DrawOnScene(this); }
 
         private void End()
         {

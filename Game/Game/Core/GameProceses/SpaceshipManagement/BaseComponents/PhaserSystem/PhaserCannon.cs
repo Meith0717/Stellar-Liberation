@@ -24,7 +24,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.BaseCompo
             => mRelativePosition = relativePosition;
 
         public void Fire(GameLayer gameLayer, Spaceship origin, Color particleColor, float shieldDamage, float hullDamage)
-            => gameLayer.GameObjects.Add(new LaserProjectile(Position, Rotation, particleColor, shieldDamage, hullDamage, origin.Fraction));
+            => gameLayer.GameObjectsManager.Add(new LaserProjectile(Position, Rotation, particleColor, shieldDamage, hullDamage, origin.Fraction));
 
         public void GetPosition(Vector2 originPosition, float originRotation, float rotation)
         {

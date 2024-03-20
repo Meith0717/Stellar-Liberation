@@ -9,7 +9,6 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.GridSystem;
-using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Visuals.ParallaxSystem;
@@ -44,15 +43,16 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
             Camera2D.Zoom = 0.01f;
             PlanetSystem = planetSystem;
-            GameObjects.AddRange(PlanetSystem.AstrononomicalObjects);
-            GameObjects.AddRange(GameState.SpaceShips.GetSpaceshipsOfPlanetSystem(PlanetSystem));
-            GameObject2DManager.Initialize(SpatialHashing, ref GameObjects, this);
+            GameObjectsManager.AddRange(PlanetSystem.AstrononomicalObjects);
+            GameObjectsManager.AddRange(GameState.SpaceShips.GetSpaceshipsOfPlanetSystem(PlanetSystem));
+            GameObjectsManager.Initialize(SpatialHashing);
 
             mParallaxController = new(Camera2D);
             mParallaxController.Add(new(GameSpriteRegistries.gameBackgroundParlax1, .01f));
             mParallaxController.Add(new(GameSpriteRegistries.gameBackgroundParlax2, .04f));
             mParallaxController.Add(new(GameSpriteRegistries.gameBackgroundParlax3, .08f));
             mParallaxController.Add(new(GameSpriteRegistries.gameBackgroundParlax4, .12f));
+            ApplyResolution();
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
@@ -66,15 +66,22 @@ namespace StellarLiberation.Game.Layers.GameLayers
             base.Update(gameTime, inputState);
         }
 
-        public override void DrawOnScreenView(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Begin();
             mBackgroundLayer.Draw();
             mParallaxController.Draw();
+            spriteBatch.End();
+
+            spriteBatch.Begin(transformMatrix: ViewTransformationMatrix);
+            mGrid.Draw(this);
+            spriteBatch.End();
+
+            base.Draw(spriteBatch);
         }
 
-        public override void DrawOnWorldView(SpriteBatch spriteBatch) => mGrid.Draw(this);
 
-        public override void ApplyResolution() { base.ApplyResolution(); }
+        public override void ApplyResolution() { mBackgroundLayer.ApplyResolution(GraphicsDevice.Viewport.Bounds, ResolutionManager.Resolution); }
 
         public override void Destroy() {; }
     }

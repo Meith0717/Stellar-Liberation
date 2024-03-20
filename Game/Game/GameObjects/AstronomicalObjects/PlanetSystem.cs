@@ -52,9 +52,6 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
 
             distanceToStar += 50000;
             SystemRadius = distanceToStar;
-
-            //AstrononomicalObjects.AddRange(AsteroidGenerator.GetAsteroidsRing(Position, distanceToStar));
-
         }
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer)

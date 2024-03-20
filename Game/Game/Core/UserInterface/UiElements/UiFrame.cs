@@ -33,7 +33,7 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
 
         public bool AnyChild() => mChildren.Any();
 
-        #region Draw
+        #region Draw Frame with Roundetedges
 
         public override void Draw()
         {
@@ -68,10 +68,16 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
         }
         #endregion
 
+        private bool mLastDragState;
         public override void Update(InputState inputState, GameTime gameTime)
         {
             foreach (var child in mChildren) 
                 child.Update(inputState, gameTime);
+            // if (!Bounds.Contains(inputState.mMousePosition) && !mLastDragState) return;
+            // mLastDragState = false;
+            // if (!inputState.HasAction(ActionType.LeftClickHold)) return;
+            // Canvas.MouseDrag(inputState);
+            // mLastDragState = true;
         }
 
         public override void ApplyResolution(Rectangle root, Resolution resolution)

@@ -31,11 +31,6 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             };
         }
 
-        public override void Initialize(GameLayer gameLayer)
-        {
-            gameLayer.Penumbra.Lights.Add(mLight);
-        }
-
         public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
             base.Update(gameTime, inputState, scene);

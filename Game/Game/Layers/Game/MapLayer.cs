@@ -29,7 +29,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
             Camera2D.Position = currentSystem.Position;
             mCurrentSystem = currentSystem;
-            foreach (var system in gameState.mPlanetSystems)
+            foreach (var system in gameState.PlanetSystems)
             {
                 SpatialHashing.InsertObject(system, (int)system.Position.X, (int)system.Position.Y);
             }
@@ -43,7 +43,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
             mBackgroundLayer.Update(inputState, gameTime);
             inputState.DoAction(ActionType.ToggleHyperMap, GameState.PopLayer);
-            foreach (var system in GameState.mPlanetSystems)
+            foreach (var system in GameState.PlanetSystems)
             {
                 system.Update(gameTime, inputState, this);
                 GameObject2DInteractionManager.Manage(inputState, system, this, ()=> LeftPressAction(system), null, () => system.IsHovered = true); ;
@@ -58,10 +58,13 @@ namespace StellarLiberation.Game.Layers.GameLayers
             GameState.AddLayer(new PlanetSystemLayer(GameState, planetSystem, Game1));
         }
 
-
-        public override void DrawOnScreenView(SpriteBatch spriteBatch) => mBackgroundLayer.Draw();
-
-        public override void DrawOnWorldView(SpriteBatch spriteBatch) {; }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Begin();
+            mBackgroundLayer.Draw();
+            spriteBatch.End();
+            base.Draw(spriteBatch);
+        }
 
         public override void ApplyResolution() { base.ApplyResolution(); }
 

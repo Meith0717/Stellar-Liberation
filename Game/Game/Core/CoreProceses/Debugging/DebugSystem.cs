@@ -21,6 +21,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugging
 
         private List<DebugAction> debugActions;
 
+        public bool IsActive => IsDebug;
         private bool IsDebug;
         private bool DrawBuckets;
         private bool ShowObjectsInBucket;

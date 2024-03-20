@@ -41,8 +41,8 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
             if (mCoolDown > 0) return;
             mCoolDown = MaxCoolDown;
 
-            mOpponents = scene.GameObjects.OfType<Spaceship>().Where((spaceShip) => spaceShip.Fraction != fraction).ToList();
-            mAllies = scene.GameObjects.OfType<Spaceship>().Where((spaceShip) => spaceShip.Fraction == fraction).ToList();
+            mOpponents = scene.GameObjectsManager.OfType<Spaceship>().Where((spaceShip) => spaceShip.Fraction != fraction).ToList();
+            mAllies = scene.GameObjectsManager.OfType<Spaceship>().Where((spaceShip) => spaceShip.Fraction == fraction).ToList();
 
             mOpponents.Sort((obj1, obj2) =>
             {

@@ -140,3 +140,18 @@ dotnet_naming_style.pascal_schreibweise.required_prefix =
 dotnet_naming_style.pascal_schreibweise.required_suffix = 
 dotnet_naming_style.pascal_schreibweise.word_separator = 
 dotnet_naming_style.pascal_schreibweise.capitalization = pascal_case
+
+# Code files
+[*.{cs,vb}]
+
+dotnet_diagnostic.C6259.severity = warning
+
+dotnet_diagnostic.CA1801.severity = warning
+
+dotnet_diagnostic.CA1804.severity = warning
+
+dotnet_diagnostic.CA1811.severity = warning
+
+dotnet_diagnostic.CA1812.severity = warning
+
+dotnet_diagnostic.CA1823.severity = warning

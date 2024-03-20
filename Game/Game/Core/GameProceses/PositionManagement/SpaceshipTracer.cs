@@ -61,5 +61,18 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
             return spaceships;
         }
 
+        public void Dispose()
+        {
+            foreach (var ships in mSystemShipTracer.Values)
+            {
+                var lstCopy = ships.ToArray();
+                foreach (var ship in lstCopy)
+                {
+                    if (!ship.IsDisposed) continue;
+                    ships.Remove(ship);
+                }
+            }
+        }
+
     }
 }

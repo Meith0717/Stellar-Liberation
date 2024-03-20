@@ -28,7 +28,8 @@ namespace StellarLiberation.Game.Layers
     [Serializable]
     public class GameLayerManager : Layer
     {
-        [JsonIgnore] public List<PlanetSystem> mPlanetSystems { get; private set; }
+        [JsonIgnore] private bool mIsInitialised;
+        [JsonIgnore] public List<PlanetSystem> PlanetSystems { get; private set; }
         [JsonIgnore] public readonly DebugSystem DebugSystem = new();
         [JsonIgnore] private readonly LinkedList<Layer> mLayers = new();
         [JsonIgnore] private readonly FrameCounter mFrameCounter = new(1000);
@@ -39,10 +40,9 @@ namespace StellarLiberation.Game.Layers
         public GameLayerManager(Game1 game1) : base(game1, false)
         {
             mMapConfig = new(50, 50, 42);
-            mPlanetSystems = MapFactory.Generate(mMapConfig);
-            for (int i = 0; i < 2; i++)
-                SpaceShips.AddSpaceShip(mPlanetSystems.First(), SpaceshipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, mPlanetSystems.First().SystemRadius)), ShipID.Destroyer, Fractions.Allied));
-            AddLayer(new PlanetSystemLayer(this, mPlanetSystems.First(), game1));
+            PlanetSystems = MapFactory.Generate(mMapConfig);
+            SpaceShips.AddSpaceShip(PlanetSystems.First(), SpaceshipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, PlanetSystems.First().SystemRadius)), ShipID.Destroyer, Fractions.Allied));
+            mIsInitialised = true;
         }
 
         public void AddLayer(Layer layer)
@@ -60,6 +60,10 @@ namespace StellarLiberation.Game.Layers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            if (mIsInitialised)
+                AddLayer(new PlanetSystemLayer(this, PlanetSystems.First(), Game1));
+            mIsInitialised = false;
+
             mFrameCounter.Update(gameTime);
             DebugSystem.Update(inputState);
             inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this, Game1)));
@@ -77,9 +81,15 @@ namespace StellarLiberation.Game.Layers
             spriteBatch.End();
         }
 
-        public override void Destroy() {; }
+        public override void Destroy() 
+        {
+            SpaceShips.Dispose(); // Remove Disposed Spaceships IMPORTANT
+        }
 
         public override void ApplyResolution() 
-        {; }
+        {
+            foreach (var layer in mLayers) 
+                layer.ApplyResolution();
+        }
     }
 }

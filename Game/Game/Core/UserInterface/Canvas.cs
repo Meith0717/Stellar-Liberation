@@ -3,7 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
+using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 
 namespace StellarLiberation.Game.Core.UserInterface
 {
@@ -46,6 +46,8 @@ namespace StellarLiberation.Game.Core.UserInterface
 
             mCanvas = new(x, y, width, height);
         }
+
+        #region Apply Resolution and Position
 
         private void ManageFillScale(Rectangle root, ref int x, ref int y, ref int width, ref int height)
         {
@@ -187,6 +189,19 @@ namespace StellarLiberation.Game.Core.UserInterface
                 }
             }
         }
+
+        private Vector2 mLastMousePosition;
+
+        public void MouseDrag(InputState inputState)
+        {
+            Vector2 delta = inputState.mMousePosition - mLastMousePosition;
+            mCanvas.X += (int)delta.X;
+            mCanvas.Y += (int)delta.Y;
+            mLastMousePosition = inputState.mMousePosition;
+        }
+
+        #endregion
+
 
 
         public bool Contains(Vector2 position) => mCanvas.Contains(position);

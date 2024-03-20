@@ -49,8 +49,6 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             UpdateScale(TextureScale);
         }
 
-        public virtual void Initialize(GameLayer gameLayer){}
-
         public void UpdateScale(float scale)
         {
             BoundedBox.Position = Position;

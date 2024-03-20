@@ -26,12 +26,6 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             mHull = new(BoundedBox.GetPolygone());
         }
 
-        public override void Initialize(GameLayer gameLayer)
-        {
-            base.Initialize(gameLayer);
-            gameLayer.Penumbra.Hulls.Add(mHull);
-        }
-
         public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
             base.Update(gameTime, inputState, scene);
