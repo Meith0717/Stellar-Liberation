@@ -88,7 +88,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
 
         public override void ApplyResolution() 
         {
-            HUDLayer.ApplyResolution();
+            HUDLayer?.ApplyResolution();
             Camera2D.ApplyResolution(ResolutionManager.Resolution, this);
         }
 

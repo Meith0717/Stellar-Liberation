@@ -29,6 +29,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegi
         public readonly static Registry menu = new(buttons, "menu");
         public readonly static Registry pause = new(buttons, "pause");
         public readonly static Registry xMark = new(buttons, "xMark");
+        public readonly static Registry toggleOn = new(buttons, "toggleOn");
+        public readonly static Registry toggleOff = new(buttons, "toggleOff");
 
         private readonly static string layer = @"textures\menueSprites\layer";
         public readonly static Registry edge0 = new(layer, "edge0");

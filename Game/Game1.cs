@@ -51,7 +51,7 @@ namespace StellarLiberation
         protected override void Initialize()
         {
             base.Initialize();
-            LayerManager = new(this, GraphicsDevice, PersistanceManager, ResolutionManager, Settings);
+            LayerManager = new(this);
             LayerManager.AddLayer(new LoadingLayer(this));
             ResolutionManager.Apply(Settings.Resolution);
 
@@ -77,6 +77,8 @@ namespace StellarLiberation
         protected override void Update(GameTime gameTime)
         {
             MusicManager.Instance.Update();
+            if (ResolutionManager.WasResized) 
+                LayerManager.OnResolutionChanged();
             if (IAmActive)
             {
                 InputState inputState = mInputManager.Update();

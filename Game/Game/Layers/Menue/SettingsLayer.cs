@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
         private UiVariableSelector<string> mResolutionSelector;
         private UiVariableSelector<float> mParticleMultiplier;
         private UiVariableSelector<string> mRefreshRate;
-        private UiVariableSelector<bool> mVsync;
+        private UiCheckBox mVsync;
 
         public SettingsLayer(Game1 game1) : base(game1, false)
         {
@@ -59,7 +59,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
             mResolutionSelector = new UiVariableSelector<string>(ResolutionManager.Resolutions, GameSettings.Resolution) { RelWidth = 1, Anchor = Anchor.CenterH };
             mParticleMultiplier = new UiVariableSelector<float>(new() { 0, 0.2f, 0.5f, 1f, 2f }, GameSettings.ParticlesMultiplier) { RelWidth = 1, Anchor = Anchor.CenterH };
             mRefreshRate = new UiVariableSelector<string>(new() { "30", "60", "75", "120", "Unlimit" }, GameSettings.RefreshRate.ToString()) { RelWidth = 1, Anchor = Anchor.CenterH };
-            mVsync = new UiVariableSelector<bool>(new() { true, false }, GameSettings.Vsync) { RelWidth = 1, Anchor = Anchor.CenterH };
+            mVsync = new UiCheckBox(GameSettings.Vsync) { RelWidth = 1, Anchor = Anchor.Center };
 
             mSettingsGrid.Set(1, 1, mMasterSlider);
             mSettingsGrid.Set(1, 2, mMusicSlider);
