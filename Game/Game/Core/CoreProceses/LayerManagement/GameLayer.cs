@@ -18,7 +18,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
     public abstract class GameLayer : Layer
     {
         public Vector2 WorldMousePosition { get; private set; }
-        public Matrix ViewTransformationMatrix { get; private set; }   
+        public Matrix ViewTransformationMatrix { get; private set; }
         public GameObject2DManager GameObjectsManager;
         public readonly Debugging.DebugSystem DebugSystem;
         public readonly SpatialHashing SpatialHashing;
@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
 
         public GameLayer(GameLayerManager gameState, int spatialHashingCellSize, Game1 game1) : base(game1, false)
         {
-            DebugSystem = gameState.DebugSystem?? new(true);
+            DebugSystem = gameState.DebugSystem ?? new(true);
 
             SpatialHashing = new(spatialHashingCellSize);
             GameObjectsManager = new();
@@ -63,14 +63,14 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
             HUDLayer?.Draw(spriteBatch);
         }
 
-        public override void ApplyResolution() 
+        public override void ApplyResolution()
         {
             HUDLayer?.ApplyResolution();
             Camera2D.ApplyResolution(ResolutionManager.Resolution, this);
         }
 
-        public override void Destroy() 
-        { 
+        public override void Destroy()
+        {
             SpatialHashing.ClearBuckets();
             ParticleManager.Clear();
         }

@@ -4,7 +4,6 @@
 
 using MathNet.Numerics.Distributions;
 using Microsoft.Xna.Framework;
-using Penumbra;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
@@ -46,7 +45,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             PlanetCount = (int)Triangular.Sample(seededRandom, 1, 10, 7);
             for (int i = 1; i <= PlanetCount; i++)
             {
-                distanceToStar += seededRandom.Next(40000, 80000);
+                distanceToStar += seededRandom.Next(8000, 20000);
                 AstrononomicalObjects.Add(PlanetGenerator.GetPlanet(seededRandom, star.Kelvin, distanceToStar));
             }
 

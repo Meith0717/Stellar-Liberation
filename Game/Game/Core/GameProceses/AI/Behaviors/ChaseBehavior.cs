@@ -1,4 +1,4 @@
-﻿// PatrollBehavior.cs 
+﻿// ChaseBehavior.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
@@ -41,7 +41,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
                 case not null: // Check if Patrol Target is reached
                     mSpaceship.SublightDrive.SetVelocity(1f);
-                    if (mSpaceship.SublightDrive.IsMoving 
+                    if (mSpaceship.SublightDrive.IsMoving
                         && !mPatrolTarget.IsDisposed) break;
                     mPatrolTarget = null;
                     break;

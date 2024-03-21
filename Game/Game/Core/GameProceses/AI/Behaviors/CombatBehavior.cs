@@ -5,7 +5,6 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
-using System;
 
 namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 {
@@ -15,7 +14,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
         private bool mReposition;
         private double mBias1;
 
-        public CombatBehavior(Spaceship spaceShip) 
+        public CombatBehavior(Spaceship spaceShip)
         {
             mSpaceship = spaceShip;
             mBias1 = .7f + ExtendetRandom.Random.NextSingle() * .2f;
@@ -49,7 +48,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
                 case true:
                     mSpaceship.PhaserCannaons.StopFire();
                     mSpaceship.SublightDrive.MoveInDirection(-Vector2.Normalize(target.Position - mSpaceship.Position));
-                    velocity = (- dotProduct + 1) / 2;
+                    velocity = (-dotProduct + 1) / 2;
                     if (distance >= mSpaceship.BoundedBox.Diameter * 30) mReposition = false;
                     break;
             }

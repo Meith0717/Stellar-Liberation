@@ -1,18 +1,14 @@
-﻿// Spaceship.cs 
+﻿// SpaceShip.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using MathNet.Numerics.Random;
 using Microsoft.Xna.Framework;
-using MonoGame.Extended;
-using MonoGame.Extended.Shapes;
 using Newtonsoft.Json;
-using Penumbra;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.Core.Extensions;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.AI;
 using StellarLiberation.Game.Core.GameProceses.AI.Behaviors;
@@ -48,7 +44,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
         [JsonProperty] public readonly int ID;
 
         [JsonIgnore] public readonly SpaceshipController mSpaceshipController = new();
-        public float Mass { get => 5; } 
+        public float Mass { get => 5; }
 
         public Spaceship(Vector2 position, Fractions fraction, string textureID, float textureScale)
             : base(position, textureID, textureScale, 10)
@@ -66,7 +62,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
             DefenseSystem = new(1000, 100, 10);
             mAccentColor = accentCoor;
             PhaserCannaons.PlaceTurret(new(Vector2.Zero, 1, TextureDepth + 1));
-             
+
             mUtilityAi.AddBehavior(new IdleBehavior(SublightDrive));
             mUtilityAi.AddBehavior(new ChaseBehavior(this));
             mUtilityAi.AddBehavior(new CollectItemsBehavior(this));
@@ -91,7 +87,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
             DefenseSystem.Update(gameTime);
             mItemCollector.Collect(gameTime, this, gameLayer);
             PhaserCannaons.Update(gameTime, this, gameLayer);
-            mUtilityAi.Update(gameTime);
+            // mUtilityAi.Update(gameTime);
 
             if (DefenseSystem.HullPercentage <= 0) Explode(gameLayer);
         }
@@ -142,7 +138,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
             TextureManager.Instance.Draw($"{TextureId}Frame", Position, TextureScale, Rotation, TextureDepth, Color.Black);
             TextureManager.Instance.Draw($"{TextureId}Hull", Position, TextureScale, Rotation, TextureDepth, new(10, 10, 10));
             TextureManager.Instance.Draw($"{TextureId}Structure", Position, TextureScale, Rotation, TextureDepth, new(20, 30, 40));
-            TextureManager.Instance.Draw(GameSpriteRegistries.radar, Position, .04f / scene.Camera2D.Zoom, 0, TextureDepth + 1,  Fraction == Fractions.Enemys ? Color.Red : Color.LightGreen);
+            TextureManager.Instance.Draw(GameSpriteRegistries.radar, Position, .04f / scene.Camera2D.Zoom, 0, TextureDepth + 1, Fraction == Fractions.Enemys ? Color.Red : Color.LightGreen);
 
             scene.DebugSystem.DrawAiDebug(BoundedBox, mUtilityAi.DebugMessage, scene.Camera2D.Zoom);
 

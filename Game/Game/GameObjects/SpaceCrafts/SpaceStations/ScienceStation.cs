@@ -14,7 +14,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceStations
 {
     public class ScienceStation : GameObject2D, ICollidable
     {
-        public float Mass =>float.PositiveInfinity;
+        public float Mass => float.PositiveInfinity;
 
         public ScienceStation(Vector2 position)
             : base(position, GameSpriteRegistries.scienceStation, 1, 20) { }

@@ -3,7 +3,6 @@
 // All rights reserved.
 
 using MathNet.Numerics.Random;
-using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using System;
 using System.Collections.Generic;

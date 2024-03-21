@@ -71,7 +71,7 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
         private bool mLastDragState;
         public override void Update(InputState inputState, GameTime gameTime)
         {
-            foreach (var child in mChildren) 
+            foreach (var child in mChildren)
                 child.Update(inputState, gameTime);
             // if (!Bounds.Contains(inputState.mMousePosition) && !mLastDragState) return;
             // mLastDragState = false;

@@ -1,4 +1,4 @@
-﻿// SpatialGameObject2DManager.cs 
+﻿// SpaceshipTracer.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
@@ -47,7 +47,7 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
             return planetSystem;
         }
 
-        public List<Spaceship> GetSpaceshipsOfPlanetSystem(PlanetSystem planetSystem) 
+        public List<Spaceship> GetSpaceshipsOfPlanetSystem(PlanetSystem planetSystem)
         {
             if (!mSystemShipTracer.TryGetValue(planetSystem.Seed, out var spaceships))
                 return new();

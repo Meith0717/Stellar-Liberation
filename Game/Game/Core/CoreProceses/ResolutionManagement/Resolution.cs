@@ -3,7 +3,6 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using MonoGame.Extended;
 
 namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
 {

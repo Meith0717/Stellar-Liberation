@@ -79,7 +79,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
 
         public override void Update(InputState inputState, GameTime gameTime)
         {
-            foreach (var child in mGrid.Values) 
+            foreach (var child in mGrid.Values)
                 child.Update(inputState, gameTime);
         }
 

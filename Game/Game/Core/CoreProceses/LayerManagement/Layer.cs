@@ -23,7 +23,7 @@ public abstract class Layer
     [JsonIgnore] public GameSettings GameSettings { get; private set; }
     [JsonIgnore] protected ResolutionManager ResolutionManager { get; private set; }
 
-    protected Layer(Game1 game1, bool updateBelow) 
+    protected Layer(Game1 game1, bool updateBelow)
     {
         Game1 = game1;
         LayerManager = game1.LayerManager;
@@ -31,7 +31,7 @@ public abstract class Layer
         PersistanceManager = game1.PersistanceManager;
         GameSettings = game1.Settings;
         ResolutionManager = game1.ResolutionManager;
-        UpdateBelow = updateBelow; 
+        UpdateBelow = updateBelow;
     }
 
     public abstract void Update(GameTime gameTime, InputState inputState);

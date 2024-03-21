@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
-using System;
 
 namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 {
@@ -12,7 +11,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
     {
         private readonly Spaceship mSpaceship;
 
-        public FleeBehavior(Spaceship spaceShip) 
+        public FleeBehavior(Spaceship spaceShip)
             => mSpaceship = spaceShip;
 
         public override double GetScore()
@@ -42,6 +41,6 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
             mSpaceship.SublightDrive.MoveInDirection(dir);
         }
 
-        public override void Recet(){ }
+        public override void Recet() { }
     }
 }

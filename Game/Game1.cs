@@ -12,7 +12,6 @@ using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Layers;
-using StellarLiberation.Game;
 using StellarLiberation.Game.Layers.MenueLayers;
 using System;
 
@@ -77,7 +76,7 @@ namespace StellarLiberation
         protected override void Update(GameTime gameTime)
         {
             MusicManager.Instance.Update();
-            if (ResolutionManager.WasResized) 
+            if (ResolutionManager.WasResized)
                 LayerManager.OnResolutionChanged();
             if (IAmActive)
             {

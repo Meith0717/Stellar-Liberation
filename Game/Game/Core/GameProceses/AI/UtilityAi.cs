@@ -44,7 +44,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI
 
             // Auswahl des Verhaltens basierend auf Prioritäten und Spielsituation
             mCurrentBehavior = SelectBehavior();
-            if (mCurrentBehavior != mLastBehavior) 
+            if (mCurrentBehavior != mLastBehavior)
                 mLastBehavior?.Recet();
             mLastBehavior = mCurrentBehavior;
 

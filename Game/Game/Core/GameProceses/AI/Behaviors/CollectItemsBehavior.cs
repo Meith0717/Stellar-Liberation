@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.GameObjects;
-using StellarLiberation.Game.GameObjects.Recources.Items;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,8 +28,8 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
             var shielHhullScore = mSpaceship.DefenseSystem.ShieldPercentage * .8 + mSpaceship.DefenseSystem.HullPercentage * .2;
 
-            var distanceToFirstOpponent = 1 - ( 1 / (1d * Vector2.Distance(mSpaceship.Position, opponents.First().Position) + 1));
-            return opponentsInRageScore * distanceToFirstOpponent * shielHhullScore;    
+            var distanceToFirstOpponent = 1 - (1 / (1d * Vector2.Distance(mSpaceship.Position, opponents.First().Position) + 1));
+            return opponentsInRageScore * distanceToFirstOpponent * shielHhullScore;
         }
 
         public override void Execute()

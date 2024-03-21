@@ -14,7 +14,6 @@ using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
-using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using StellarLiberation.Game.Layers.GameLayers;
@@ -41,7 +40,10 @@ namespace StellarLiberation.Game.Layers
         {
             mMapConfig = new(50, 50, 42);
             PlanetSystems = MapFactory.Generate(mMapConfig);
-            SpaceShips.AddSpaceShip(PlanetSystems.First(), SpaceshipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, PlanetSystems.First().SystemRadius)), ShipID.Destroyer, Fractions.Allied));
+            for (int i = 0; i < 10; i++)
+            {
+                SpaceShips.AddSpaceShip(PlanetSystems.First(), SpaceshipFactory.Get(Vector2.One * 50000, ShipID.Destroyer, Fractions.Allied));
+            }
             mIsInitialised = true;
         }
 
@@ -73,7 +75,7 @@ namespace StellarLiberation.Game.Layers
         public override void Draw(SpriteBatch spriteBatch)
         {
             mFrameCounter.UpdateFrameCouning();
-             GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.Black);
             mLayers.Last?.Value.Draw(spriteBatch);
             spriteBatch.Begin();
             DebugSystem.ShowInfo(new(10, 10));
@@ -81,14 +83,14 @@ namespace StellarLiberation.Game.Layers
             spriteBatch.End();
         }
 
-        public override void Destroy() 
+        public override void Destroy()
         {
             SpaceShips.Dispose(); // Remove Disposed Spaceships IMPORTANT
         }
 
-        public override void ApplyResolution() 
+        public override void ApplyResolution()
         {
-            foreach (var layer in mLayers) 
+            foreach (var layer in mLayers)
                 layer.ApplyResolution();
         }
     }

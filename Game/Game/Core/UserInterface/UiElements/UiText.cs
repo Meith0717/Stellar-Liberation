@@ -25,7 +25,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             FontID = fontID;
         }
 
-        private static Vector2 GetTextDimension(string fontID, string text) 
+        private static Vector2 GetTextDimension(string fontID, string text)
             => TextureManager.Instance.GetFont(fontID).MeasureString(text);
 
         public override void Draw()

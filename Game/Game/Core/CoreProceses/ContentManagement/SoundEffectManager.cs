@@ -9,7 +9,6 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static System.Collections.Specialized.BitVector32;
 
 namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 {
@@ -71,11 +70,11 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
             }
         }
 
-        public void PauseAllSounds() 
+        public void PauseAllSounds()
         {
             foreach (var instances in SoundEffectInstances.Values)
             {
-                foreach (var instance in instances.Where((instance) => instance.State == SoundState.Playing )) 
+                foreach (var instance in instances.Where((instance) => instance.State == SoundState.Playing))
                     instance.Pause();
             }
         }

@@ -1,9 +1,8 @@
-﻿// SpaceshipConfig.cs 
+﻿// SpaceShipConfig.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using StellarLiberation.Game.Core.GameProceses.AI;
 using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement

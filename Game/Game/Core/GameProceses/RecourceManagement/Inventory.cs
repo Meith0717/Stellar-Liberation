@@ -40,7 +40,7 @@ namespace StellarLiberation.Game.Core.GameProceses.RecourceManagement
             {
                 var addetAmount = stackCapacity - inItemStack.Amount;
                 if (addetAmount > item.Amount) addetAmount = item.Amount;
-                inItemStack.Amount  += addetAmount;
+                inItemStack.Amount += addetAmount;
                 item.Amount -= addetAmount;
             }
 

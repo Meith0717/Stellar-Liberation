@@ -1,4 +1,4 @@
-﻿// TractorBeam.cs 
+﻿// ItemCollector.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
@@ -29,7 +29,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
             {
                 container.IsDisposed = true;
                 if (!ContinuousCollisionDetection.HasCollide(gameTime, container, spaceShip, out _)) continue;
-                foreach (var item in  container.Items)
+                foreach (var item in container.Items)
                 {
                     if (!inventory.HasSpace(item)) continue;
                     inventory.Add(item);

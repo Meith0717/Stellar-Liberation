@@ -21,7 +21,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         private readonly Hull mHull;
 
         public Asteroid(Vector2 position, string textureID, float textureScale)
-            : base(position, textureID, textureScale, 50) 
+            : base(position, textureID, textureScale, 50)
         {
             mHull = new(BoundedBox.GetPolygone());
         }

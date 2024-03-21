@@ -38,7 +38,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
 
             UiFrame settingsFrame; mMainFrame.AddChild(settingsFrame = new() { Width = 1000, Height = 900, Anchor = Anchor.Center });
             settingsFrame.AddChild(new UiText(FontRegistries.subTitleFont, "Settings") { Anchor = Anchor.NW, HSpace = 20, VSpace = 20 });
-            settingsFrame.AddChild(mSettingsGrid = new UiGrid(new List<float>() { 0.3f, 0.7f }, Enumerable.Repeat(1f/15, 15).ToList()) { RelHeight = .9f, RelWidth = .9f, Anchor = Anchor.S, VSpace = 10 });
+            settingsFrame.AddChild(mSettingsGrid = new UiGrid(new List<float>() { 0.3f, 0.7f }, Enumerable.Repeat(1f / 15, 15).ToList()) { RelHeight = .9f, RelWidth = .9f, Anchor = Anchor.S, VSpace = 10 });
 
             mSettingsGrid.Set(0, 0, new UiText(FontRegistries.subTitleFont, "Audio") { Anchor = Anchor.Center });
             mSettingsGrid.Set(0, 1, new UiText(FontRegistries.textFont, "Master") { Anchor = Anchor.E, HSpace = 20 });
@@ -52,7 +52,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
             mSettingsGrid.Set(0, 10, new UiText(FontRegistries.textFont, "Particle Multiplier") { Anchor = Anchor.E, HSpace = 20 });
 
             settingsFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Back & Save") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = Exit });
-            settingsFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Start Benchmark") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = () =>  LayerManager.AddLayer(new BenchmarkLayer(Game1)) });
+            settingsFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Start Benchmark") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = () => LayerManager.AddLayer(new BenchmarkLayer(Game1)) });
             mMasterSlider = new(GameSettings.MasterVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
             mMusicSlider = new(GameSettings.MusicVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
             mSfxSlider = new(GameSettings.SoundEffectsVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
@@ -80,7 +80,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
             spriteBatch.End();
         }
 
-        public override void ApplyResolution() 
+        public override void ApplyResolution()
         {
             mMainFrame.ApplyResolution(GraphicsDevice.Viewport.Bounds, ResolutionManager.Resolution);
         }

@@ -7,7 +7,6 @@
 // Copyright (c) 2023 Thierry Meiers 
 // All rights reserved.
 
-using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 namespace StellarLiberation.Game.GameObjects.Recources.Items
 {

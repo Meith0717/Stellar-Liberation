@@ -25,7 +25,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement
         {
         }
 
-        public void Update() 
+        public void Update()
         {
             foreach (var weapon in Weapons)
                 weapon.Update(mSpaceship.Rotation);

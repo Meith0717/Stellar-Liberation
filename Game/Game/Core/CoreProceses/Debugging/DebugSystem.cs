@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugging
         private bool ShowPaths;
         private bool ShowAi;
 
-        public DebugSystem(bool isActive = false) 
+        public DebugSystem(bool isActive = false)
         {
             IsDebug = isActive;
             debugActions = new()
@@ -71,11 +71,11 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugging
         public void ShowInfo(Vector2 position)
         {
             if (!IsDebug) return;
-            foreach (var action in debugActions) 
+            foreach (var action in debugActions)
             {
                 action.DrawInfo(position);
                 position.Y += 15;
-            } 
+            }
 
         }
 

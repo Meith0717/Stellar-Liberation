@@ -29,7 +29,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             ClearChilds();
             Item = item;
             AddChild(new UiSprite(item.UiTextureId) { FillScale = FillScale.Fit, Anchor = Anchor.Center });
-            if (item.IsStakable) 
+            if (item.IsStakable)
                 AddChild(new UiText(FontRegistries.textFont, item.Amount.ToString()) { Anchor = Anchor.SE, HSpace = 5, VSpace = 5 });
         }
 

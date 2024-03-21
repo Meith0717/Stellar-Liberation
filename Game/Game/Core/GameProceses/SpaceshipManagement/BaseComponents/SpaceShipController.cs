@@ -1,4 +1,4 @@
-﻿// SpaceshipController.cs 
+﻿// SpaceShipController.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
-using StellarLiberation.Game.Layers.GameLayers;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components
 {
@@ -21,7 +20,8 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
             if (inputState.HasAction(ActionType.Accelerate))
             {
                 mVelocityProcentage = MathHelper.Clamp(mVelocityProcentage + .002f * (float)gameTime.ElapsedGameTime.TotalMilliseconds, 0, 1);
-            } else
+            }
+            else
             {
                 mVelocityProcentage = MathHelper.Clamp(mVelocityProcentage - .002f * (float)gameTime.ElapsedGameTime.TotalMilliseconds, 0, 1);
             }

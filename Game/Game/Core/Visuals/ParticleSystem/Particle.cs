@@ -18,8 +18,8 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem
 
         public bool IsDisposed => DisposeTime <= 0;
 
-        public Particle(Vector2 position, Vector2 movementDirection, float velocity, Color color, int dispodeTime) 
-            => Populate(position, movementDirection, velocity, color, dispodeTime);  
+        public Particle(Vector2 position, Vector2 movementDirection, float velocity, Color color, int dispodeTime)
+            => Populate(position, movementDirection, velocity, color, dispodeTime);
 
         public void Populate(Vector2 position, Vector2 movementDirection, float velocity, Color color, int dispodeTime)
         {
@@ -37,6 +37,6 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem
         }
 
         public void Draw()
-            =>TextureManager.Instance.Draw(GameSpriteRegistries.particle, Position, .1f, 0f, 9, Color);
+            => TextureManager.Instance.Draw(GameSpriteRegistries.particle, Position, .1f, 0f, 9, Color);
     }
 }

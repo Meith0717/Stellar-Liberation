@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
-using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using System;
 using System.Collections.Generic;
@@ -81,7 +80,7 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
             {
                 foreach (var y in yRange)
                 {
-                    if (!TryGetObjectsInBucket(x * CellSize, y * CellSize,out var objectsInBucket)) continue;
+                    if (!TryGetObjectsInBucket(x * CellSize, y * CellSize, out var objectsInBucket)) continue;
                     foreach (GameObject2D gameObject in objectsInBucket.OfType<T>())
                     {
                         if (!CircleF.Intersects(lookUpCircle, gameObject.BoundedBox)) continue;

@@ -1,4 +1,4 @@
-﻿// SpaceshipFactory.cs 
+﻿// SpaceShipFactory.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement;
-using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 
 namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
 {

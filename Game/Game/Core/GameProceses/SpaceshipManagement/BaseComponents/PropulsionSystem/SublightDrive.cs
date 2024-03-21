@@ -5,7 +5,6 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.Debugging;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using System;
@@ -74,7 +73,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
         private void UpdateRotation(GameTime gameTime, Spaceship spaceShip)
         {
             if (mDirection is null) return;
-            var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, Geometry.GetPointInDirection(spaceShip.Position, (Vector2)mDirection, 1)); 
+            var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, Geometry.GetPointInDirection(spaceShip.Position, (Vector2)mDirection, 1));
             spaceShip.Rotation += rotationUpdate * Maneuverability * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
@@ -112,7 +111,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
             IsMoving = false;
         }
 
-        public void Draw(DebugSystem debugSystem, Spaceship spaceShip, GameLayer scene) 
+        public void Draw(DebugSystem debugSystem, Spaceship spaceShip, GameLayer scene)
             => debugSystem.DrawMovingDir(mDirection, spaceShip, scene);
     }
 }

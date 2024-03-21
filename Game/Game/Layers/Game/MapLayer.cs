@@ -37,7 +37,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, 0.1f, 5);
+            Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, 0.01f, 5);
             Camera2DMover.UpdateCameraByMouseDrag(inputState, Camera2D);
             Camera2DMover.MoveByKeys(gameTime, inputState, Camera2D);
 
@@ -46,12 +46,17 @@ namespace StellarLiberation.Game.Layers.GameLayers
             foreach (var system in GameState.PlanetSystems)
             {
                 system.Update(gameTime, inputState, this);
-                GameObject2DInteractionManager.Manage(inputState, system, this, ()=> LeftPressAction(system), null, () => system.IsHovered = true); ;
             }
+            var objByMouse = SpatialHashing.GetObjectsInRadius<PlanetSystem>(WorldMousePosition, 200);
+            foreach (var system in objByMouse)
+            {
+                GameObject2DInteractionManager.Manage(inputState, system, this, () => LeftPressAction(system), null, () => system.IsHovered = true); ;
+            }
+
             base.Update(gameTime, inputState);
         }
 
-        void LeftPressAction(PlanetSystem planetSystem)
+        private void LeftPressAction(PlanetSystem planetSystem)
         {
             if (mCurrentSystem == planetSystem) return;
             GameState.PopLayer();

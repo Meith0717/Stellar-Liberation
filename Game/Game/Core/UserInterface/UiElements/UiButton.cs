@@ -22,7 +22,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
         public Action OnClickAction;
         private float mScaling;
 
-        public UiButton(string SpriteId, string text, TextAllign textAllign = TextAllign.Center) 
+        public UiButton(string SpriteId, string text, TextAllign textAllign = TextAllign.Center)
             : base(SpriteId, 1)
         {
             mText = new(FontRegistries.buttonFont, text)
@@ -46,7 +46,8 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             {
                 mScaling += (float)(0.01d * gameTime.ElapsedGameTime.TotalMilliseconds);
                 inputState.DoAction(ActionType.Select, () => { OnClickAction?.Invoke(); IsHover = false; mScaling = 1; });
-            } else
+            }
+            else
             {
                 mScaling -= (float)(0.01d * gameTime.ElapsedGameTime.TotalMilliseconds);
             }

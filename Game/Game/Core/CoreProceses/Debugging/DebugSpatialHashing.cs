@@ -23,7 +23,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugging
                 TextureManager.Instance.DrawAdaptiveLine(scene.WorldMousePosition, obj.Position, Color.Orange,
                     2, TextureManager.MaxLayerDepth, scene.Camera2D.Zoom);
             }
-            TextureManager.Instance.DrawAdaptiveCircle(scene.WorldMousePosition, 10000, Color.Blue, 1 , 1, scene.Camera2D.Zoom);
+            TextureManager.Instance.DrawAdaptiveCircle(scene.WorldMousePosition, 10000, Color.Blue, 1, 1, scene.Camera2D.Zoom);
             var GameObjects = scene.SpatialHashing.GetObjectsInRadius<GameObject2D>(scene.WorldMousePosition, 10000);
             foreach (var obj in GameObjects)
             {

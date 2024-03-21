@@ -39,9 +39,9 @@ namespace StellarLiberation.Game.Layers.MenueLayers
                     PersistanceManager.SaveAsync(PersistanceManager.GameSaveFilePath, gameState, () => LayerManager.PopLayer(), (ex) => throw ex);
                 }
             });
-            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Settings") { Anchor = Anchor.CenterV, RelY = .2f, RelWidth = .8f, OnClickAction = () => LayerManager.AddLayer(new SettingsLayer(Game1))});
+            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Settings") { Anchor = Anchor.CenterV, RelY = .2f, RelWidth = .8f, OnClickAction = () => LayerManager.AddLayer(new SettingsLayer(Game1)) });
             buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Resume") { Anchor = Anchor.CenterV, RelY = .35f, RelWidth = .8f, OnClickAction = () => { LayerManager.PopLayer(); SoundEffectManager.Instance.ResumeAllSounds(); } });
-            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Exit to Menue") { Anchor = Anchor.CenterV, RelY = .7f, RelWidth = .8f, OnClickAction = Menue,});
+            buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Exit to Menue") { Anchor = Anchor.CenterV, RelY = .7f, RelWidth = .8f, OnClickAction = Menue, });
             buttonFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Exit to Desktop") { Anchor = Anchor.CenterV, RelY = .85f, RelWidth = .8f, OnClickAction = () => LayerManager.Exit() });
             SoundEffectManager.Instance.PauseAllSounds();
         }
@@ -55,7 +55,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
             spriteBatch.End();
         }
 
-        public override void ApplyResolution() 
+        public override void ApplyResolution()
         {
             mBackgroundLayer.ApplyResolution(GraphicsDevice.Viewport.Bounds, ResolutionManager.Resolution);
         }

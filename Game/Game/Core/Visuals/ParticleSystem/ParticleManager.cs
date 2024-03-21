@@ -44,7 +44,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem
         public void Update(GameTime gameTime)
         {
             var particles = mParticles.ToList();
-            foreach ( var particle in particles)
+            foreach (var particle in particles)
             {
                 particle.Update(gameTime);
                 if (!particle.IsDisposed) continue;
@@ -57,7 +57,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem
             foreach (var particle in mParticles)
             {
                 if (!camera2D.Contains(particle.Position)) continue;
-               particle.Draw();
+                particle.Draw();
             }
         }
 

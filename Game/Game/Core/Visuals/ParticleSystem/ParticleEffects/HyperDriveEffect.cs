@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
-using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
 
 namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects

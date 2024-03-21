@@ -43,7 +43,20 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGenerati
                 < 1000 => StoneTextures[seededRandom.Next(3)],
                 _ => WarmTextures[seededRandom.Next(3)]
             };
-            return new(distanceToStar, angle, texture, seededRandom.Next(5, 20));
+
+            float size = kelvin switch
+            {
+                < 100 => seededRandom.Next(40, 50) * .1f,
+                < 200 => seededRandom.Next(60, 100) * .1f,
+                < 250 => seededRandom.Next(45, 55) * .1f,
+                < 280 => seededRandom.Next(50, 55) * .1f,
+                < 330 => seededRandom.Next(50, 55) * .1f,
+                < 500 => seededRandom.Next(50, 55) * .1f,
+                < 1000 => seededRandom.Next(45, 50) * .1f,
+                _ => seededRandom.Next(40, 45) * .1f
+            };
+
+            return new(distanceToStar, angle, texture, size);
         }
     }
 }

@@ -70,6 +70,6 @@ namespace StellarLiberation.Game.Core.Utilitys
             );
         }
 
-        public static Vector2 Rotation(Vector2 rotationCenter, Vector2 rotatetVector, float angleRad) =>  RotateVector(rotatetVector, angleRad) + rotationCenter;
+        public static Vector2 Rotation(Vector2 rotationCenter, Vector2 rotatetVector, float angleRad) => RotateVector(rotatetVector, angleRad) + rotationCenter;
     }
 }

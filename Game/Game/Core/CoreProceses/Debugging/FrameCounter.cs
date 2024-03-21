@@ -3,8 +3,6 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace StellarLiberation.Game.Core.CoreProceses.Debugging
 {
@@ -26,12 +24,12 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugging
 
         public FrameCounter(int cooldown = 0) => mMaxCoolDown = cooldown;
 
-        public void Update(GameTime gameTime) 
+        public void Update(GameTime gameTime)
         {
             mGameTime = gameTime;
             if (mCoolDown <= 0) mCoolDown = mMaxCoolDown;
             mCoolDown -= gameTime.ElapsedGameTime.Milliseconds;
-        } 
+        }
 
         public void UpdateFrameCouning()
         {

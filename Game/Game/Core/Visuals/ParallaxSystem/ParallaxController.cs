@@ -1,4 +1,4 @@
-﻿// ParllaxManager.cs 
+﻿// ParallaxController.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
@@ -15,7 +15,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParallaxSystem
         private readonly Camera2D mCamera2D;
         private Vector2 mLastPosition;
 
-        public ParallaxController(Camera2D camera2D) 
+        public ParallaxController(Camera2D camera2D)
         {
             mCamera2D = camera2D;
             mLastPosition = mCamera2D.Position;
