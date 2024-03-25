@@ -3,6 +3,8 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 
 namespace StellarLiberation.Game.Core.Visuals.Rendering
@@ -27,7 +29,7 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
         public static bool UpdateCameraByMouseDrag(InputState inputState, Camera2D camera)
         {
             var wasMoved = false;
-            if (inputState.HasAction(ActionType.RightClickHold))
+            if (inputState.HasAction(ActionType.LeftClickHold))
             {
                 Vector2 delta = inputState.mMousePosition - lastMousePosition;
                 camera.Position -= delta / camera.Zoom;
@@ -36,6 +38,17 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
 
             lastMousePosition = inputState.mMousePosition;
             return wasMoved;
+        }
+
+        public static void EdgeScrolling (InputState inputState, GameTime gameTime, GraphicsDevice graphicsDevice, Camera2D camera)
+        {
+            var screen = graphicsDevice.Viewport.Bounds;
+            var edge = screen.Size.ToVector2() * 0.10f;
+            var bounds = new RectangleF(screen.Location.ToVector2() + (edge/2), screen.Size.ToVector2() - edge);
+            if (bounds.Contains(inputState.mMousePosition)) return;
+            var center = screen.Center;
+            var dir = Vector2.Normalize(inputState.mMousePosition - center.ToVector2());
+            camera.Position += (dir * .5f * (float)gameTime.ElapsedGameTime.TotalMilliseconds) / camera.Zoom;
         }
 
         public static bool MoveByKeys(GameTime gameTime, InputState inputState, Camera2D camera)

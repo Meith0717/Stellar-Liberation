@@ -19,7 +19,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
     {
         private readonly Vector2 MainBodyPosition = Vector2.Zero;
         private float mShadowRotation;
-        private readonly int OrbitRadius;
+        public readonly int OrbitRadius;
 
         public float Mass => float.PositiveInfinity;
 
@@ -48,7 +48,13 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             base.Draw(scene);
             TextureManager.Instance.Draw(GameSpriteRegistries.planetShadow, Position, TextureOffset, TextureScale * 1.03f, mShadowRotation, TextureDepth + 1, Color.White * 0.875f);
             TextureManager.Instance.DrawGameObject(this);
-            TextureManager.Instance.DrawAdaptiveCircle(MainBodyPosition, OrbitRadius, Color.Gray * .1f, 1, TextureDepth - 1, scene.Camera2D.Zoom);
+        }
+
+        public Vector2 GetPositionInOrbit(Vector2 actualPosition)
+        {
+            var dirToActualPosition = Vector2.Normalize(actualPosition - Position);
+            var position = (dirToActualPosition * (BoundedBox.Radius + 500)) + Position;
+            return position;
         }
     }
 }

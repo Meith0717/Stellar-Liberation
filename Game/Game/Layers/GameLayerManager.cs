@@ -2,6 +2,7 @@
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
+using MathNet.Numerics.Distributions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
@@ -14,6 +15,7 @@ using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
+using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using StellarLiberation.Game.Layers.GameLayers;
@@ -31,7 +33,7 @@ namespace StellarLiberation.Game.Layers
         [JsonIgnore] public List<PlanetSystem> PlanetSystems { get; private set; }
         [JsonIgnore] public readonly DebugSystem DebugSystem = new();
         [JsonIgnore] private readonly LinkedList<Layer> mLayers = new();
-        [JsonIgnore] private readonly FrameCounter mFrameCounter = new(1000);
+        [JsonIgnore] private readonly FrameCounter mFrameCounter = new(200);
         [JsonProperty] public readonly SpaceshipTracer SpaceShips = new();
         [JsonProperty] private readonly MapConfig mMapConfig;
         [JsonProperty] public readonly Wallet Wallet = new();
@@ -40,9 +42,10 @@ namespace StellarLiberation.Game.Layers
         {
             mMapConfig = new(50, 50, 42);
             PlanetSystems = MapFactory.Generate(mMapConfig);
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
-                SpaceShips.AddSpaceShip(PlanetSystems.First(), SpaceshipFactory.Get(Vector2.One * 50000, ShipID.Destroyer, Fractions.Allied));
+                var pos = ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, PlanetSystems.First().SystemRadius));
+                SpaceShips.AddSpaceShip(PlanetSystems.First(), SpaceshipFactory.Get(pos, ShipID.Destroyer, Fractions.Allied));
             }
             mIsInitialised = true;
         }

@@ -15,7 +15,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugging
     {
         public static void ObjectsInBucket(GameLayer scene)
         {
-            RectangleF rectangle = new(scene.WorldMousePosition, new(10000, 10000));
+            RectangleF rectangle = new(scene.WorldMousePosition - new Vector2(10000, 10000), new(20000, 20000));
             TextureManager.Instance.DrawAdaptiveRectangleF(rectangle, Color.Orange, 1, 1, scene.Camera2D.Zoom);
             var GameObjects1 = scene.SpatialHashing.GetObjectsInRectangle<GameObject2D>(rectangle);
             foreach (var obj in GameObjects1)

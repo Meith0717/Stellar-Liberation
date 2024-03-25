@@ -10,7 +10,7 @@ namespace StellarLiberation.Game.Core.CoreProceses
 {
     internal class SelectionBox
     {
-        private readonly Vector2 mStartPosition;
+        private Vector2 mStartPosition;
         private RectangleF mBox = new();
 
         public SelectionBox(Vector2 position)
