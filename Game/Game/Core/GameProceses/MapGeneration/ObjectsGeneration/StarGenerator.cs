@@ -14,7 +14,7 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGenerati
         {
             var kelvin = seededRandom.Next(2000, 50000);
             var color = GetStarColor(kelvin);
-            var size = seededRandom.Next(17, 17);
+            var size = seededRandom.Next(17, 17) * .5f;
             return new(size, kelvin, color);
         }
 

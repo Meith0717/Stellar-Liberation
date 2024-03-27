@@ -24,7 +24,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
         public readonly GameObjectsInteractor SpaceShipInteractor;
 
         public PlanetSystemLayer(GameLayerManager gameState, PlanetSystem planetSystem, Game1 game1)
-            : base(gameState, 10000, game1)
+            : base(gameState, 5000, game1)
         {
             HUDLayer = new PlanetSystemHud(this, game1);
             HUDLayer.ApplyResolution();

@@ -27,7 +27,6 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
         private readonly UiFrame mMainFrame;
         private readonly PlanetSystemLayer mPlanetSystemLayer;
-        private readonly Grid mGrid;
         private readonly List<UiFrame> mPopups = new();
         private UiFrame mBottomLeftMenue = new();
 
@@ -38,9 +37,8 @@ namespace StellarLiberation.Game.Layers.GameLayers
             mMainFrame = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
 
             mMainFrame.AddChild(new UiButton(MenueSpriteRegistries.pause, "") { Anchor = Anchor.NE, HSpace = 20, VSpace = 20, OnClickAction = () => LayerManager.AddLayer(new PauseLayer(planetSystemLayer.GameState, Game1)) });
+            mMainFrame.AddChild(new UiButton(MenueSpriteRegistries.map, "") { Anchor = Anchor.SE, HSpace = 20, VSpace = 20, OnClickAction = null });
             mPlanetSystemLayer = planetSystemLayer;
-            mGrid = new(10000);
-
         }
 
         public void AddPopup(UiFrame uiFrame)
@@ -73,7 +71,6 @@ namespace StellarLiberation.Game.Layers.GameLayers
             if (Hide) return;
 
             spriteBatch.Begin(transformMatrix: mPlanetSystemLayer.ViewTransformationMatrix);
-            mGrid.Draw(mPlanetSystemLayer);
             foreach (var spaceship in mPlanetSystemLayer.SpaceShipInteractor.SelectedSpaceships)
                 TextureManager.Instance.DrawCircle(spaceship.Position, spaceship.BoundedBox.Radius, Color.Purple, 10, 1);
             if (mPlanetSystemLayer.SpaceShipInteractor.HoveredGameObject is not null)

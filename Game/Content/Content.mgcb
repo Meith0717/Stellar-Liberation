@@ -1568,30 +1568,6 @@
 /processorParam:TextureFormat=Color
 /build:textures/menueSprites/buttons/arrowL.png
 
-#begin textures/menueSprites/buttons/arrowL.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/menueSprites/buttons/arrowL.png
-
-#begin textures/menueSprites/buttons/arrowR.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/menueSprites/buttons/arrowR.png
-
 #begin textures/menueSprites/buttons/arrowR.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1616,18 +1592,6 @@
 /processorParam:TextureFormat=Color
 /build:textures/menueSprites/buttons/button.png
 
-#begin textures/menueSprites/buttons/button.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/menueSprites/buttons/button.png
-
 #begin textures/menueSprites/buttons/button1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1639,30 +1603,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/menueSprites/buttons/button1.png
-
-#begin textures/menueSprites/buttons/button1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/menueSprites/buttons/button1.png
-
-#begin textures/menueSprites/buttons/copyright.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/menueSprites/buttons/copyright.png
 
 #begin textures/menueSprites/buttons/copyright.png
 /importer:TextureImporter
@@ -1688,6 +1628,18 @@
 /processorParam:TextureFormat=Color
 /build:textures/menueSprites/buttons/dot.png
 
+#begin textures/menueSprites/buttons/map.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/menueSprites/buttons/map.png
+
 #begin textures/menueSprites/buttons/menu.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1699,18 +1651,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/menueSprites/buttons/menu.png
-
-#begin textures/menueSprites/buttons/pause.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/menueSprites/buttons/pause.png
 
 #begin textures/menueSprites/buttons/pause.png
 /importer:TextureImporter
@@ -1747,18 +1687,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/menueSprites/buttons/toggleOn.png
-
-#begin textures/menueSprites/buttons/xMark.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/menueSprites/buttons/xMark.png
 
 #begin textures/menueSprites/buttons/xMark.png
 /importer:TextureImporter

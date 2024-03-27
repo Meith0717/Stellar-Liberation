@@ -46,14 +46,14 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGenerati
 
             float size = kelvin switch
             {
-                < 100 => seededRandom.Next(40, 50) * .1f,
-                < 200 => seededRandom.Next(60, 100) * .1f,
-                < 250 => seededRandom.Next(45, 55) * .1f,
-                < 280 => seededRandom.Next(50, 55) * .1f,
-                < 330 => seededRandom.Next(50, 55) * .1f,
-                < 500 => seededRandom.Next(50, 55) * .1f,
-                < 1000 => seededRandom.Next(45, 50) * .1f,
-                _ => seededRandom.Next(40, 45) * .1f
+                < 100 => seededRandom.Next(40, 50) * .05f,
+                < 200 => seededRandom.Next(60, 100) * .05f,
+                < 250 => seededRandom.Next(45, 55) * .05f,
+                < 280 => seededRandom.Next(50, 55) * .05f,
+                < 330 => seededRandom.Next(50, 55) * .05f,
+                < 500 => seededRandom.Next(50, 55) * .05f,
+                < 1000 => seededRandom.Next(45, 50) * .05f,
+                _ => seededRandom.Next(40, 45) * .05f
             };
 
             return new(distanceToStar, angle, texture, size);

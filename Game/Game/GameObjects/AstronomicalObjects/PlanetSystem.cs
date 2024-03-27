@@ -45,11 +45,11 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             PlanetCount = (int)Triangular.Sample(seededRandom, 1, 10, 7);
             for (int i = 1; i <= PlanetCount; i++)
             {
-                distanceToStar += seededRandom.Next(8000, 20000);
+                distanceToStar += seededRandom.Next(4000, 10000);
                 AstrononomicalObjects.Add(PlanetGenerator.GetPlanet(seededRandom, star.Kelvin, distanceToStar));
             }
 
-            distanceToStar += 50000;
+            distanceToStar += 10000;
             SystemRadius = distanceToStar;
         }
 
