@@ -15,6 +15,7 @@ using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
+using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using StellarLiberation.Game.Layers.MenueLayers;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
             mMainFrame = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
 
             mMainFrame.AddChild(new UiButton(MenueSpriteRegistries.pause, "") { Anchor = Anchor.NE, HSpace = 20, VSpace = 20, OnClickAction = () => LayerManager.AddLayer(new PauseLayer(planetSystemLayer.GameState, Game1)) });
-            mMainFrame.AddChild(new UiButton(MenueSpriteRegistries.map, "") { Anchor = Anchor.SE, HSpace = 20, VSpace = 20, OnClickAction = null });
+            mMainFrame.AddChild(new UiButton(MenueSpriteRegistries.map, "") { Anchor = Anchor.SE, HSpace = 20, VSpace = 20, OnClickAction = planetSystemLayer.OpenMap });
             mPlanetSystemLayer = planetSystemLayer;
         }
 
@@ -47,10 +48,14 @@ namespace StellarLiberation.Game.Layers.GameLayers
             mPopups.Add(uiFrame);
         }
 
+
+
         public override void Update(GameTime gameTime, InputState inputState)
         {
             inputState.DoAction(ActionType.F1, () => Hide = !Hide);
             if (Hide) return;
+            inputState.DoAction(ActionType.ToggleHyperMap, mPlanetSystemLayer.OpenMap);
+            
 
             mMainFrame.Update(inputState, gameTime);
             foreach (var uiFranes in mPopups)

@@ -27,7 +27,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
             }
 
             spaceShip.SublightDrive.SetVelocity(mVelocityProcentage);
-            spaceShip.SublightDrive.MoveInDirection(Vector2.Normalize(gameLayer.WorldMousePosition - spaceShip.Position));
+            spaceShip.SublightDrive.MoveToTarget(spaceShip.Position);
             spaceShip.SensorSystem.TryGetAimingShip(spaceShip.Position, out var target);
             gameLayer.Camera2D.Position = spaceShip.Position;
         }

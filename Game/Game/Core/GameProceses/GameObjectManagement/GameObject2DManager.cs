@@ -82,7 +82,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
                 obj.Update(gameTime, inputState, gameLayer);
 
                 if (!obj.IsDisposed) continue;
-                if (!AllObjects.Remove(obj)) return;
+                if (!Remove(obj)) return;
                 gameLayer.SpatialHashing.RemoveObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
             }
         }

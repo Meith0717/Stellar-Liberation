@@ -40,7 +40,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
             UpdateVelocity(gameTime, spaceShip, damage);
 
             if (mVectorTarget is null) return;
-            if (Vector2.Distance((Vector2)mVectorTarget, spaceShip.Position) > 1000) return;
+            if (Vector2.Distance((Vector2)mVectorTarget, spaceShip.Position) > 200) return;
             Standstill();
             SetVelocity(0);
         }

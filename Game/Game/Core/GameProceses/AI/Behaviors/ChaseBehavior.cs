@@ -35,8 +35,9 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
             {
                 case null: // Get new Patrol Target
                     var targets = mSpaceship.SensorSystem.Opponents;
-                    mSpaceship.SublightDrive.FollowSpaceship(mPatrolTarget = targets.First());
-                    mSpaceship.SublightDrive.SetVelocity(.2f);
+                    mPatrolTarget = targets.First();
+                    mSpaceship.SublightDrive.MoveToTarget(mPatrolTarget.Position);
+                    mSpaceship.SublightDrive.SetVelocity(1f);
                     break;
 
                 case not null: // Check if Patrol Target is reached
@@ -50,6 +51,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
         public override void Recet()
         {
+            mSpaceship.SublightDrive.SetVelocity(0);
             mPatrolTarget = null;
         }
     }

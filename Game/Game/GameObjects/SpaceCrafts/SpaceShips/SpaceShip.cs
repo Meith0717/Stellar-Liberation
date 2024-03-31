@@ -20,9 +20,7 @@ using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components;
 using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components.PropulsionSystem;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
-using StellarLiberation.Game.GameObjects.Recources.Items;
 using System;
-using System.Collections.Generic;
 
 namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
 {
@@ -63,11 +61,6 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
             mAccentColor = accentCoor;
             PhaserCannaons.PlaceTurret(new(Vector2.Zero, 1, TextureDepth + 1));
 
-            mUtilityAi.AddBehavior(new IdleBehavior(SublightDrive));
-            mUtilityAi.AddBehavior(new ChaseBehavior(this));
-            mUtilityAi.AddBehavior(new CollectItemsBehavior(this));
-            mUtilityAi.AddBehavior(new CombatBehavior(this));
-            mUtilityAi.AddBehavior(new FleeBehavior(this));
             ID = ExtendetRandom.Random.NextFullRangeInt32();
         }
 
@@ -87,7 +80,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
             DefenseSystem.Update(gameTime);
             mItemCollector.Collect(gameTime, this, gameLayer);
             PhaserCannaons.Update(gameTime, this, gameLayer);
-            // mUtilityAi.Update(gameTime);
+            mUtilityAi.Update(gameTime);
 
             if (DefenseSystem.HullPercentage <= 0) Explode(gameLayer);
         }
@@ -99,15 +92,6 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
             var distance = Vector2.Distance(gameLayer.Camera2D.Position, Position);
             var threshold = MathHelper.Clamp(1 - (distance / 7500), 0, 1);
             gameLayer.CameraShaker.Shake(200 * threshold, 1);
-
-            var lst = new List<Item>()
-            {
-                 ItemFactory.Get(ItemID.Iron),
-                 ItemFactory.Get(ItemID.Iron),
-                 ItemFactory.Get(ItemID.Iron),
-                 ItemFactory.Get(ItemID.Iron)
-            };
-            gameLayer.GameObjectsManager.Add(new Container(Position, lst));
         }
 
         private void HasProjectileHit(GameTime gameTime, GameLayer scene)

@@ -66,6 +66,7 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
 
         public bool TryGetObjectsInBucket(int x, int y, out GameObject2DManager object2Ds) => mSpatialGrids.TryGetValue(Hash(x, y), out object2Ds);
 
+
         public void GetObjectsInRadius<T>(Vector2 position, float radius, ref List<T> objectsInRadius, bool sortedByDistance = true) where T : GameObject2D
         {
             var startX = (int)Math.Floor((position.X - radius) / CellSize);
@@ -92,8 +93,8 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
             if (!sortedByDistance) return;
             objectsInRadius.Sort((obj1, obj2) =>
             {
-                var distance1 = Vector2.DistanceSquared(position, obj1.Position);
-                var distance2 = Vector2.DistanceSquared(position, obj2.Position);
+                var distance1 = Vector2.Distance(position, obj1.Position) - obj1.BoundedBox.Radius;
+                var distance2 = Vector2.Distance(position, obj2.Position) - obj2.BoundedBox.Radius;
                 return distance1.CompareTo(distance2);
             });
         }

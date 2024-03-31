@@ -59,6 +59,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
         {
             mSpaceship.PhaserCannaons.StopFire();
             mBias1 = .4f + ExtendetRandom.Random.NextSingle() * .2f;
+            mSpaceship.SublightDrive.SetVelocity(0);
         }
     }
 }

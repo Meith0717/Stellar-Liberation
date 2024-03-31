@@ -12,10 +12,10 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
         public IdleBehavior(SublightDrive sublightDrive) => mSublightDrive = sublightDrive;
 
-        public override void Execute() => mSublightDrive.SetVelocity(0);
+        public override void Execute() {; }
 
         public override double GetScore() => 0.01f;
 
-        public override void Recet() {; }
+        public override void Recet() { mSublightDrive.SetVelocity(0); }
     }
 }

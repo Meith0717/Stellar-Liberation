@@ -57,14 +57,14 @@ namespace StellarLiberation.Game.Layers.GameLayers
             ApplyResolution();
         }
 
+        public void OpenMap() => GameState.AddLayer(new MapLayer(GameState, PlanetSystem, Game1));
+
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            inputState.DoAction(ActionType.ToggleHyperMap, () => GameState.AddLayer(new MapLayer(GameState, PlanetSystem, Game1)));
-
             mParallaxController.Update();
             mBackgroundLayer.Update(inputState, gameTime);
             Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, .008f, 1);
-            Camera2DMover.EdgeScrolling(inputState, gameTime, GraphicsDevice, Camera2D);
+            Camera2DMover.UpdateCameraByMouseDrag(inputState, Camera2D);
             Camera2DMover.MoveByKeys(gameTime, inputState, Camera2D);
             SpaceShipInteractor.Update(inputState, this);
             base.Update(gameTime, inputState);

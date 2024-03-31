@@ -7,7 +7,9 @@ using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
+using System.Xml.Schema;
 
 namespace StellarLiberation.Game.Core.CoreProceses.Debugging
 {
@@ -15,7 +17,9 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugging
     {
         public static void ObjectsInBucket(GameLayer scene)
         {
-            RectangleF rectangle = new(scene.WorldMousePosition - new Vector2(10000, 10000), new(20000, 20000));
+            var radius = GameObjectsInteractor.LookupRange;
+            var radius2 = radius * 2;
+            RectangleF rectangle = new(scene.WorldMousePosition - new Vector2(radius), new(radius2, radius2));
             TextureManager.Instance.DrawAdaptiveRectangleF(rectangle, Color.Orange, 1, 1, scene.Camera2D.Zoom);
             var GameObjects1 = scene.SpatialHashing.GetObjectsInRectangle<GameObject2D>(rectangle);
             foreach (var obj in GameObjects1)
@@ -23,8 +27,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugging
                 TextureManager.Instance.DrawAdaptiveLine(scene.WorldMousePosition, obj.Position, Color.Orange,
                     2, TextureManager.MaxLayerDepth, scene.Camera2D.Zoom);
             }
-            TextureManager.Instance.DrawAdaptiveCircle(scene.WorldMousePosition, 10000, Color.Blue, 1, 1, scene.Camera2D.Zoom);
-            var GameObjects = scene.SpatialHashing.GetObjectsInRadius<GameObject2D>(scene.WorldMousePosition, 10000);
+            TextureManager.Instance.DrawAdaptiveCircle(scene.WorldMousePosition, radius, Color.Blue, 1, 1, scene.Camera2D.Zoom);
+            var GameObjects = scene.SpatialHashing.GetObjectsInRadius<GameObject2D>(scene.WorldMousePosition, radius);
             foreach (var obj in GameObjects)
             {
                 TextureManager.Instance.DrawAdaptiveLine(scene.WorldMousePosition, obj.Position, Color.Blue,

@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using static StellarLiberation.Game.Core.Visuals.Rendering.Camera2DMover;
 
 namespace StellarLiberation.Game.Core.Visuals.Rendering
 {
@@ -26,10 +27,12 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
 
         private static Vector2 lastMousePosition;
 
+        public enum DragInput { LeftHold, RightHold }
+
         public static bool UpdateCameraByMouseDrag(InputState inputState, Camera2D camera)
         {
             var wasMoved = false;
-            if (inputState.HasAction(ActionType.LeftClickHold))
+            if (inputState.HasAction(ActionType.RightClickHold))
             {
                 Vector2 delta = inputState.mMousePosition - lastMousePosition;
                 camera.Position -= delta / camera.Zoom;

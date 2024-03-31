@@ -42,11 +42,17 @@ namespace StellarLiberation.Game.Layers
         {
             mMapConfig = new(50, 50, 42);
             PlanetSystems = MapFactory.Generate(mMapConfig);
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 10; i++)
             {
                 var pos = ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, PlanetSystems.First().SystemRadius));
                 SpaceShips.AddSpaceShip(PlanetSystems.First(), SpaceshipFactory.Get(pos, ShipID.Destroyer, Fractions.Allied));
             }
+            for (int i = 0; i < 2; i++)
+            {
+                var pos = ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, PlanetSystems.First().SystemRadius));
+                SpaceShips.AddSpaceShip(PlanetSystems.First(), SpaceshipFactory.Get(pos, ShipID.Destroyer, Fractions.Enemys));
+            }
+
             mIsInitialised = true;
         }
 

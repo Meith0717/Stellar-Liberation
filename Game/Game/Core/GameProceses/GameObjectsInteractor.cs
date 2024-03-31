@@ -13,16 +13,16 @@ using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
-using StellarLiberation.Game.Layers.GameLayers;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace StellarLiberation.Game.Core.GameProceses
 {
     internal class GameObjectsInteractor
     {
+        public readonly static int LookupRange = 1000;
         public GameObject2D HoveredGameObject { get; private set; }
+        public HashSet<Spaceship> SelectedSpaceships => mSelectedSpaceShips;
         public readonly HashSet<Spaceship> mSelectedSpaceShips = new();
         private SelectionBox mSelectionBox;
 
@@ -31,50 +31,43 @@ namespace StellarLiberation.Game.Core.GameProceses
             var spatialHashing = gameLayer.SpatialHashing;
             var worldMousePosition = gameLayer.WorldMousePosition;
 
+            // Select SpaceShips by Selection Box
             CheckForSelectionBox(inputState, spatialHashing, worldMousePosition);
+
+            // Check for Hovered Object
             HoveredGameObject = null;
             var objectsByMouse = spatialHashing.GetObjectsInRadius<GameObject2D>(worldMousePosition, 5000);
-            if (objectsByMouse.Count <= 0) return;
-            var nearestObjectsByMouse = objectsByMouse.First();
-            if (!nearestObjectsByMouse.BoundedBox.Contains(worldMousePosition)) return;
-            HoveredGameObject = nearestObjectsByMouse;
-            if (!(inputState.Actions.Contains(ActionType.LeftClick)
-                || inputState.Actions.Contains(ActionType.RightClick))) 
-                return;
+            if (objectsByMouse.Count > 0 && objectsByMouse.First().BoundedBox.Contains(worldMousePosition))
+                HoveredGameObject = objectsByMouse.First();
 
-            switch (nearestObjectsByMouse)
+            // Interact
+            if (!inputState.HasAction(ActionType.LeftClick)) return;
+            switch (HoveredGameObject)
             {
                 case Spaceship:
-                    var spaceship = (Spaceship)nearestObjectsByMouse;
-                    Debug.WriteLine($"Spaceship clicked: {spaceship}");
-                    if (spaceship.Fraction == Fractions.Enemys) break;
+                    var spaceship = (Spaceship)HoveredGameObject;
                     SelectOrUnselect(spaceship);
-                    return;
+                    break;
                 case Planet:
-                    var planet = (Planet)nearestObjectsByMouse;
-                    Debug.WriteLine($"Planet clicked: {planet}");
-                    switch (mSelectedSpaceShips.Count)
+                    var planet = (Planet)HoveredGameObject;
+                    if (mSelectedSpaceShips.Count > 0)
                     {
-                        case <= 0:
-                            break;
-                        case > 0:
-                            foreach (var obj in mSelectedSpaceShips)
-                            {
-                                obj.SublightDrive.SetVelocity(1f);
-                                obj.SublightDrive.MoveToTarget(planet.GetPositionInOrbit(obj.Position));
-                            }
-                            mSelectedSpaceShips.Clear();
-                            break;
+                        MoveSpaceShipsToPlanet(planet);
+                        break;
                     }
-                    return;
+                    break;
+                case null:
+                    if (SelectedSpaceships.Count > 0)
+                        MoveSpaceShipsToPosition(worldMousePosition);
+                    break;
             }
         }
 
         #region Space Ships Interactions
-        public HashSet<Spaceship> SelectedSpaceships => mSelectedSpaceShips;
 
         private void SelectOrUnselect(Spaceship spaceship)
         {
+            if (spaceship.Fraction == Fractions.Enemys) return;
             if (mSelectedSpaceShips.Remove(spaceship)) return;
             mSelectedSpaceShips.Add(spaceship);
         }
@@ -87,13 +80,37 @@ namespace StellarLiberation.Game.Core.GameProceses
                 var selectionBox = mSelectionBox;
                 mSelectionBox = null;
                 if (selectionBox.Length < 1000) return;
+                mSelectedSpaceShips.Clear();
                 var objInBox = spatialHashing.GetObjectsInRectangle<Spaceship>(selectionBox.ToRectangleF());
                 foreach (var obj in objInBox)
+                {
+                    if (obj.Fraction == Fractions.Enemys) continue;
                     mSelectedSpaceShips.Add(obj);
+                }
                 return;
             }
             mSelectionBox ??= new(worldMousePosition);
             mSelectionBox.Update(worldMousePosition);
+        }
+
+        public void MoveSpaceShipsToPosition(Vector2 position)
+        {
+            foreach (var obj in mSelectedSpaceShips)
+            {
+                obj.SublightDrive.SetVelocity(1f);
+                obj.SublightDrive.MoveToTarget(position);
+            }
+            SelectedSpaceships.Clear();
+        }
+
+        public void MoveSpaceShipsToPlanet(Planet planet)
+        {
+            foreach (var obj in mSelectedSpaceShips)
+            {
+                obj.SublightDrive.SetVelocity(1f);
+                obj.SublightDrive.MoveToTarget(planet.GetPositionInOrbit(obj.Position));
+            }
+            SelectedSpaceships.Clear();
         }
 
         #endregion
