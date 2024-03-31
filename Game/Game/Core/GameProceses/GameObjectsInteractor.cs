@@ -12,13 +12,15 @@ using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
+using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
+using StellarLiberation.Game.Popups;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace StellarLiberation.Game.Core.GameProceses
 {
-    internal class GameObjectsInteractor
+    public class GameObjectsInteractor
     {
         public readonly static int LookupRange = 1000;
         public GameObject2D HoveredGameObject { get; private set; }
@@ -26,7 +28,7 @@ namespace StellarLiberation.Game.Core.GameProceses
         public readonly HashSet<Spaceship> mSelectedSpaceShips = new();
         private SelectionBox mSelectionBox;
 
-        public void Update(InputState inputState, GameLayer gameLayer)
+        public void Update(InputState inputState, GameLayer gameLayer, Layer hudLayer, PlanetSystem planetSystem)
         {
             var spatialHashing = gameLayer.SpatialHashing;
             var worldMousePosition = gameLayer.WorldMousePosition;
@@ -52,10 +54,15 @@ namespace StellarLiberation.Game.Core.GameProceses
                     var planet = (Planet)HoveredGameObject;
                     if (mSelectedSpaceShips.Count > 0)
                     {
-                        MoveSpaceShipsToPlanet(planet);
+                        MoveSpaceShipsToPlanet(gameLayer, planetSystem, planet);
                         break;
                     }
                     break;
+                case Star:
+                    var star = (Star)HoveredGameObject;
+                    hudLayer.ClearUiElements();
+                    hudLayer.AddUiElement(new StarInfoPopup(star));
+                    break;                  
                 case null:
                     if (SelectedSpaceships.Count > 0)
                         MoveSpaceShipsToPosition(worldMousePosition);
@@ -103,10 +110,15 @@ namespace StellarLiberation.Game.Core.GameProceses
             SelectedSpaceships.Clear();
         }
 
-        public void MoveSpaceShipsToPlanet(Planet planet)
+        public void MoveSpaceShipsToPlanet(GameLayer gameLayer, PlanetSystem planetSystem, Planet planet)
         {
             foreach (var obj in mSelectedSpaceShips)
             {
+                if (gameLayer.GameState.SpaceshipLocator.Locate(obj) != planetSystem)
+                {
+                    obj.HyperDrive.SetTarget(planetSystem);
+                    continue;
+                }
                 obj.SublightDrive.SetVelocity(1f);
                 obj.SublightDrive.MoveToTarget(planet.GetPositionInOrbit(obj.Position));
             }

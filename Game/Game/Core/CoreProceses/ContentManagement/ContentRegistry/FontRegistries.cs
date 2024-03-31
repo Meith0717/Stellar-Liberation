@@ -13,5 +13,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegi
         public readonly static Registry descriptionFont = new(fonts, "descriptionFont");
         public readonly static Registry titleFont = new(fonts, "titleFont");
         public readonly static Registry subTitleFont = new(fonts, "subTitleFont");
+        public readonly static Registry hoverFont = new(fonts, "hoverFont");
     }
 }

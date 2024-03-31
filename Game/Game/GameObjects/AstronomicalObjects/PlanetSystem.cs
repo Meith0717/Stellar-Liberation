@@ -13,16 +13,16 @@ using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGeneration;
 using System;
-using System.Collections.Generic;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
 {
+    [Serializable]
     public class PlanetSystem : GameObject2D
     {
         public bool IsHovered;
         public Fractions Occupier = Fractions.Neutral;
 
-        public readonly List<GameObject2D> AstrononomicalObjects = new();
+        public GameObject2DList GameObjects = new();
         public readonly int SystemRadius;
         private readonly Sector mSector;
         private readonly int? PlanetCount;
@@ -40,13 +40,13 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             TextureColor = star.TextureColor;
             Temperature = star.Kelvin;
 
-            AstrononomicalObjects.Add(star);
+            GameObjects.Add(star);
             var distanceToStar = (int)star.BoundedBox.Radius;
             PlanetCount = (int)Triangular.Sample(seededRandom, 1, 10, 7);
             for (int i = 1; i <= PlanetCount; i++)
             {
                 distanceToStar += seededRandom.Next(4000, 10000);
-                AstrononomicalObjects.Add(PlanetGenerator.GetPlanet(seededRandom, star.Kelvin, distanceToStar));
+                GameObjects.Add(PlanetGenerator.GetPlanet(seededRandom, star.Kelvin, distanceToStar));
             }
 
             distanceToStar += 10000;

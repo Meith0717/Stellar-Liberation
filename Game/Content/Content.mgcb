@@ -35,6 +35,13 @@
 /processorParam:TextureFormat=Compressed
 /build:fonts/descriptionFont.spritefont
 
+#begin fonts/hoverFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:fonts/hoverFont.spritefont
+
 #begin fonts/subTitleFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

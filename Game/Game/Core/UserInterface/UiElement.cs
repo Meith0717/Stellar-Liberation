@@ -11,7 +11,7 @@ namespace StellarLiberation.Game.Core.UserInterface
     public abstract class UiElement
     {
         protected Canvas Canvas;
-
+        public bool IsDisposed { get; protected set; }
         public UiElement() => Canvas = new Canvas();
         public abstract void Update(InputState inputState, GameTime gameTime);
         public abstract void Draw();

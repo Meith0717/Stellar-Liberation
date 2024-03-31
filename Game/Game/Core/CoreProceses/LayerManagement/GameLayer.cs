@@ -19,7 +19,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
     {
         public Vector2 WorldMousePosition { get; private set; }
         public Matrix ViewTransformationMatrix { get; private set; }
-        public GameObject2DManager GameObjectsManager;
         public readonly Debugging.DebugSystem DebugSystem;
         public readonly SpatialHashing SpatialHashing;
         public readonly ParticleManager ParticleManager;
@@ -33,27 +32,26 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
             DebugSystem = gameState.DebugSystem ?? new(true);
 
             SpatialHashing = new(spatialHashingCellSize);
-            GameObjectsManager = new();
             ParticleManager = new();
             Camera2D = new();
             CameraShaker = new();
             GameState = gameState;
-            GameObjectsManager.Initialize(SpatialHashing);
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            base.Update(gameTime, inputState);
             HUDLayer?.Update(gameTime, inputState);
             ParticleManager.Update(gameTime);
             CameraShaker.Update(Camera2D, gameTime);
             Camera2D.ApplyResolution(ResolutionManager.Resolution, this);
             ViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera2D.Position, Camera2D.Zoom, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
             WorldMousePosition = Transformations.ScreenToWorld(ViewTransformationMatrix, inputState.mMousePosition);
-            GameObjectsManager.Update(gameTime, inputState, this);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            base.Draw(spriteBatch);
             spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: ViewTransformationMatrix, samplerState: SamplerState.PointClamp);
             Camera2D.Draw(this);
             ParticleManager.Draw(Camera2D);
@@ -65,12 +63,14 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
 
         public override void ApplyResolution()
         {
+            base.ApplyResolution();
             HUDLayer?.ApplyResolution();
             Camera2D.ApplyResolution(ResolutionManager.Resolution, this);
         }
 
         public override void Destroy()
         {
+            base.Destroy();
             SpatialHashing.ClearBuckets();
             ParticleManager.Clear();
         }

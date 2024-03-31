@@ -38,7 +38,9 @@ namespace StellarLiberation.Game.GameObjects.Recources.Weapons
         }
 
         public void Fire(GameLayer gameLayer, Spaceship target)
-            => gameLayer.GameObjectsManager.Add(new WeaponProjectile(mPosition, mRotation, mSpaceship, target, HullDamage, ShieldDamage, mProjectileFollowTarget, mProjectileTextureID, mProjectileColor));
+        {
+            //gameLayer.GameObjectsManager.Add(new WeaponProjectile(mPosition, mRotation, mSpaceship, target, HullDamage, ShieldDamage, mProjectileFollowTarget, mProjectileTextureID, mProjectileColor));
+        }
 
         public void Update(float rotation)
         {

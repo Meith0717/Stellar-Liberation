@@ -41,7 +41,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
             if (TargetPlanetSystem is null) return;
             HyperDriveEffect.Charge(operatingShip.Position, scene.ParticleManager);
             if (CoolDown >= mActualChargingTime) return;
-            scene.GameState.SpaceShips.ChangePlanetSystem(scene.GameState.SpaceShips.LocateSpaceShip(operatingShip), TargetPlanetSystem, operatingShip);
+            scene.GameState.SpaceshipLocator.ChangeSystem(operatingShip, TargetPlanetSystem);
             operatingShip.Position = ExtendetRandom.NextVectorOnBorder(new(Vector2.Zero, TargetPlanetSystem.SystemRadius));
             TargetPlanetSystem = null;
             IsActive = false;

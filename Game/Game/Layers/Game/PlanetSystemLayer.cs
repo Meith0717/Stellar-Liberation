@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.Core.GameProceses;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Visuals.ParallaxSystem;
@@ -18,17 +18,15 @@ namespace StellarLiberation.Game.Layers.GameLayers
 {
     internal class PlanetSystemLayer : GameLayer
     {
-        public readonly PlanetSystem PlanetSystem;
+        public PlanetSystem PlanetSystem { get; private set; }
         private readonly UiFrame mBackgroundLayer;
         private readonly ParallaxController mParallaxController;
-        public readonly GameObjectsInteractor SpaceShipInteractor;
 
         public PlanetSystemLayer(GameLayerManager gameState, PlanetSystem planetSystem, Game1 game1)
             : base(gameState, 5000, game1)
         {
             HUDLayer = new PlanetSystemHud(this, game1);
             HUDLayer.ApplyResolution();
-            SpaceShipInteractor = new();
 
             mBackgroundLayer = new()
             {
@@ -45,10 +43,6 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
             Camera2D.Zoom = 0.01f;
             PlanetSystem = planetSystem;
-            GameObjectsManager.AddRange(PlanetSystem.AstrononomicalObjects);
-            GameObjectsManager.AddRange(GameState.SpaceShips.GetSpaceshipsOfPlanetSystem(PlanetSystem));
-            GameObjectsManager.Initialize(SpatialHashing);
-
             mParallaxController = new(Camera2D);
             mParallaxController.Add(new(GameSpriteRegistries.gameBackgroundParlax1, .01f));
             mParallaxController.Add(new(GameSpriteRegistries.gameBackgroundParlax2, .04f));
@@ -66,7 +60,8 @@ namespace StellarLiberation.Game.Layers.GameLayers
             Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, .008f, 1);
             Camera2DMover.UpdateCameraByMouseDrag(inputState, Camera2D);
             Camera2DMover.MoveByKeys(gameTime, inputState, Camera2D);
-            SpaceShipInteractor.Update(inputState, this);
+            GameState.GameObjectsInteractor.Update(inputState, this, HUDLayer, PlanetSystem);
+            GameObject2DManager.Update(gameTime, inputState, this, ref PlanetSystem.GameObjects);
             base.Update(gameTime, inputState);
         }
 
@@ -80,7 +75,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
             base.Draw(spriteBatch);
 
             spriteBatch.Begin(transformMatrix: ViewTransformationMatrix);
-            SpaceShipInteractor.Draw(Camera2D);
+            GameState.GameObjectsInteractor.Draw(Camera2D);
             spriteBatch.End();
         }
 

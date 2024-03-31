@@ -21,7 +21,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
                 ShipID.Bomber => new(
                     textureID: GameSpriteRegistries.bomber,
                     textureScale: 1,
-                    velocity: 5,
+                    velocity: 1,
                     turretCoolDown: 500,
                     shieldForce: 100,
                     hullForce: 300,
@@ -33,7 +33,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
                 ShipID.Cargo => new(
                     textureID: GameSpriteRegistries.cargo,
                     textureScale: 1,
-                    velocity: 5,
+                    velocity: 1,
                     turretCoolDown: 500,
                     shieldForce: 100,
                     hullForce: 100,
@@ -45,7 +45,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
                 ShipID.Corvette => new(
                     textureID: GameSpriteRegistries.corvette,
                     textureScale: 1,
-                    velocity: 5,
+                    velocity: 1,
                     turretCoolDown: 500,
                     shieldForce: 100,
                     hullForce: 100,
@@ -57,7 +57,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
                 ShipID.Cuiser => new(
                     textureID: GameSpriteRegistries.cruiser,
                     textureScale: 1,
-                    velocity: 5,
+                    velocity: 1,
                     turretCoolDown: 500,
                     shieldForce: 100,
                     hullForce: 100,
@@ -69,7 +69,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
                 ShipID.Destroyer => new(
                     textureID: GameSpriteRegistries.destroyer,
                     textureScale: 1,
-                    velocity: 5,
+                    velocity: 1,
                     turretCoolDown: 50,
                     shieldForce: 10000,
                     hullForce: 100000,
@@ -81,7 +81,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
                 ShipID.Fighter => new(
                     textureID: GameSpriteRegistries.fighter,
                     textureScale: 1,
-                    velocity: 5,
+                    velocity: 1,
                     turretCoolDown: 50,
                     shieldForce: 100,
                     hullForce: 100,

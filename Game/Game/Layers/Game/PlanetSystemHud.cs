@@ -10,15 +10,12 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Core.GameProceses;
-using StellarLiberation.Game.Core.GameProceses.GridSystem;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
-using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using StellarLiberation.Game.Layers.MenueLayers;
-using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Layers.GameLayers
 {
@@ -28,10 +25,6 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
         private readonly UiFrame mMainFrame;
         private readonly PlanetSystemLayer mPlanetSystemLayer;
-        private readonly List<UiFrame> mPopups = new();
-        private UiFrame mBottomLeftMenue = new();
-
-        public UiFrame SetLeftMenue { set { mBottomLeftMenue = value; } }
 
         public PlanetSystemHud(PlanetSystemLayer planetSystemLayer, Game1 game1) : base(game1, true)
         {
@@ -42,58 +35,45 @@ namespace StellarLiberation.Game.Layers.GameLayers
             mPlanetSystemLayer = planetSystemLayer;
         }
 
-        public void AddPopup(UiFrame uiFrame)
-        {
-            uiFrame.ApplyResolution(GraphicsDevice.Viewport.Bounds, ResolutionManager.Resolution);
-            mPopups.Add(uiFrame);
-        }
-
-
-
         public override void Update(GameTime gameTime, InputState inputState)
         {
             inputState.DoAction(ActionType.F1, () => Hide = !Hide);
             if (Hide) return;
+            base.Update(gameTime, inputState);
             inputState.DoAction(ActionType.ToggleHyperMap, mPlanetSystemLayer.OpenMap);
             
 
             mMainFrame.Update(inputState, gameTime);
-            foreach (var uiFranes in mPopups)
-                uiFranes.Update(inputState, gameTime);
         }
 
         public override void ApplyResolution()
         {
+            base.ApplyResolution();
             mMainFrame.ApplyResolution(GraphicsDevice.Viewport.Bounds, ResolutionManager.Resolution);
-            foreach (var uiFranes in mPopups)
-                uiFranes.ApplyResolution(GraphicsDevice.Viewport.Bounds, ResolutionManager.Resolution);
         }
-
-        public override void Destroy() { }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (Hide) return;
 
             spriteBatch.Begin(transformMatrix: mPlanetSystemLayer.ViewTransformationMatrix);
-            foreach (var spaceship in mPlanetSystemLayer.SpaceShipInteractor.SelectedSpaceships)
+            foreach (var spaceship in mPlanetSystemLayer.GameState.GameObjectsInteractor.SelectedSpaceships)
                 TextureManager.Instance.DrawCircle(spaceship.Position, spaceship.BoundedBox.Radius, Color.Purple, 10, 1);
-            if (mPlanetSystemLayer.SpaceShipInteractor.HoveredGameObject is not null)
+            if (mPlanetSystemLayer.GameState.GameObjectsInteractor.HoveredGameObject is not null)
             {
-                var obi = mPlanetSystemLayer.SpaceShipInteractor.HoveredGameObject;
+                var obi = mPlanetSystemLayer.GameState.GameObjectsInteractor.HoveredGameObject;
                 TextureManager.Instance.DrawAdaptiveCircle(obi.Position, obi.BoundedBox.Radius, Color.White * .4f, 2, 1, mPlanetSystemLayer.Camera2D.Zoom);
             }
-            foreach (var spaceship in mPlanetSystemLayer.GameObjectsManager.OfType<Spaceship>())
+            foreach (var spaceship in mPlanetSystemLayer.PlanetSystem.GameObjects.OfType<Spaceship>())
                 TextureManager.Instance.Draw(GameSpriteRegistries.radar, spaceship.Position, .04f / mPlanetSystemLayer.Camera2D.Zoom, 0, spaceship.TextureDepth + 1, spaceship.Fraction == Fractions.Enemys ? Color.Red : Color.LightGreen);
-            foreach (var planet in mPlanetSystemLayer.GameObjectsManager.OfType<Planet>())
+            foreach (var planet in mPlanetSystemLayer.PlanetSystem.GameObjects.OfType<Planet>())
                 TextureManager.Instance.DrawAdaptiveCircle(Vector2.Zero, planet.OrbitRadius, Color.Gray * .1f, 1, planet.TextureDepth - 1, mPlanetSystemLayer.Camera2D.Zoom);
             spriteBatch.End();
 
             spriteBatch.Begin();
             mMainFrame.Draw();
-            foreach (var uiFrame in mPopups)
-                uiFrame.Draw();
             spriteBatch.End();
+            base.Draw(spriteBatch);
         }
     }
 }

@@ -55,7 +55,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
                 Fractions.Neutral => throw new NotImplementedException(),
                 _ => throw new NotImplementedException()
             };
-            SublightDrive = new(5, 0.01f);
+            SublightDrive = new(1, 0.01f);
             PhaserCannaons = new(100, accentCoor, 10, 10);
             DefenseSystem = new(1000, 100, 10);
             mAccentColor = accentCoor;

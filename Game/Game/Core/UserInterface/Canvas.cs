@@ -3,6 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 
 namespace StellarLiberation.Game.Core.UserInterface

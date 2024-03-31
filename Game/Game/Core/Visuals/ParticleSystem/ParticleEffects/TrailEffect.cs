@@ -14,7 +14,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
             for (int i = 1; i < gameTime.ElapsedGameTime.TotalMilliseconds * velocity * multiplier; i += 5)
             {
                 var spawnPos = Geometry.GetPointInDirection(position, movingDir, -i);
-                particleManager.Add(spawnPos, Vector2.Zero, 0, color, ExtendetRandom.Random.Next(20, 60));
+                particleManager.Add(spawnPos, Vector2.Zero, 0, color, ExtendetRandom.Random.Next(100, 300));
             }
         }
     }

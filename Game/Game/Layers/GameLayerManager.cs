@@ -2,7 +2,6 @@
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
-using MathNet.Numerics.Distributions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
@@ -30,11 +29,12 @@ namespace StellarLiberation.Game.Layers
     public class GameLayerManager : Layer
     {
         [JsonIgnore] private bool mIsInitialised;
-        [JsonIgnore] public List<PlanetSystem> PlanetSystems { get; private set; }
         [JsonIgnore] public readonly DebugSystem DebugSystem = new();
         [JsonIgnore] private readonly LinkedList<Layer> mLayers = new();
         [JsonIgnore] private readonly FrameCounter mFrameCounter = new(200);
-        [JsonProperty] public readonly SpaceshipTracer SpaceShips = new();
+        [JsonIgnore] public readonly GameObjectsInteractor GameObjectsInteractor = new();
+        [JsonIgnore] public readonly SpaceshipLocator SpaceshipLocator = new();
+        [JsonProperty] public List<PlanetSystem> PlanetSystems { get; private set; }
         [JsonProperty] private readonly MapConfig mMapConfig;
         [JsonProperty] public readonly Wallet Wallet = new();
 
@@ -45,12 +45,12 @@ namespace StellarLiberation.Game.Layers
             for (int i = 0; i < 10; i++)
             {
                 var pos = ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, PlanetSystems.First().SystemRadius));
-                SpaceShips.AddSpaceShip(PlanetSystems.First(), SpaceshipFactory.Get(pos, ShipID.Destroyer, Fractions.Allied));
+                PlanetSystems.First().GameObjects.Add(SpaceshipFactory.Get(pos, ShipID.Destroyer, Fractions.Allied));
             }
             for (int i = 0; i < 2; i++)
             {
                 var pos = ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, PlanetSystems.First().SystemRadius));
-                SpaceShips.AddSpaceShip(PlanetSystems.First(), SpaceshipFactory.Get(pos, ShipID.Destroyer, Fractions.Enemys));
+                PlanetSystems.First().GameObjects.Add(SpaceshipFactory.Get(pos, ShipID.Destroyer, Fractions.Enemys));
             }
 
             mIsInitialised = true;
@@ -78,6 +78,7 @@ namespace StellarLiberation.Game.Layers
             mFrameCounter.Update(gameTime);
             DebugSystem.Update(inputState);
             inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this, Game1)));
+            SpaceshipLocator.Update(PlanetSystems);
             mLayers.Last?.Value.Update(gameTime, inputState);
         }
 
@@ -90,11 +91,6 @@ namespace StellarLiberation.Game.Layers
             DebugSystem.ShowInfo(new(10, 10));
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(1, 1), $"{MathF.Round(mFrameCounter.CurrentFramesPerSecond)} fps", 0.75f, Color.White);
             spriteBatch.End();
-        }
-
-        public override void Destroy()
-        {
-            SpaceShips.Dispose(); // Remove Disposed Spaceships IMPORTANT
         }
 
         public override void ApplyResolution()

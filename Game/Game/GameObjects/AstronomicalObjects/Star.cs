@@ -16,7 +16,6 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
     public class Star : GameObject2D, ICollidable
     {
         public readonly int Kelvin;
-        private readonly Light mLight;
         public float Mass => float.PositiveInfinity;
 
         public Star(float textureScale, int temperature, Color color)
@@ -24,19 +23,13 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         {
             Kelvin = temperature;
             TextureColor = color;
-            mLight = new PointLight
-            {
-                Radius = BoundedBox.Radius,
-                ShadowType = ShadowType.Solid
-            };
         }
 
         public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
         {
+            scene.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
             base.Update(gameTime, inputState, scene);
-            mLight.Scale = new Vector2(3000000);
-            mLight.Position = Position;
-            mLight.Color = TextureColor * .5f;
+            scene.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
 
         public override void Draw(GameLayer scene)
