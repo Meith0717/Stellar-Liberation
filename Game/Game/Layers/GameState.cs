@@ -12,9 +12,6 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration;
-using StellarLiberation.Game.Core.GameProceses.PositionManagement;
-using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
-using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using StellarLiberation.Game.Layers.GameLayers;
@@ -26,34 +23,29 @@ using System.Linq;
 namespace StellarLiberation.Game.Layers
 {
     [Serializable]
-    public class GameLayerManager : Layer
+    public class GameState : Layer
     {
-        [JsonIgnore] private bool mIsInitialised;
         [JsonIgnore] public readonly DebugSystem DebugSystem = new();
         [JsonIgnore] private readonly LinkedList<Layer> mLayers = new();
         [JsonIgnore] private readonly FrameCounter mFrameCounter = new(200);
         [JsonIgnore] public readonly GameObjectsInteractor GameObjectsInteractor = new();
-        [JsonIgnore] public readonly SpaceshipLocator SpaceshipLocator = new();
-        [JsonProperty] public List<PlanetSystem> PlanetSystems { get; private set; }
+        [JsonIgnore] public List<PlanetSystem> PlanetSystems;
+        [JsonProperty] private readonly List<PlanetsystemState> PlanetSystemStates;
         [JsonProperty] private readonly MapConfig mMapConfig;
-        [JsonProperty] public readonly Wallet Wallet = new();
 
-        public GameLayerManager(Game1 game1) : base(game1, false)
+        public GameState(Game1 game1) : base(game1, false)
         {
-            mMapConfig = new(50, 50, 42);
-            PlanetSystems = MapFactory.Generate(mMapConfig);
-            for (int i = 0; i < 10; i++)
-            {
-                var pos = ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, PlanetSystems.First().SystemRadius));
-                PlanetSystems.First().GameObjects.Add(SpaceshipFactory.Get(pos, ShipID.Destroyer, Fractions.Allied));
-            }
-            for (int i = 0; i < 2; i++)
-            {
-                var pos = ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, PlanetSystems.First().SystemRadius));
-                PlanetSystems.First().GameObjects.Add(SpaceshipFactory.Get(pos, ShipID.Destroyer, Fractions.Enemys));
-            }
+            mMapConfig = new(25, 25, 42);
+            PlanetSystemStates = MapFactory.Generate(mMapConfig);
+            PlanetSystemStates.First().GameObjects.Add(SpaceshipFactory.Get(Vector2.Zero, ShipID.Destroyer, Fractions.Allied));
+        }
 
-            mIsInitialised = true;
+        public override void Initialize()
+        {
+            PlanetSystems = MapFactory.GetPlanetSystems(PlanetSystemStates);
+            foreach (var planetsystemState in PlanetSystemStates)
+                planetsystemState.Initialize();
+            AddLayer(new PlanetSystemLayer(this, PlanetSystemStates.First(), Game1));
         }
 
         public void AddLayer(Layer layer)
@@ -70,15 +62,12 @@ namespace StellarLiberation.Game.Layers
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
-        {
-            if (mIsInitialised)
-                AddLayer(new PlanetSystemLayer(this, PlanetSystems.First(), Game1));
-            mIsInitialised = false;
-
+        { 
+            inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this, Game1)));
             mFrameCounter.Update(gameTime);
             DebugSystem.Update(inputState);
-            inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this, Game1)));
-            SpaceshipLocator.Update(PlanetSystems);
+            foreach (var planetsystemState in PlanetSystemStates)
+                planetsystemState.Update(gameTime, inputState, this);
             mLayers.Last?.Value.Update(gameTime, inputState);
         }
 

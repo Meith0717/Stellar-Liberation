@@ -6,6 +6,7 @@ using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
+using StellarLiberation.Game.Layers;
 using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.Visuals.Rendering
@@ -32,9 +33,10 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
         /// <summary>
         /// Renders the filtered 2D game objects in a given scene.
         /// </summary>
-        public void RenderFiltredObjs(GameLayer scene)
+        public void RenderFiltredObjs(GameState gameState, GameLayer scene)
         {
-            foreach (var obj in mObjects) obj.Draw(scene);
+            foreach (var obj in mObjects) 
+                obj.Draw(gameState, scene);
         }
     }
 }

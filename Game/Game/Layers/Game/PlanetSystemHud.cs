@@ -64,9 +64,9 @@ namespace StellarLiberation.Game.Layers.GameLayers
                 var obi = mPlanetSystemLayer.GameState.GameObjectsInteractor.HoveredGameObject;
                 TextureManager.Instance.DrawAdaptiveCircle(obi.Position, obi.BoundedBox.Radius, Color.White * .4f, 2, 1, mPlanetSystemLayer.Camera2D.Zoom);
             }
-            foreach (var spaceship in mPlanetSystemLayer.PlanetSystem.GameObjects.OfType<Spaceship>())
+            foreach (var spaceship in mPlanetSystemLayer.PlanetsystemState.GameObjects.OfType<Spaceship>())
                 TextureManager.Instance.Draw(GameSpriteRegistries.radar, spaceship.Position, .04f / mPlanetSystemLayer.Camera2D.Zoom, 0, spaceship.TextureDepth + 1, spaceship.Fraction == Fractions.Enemys ? Color.Red : Color.LightGreen);
-            foreach (var planet in mPlanetSystemLayer.PlanetSystem.GameObjects.OfType<Planet>())
+            foreach (var planet in mPlanetSystemLayer.PlanetsystemState.GameObjects.OfType<Planet>())
                 TextureManager.Instance.DrawAdaptiveCircle(Vector2.Zero, planet.OrbitRadius, Color.Gray * .1f, 1, planet.TextureDepth - 1, mPlanetSystemLayer.Camera2D.Zoom);
             spriteBatch.End();
 

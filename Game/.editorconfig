@@ -96,6 +96,9 @@ csharp_style_prefer_tuple_swap = true:suggestion
 # IDE0005: Using directive is unnecessary.
 dotnet_diagnostic.IDE0005.severity = suggestion
 
+# CS0612: Type or member is obsolete
+dotnet_diagnostic.CS0612.severity = warning
+
 [*.vb]
 #### Benennungsstile ####
 

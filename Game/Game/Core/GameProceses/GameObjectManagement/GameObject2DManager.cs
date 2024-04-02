@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
+using StellarLiberation.Game.Layers;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,16 +20,17 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
                 spatialHashing.InsertObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
         }
 
-        public static void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer, ref GameObject2DList gameObject2DList)
+        public static void Update(GameTime gameTime, InputState inputState, GameState gameState, PlanetsystemState planetsystemState, ref GameObject2DList gameObject2DList)
         {
             var copyList = new List<GameObject2D>(gameObject2DList.ToList());
-            foreach (var obj in copyList)
-            {
-                obj.Update(gameTime, inputState, gameLayer);
+            foreach (var obj in copyList) 
+            { 
+            
+                obj.Update(gameTime, inputState, gameState, planetsystemState);
 
                 if (!obj.IsDisposed) continue;
                 if (!gameObject2DList.Remove(obj)) return;
-                gameLayer.SpatialHashing.RemoveObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
+                planetsystemState.SpatialHashing.RemoveObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
             }
         }
 

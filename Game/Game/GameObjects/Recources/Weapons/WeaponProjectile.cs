@@ -6,9 +6,11 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
+using StellarLiberation.Game.Layers;
 
 namespace StellarLiberation.Game.GameObjects.Recources.Weapons
 {
@@ -32,16 +34,16 @@ namespace StellarLiberation.Game.GameObjects.Recources.Weapons
             TextureColor = color;
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
+        public override void Update(GameTime gameTime, InputState inputState, GameState gameState, PlanetsystemState planetsystemState)
         {
             if (mFollowTarget && Target is not null) Rotation = Geometry.AngleBetweenVectors(Position, Target.Position);
-            GameObject2DMover.Move(gameTime, this, scene.SpatialHashing);
-            base.Update(gameTime, inputState, scene);
+            GameObject2DMover.Move(gameTime, this, planetsystemState.SpatialHashing);
+            base.Update(gameTime, inputState, gameState, planetsystemState);
         }
 
-        public override void Draw(GameLayer scene)
+        public override void Draw(GameState gameState, GameLayer scene)
         {
-            base.Draw(scene);
+            base.Draw(gameState, scene);
             TextureManager.Instance.DrawGameObject(this);
         }
 

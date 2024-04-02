@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
+using StellarLiberation.Game.Layers;
 using System;
 using System.Collections.Generic;
 
@@ -35,7 +36,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.BaseCompo
         public void Fire() => mFire = true;
         public void StopFire() => mFire = false;
 
-        public void Update(GameTime gameTime, Spaceship origin, GameLayer scene)
+        public void Update(GameTime gameTime, Spaceship origin, PlanetsystemState planetsystemState)
         {
             mFireCoolDown -= gameTime.ElapsedGameTime.Milliseconds;
 
@@ -43,11 +44,15 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.BaseCompo
                 cannon.GetPosition(origin.Position, origin.Rotation, origin.Rotation);
             if (!mFire || mFireCoolDown > 0) return;
             foreach (var cannon in mCannons)
-                cannon.Fire(scene, origin, mParticleColor, mShielDamage, mHullDamage);
-            SoundEffectSystem.PlaySound(SoundEffectRegistries.torpedoFire, scene.Camera2D, origin.Position);
+                cannon.Fire(planetsystemState, origin, mParticleColor, mShielDamage, mHullDamage);
+            planetsystemState.StereoSounds.Enqueue(new(origin.Position, SoundEffectRegistries.torpedoFire));
             mFireCoolDown = mMaxFireCoolDown;
         }
 
-        public void Draw(GameLayer sceme) { foreach (var weapon in mCannons) weapon.Draw(sceme); }
+        public void Draw(GameState gameState, GameLayer sceme) 
+        { 
+            foreach (var weapon in mCannons) 
+                weapon.Draw(gameState, sceme); 
+        }
     }
 }

@@ -8,8 +8,10 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
+using StellarLiberation.Game.Layers;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
@@ -25,16 +27,16 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             TextureColor = color;
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameLayer scene)
+        public override void Update(GameTime gameTime, InputState inputState, GameState gameState, PlanetsystemState planetsystemState)
         {
-            scene.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
-            base.Update(gameTime, inputState, scene);
-            scene.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
+            planetsystemState.SpatialHashing.RemoveObject(this, (int)Position.X, (int)Position.Y);
+            base.Update(gameTime, inputState, gameState, planetsystemState);
+            planetsystemState.SpatialHashing.InsertObject(this, (int)Position.X, (int)Position.Y);
         }
 
-        public override void Draw(GameLayer scene)
+        public override void Draw(GameState gameState, GameLayer scene)
         {
-            base.Draw(scene);
+            base.Draw(gameState, scene);
             TextureManager.Instance.Draw(GameSpriteRegistries.starLightAlpha, Position, TextureOffset, TextureScale * 1.5f, Rotation, 0, TextureColor);
             TextureManager.Instance.DrawGameObject(this);
         }

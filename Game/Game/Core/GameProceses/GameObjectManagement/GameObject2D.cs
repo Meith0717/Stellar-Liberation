@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Layers;
 using System;
 
 namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
@@ -55,14 +56,14 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             BoundedBox.Radius = MaxTextureSize / 2 * scale;
         }
 
-        public virtual void Update(GameTime gameTime, InputState inputState, GameLayer scene)
+        public virtual void Update(GameTime gameTime, InputState inputState, GameState gameState, PlanetsystemState planetsystemState)
         {
             DisposeTime -= gameTime.ElapsedGameTime.TotalMilliseconds;
             IsDisposed = double.IsNegative(DisposeTime - 1) | IsDisposed;
-            scene.DebugSystem.UpdateObjectCount += 1;
+            gameState.DebugSystem.UpdateObjectCount += 1;
         }
 
-        public virtual void Draw(GameLayer scene)
+        public virtual void Draw(GameState gameState, GameLayer scene)
         {
             scene.DebugSystem.DrawnObjectCount += 1;
             scene.DebugSystem.DrawHitbox(BoundedBox, scene);

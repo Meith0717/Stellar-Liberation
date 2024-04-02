@@ -4,6 +4,7 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Layers;
 
 namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection
 {

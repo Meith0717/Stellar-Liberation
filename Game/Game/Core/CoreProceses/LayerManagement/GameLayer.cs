@@ -4,14 +4,17 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
+using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.Layers;
+using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
 {
@@ -21,18 +24,20 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         public Matrix ViewTransformationMatrix { get; private set; }
         public readonly Debugging.DebugSystem DebugSystem;
         public readonly SpatialHashing SpatialHashing;
-        public readonly ParticleManager ParticleManager;
         public readonly Camera2D Camera2D;
         public readonly Camera2DShaker CameraShaker;
-        public readonly GameLayerManager GameState;
+        public readonly GameState GameState;
         protected Layer HUDLayer;
 
-        public GameLayer(GameLayerManager gameState, int spatialHashingCellSize, Game1 game1) : base(game1, false)
+        protected readonly StereoSoundSystem mStereoSoundSystem = new();
+        protected readonly ParticleManager mParticleManager = new();
+
+        public GameLayer(GameState gameState, SpatialHashing spatialHashing, Game1 game1) 
+            : base(game1, false)
         {
             DebugSystem = gameState.DebugSystem ?? new(true);
 
-            SpatialHashing = new(spatialHashingCellSize);
-            ParticleManager = new();
+            SpatialHashing = spatialHashing;
             Camera2D = new();
             CameraShaker = new();
             GameState = gameState;
@@ -42,7 +47,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         {
             base.Update(gameTime, inputState);
             HUDLayer?.Update(gameTime, inputState);
-            ParticleManager.Update(gameTime);
             CameraShaker.Update(Camera2D, gameTime);
             Camera2D.ApplyResolution(ResolutionManager.Resolution, this);
             ViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera2D.Position, Camera2D.Zoom, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
@@ -53,8 +57,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         {
             base.Draw(spriteBatch);
             spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: ViewTransformationMatrix, samplerState: SamplerState.PointClamp);
-            Camera2D.Draw(this);
-            ParticleManager.Draw(Camera2D);
+            Camera2D.Draw(GameState, this);
+            mParticleManager.Draw(Camera2D);
             GameState.DebugSystem.DrawOnScene(this);
             spriteBatch.End();
 
@@ -72,7 +76,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         {
             base.Destroy();
             SpatialHashing.ClearBuckets();
-            ParticleManager.Clear();
+            mParticleManager.Clear();
         }
 
     }

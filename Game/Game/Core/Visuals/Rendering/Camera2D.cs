@@ -8,6 +8,7 @@ using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.Utilitys;
+using StellarLiberation.Game.Layers;
 
 namespace StellarLiberation.Game.Core.Visuals.Rendering
 {
@@ -42,9 +43,9 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
 
         public bool Intersects(RectangleF rectangle) => Bounds.Intersects(rectangle);
 
-        public void Draw(GameLayer scene)
+        public void Draw(GameState gameState, GameLayer scene)
         {
-            mRenderPipeline.RenderFiltredObjs(scene);
+            mRenderPipeline.RenderFiltredObjs(gameState, scene);
         }
     }
 }

@@ -11,7 +11,6 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.AI;
-using StellarLiberation.Game.Core.GameProceses.AI.Behaviors;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
@@ -20,6 +19,7 @@ using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components;
 using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components.PropulsionSystem;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
+using StellarLiberation.Game.Layers;
 using System;
 
 namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
@@ -64,39 +64,37 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
             ID = ExtendetRandom.Random.NextFullRangeInt32();
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameLayer gameLayer)
+        public override void Update(GameTime gameTime, InputState inputState, GameState gameState, PlanetsystemState planetsystemState)
         {
             SublightDrive.Update(gameTime, this, DefenseSystem.HullPercentage);
 
             MovingDirection = Geometry.CalculateDirectionVector(Rotation);
-            Physics.HandleCollision(gameTime, this, gameLayer.SpatialHashing);
-            GameObject2DMover.Move(gameTime, this, gameLayer.SpatialHashing);
-            base.Update(gameTime, inputState, gameLayer);
-            TrailEffect.Show(Transformations.Rotation(Position, new(-100, 0), Rotation), MovingDirection, Velocity, gameTime, mAccentColor, gameLayer.ParticleManager, gameLayer.GameSettings.ParticlesMultiplier);
+            Physics.HandleCollision(gameTime, this, planetsystemState.SpatialHashing);
+            GameObject2DMover.Move(gameTime, this, planetsystemState.SpatialHashing);
+            base.Update(gameTime, inputState, gameState, planetsystemState);
+            TrailEffect.Show(Transformations.Rotation(Position, new(-100, 0), Rotation), MovingDirection, Velocity, gameTime, mAccentColor, planetsystemState.ParticleEmitors, gameState.GameSettings.ParticlesMultiplier);
 
-            SensorSystem.Scan(gameTime, this, Fraction, gameLayer);
-            HasProjectileHit(gameTime, gameLayer);
-            HyperDrive.Update(gameTime, this, gameLayer);
+            SensorSystem.Scan(gameTime, this, Fraction, planetsystemState);
+            HasProjectileHit(gameTime, gameState, planetsystemState);
+            HyperDrive.Update(gameTime, this, planetsystemState);
             DefenseSystem.Update(gameTime);
-            mItemCollector.Collect(gameTime, this, gameLayer);
-            PhaserCannaons.Update(gameTime, this, gameLayer);
+            mItemCollector.Collect(gameTime, this, planetsystemState);
+            PhaserCannaons.Update(gameTime, this, planetsystemState);
             mUtilityAi.Update(gameTime);
 
-            if (DefenseSystem.HullPercentage <= 0) Explode(gameLayer);
+            if (DefenseSystem.HullPercentage <= 0) Explode(gameState, planetsystemState);
         }
 
-        private void Explode(GameLayer gameLayer)
+        private void Explode(GameState gameState, PlanetsystemState gameLayer)
         {
-            ExplosionEffect.ShipDestroyed(Position, gameLayer.ParticleManager, gameLayer.GameSettings.ParticlesMultiplier);
+            ExplosionEffect.ShipDestroyed(Position, gameLayer.ParticleEmitors, gameState.GameSettings.ParticlesMultiplier);
             IsDisposed = true;
-            var distance = Vector2.Distance(gameLayer.Camera2D.Position, Position);
-            var threshold = MathHelper.Clamp(1 - (distance / 7500), 0, 1);
-            gameLayer.CameraShaker.Shake(200 * threshold, 1);
+            // TODO Cam Shaker
         }
 
-        private void HasProjectileHit(GameTime gameTime, GameLayer scene)
+        private void HasProjectileHit(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState)
         {
-            var projectileInRange = scene.SpatialHashing.GetObjectsInRadius<LaserProjectile>(Position, (int)BoundedBox.Radius * 10);
+            var projectileInRange = planetsystemState.SpatialHashing.GetObjectsInRadius<LaserProjectile>(Position, (int)BoundedBox.Radius * 10);
             if (projectileInRange.Count == 0) return;
             var hit = false;
             foreach (var projectile in projectileInRange)
@@ -104,17 +102,17 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
                 if (projectile.Fraction == Fraction) continue;
                 if (!ContinuousCollisionDetection.HasCollide(gameTime, projectile, this, out var position)) continue;
 
-                projectile.HasCollide((Vector2)position, scene);
-                DefenseSystem.GotHit((Vector2)position, projectile.ShieldDamage, projectile.HullDamage, scene);
+                projectile.HasCollide((Vector2)position, null);
+                DefenseSystem.GotHit((Vector2)position, projectile.ShieldDamage, projectile.HullDamage, gameState, planetsystemState);
                 hit = true;
             }
             if (!hit) return;
-            SoundEffectSystem.PlaySound(SoundEffectRegistries.torpedoHit, scene.Camera2D, Position);
+            planetsystemState.StereoSounds.Enqueue(new(Position, SoundEffectRegistries.torpedoHit));
         }
 
-        public override void Draw(GameLayer scene)
+        public override void Draw(GameState gameState, GameLayer scene)
         {
-            base.Draw(scene);
+            base.Draw(gameState, scene);
 
             scene.DebugSystem.DrawSensorRadius(Position, SensorSystem.ShortRangeScanDistance, scene);
 
@@ -125,7 +123,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
 
             scene.DebugSystem.DrawAiDebug(BoundedBox, mUtilityAi.DebugMessage, scene.Camera2D.Zoom);
 
-            PhaserCannaons.Draw(scene);
+            PhaserCannaons.Draw(gameState, scene);
             SublightDrive.Draw(scene.DebugSystem, this, scene);
             DefenseSystem.DrawShields(this);
         }

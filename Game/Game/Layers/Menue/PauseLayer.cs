@@ -16,7 +16,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
 {
     public class PauseLayer : Layer
     {
-        public PauseLayer(GameLayerManager gameState, Game1 game1)
+        public PauseLayer(GameState gameState, Game1 game1)
             : base(game1, false)
         {
             var mainFrame = new UiFrame() 

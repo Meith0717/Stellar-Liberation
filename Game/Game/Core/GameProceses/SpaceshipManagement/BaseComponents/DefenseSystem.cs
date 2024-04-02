@@ -8,6 +8,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
+using StellarLiberation.Game.Layers;
 using System;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components
@@ -52,7 +53,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
             mActualShieldForce += mRegenerationPerSecond / gameTime.ElapsedGameTime.Milliseconds;
         }
 
-        public void GotHit(Vector2 position, float shieldDamage, float hullDamage, GameLayer gameLayer)
+        public void GotHit(Vector2 position, float shieldDamage, float hullDamage, GameState gameState, PlanetsystemState planetsystemState)
         {
             ShieldRegenerateCoolDown = 5000;
             if (mActualShieldForce > 0)
@@ -63,7 +64,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
                 return;
             }
             mActualHullForce -= mActualHullForce > 0 ? hullDamage : 0;
-            ExplosionEffect.ShipHit(position, Vector2.Zero, gameLayer.ParticleManager, gameLayer.GameSettings.ParticlesMultiplier);
+            ExplosionEffect.ShipHit(position, Vector2.Zero, planetsystemState.ParticleEmitors, gameState.GameSettings.ParticlesMultiplier);
         }
 
         public void Upgrade(float shieldUpgradePercentage = 0, float hullUpgradePercentage = 0, float regenerationUpgradePercentage = 0)

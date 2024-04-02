@@ -5,8 +5,6 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
-using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
-using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
@@ -33,16 +31,15 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
             TargetPlanetSystem = planetSystem;
         }
 
-        public void Update(GameTime gameTime, Spaceship operatingShip, GameLayer scene)
+        public void Update(GameTime gameTime, Spaceship operatingShip, PlanetsystemState planetsystemState)
         {
             mActualEngineCoolDownTime += gameTime.ElapsedGameTime.Milliseconds;
             mActualChargingTime += gameTime.ElapsedGameTime.Milliseconds;
 
             if (TargetPlanetSystem is null) return;
-            HyperDriveEffect.Charge(operatingShip.Position, scene.ParticleManager);
+            HyperDriveEffect.Charge(operatingShip.Position, planetsystemState.ParticleEmitors);
             if (CoolDown >= mActualChargingTime) return;
-            scene.GameState.SpaceshipLocator.ChangeSystem(operatingShip, TargetPlanetSystem);
-            operatingShip.Position = ExtendetRandom.NextVectorOnBorder(new(Vector2.Zero, TargetPlanetSystem.SystemRadius));
+            // TODO
             TargetPlanetSystem = null;
             IsActive = false;
         }

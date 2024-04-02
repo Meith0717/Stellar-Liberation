@@ -28,11 +28,8 @@ namespace StellarLiberation.Game.Core.GameProceses
         public readonly HashSet<Spaceship> mSelectedSpaceShips = new();
         private SelectionBox mSelectionBox;
 
-        public void Update(InputState inputState, GameLayer gameLayer, Layer hudLayer, PlanetSystem planetSystem)
+        public void Update(InputState inputState, SpatialHashing spatialHashing, Vector2 worldMousePosition, Layer hudLayer)
         {
-            var spatialHashing = gameLayer.SpatialHashing;
-            var worldMousePosition = gameLayer.WorldMousePosition;
-
             // Select SpaceShips by Selection Box
             CheckForSelectionBox(inputState, spatialHashing, worldMousePosition);
 
@@ -54,7 +51,7 @@ namespace StellarLiberation.Game.Core.GameProceses
                     var planet = (Planet)HoveredGameObject;
                     if (mSelectedSpaceShips.Count > 0)
                     {
-                        MoveSpaceShipsToPlanet(gameLayer, planetSystem, planet);
+                        MoveSpaceShipsToPlanet(planet);
                         break;
                     }
                     break;
@@ -110,15 +107,10 @@ namespace StellarLiberation.Game.Core.GameProceses
             SelectedSpaceships.Clear();
         }
 
-        public void MoveSpaceShipsToPlanet(GameLayer gameLayer, PlanetSystem planetSystem, Planet planet)
+        public void MoveSpaceShipsToPlanet(Planet planet)
         {
             foreach (var obj in mSelectedSpaceShips)
             {
-                if (gameLayer.GameState.SpaceshipLocator.Locate(obj) != planetSystem)
-                {
-                    obj.HyperDrive.SetTarget(planetSystem);
-                    continue;
-                }
                 obj.SublightDrive.SetVelocity(1f);
                 obj.SublightDrive.MoveToTarget(planet.GetPositionInOrbit(obj.Position));
             }

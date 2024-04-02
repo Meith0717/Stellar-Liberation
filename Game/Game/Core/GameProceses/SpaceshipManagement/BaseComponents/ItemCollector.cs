@@ -16,14 +16,14 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
     {
         private List<Container> mContainerInRange = new();
 
-        public void Collect(GameTime gameTime, Spaceship spaceShip, GameLayer scene)
+        public void Collect(GameTime gameTime, Spaceship spaceShip, PlanetsystemState planetsystemState)
         {
             var inventory = spaceShip.Inventory;
 
             mContainerInRange.Clear();
             var position = spaceShip.Position;
 
-            mContainerInRange = scene.SpatialHashing.GetObjectsInRadius<Container>(position, spaceShip.BoundedBox.Radius);
+            mContainerInRange = planetsystemState.SpatialHashing.GetObjectsInRadius<Container>(position, spaceShip.BoundedBox.Radius);
 
             foreach (var container in mContainerInRange)
             {
@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
                     if (!inventory.HasSpace(item)) continue;
                     inventory.Add(item);
                 }
-                SoundEffectSystem.PlaySound(SoundEffectRegistries.collect, scene.Camera2D, spaceShip.Position);
+                planetsystemState.StereoSounds.Enqueue(new(spaceShip.Position, SoundEffectRegistries.collect));
             }
         }
     }

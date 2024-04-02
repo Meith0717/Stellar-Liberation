@@ -31,14 +31,14 @@ namespace StellarLiberation.Game.Layers.Benchmark
         private bool mIsPaused;
 
         public BenchmarkLayer(Game1 game1)
-            : base(new(game1), 10000, game1)
+            : base(new(game1), new(10000), game1)
         {
             mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn };
             mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
 
             mFrameCounter = new(100);
 
-            mPlanetSystem = new PlanetSystem(Vector2.Zero, 42);
+            //mPlanetSystem = new PlanetSystem(Vector2.Zero, 42);
             Camera2D.Zoom = 0.002f;
         }
 
@@ -50,9 +50,9 @@ namespace StellarLiberation.Game.Layers.Benchmark
                 CoolDown = 100;
                 var enemy = SpaceshipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Enemys);
                 var allied = SpaceshipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Allied);
-                mPlanetSystem.GameObjects.Add(allied);
-                mPlanetSystem.GameObjects.Add(enemy);
-                mDataCollector.AddData([mFrameCounter.CurrentFramesPerSecond, mFrameCounter.FrameDuration, SpatialHashing.Count, ParticleManager.Count]);
+                //mPlanetSystem.GameObjects.Add(allied);
+                //mPlanetSystem.GameObjects.Add(enemy);
+                mDataCollector.AddData([mFrameCounter.CurrentFramesPerSecond, mFrameCounter.FrameDuration, SpatialHashing.Count, 0]);
             }
             CoolDown -= gameTime.ElapsedGameTime.Milliseconds;
             mRunTime -= gameTime.ElapsedGameTime.Milliseconds;
@@ -86,7 +86,7 @@ namespace StellarLiberation.Game.Layers.Benchmark
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 70), $"Frame:      {mFrameCounter.FrameDuration} ms", .75f, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 85), $"", .75f, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 100), $"Objects:    {SpatialHashing.Count}", .75f, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 115), $"Particles:  {ParticleManager.Count}", .75f, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 115), $"Particles:  N.A", .75f, Color.White);
             TimeSpan timeSpan = TimeSpan.FromMilliseconds(mRunTime);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 150), $"{timeSpan.Minutes} min {timeSpan.Seconds}s ESC => Quit", .75f, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 165), $"Left control => Pause Spawning", .75f, mIsPaused ? Color.LightGreen : Color.White);

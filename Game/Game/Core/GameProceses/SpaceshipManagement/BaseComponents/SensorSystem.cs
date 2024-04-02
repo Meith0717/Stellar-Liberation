@@ -3,10 +3,10 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
+using StellarLiberation.Game.Layers;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,14 +35,14 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
 
         public SensorSystem() => mCoolDown = ExtendetRandom.Random.Next(MaxCoolDown);
 
-        public void Scan(GameTime gameTime, Spaceship spaceship, Fractions fraction, GameLayer scene)
+        public void Scan(GameTime gameTime, Spaceship spaceship, Fractions fraction, PlanetsystemState planetsystemState)
         {
             mCoolDown -= gameTime.ElapsedGameTime.Milliseconds;
             if (mCoolDown > 0) return;
             mCoolDown = MaxCoolDown;
 
-            mOpponents = scene.GameState.SpaceshipLocator.Locate(spaceship).GameObjects.OfType<Spaceship>().Where((spaceShip) => spaceShip.Fraction != fraction).ToList();
-            mAllies = scene.GameState.SpaceshipLocator.Locate(spaceship).GameObjects.OfType<Spaceship>().Where((spaceShip) => spaceShip.Fraction == fraction).ToList();
+            mOpponents = planetsystemState.GameObjects.OfType<Spaceship>().Where((spaceShip) => spaceShip.Fraction != fraction).ToList();
+            mAllies = planetsystemState.GameObjects.OfType<Spaceship>().Where((spaceShip) => spaceShip.Fraction == fraction).ToList();
 
             mOpponents.Sort((obj1, obj2) =>
             {
@@ -58,7 +58,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
             });
 
             mShortRangeScan.Clear();
-            scene.SpatialHashing.GetObjectsInRadius(spaceship.Position, ShortRangeScanDistance, ref mShortRangeScan);
+            planetsystemState.SpatialHashing.GetObjectsInRadius(spaceship.Position, ShortRangeScanDistance, ref mShortRangeScan);
 
             mOpponentsInRannge = mShortRangeScan.OfType<Spaceship>().Where((spaceShip) => spaceShip.Fraction != fraction).ToList();
             mAlliesInRannge = mShortRangeScan.OfType<Spaceship>().Where((spaceShip) => spaceShip.Fraction == fraction).ToList();

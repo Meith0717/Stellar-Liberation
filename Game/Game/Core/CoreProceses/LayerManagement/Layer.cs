@@ -42,6 +42,8 @@ public abstract class Layer
         mHoverText = new UiText(FontRegistries.hoverFont, "");
     }
 
+    public virtual void Initialize() {; }
+
     public void AddUiElement(UiElement uiElement)
     {
         uiElement.ApplyResolution(GraphicsDevice.Viewport.Bounds, ResolutionManager.Resolution);

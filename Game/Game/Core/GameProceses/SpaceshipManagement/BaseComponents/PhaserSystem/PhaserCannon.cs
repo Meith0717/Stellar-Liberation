@@ -10,6 +10,7 @@ using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
+using StellarLiberation.Game.Layers;
 using System;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.BaseComponents.PhaserSystem
@@ -23,7 +24,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.BaseCompo
         : base(Vector2.Zero, GameSpriteRegistries.turette, textureScale, textureDepth)
             => mRelativePosition = relativePosition;
 
-        public void Fire(GameLayer gameLayer, Spaceship origin, Color particleColor, float shieldDamage, float hullDamage)
+        public void Fire(PlanetsystemState planetsystemState, Spaceship origin, Color particleColor, float shieldDamage, float hullDamage)
         {
             //gameLayer.GameObjectsManager.Add(new LaserProjectile(Position, Rotation, particleColor, shieldDamage, hullDamage, origin.Fraction));
         }
@@ -34,9 +35,9 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.BaseCompo
             Rotation = rotation;
         }
 
-        public override void Draw(GameLayer scene)
+        public override void Draw(GameState gameState, GameLayer scene)
         {
-            base.Draw(scene);
+            base.Draw(gameState, scene);
             TextureManager.Instance.DrawGameObject(this);
         }
     }

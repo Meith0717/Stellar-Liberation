@@ -8,6 +8,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.GameObjects.Recources.Items;
+using StellarLiberation.Game.Layers;
 using System.Collections.Generic;
 
 namespace StellarLiberation.Game.GameObjects
@@ -20,9 +21,9 @@ namespace StellarLiberation.Game.GameObjects
             : base(position, GameSpriteRegistries.container, .5f, 20)
             => Items = items;
 
-        public override void Draw(GameLayer scene)
+        public override void Draw(GameState gameState, GameLayer scene)
         {
-            base.Draw(scene);
+            base.Draw(gameState, scene);
             TextureManager.Instance.DrawGameObject(this);
             TextureManager.Instance.Draw(GameSpriteRegistries.radar, Position, .04f / scene.Camera2D.Zoom, 0, TextureDepth + 1, Color.LightGray);
 
