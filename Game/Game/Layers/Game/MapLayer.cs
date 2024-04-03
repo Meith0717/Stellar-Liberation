@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
+using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration;
 using StellarLiberation.Game.Core.UserInterface;
@@ -36,15 +37,18 @@ namespace StellarLiberation.Game.Layers.GameLayers
             foreach (var planetSystem in GameState.PlanetSystems) 
                 planetSystem.Update(gameTime, inputState, null, null);
 
-            var objByMouse = SpatialHashing.GetObjectsInRadius<PlanetSystem>(WorldMousePosition, 200);
+            var objByMouse = SpatialHashing.GetObjectsInRadius<Planetsystem>(WorldMousePosition, 200);
             foreach (var system in objByMouse)
-                GameObject2DInteractionManager.Manage(inputState, system, this, LeftPressAction, null, null);
+                GameObject2DInteractionManager.Manage(inputState, system, this, () => LeftPressAction(system.mPlanetsystemState), null, null);
 
             base.Update(gameTime, inputState);
         }
 
-        private void LeftPressAction()
+        private void LeftPressAction(PlanetsystemState planetsystemState)
         {
+            GameState.PopLayer();
+            GameState.PopLayer();
+            GameState.AddLayer(new PlanetsystemLayer(GameState, planetsystemState, Game1));
         }
 
         public override void ApplyResolution() { base.ApplyResolution(); }

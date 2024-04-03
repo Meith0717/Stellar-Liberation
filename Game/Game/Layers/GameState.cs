@@ -29,15 +29,16 @@ namespace StellarLiberation.Game.Layers
         [JsonIgnore] private readonly LinkedList<Layer> mLayers = new();
         [JsonIgnore] private readonly FrameCounter mFrameCounter = new(200);
         [JsonIgnore] public readonly GameObjectsInteractor GameObjectsInteractor = new();
-        [JsonIgnore] public List<PlanetSystem> PlanetSystems;
+        [JsonIgnore] public List<Planetsystem> PlanetSystems;
         [JsonProperty] private readonly List<PlanetsystemState> PlanetSystemStates;
         [JsonProperty] private readonly MapConfig mMapConfig;
 
         public GameState(Game1 game1) : base(game1, false)
         {
-            mMapConfig = new(25, 25, 42);
+            mMapConfig = new(2, 2, 42);
             PlanetSystemStates = MapFactory.Generate(mMapConfig);
-            PlanetSystemStates.First().GameObjects.Add(SpaceshipFactory.Get(Vector2.Zero, ShipID.Destroyer, Fractions.Allied));
+            for (int i = 0; i < 10; i++)
+                PlanetSystemStates.First().GameObjects.Add(SpaceshipFactory.Get(Vector2.Zero, ShipID.Destroyer, Fractions.Allied));
         }
 
         public override void Initialize()
@@ -45,7 +46,7 @@ namespace StellarLiberation.Game.Layers
             PlanetSystems = MapFactory.GetPlanetSystems(PlanetSystemStates);
             foreach (var planetsystemState in PlanetSystemStates)
                 planetsystemState.Initialize();
-            AddLayer(new PlanetSystemLayer(this, PlanetSystemStates.First(), Game1));
+            AddLayer(new PlanetsystemLayer(this, PlanetSystemStates.First(), Game1));
         }
 
         public void AddLayer(Layer layer)

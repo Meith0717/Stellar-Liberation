@@ -22,7 +22,7 @@ namespace StellarLiberation.Game.Layers.Benchmark
 {
     internal class BenchmarkLayer : GameLayer
     {
-        private readonly PlanetSystem mPlanetSystem;
+        private readonly Planetsystem mPlanetSystem;
         private readonly FrameCounter mFrameCounter;
         private readonly UiFrame mBackgroundLayer;
         private readonly DataCollector mDataCollector = new(4, ["fps", "render time", "object count", "particle count"]);

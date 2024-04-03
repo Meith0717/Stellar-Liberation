@@ -28,8 +28,9 @@ namespace StellarLiberation.Game.Core.GameProceses
         public readonly HashSet<Spaceship> mSelectedSpaceShips = new();
         private SelectionBox mSelectionBox;
 
-        public void Update(InputState inputState, SpatialHashing spatialHashing, Vector2 worldMousePosition, Layer hudLayer)
+        public void Update(InputState inputState, PlanetsystemState planetsystemState, Vector2 worldMousePosition, Layer hudLayer)
         {
+            var spatialHashing = planetsystemState.SpatialHashing;
             // Select SpaceShips by Selection Box
             CheckForSelectionBox(inputState, spatialHashing, worldMousePosition);
 
@@ -51,7 +52,7 @@ namespace StellarLiberation.Game.Core.GameProceses
                     var planet = (Planet)HoveredGameObject;
                     if (mSelectedSpaceShips.Count > 0)
                     {
-                        MoveSpaceShipsToPlanet(planet);
+                        MoveSpaceShipsToPlanet(planet, planetsystemState);
                         break;
                     }
                     break;
@@ -62,7 +63,7 @@ namespace StellarLiberation.Game.Core.GameProceses
                     break;                  
                 case null:
                     if (SelectedSpaceships.Count > 0)
-                        MoveSpaceShipsToPosition(worldMousePosition);
+                        MoveSpaceShipsToPosition(worldMousePosition, planetsystemState);
                     break;
             }
         }
@@ -97,7 +98,7 @@ namespace StellarLiberation.Game.Core.GameProceses
             mSelectionBox.Update(worldMousePosition);
         }
 
-        public void MoveSpaceShipsToPosition(Vector2 position)
+        public void MoveSpaceShipsToPosition(Vector2 position, PlanetsystemState planetsystemState)
         {
             foreach (var obj in mSelectedSpaceShips)
             {
@@ -107,12 +108,14 @@ namespace StellarLiberation.Game.Core.GameProceses
             SelectedSpaceships.Clear();
         }
 
-        public void MoveSpaceShipsToPlanet(Planet planet)
+        public void MoveSpaceShipsToPlanet(Planet planet, PlanetsystemState planetsystemState)
         {
             foreach (var obj in mSelectedSpaceShips)
             {
                 obj.SublightDrive.SetVelocity(1f);
                 obj.SublightDrive.MoveToTarget(planet.GetPositionInOrbit(obj.Position));
+                if (planetsystemState.GameObjects.Contains(obj)) continue;
+                obj.HyperDrive.SetTarget(planetsystemState);
             }
             SelectedSpaceships.Clear();
         }

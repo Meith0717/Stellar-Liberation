@@ -10,20 +10,21 @@ using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Visuals.ParallaxSystem;
+using StellarLiberation.Game.Core.Visuals.ParticleSystem;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 
 namespace StellarLiberation.Game.Layers.GameLayers
 {
-    internal class PlanetSystemLayer : GameLayer
+    internal class PlanetsystemLayer : GameLayer
     {
         public readonly PlanetsystemState PlanetsystemState;
         private readonly ParallaxController mParallaxController;
 
-        public PlanetSystemLayer(GameState gameState, PlanetsystemState planetsystemState, Game1 game1)
+        public PlanetsystemLayer(GameState gameState, PlanetsystemState planetsystemState, Game1 game1)
             : base(gameState, planetsystemState.SpatialHashing, game1)
         {
             PlanetsystemState = planetsystemState;
-            HUDLayer = new PlanetSystemHud(this, game1);
+            HUDLayer = new PlanetsystemHud(this, game1);
             HUDLayer.ApplyResolution();
 
             var background = new UiSprite(GameSpriteRegistries.gameBackground)
@@ -51,7 +52,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
             Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, .008f, 1);
             Camera2DMover.UpdateCameraByMouseDrag(inputState, Camera2D);
             Camera2DMover.MoveByKeys(gameTime, inputState, Camera2D);
-            GameState.GameObjectsInteractor.Update(inputState, SpatialHashing, WorldMousePosition, HUDLayer);
+            GameState.GameObjectsInteractor.Update(inputState, PlanetsystemState, WorldMousePosition, HUDLayer);
             mParticleManager.Update(gameTime, PlanetsystemState.ParticleEmitors);
             mStereoSoundSystem.Update(Camera2D.Position, Camera2D.Zoom, PlanetsystemState.StereoSounds);
             base.Update(gameTime, inputState);
@@ -68,6 +69,8 @@ namespace StellarLiberation.Game.Layers.GameLayers
             spriteBatch.Begin(transformMatrix: ViewTransformationMatrix);
             GameState.GameObjectsInteractor.Draw(Camera2D);
             spriteBatch.End();
+            PlanetsystemState.StereoSounds.Clear();
+            PlanetsystemState.ParticleEmitors.Clear();
         }
     }
 }

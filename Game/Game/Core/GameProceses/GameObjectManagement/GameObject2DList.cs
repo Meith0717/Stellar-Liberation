@@ -12,12 +12,14 @@ using System.Linq;
 namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
 {
     [Serializable]
-    public class GameObject2DList : IEnumerable<GameObject2D>
+    public class GameObject2DList
     {
         [JsonProperty] private readonly Dictionary<Type, List<GameObject2D>> mTypeDict = new();
         [JsonProperty] private readonly List<GameObject2D> AllObjects = new();
 
         public int Count => AllObjects.Count;
+
+        public List<GameObject2D> GameObject2Ds => AllObjects;
 
         public void Add(GameObject2D gameObject2D)
         {
@@ -65,14 +67,9 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             AllObjects.Clear();
         }
 
-        public IEnumerator<GameObject2D> GetEnumerator()
-        {
-            return AllObjects.GetEnumerator();
-        }
+        public bool Contains(GameObject2D gameObject2D) => AllObjects.Contains(gameObject2D);
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        public List<GameObject2D> ListCopy() => new List<GameObject2D>(AllObjects);
+
     }
 }

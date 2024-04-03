@@ -4,8 +4,9 @@
 
 using MathNet.Numerics.Distributions;
 using MathNet.Numerics.Random;
-using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
+using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGeneration;
+using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using System;
 using System.Collections.Generic;
@@ -29,35 +30,34 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
             foreach (var position in positions)
             {
                 var seed = seededRandom.NextFullRangeInt32();
-                planetSystems.Add(new(position, GenerateSystem(seed)));
+                planetSystems.Add(GenerateSystem(position, seed));
             }
             return planetSystems;
         }
 
-        public static List<GameObject2D> GenerateSystem(int seed)
+        public static PlanetsystemState GenerateSystem(Vector2 position, int seed)
         {
-            var lst = new List<GameObject2D>();
             var seededRandom = new Random(seed);
 
             var star = StarGenerator.Generat(seededRandom);
 
-            lst.Add(star);
+            var planets = new List<Planet>();
             var distanceToStar = (int)star.BoundedBox.Radius;
             var planetCount = (int)Triangular.Sample(seededRandom, 1, 10, 7);
             for (int i = 1; i <= planetCount; i++)
             {
                 distanceToStar += seededRandom.Next(4000, 10000);
-                lst.Add(PlanetGenerator.GetPlanet(seededRandom, star.Kelvin, distanceToStar));
+                planets.Add(PlanetGenerator.GetPlanet(seededRandom, star.Kelvin, distanceToStar));
             }
 
-            return lst;
+            return new(position, star, planets);
         }
 
-        public static List<PlanetSystem> GetPlanetSystems(List<PlanetsystemState> planetsystemStates)
+        public static List<Planetsystem> GetPlanetSystems(List<PlanetsystemState> planetsystemStates)
         {
-            var lst = new List<PlanetSystem>();
+            var lst = new List<Planetsystem>();
             foreach (var state in planetsystemStates)
-                lst.Add(new PlanetSystem(state));
+                lst.Add(new Planetsystem(state));
             return lst;
         }
 

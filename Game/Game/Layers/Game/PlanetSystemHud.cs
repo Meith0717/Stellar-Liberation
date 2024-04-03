@@ -13,20 +13,19 @@ using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
-using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using StellarLiberation.Game.Layers.MenueLayers;
 
 namespace StellarLiberation.Game.Layers.GameLayers
 {
-    internal class PlanetSystemHud : Layer
+    internal class PlanetsystemHud : Layer
     {
         public bool Hide;
 
         private readonly UiFrame mMainFrame;
-        private readonly PlanetSystemLayer mPlanetSystemLayer;
+        private readonly PlanetsystemLayer mPlanetSystemLayer;
 
-        public PlanetSystemHud(PlanetSystemLayer planetSystemLayer, Game1 game1) : base(game1, true)
+        public PlanetsystemHud(PlanetsystemLayer planetSystemLayer, Game1 game1) : base(game1, true)
         {
             mMainFrame = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
 
@@ -66,8 +65,8 @@ namespace StellarLiberation.Game.Layers.GameLayers
             }
             foreach (var spaceship in mPlanetSystemLayer.PlanetsystemState.GameObjects.OfType<Spaceship>())
                 TextureManager.Instance.Draw(GameSpriteRegistries.radar, spaceship.Position, .04f / mPlanetSystemLayer.Camera2D.Zoom, 0, spaceship.TextureDepth + 1, spaceship.Fraction == Fractions.Enemys ? Color.Red : Color.LightGreen);
-            foreach (var planet in mPlanetSystemLayer.PlanetsystemState.GameObjects.OfType<Planet>())
-                TextureManager.Instance.DrawAdaptiveCircle(Vector2.Zero, planet.OrbitRadius, Color.Gray * .1f, 1, planet.TextureDepth - 1, mPlanetSystemLayer.Camera2D.Zoom);
+            foreach (var planet in mPlanetSystemLayer.PlanetsystemState.Planets)
+                TextureManager.Instance.DrawAdaptiveCircle(Vector2.Zero, planet.Position.Length(), Color.Gray * .1f, 1, planet.TextureDepth - 1, mPlanetSystemLayer.Camera2D.Zoom);
             spriteBatch.End();
 
             spriteBatch.Begin();

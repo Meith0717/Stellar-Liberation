@@ -23,14 +23,22 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
             }
         }
 
-        public static void Stop(Vector2 position, Queue<ParticleEmitor> particleEmitors)
+        public static void Stop(Vector2 position, Queue<ParticleEmitor> particleEmitors, float multiplier)
         {
-            for (int i = 0; i < ExtendetRandom.Random.Next(10, 30); i++)
+            for (int i = 0; i < ExtendetRandom.Random.Next(20, 60) * multiplier; i++)
             {
-                ExtendetRandom.Random.NextUnitVector(out var direction);
-                var velocity = ExtendetRandom.Random.Next(50, 100) * .01f;
+                ExtendetRandom.Random.NextUnitVector(out var dir);
 
-                particleEmitors.Enqueue(new(position, direction, velocity, new(214, 234, 248), ExtendetRandom.Random.Next(50, 800)));
+                var velocity = ExtendetRandom.Random.Next(10, 100) * .01f;
+                particleEmitors.Enqueue(new(position, dir, velocity, new(214, 234, 248), ExtendetRandom.Random.Next(50, 500)));
+            }
+
+            for (int i = 0; i < ExtendetRandom.Random.Next(300, 500) * multiplier; i++)
+            {
+                ExtendetRandom.Random.NextUnitVector(out var dir);
+
+                var velocity = ExtendetRandom.Random.Next(10, 200) * .01f;
+                particleEmitors.Enqueue(new(position, dir, velocity, new(214, 234, 248), ExtendetRandom.Random.Next(150, 1000)));
             }
         }
     }

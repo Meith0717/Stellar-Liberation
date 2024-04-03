@@ -21,7 +21,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement
             Weapons = new() { WeaponFactory.Get(spaceship) };
         }
 
-        public void FireWeapons(PlanetSystem planetSystem, Spaceship target)
+        public void FireWeapons(Planetsystem planetSystem, Spaceship target)
         {
         }
 

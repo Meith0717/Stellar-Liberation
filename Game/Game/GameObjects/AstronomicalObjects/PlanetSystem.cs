@@ -12,19 +12,20 @@ using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration;
 using StellarLiberation.Game.Layers;
 using System;
+using System.Linq;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
 {
     [Serializable]
-    [Obsolete]
-    public class PlanetSystem : GameObject2D
+    public class Planetsystem : GameObject2D
     {
         public readonly PlanetsystemState mPlanetsystemState;
         private readonly Sector mSector;
 
-        public PlanetSystem(PlanetsystemState planetsystemState) 
+        public Planetsystem(PlanetsystemState planetsystemState) 
             : base(planetsystemState.MapPosition, GameSpriteRegistries.star, .1f, 1)
         {
+            TextureColor = planetsystemState.Star.TextureColor;
             mPlanetsystemState = planetsystemState;
             mSector = new(Position - (new Vector2(MapFactory.MapScale) / 2), MapFactory.MapScale, MapFactory.MapScale);
         }

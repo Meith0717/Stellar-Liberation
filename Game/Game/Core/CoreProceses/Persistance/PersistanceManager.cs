@@ -14,8 +14,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.Persistance
         private static readonly string GameSaveDirectory = "save";
         private static readonly string DataSaveDirectory = "data";
 
-        public static string GameSaveFilePath => Path.Combine(GameSaveDirectory, "save");
-        public static string SettingsSaveFilePath => Path.Combine(DataSaveDirectory, "settings");
+        public static string GameSaveFilePath => Path.Combine(GameSaveDirectory, "game.json");
+        public static string SettingsSaveFilePath => Path.Combine(DataSaveDirectory, "settings.json");
 
         public PersistanceManager()
         {

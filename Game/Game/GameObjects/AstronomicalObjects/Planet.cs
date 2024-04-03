@@ -4,6 +4,7 @@
 
 using MathNet.Numerics;
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
@@ -17,21 +18,20 @@ using System;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
+    [Serializable]
     public class Planet : GameObject2D, ICollidable
     {
-        private readonly Vector2 MainBodyPosition = Vector2.Zero;
-        private float mShadowRotation;
-        public readonly int OrbitRadius;
+        [JsonIgnore] private readonly Vector2 MainBodyPosition = new(0);
+        [JsonIgnore] private float mShadowRotation;
 
-        public float Mass => float.PositiveInfinity;
+        [JsonIgnore] public float Mass => float.PositiveInfinity;
 
         public Planet(int distanceToStar, float orbitAnle, string textureId, float textureScale)
             : base(Vector2.Zero, textureId, textureScale, 1)
         {
-            OrbitRadius = distanceToStar;
             Velocity = (float)(Constants.GravitationalConstant * Math.Pow(10, 16) / distanceToStar) * 0.00001f;
 
-            Position = Geometry.GetPointOnCircle(MainBodyPosition, OrbitRadius, orbitAnle);
+            Position = Geometry.GetPointOnCircle(MainBodyPosition, distanceToStar, orbitAnle);
             mShadowRotation = Geometry.AngleBetweenVectors(Position, MainBodyPosition) + MathF.PI;
         }
 
