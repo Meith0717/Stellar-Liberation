@@ -64,14 +64,14 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
             ID = ExtendetRandom.Random.NextFullRangeInt32();
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameState gameState, PlanetsystemState planetsystemState)
+        public override void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState)
         {
             SublightDrive.Update(gameTime, this, DefenseSystem.HullPercentage);
 
             MovingDirection = Geometry.CalculateDirectionVector(Rotation);
             Physics.HandleCollision(gameTime, this, planetsystemState.SpatialHashing);
             GameObject2DMover.Move(gameTime, this, planetsystemState.SpatialHashing);
-            base.Update(gameTime, inputState, gameState, planetsystemState);
+            base.Update(gameTime, gameState, planetsystemState);
             TrailEffect.Show(Transformations.Rotation(Position, new(-100, 0), Rotation), MovingDirection, Velocity, gameTime, mAccentColor, planetsystemState.ParticleEmitors, gameState.GameSettings.ParticlesMultiplier);
 
             SensorSystem.Scan(gameTime, this, Fraction, planetsystemState);

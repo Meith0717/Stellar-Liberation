@@ -56,7 +56,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             BoundedBox.Radius = MaxTextureSize / 2 * scale;
         }
 
-        public virtual void Update(GameTime gameTime, InputState inputState, GameState gameState, PlanetsystemState planetsystemState)
+        public virtual void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState)
         {
             DisposeTime -= gameTime.ElapsedGameTime.TotalMilliseconds;
             IsDisposed = double.IsNegative(DisposeTime - 1) | IsDisposed;

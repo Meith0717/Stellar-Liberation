@@ -34,11 +34,11 @@ namespace StellarLiberation.Game.GameObjects.Recources.Weapons
             TextureColor = color;
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameState gameState, PlanetsystemState planetsystemState)
+        public override void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState)
         {
             if (mFollowTarget && Target is not null) Rotation = Geometry.AngleBetweenVectors(Position, Target.Position);
             GameObject2DMover.Move(gameTime, this, planetsystemState.SpatialHashing);
-            base.Update(gameTime, inputState, gameState, planetsystemState);
+            base.Update(gameTime, gameState, planetsystemState);
         }
 
         public override void Draw(GameState gameState, GameLayer scene)

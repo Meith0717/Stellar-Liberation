@@ -29,7 +29,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             TextureColor = color;
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameState gameState, PlanetsystemState planetsystemState) => base.Update(gameTime, inputState, gameState, planetsystemState);
+        public override void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState) => base.Update(gameTime, gameState, planetsystemState);
 
         public override void Draw(GameState gameState, GameLayer scene)
         {

@@ -21,9 +21,9 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.SpaceStations
         public ScienceStation(Vector2 position)
             : base(position, GameSpriteRegistries.scienceStation, 1, 20) { }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameState gameState, PlanetsystemState planetsystemState)
+        public override void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState)
         {
-            base.Update(gameTime, inputState, gameState, planetsystemState);
+            base.Update(gameTime, gameState, planetsystemState);
         }
 
         public override void Draw(GameState gameState, GameLayer scene)

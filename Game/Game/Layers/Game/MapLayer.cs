@@ -35,7 +35,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
             inputState.DoAction(ActionType.ToggleHyperMap, GameState.PopLayer);
 
             foreach (var planetSystem in GameState.PlanetSystems) 
-                planetSystem.Update(gameTime, inputState, null, null);
+                planetSystem.Update(gameTime, null, null);
 
             var objByMouse = SpatialHashing.GetObjectsInRadius<Planetsystem>(WorldMousePosition, 200);
             foreach (var system in objByMouse)

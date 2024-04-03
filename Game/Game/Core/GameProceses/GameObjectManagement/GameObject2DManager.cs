@@ -33,7 +33,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             foreach (var obj in copyList)
             {
 
-                obj.Update(gameTime, inputState, gameState, planetsystemState);
+                obj.Update(gameTime, gameState, planetsystemState);
 
                 if (!obj.IsDisposed) continue;
                 if (!gameObject2DList.Remove(obj)) return;
@@ -47,7 +47,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             foreach (T obj in copyList)
             {
 
-                obj.Update(gameTime, inputState, gameState, planetsystemState);
+                obj.Update(gameTime, gameState, planetsystemState);
 
                 if (!obj.IsDisposed) continue;
                 if (!gameObject2DList.Remove(obj)) return;
@@ -55,6 +55,6 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             }
         }
 
-        public static void Update<T>(GameTime gameTime, InputState inputState, GameState gameState, PlanetsystemState planetsystemState, ref T obj) where T : GameObject2D => obj.Update(gameTime, inputState, gameState, planetsystemState);
+        public static void Update<T>(GameTime gameTime, InputState inputState, GameState gameState, PlanetsystemState planetsystemState, ref T obj) where T : GameObject2D => obj.Update(gameTime, gameState, planetsystemState);
     }
 }

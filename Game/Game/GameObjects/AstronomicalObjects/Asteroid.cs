@@ -28,9 +28,9 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             mHull = new(BoundedBox.GetPolygone());
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameState gameState, PlanetsystemState planetsystemState)
+        public override void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState)
         {
-            base.Update(gameTime, inputState, gameState, planetsystemState);
+            base.Update(gameTime, gameState, planetsystemState);
             Rotation -= (float)(0.00001 * gameTime.ElapsedGameTime.TotalMilliseconds);
             Velocity = MathHelper.Clamp(Velocity - 0.001f, 0, float.PositiveInfinity);
             CheckForHit(gameTime,gameState, planetsystemState);

@@ -36,9 +36,9 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         }
 
 
-        public override void Update(GameTime gameTime, InputState inputState, GameState gameState, PlanetsystemState planetsystemState)
+        public override void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState)
         {
-            base.Update(gameTime, inputState, gameState, planetsystemState);
+            base.Update(gameTime, gameState, planetsystemState);
             MovingDirection = Transformations.RotateVector(Vector2.Normalize(MainBodyPosition - Position), MathHelper.Pi / 2);
             GameObject2DMover.Move(gameTime, this, planetsystemState.SpatialHashing);
             mShadowRotation = Geometry.AngleBetweenVectors(Position, MainBodyPosition) + MathF.PI;

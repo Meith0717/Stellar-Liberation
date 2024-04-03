@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             mSector = new(Position - (new Vector2(MapFactory.MapScale) / 2), MapFactory.MapScale, MapFactory.MapScale);
         }
 
-        public override void Update(GameTime gameTime, InputState inputState, GameState gameState, PlanetsystemState planetsystemState)
+        public override void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState)
         {
             mSector.Update(mPlanetsystemState.Occupier);
         }
