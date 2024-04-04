@@ -7,7 +7,6 @@ using MathNet.Numerics.Random;
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGeneration;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
-using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using System;
 using System.Collections.Generic;
 
@@ -52,14 +51,5 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration
 
             return new(position, star, planets);
         }
-
-        public static List<Planetsystem> GetPlanetSystems(List<PlanetsystemState> planetsystemStates)
-        {
-            var lst = new List<Planetsystem>();
-            foreach (var state in planetsystemStates)
-                lst.Add(new Planetsystem(state));
-            return lst;
-        }
-
     }
 }

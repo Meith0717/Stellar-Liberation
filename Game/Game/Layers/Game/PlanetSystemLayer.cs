@@ -43,7 +43,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
             ApplyResolution();
         }
 
-        public void OpenMap() { GameState.AddLayer(new MapLayer(GameState, PlanetsystemState.MapPosition, Game1)); }
+        public void OpenMap() { GameState.AddLayer(new MapLayer(GameState, GameState.MapState, PlanetsystemState.MapPosition, Game1)); }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
@@ -68,6 +68,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
             spriteBatch.Begin(transformMatrix: ViewTransformationMatrix);
             GameState.GameObjectsInteractor.Draw(Camera2D);
             spriteBatch.End();
+
             PlanetsystemState.StereoSounds.Clear();
             PlanetsystemState.ParticleEmitors.Clear();
         }

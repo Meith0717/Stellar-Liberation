@@ -3,6 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
@@ -17,20 +18,20 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
     [Serializable]
     public class Planetsystem : GameObject2D
     {
-        public readonly PlanetsystemState mPlanetsystemState;
-        private readonly Sector mSector;
+        [JsonProperty] public readonly PlanetsystemState PlanetsystemState;
+        [JsonIgnore] private readonly Sector mSector;
 
         public Planetsystem(PlanetsystemState planetsystemState)
             : base(planetsystemState.MapPosition, GameSpriteRegistries.star, .1f, 1)
         {
             TextureColor = planetsystemState.Star.TextureColor;
-            mPlanetsystemState = planetsystemState;
+            PlanetsystemState = planetsystemState;
             mSector = new(Position - (new Vector2(MapFactory.MapScale) / 2), MapFactory.MapScale, MapFactory.MapScale);
         }
 
         public override void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState)
         {
-            mSector.Update(mPlanetsystemState.Occupier);
+            mSector.Update(PlanetsystemState.Occupier);
         }
 
         public override void Draw(GameState gameState, GameLayer scene)

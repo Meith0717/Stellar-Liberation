@@ -12,7 +12,6 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration;
-using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using StellarLiberation.Game.Layers.GameLayers;
 using StellarLiberation.Game.Layers.MenueLayers;
@@ -27,12 +26,12 @@ namespace StellarLiberation.Game.Layers
     {
 
         [JsonIgnore] public readonly DebugSystem DebugSystem = new();
-        [JsonIgnore] private readonly LinkedList<Layer> mLayers = new();
+        [JsonIgnore] private readonly LinkedList<GameLayer> mLayers = new();
         [JsonIgnore] private readonly FrameCounter mFrameCounter = new(200);
         [JsonIgnore] public readonly GameObjectsInteractor GameObjectsInteractor = new();
-        [JsonIgnore] public List<Planetsystem> PlanetSystems;
-        [JsonProperty] private readonly List<PlanetsystemState> PlanetSystemStates;
+        [JsonProperty] public readonly MapState MapState = new();
         [JsonProperty] private readonly MapConfig mMapConfig;
+        [JsonProperty] private readonly List<PlanetsystemState> PlanetSystemStates;
 
         public GameState(Game1 game1) : base(game1, false)
         {
@@ -44,13 +43,13 @@ namespace StellarLiberation.Game.Layers
 
         public override void Initialize()
         {
-            PlanetSystems = MapFactory.GetPlanetSystems(PlanetSystemStates);
+            MapState.Initialize(PlanetSystemStates);
             foreach (var planetsystemState in PlanetSystemStates)
                 planetsystemState.Initialize();
             AddLayer(new PlanetsystemLayer(this, PlanetSystemStates.First(), Game1));
         }
 
-        public void AddLayer(Layer layer)
+        public void AddLayer(GameLayer layer)
         {
             layer.ApplyResolution();
             mLayers.AddLast(layer);
@@ -68,6 +67,7 @@ namespace StellarLiberation.Game.Layers
             inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this, Game1)));
             mFrameCounter.Update(gameTime);
             DebugSystem.Update(inputState);
+            MapState.Update(gameTime);
             foreach (var planetsystemState in PlanetSystemStates)
                 planetsystemState.Update(gameTime, this);
             mLayers.Last?.Value.Update(gameTime, inputState);
