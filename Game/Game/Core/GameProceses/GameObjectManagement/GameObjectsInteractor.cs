@@ -100,10 +100,7 @@ namespace StellarLiberation.Game.Core.GameProceses
         public void MoveSpaceShipsToPosition(Vector2 position, PlanetsystemState planetsystemState)
         {
             foreach (var obj in mSelectedSpaceShips)
-            {
-                obj.SublightDrive.SetVelocity(1f);
-                obj.SublightDrive.MoveToTarget(position);
-            }
+                obj.ImpulseDrive.MoveToTarget(position);
             SelectedSpaceships.Clear();
         }
 
@@ -111,8 +108,7 @@ namespace StellarLiberation.Game.Core.GameProceses
         {
             foreach (var obj in mSelectedSpaceShips)
             {
-                obj.SublightDrive.SetVelocity(1f);
-                obj.SublightDrive.MoveToTarget(planet.GetPositionInOrbit(obj.Position));
+                obj.ImpulseDrive.MoveToTarget(planet.GetPositionInOrbit(obj.Position));
                 if (planetsystemState.GameObjects.Contains(obj)) continue;
                 obj.HyperDrive.SetTarget(planetsystemState);
             }

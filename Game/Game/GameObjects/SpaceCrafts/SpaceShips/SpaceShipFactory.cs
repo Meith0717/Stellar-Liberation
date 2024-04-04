@@ -16,83 +16,18 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
     {
         public static Spaceship Get(Vector2 position, ShipID shipID, Fractions fraction)
         {
-            SpaceshipConfig config = shipID switch
+            Spaceship spaceship = shipID switch
             {
-                ShipID.Bomber => new(
-                    textureID: GameSpriteRegistries.bomber,
-                    textureScale: 1,
-                    velocity: 1,
-                    turretCoolDown: 500,
-                    shieldForce: 100,
-                    hullForce: 300,
-                    turretPositions: new()
-                    {
-                        Vector2.Zero
-                    }
-                ),
-                ShipID.Cargo => new(
-                    textureID: GameSpriteRegistries.cargo,
-                    textureScale: 1,
-                    velocity: 1,
-                    turretCoolDown: 500,
-                    shieldForce: 100,
-                    hullForce: 100,
-                    turretPositions: new()
-                    {
-                        Vector2.Zero
-                    }
-                ),
-                ShipID.Corvette => new(
-                    textureID: GameSpriteRegistries.corvette,
-                    textureScale: 1,
-                    velocity: 1,
-                    turretCoolDown: 500,
-                    shieldForce: 100,
-                    hullForce: 100,
-                    turretPositions: new()
-                    {
-                        Vector2.Zero
-                    }
-                ),
-                ShipID.Cuiser => new(
-                    textureID: GameSpriteRegistries.cruiser,
-                    textureScale: 1,
-                    velocity: 1,
-                    turretCoolDown: 500,
-                    shieldForce: 100,
-                    hullForce: 100,
-                    turretPositions: new()
-                    {
-                        Vector2.Zero
-                    }
-                ),
-                ShipID.Destroyer => new(
-                    textureID: GameSpriteRegistries.destroyer,
-                    textureScale: 1,
-                    velocity: 1,
-                    turretCoolDown: 50,
-                    shieldForce: 10000,
-                    hullForce: 100000,
-                    turretPositions: new()
-                    {
-                        Vector2.Zero
-                    }
-                ),
-                ShipID.Fighter => new(
-                    textureID: GameSpriteRegistries.fighter,
-                    textureScale: 1,
-                    velocity: 1,
-                    turretCoolDown: 50,
-                    shieldForce: 100,
-                    hullForce: 100,
-                    turretPositions: new()
-                    {
-                        Vector2.Zero
-                    }
-                ),
+                ShipID.Bomber => new(position, fraction, GameSpriteRegistries.bomber, 1),
+                ShipID.Cargo => new(position, fraction, GameSpriteRegistries.cargo, 5),
+                ShipID.Corvette => new(position, fraction, GameSpriteRegistries.corvette, 1),
+                ShipID.Cuiser => new(position, fraction, GameSpriteRegistries.cruiser, 1),
+                ShipID.Destroyer => new(position, fraction, GameSpriteRegistries.destroyer, 5),
+                ShipID.Fighter => new(position, fraction, GameSpriteRegistries.fighter, 1),
                 _ => throw new System.NotImplementedException()
             };
-            return new Spaceship(position, fraction, config.TextureID, config.TextureScale);
+            spaceship.ApplyConfig(1, 1, 0, 0, 1, 1);
+            return spaceship;
         }
     }
 }

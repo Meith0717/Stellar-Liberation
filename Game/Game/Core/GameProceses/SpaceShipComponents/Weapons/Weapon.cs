@@ -7,7 +7,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.BaseComponents.Weapons
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons
 {
     public class Weapon
     {

@@ -37,8 +37,8 @@ namespace StellarLiberation.Game.Layers
         {
             mMapConfig = new(5, 5, 0);
             PlanetSystemStates = MapFactory.Generate(mMapConfig);
-            for (int i = 0; i < 10; i++)
-                PlanetSystemStates.First().GameObjects.Add(SpaceshipFactory.Get(Vector2.Zero, ShipID.Destroyer, Fractions.Allied));
+            for (int i = 0; i < 1; i++)
+                PlanetSystemStates.First().GameObjects.Add(SpaceshipFactory.Get(Vector2.Zero, ShipID.Cargo, Fractions.Allied));
         }
 
         public override void Initialize()

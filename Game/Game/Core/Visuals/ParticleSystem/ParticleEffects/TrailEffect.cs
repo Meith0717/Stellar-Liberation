@@ -10,12 +10,12 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
 {
     public class TrailEffect
     {
-        public static void Show(Vector2 position, Vector2 movingDir, float velocity, GameTime gameTime, Color color, Queue<ParticleEmitor> particleEmitors, float multiplier)
+        public static void Show(Vector2 position, Vector2 movingDir, float velocity, GameTime gameTime, Color color, Queue<ParticleEmitor> particleEmitors, float multiplier, int length = 1)
         {
             for (int i = 1; i < gameTime.ElapsedGameTime.TotalMilliseconds * velocity * multiplier; i += 5)
             {
                 var spawnPos = Geometry.GetPointInDirection(position, movingDir, -i);
-                particleEmitors.Enqueue(new(spawnPos, Vector2.Zero, 0, color, ExtendetRandom.Random.Next(100, 300)));
+                particleEmitors.Enqueue(new(spawnPos, Vector2.Zero, 0, color, ExtendetRandom.Random.Next(100 * length, 300 * length)));
             }
         }
     }

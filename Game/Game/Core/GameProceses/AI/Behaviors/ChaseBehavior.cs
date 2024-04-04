@@ -20,8 +20,8 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
         public override double GetScore()
         {
-            var shialdHullScore = mSpaceship.DefenseSystem.HullPercentage * 0.95 + mSpaceship.DefenseSystem.ShieldPercentage * 0.05;
-            var targets = mSpaceship.SensorSystem.Opponents;
+            var shialdHullScore = mSpaceship.Defense.HullPercentage * 0.95 + mSpaceship.Defense.ShieldPercentage * 0.05;
+            var targets = mSpaceship.Sensors.Opponents;
             var targetScore = MathF.Min(targets.Count, 1);
             return targetScore * shialdHullScore * .1f;
         }
@@ -33,15 +33,13 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
             switch (mPatrolTarget)
             {
                 case null: // Get new Patrol Target
-                    var targets = mSpaceship.SensorSystem.Opponents;
+                    var targets = mSpaceship.Sensors.Opponents;
                     mPatrolTarget = targets.First();
-                    mSpaceship.SublightDrive.MoveToTarget(mPatrolTarget.Position);
-                    mSpaceship.SublightDrive.SetVelocity(1f);
+                    mSpaceship.ImpulseDrive.MoveToTarget(mPatrolTarget.Position);
                     break;
 
                 case not null: // Check if Patrol Target is reached
-                    mSpaceship.SublightDrive.SetVelocity(1f);
-                    if (mSpaceship.SublightDrive.IsMoving
+                    if (mSpaceship.ImpulseDrive.IsMoving
                         && !mPatrolTarget.IsDisposed) break;
                     mPatrolTarget = null;
                     break;
@@ -50,7 +48,6 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
         public override void Recet()
         {
-            mSpaceship.SublightDrive.SetVelocity(0);
             mPatrolTarget = null;
         }
     }

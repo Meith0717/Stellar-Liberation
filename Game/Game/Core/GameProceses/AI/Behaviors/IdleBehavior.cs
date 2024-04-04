@@ -2,20 +2,20 @@
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
-using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components.PropulsionSystem;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipComponents;
 
 namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 {
     internal class IdleBehavior : Behavior
     {
-        private readonly SublightDrive mSublightDrive;
+        private readonly ImpulseDrive mSublightDrive;
 
-        public IdleBehavior(SublightDrive sublightDrive) => mSublightDrive = sublightDrive;
+        public IdleBehavior(ImpulseDrive sublightDrive) => mSublightDrive = sublightDrive;
 
         public override void Execute() {; }
 
         public override double GetScore() => 0.01f;
 
-        public override void Recet() { mSublightDrive.SetVelocity(0); }
+        public override void Recet() { ; }
     }
 }

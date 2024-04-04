@@ -16,33 +16,15 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
         public override double GetScore()
         {
-            var shieldHullScore = 1 - (mSpaceship.DefenseSystem.HullPercentage * 0.85 + mSpaceship.DefenseSystem.ShieldPercentage * 0.15);
-
-            var opponents = mSpaceship.SensorSystem.OpponentsInRannge;
-            var opponentShieldHullScore = 0d;
-            foreach (var opponent in opponents)
-            {
-                opponentShieldHullScore += opponent.DefenseSystem.HullPercentage * 0.85 + mSpaceship.DefenseSystem.ShieldPercentage * 0.15;
-            }
-            opponentShieldHullScore = opponents.Count == 0 ? 0 : opponentShieldHullScore / opponents.Count;
-            var opponentsScore = 1 - (1 / (.5 * opponentShieldHullScore + 1));
-
-            return shieldHullScore * opponentsScore;
+            return 0;
         }
 
         public override void Execute()
         {
-            var opponents = mSpaceship.SensorSystem.OpponentsInRannge;
-            var dir = Vector2.Zero;
-            foreach (var opponent in opponents) dir -= Vector2.Subtract(opponent.Position, mSpaceship.Position);
-            dir.Normalize();
-            mSpaceship.SublightDrive.SetVelocity(1);
-            mSpaceship.SublightDrive.MoveInDirection(dir);
         }
 
         public override void Recet()
         {
-            mSpaceship.SublightDrive.SetVelocity(0);
         }
     }
 }
