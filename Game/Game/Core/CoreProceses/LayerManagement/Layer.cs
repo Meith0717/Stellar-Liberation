@@ -59,12 +59,12 @@ public abstract class Layer
         mHoverText.X = (int)inputState.mMousePosition.X;
         mHoverText.Y = (int)inputState.mMousePosition.Y - 15;
         mHoverText.ApplyResolution(GraphicsDevice.Viewport.Bounds, ResolutionManager.Resolution);
-        foreach (UiElement uiElement in mUiElements.ToList()) 
+        foreach (UiElement uiElement in mUiElements.ToList())
         {
             uiElement.Update(inputState, gameTime);
             if (!uiElement.IsDisposed) continue;
             mUiElements.Remove(uiElement);
-        }            
+        }
     }
 
     public virtual void Draw(SpriteBatch spriteBatch)

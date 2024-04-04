@@ -1,4 +1,4 @@
-﻿// GameLayerManager.cs 
+﻿// GameState.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
@@ -25,6 +25,7 @@ namespace StellarLiberation.Game.Layers
     [Serializable]
     public class GameState : Layer
     {
+
         [JsonIgnore] public readonly DebugSystem DebugSystem = new();
         [JsonIgnore] private readonly LinkedList<Layer> mLayers = new();
         [JsonIgnore] private readonly FrameCounter mFrameCounter = new(200);
@@ -63,12 +64,12 @@ namespace StellarLiberation.Game.Layers
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
-        { 
+        {
             inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this, Game1)));
             mFrameCounter.Update(gameTime);
             DebugSystem.Update(inputState);
             foreach (var planetsystemState in PlanetSystemStates)
-                planetsystemState.Update(gameTime, inputState, this);
+                planetsystemState.Update(gameTime, this);
             mLayers.Last?.Value.Update(gameTime, inputState);
         }
 

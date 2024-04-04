@@ -41,7 +41,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
             mSpaceship.SublightDrive.MoveInDirection(dir);
         }
 
-        public override void Recet() 
+        public override void Recet()
         {
             mSpaceship.SublightDrive.SetVelocity(0);
         }

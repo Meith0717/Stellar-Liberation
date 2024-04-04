@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
-using static StellarLiberation.Game.Core.Visuals.Rendering.Camera2DMover;
 
 namespace StellarLiberation.Game.Core.Visuals.Rendering
 {
@@ -43,11 +42,11 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
             return wasMoved;
         }
 
-        public static void EdgeScrolling (InputState inputState, GameTime gameTime, GraphicsDevice graphicsDevice, Camera2D camera)
+        public static void EdgeScrolling(InputState inputState, GameTime gameTime, GraphicsDevice graphicsDevice, Camera2D camera)
         {
             var screen = graphicsDevice.Viewport.Bounds;
             var edge = screen.Size.ToVector2() * 0.10f;
-            var bounds = new RectangleF(screen.Location.ToVector2() + (edge/2), screen.Size.ToVector2() - edge);
+            var bounds = new RectangleF(screen.Location.ToVector2() + (edge / 2), screen.Size.ToVector2() - edge);
             if (bounds.Contains(inputState.mMousePosition)) return;
             var center = screen.Center;
             var dir = Vector2.Normalize(inputState.mMousePosition - center.ToVector2());

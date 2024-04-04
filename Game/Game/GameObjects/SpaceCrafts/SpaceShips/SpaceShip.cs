@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
-using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.AI;
@@ -114,17 +113,17 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
         {
             base.Draw(gameState, scene);
 
-            scene.DebugSystem.DrawSensorRadius(Position, SensorSystem.ShortRangeScanDistance, scene);
+            gameState.DebugSystem.DrawSensorRadius(Position, SensorSystem.ShortRangeScanDistance, scene);
 
             TextureManager.Instance.Draw($"{TextureId}Borders", Position, TextureScale, Rotation, TextureDepth, mAccentColor);
             TextureManager.Instance.Draw($"{TextureId}Frame", Position, TextureScale, Rotation, TextureDepth, Color.Black);
             TextureManager.Instance.Draw($"{TextureId}Hull", Position, TextureScale, Rotation, TextureDepth, new(10, 10, 10));
             TextureManager.Instance.Draw($"{TextureId}Structure", Position, TextureScale, Rotation, TextureDepth, new(20, 30, 40));
 
-            scene.DebugSystem.DrawAiDebug(BoundedBox, mUtilityAi.DebugMessage, scene.Camera2D.Zoom);
+            gameState.DebugSystem.DrawAiDebug(BoundedBox, mUtilityAi.DebugMessage, scene.Camera2D.Zoom);
 
             PhaserCannaons.Draw(gameState, scene);
-            SublightDrive.Draw(scene.DebugSystem, this, scene);
+            SublightDrive.Draw(gameState.DebugSystem, this, scene);
             DefenseSystem.DrawShields(this);
         }
     }

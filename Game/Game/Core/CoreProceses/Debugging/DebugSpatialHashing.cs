@@ -9,7 +9,6 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
-using System.Xml.Schema;
 
 namespace StellarLiberation.Game.Core.CoreProceses.Debugging
 {

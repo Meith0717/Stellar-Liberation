@@ -3,10 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
-using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components.PropulsionSystem

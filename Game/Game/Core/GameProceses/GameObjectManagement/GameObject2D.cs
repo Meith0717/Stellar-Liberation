@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Layers;
 using System;
@@ -65,8 +64,8 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
 
         public virtual void Draw(GameState gameState, GameLayer scene)
         {
-            scene.DebugSystem.DrawnObjectCount += 1;
-            scene.DebugSystem.DrawHitbox(BoundedBox, scene);
+            gameState.DebugSystem.DrawnObjectCount += 1;
+            gameState.DebugSystem.DrawHitbox(BoundedBox, scene);
         }
 
         public virtual void HasCollide(Vector2 position, GameLayer scene) { }

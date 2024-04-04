@@ -1,12 +1,12 @@
-﻿// PlanetSystemState.cs 
+﻿// PlanetsystemState.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
-using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
+using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.Layers;
@@ -19,6 +19,9 @@ namespace StellarLiberation.Game.Core.GameProceses
     [Serializable]
     public class PlanetsystemState
     {
+        private const double PlanetUpdateCoolDown = 200;
+        [JsonIgnore] private double mPlanetUpdateCoolDown;
+
         [JsonProperty] public Vector2 MapPosition;
         [JsonProperty] public Fractions Occupier = Fractions.Neutral;
         [JsonProperty] private Star mStar;
@@ -34,6 +37,7 @@ namespace StellarLiberation.Game.Core.GameProceses
             MapPosition = mapPosition;
             mStar = star;
             mPlanets = planets;
+            mPlanetUpdateCoolDown = ExtendetRandom.Random.NextDouble() * PlanetUpdateCoolDown;
         }
 
         public void Initialize()
@@ -43,11 +47,16 @@ namespace StellarLiberation.Game.Core.GameProceses
             GameObject2DManager.Initialize(SpatialHashing, ref mGameObjects);
         }
 
-        public void Update(GameTime gameTime, InputState inputState, GameState gameState)
+        public void Update(GameTime gameTime, GameState gameState)
         {
-            GameObject2DManager.Update(gameTime, inputState, gameState, this,ref mStar);
-            GameObject2DManager.Update(gameTime, inputState, gameState, this, ref mPlanets);
-            GameObject2DManager.Update(gameTime, inputState, gameState, this, ref mGameObjects);
+            mPlanetUpdateCoolDown -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            GameObject2DManager.Update(gameTime, gameState, this, ref mStar);
+            if (mPlanetUpdateCoolDown <= 0)
+            {
+                mPlanetUpdateCoolDown = PlanetUpdateCoolDown;
+                GameObject2DManager.Update(gameTime, gameState, this, ref mPlanets);
+            }
+            GameObject2DManager.Update(gameTime, gameState, this, ref mGameObjects);
         }
 
         public void AddGameObject(GameObject2D gameObject)

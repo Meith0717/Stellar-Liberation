@@ -1,4 +1,4 @@
-﻿// HudLayer.cs 
+﻿// PlanetsystemHud.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
@@ -40,7 +40,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
             if (Hide) return;
             base.Update(gameTime, inputState);
             inputState.DoAction(ActionType.ToggleHyperMap, mPlanetSystemLayer.OpenMap);
-            
+
 
             mMainFrame.Update(inputState, gameTime);
         }

@@ -4,17 +4,14 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Core.GameProceses;
-using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.Layers;
-using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
 {
@@ -22,7 +19,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
     {
         public Vector2 WorldMousePosition { get; private set; }
         public Matrix ViewTransformationMatrix { get; private set; }
-        public readonly Debugging.DebugSystem DebugSystem;
         public readonly SpatialHashing SpatialHashing;
         public readonly Camera2D Camera2D;
         public readonly Camera2DShaker CameraShaker;
@@ -32,11 +28,9 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         protected readonly StereoSoundSystem mStereoSoundSystem = new();
         protected readonly ParticleManager mParticleManager = new();
 
-        public GameLayer(GameState gameState, SpatialHashing spatialHashing, Game1 game1) 
+        public GameLayer(GameState gameState, SpatialHashing spatialHashing, Game1 game1)
             : base(game1, false)
         {
-            DebugSystem = gameState.DebugSystem ?? new(true);
-
             SpatialHashing = spatialHashing;
             Camera2D = new();
             CameraShaker = new();
@@ -75,7 +69,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         public override void Destroy()
         {
             base.Destroy();
-            SpatialHashing.ClearBuckets();
             mParticleManager.Clear();
         }
 

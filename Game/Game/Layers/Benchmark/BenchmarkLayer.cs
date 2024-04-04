@@ -57,7 +57,7 @@ namespace StellarLiberation.Game.Layers.Benchmark
             CoolDown -= gameTime.ElapsedGameTime.Milliseconds;
             mRunTime -= gameTime.ElapsedGameTime.Milliseconds;
 
-            DebugSystem.Update(inputState);
+            GameState.DebugSystem.Update(inputState);
             mFrameCounter.Update(gameTime);
             inputState.DoAction(ActionType.ESC, LayerManager.PopLayer);
             inputState.DoAction(ActionType.BenchmarkPause, () => mIsPaused = !mIsPaused);
@@ -90,8 +90,8 @@ namespace StellarLiberation.Game.Layers.Benchmark
             TimeSpan timeSpan = TimeSpan.FromMilliseconds(mRunTime);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 150), $"{timeSpan.Minutes} min {timeSpan.Seconds}s ESC => Quit", .75f, Color.White);
             TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 165), $"Left control => Pause Spawning", .75f, mIsPaused ? Color.LightGreen : Color.White);
-            DebugSystem.ShowInfo(new Vector2(200, 10));
-            DebugSystem.DrawOnScene(this);
+            GameState.DebugSystem.ShowInfo(new Vector2(200, 10));
+            GameState.DebugSystem.DrawOnScene(this);
             spriteBatch.End();
         }
 

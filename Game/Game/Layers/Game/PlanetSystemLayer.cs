@@ -1,4 +1,4 @@
-﻿// PlanetSystemLayer.cs 
+﻿// PlanetsystemLayer.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
@@ -10,7 +10,6 @@ using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Visuals.ParallaxSystem;
-using StellarLiberation.Game.Core.Visuals.ParticleSystem;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 
 namespace StellarLiberation.Game.Layers.GameLayers

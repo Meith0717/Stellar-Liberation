@@ -49,10 +49,10 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.BaseCompo
             mFireCoolDown = mMaxFireCoolDown;
         }
 
-        public void Draw(GameState gameState, GameLayer sceme) 
-        { 
-            foreach (var weapon in mCannons) 
-                weapon.Draw(gameState, sceme); 
+        public void Draw(GameState gameState, GameLayer sceme)
+        {
+            foreach (var weapon in mCannons)
+                weapon.Draw(gameState, sceme);
         }
     }
 }

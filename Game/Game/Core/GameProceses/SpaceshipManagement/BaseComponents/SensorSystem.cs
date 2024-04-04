@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
-using StellarLiberation.Game.Layers;
 using System.Collections.Generic;
 using System.Linq;
 

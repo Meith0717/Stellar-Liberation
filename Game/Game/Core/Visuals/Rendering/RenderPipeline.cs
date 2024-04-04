@@ -35,7 +35,7 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
         /// </summary>
         public void RenderFiltredObjs(GameState gameState, GameLayer scene)
         {
-            foreach (var obj in mObjects) 
+            foreach (var obj in mObjects)
                 obj.Draw(gameState, scene);
         }
     }

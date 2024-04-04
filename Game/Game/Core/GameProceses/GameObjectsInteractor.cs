@@ -1,4 +1,4 @@
-﻿// SpaceShipInteractor.cs 
+﻿// GameObjectsInteractor.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
@@ -12,7 +12,6 @@ using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
-using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using StellarLiberation.Game.Popups;
 using System.Collections.Generic;
@@ -60,7 +59,7 @@ namespace StellarLiberation.Game.Core.GameProceses
                     var star = (Star)HoveredGameObject;
                     hudLayer.ClearUiElements();
                     hudLayer.AddUiElement(new StarInfoPopup(star));
-                    break;                  
+                    break;
                 case null:
                     if (SelectedSpaceships.Count > 0)
                         MoveSpaceShipsToPosition(worldMousePosition, planetsystemState);

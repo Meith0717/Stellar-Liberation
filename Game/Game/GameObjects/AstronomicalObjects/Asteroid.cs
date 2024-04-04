@@ -5,7 +5,6 @@
 using Microsoft.Xna.Framework;
 using Penumbra;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.Extensions;
 using StellarLiberation.Game.Core.GameProceses;
@@ -33,7 +32,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             base.Update(gameTime, gameState, planetsystemState);
             Rotation -= (float)(0.00001 * gameTime.ElapsedGameTime.TotalMilliseconds);
             Velocity = MathHelper.Clamp(Velocity - 0.001f, 0, float.PositiveInfinity);
-            CheckForHit(gameTime,gameState, planetsystemState);
+            CheckForHit(gameTime, gameState, planetsystemState);
             Physics.HandleCollision(gameTime, this, planetsystemState.SpatialHashing);
             GameObject2DMover.Move(gameTime, this, planetsystemState.SpatialHashing);
             mHull.Position = Position;

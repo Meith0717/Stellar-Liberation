@@ -1,4 +1,4 @@
-﻿// SoundEffectSystem.cs 
+﻿// StereoSoundSystem.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
@@ -21,7 +21,7 @@ namespace StellarLiberation.Game.Core.GameProceses
 
         public void Update(Vector2 camera2DPosition, float camera2DZoom, Queue<StereoSound> soundQueue)
         {
-            while (soundQueue.Count > 0) 
+            while (soundQueue.Count > 0)
             {
                 var stereoSound = soundQueue.Dequeue();
                 PlaySound(stereoSound, camera2DPosition, camera2DZoom);

@@ -5,14 +5,12 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
-using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration;
 using StellarLiberation.Game.Layers;
 using System;
-using System.Linq;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
 {
@@ -22,7 +20,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
         public readonly PlanetsystemState mPlanetsystemState;
         private readonly Sector mSector;
 
-        public Planetsystem(PlanetsystemState planetsystemState) 
+        public Planetsystem(PlanetsystemState planetsystemState)
             : base(planetsystemState.MapPosition, GameSpriteRegistries.star, .1f, 1)
         {
             TextureColor = planetsystemState.Star.TextureColor;

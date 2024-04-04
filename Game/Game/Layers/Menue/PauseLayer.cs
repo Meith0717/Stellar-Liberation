@@ -19,19 +19,21 @@ namespace StellarLiberation.Game.Layers.MenueLayers
         public PauseLayer(GameState gameState, Game1 game1)
             : base(game1, false)
         {
-            var mainFrame = new UiFrame() 
-            { 
+            var mainFrame = new UiFrame()
+            {
                 RelHeight = 1,
                 RelWidth = 1,
                 Alpha = .5f
             };
 
-            var buttonFrame = new UiGrid(1,6) { Anchor = Anchor.W, Height = 500, Width = 400, HSpace = 20};
+            var buttonFrame = new UiGrid(1, 6) { Anchor = Anchor.W, Height = 500, Width = 400, HSpace = 20 };
             mainFrame.AddChild(buttonFrame);
 
-            buttonFrame.Set(0, 0, new UiButton(MenueSpriteRegistries.button, "Resume") 
-            { 
-                OnClickAction = () => { LayerManager.PopLayer(); SoundEffectManager.Instance.ResumeAllSounds();
+            buttonFrame.Set(0, 0, new UiButton(MenueSpriteRegistries.button, "Resume")
+            {
+                OnClickAction = () =>
+                {
+                    LayerManager.PopLayer(); SoundEffectManager.Instance.ResumeAllSounds();
                 },
                 Anchor = Anchor.Center,
                 FillScale = FillScale.Fit
@@ -46,19 +48,19 @@ namespace StellarLiberation.Game.Layers.MenueLayers
                 Anchor = Anchor.Center,
                 FillScale = FillScale.Fit
             });
-            buttonFrame.Set(0, 2, new UiButton(MenueSpriteRegistries.button, "Settings") 
-            { 
+            buttonFrame.Set(0, 2, new UiButton(MenueSpriteRegistries.button, "Settings")
+            {
                 OnClickAction = () => LayerManager.AddLayer(new SettingsLayer(Game1)),
                 Anchor = Anchor.Center,
                 FillScale = FillScale.Fit
             });
-            buttonFrame.Set(0, 3, new UiButton(MenueSpriteRegistries.button, "Exit to Desktop") 
+            buttonFrame.Set(0, 3, new UiButton(MenueSpriteRegistries.button, "Exit to Desktop")
             {
                 OnClickAction = LayerManager.Exit,
                 Anchor = Anchor.Center,
                 FillScale = FillScale.Fit
             });
-            buttonFrame.Set(0, 5, new UiButton(MenueSpriteRegistries.button, "Exit to Menue") 
+            buttonFrame.Set(0, 5, new UiButton(MenueSpriteRegistries.button, "Exit to Menue")
             {
                 OnClickAction = Menue,
                 Anchor = Anchor.Center,
