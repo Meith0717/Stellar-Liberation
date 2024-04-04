@@ -4,14 +4,12 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.Recources.Items;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 
-namespace StellarLiberation.Game.GameObjects.Recources.Weapons
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.BaseComponents.Weapons
 {
-    public class Weapon : Item
+    public class Weapon
     {
         private Vector2 mOnShipPosition;
         private Vector2 mPosition;
@@ -24,8 +22,7 @@ namespace StellarLiberation.Game.GameObjects.Recources.Weapons
         public readonly float HullDamage;
         public readonly float ShieldDamage;
 
-        public Weapon(Vector2 onShipPosition, Spaceship spaceShip, string objectTextureID, string itemTextureId, ItemID itemID, string projectileTextureID, Color projectileColor, float hullDamage, float shieldDamage, bool followTarget)
-            : base(itemID, itemTextureId, false)
+        public Weapon(Vector2 onShipPosition, Spaceship spaceShip, string objectTextureID, string projectileTextureID, Color projectileColor, float hullDamage, float shieldDamage, bool followTarget)
         {
             mOnShipPosition = onShipPosition;
             mSpaceship = spaceShip;
@@ -37,9 +34,9 @@ namespace StellarLiberation.Game.GameObjects.Recources.Weapons
             mProjectileFollowTarget = followTarget;
         }
 
-        public void Fire(GameLayer gameLayer, Spaceship target)
+        public void Fire(PlanetsystemState planetsystemState, Spaceship target)
         {
-            //gameLayer.GameObjectsManager.Add(new WeaponProjectile(mPosition, mRotation, mSpaceship, target, HullDamage, ShieldDamage, mProjectileFollowTarget, mProjectileTextureID, mProjectileColor));
+            planetsystemState.AddGameObject(new WeaponProjectile(mPosition, mRotation, mSpaceship, target, HullDamage, ShieldDamage, mProjectileFollowTarget, mProjectileTextureID, mProjectileColor));
         }
 
         public void Update(float rotation)

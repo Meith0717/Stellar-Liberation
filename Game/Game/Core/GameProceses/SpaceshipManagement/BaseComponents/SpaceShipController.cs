@@ -16,7 +16,6 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Component
         public void Controll(GameTime gameTime, Spaceship spaceShip, InputState inputState, GameLayer gameLayer)
         {
             if (spaceShip == null) return;
-            spaceShip.PhaserCannaons.StopFire();
             if (inputState.HasAction(ActionType.Accelerate))
             {
                 mVelocityProcentage = MathHelper.Clamp(mVelocityProcentage + .002f * (float)gameTime.ElapsedGameTime.TotalMilliseconds, 0, 1);

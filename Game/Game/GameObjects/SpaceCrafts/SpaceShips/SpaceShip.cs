@@ -13,7 +13,6 @@ using StellarLiberation.Game.Core.GameProceses.AI;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.RecourceManagement;
-using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.BaseComponents.PhaserSystem;
 using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components;
 using StellarLiberation.Game.Core.GameProceses.SpaceshipManagement.Components.PropulsionSystem;
 using StellarLiberation.Game.Core.Utilitys;
@@ -32,7 +31,6 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
         [JsonIgnore] public readonly SensorSystem SensorSystem = new();
         [JsonIgnore] public readonly HyperDrive HyperDrive = new();
         [JsonIgnore] public readonly SublightDrive SublightDrive;
-        [JsonIgnore] public readonly PhaserCannons PhaserCannaons;
         [JsonIgnore] public readonly DefenseSystem DefenseSystem;
 
         [JsonProperty] public readonly Fractions Fraction;
@@ -55,10 +53,8 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
                 _ => throw new NotImplementedException()
             };
             SublightDrive = new(1, 0.01f);
-            PhaserCannaons = new(100, accentCoor, 10, 10);
             DefenseSystem = new(1000, 100, 10);
             mAccentColor = accentCoor;
-            PhaserCannaons.PlaceTurret(new(Vector2.Zero, 1, TextureDepth + 1));
 
             ID = ExtendetRandom.Random.NextFullRangeInt32();
         }
@@ -78,7 +74,6 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
             HyperDrive.Update(gameTime, this, planetsystemState);
             DefenseSystem.Update(gameTime);
             mItemCollector.Collect(gameTime, this, planetsystemState);
-            PhaserCannaons.Update(gameTime, this, planetsystemState);
             mUtilityAi.Update(gameTime);
 
             if (DefenseSystem.HullPercentage <= 0) Explode(gameState, planetsystemState);
@@ -122,7 +117,6 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships
 
             gameState.DebugSystem.DrawAiDebug(BoundedBox, mUtilityAi.DebugMessage, scene.Camera2D.Zoom);
 
-            PhaserCannaons.Draw(gameState, scene);
             SublightDrive.Draw(gameState.DebugSystem, this, scene);
             DefenseSystem.DrawShields(this);
         }

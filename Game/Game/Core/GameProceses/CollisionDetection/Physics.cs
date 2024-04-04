@@ -4,6 +4,7 @@
 
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
+using StellarLiberation.Game.Core.Extensions;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using System;
@@ -45,7 +46,7 @@ namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection
             {
                 if (!TryGetGetMass(obj, out var m2)) continue;
                 if (!ContinuousCollisionDetection.HasCollide(gameTime, gameObject2D, obj, out var _)) continue;
-                var pushDir = -Vector2.Normalize(obj.Position - gameObject2D.Position);
+                var pushDir = -Vector2.Normalize(obj.Position - gameObject2D.Position); // TODO
                 gameObject2D.MovingDirection += pushDir.IsNaN() ? Vector2.UnitX : pushDir;
                 if (TryMomentumConservation(m1, m2, gameObject2D.Velocity, obj.Velocity, out var v))
                 {

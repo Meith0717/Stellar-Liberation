@@ -28,7 +28,6 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
         public override void Execute()
         {
-            mSpaceship.PhaserCannaons.StopFire();
 
             // Move to Patrol Target
             switch (mPatrolTarget)

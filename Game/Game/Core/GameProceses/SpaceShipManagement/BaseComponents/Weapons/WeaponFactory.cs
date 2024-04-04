@@ -6,13 +6,13 @@ using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 
-namespace StellarLiberation.Game.GameObjects.Recources.Weapons
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.BaseComponents.Weapons
 {
     public static class WeaponFactory
     {
         public static Weapon Get(Spaceship spaceship)
         {
-            return new Weapon(Vector2.Zero, spaceship, GameSpriteRegistries.turette, GameSpriteRegistries.turette, Items.ItemID.DarkMatter, GameSpriteRegistries.projectile, Color.Green, 1, 1, false);
+            return new Weapon(Vector2.Zero, spaceship, GameSpriteRegistries.turette, GameSpriteRegistries.projectile, Color.Green, 1, 1, false);
         }
     }
 }

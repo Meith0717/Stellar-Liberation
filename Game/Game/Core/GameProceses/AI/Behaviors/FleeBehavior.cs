@@ -32,7 +32,6 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
         public override void Execute()
         {
-            mSpaceship.PhaserCannaons.StopFire();
             var opponents = mSpaceship.SensorSystem.OpponentsInRannge;
             var dir = Vector2.Zero;
             foreach (var opponent in opponents) dir -= Vector2.Subtract(opponent.Position, mSpaceship.Position);

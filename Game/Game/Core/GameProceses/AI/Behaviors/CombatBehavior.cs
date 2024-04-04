@@ -40,13 +40,11 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
             switch (mReposition)
             {
                 case false:
-                    mSpaceship.PhaserCannaons.Fire();
                     mSpaceship.SublightDrive.MoveInDirection(Vector2.Normalize(target.Position - mSpaceship.Position));
                     velocity = (dotProduct + 1) / 2;
                     if (distance <= mSpaceship.BoundedBox.Diameter * 5) mReposition = true;
                     break;
                 case true:
-                    mSpaceship.PhaserCannaons.StopFire();
                     mSpaceship.SublightDrive.MoveInDirection(-Vector2.Normalize(target.Position - mSpaceship.Position));
                     velocity = (-dotProduct + 1) / 2;
                     if (distance >= mSpaceship.BoundedBox.Diameter * 30) mReposition = false;
@@ -57,7 +55,6 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
         public override void Recet()
         {
-            mSpaceship.PhaserCannaons.StopFire();
             mBias1 = .4f + ExtendetRandom.Random.NextSingle() * .2f;
             mSpaceship.SublightDrive.SetVelocity(0);
         }

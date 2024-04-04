@@ -11,7 +11,7 @@ using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
 using StellarLiberation.Game.Layers;
 
-namespace StellarLiberation.Game.GameObjects.Recources.Weapons
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipManagement.BaseComponents.Weapons
 {
     public class WeaponProjectile : GameObject2D
     {

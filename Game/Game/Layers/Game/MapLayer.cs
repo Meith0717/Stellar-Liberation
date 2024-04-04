@@ -39,8 +39,6 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
             var objByMouse = SpatialHashing.GetObjectsInRadius<Planetsystem>(WorldMousePosition, 200);
             foreach (var system in objByMouse)
-                GameObject2DInteractionManager.Manage(inputState, system, this, () => LeftPressAction(system.mPlanetsystemState), null, null);
-
             base.Update(gameTime, inputState);
         }
 
