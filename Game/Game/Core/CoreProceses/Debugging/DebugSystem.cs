@@ -9,7 +9,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceCrafts;
+using StellarLiberation.Game.GameObjects.Spacecrafts;
 using System.Collections.Generic;
 
 namespace StellarLiberation.Game.Core.CoreProceses.Debugging

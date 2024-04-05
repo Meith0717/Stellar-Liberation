@@ -11,7 +11,7 @@ using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.GameObjects;
-using StellarLiberation.Game.GameObjects.SpaceCrafts;
+using StellarLiberation.Game.GameObjects.Spacecrafts;
 using StellarLiberation.Game.Layers;
 using System;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -46,7 +46,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
             mActualShieldForce = mMaxShieldForce;
         }
 
-        public void Update(SpaceCraft spacecraft, GameTime gameTime, GameSettings gameSettings, PlanetsystemState planetsystemState)
+        public void Update(Spacecraft spacecraft, GameTime gameTime, GameSettings gameSettings, PlanetsystemState planetsystemState)
         {
             mShieldDrawAlpha = mShieldDrawAlpha < 0 ? 0 : mShieldDrawAlpha - 0.1f;
             RegenerateCoolDown -= gameTime.ElapsedGameTime.Milliseconds;
@@ -73,13 +73,13 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
             mActualHullForce -= mActualHullForce > 0 ? hullDamage : 0;
         }
 
-        public void Draw(SpaceCraft scpacecraft)
+        public void Draw(Spacecraft scpacecraft)
         {
             var color = new Color((int)(255 * mShieldDrawAlpha), (int)(255 * mShieldDrawAlpha), (int)(255 * mShieldDrawAlpha), (int)(255 * mShieldDrawAlpha));
             TextureManager.Instance.Draw($"{scpacecraft.TextureId}Shield", scpacecraft.Position, scpacecraft.TextureScale, scpacecraft.Rotation, scpacecraft.TextureDepth + 1, color);
         }
 
-        private void CheckForHit(SpaceCraft spacecraft, GameTime gameTime, GameSettings gameSettings, PlanetsystemState planetsystemState)
+        private void CheckForHit(Spacecraft spacecraft, GameTime gameTime, GameSettings gameSettings, PlanetsystemState planetsystemState)
         {
             var projectileInRange = planetsystemState.SpatialHashing.GetObjectsInRadius<WeaponProjectile>(spacecraft.Position, (int)spacecraft.BoundedBox.Radius * 10);
             if (projectileInRange.Count == 0) return;

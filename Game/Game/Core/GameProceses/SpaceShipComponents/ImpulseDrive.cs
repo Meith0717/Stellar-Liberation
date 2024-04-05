@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using StellarLiberation.Game.Core.Extensions;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceCrafts;
+using StellarLiberation.Game.GameObjects.Spacecrafts;
 using System;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents

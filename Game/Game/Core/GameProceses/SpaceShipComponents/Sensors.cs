@@ -5,7 +5,7 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceCrafts;
+using StellarLiberation.Game.GameObjects.Spacecrafts;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,7 +27,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
 
         public Sensors() => mCoolDown = ExtendetRandom.Random.Next(MaxCoolDown);
 
-        public void Scan(GameTime gameTime, SpaceCraft spacecraft, Fractions fraction, PlanetsystemState planetsystemState)
+        public void Scan(GameTime gameTime, Spacecraft spacecraft, Fractions fraction, PlanetsystemState planetsystemState)
         {
             mCoolDown -= gameTime.ElapsedGameTime.Milliseconds;
             if (mCoolDown > 0) return;

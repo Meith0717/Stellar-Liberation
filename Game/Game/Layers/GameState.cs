@@ -12,7 +12,7 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration;
-using StellarLiberation.Game.GameObjects.SpaceCrafts;
+using StellarLiberation.Game.GameObjects.Spacecrafts;
 using StellarLiberation.Game.Layers.GameLayers;
 using StellarLiberation.Game.Layers.MenueLayers;
 using System;

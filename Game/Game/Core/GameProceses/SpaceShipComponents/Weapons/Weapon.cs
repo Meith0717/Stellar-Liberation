@@ -3,50 +3,60 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceCrafts;
+using StellarLiberation.Game.GameObjects.Spacecrafts;
+using System;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons
 {
+    [Serializable]
     public class Weapon
     {
-        private Vector2 mOnShipPosition;
-        private Vector2 mPosition;
-        private float mRotation;
-        private readonly Flagship mSpaceship;
-        private readonly string mTextureID;
-        private readonly string mProjectileTextureID;
-        private readonly Color mProjectileColor;
-        private readonly bool mProjectileFollowTarget;
-        public readonly float HullDamage;
-        public readonly float ShieldDamage;
+        [JsonProperty] public readonly float HullDamage;
+        [JsonProperty] public readonly float ShieldDamage; 
+        [JsonProperty] private Vector2 mOnShipPosition;
+        [JsonProperty] private Vector2 mPosition;
+        [JsonProperty] private float mRotation;
+        [JsonProperty] private readonly string mTextureID;
+        [JsonProperty] private readonly string mProjectileTextureID;
+        [JsonProperty] private readonly Color mProjectileColor;
+        [JsonProperty] private readonly bool mProjectileFollowTarget;
+        [JsonProperty] private readonly double mCoolDown;
+        [JsonProperty] private double mActualCoolDown;
 
-        public Weapon(Vector2 onShipPosition, Flagship spaceShip, string objectTextureID, string projectileTextureID, Color projectileColor, float hullDamage, float shieldDamage, bool followTarget)
+        public Weapon(Vector2 onShipPosition, string objectTextureID, string projectileTextureID, Color projectileColor, bool followTarget, float hullDamage, float shieldDamage, double coolDown)
         {
             mOnShipPosition = onShipPosition;
-            mSpaceship = spaceShip;
             mTextureID = objectTextureID;
             mProjectileTextureID = projectileTextureID;
             mProjectileColor = projectileColor;
+            mProjectileFollowTarget = followTarget;
             HullDamage = hullDamage;
             ShieldDamage = shieldDamage;
-            mProjectileFollowTarget = followTarget;
+            mCoolDown = coolDown;
         }
 
-        public void Fire(PlanetsystemState planetsystemState, Flagship target)
+        public void Fire(PlanetsystemState planetsystemState, Spacecraft spacecraft, Spacecraft target)
         {
-            planetsystemState.AddGameObject(new WeaponProjectile(mPosition, mRotation, mSpaceship, target, HullDamage, ShieldDamage, mProjectileFollowTarget, mProjectileTextureID, mProjectileColor));
+            if (mActualCoolDown < mCoolDown) return;
+            var projectile = new WeaponProjectile(mPosition, mProjectileTextureID);
+            projectile.Populate(spacecraft, target, mRotation, HullDamage, ShieldDamage, mProjectileFollowTarget, mProjectileColor);
+            planetsystemState.AddGameObject(projectile);
+            mActualCoolDown = 0;
         }
 
-        public void Update(float rotation)
+        public void Update(GameTime gameTime, Spacecraft spacecraft, float rotation)
         {
-            var shipPosition = mSpaceship.Position;
-            var shipRotation = mSpaceship.Rotation;
+            mActualCoolDown += gameTime.ElapsedGameTime.TotalMilliseconds;
+            var shipPosition = spacecraft.Position;
+            var shipRotation = spacecraft.Rotation;
             mPosition = Transformations.Rotation(shipPosition, mOnShipPosition, shipRotation);
             mRotation = rotation;
         }
 
-        public void Draw() => TextureManager.Instance.Draw(mTextureID, mPosition, 1f, mRotation, 11, Color.White);
+        public void Draw() 
+            => TextureManager.Instance.Draw(mTextureID, mPosition, 5f, mRotation, 20, Color.White);
     }
 }

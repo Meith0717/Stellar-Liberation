@@ -5,28 +5,32 @@
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipComponents;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.Layers;
 using System;
+using System.Collections.Generic;
 
-namespace StellarLiberation.Game.GameObjects.SpaceCrafts
+namespace StellarLiberation.Game.GameObjects.Spacecrafts
 {
     [Serializable]
-    public abstract class SpaceCraft : GameObject, IGameObject, ICollidable
+    public abstract class Spacecraft : GameObject, IGameObject, ICollidable
     {
         [JsonProperty] public float Mass => MathF.PI * 1.33f * BoundedBox.Radius;
         [JsonProperty] public Defense Defense { get; private set; }
+        [JsonProperty] public WeaponManager Weapons { get; private set; }
         [JsonProperty] public readonly Sensors Sensors;
         [JsonProperty] public readonly Fractions Fraction;
         [JsonProperty] private readonly Color mAccentColor;
 
-        public SpaceCraft(Vector2 position, Fractions fraction, string textureID, float textureScale)
+        public Spacecraft(Vector2 position, Fractions fraction, string textureID, float textureScale)
             : base(position, textureID, textureScale, 10)
         {
             Sensors = new();
@@ -40,12 +44,17 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts
             };
         }
 
-        protected void ApplyConfig(float shieldForcePerc, float hullForcePerc, float shieldRegPerc, float hullRegPerc) => Defense = new(shieldForcePerc, hullForcePerc, shieldRegPerc, hullRegPerc);
+        protected void Populate(float shieldForcePerc, float hullForcePerc, float shieldRegPerc, float hullRegPerc, List<Weapon> weapons)
+        {
+            Defense = new(shieldForcePerc, hullForcePerc, shieldRegPerc, hullRegPerc);
+            Weapons = new(weapons);
+        } 
 
         public override void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState)
         {
             if (Defense is null) throw new ArgumentNullException("ApplyConfig not called!");
             Defense.Update(this, gameTime, gameState.GameSettings, planetsystemState);
+            Weapons.Update(gameTime, this, planetsystemState);
             Sensors.Scan(gameTime, this, Fraction, planetsystemState);
 
             MovingDirection = Geometry.CalculateDirectionVector(Rotation);
@@ -71,6 +80,7 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts
             TextureManager.Instance.Draw($"{TextureId}Frame", Position, TextureScale, Rotation, TextureDepth, Color.White);
             TextureManager.Instance.Draw($"{TextureId}Hull", Position, TextureScale, Rotation, TextureDepth, new(30, 30, 35));
             TextureManager.Instance.Draw($"{TextureId}Structure", Position, TextureScale, Rotation, TextureDepth, new(20, 20, 50));
+            Weapons.Draw();
 
             Defense.Draw(this);
         }

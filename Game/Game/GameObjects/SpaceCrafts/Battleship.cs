@@ -10,11 +10,13 @@ using StellarLiberation.Game.Core.GameProceses.SpaceShipComponents;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Layers;
 using System;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons;
+using System.Collections.Generic;
 
-namespace StellarLiberation.Game.GameObjects.SpaceCrafts
+namespace StellarLiberation.Game.GameObjects.Spacecrafts
 {
     [Serializable]
-    public class Battleship : SpaceCraft, IGameObject, ICollidable
+    public class Battleship : Spacecraft, IGameObject, ICollidable
     {
         [JsonProperty] public HyperDrive HyperDrive { get; private set; }
         [JsonProperty] public ImpulseDrive ImpulseDrive { get; private set; }
@@ -23,9 +25,9 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts
             : base(position, fraction, textureID, textureScale)
         {; }
 
-        public void ApplyConfig(float shieldForcePerc, float hullForcePerc, float shieldRegPerc, float hullRegPerc, float impulseVelocityPerc, float hyperVelocityPerc)
+        public void Populate(float shieldForcePerc, float hullForcePerc, float shieldRegPerc, float hullRegPerc, List<Weapon> weapons, float impulseVelocityPerc, float hyperVelocityPerc)
         {
-            ApplyConfig(shieldForcePerc, hullForcePerc, shieldRegPerc, hullRegPerc);
+            Populate(shieldForcePerc, hullForcePerc, shieldRegPerc, hullRegPerc, weapons);
             HyperDrive = new(impulseVelocityPerc);
             ImpulseDrive = new(hyperVelocityPerc);
         }

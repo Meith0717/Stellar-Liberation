@@ -3,38 +3,46 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceCrafts;
+using StellarLiberation.Game.GameObjects.Spacecrafts;
 using StellarLiberation.Game.Layers;
+using System;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons
 {
+    [Serializable]
     public class WeaponProjectile : GameObject, IGameObject
     {
-        public readonly Flagship Shooter;
-        public readonly Flagship Target;
-        public readonly bool mFollowTarget;
-        public readonly float ShieldDamage;
-        public readonly float HullDamage;
+        [JsonProperty] public float ShieldDamage { get; private set; }
+        [JsonProperty] public float HullDamage { get; private set; }
+        [JsonProperty] public Spacecraft Shooter { get; private set;}
+        [JsonProperty] private Spacecraft Target;
+        [JsonProperty] private bool mFollowTarget;
 
-        public WeaponProjectile(Vector2 startPosition, float shootRotation, Flagship shooter, Flagship target, float shieldDamage, float hullDamage, bool followTarget, string textureId, Color color)
-            : base(startPosition, textureId, 1f, 15)
+        public WeaponProjectile(Vector2 startPosition,string textureId)
+            : base(startPosition, textureId, 1f, 15) {; }
+
+        public void Populate(Spacecraft shooter, Spacecraft target, float shootRotation, float shieldDamage, float hullDamage, bool followTarget, Color color)
         {
             Shooter = shooter;
-            Rotation = shootRotation;
             Target = target;
+            Rotation = shootRotation;
             ShieldDamage = shieldDamage;
             HullDamage = hullDamage;
             mFollowTarget = followTarget;
             TextureColor = color;
+            Velocity = 25;
         }
 
         public override void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState)
         {
-            if (mFollowTarget && Target is not null) Rotation = Geometry.AngleBetweenVectors(Position, Target.Position);
+            if (mFollowTarget && Target is not null) 
+                Rotation = Geometry.AngleBetweenVectors(Position, Target.Position);
+            MovingDirection = Geometry.CalculateDirectionVector(Rotation);
             GameObjectMover.Move(gameTime, this, planetsystemState.SpatialHashing);
             base.Update(gameTime, gameState, planetsystemState);
         }

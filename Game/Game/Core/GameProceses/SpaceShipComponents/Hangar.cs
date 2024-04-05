@@ -3,7 +3,7 @@
 // All rights reserved.
 
 using Newtonsoft.Json;
-using StellarLiberation.Game.GameObjects.SpaceCrafts;
+using StellarLiberation.Game.GameObjects.Spacecrafts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

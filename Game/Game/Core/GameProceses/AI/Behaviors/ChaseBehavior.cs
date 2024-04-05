@@ -2,7 +2,7 @@
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
-using StellarLiberation.Game.GameObjects.SpaceCrafts;
+using StellarLiberation.Game.GameObjects.Spacecrafts;
 using System;
 using System.Linq;
 

@@ -12,7 +12,7 @@ using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
-using StellarLiberation.Game.GameObjects.SpaceCrafts;
+using StellarLiberation.Game.GameObjects.Spacecrafts;
 using StellarLiberation.Game.Popups;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +29,12 @@ namespace StellarLiberation.Game.Core.GameProceses
 
         public void Update(InputState inputState, PlanetsystemState planetsystemState, Vector2 worldMousePosition, Layer hudLayer)
         {
+            if (inputState.HasAction(ActionType.Space))
+            {
+                foreach (var obj in mSelectedSpaceShips)
+                    obj.Weapons.Fire();
+            }
+
             var spatialHashing = planetsystemState.SpatialHashing;
             // Select SpaceShips by Selection Box
             CheckForSelectionBox(inputState, spatialHashing, worldMousePosition);

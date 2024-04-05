@@ -6,8 +6,10 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameProceses;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons;
+using System.Collections.Generic;
 
-namespace StellarLiberation.Game.GameObjects.SpaceCrafts
+namespace StellarLiberation.Game.GameObjects.Spacecrafts
 {
     public enum BattleshipID { Bomber, Interceptor, Fighter }
 
@@ -23,14 +25,18 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts
                 BattleshipID.Fighter => new(position, fraction, GameSpriteRegistries.fighter, 1),
                 _ => throw new System.NotImplementedException()
             };
-            spaceship.ApplyConfig(1, 1, 0, 0, 1, 1);
+            spaceship.Populate(1, 1, 0, 0, new(), 1, 1);
             return spaceship;
         }
 
         public static Flagship GetFlagship(Vector2 position, Fractions fraction)
         {
             Flagship spaceship = new(position, fraction);
-            spaceship.ApplyConfig(1, 1, 0, 0, 1, 1);
+            var weapons = new List<Weapon>()
+            {
+                new(Vector2.Zero, GameSpriteRegistries.turette, GameSpriteRegistries.projectile, Color.MonoGameOrange, false, 10, 10, 200),
+            };
+            spaceship.Populate(1, 1, 0, 0, weapons, 1, 1);
             return spaceship;
         }
     }
