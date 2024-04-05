@@ -13,7 +13,7 @@ using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
+using StellarLiberation.Game.GameObjects.SpaceCrafts;
 using StellarLiberation.Game.Layers.MenueLayers;
 
 namespace StellarLiberation.Game.Layers.GameLayers
@@ -63,7 +63,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
                 var obi = mPlanetSystemLayer.GameState.GameObjectsInteractor.HoveredGameObject;
                 TextureManager.Instance.DrawAdaptiveCircle(obi.Position, obi.BoundedBox.Radius, Color.White * .4f, 2, 1, mPlanetSystemLayer.Camera2D.Zoom);
             }
-            foreach (var spaceship in mPlanetSystemLayer.PlanetsystemState.GameObjects.OfType<Spaceship>())
+            foreach (var spaceship in mPlanetSystemLayer.PlanetsystemState.GameObjects.OfType<Flagship>())
                 TextureManager.Instance.Draw(GameSpriteRegistries.radar, spaceship.Position, .04f / mPlanetSystemLayer.Camera2D.Zoom, 0, spaceship.TextureDepth + 1, spaceship.Fraction == Fractions.Enemys ? Color.Red : Color.LightGreen);
             foreach (var planet in mPlanetSystemLayer.PlanetsystemState.Planets)
                 TextureManager.Instance.DrawAdaptiveCircle(Vector2.Zero, planet.Position.Length(), Color.Gray * .1f, 1, planet.TextureDepth - 1, mPlanetSystemLayer.Camera2D.Zoom);

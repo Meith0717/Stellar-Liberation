@@ -10,23 +10,23 @@ using System.Linq;
 
 namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
 {
-    public static class GameObject2DManager
+    public static class GameObjectManager
     {
-        public static void Initialize(SpatialHashing spatialHashing, ref GameObject2DList gameObject2DList)
+        public static void Initialize(SpatialHashing spatialHashing, ref GameObjectList gameObject2DList)
         {
             foreach (var obj in gameObject2DList.ListCopy())
                 spatialHashing.InsertObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
         }
 
-        public static void Initialize<T>(SpatialHashing spatialHashing, ref List<T> gameObject2DList) where T : GameObject2D
+        public static void Initialize<T>(SpatialHashing spatialHashing, ref List<T> gameObject2DList) where T : GameObject
         {
             foreach (var obj in gameObject2DList)
                 spatialHashing.InsertObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
         }
 
-        public static void Initialize<T>(SpatialHashing spatialHashing, ref T obj) where T : GameObject2D => spatialHashing.InsertObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
+        public static void Initialize<T>(SpatialHashing spatialHashing, ref T obj) where T : GameObject => spatialHashing.InsertObject(obj, (int)obj.Position.X, (int)obj.Position.Y);
 
-        public static void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState, ref GameObject2DList gameObject2DList)
+        public static void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState, ref GameObjectList gameObject2DList)
         {
             var copyList = gameObject2DList.ListCopy();
             foreach (var obj in copyList)
@@ -38,9 +38,9 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             }
         }
 
-        public static void Update<T>(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState, ref List<T> gameObject2DList) where T : GameObject2D
+        public static void Update<T>(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState, ref List<T> gameObject2DList) where T : GameObject
         {
-            var copyList = new List<GameObject2D>(gameObject2DList.ToList());
+            var copyList = new List<GameObject>(gameObject2DList.ToList());
             foreach (T obj in copyList)
             {
                 obj.Update(gameTime, gameState, planetsystemState);
@@ -50,6 +50,6 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             }
         }
 
-        public static void Update<T>(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState, ref T obj) where T : GameObject2D => obj.Update(gameTime, gameState, planetsystemState);
+        public static void Update<T>(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState, ref T obj) where T : GameObject => obj.Update(gameTime, gameState, planetsystemState);
     }
 }

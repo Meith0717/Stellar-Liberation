@@ -4,17 +4,17 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
+using StellarLiberation.Game.GameObjects.SpaceCrafts;
 
 namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 {
     public class CombatBehavior : Behavior
     {
-        private readonly Spaceship mSpaceship;
+        private readonly Flagship mSpaceship;
         private bool mReposition;
         private double mBias1;
 
-        public CombatBehavior(Spaceship spaceShip)
+        public CombatBehavior(Flagship spaceShip)
         {
             mSpaceship = spaceShip;
             mBias1 = .7f + ExtendetRandom.Random.NextSingle() * .2f;

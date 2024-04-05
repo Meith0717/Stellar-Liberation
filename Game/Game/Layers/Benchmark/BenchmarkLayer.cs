@@ -15,7 +15,7 @@ using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
+using StellarLiberation.Game.GameObjects.SpaceCrafts;
 using System;
 
 namespace StellarLiberation.Game.Layers.Benchmark
@@ -48,8 +48,8 @@ namespace StellarLiberation.Game.Layers.Benchmark
             if (CoolDown < 0 && !mIsPaused)
             {
                 CoolDown = 100;
-                var enemy = SpaceshipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Enemys);
-                var allied = SpaceshipFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), ShipID.Corvette, Core.GameProceses.Fractions.Allied);
+                var enemy = SpacecraftFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), BattleshipID.Bomber, Core.GameProceses.Fractions.Enemys);
+                var allied = SpacecraftFactory.Get(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), BattleshipID.Bomber, Core.GameProceses.Fractions.Allied);
                 //mPlanetSystem.GameObjects.Add(allied);
                 //mPlanetSystem.GameObjects.Add(enemy);
                 mDataCollector.AddData([mFrameCounter.CurrentFramesPerSecond, mFrameCounter.FrameDuration, SpatialHashing.Count, 0]);

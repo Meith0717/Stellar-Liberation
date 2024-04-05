@@ -13,7 +13,7 @@ using System;
 namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
 {
     [Serializable]
-    public abstract class GameObject2D
+    public abstract class GameObject : IGameObject
     {
         // Phisics Stuff
         [JsonProperty] public CircleF BoundedBox;
@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
         [JsonProperty] public double DisposeTime;
         [JsonIgnore] public bool IsDisposed;
 
-        internal GameObject2D(Vector2 position, string textureId, float textureScale, int textureDepth)
+        internal GameObject(Vector2 position, string textureId, float textureScale, int textureDepth)
         {
             Position = position;
             TextureId = textureId;
@@ -67,7 +67,5 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             gameState.DebugSystem.DrawnObjectCount += 1;
             gameState.DebugSystem.DrawHitbox(BoundedBox, scene);
         }
-
-        public virtual void HasCollide(Vector2 position, GameLayer scene) { }
     }
 }

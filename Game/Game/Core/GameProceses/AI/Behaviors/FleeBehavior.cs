@@ -3,15 +3,15 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
+using StellarLiberation.Game.GameObjects.SpaceCrafts;
 
 namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 {
     public class FleeBehavior : Behavior
     {
-        private readonly Spaceship mSpaceship;
+        private readonly Flagship mSpaceship;
 
-        public FleeBehavior(Spaceship spaceShip)
+        public FleeBehavior(Flagship spaceShip)
             => mSpaceship = spaceShip;
 
         public override double GetScore()

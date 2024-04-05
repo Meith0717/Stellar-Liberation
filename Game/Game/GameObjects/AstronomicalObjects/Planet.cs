@@ -18,7 +18,7 @@ using System;
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
     [Serializable]
-    public class Planet : GameObject2D, ICollidable
+    public class Planet : GameObject, IGameObject, ICollidable
     {
         [JsonIgnore] private readonly Vector2 MainBodyPosition = new(0);
         [JsonIgnore] private float mShadowRotation;
@@ -39,7 +39,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         {
             base.Update(gameTime, gameState, planetsystemState);
             MovingDirection = Transformations.RotateVector(Vector2.Normalize(MainBodyPosition - Position), MathHelper.Pi / 2);
-            GameObject2DMover.Move(gameTime, this, planetsystemState.SpatialHashing);
+            GameObjectMover.Move(gameTime, this, planetsystemState.SpatialHashing);
             mShadowRotation = Geometry.AngleBetweenVectors(Position, MainBodyPosition) + MathF.PI;
             Rotation -= (float)(MathF.PI / (24 * 60000) * gameTime.ElapsedGameTime.TotalMilliseconds);
         }
@@ -57,5 +57,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             var position = (dirToActualPosition * (BoundedBox.Radius + 500)) + Position;
             return position;
         }
+
+        public void HasCollide(Vector2 position, GameLayer scene) {; }
     }
 }

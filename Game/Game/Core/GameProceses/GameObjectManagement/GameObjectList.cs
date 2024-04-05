@@ -11,16 +11,16 @@ using System.Linq;
 namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
 {
     [Serializable]
-    public class GameObject2DList
+    public class GameObjectList
     {
-        [JsonProperty] private readonly Dictionary<Type, List<GameObject2D>> mTypeDict = new();
-        [JsonProperty] private readonly List<GameObject2D> AllObjects = new();
+        [JsonProperty] private readonly Dictionary<Type, List<GameObject>> mTypeDict = new();
+        [JsonProperty] private readonly List<GameObject> AllObjects = new();
 
         public int Count => AllObjects.Count;
 
-        public List<GameObject2D> GameObject2Ds => AllObjects;
+        public List<GameObject> GameObject2Ds => AllObjects;
 
-        public void Add(GameObject2D gameObject2D)
+        public void Add(GameObject gameObject2D)
         {
             ArgumentNullException.ThrowIfNull(gameObject2D);
             var type = gameObject2D.GetType();
@@ -28,13 +28,13 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             AllObjects.Add(gameObject2D);
         }
 
-        public void AddRange(IEnumerable<GameObject2D> gameObjects)
+        public void AddRange(IEnumerable<GameObject> gameObjects)
         {
             ArgumentNullException.ThrowIfNull(gameObjects);
             foreach (var gameObject in gameObjects) Add(gameObject);
         }
 
-        public bool Remove(GameObject2D gameObject2D)
+        public bool Remove(GameObject gameObject2D)
         {
             if (gameObject2D == null)
                 return false;
@@ -45,16 +45,16 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             return true;
         }
 
-        public IEnumerable<T> OfType<T>() where T : GameObject2D
+        public IEnumerable<T> OfType<T>() where T : GameObject
         {
             var type = typeof(T);
             ArgumentNullException.ThrowIfNull(type);
-            if (type == typeof(GameObject2D))
+            if (type == typeof(GameObject))
                 return AllObjects.OfType<T>();
             return mTypeDict.TryGetValue(type, out var list) ? list.OfType<T>() : new List<T>();
         }
 
-        public void Sort(Comparison<GameObject2D> comparison)
+        public void Sort(Comparison<GameObject> comparison)
         {
             foreach (var list in mTypeDict.Values)
                 list.Sort(comparison);
@@ -66,9 +66,9 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
             AllObjects.Clear();
         }
 
-        public bool Contains(GameObject2D gameObject2D) => AllObjects.Contains(gameObject2D);
+        public bool Contains(GameObject gameObject2D) => AllObjects.Contains(gameObject2D);
 
-        public List<GameObject2D> ListCopy() => new List<GameObject2D>(AllObjects);
+        public List<GameObject> ListCopy() => new List<GameObject>(AllObjects);
 
     }
 }

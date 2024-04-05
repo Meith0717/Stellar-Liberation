@@ -11,7 +11,7 @@ using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.GameObjects;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
+using StellarLiberation.Game.GameObjects.SpaceCrafts;
 using StellarLiberation.Game.Layers;
 using System;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -46,12 +46,12 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
             mActualShieldForce = mMaxShieldForce;
         }
 
-        public void Update(Spaceship spaceship, GameTime gameTime, GameSettings gameSettings, PlanetsystemState planetsystemState)
+        public void Update(SpaceCraft spacecraft, GameTime gameTime, GameSettings gameSettings, PlanetsystemState planetsystemState)
         {
             mShieldDrawAlpha = mShieldDrawAlpha < 0 ? 0 : mShieldDrawAlpha - 0.1f;
             RegenerateCoolDown -= gameTime.ElapsedGameTime.Milliseconds;
 
-            CheckForHit(spaceship, gameTime, gameSettings, planetsystemState);
+            CheckForHit(spacecraft, gameTime, gameSettings, planetsystemState);
 
             if (RegenerateCoolDown > 0) return;
             mActualShieldForce += mShieldRegenerationPerSecond / gameTime.ElapsedGameTime.Milliseconds;
@@ -73,21 +73,21 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
             mActualHullForce -= mActualHullForce > 0 ? hullDamage : 0;
         }
 
-        public void Draw(Spaceship spaceShip)
+        public void Draw(SpaceCraft scpacecraft)
         {
             var color = new Color((int)(255 * mShieldDrawAlpha), (int)(255 * mShieldDrawAlpha), (int)(255 * mShieldDrawAlpha), (int)(255 * mShieldDrawAlpha));
-            TextureManager.Instance.Draw($"{spaceShip.TextureId}Shield", spaceShip.Position, spaceShip.TextureScale, spaceShip.Rotation, spaceShip.TextureDepth + 1, color);
+            TextureManager.Instance.Draw($"{scpacecraft.TextureId}Shield", scpacecraft.Position, scpacecraft.TextureScale, scpacecraft.Rotation, scpacecraft.TextureDepth + 1, color);
         }
 
-        private void CheckForHit(Spaceship spaceship, GameTime gameTime, GameSettings gameSettings, PlanetsystemState planetsystemState)
+        private void CheckForHit(SpaceCraft spacecraft, GameTime gameTime, GameSettings gameSettings, PlanetsystemState planetsystemState)
         {
-            var projectileInRange = planetsystemState.SpatialHashing.GetObjectsInRadius<WeaponProjectile>(spaceship.Position, (int)spaceship.BoundedBox.Radius * 10);
+            var projectileInRange = planetsystemState.SpatialHashing.GetObjectsInRadius<WeaponProjectile>(spacecraft.Position, (int)spacecraft.BoundedBox.Radius * 10);
             if (projectileInRange.Count == 0) return;
             var hit = false;
             foreach (var projectile in projectileInRange)
             {
-                if (projectile.Shooter.Fraction == spaceship.Fraction) continue;
-                if (!ContinuousCollisionDetection.HasCollide(gameTime, projectile, spaceship, out var position)) continue;
+                if (projectile.Shooter.Fraction == spacecraft.Fraction) continue;
+                if (!ContinuousCollisionDetection.HasCollide(gameTime, projectile, spacecraft, out var position)) continue;
 
                 projectile.HasCollide((Vector2)position, null);
                 GotHit((int)projectile.ShieldDamage, (int)projectile.HullDamage); // TODO int
@@ -95,7 +95,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
                 ExplosionEffect.ShipHit((Vector2)position, Vector2.Zero, planetsystemState.ParticleEmitors, gameSettings.ParticlesMultiplier);
             }
             if (!hit) return;
-            planetsystemState.StereoSounds.Enqueue(new(spaceship.Position, SoundEffectRegistries.torpedoHit));
+            planetsystemState.StereoSounds.Enqueue(new(spacecraft.Position, SoundEffectRegistries.torpedoHit));
         }
     }
 }

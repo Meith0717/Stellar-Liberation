@@ -12,7 +12,7 @@ namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection
         /// <summary>
         /// Checks for collision between two 2D game objects based on their bounding boxes, considering their current positions and predicted positions based on velocity.
         /// </summary>
-        public static bool HasCollide(GameTime gameTime, GameObject2D checkingObj, GameObject2D collidingObj, out Vector2? collidingPosition)
+        public static bool HasCollide(GameTime gameTime, GameObject checkingObj, GameObject collidingObj, out Vector2? collidingPosition)
         {
             collidingPosition = null;
 
@@ -51,7 +51,7 @@ namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection
         /// <summary>
         /// Determines if one 2D game object is completely inside another by checking if the bounding box of the second object contains the position of the first object.
         /// </summary>
-        public static bool IsInside(GameObject2D checkingObj, GameObject2D collidingObj)
+        public static bool IsInside(GameObject checkingObj, GameObject collidingObj)
         {
             var distance = Vector2.Distance(checkingObj.Position, collidingObj.Position);
             return distance < (checkingObj.BoundedBox.Radius + collidingObj.BoundedBox.Radius);

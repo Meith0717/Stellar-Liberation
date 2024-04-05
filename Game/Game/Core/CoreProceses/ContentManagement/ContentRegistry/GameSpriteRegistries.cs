@@ -116,13 +116,13 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegi
         public readonly static Registry bomberHull = new(spaceShips, "bomberHull");
         public readonly static Registry bomberShield = new(spaceShips, "bomberShield");
         public readonly static Registry bomberStructure = new(spaceShips, "bomberStructure");
-        // corvette
-        public readonly static Registry corvette = new(spaceShips, "corvette");
-        public readonly static Registry corvetteBorders = new(spaceShips, "corvetteBorders");
-        public readonly static Registry corvetteFrame = new(spaceShips, "corvetteFrame");
-        public readonly static Registry corvetteHull = new(spaceShips, "corvetteHull");
-        public readonly static Registry corvetteShield = new(spaceShips, "corvetteShield");
-        public readonly static Registry corvetteStructure = new(spaceShips, "corvetteStructure");
+        // interceptor
+        public readonly static Registry interceptor = new(spaceShips, "interceptor");
+        public readonly static Registry interceptorBorders = new(spaceShips, "interceptorBorders");
+        public readonly static Registry interceptorFrame = new(spaceShips, "interceptorFrame");
+        public readonly static Registry interceptorHull = new(spaceShips, "interceptorHull");
+        public readonly static Registry interceptorShield = new(spaceShips, "interceptorShield");
+        public readonly static Registry interceptorStructure = new(spaceShips, "interceptorStructure");
         // destroyer
         public readonly static Registry destroyer = new(spaceShips, "destroyer");
         public readonly static Registry destroyerBorders = new(spaceShips, "destroyerBorders");

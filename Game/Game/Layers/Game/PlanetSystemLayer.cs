@@ -59,11 +59,11 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            base.Draw(spriteBatch);
-
             spriteBatch.Begin();
             mParallaxController.Draw();
             spriteBatch.End();
+
+            base.Draw(spriteBatch);
 
             spriteBatch.Begin(transformMatrix: ViewTransformationMatrix);
             GameState.GameObjectsInteractor.Draw(Camera2D);

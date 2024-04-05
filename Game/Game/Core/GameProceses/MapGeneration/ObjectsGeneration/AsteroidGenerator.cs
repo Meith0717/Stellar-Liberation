@@ -17,9 +17,9 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGenerati
     {
         private const int mMargin = 1000;
 
-        public static List<GameObject2D> GetAsteroidsRing(Vector2 centerPosition, float orbitRadius)
+        public static List<GameObject> GetAsteroidsRing(Vector2 centerPosition, float orbitRadius)
         {
-            List<GameObject2D> asteroids = new();
+            List<GameObject> asteroids = new();
             var circle = new CircleF(centerPosition, orbitRadius - mMargin);
 
             for (int i = 0; i < 100; i++)

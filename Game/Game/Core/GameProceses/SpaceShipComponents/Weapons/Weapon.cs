@@ -5,7 +5,7 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
+using StellarLiberation.Game.GameObjects.SpaceCrafts;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons
 {
@@ -14,7 +14,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons
         private Vector2 mOnShipPosition;
         private Vector2 mPosition;
         private float mRotation;
-        private readonly Spaceship mSpaceship;
+        private readonly Flagship mSpaceship;
         private readonly string mTextureID;
         private readonly string mProjectileTextureID;
         private readonly Color mProjectileColor;
@@ -22,7 +22,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons
         public readonly float HullDamage;
         public readonly float ShieldDamage;
 
-        public Weapon(Vector2 onShipPosition, Spaceship spaceShip, string objectTextureID, string projectileTextureID, Color projectileColor, float hullDamage, float shieldDamage, bool followTarget)
+        public Weapon(Vector2 onShipPosition, Flagship spaceShip, string objectTextureID, string projectileTextureID, Color projectileColor, float hullDamage, float shieldDamage, bool followTarget)
         {
             mOnShipPosition = onShipPosition;
             mSpaceship = spaceShip;
@@ -34,7 +34,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons
             mProjectileFollowTarget = followTarget;
         }
 
-        public void Fire(PlanetsystemState planetsystemState, Spaceship target)
+        public void Fire(PlanetsystemState planetsystemState, Flagship target)
         {
             planetsystemState.AddGameObject(new WeaponProjectile(mPosition, mRotation, mSpaceship, target, HullDamage, ShieldDamage, mProjectileFollowTarget, mProjectileTextureID, mProjectileColor));
         }

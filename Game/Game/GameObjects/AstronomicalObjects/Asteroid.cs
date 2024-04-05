@@ -10,13 +10,14 @@ using StellarLiberation.Game.Core.Extensions;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.Layers;
 using System.Linq;
 
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
-    public class Asteroid : GameObject2D, ICollidable
+    public class Asteroid : GameObject, IGameObject, ICollidable
     {
         public float Mass { get => 50; }
         private readonly Hull mHull;
@@ -34,13 +35,13 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             Velocity = MathHelper.Clamp(Velocity - 0.001f, 0, float.PositiveInfinity);
             CheckForHit(gameTime, gameState, planetsystemState);
             Physics.HandleCollision(gameTime, this, planetsystemState.SpatialHashing);
-            GameObject2DMover.Move(gameTime, this, planetsystemState.SpatialHashing);
+            GameObjectMover.Move(gameTime, this, planetsystemState.SpatialHashing);
             mHull.Position = Position;
         }
 
         private void CheckForHit(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState)
         {
-            var projectileInRange = planetsystemState.SpatialHashing.GetObjectsInRadius<LaserProjectile>(Position, (int)BoundedBox.Diameter);
+            var projectileInRange = planetsystemState.SpatialHashing.GetObjectsInRadius<WeaponProjectile>(Position, (int)BoundedBox.Diameter);
             if (!projectileInRange.Any()) return;
             var gotHit = false;
             Vector2? position = null;
@@ -63,5 +64,8 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             base.Draw(gameState, scene);
             TextureManager.Instance.DrawGameObject(this);
         }
+
+        public void HasCollide(Vector2 position, GameLayer scene)
+        {; }
     }
 }

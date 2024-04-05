@@ -16,7 +16,7 @@ using System;
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
 {
     [Serializable]
-    public class Planetsystem : GameObject2D
+    public class Planetsystem : GameObject, IGameObject
     {
         [JsonProperty] public readonly PlanetsystemState PlanetsystemState;
         [JsonIgnore] private readonly Sector mSector;

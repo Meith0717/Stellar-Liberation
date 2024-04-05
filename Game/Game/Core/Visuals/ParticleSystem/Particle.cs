@@ -10,33 +10,35 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem
 {
     internal class Particle
     {
-        public Vector2 Position;
-        private Vector2 MovingDirection;
-        private float Velocity;
-        private Color Color;
-        private int DisposeTime;
+        public Vector2 mPosition;
+        private Vector2 mMovingDirection;
+        private float mVelocity;
+        private Color mColor;
+        private int mDisposeTime;
+        private float mSize;
 
-        public bool IsDisposed => DisposeTime <= 0;
+        public bool IsDisposed => mDisposeTime <= 0;
 
-        public Particle(Vector2 position, Vector2 movementDirection, float velocity, Color color, int dispodeTime)
-            => Populate(position, movementDirection, velocity, color, dispodeTime);
+        public Particle(Vector2 position, Vector2 movementDirection, float velocity, Color color, int dispodeTime, float size)
+            => Populate(position, movementDirection, velocity, color, dispodeTime, size);
 
-        public void Populate(Vector2 position, Vector2 movementDirection, float velocity, Color color, int dispodeTime)
+        public void Populate(Vector2 position, Vector2 movementDirection, float velocity, Color color, int dispodeTime, float size)
         {
-            Position = position;
-            MovingDirection = movementDirection;
-            Velocity = velocity;
-            Color = color;
-            DisposeTime = dispodeTime;
+            mPosition = position;
+            mMovingDirection = movementDirection;
+            mVelocity = velocity;
+            mColor = color;
+            mDisposeTime = dispodeTime;
+            mSize = size;
         }
 
         public void Update(GameTime gameTime)
         {
-            DisposeTime -= gameTime.ElapsedGameTime.Milliseconds;
-            Position += MovingDirection * Velocity * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            mDisposeTime -= gameTime.ElapsedGameTime.Milliseconds;
+            mPosition += mMovingDirection * mVelocity * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
         public void Draw()
-            => TextureManager.Instance.Draw(GameSpriteRegistries.particle, Position, .1f, 0f, 9, Color);
+            => TextureManager.Instance.Draw(GameSpriteRegistries.particle, mPosition, .1f * mSize, 0f, 9, mColor);
     }
 }

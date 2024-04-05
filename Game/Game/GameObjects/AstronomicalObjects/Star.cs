@@ -16,7 +16,7 @@ using System;
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
     [Serializable]
-    public class Star : GameObject2D, ICollidable
+    public class Star : GameObject, IGameObject, ICollidable
     {
         [JsonProperty] public readonly int Kelvin;
         [JsonProperty] public float Mass => float.PositiveInfinity;
@@ -36,5 +36,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             TextureManager.Instance.Draw(GameSpriteRegistries.starLightAlpha, Position, TextureOffset, TextureScale * 1.5f, Rotation, 0, TextureColor);
             TextureManager.Instance.DrawGameObject(this);
         }
+
+        public void HasCollide(Vector2 position, GameLayer scene) {; }
     }
 }

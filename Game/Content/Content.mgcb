@@ -1047,78 +1047,6 @@
 /processorParam:TextureFormat=Color
 /build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/cargoStructure.png
 
-#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvette.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvette.png
-
-#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteBorders.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteBorders.png
-
-#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteFrame.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteFrame.png
-
-#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteHull.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteHull.png
-
-#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteShield.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteShield.png
-
-#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteStructure.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/corvetteStructure.png
-
 #begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/cruiser.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1334,6 +1262,78 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/fighterStructure.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/interceptor.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/interceptor.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/interceptorBorders.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/interceptorBorders.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/interceptorFrame.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/interceptorFrame.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/interceptorHull.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/interceptorHull.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/interceptorShield.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/interceptorShield.png
+
+#begin textures/gameSprites/gameObjects/spacecrafts/spaceShips/interceptorStructure.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/gameSprites/gameObjects/spacecrafts/spaceShips/interceptorStructure.png
 
 #begin textures/gameSprites/gameObjects/spacecrafts/unkownObj.png
 /importer:TextureImporter

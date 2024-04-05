@@ -7,20 +7,20 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
+using StellarLiberation.Game.GameObjects.SpaceCrafts;
 using StellarLiberation.Game.Layers;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons
 {
-    public class WeaponProjectile : GameObject2D
+    public class WeaponProjectile : GameObject, IGameObject
     {
-        public readonly Spaceship Shooter;
-        public readonly Spaceship Target;
+        public readonly Flagship Shooter;
+        public readonly Flagship Target;
         public readonly bool mFollowTarget;
         public readonly float ShieldDamage;
         public readonly float HullDamage;
 
-        public WeaponProjectile(Vector2 startPosition, float shootRotation, Spaceship shooter, Spaceship target, float shieldDamage, float hullDamage, bool followTarget, string textureId, Color color)
+        public WeaponProjectile(Vector2 startPosition, float shootRotation, Flagship shooter, Flagship target, float shieldDamage, float hullDamage, bool followTarget, string textureId, Color color)
             : base(startPosition, textureId, 1f, 15)
         {
             Shooter = shooter;
@@ -35,7 +35,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons
         public override void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState)
         {
             if (mFollowTarget && Target is not null) Rotation = Geometry.AngleBetweenVectors(Position, Target.Position);
-            GameObject2DMover.Move(gameTime, this, planetsystemState.SpatialHashing);
+            GameObjectMover.Move(gameTime, this, planetsystemState.SpatialHashing);
             base.Update(gameTime, gameState, planetsystemState);
         }
 
@@ -45,7 +45,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons
             TextureManager.Instance.DrawGameObject(this);
         }
 
-        public override void HasCollide(Vector2 position, GameLayer scene)
+        public void HasCollide(Vector2 position, GameLayer scene)
         {
             IsDisposed = true;
             Position = position;

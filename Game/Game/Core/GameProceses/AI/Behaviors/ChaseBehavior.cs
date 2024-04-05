@@ -2,7 +2,7 @@
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
-using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
+using StellarLiberation.Game.GameObjects.SpaceCrafts;
 using System;
 using System.Linq;
 
@@ -10,10 +10,10 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 {
     public class ChaseBehavior : Behavior
     {
-        private Spaceship mPatrolTarget;
-        private readonly Spaceship mSpaceship;
+        private Flagship mPatrolTarget;
+        private readonly Flagship mSpaceship;
 
-        public ChaseBehavior(Spaceship spaceShip)
+        public ChaseBehavior(Flagship spaceShip)
         {
             mSpaceship = spaceShip;
         }

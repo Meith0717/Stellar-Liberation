@@ -9,13 +9,14 @@ using System.Linq;
 
 namespace StellarLiberation.Game.Core.Visuals.ParticleSystem
 {
-    public readonly struct ParticleEmitor(Vector2 Position, Vector2 MovementDirection, float Velocity, Color Color, int DispodeTime)
+    public readonly struct ParticleEmitor(Vector2 Position, Vector2 MovementDirection, float Velocity, Color Color, int DispodeTime, float Size = 1)
     {
         public readonly Vector2 Position = Position;
         public readonly Vector2 MovementDirection = MovementDirection;
         public readonly float Velocity = Velocity;
         public readonly Color Color = Color;
         public readonly int DispodeTime = DispodeTime;
+        public readonly float Size = Size;
     }
 
     public class ParticleManager
@@ -36,7 +37,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem
             while (particleEmitors.Count > 0)
             {
                 var particleEmitor = particleEmitors.Dequeue();
-                Add(particleEmitor.Position, particleEmitor.MovementDirection, particleEmitor.Velocity, particleEmitor.Color, particleEmitor.DispodeTime);
+                Add(particleEmitor.Position, particleEmitor.MovementDirection, particleEmitor.Velocity, particleEmitor.Color, particleEmitor.DispodeTime, particleEmitor.Size);
             }
 
             var particles = mParticles.ToList();
@@ -48,16 +49,16 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem
             }
         }
 
-        private void Add(Vector2 position, Vector2 movementDirection, float velocity, Color color, int dispodeTime)
+        private void Add(Vector2 position, Vector2 movementDirection, float velocity, Color color, int dispodeTime, float size)
         {
             if (mCachedParticles.Count == 0)
             {
-                mParticles.Add(new(position, movementDirection, velocity, color, dispodeTime));
+                mParticles.Add(new(position, movementDirection, velocity, color, dispodeTime, size));
                 return;
             }
             var cachedParticle = mCachedParticles.First();
             mCachedParticles.RemoveFirst();
-            cachedParticle.Populate(position, movementDirection, velocity, color, dispodeTime);
+            cachedParticle.Populate(position, movementDirection, velocity, color, dispodeTime, size);
             mParticles.Add(cachedParticle);
         }
 
@@ -77,7 +78,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem
         {
             foreach (var particle in mParticles)
             {
-                if (!camera2D.Contains(particle.Position)) continue;
+                if (!camera2D.Contains(particle.mPosition)) continue;
                 particle.Draw();
             }
         }

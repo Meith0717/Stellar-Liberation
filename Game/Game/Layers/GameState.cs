@@ -12,7 +12,7 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
+using StellarLiberation.Game.GameObjects.SpaceCrafts;
 using StellarLiberation.Game.Layers.GameLayers;
 using StellarLiberation.Game.Layers.MenueLayers;
 using System;
@@ -38,7 +38,7 @@ namespace StellarLiberation.Game.Layers
             mMapConfig = new(5, 5, 0);
             PlanetSystemStates = MapFactory.Generate(mMapConfig);
             for (int i = 0; i < 1; i++)
-                PlanetSystemStates.First().GameObjects.Add(SpaceshipFactory.Get(Vector2.Zero, ShipID.Cargo, Fractions.Allied));
+                PlanetSystemStates.First().GameObjects.Add(SpacecraftFactory.GetFlagship(Vector2.Zero, Fractions.Allied));
         }
 
         public override void Initialize()

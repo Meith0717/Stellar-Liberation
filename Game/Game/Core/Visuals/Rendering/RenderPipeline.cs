@@ -19,7 +19,7 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
         /// <summary>
         /// List of 2D game objects managed by the render pipeline.
         /// </summary>
-        private List<GameObject2D> mObjects = new();
+        private List<GameObject> mObjects = new();
 
         /// <summary>
         /// Filters 2D game objects based on a specified view frustum using spatial hashing.

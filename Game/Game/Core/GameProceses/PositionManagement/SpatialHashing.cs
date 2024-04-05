@@ -18,7 +18,7 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
     {
         public int Count { get; private set; }
         public readonly int CellSize;
-        private readonly Dictionary<int, GameObject2DList> mSpatialGrids = new();
+        private readonly Dictionary<int, GameObjectList> mSpatialGrids = new();
 
         public SpatialHashing(int cellSize) => CellSize = cellSize;
 
@@ -40,7 +40,7 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
             return adjustedX / CellSize * shiftingFactor + adjustedY / CellSize;
         }
 
-        public void InsertObject(GameObject2D obj, int x, int y)
+        public void InsertObject(GameObject obj, int x, int y)
         {
             var hash = Hash(x, y);
             if (!mSpatialGrids.TryGetValue(hash, out var objectBucket))
@@ -52,7 +52,7 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
             Count++;
         }
 
-        public void RemoveObject(GameObject2D obj, int x, int y)
+        public void RemoveObject(GameObject obj, int x, int y)
         {
             var hash = Hash(x, y);
             if (!mSpatialGrids.TryGetValue(hash, out var objectBucket)) return;
@@ -64,10 +64,10 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
 
         public void ClearBuckets() => mSpatialGrids.Clear();
 
-        public bool TryGetObjectsInBucket(int x, int y, out GameObject2DList object2Ds) => mSpatialGrids.TryGetValue(Hash(x, y), out object2Ds);
+        public bool TryGetObjectsInBucket(int x, int y, out GameObjectList object2Ds) => mSpatialGrids.TryGetValue(Hash(x, y), out object2Ds);
 
 
-        public void GetObjectsInRadius<T>(Vector2 position, float radius, ref List<T> objectsInRadius, bool sortedByDistance = true) where T : GameObject2D
+        public void GetObjectsInRadius<T>(Vector2 position, float radius, ref List<T> objectsInRadius, bool sortedByDistance = true) where T : GameObject
         {
             var startX = (int)Math.Floor((position.X - radius) / CellSize);
             var endX = (int)Math.Ceiling((position.X + radius) / CellSize);
@@ -82,7 +82,7 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
                 foreach (var y in yRange)
                 {
                     if (!TryGetObjectsInBucket(x * CellSize, y * CellSize, out var objectsInBucket)) continue;
-                    foreach (GameObject2D gameObject in objectsInBucket.OfType<T>())
+                    foreach (GameObject gameObject in objectsInBucket.OfType<T>())
                     {
                         if (!CircleF.Intersects(lookUpCircle, gameObject.BoundedBox)) continue;
                         objectsInRadius.Add((T)gameObject);
@@ -99,14 +99,14 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
             });
         }
 
-        public List<T> GetObjectsInRadius<T>(Vector2 position, float radius, bool sortedByDistance = true) where T : GameObject2D
+        public List<T> GetObjectsInRadius<T>(Vector2 position, float radius, bool sortedByDistance = true) where T : GameObject
         {
             var objectsInRadius = new List<T>();
             GetObjectsInRadius<T>(position, radius, ref objectsInRadius, sortedByDistance);
             return objectsInRadius;
         }
 
-        public void GetObjectsInRectangle<T>(RectangleF searchRectangle, ref List<T> objectsInRectangle) where T : GameObject2D
+        public void GetObjectsInRectangle<T>(RectangleF searchRectangle, ref List<T> objectsInRectangle) where T : GameObject
         {
             var startX = (int)Math.Floor(searchRectangle.Left / CellSize);
             var endX = (int)Math.Ceiling(searchRectangle.Right / CellSize);
@@ -120,7 +120,7 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
                 foreach (var y in yRange)
                 {
                     if (!TryGetObjectsInBucket(x * CellSize, y * CellSize, out var objectsInBucket)) continue;
-                    foreach (GameObject2D gameObject in objectsInBucket.OfType<T>())
+                    foreach (GameObject gameObject in objectsInBucket.OfType<T>())
                     {
                         if (!searchRectangle.Intersects(gameObject.BoundedBox))
                             continue;
@@ -131,7 +131,7 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
             }
         }
 
-        public List<T> GetObjectsInRectangle<T>(RectangleF searchRectangle) where T : GameObject2D
+        public List<T> GetObjectsInRectangle<T>(RectangleF searchRectangle) where T : GameObject
         {
             var objectsInRadius = new List<T>();
             GetObjectsInRectangle<T>(searchRectangle, ref objectsInRadius);

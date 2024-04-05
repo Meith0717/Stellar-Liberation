@@ -5,8 +5,9 @@
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.Extensions;
+using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.SpaceCrafts.Spaceships;
+using StellarLiberation.Game.GameObjects.SpaceCrafts;
 using System;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
@@ -18,14 +19,14 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
 
         [JsonProperty] public readonly float MaxVelocity;
         [JsonProperty] private Vector2? mVectorTarget;
-        [JsonProperty] private Spaceship mShipTarget;
+        [JsonProperty] private Flagship mShipTarget;
         [JsonProperty] private Vector2? mDirectionTarget;
 
-        [JsonIgnore] public bool IsMoving { get; private set; }
+        [JsonProperty] public bool IsMoving { get; private set; }
 
         public ImpulseDrive(float velocityPerc) => MaxVelocity = 1 * velocityPerc;
 
-        public void Update(GameTime gameTime, Spaceship spaceShip, double damage)
+        public void Move(GameTime gameTime, GameObject obj, double damage)
         {
             var targetPosition = mVectorTarget ?? mShipTarget?.Position;
 
@@ -37,36 +38,36 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
                     IsMoving = mDirectionTarget is not null;
                     break;
                 case not null:
-                    direction = spaceShip.Position.DirectionToVector2((Vector2)targetPosition);
-                    IsMoving = IsMoving && !spaceShip.BoundedBox.Contains((Vector2)targetPosition);
+                    direction = obj.Position.DirectionToVector2((Vector2)targetPosition);
+                    IsMoving = IsMoving && !obj.BoundedBox.Contains((Vector2)targetPosition);
                     break;
             }
 
-            UpdateRotation(gameTime, spaceShip, direction);
-            UpdateVelocity(gameTime, spaceShip, direction);
-            spaceShip.Velocity *= (float)damage;
+            UpdateRotation(gameTime, obj, direction);
+            UpdateVelocity(gameTime, obj, direction);
+            obj.Velocity *= (float)damage;
         }
 
         #region Moving Logic
-        private void UpdateRotation(GameTime gameTime, Spaceship spaceShip, Vector2? direction)
+        private void UpdateRotation(GameTime gameTime, GameObject obj, Vector2? direction)
         {
             if (direction is null) return;
-            var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, Geometry.GetPointInDirection(spaceShip.Position, (Vector2)direction, 1));
-            spaceShip.Rotation += rotationUpdate * Maneuverability * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            var rotationUpdate = MovementController.GetRotationUpdate(obj.Rotation, obj.Position, Geometry.GetPointInDirection(obj.Position, (Vector2)direction, 1));
+            obj.Rotation += rotationUpdate * Maneuverability * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
 
-        private void UpdateVelocity(GameTime gameTime, Spaceship spaceShip, Vector2? direction)
+        private void UpdateVelocity(GameTime gameTime, GameObject obj, Vector2? direction)
         {
             if (!IsMoving)
             {
-                spaceShip.Velocity = MovementController.GetVelocity(gameTime, spaceShip.Velocity, 0, MaxVelocity / 100f);
+                obj.Velocity = MovementController.GetVelocity(gameTime, obj.Velocity, 0, MaxVelocity / 100f);
                 return;
             }
 
             if (direction is null) return;
 
-            var rotationUpdate = MovementController.GetRotationUpdate(spaceShip.Rotation, spaceShip.Position, Geometry.GetPointInDirection(spaceShip.Position, (Vector2)direction, 1));
+            var rotationUpdate = MovementController.GetRotationUpdate(obj.Rotation, obj.Position, Geometry.GetPointInDirection(obj.Position, (Vector2)direction, 1));
 
             var relRotation = 1f - MathF.Abs(rotationUpdate) / MathF.PI;
             var rotationScore = MathF.Abs(0.5f - MathF.Abs(rotationUpdate) / MathF.PI);
@@ -78,7 +79,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
                 float.NaN => 0
             };
 
-            spaceShip.Velocity = MovementController.GetVelocity(gameTime, spaceShip.Velocity, targetVelocity, MaxVelocity / 100f);
+            obj.Velocity = MovementController.GetVelocity(gameTime, obj.Velocity, targetVelocity, MaxVelocity / 100f);
         }
         #endregion
 
@@ -99,7 +100,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
             IsMoving = true;
         }
 
-        public void FollowSpaceship(Spaceship spaceShip)
+        public void FollowSpaceship(Flagship spaceShip)
         {
             mDirectionTarget = null;
             mVectorTarget = null;

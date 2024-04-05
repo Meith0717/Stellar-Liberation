@@ -26,7 +26,7 @@ namespace StellarLiberation.Game.Core.GameProceses
         [JsonProperty] public Fractions Occupier = Fractions.Neutral;
         [JsonProperty] private Star mStar;
         [JsonProperty] private List<Planet> mPlanets = new();
-        [JsonProperty] private GameObject2DList mGameObjects = new();
+        [JsonProperty] private GameObjectList mGameObjects = new();
 
         [JsonIgnore] public readonly SpatialHashing SpatialHashing = new(5000);
         [JsonIgnore] public readonly Queue<StereoSound> StereoSounds = new();
@@ -42,37 +42,37 @@ namespace StellarLiberation.Game.Core.GameProceses
 
         public void Initialize()
         {
-            GameObject2DManager.Initialize(SpatialHashing, ref mStar);
-            GameObject2DManager.Initialize(SpatialHashing, ref mPlanets);
-            GameObject2DManager.Initialize(SpatialHashing, ref mGameObjects);
+            GameObjectManager.Initialize(SpatialHashing, ref mStar);
+            GameObjectManager.Initialize(SpatialHashing, ref mPlanets);
+            GameObjectManager.Initialize(SpatialHashing, ref mGameObjects);
         }
 
         public void Update(GameTime gameTime, GameState gameState)
         {
             mPlanetUpdateCoolDown -= gameTime.ElapsedGameTime.TotalMilliseconds;
-            GameObject2DManager.Update(gameTime, gameState, this, ref mStar);
+            GameObjectManager.Update(gameTime, gameState, this, ref mStar);
             if (mPlanetUpdateCoolDown <= 0)
             {
                 mPlanetUpdateCoolDown = PlanetUpdateCoolDown;
-                GameObject2DManager.Update(gameTime, gameState, this, ref mPlanets);
+                GameObjectManager.Update(gameTime, gameState, this, ref mPlanets);
             }
-            GameObject2DManager.Update(gameTime, gameState, this, ref mGameObjects);
+            GameObjectManager.Update(gameTime, gameState, this, ref mGameObjects);
         }
 
-        public void AddGameObject(GameObject2D gameObject)
+        public void AddGameObject(GameObject gameObject)
         {
             SpatialHashing.InsertObject(gameObject, (int)gameObject.Position.X, (int)gameObject.Position.Y);
             mGameObjects.Add(gameObject);
         }
 
-        public void RemoveGameObject(GameObject2D gameObject)
+        public void RemoveGameObject(GameObject gameObject)
         {
             SpatialHashing.RemoveObject(gameObject, (int)gameObject.Position.X, (int)gameObject.Position.Y);
             mGameObjects.Remove(gameObject);
         }
 
         [JsonIgnore]
-        public GameObject2DList GameObjects => mGameObjects;
+        public GameObjectList GameObjects => mGameObjects;
 
         [JsonIgnore]
         public List<Planet> Planets => mPlanets;

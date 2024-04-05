@@ -35,7 +35,7 @@ namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection
         }
 
         // TODO
-        public static Vector2? PredictPosition(GameTime gameTime, Vector2 position, float speed, GameObject2D target)
+        public static Vector2? PredictPosition(GameTime gameTime, Vector2 position, float speed, GameObject target)
         {
             if (target is null) return null;
 

@@ -7,9 +7,9 @@ using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 
 namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
 {
-    public static class GameObject2DMover
+    public static class GameObjectMover
     {
-        public static void Move(GameTime gameTime, GameObject2D gameObject2D, SpatialHashing spatialHashing)
+        public static void Move(GameTime gameTime, GameObject gameObject2D, SpatialHashing spatialHashing)
         {
             spatialHashing?.RemoveObject(gameObject2D, (int)gameObject2D.Position.X, (int)gameObject2D.Position.Y);
             gameObject2D.Position += gameObject2D.MovingDirection * gameObject2D.Velocity * (float)gameTime.ElapsedGameTime.TotalMilliseconds;

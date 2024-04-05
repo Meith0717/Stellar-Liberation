@@ -28,7 +28,7 @@ namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection
             return maxVelocity * ((1 + MathF.Cos(distance * MathF.PI / boundBox.Diameter)) / 2);
         }
 
-        private static bool TryGetGetMass(GameObject2D gameObject2D, out float mass)
+        private static bool TryGetGetMass(GameObject gameObject2D, out float mass)
         {
             mass = 0;
             if (gameObject2D is not ICollidable) return false;
@@ -37,10 +37,10 @@ namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection
             return true;
         }
 
-        public static void HandleCollision(GameTime gameTime, GameObject2D gameObject2D, SpatialHashing spatialHashing)
+        public static void HandleCollision(GameTime gameTime, GameObject gameObject2D, SpatialHashing spatialHashing)
         {
             if (!TryGetGetMass(gameObject2D, out var m1)) return;
-            var objts = spatialHashing.GetObjectsInRadius<GameObject2D>(gameObject2D.Position, gameObject2D.BoundedBox.Radius);
+            var objts = spatialHashing.GetObjectsInRadius<GameObject>(gameObject2D.Position, gameObject2D.BoundedBox.Radius);
             objts.Remove(gameObject2D);
             foreach (var obj in objts)
             {

@@ -20,14 +20,14 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugging
             var radius2 = radius * 2;
             RectangleF rectangle = new(scene.WorldMousePosition - new Vector2(radius), new(radius2, radius2));
             TextureManager.Instance.DrawAdaptiveRectangleF(rectangle, Color.Orange, 1, 1, scene.Camera2D.Zoom);
-            var GameObjects1 = scene.SpatialHashing.GetObjectsInRectangle<GameObject2D>(rectangle);
+            var GameObjects1 = scene.SpatialHashing.GetObjectsInRectangle<GameObject>(rectangle);
             foreach (var obj in GameObjects1)
             {
                 TextureManager.Instance.DrawAdaptiveLine(scene.WorldMousePosition, obj.Position, Color.Orange,
                     2, TextureManager.MaxLayerDepth, scene.Camera2D.Zoom);
             }
             TextureManager.Instance.DrawAdaptiveCircle(scene.WorldMousePosition, radius, Color.Blue, 1, 1, scene.Camera2D.Zoom);
-            var GameObjects = scene.SpatialHashing.GetObjectsInRadius<GameObject2D>(scene.WorldMousePosition, radius);
+            var GameObjects = scene.SpatialHashing.GetObjectsInRadius<GameObject>(scene.WorldMousePosition, radius);
             foreach (var obj in GameObjects)
             {
                 TextureManager.Instance.DrawAdaptiveLine(scene.WorldMousePosition, obj.Position, Color.Blue,
