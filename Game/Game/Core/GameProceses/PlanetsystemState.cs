@@ -26,7 +26,7 @@ namespace StellarLiberation.Game.Core.GameProceses
         [JsonProperty] public Fractions Occupier = Fractions.Neutral;
         [JsonProperty] private Star mStar;
         [JsonProperty] private List<Planet> mPlanets = new();
-        [JsonProperty] private GameObjectList mGameObjects = new();
+        [JsonProperty] private List<GameObject> mGameObjects = new();
 
         [JsonIgnore] public readonly SpatialHashing SpatialHashing = new(5000);
         [JsonIgnore] public readonly Queue<StereoSound> StereoSounds = new();
@@ -72,7 +72,7 @@ namespace StellarLiberation.Game.Core.GameProceses
         }
 
         [JsonIgnore]
-        public GameObjectList GameObjects => mGameObjects;
+        public List<GameObject> GameObjects => mGameObjects;
 
         [JsonIgnore]
         public List<Planet> Planets => mPlanets;
