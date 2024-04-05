@@ -54,9 +54,9 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
             CheckForHit(spacecraft, gameTime, gameSettings, planetsystemState);
 
             if (RegenerateCoolDown > 0) return;
-            mActualShieldForce += mShieldRegenerationPerSecond / gameTime.ElapsedGameTime.Milliseconds;
+            mActualShieldForce += mShieldRegenerationPerSecond / (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             float.Clamp(mActualShieldForce, 0, mMaxShieldForce);
-            mActualHullForce += mHullRegenerationPerSecond / gameTime.ElapsedGameTime.Milliseconds;
+            mActualHullForce += mHullRegenerationPerSecond / (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             float.Clamp(mActualHullForce, 0, mMaxHullForce);
         }
 

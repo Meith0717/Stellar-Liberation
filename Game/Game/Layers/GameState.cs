@@ -35,7 +35,7 @@ namespace StellarLiberation.Game.Layers
 
         public GameState(Game1 game1) : base(game1, false)
         {
-            mMapConfig = new(5, 5, 0);
+            mMapConfig = new(1, 1, 0);
             PlanetSystemStates = MapFactory.Generate(mMapConfig);
             for (int i = 0; i < 1; i++)
                 PlanetSystemStates.First().GameObjects.Add(SpacecraftFactory.GetFlagship(Vector2.Zero, Fractions.Allied));

@@ -69,7 +69,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
         public Texture2D GetTexture(string id)
         {
             if (id is null) return null;
-            Texture2D texture = mTextures[id];
+            Texture2D texture = mTextures[id];// TODO
             if (texture == null)
             {
                 throw new Exception($"Error, Texture {id} was not found in TextureManager");

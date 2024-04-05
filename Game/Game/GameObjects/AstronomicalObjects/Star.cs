@@ -8,7 +8,6 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
-using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Layers;
 using System;
@@ -16,7 +15,7 @@ using System;
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
     [Serializable]
-    public class Star : GameObject, IGameObject, ICollidable
+    public class Star : GameObject, IGameObject
     {
         [JsonProperty] public readonly int Kelvin;
         [JsonProperty] public float Mass => float.PositiveInfinity;
@@ -36,7 +35,5 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             TextureManager.Instance.Draw(GameSpriteRegistries.starLightAlpha, Position, TextureOffset, TextureScale * 1.5f, Rotation, 0, TextureColor);
             TextureManager.Instance.DrawGameObject(this);
         }
-
-        public void HasCollide(Vector2 position, GameLayer scene) {; }
     }
 }

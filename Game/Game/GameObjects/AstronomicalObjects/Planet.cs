@@ -18,7 +18,7 @@ using System;
 namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
 {
     [Serializable]
-    public class Planet : GameObject, IGameObject, ICollidable
+    public class Planet : GameObject, IGameObject
     {
         [JsonIgnore] private readonly Vector2 MainBodyPosition = new(0);
         [JsonIgnore] private float mShadowRotation;
@@ -57,7 +57,5 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
             var position = (dirToActualPosition * (BoundedBox.Radius + 500)) + Position;
             return position;
         }
-
-        public void HasCollide(Vector2 position, GameLayer scene) {; }
     }
 }
