@@ -26,11 +26,11 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
             : base(position, fraction, GameSpriteRegistries.destroyer, 5)
         {; }
 
-        public void Populate(float shieldForcePerc, float hullForcePerc, float shieldRegPerc, float hullRegPerc, List<Weapon> weapons, float impulseVelocityPerc, float hyperVelocityPerc)
+        public void Populate(float shieldForcePerc, float hullForcePerc, float shieldRegPerc, float hullRegPerc, List<Weapon> weapons, float impulseVelocity, float hyperVelocity)
         {
             Populate(shieldForcePerc, hullForcePerc, shieldRegPerc, hullRegPerc, weapons);
-            HyperDrive = new(impulseVelocityPerc);
-            ImpulseDrive = new(hyperVelocityPerc);
+            HyperDrive = new(impulseVelocity);
+            ImpulseDrive = new(hyperVelocity);
         }
 
         public override void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState)

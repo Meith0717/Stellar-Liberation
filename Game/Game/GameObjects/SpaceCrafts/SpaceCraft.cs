@@ -5,7 +5,6 @@
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
@@ -44,9 +43,9 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
             };
         }
 
-        protected void Populate(float shieldForcePerc, float hullForcePerc, float shieldRegPerc, float hullRegPerc, List<Weapon> weapons)
+        protected void Populate(float shieldForce, float hullForce, float shieldReg, float hullReg, List<Weapon> weapons)
         {
-            Defense = new(shieldForcePerc, hullForcePerc, shieldRegPerc, hullRegPerc);
+            Defense = new(shieldForce, hullForce, shieldReg, hullReg);
             Weapons = new(weapons);
         } 
 

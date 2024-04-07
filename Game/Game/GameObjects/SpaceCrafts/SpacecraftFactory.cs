@@ -2,7 +2,6 @@
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
-
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameProceses;
@@ -15,8 +14,7 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
 
     public class SpacecraftFactory
     {
-
-        public static Battleship Get(Vector2 position, BattleshipID shipID, Fractions fraction)
+        public static Battleship GetBattleship(Vector2 position, BattleshipID shipID, Fractions fraction)
         {
             Battleship spaceship = shipID switch
             {
