@@ -10,59 +10,65 @@ using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
-using StellarLiberation.Game.GameObjects;
 using StellarLiberation.Game.GameObjects.Spacecrafts;
-using StellarLiberation.Game.Layers;
 using System;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
 {
     [Serializable]
     public class Defense
     {
-        [JsonProperty] private readonly float mMaxShieldForce;
-        [JsonProperty] private readonly float mShieldRegenerationPerSecond;
-        [JsonProperty] private readonly float mMaxHullForce;
-        [JsonProperty] private readonly float mHullRegenerationPerSecond;
-
+        // Shield Stuff
         [JsonProperty] private float mActualShieldForce;
+        [JsonProperty] public float MaxShieldForce { get; private set; }
+        [JsonProperty] public float ShieldRegenerationPerSecond { get; private set; }
+        [JsonIgnore] public double ShieldPercentage => mActualShieldForce / MaxShieldForce;
+
+        // Hull Stuff
         [JsonProperty] private float mActualHullForce;
-        [JsonIgnore] private int RegenerateCoolDown;
+        [JsonProperty] public float MaxHullForce { get; private set; }
+        [JsonProperty] public float HullRegenerationPerSecond { get; private set; }
+        [JsonIgnore] public double HullPercentage => mActualHullForce / MaxHullForce;
+
+        // Update Stuff
+        [JsonIgnore] private int mRegenerateCoolDown;
         [JsonIgnore] private float mShieldDrawAlpha;
 
-        [JsonIgnore]
-        public double ShieldPercentage => mActualShieldForce / mMaxShieldForce;
-        [JsonIgnore]
-        public double HullPercentage => mActualHullForce / mMaxHullForce;
-
-        public Defense(float shieldForcePerc, float hullForcePerc, float shieldRegPerc, float hullRegPerc)
+        public Defense(float shieldForce, float hullForce, float shieldReg, float hullReg)
         {
-            mMaxShieldForce = 100 * shieldForcePerc;
-            mMaxHullForce = 100 * hullForcePerc;
-            mShieldRegenerationPerSecond = 100 * shieldRegPerc;
-            mHullRegenerationPerSecond = 100 * hullRegPerc;
-            mActualHullForce = mMaxHullForce;
-            mActualShieldForce = mMaxShieldForce;
+            MaxShieldForce = shieldForce;
+            MaxHullForce = hullForce;
+            ShieldRegenerationPerSecond = shieldReg;
+            HullRegenerationPerSecond = hullReg;
+            mActualHullForce = MaxHullForce;
+            mActualShieldForce = MaxShieldForce;
+        }
+
+        public void Boost(float shieldForcePerc, float hullForcePerc, float shieldRegPerc, float hullRegPerc)
+        {
+            MaxShieldForce *= shieldForcePerc;
+            MaxHullForce *= hullForcePerc;
+            ShieldRegenerationPerSecond *= shieldRegPerc;
+            HullRegenerationPerSecond *= hullRegPerc;
         }
 
         public void Update(Spacecraft spacecraft, GameTime gameTime, GameSettings gameSettings, PlanetsystemState planetsystemState)
         {
             mShieldDrawAlpha = mShieldDrawAlpha < 0 ? 0 : mShieldDrawAlpha - 0.1f;
-            RegenerateCoolDown -= gameTime.ElapsedGameTime.Milliseconds;
+            mRegenerateCoolDown -= gameTime.ElapsedGameTime.Milliseconds;
 
             CheckForHit(spacecraft, gameTime, gameSettings, planetsystemState);
 
-            if (RegenerateCoolDown > 0) return;
-            mActualShieldForce += mShieldRegenerationPerSecond / (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            float.Clamp(mActualShieldForce, 0, mMaxShieldForce);
-            mActualHullForce += mHullRegenerationPerSecond / (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            float.Clamp(mActualHullForce, 0, mMaxHullForce);
+            if (mRegenerateCoolDown > 0) return;
+            mActualShieldForce += ShieldRegenerationPerSecond / (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            float.Clamp(mActualShieldForce, 0, MaxShieldForce);
+            mActualHullForce += HullRegenerationPerSecond / (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            float.Clamp(mActualHullForce, 0, MaxHullForce);
         }
 
         public void GotHit(int shieldDamage, int hullDamage)
         {
-            RegenerateCoolDown = 5000;
+            mRegenerateCoolDown = 5000;
             if (mActualShieldForce > 0)
             {
                 mShieldDrawAlpha = 1f;

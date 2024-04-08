@@ -17,14 +17,16 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
     {
         private const float Maneuverability = 0.01f;
 
-        [JsonProperty] public readonly float MaxVelocity;
+        [JsonProperty] public float MaxVelocity { get; private set; }
         [JsonProperty] private Vector2? mVectorTarget;
         [JsonProperty] private Flagship mShipTarget;
         [JsonProperty] private Vector2? mDirectionTarget;
 
         [JsonProperty] public bool IsMoving { get; private set; }
 
-        public ImpulseDrive(float velocityPerc) => MaxVelocity = 1 * velocityPerc;
+        public ImpulseDrive(float velocity) => MaxVelocity = velocity;
+
+        public void Boost(float velocityPerc) => MaxVelocity *= velocityPerc;
 
         public void Move(GameTime gameTime, GameObject obj, double damage)
         {

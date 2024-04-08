@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
-using StellarLiberation.Game.GameObjects.Spacecrafts;
 using System;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
@@ -16,10 +15,13 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
     {
         private const int CoolDown = 1000;
 
+        [JsonProperty] public float MaxVelocity { get; private set; }
         [JsonProperty] private float mActualChargingTime;
         [JsonProperty] private PlanetsystemState TargetPlanetSystem;
 
-        public HyperDrive(float velocityPerc) {; }
+        public HyperDrive(float velocity) { MaxVelocity = velocity; }
+
+        public void Boos(float velocityPerc) => MaxVelocity *= velocityPerc;
 
         public void SetTarget(PlanetsystemState planetSystem) => TargetPlanetSystem = planetSystem;
 
