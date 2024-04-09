@@ -16,6 +16,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons
     {
         [JsonProperty] public float HullDamage { get; private set; }
         [JsonProperty] public float ShieldDamage { get; private set; }
+        [JsonProperty] public float Range { get; private set; }
         [JsonProperty] private Vector2 mOnShipPosition;
         [JsonProperty] private Vector2 mPosition;
         [JsonProperty] private float mRotation;
@@ -26,7 +27,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons
         [JsonProperty] private readonly double mCoolDown;
         [JsonProperty] private double mActualCoolDown;
 
-        public Weapon(Vector2 onShipPosition, string objectTextureID, string projectileTextureID, Color projectileColor, bool followTarget, float hullDamage, float shieldDamage, double coolDown)
+        public Weapon(Vector2 onShipPosition, string objectTextureID, string projectileTextureID, Color projectileColor, bool followTarget, float hullDamage, float shieldDamage, float range, double coolDown)
         {
             mOnShipPosition = onShipPosition;
             mTextureID = objectTextureID;
@@ -35,20 +36,22 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons
             mProjectileFollowTarget = followTarget;
             HullDamage = hullDamage;
             ShieldDamage = shieldDamage;
+            Range = range;
             mCoolDown = coolDown;
         }
 
-        public void Boost(float hullDamagePerc, float shieldDamagePerc)
+        public void Boost(float hullDamagePerc, float shieldDamagePerc, float rangePerc)
         {
             HullDamage *= hullDamagePerc;
             ShieldDamage *= shieldDamagePerc;
+            Range *= rangePerc;
         }
 
         public void Fire(PlanetsystemState planetsystemState, Spacecraft spacecraft, Spacecraft target)
         {
             if (mActualCoolDown < mCoolDown) return;
             var projectile = new WeaponProjectile(mPosition, mProjectileTextureID);
-            projectile.Populate(spacecraft, target, mRotation, HullDamage, ShieldDamage, mProjectileFollowTarget, mProjectileColor);
+            projectile.Populate(spacecraft, target, mRotation, HullDamage, ShieldDamage, Range, mProjectileFollowTarget, mProjectileColor);
             planetsystemState.AddGameObject(projectile);
             mActualCoolDown = 0;
         }

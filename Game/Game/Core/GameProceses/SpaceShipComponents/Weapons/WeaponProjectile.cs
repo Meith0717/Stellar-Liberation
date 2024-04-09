@@ -26,7 +26,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons
         public WeaponProjectile(Vector2 startPosition,string textureId)
             : base(startPosition, textureId, 1f, 15) {; }
 
-        public void Populate(Spacecraft shooter, Spacecraft target, float shootRotation, float shieldDamage, float hullDamage, bool followTarget, Color color)
+        public void Populate(Spacecraft shooter, Spacecraft target, float shootRotation, float shieldDamage, float hullDamage, float range, bool followTarget, Color color)
         {
             Shooter = shooter;
             Target = target;
@@ -36,6 +36,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons
             mFollowTarget = followTarget;
             TextureColor = color;
             Velocity = 25;
+            DisposeTime = range / Velocity;
         }
 
         public override void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState)

@@ -32,10 +32,10 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons
             }
         }
 
-        public void Boost(float hullDamagePerc, float shieldDamagePerc)
+        public void Boost(float hullDamagePerc, float shieldDamagePerc, float rangePerc)
         {
             foreach (var weapon in mWeapons)
-                weapon.Boost(hullDamagePerc, shieldDamagePerc);
+                weapon.Boost(hullDamagePerc, shieldDamagePerc, rangePerc);
         }
 
         public void Draw()

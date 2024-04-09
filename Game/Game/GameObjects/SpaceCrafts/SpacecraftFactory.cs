@@ -32,7 +32,7 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
             Flagship spaceship = new(position, fraction);
             var weapons = new List<Weapon>()
             {
-                new(Vector2.Zero, GameSpriteRegistries.turette, GameSpriteRegistries.projectile, Color.MonoGameOrange, false, 10, 10, 200),
+                new(Vector2.Zero, GameSpriteRegistries.turette, GameSpriteRegistries.projectile, Color.MonoGameOrange, false, 10, 10, 10000, 200),
             };
             spaceship.Populate(1, 1, 0, 0, weapons, 1, 1);
             return spaceship;
