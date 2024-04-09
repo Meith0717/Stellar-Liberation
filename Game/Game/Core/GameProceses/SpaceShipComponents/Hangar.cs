@@ -2,11 +2,12 @@
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
+using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using StellarLiberation.Game.GameObjects.Spacecrafts;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Linq;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
 {
@@ -21,6 +22,13 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
             if (mOnBoardShips.Count >= Capacity) return false;
             mOnBoardShips[shipID]++;
             return true;
+        }
+
+        public Battleship Spawn()
+        {
+            var shipId = mOnBoardShips.First().Key;
+            if (mOnBoardShips[shipId] <= 0) mOnBoardShips.Remove(shipId);
+            return SpacecraftFactory.GetBattleship(Vector2.Zero, shipId, Fractions.Neutral);
         }
     }
 }
