@@ -14,8 +14,8 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons
     [Serializable]
     public class Weapon
     {
-        [JsonProperty] public readonly float HullDamage;
-        [JsonProperty] public readonly float ShieldDamage; 
+        [JsonProperty] public float HullDamage { get; private set; }
+        [JsonProperty] public float ShieldDamage { get; private set; }
         [JsonProperty] private Vector2 mOnShipPosition;
         [JsonProperty] private Vector2 mPosition;
         [JsonProperty] private float mRotation;
@@ -36,6 +36,12 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons
             HullDamage = hullDamage;
             ShieldDamage = shieldDamage;
             mCoolDown = coolDown;
+        }
+
+        public void Boost(float hullDamagePerc, float shieldDamagePerc)
+        {
+            HullDamage *= hullDamagePerc;
+            ShieldDamage *= shieldDamagePerc;
         }
 
         public void Fire(PlanetsystemState planetsystemState, Spacecraft spacecraft, Spacecraft target)
