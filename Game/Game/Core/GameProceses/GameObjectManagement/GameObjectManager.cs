@@ -1,4 +1,4 @@
-﻿// GameObject2DManager.cs 
+﻿// GameObjectManager.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 

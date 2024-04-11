@@ -1,4 +1,4 @@
-﻿// IGameObject2D.cs 
+﻿// IGameObject.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 

@@ -12,18 +12,18 @@ using StellarLiberation.Game.GameObjects.Spacecrafts;
 using StellarLiberation.Game.Layers;
 using System;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons
 {
     [Serializable]
     public class WeaponProjectile : GameObject, IGameObject
     {
         [JsonProperty] public float ShieldDamage { get; private set; }
         [JsonProperty] public float HullDamage { get; private set; }
-        [JsonProperty] public Spacecraft Shooter { get; private set;}
+        [JsonProperty] public Spacecraft Shooter { get; private set; }
         [JsonProperty] private Spacecraft Target;
         [JsonProperty] private bool mFollowTarget;
 
-        public WeaponProjectile(Vector2 startPosition,string textureId)
+        public WeaponProjectile(Vector2 startPosition, string textureId)
             : base(startPosition, textureId, 1f, 15) {; }
 
         public void Populate(Spacecraft shooter, Spacecraft target, float shootRotation, float shieldDamage, float hullDamage, float range, bool followTarget, Color color)
@@ -35,13 +35,13 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons
             HullDamage = hullDamage;
             mFollowTarget = followTarget;
             TextureColor = color;
-            Velocity = 25;
+            Velocity = 10;
             DisposeTime = range / Velocity;
         }
 
         public override void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState)
         {
-            if (mFollowTarget && Target is not null) 
+            if (mFollowTarget && Target is not null)
                 Rotation = Geometry.AngleBetweenVectors(Position, Target.Position);
             MovingDirection = Geometry.CalculateDirectionVector(Rotation);
             GameObjectMover.Move(gameTime, this, planetsystemState.SpatialHashing);

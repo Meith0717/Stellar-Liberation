@@ -1,11 +1,11 @@
-﻿// SpaceShipFactory.cs 
+﻿// SpacecraftFactory.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameProceses;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons;
 using System.Collections.Generic;
 
 namespace StellarLiberation.Game.GameObjects.Spacecrafts
@@ -23,7 +23,7 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
                 BattleshipID.Fighter => new(position, fraction, GameSpriteRegistries.fighter, 1),
                 _ => throw new System.NotImplementedException()
             };
-            spaceship.Populate(1, 1, 0, 0, new(), 1, 1);
+            spaceship.Populate(200, 200, 0, 0, new(), 1);
             return spaceship;
         }
 
@@ -32,9 +32,10 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
             Flagship spaceship = new(position, fraction);
             var weapons = new List<Weapon>()
             {
-                new(Vector2.Zero, GameSpriteRegistries.turette, GameSpriteRegistries.projectile, Color.MonoGameOrange, false, 10, 10, 50000, 200),
+                new(new(-290, 610), GameSpriteRegistries.turette, GameSpriteRegistries.projectile, Color.MonoGameOrange, false, 10, 10, 50000, 200),
+                new(new(-290, -610), GameSpriteRegistries.turette, GameSpriteRegistries.projectile, Color.MonoGameOrange, false, 10, 10, 50000, 200),
             };
-            spaceship.Populate(1, 1, 0, 0, weapons, 1, 1);
+            spaceship.Populate(1, 1, 0, 0, weapons, 1, 1, 10);
             return spaceship;
         }
     }

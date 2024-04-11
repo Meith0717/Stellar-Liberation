@@ -1,4 +1,4 @@
-﻿// DefenseSystem.cs 
+﻿// Defense.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
@@ -8,12 +8,12 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.GameObjects.Spacecrafts;
 using System;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
 {
     [Serializable]
     public class Defense

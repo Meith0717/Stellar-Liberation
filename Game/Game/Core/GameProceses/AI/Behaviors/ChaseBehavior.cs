@@ -10,7 +10,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 {
     public class ChaseBehavior : Behavior
     {
-        private Flagship mPatrolTarget;
+        private Spacecraft mPatrolTarget;
         private readonly Flagship mSpaceship;
 
         public ChaseBehavior(Flagship spaceShip)

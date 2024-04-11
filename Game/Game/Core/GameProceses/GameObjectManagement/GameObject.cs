@@ -1,4 +1,4 @@
-﻿// GameObject2D.cs 
+﻿// GameObject.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 

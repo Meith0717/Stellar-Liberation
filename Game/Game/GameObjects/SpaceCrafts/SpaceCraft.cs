@@ -9,8 +9,8 @@ using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipComponents;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipProceses;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.Layers;
@@ -47,7 +47,7 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
         {
             Defense = new(shieldForce, hullForce, shieldReg, hullReg);
             Weapons = new(weapons);
-        } 
+        }
 
         public override void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState)
         {
@@ -79,7 +79,7 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
             TextureManager.Instance.Draw($"{TextureId}Frame", Position, TextureScale, Rotation, TextureDepth, Color.White);
             TextureManager.Instance.Draw($"{TextureId}Hull", Position, TextureScale, Rotation, TextureDepth, new(30, 30, 35));
             TextureManager.Instance.Draw($"{TextureId}Structure", Position, TextureScale, Rotation, TextureDepth, new(20, 20, 50));
-            Weapons.Draw();
+            Weapons.Draw(TextureScale, new(30, 30, 35));
 
             Defense.Draw(this);
         }

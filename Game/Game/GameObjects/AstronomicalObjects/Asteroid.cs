@@ -10,7 +10,7 @@ using StellarLiberation.Game.Core.Extensions;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
-using StellarLiberation.Game.Core.GameProceses.SpaceShipComponents.Weapons;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.Layers;
 using System.Linq;

@@ -35,10 +35,9 @@ namespace StellarLiberation.Game.Layers
 
         public GameState(Game1 game1) : base(game1, false)
         {
-            mMapConfig = new(1, 1, 0);
+            mMapConfig = new(3, 3, 0);
             PlanetSystemStates = MapFactory.Generate(mMapConfig);
-            for (int i = 0; i < 1; i++)
-                PlanetSystemStates.First().GameObjects.Add(SpacecraftFactory.GetFlagship(Vector2.Zero, Fractions.Allied));
+            PlanetSystemStates.First().GameObjects.Add(SpacecraftFactory.GetFlagship(Vector2.Zero, Fractions.Allied));
         }
 
         public override void Initialize()
@@ -67,7 +66,7 @@ namespace StellarLiberation.Game.Layers
             inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this, Game1)));
             mFrameCounter.Update(gameTime);
             DebugSystem.Update(inputState);
-            MapState.Update(gameTime);
+            MapState. Update(gameTime);
             foreach (var planetsystemState in PlanetSystemStates)
                 planetsystemState.Update(gameTime, this);
             mLayers.Last?.Value.Update(gameTime, inputState);

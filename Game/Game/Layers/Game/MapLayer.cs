@@ -17,11 +17,14 @@ namespace StellarLiberation.Game.Layers.GameLayers
 {
     internal class MapLayer : GameLayer
     {
+        private readonly MapState mMapState;
+
         public MapLayer(GameState gameState, MapState mapState, Vector2 camera2DPosition, Game1 game1)
             : base(gameState, mapState.SpatialHasing, game1)
         {
             AddUiElement(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
             Camera2D.Position = camera2DPosition;
+            mMapState = mapState;
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
@@ -52,6 +55,10 @@ namespace StellarLiberation.Game.Layers.GameLayers
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+
+            spriteBatch.Begin(transformMatrix: ViewTransformationMatrix);
+            mMapState.Draw(Camera2D.Zoom);
+            spriteBatch.End();
         }
     }
 }

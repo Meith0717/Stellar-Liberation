@@ -1,4 +1,4 @@
-﻿// PlanetsystemLayer.cs 
+﻿// PlanetSystemLayer.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 

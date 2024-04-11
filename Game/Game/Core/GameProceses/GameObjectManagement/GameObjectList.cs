@@ -1,4 +1,4 @@
-﻿// GameObject2DList.cs 
+﻿// GameObjectList.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 

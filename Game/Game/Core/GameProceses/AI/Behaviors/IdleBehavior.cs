@@ -2,7 +2,7 @@
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
-using StellarLiberation.Game.Core.GameProceses.SpaceShipComponents;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipProceses;
 
 namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 {
@@ -16,6 +16,6 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
         public override double GetScore() => 0.01f;
 
-        public override void Recet() { ; }
+        public override void Recet() {; }
     }
 }

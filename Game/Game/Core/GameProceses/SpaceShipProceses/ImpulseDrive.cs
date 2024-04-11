@@ -10,7 +10,7 @@ using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.Spacecrafts;
 using System;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
 {
     [Serializable]
     public class ImpulseDrive

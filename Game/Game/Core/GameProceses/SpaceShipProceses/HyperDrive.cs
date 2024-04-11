@@ -6,14 +6,16 @@ using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
+using StellarLiberation.Game.GameObjects.Spacecrafts;
+using StellarLiberation.Game.Layers;
 using System;
 
-namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
+namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
 {
     [Serializable]
     public class HyperDrive
     {
-        private const int CoolDown = 1000;
+        private const int CoolDown = 10000;
 
         [JsonProperty] public float MaxVelocity { get; private set; }
         [JsonProperty] private float mActualChargingTime;
@@ -25,15 +27,14 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipComponents
 
         public void SetTarget(PlanetsystemState planetSystem) => TargetPlanetSystem = planetSystem;
 
-        public void Move(GameTime gameTime, GameObject gameObject, PlanetsystemState planetsystemState)
+        public void Update(GameTime gameTime, Flagship flagship, GameState gameState, PlanetsystemState planetsystemState)
         {
             if (TargetPlanetSystem is null) return;
             mActualChargingTime += gameTime.ElapsedGameTime.Milliseconds;
-            HyperDriveEffect.Charge(gameObject.Position, planetsystemState.ParticleEmitors);
+            HyperDriveEffect.Charge(flagship.Position, planetsystemState.ParticleEmitors);
             if (CoolDown >= mActualChargingTime) return;
-            planetsystemState.RemoveGameObject(gameObject);
-            TargetPlanetSystem.AddGameObject(gameObject);
-            HyperDriveEffect.Stop(gameObject.Position, TargetPlanetSystem.ParticleEmitors, 1);
+            flagship.IsDisposed = true;
+            gameState.MapState.JumpInHyperSpace(flagship, planetsystemState, TargetPlanetSystem);
             TargetPlanetSystem = null;
             mActualChargingTime = 0;
         }
