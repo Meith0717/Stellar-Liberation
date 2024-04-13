@@ -23,7 +23,6 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons
 
         public void Fire() => mFire = true;
         public void AimTarget(Spacecraft target) => mTarget = target;
-
         public void StopFire() => mFire = false;
 
         public void Update(GameTime gameTime, Spacecraft spaceCraft, PlanetsystemState planetsystemState)

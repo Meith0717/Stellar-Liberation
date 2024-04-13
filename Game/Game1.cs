@@ -96,7 +96,7 @@ namespace StellarLiberation
 
         public void ActivateMyGame(object sendet, EventArgs args) => IAmActive = true;
 
-        public void DeactivateMyGame(object sendet, EventArgs args) => IAmActive = false;
+        public void DeactivateMyGame(object sendet, EventArgs args) => IAmActive = true; //TODO
 
         public void SetCursorTexture(Registry registry) => Mouse.SetCursor(MouseCursor.FromTexture2D(Content.Load<Texture2D>(registry.FilePath), 0, 0));
     }

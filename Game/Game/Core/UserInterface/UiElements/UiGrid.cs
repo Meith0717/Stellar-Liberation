@@ -46,7 +46,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             }
         }
 
-        public UiGrid(List<float> row, List<float> columns)
+        public UiGrid(List<double> row, List<double> columns)
         {
             float cumulativeX = 0;
             int x = 0;
@@ -58,14 +58,14 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
                 {
                     var relX = cumulativeX;
                     var relY = cumulativeY;
-                    var width = r;
-                    var height = c;
+                    var width = (float)r;
+                    var height = (float)c;
                     var grid = new UiGridElement { RelX = relX, RelY = relY, RelWidth = width, RelHeight = height };
                     mGrid.Add(new(x, y), grid);
-                    cumulativeY += c;
+                    cumulativeY += (float)c;
                     y++;
                 }
-                cumulativeX += r;
+                cumulativeX += (float)r;
                 x++;
             }
         }

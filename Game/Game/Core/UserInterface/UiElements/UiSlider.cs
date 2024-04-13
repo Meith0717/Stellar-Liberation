@@ -24,8 +24,6 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public UiSlider(float val) => mSliderValue = val;
 
-        public UiSlider(ref float val) => mSliderValue = val;
-
         public override void Update(InputState inputState, GameTime gameTime)
         {
             mSliderLength = MathF.Abs(Canvas.Bounds.Left - Canvas.Bounds.Right);
@@ -54,16 +52,17 @@ namespace StellarLiberation.Game.Core.UserInterface
         public override void Draw()
         {
             var sliderPos = new Vector2(Canvas.Bounds.Left, Canvas.Center.Y);
-            var dotDim = new Vector2(Canvas.Bounds.Height, Canvas.Bounds.Height);
+            var dotDim = new Vector2(Canvas.Bounds.Height, Canvas.Bounds.Height) * 1.2f;
 
-            TextureManager.Instance.DrawLine(sliderPos, mSliderDotPosition, Color.White, 6, 1);
-            TextureManager.Instance.DrawLine(sliderPos, mSliderLength, new(100, 100, 100, 100), 6, 1);
-            TextureManager.Instance.Draw(MenueSpriteRegistries.dot, mSliderDotPosition - (dotDim / 2), dotDim.X, dotDim.Y, mWasPressed ? new(192, 57, 43) : Color.White);
+            TextureManager.Instance.DrawLine(sliderPos, mSliderLength, Color.Black * 0.9f, 10 * mUiScale, 1);
+            TextureManager.Instance.DrawLine(sliderPos, mSliderDotPosition, Color.MonoGameOrange, 10 * mUiScale, 0);
+            TextureManager.Instance.Draw(MenueSpriteRegistries.dot, mSliderDotPosition - (dotDim / 2), dotDim.X, dotDim.Y, mWasPressed ? Color.DarkGray : Color.White);
             Canvas.Draw();
         }
 
         public override void ApplyResolution(Rectangle root, Resolution resolution)
         {
+            base.ApplyResolution(root, resolution);
             Height = 25;
             Canvas.UpdateFrame(root, resolution.uiScaling);
         }

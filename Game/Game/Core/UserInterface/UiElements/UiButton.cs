@@ -20,7 +20,6 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
         public bool IsHover;
         private bool mLastHoverState;
         public Action OnClickAction;
-        private float mScaling;
 
         public UiButton(string SpriteId, string text, TextAllign textAllign = TextAllign.Center)
             : base(SpriteId, 1)
@@ -43,17 +42,9 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             if (IsHover && !IsDisabled && IsHover != mLastHoverState) SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.hover);
             mLastHoverState = IsHover;
             if (IsHover)
-            {
-                mScaling += (float)(0.01d * gameTime.ElapsedGameTime.TotalMilliseconds);
-                inputState.DoAction(ActionType.Select, () => { OnClickAction?.Invoke(); IsHover = false; mScaling = 1; });
-            }
-            else
-            {
-                mScaling -= (float)(0.01d * gameTime.ElapsedGameTime.TotalMilliseconds);
-            }
-            mScaling = MathHelper.Clamp(mScaling, 1, 1.05f);
-            Color = IsDisabled ? Color.Transparent : IsHover ? new(51, 204, 204) : new(128, 128, 128);
-
+                inputState.DoAction(ActionType.Select, () => { OnClickAction?.Invoke(); IsHover = false; });
+            Color = IsDisabled ? Color.Transparent : IsHover ? Color.MonoGameOrange : new(128, 128, 128);
+            mText.Update(inputState, gameTime);
             base.Update(inputState, gameTime);
         }
 

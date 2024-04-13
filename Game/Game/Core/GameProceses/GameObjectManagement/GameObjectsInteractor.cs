@@ -46,31 +46,54 @@ namespace StellarLiberation.Game.Core.GameProceses
                 HoveredGameObject = objectsByMouse.First();
 
             // Interact
-            if (!inputState.HasAction(ActionType.LeftClick)) return;
-            switch (HoveredGameObject)
+            if (inputState.HasAction(ActionType.LeftClick))
             {
-                case Flagship:
-                    var spaceship = (Flagship)HoveredGameObject;
-                    SelectOrUnselect(spaceship);
-                    break;
-                case Planet:
-                    var planet = (Planet)HoveredGameObject;
-                    if (mSelectedSpaceShips.Count > 0)
-                    {
-                        MoveSpaceShipsToPlanet(planet, planetsystemState);
+                switch (HoveredGameObject)
+                {
+                    case Flagship:
+                        var spaceship = (Flagship)HoveredGameObject;
+                        SelectOrUnselect(spaceship);
                         break;
-                    }
-                    break;
-                case Star:
-                    var star = (Star)HoveredGameObject;
-                    hudLayer.ClearUiElements();
-                    hudLayer.AddUiElement(new StarInfoPopup(star));
-                    break;
-                case null:
-                    if (SelectedSpaceships.Count > 0)
-                        MoveSpaceShipsToPosition(worldMousePosition, planetsystemState);
-                    break;
+                    case Planet:
+                        var planet = (Planet)HoveredGameObject;
+                        if (mSelectedSpaceShips.Count > 0)
+                        {
+                            MoveSpaceShipsToPlanet(planet, planetsystemState);
+                            break;
+                        }
+                        break;
+                    case Star:
+                        var star = (Star)HoveredGameObject;
+                        hudLayer.ClearUiElements();
+                        hudLayer.AddUiElement(new StarInfoPopup(star));
+                        break;
+                    case null:
+                        if (SelectedSpaceships.Count > 0)
+                            MoveSpaceShipsToPosition(worldMousePosition, planetsystemState);
+                        break;
+                }
             }
+
+            if (inputState.HasAction(ActionType.RightClick))
+            {
+                switch (HoveredGameObject)
+                {
+                    case Flagship:
+                        var flagship = (Flagship)HoveredGameObject;
+                        hudLayer.ClearUiElements();
+                        hudLayer.AddUiElement(new FlagshipPopup(flagship));
+                        break;
+                    case Planet:
+                        var planet = (Planet)HoveredGameObject;
+                        break;
+                    case Star:
+                        var star = (Star)HoveredGameObject;
+                        break;
+                    case null:
+                        break;
+                }
+            }
+
         }
 
         #region Space Ships Interactions

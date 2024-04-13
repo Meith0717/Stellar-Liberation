@@ -5,7 +5,6 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Core.UserInterface;
@@ -16,16 +15,12 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
 {
     public class UiFrame : UiElement
     {
-        public Color Color = new(30, 34, 34);
-        public double Alpha = .95f;
-        private float mBorder;
+        private Color mColor = new(0, 0, 0);
+        public float Alpha = .9f;
+        public bool mBorder;
         private readonly LinkedList<UiElement> mChildren = new();
 
-        public UiFrame(int border = 16)
-        {
-            if (border % 2 != 0) throw new System.Exception("Odd values lead to artefacts");
-            mBorder = border;
-        }
+        public UiFrame(bool border = true) => mBorder = border; 
 
         public void AddChild(UiElement child) => mChildren.AddLast(child);
 
@@ -37,30 +32,33 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
 
         public override void Draw()
         {
-            var innerColor = new Color((int)(Color.R * Alpha), (int)(Color.G * Alpha), (int)(Color.B * Alpha), (int)(Color.A * Alpha));
+            TextureManager.Instance.SpriteBatch.FillRectangle(Bounds, mColor * Alpha, 1);
 
-            if (mBorder == 0)
+            if (mBorder)
             {
-                TextureManager.Instance.SpriteBatch.FillRectangle(Bounds, innerColor, 1);
-            }
-            else
-            {
-                var bounds = Canvas.Bounds;
-                bounds.Inflate(-mBorder / 2f, -mBorder / 2f);
+                var boundsF = Bounds.ToRectangleF();
 
-                var edgePositions = bounds.GetCorners();
-                TextureManager.Instance.Draw(MenueSpriteRegistries.edge0, edgePositions[0].ToVector2() - new Vector2(mBorder, mBorder) / 2f, mBorder, mBorder, innerColor);
-                TextureManager.Instance.Draw(MenueSpriteRegistries.edge1, edgePositions[1].ToVector2() - new Vector2(mBorder, mBorder) / 2f, mBorder, mBorder, innerColor);
-                TextureManager.Instance.Draw(MenueSpriteRegistries.edge2, edgePositions[2].ToVector2() - new Vector2(mBorder, mBorder) / 2f, mBorder, mBorder, innerColor);
-                TextureManager.Instance.Draw(MenueSpriteRegistries.edge3, edgePositions[3].ToVector2() - new Vector2(mBorder, mBorder) / 2f, mBorder, mBorder, innerColor);
+                var length = 100;
+                var offset = 10;
 
-                TextureManager.Instance.DrawLine(edgePositions[0].ToVector2() + new Vector2(mBorder / 2f, 0), edgePositions[1].ToVector2() + new Vector2(-mBorder / 2f, 0), innerColor, mBorder, 1);
-                TextureManager.Instance.DrawLine(edgePositions[1].ToVector2() + new Vector2(0, mBorder / 2f), edgePositions[2].ToVector2() + new Vector2(0, -mBorder / 2f), innerColor, mBorder, 1);
-                TextureManager.Instance.DrawLine(edgePositions[2].ToVector2() + new Vector2(-mBorder / 2f, 0), edgePositions[3].ToVector2() + new Vector2(mBorder / 2f, 0), innerColor, mBorder, 1);
-                TextureManager.Instance.DrawLine(edgePositions[3].ToVector2() + new Vector2(0, -mBorder / 2f), edgePositions[0].ToVector2() + new Vector2(0, +mBorder / 2f), innerColor, mBorder, 1);
+                var topLeft = boundsF.TopLeft + new Vector2(offset);
+                var topRight = boundsF.TopRight + new Vector2(-offset, offset);
+                var bottomRight = boundsF.BottomRight - new Vector2(offset);
+                var bottomLeft = boundsF.BottomLeft + new Vector2(offset, -offset);
 
-                bounds.Inflate(-mBorder / 2f, -mBorder / 2f);
-                TextureManager.Instance.SpriteBatch.FillRectangle(bounds, innerColor, 1);
+                var color = Color.MonoGameOrange * Alpha;
+
+                TextureManager.Instance.DrawLine(topLeft, topLeft + new Vector2(length, 0), color, 2, 0);
+                TextureManager.Instance.DrawLine(topLeft, topLeft + new Vector2(0, length), color, 2, 0);
+
+                TextureManager.Instance.DrawLine(topRight, topRight - new Vector2(length, 0), color, 2, 0);
+                TextureManager.Instance.DrawLine(topRight, topRight + new Vector2(0, length), Color.MonoGameOrange, 2, 0);
+
+                TextureManager.Instance.DrawLine(bottomRight, bottomRight - new Vector2(length, 0), color, 2, 0);
+                TextureManager.Instance.DrawLine(bottomRight, bottomRight - new Vector2(0, length), color, 2, 0);
+
+                TextureManager.Instance.DrawLine(bottomLeft, bottomLeft + new Vector2(length, 0), color, 2, 0);
+                TextureManager.Instance.DrawLine(bottomLeft, bottomLeft - new Vector2(0, length), color, 2, 0);
             }
 
             foreach (var child in mChildren) child.Draw();
@@ -68,16 +66,10 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
         }
         #endregion
 
-        private bool mLastDragState;
         public override void Update(InputState inputState, GameTime gameTime)
         {
             foreach (var child in mChildren)
                 child.Update(inputState, gameTime);
-            // if (!Bounds.Contains(inputState.mMousePosition) && !mLastDragState) return;
-            // mLastDragState = false;
-            // if (!inputState.HasAction(ActionType.LeftClickHold)) return;
-            // Canvas.MouseDrag(inputState);
-            // mLastDragState = true;
         }
 
         public override void ApplyResolution(Rectangle root, Resolution resolution)
@@ -88,3 +80,4 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
         }
     }
 }
+

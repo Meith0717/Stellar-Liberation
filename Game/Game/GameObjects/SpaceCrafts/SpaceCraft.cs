@@ -25,7 +25,7 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
         [JsonProperty] public float Mass => MathF.PI * 1.33f * BoundedBox.Radius;
         [JsonProperty] public Defense Defense { get; private set; }
         [JsonProperty] public WeaponManager Weapons { get; private set; }
-        [JsonProperty] public readonly Sensors Sensors;
+        [JsonIgnore] public readonly Sensors Sensors;
         [JsonProperty] public readonly Fractions Fraction;
         [JsonProperty] private readonly Color mAccentColor;
 

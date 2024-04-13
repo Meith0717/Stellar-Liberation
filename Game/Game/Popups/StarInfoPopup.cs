@@ -13,8 +13,8 @@ namespace StellarLiberation.Game.Popups
     {
         public StarInfoPopup(Star star)
         {
-            Width = 700;
-            Height = 500;
+            Width = 1000;
+            Height = 800;
             Anchor = Core.UserInterface.Anchor.Center;
             AddChild(new UiButton(MenueSpriteRegistries.xMark, "")
             {

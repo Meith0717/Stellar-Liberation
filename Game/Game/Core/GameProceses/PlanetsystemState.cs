@@ -71,6 +71,8 @@ namespace StellarLiberation.Game.Core.GameProceses
             mGameObjects.Remove(gameObject);
         }
 
+        public bool Contains(GameObject gameObject) => mGameObjects.Contains(gameObject);
+
         [JsonIgnore]
         public List<GameObject> GameObjects => mGameObjects;
 

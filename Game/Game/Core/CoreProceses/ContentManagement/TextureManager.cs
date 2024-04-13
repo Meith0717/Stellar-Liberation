@@ -9,6 +9,7 @@
  *  All rights reserved.
  */
 
+using MathNet.Numerics.LinearAlgebra.Factorization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -123,14 +124,9 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
         }
 
         // render Game Objects ___________________________________________________________________________
-        public void DrawGameObject(GameObject obj)
+        public void DrawGameObject(GameObject obj, bool isHover = false)
         {
-            SpriteBatch.Draw(GetTexture(obj.TextureId), obj.Position, null, obj.TextureColor, obj.Rotation, obj.TextureOffset,
-                obj.TextureScale, SpriteEffects.None, GetDepth(obj.TextureDepth));
-        }
-        public void DrawGameObject(GameObject obj, bool isHover)
-        {
-            var color = isHover ? Color.Gray : obj.TextureColor;
+            var color = isHover ? Color.Yellow : obj.TextureColor;
             SpriteBatch.Draw(GetTexture(obj.TextureId), obj.Position, null, color, obj.Rotation, obj.TextureOffset,
                 obj.TextureScale, SpriteEffects.None, GetDepth(obj.TextureDepth));
         }

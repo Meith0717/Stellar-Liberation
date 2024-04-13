@@ -34,11 +34,11 @@ namespace StellarLiberation.Game.Layers.MenueLayers
 
         public SettingsLayer(Game1 game1) : base(game1, false)
         {
-            mMainFrame = new() { FillScale = FillScale.Both, Color = Color.Transparent };
+            mMainFrame = new() { FillScale = FillScale.Both, Alpha = 0 };
 
             UiFrame settingsFrame; mMainFrame.AddChild(settingsFrame = new() { Width = 1000, Height = 900, Anchor = Anchor.Center });
             settingsFrame.AddChild(new UiText(FontRegistries.subTitleFont, "Settings") { Anchor = Anchor.NW, HSpace = 20, VSpace = 20 });
-            settingsFrame.AddChild(mSettingsGrid = new UiGrid(new List<float>() { 0.3f, 0.7f }, Enumerable.Repeat(1f / 15, 15).ToList()) { RelHeight = .9f, RelWidth = .9f, Anchor = Anchor.S, VSpace = 10 });
+            settingsFrame.AddChild(mSettingsGrid = new UiGrid(new List<double>() { 0.3, 0.7 }, Enumerable.Repeat(1d / 15, 15).ToList()) { RelHeight = .9f, RelWidth = .9f, Anchor = Anchor.S, VSpace = 10 });
 
             mSettingsGrid.Set(0, 0, new UiText(FontRegistries.subTitleFont, "Audio") { Anchor = Anchor.Center });
             mSettingsGrid.Set(0, 1, new UiText(FontRegistries.textFont, "Master") { Anchor = Anchor.E, HSpace = 20 });

@@ -3,6 +3,8 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using MonoGame.Extended;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 
 namespace StellarLiberation.Game.Core.UserInterface
@@ -125,8 +127,8 @@ namespace StellarLiberation.Game.Core.UserInterface
                 Anchor.Left => root.Left,
                 Anchor.Right => root.Right - width,
                 Anchor.CenterV => root.Center.X - (width / 2),
-                Anchor.Top => x,
-                Anchor.Bottom => x,
+                Anchor.Top => root.Left + root.Width / 2 - width / 2,
+                Anchor.Bottom => root.Left + root.Width / 2 - width / 2,
                 Anchor.CenterH => x,
                 Anchor.None => x,
                 _ => throw new System.NotImplementedException()
@@ -145,8 +147,8 @@ namespace StellarLiberation.Game.Core.UserInterface
                 Anchor.Top => root.Top,
                 Anchor.Bottom => root.Bottom - height,
                 Anchor.CenterH => root.Center.Y - (height / 2),
-                Anchor.Left => y,
-                Anchor.Right => y,
+                Anchor.Left => root.Y + root.Height / 2 - height / 2,
+                Anchor.Right => root.Y + root.Height / 2 - height / 2,
                 Anchor.CenterV => y,
                 Anchor.None => y,
                 _ => throw new System.NotImplementedException()
@@ -202,8 +204,6 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         #endregion
 
-
-
         public bool Contains(Vector2 position) => mCanvas.Contains(position);
 
         public Vector2 Offset => new(mCanvas.Width / 2, mCanvas.Height / 2);
@@ -216,7 +216,8 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public void Draw()
         {
-            //TextureManager.Instance.DrawRectangleF(mCanvas, Color.Green, 2, 1);
+            if (true) return;
+            TextureManager.Instance.DrawRectangleF(mCanvas, Color.Green, 1, 1);
         }
     }
 }

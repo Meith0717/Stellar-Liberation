@@ -33,6 +33,7 @@ namespace StellarLiberation.Game.Core.GameProceses.GameObjectManagement
         // Managing Stuff
         [JsonProperty] public double DisposeTime;
         [JsonIgnore] public bool IsDisposed;
+        [JsonIgnore] public bool IsHovered;
 
         internal GameObject(Vector2 position, string textureId, float textureScale, int textureDepth)
         {

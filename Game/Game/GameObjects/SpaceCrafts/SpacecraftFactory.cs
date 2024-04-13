@@ -35,7 +35,7 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
                 new(new(-290, 610), GameSpriteRegistries.turette, GameSpriteRegistries.projectile, Color.MonoGameOrange, false, 10, 10, 50000, 200),
                 new(new(-290, -610), GameSpriteRegistries.turette, GameSpriteRegistries.projectile, Color.MonoGameOrange, false, 10, 10, 50000, 200),
             };
-            spaceship.Populate(1, 1, 0, 0, weapons, 1, 1, 10);
+            spaceship.Populate(100, 100, 1, 0, weapons, 1, 1, 10);
             return spaceship;
         }
     }

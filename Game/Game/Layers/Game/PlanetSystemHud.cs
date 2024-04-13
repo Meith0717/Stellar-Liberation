@@ -22,7 +22,6 @@ namespace StellarLiberation.Game.Layers.GameLayers
     internal class PlanetsystemHud : Layer
     {
         public bool Hide;
-
         private readonly UiFrame mMainFrame;
         private readonly PlanetsystemLayer mPlanetSystemLayer;
 
@@ -41,8 +40,6 @@ namespace StellarLiberation.Game.Layers.GameLayers
             if (Hide) return;
             base.Update(gameTime, inputState);
             inputState.DoAction(ActionType.ToggleHyperMap, mPlanetSystemLayer.OpenMap);
-
-
             mMainFrame.Update(inputState, gameTime);
         }
 
@@ -58,22 +55,31 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
             spriteBatch.Begin(transformMatrix: mPlanetSystemLayer.ViewTransformationMatrix);
             foreach (var spaceship in mPlanetSystemLayer.GameState.GameObjectsInteractor.SelectedSpaceships)
-                TextureManager.Instance.DrawCircle(spaceship.Position, spaceship.BoundedBox.Radius, Color.Purple, 10, 1);
+            {
+                if (!mPlanetSystemLayer.PlanetsystemState.Contains(spaceship)) continue;
+                TextureManager.Instance.DrawAdaptiveCircle(spaceship.Position, spaceship.BoundedBox.Radius, Color.White, 2, 1, mPlanetSystemLayer.Camera2D.Zoom);
+            }
             if (mPlanetSystemLayer.GameState.GameObjectsInteractor.HoveredGameObject is not null)
             {
                 var obi = mPlanetSystemLayer.GameState.GameObjectsInteractor.HoveredGameObject;
-                TextureManager.Instance.DrawAdaptiveCircle(obi.Position, obi.BoundedBox.Radius, Color.White * .4f, 2, 1, mPlanetSystemLayer.Camera2D.Zoom);
+                TextureManager.Instance.DrawAdaptiveCircle(obi.Position, obi.BoundedBox.Radius, Color.Yellow * .7f, 2, 1, mPlanetSystemLayer.Camera2D.Zoom);
             }
             foreach (var spaceship in mPlanetSystemLayer.PlanetsystemState.GameObjects.OfType<Flagship>())
+            {
                 TextureManager.Instance.Draw(GameSpriteRegistries.radar, spaceship.Position, .04f / mPlanetSystemLayer.Camera2D.Zoom, 0, spaceship.TextureDepth + 1, spaceship.Fraction == Fractions.Enemys ? Color.Red : Color.LightGreen);
+            }
             foreach (var planet in mPlanetSystemLayer.PlanetsystemState.Planets)
+            {
                 TextureManager.Instance.DrawAdaptiveCircle(Vector2.Zero, planet.Position.Length(), Color.Gray * .1f, 1, planet.TextureDepth - 1, mPlanetSystemLayer.Camera2D.Zoom);
+            }
             spriteBatch.End();
 
             spriteBatch.Begin();
             mMainFrame.Draw();
             spriteBatch.End();
+
             base.Draw(spriteBatch);
         }
     }
 }
+

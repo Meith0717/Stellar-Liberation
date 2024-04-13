@@ -33,7 +33,7 @@ namespace StellarLiberation.Game.Layers.Benchmark
         public BenchmarkLayer(Game1 game1)
             : base(new(game1), new(10000), game1)
         {
-            mBackgroundLayer = new() { Color = Color.Black, Anchor = Anchor.Center, FillScale = FillScale.FillIn };
+            mBackgroundLayer = new() { Anchor = Anchor.Center, FillScale = FillScale.FillIn };
             mBackgroundLayer.AddChild(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
 
             mFrameCounter = new(100);

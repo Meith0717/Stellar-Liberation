@@ -36,10 +36,8 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
         public override void Update(InputState inputState, GameTime gameTime)
         {
             base.Update(inputState, gameTime);
-            Color = new(5, 5, 5);
             if (!AnyChild()) return;
             if (!Canvas.Contains(inputState.mMousePosition)) return;
-            Color = new(30, 30, 30);
             if (!inputState.HasAction(ActionType.LeftClick)) return;
             mOnPressAction?.Invoke(Item);
         }

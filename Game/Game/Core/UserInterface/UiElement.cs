@@ -11,13 +11,19 @@ namespace StellarLiberation.Game.Core.UserInterface
     public abstract class UiElement
     {
         protected Canvas Canvas;
+        protected float mUiScale;
+        protected Rectangle mRoot;
+
         public bool IsDisposed { get; protected set; }
         public UiElement() => Canvas = new Canvas();
         public abstract void Update(InputState inputState, GameTime gameTime);
         public abstract void Draw();
         public Rectangle Bounds => Canvas.Bounds;
-        public abstract void ApplyResolution(Rectangle root, Resolution resolution);
-
+        public virtual void ApplyResolution(Rectangle root, Resolution resolution)
+        {
+            mUiScale = resolution.uiScaling;
+            mRoot = root;
+        }
 
         // Position propeties
         public float RelX { set => Canvas.RelativeX = value; }
