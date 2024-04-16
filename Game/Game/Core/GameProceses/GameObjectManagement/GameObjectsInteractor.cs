@@ -23,40 +23,45 @@ namespace StellarLiberation.Game.Core.GameProceses
     {
         public readonly static int LookupRange = 1000;
         public GameObject HoveredGameObject { get; private set; }
-        public HashSet<Flagship> SelectedSpaceships => mSelectedSpaceShips;
-        public readonly HashSet<Flagship> mSelectedSpaceShips = new();
+        public readonly HashSet<Flagship> SelectedFlagships = new();
+        public readonly HashSet<Battleship> SelectedBattleships = new();
         private SelectionBox mSelectionBox;
 
         public void Update(InputState inputState, PlanetsystemState planetsystemState, Vector2 worldMousePosition, Layer hudLayer)
         {
-            if (inputState.HasAction(ActionType.Space))
-            {
-                foreach (var obj in mSelectedSpaceShips)
-                    obj.Weapons.Fire();
-            }
-
             var spatialHashing = planetsystemState.SpatialHashing;
+
             // Select SpaceShips by Selection Box
             CheckForSelectionBox(inputState, spatialHashing, worldMousePosition);
 
+            var leftClicked = inputState.HasAction(ActionType.LeftClick);
+            var rightClicked = inputState.HasAction(ActionType.RightClick);
+
             // Check for Hovered Object
             HoveredGameObject = null;
-            var objectsByMouse = spatialHashing.GetObjectsInRadius<GameObject>(worldMousePosition, 5000);
-            if (objectsByMouse.Count > 0 && objectsByMouse.First().BoundedBox.Contains(worldMousePosition))
-                HoveredGameObject = objectsByMouse.First();
+            var nearestObjectsByMouse = spatialHashing.GetObjectsInRadius<GameObject>(worldMousePosition, 5000).FirstOrDefault(defaultValue: null);
+            if (nearestObjectsByMouse != null)
+            {
+                if (nearestObjectsByMouse.BoundedBox.Contains(worldMousePosition))
+                    HoveredGameObject = nearestObjectsByMouse;
+            }
 
-            // Interact
-            if (inputState.HasAction(ActionType.LeftClick))
+            // Left Click Interactions
+            if (leftClicked)
             {
                 switch (HoveredGameObject)
                 {
+                    case Battleship:
+                        var battleship = (Battleship)HoveredGameObject;
+                        SelectOrUnselect(battleship);
+                        break;
                     case Flagship:
                         var spaceship = (Flagship)HoveredGameObject;
                         SelectOrUnselect(spaceship);
                         break;
                     case Planet:
                         var planet = (Planet)HoveredGameObject;
-                        if (mSelectedSpaceShips.Count > 0)
+                        if (SelectedFlagships.Count > 0)
                         {
                             MoveSpaceShipsToPlanet(planet, planetsystemState);
                             break;
@@ -68,16 +73,20 @@ namespace StellarLiberation.Game.Core.GameProceses
                         hudLayer.AddUiElement(new StarInfoPopup(star));
                         break;
                     case null:
-                        if (SelectedSpaceships.Count > 0)
+                        SelectedBattleships.Clear();
+                        if (SelectedFlagships.Count > 0)
                             MoveSpaceShipsToPosition(worldMousePosition, planetsystemState);
                         break;
                 }
             }
 
-            if (inputState.HasAction(ActionType.RightClick))
+            // Right Click Interactions
+            if (rightClicked)
             {
                 switch (HoveredGameObject)
                 {
+                    case Battleship:
+                        break;
                     case Flagship:
                         var flagship = (Flagship)HoveredGameObject;
                         hudLayer.ClearUiElements();
@@ -98,11 +107,20 @@ namespace StellarLiberation.Game.Core.GameProceses
 
         #region Space Ships Interactions
 
-        private void SelectOrUnselect(Flagship spaceship)
+        private void SelectOrUnselect(Spacecraft spaceship)
         {
             if (spaceship.Fraction == Fractions.Enemys) return;
-            if (mSelectedSpaceShips.Remove(spaceship)) return;
-            mSelectedSpaceShips.Add(spaceship);
+            switch (spaceship)
+            {
+                case Flagship:
+                    if (SelectedFlagships.Remove((Flagship)spaceship)) return;
+                    SelectedFlagships.Add((Flagship)spaceship);
+                    break;
+                case Battleship:
+                    if (SelectedBattleships.Remove((Battleship)spaceship)) return;
+                    SelectedBattleships.Add((Battleship)spaceship);
+                    break;
+            }
         }
 
         private void CheckForSelectionBox(InputState inputState, SpatialHashing spatialHashing, Vector2 worldMousePosition)
@@ -113,12 +131,18 @@ namespace StellarLiberation.Game.Core.GameProceses
                 var selectionBox = mSelectionBox;
                 mSelectionBox = null;
                 if (selectionBox.Length < 1000) return;
-                mSelectedSpaceShips.Clear();
-                var objInBox = spatialHashing.GetObjectsInRectangle<Flagship>(selectionBox.ToRectangleF());
-                foreach (var obj in objInBox)
+                SelectedFlagships.Clear();
+                SelectedBattleships.Clear();
+                var objInBox = spatialHashing.GetObjectsInRectangle<Spacecraft>(selectionBox.ToRectangleF());
+                foreach (var obj in objInBox.OfType<Flagship>())
                 {
                     if (obj.Fraction == Fractions.Enemys) continue;
-                    mSelectedSpaceShips.Add(obj);
+                    SelectedFlagships.Add(obj);
+                }
+                foreach (var obj in objInBox.OfType<Battleship>())
+                {
+                    if (obj.Fraction == Fractions.Enemys) continue;
+                    SelectedBattleships.Add(obj);
                 }
                 return;
             }
@@ -128,20 +152,20 @@ namespace StellarLiberation.Game.Core.GameProceses
 
         public void MoveSpaceShipsToPosition(Vector2 position, PlanetsystemState planetsystemState)
         {
-            foreach (var obj in mSelectedSpaceShips)
+            foreach (var obj in SelectedFlagships)
                 obj.ImpulseDrive.MoveToTarget(position);
-            SelectedSpaceships.Clear();
+            SelectedFlagships.Clear();
         }
 
         public void MoveSpaceShipsToPlanet(Planet planet, PlanetsystemState planetsystemState)
         {
-            foreach (var obj in mSelectedSpaceShips)
+            foreach (var obj in SelectedFlagships)
             {
                 obj.ImpulseDrive.MoveToTarget(planet.GetPositionInOrbit(obj.Position));
                 if (planetsystemState.GameObjects.Contains(obj)) continue;
                 obj.HyperDrive.SetTarget(planetsystemState);
             }
-            SelectedSpaceships.Clear();
+            SelectedFlagships.Clear();
         }
 
         #endregion

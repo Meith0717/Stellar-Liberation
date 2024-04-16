@@ -10,7 +10,8 @@ using System.Collections.Generic;
 
 namespace StellarLiberation.Game.GameObjects.Spacecrafts
 {
-    public enum BattleshipID { Bomber, Interceptor, Fighter }
+    public enum BattleshipID { BomberMKI, InterceptorMKI, FighterMKI, BomberMKII, InterceptorMKII, FighterMKII }
+    public enum FlagshipID { }
 
     public class SpacecraftFactory
     {
@@ -18,9 +19,12 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
         {
             Battleship spaceship = shipID switch
             {
-                BattleshipID.Bomber => new(position, fraction, GameSpriteRegistries.bomber, 1),
-                BattleshipID.Interceptor => new(position, fraction, GameSpriteRegistries.destroyer, 5),
-                BattleshipID.Fighter => new(position, fraction, GameSpriteRegistries.fighter, 1),
+                BattleshipID.BomberMKI => new(position, fraction, GameSpriteRegistries.bomber, 1),
+                BattleshipID.BomberMKII => new(position, fraction, GameSpriteRegistries.bomber, 1),
+                BattleshipID.InterceptorMKI => new(position, fraction, GameSpriteRegistries.destroyer, 5),
+                BattleshipID.InterceptorMKII => new(position, fraction, GameSpriteRegistries.destroyer, 5),
+                BattleshipID.FighterMKI => new(position, fraction, GameSpriteRegistries.fighter, 1),
+                BattleshipID.FighterMKII => new(position, fraction, GameSpriteRegistries.fighter, 1),
                 _ => throw new System.NotImplementedException()
             };
             spaceship.Populate(200, 200, 0, 0, new(), 1);

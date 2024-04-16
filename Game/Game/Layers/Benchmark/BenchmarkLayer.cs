@@ -48,8 +48,8 @@ namespace StellarLiberation.Game.Layers.Benchmark
             if (CoolDown < 0 && !mIsPaused)
             {
                 CoolDown = 100;
-                var enemy = SpacecraftFactory.GetBattleship(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), BattleshipID.Bomber, Core.GameProceses.Fractions.Enemys);
-                var allied = SpacecraftFactory.GetBattleship(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), BattleshipID.Bomber, Core.GameProceses.Fractions.Allied);
+                var enemy = SpacecraftFactory.GetBattleship(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), BattleshipID.BomberMKI, Core.GameProceses.Fractions.Enemys);
+                var allied = SpacecraftFactory.GetBattleship(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 200000)), BattleshipID.BomberMKI, Core.GameProceses.Fractions.Allied);
                 //mPlanetSystem.GameObjects.Add(allied);
                 //mPlanetSystem.GameObjects.Add(enemy);
                 mDataCollector.AddData([mFrameCounter.CurrentFramesPerSecond, mFrameCounter.FrameDuration, SpatialHashing.Count, 0]);

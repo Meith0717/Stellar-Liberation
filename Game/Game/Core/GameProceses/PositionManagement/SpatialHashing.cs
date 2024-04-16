@@ -18,7 +18,7 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
     {
         public int Count { get; private set; }
         public readonly int CellSize;
-        private readonly Dictionary<int, GameObjectList> mSpatialGrids = new();
+        private readonly Dictionary<int, HashSet<GameObject>> mSpatialGrids = new();
 
         public SpatialHashing(int cellSize) => CellSize = cellSize;
 
@@ -64,7 +64,7 @@ namespace StellarLiberation.Game.Core.GameProceses.PositionManagement
 
         public void ClearBuckets() => mSpatialGrids.Clear();
 
-        public bool TryGetObjectsInBucket(int x, int y, out GameObjectList object2Ds) => mSpatialGrids.TryGetValue(Hash(x, y), out object2Ds);
+        public bool TryGetObjectsInBucket(int x, int y, out HashSet<GameObject> object2Ds) => mSpatialGrids.TryGetValue(Hash(x, y), out object2Ds);
 
 
         public void GetObjectsInRadius<T>(Vector2 position, float radius, ref List<T> objectsInRadius, bool sortedByDistance = true) where T : GameObject

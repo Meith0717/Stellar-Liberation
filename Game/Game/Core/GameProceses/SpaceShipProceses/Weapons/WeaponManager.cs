@@ -15,19 +15,23 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons
     [Serializable]
     public class WeaponManager
     {
-        [JsonProperty] private readonly List<Weapon> mWeapons;
+        [JsonProperty] public readonly List<Weapon> Weapons;
         [JsonProperty] private bool mFire;
         [JsonProperty] private Spacecraft mTarget;
 
-        public WeaponManager(List<Weapon> weapons) => mWeapons = weapons;
+        public WeaponManager(List<Weapon> weapons) => Weapons = weapons;
 
         public void Fire() => mFire = true;
+
         public void AimTarget(Spacecraft target) => mTarget = target;
+
         public void StopFire() => mFire = false;
+
+
 
         public void Update(GameTime gameTime, Spacecraft spaceCraft, PlanetsystemState planetsystemState)
         {
-            foreach (var weapon in mWeapons)
+            foreach (var weapon in Weapons)
             {
                 if (mTarget is null)
                     weapon.Update(gameTime, spaceCraft, spaceCraft.Rotation);
@@ -41,13 +45,13 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons
 
         public void Boost(float hullDamagePerc, float shieldDamagePerc, float rangePerc)
         {
-            foreach (var weapon in mWeapons)
+            foreach (var weapon in Weapons)
                 weapon.Boost(hullDamagePerc, shieldDamagePerc, rangePerc);
         }
 
         public void Draw(float scale, Color color)
         {
-            foreach (var weapon in mWeapons)
+            foreach (var weapon in Weapons)
                 weapon.Draw(scale, color);
         }
     }

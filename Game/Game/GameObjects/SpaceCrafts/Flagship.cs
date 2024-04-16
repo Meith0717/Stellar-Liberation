@@ -33,8 +33,7 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
             Populate(shieldForcePerc, hullForcePerc, shieldRegPerc, hullRegPerc, weapons);
             HyperDrive = new(hyperVelocity);
             ImpulseDrive = new(impulseVelocity);
-            Hangar = new(hangarCapacity);
-            Hangar.Add(BattleshipID.Bomber, 10);
+            Hangar = new(30);
         }
 
         public override void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState)

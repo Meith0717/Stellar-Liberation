@@ -17,6 +17,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
     {
         [JsonProperty] public int Capacity { get; private set; }
         [JsonProperty] private readonly Dictionary<BattleshipID, int> mOnBoardShips = new();
+
         [JsonIgnore] public int Count => mOnBoardShips.Sum((key) => key.Value);
 
         public Hangar(int capacity) => Capacity = capacity;
@@ -35,6 +36,13 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
             mOnBoardShips.GetOrAdd(battleshipID, () => new());
             mOnBoardShips[battleshipID] += amount;
             return true;
+        }
+
+        public int GetAmount(BattleshipID battleshipId) 
+        {
+            if (mOnBoardShips.TryGetValue(battleshipId, out var amount))
+                return amount;
+            return 0;
         }
 
         public bool Get(Vector2 position, out Battleship battleship)

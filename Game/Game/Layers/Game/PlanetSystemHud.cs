@@ -54,7 +54,12 @@ namespace StellarLiberation.Game.Layers.GameLayers
             if (Hide) return;
 
             spriteBatch.Begin(transformMatrix: mPlanetSystemLayer.ViewTransformationMatrix);
-            foreach (var spaceship in mPlanetSystemLayer.GameState.GameObjectsInteractor.SelectedSpaceships)
+            foreach (var spaceship in mPlanetSystemLayer.GameState.GameObjectsInteractor.SelectedFlagships)
+            {
+                if (!mPlanetSystemLayer.PlanetsystemState.Contains(spaceship)) continue;
+                TextureManager.Instance.DrawAdaptiveCircle(spaceship.Position, spaceship.BoundedBox.Radius, Color.White, 2, 1, mPlanetSystemLayer.Camera2D.Zoom);
+            }
+            foreach (var spaceship in mPlanetSystemLayer.GameState.GameObjectsInteractor.SelectedBattleships)
             {
                 if (!mPlanetSystemLayer.PlanetsystemState.Contains(spaceship)) continue;
                 TextureManager.Instance.DrawAdaptiveCircle(spaceship.Position, spaceship.BoundedBox.Radius, Color.White, 2, 1, mPlanetSystemLayer.Camera2D.Zoom);
