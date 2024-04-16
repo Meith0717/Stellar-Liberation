@@ -11,44 +11,25 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
     public class ChaseBehavior : Behavior
     {
         private Spacecraft mPatrolTarget;
-        private readonly Flagship mSpaceship;
+        private readonly Battleship mSpaceship;
 
-        public ChaseBehavior(Flagship spaceShip)
-        {
-            mSpaceship = spaceShip;
-        }
+        public ChaseBehavior(Battleship spaceShip) => mSpaceship = spaceShip;
 
         public override double GetScore()
         {
-            var shialdHullScore = mSpaceship.Defense.HullPercentage * 0.95 + mSpaceship.Defense.ShieldPercentage * 0.05;
+            var shieldHullScore = mSpaceship.Defense.HullPercentage * 0.95 + mSpaceship.Defense.ShieldPercentage * 0.05;
             var targets = mSpaceship.Sensors.Opponents;
             var targetScore = MathF.Min(targets.Count, 1);
-            return targetScore * shialdHullScore * .1f;
+            return targetScore * shieldHullScore * .1f;
         }
 
         public override void Execute()
         {
-
-            // Move to Patrol Target
-            switch (mPatrolTarget)
-            {
-                case null: // Get new Patrol Target
-                    var targets = mSpaceship.Sensors.Opponents;
-                    mPatrolTarget = targets.First();
-                    mSpaceship.ImpulseDrive.MoveToTarget(mPatrolTarget.Position);
-                    break;
-
-                case not null: // Check if Patrol Target is reached
-                    if (mSpaceship.ImpulseDrive.IsMoving
-                        && !mPatrolTarget.IsDisposed) break;
-                    mPatrolTarget = null;
-                    break;
-            }
+            var spaceship = mSpaceship.Sensors.Opponents.FirstOrDefault(defaultValue: null);
+            if (spaceship == null) return;
+            mSpaceship.ImpulseDrive.FollowSpaceship(spaceship);
         }
 
-        public override void Recet()
-        {
-            mPatrolTarget = null;
-        }
+        public override void Recet() => mPatrolTarget = null;
     }
 }

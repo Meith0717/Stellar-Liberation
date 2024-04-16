@@ -15,11 +15,11 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
     [Serializable]
     public class ImpulseDrive
     {
-        private const float Maneuverability = 0.01f;
+        private const float Maneuverability = 0.001f;
 
         [JsonProperty] public float MaxVelocity { get; private set; }
         [JsonProperty] private Vector2? mVectorTarget;
-        [JsonProperty] private Flagship mShipTarget;
+        [JsonProperty] private Spacecraft mShipTarget;
         [JsonProperty] private Vector2? mDirectionTarget;
 
         [JsonProperty] public bool IsMoving { get; private set; }
@@ -102,7 +102,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
             IsMoving = true;
         }
 
-        public void FollowSpaceship(Flagship spaceShip)
+        public void FollowSpaceship(Spacecraft spaceShip)
         {
             mDirectionTarget = null;
             mVectorTarget = null;

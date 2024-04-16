@@ -79,17 +79,17 @@ namespace StellarLiberation.Game.Layers.Benchmark
             base.Draw(spriteBatch);
 
             spriteBatch.Begin();
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 10), $"FPS:        {mFrameCounter.CurrentFramesPerSecond} ", .75f, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 25), $"Average:    {mFrameCounter.AverageFramesPerSecond} ", .75f, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 40), $"Min FPS:    {mFrameCounter.MinFramesPerSecond} ", .75f, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 55), $"Max FPS:    {mFrameCounter.MaxFramesPerSecond} ", .75f, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 70), $"Frame:      {mFrameCounter.FrameDuration} ms", .75f, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 85), $"", .75f, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 100), $"Objects:    {SpatialHashing.Count}", .75f, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 115), $"Particles:  N.A", .75f, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debug, new Vector2(10, 10), $"FPS:        {mFrameCounter.CurrentFramesPerSecond} ", .75f, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debug, new Vector2(10, 25), $"Average:    {mFrameCounter.AverageFramesPerSecond} ", .75f, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debug, new Vector2(10, 40), $"Min FPS:    {mFrameCounter.MinFramesPerSecond} ", .75f, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debug, new Vector2(10, 55), $"Max FPS:    {mFrameCounter.MaxFramesPerSecond} ", .75f, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debug, new Vector2(10, 70), $"Frame:      {mFrameCounter.FrameDuration} ms", .75f, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debug, new Vector2(10, 85), $"", .75f, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debug, new Vector2(10, 100), $"Objects:    {SpatialHashing.Count}", .75f, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debug, new Vector2(10, 115), $"Particles:  N.A", .75f, Color.White);
             TimeSpan timeSpan = TimeSpan.FromMilliseconds(mRunTime);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 150), $"{timeSpan.Minutes} min {timeSpan.Seconds}s ESC => Quit", .75f, Color.White);
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(10, 165), $"Left control => Pause Spawning", .75f, mIsPaused ? Color.LightGreen : Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debug, new Vector2(10, 150), $"{timeSpan.Minutes} min {timeSpan.Seconds}s ESC => Quit", .75f, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debug, new Vector2(10, 165), $"Left control => Pause Spawning", .75f, mIsPaused ? Color.LightGreen : Color.White);
             GameState.DebugSystem.ShowInfo(new Vector2(200, 10));
             GameState.DebugSystem.DrawOnScene(this);
             spriteBatch.End();

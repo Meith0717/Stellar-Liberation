@@ -40,6 +40,8 @@ namespace StellarLiberation.Game.Layers
             PlanetSystemStates.First().GameObjects.Add(SpacecraftFactory.GetFlagship(Vector2.Zero, Fractions.Allied));
             for (int i = 0; i < 10; i++)
                 PlanetSystemStates.First().GameObjects.Add(SpacecraftFactory.GetBattleship(Vector2.One * 10000, BattleshipID.BomberMKI, Fractions.Allied));
+            for (int i = 0; i < 10; i++)
+                PlanetSystemStates.First().GameObjects.Add(SpacecraftFactory.GetBattleship(-Vector2.One * 20000, BattleshipID.BomberMKI, Fractions.Enemys));
         }
 
         public override void Initialize()
@@ -81,7 +83,7 @@ namespace StellarLiberation.Game.Layers
             mLayers.Last?.Value.Draw(spriteBatch);
             spriteBatch.Begin();
             DebugSystem.ShowInfo(new(10, 10));
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, new Vector2(1, 1), $"{MathF.Round(mFrameCounter.CurrentFramesPerSecond)} fps", 0.75f, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debug, new Vector2(1, 1), $"{MathF.Round(mFrameCounter.CurrentFramesPerSecond)} fps", 0.1f, Color.White);
             spriteBatch.End();
         }
 

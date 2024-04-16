@@ -50,6 +50,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons
         public void Fire(PlanetsystemState planetsystemState, Spacecraft spacecraft, Spacecraft target)
         {
             if (mActualCoolDown < mCoolDown) return;
+            if (Vector2.Distance(target.Position, Position) > Range) return;
             var projectile = new WeaponProjectile(Position, mProjectileTextureID);
             projectile.Populate(spacecraft, target, mRotation, HullDamage, ShieldDamage, Range, mProjectileFollowTarget, mProjectileColor);
             planetsystemState.AddGameObject(projectile);

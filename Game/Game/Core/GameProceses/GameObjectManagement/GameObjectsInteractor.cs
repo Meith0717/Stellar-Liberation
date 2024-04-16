@@ -57,6 +57,15 @@ namespace StellarLiberation.Game.Core.GameProceses
                         break;
                     case Flagship:
                         var spaceship = (Flagship)HoveredGameObject;
+                        if (SelectedBattleships.Count > 0)
+                        {
+                            foreach (var obj in SelectedBattleships)
+                            {
+                                if (!spaceship.Hangar.HasFreeSlot()) break;
+                                spaceship.Hangar.Add(obj);
+                            }
+                            break;
+                        }
                         SelectOrUnselect(spaceship);
                         break;
                     case Planet:

@@ -24,8 +24,8 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
         [JsonProperty] public ImpulseDrive ImpulseDrive { get; private set; }
         [JsonProperty] public Hangar Hangar { get; private set; }
 
-        public Flagship(Vector2 position, Fractions fraction)
-            : base(position, fraction, GameSpriteRegistries.destroyer, 5)
+        public Flagship(Vector2 position, Fractions fraction, Vector2 engineTrailPosition)
+            : base(position, fraction, GameSpriteRegistries.destroyer, 5, engineTrailPosition)
         {; }
 
         public void Populate(float shieldForcePerc, float hullForcePerc, float shieldRegPerc, float hullRegPerc, List<Weapon> weapons, float impulseVelocity, float hyperVelocity, int hangarCapacity)
@@ -41,23 +41,6 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
             HyperDrive.Update(gameTime, this, gameState, planetsystemState);
             ImpulseDrive.Move(gameTime, this, Defense.HullPercentage);
             base.Update(gameTime, gameState, planetsystemState);
-            AttakEnemy(planetsystemState);
-        }
-
-        private void AttakEnemy(PlanetsystemState planetsystemState)
-        {
-            var target = Sensors.Opponents.FirstOrDefault(defaultValue: null);
-            if (target is not null)
-            {
-                Hangar.Spawn(Position, planetsystemState);
-                Weapons.AimTarget(target);
-                if (Vector2.Distance(target.Position, Position) <= 50000)
-                    Weapons.Fire();
-                else
-                    Weapons.StopFire();
-                return;
-            }
-            Weapons.StopFire();
         }
     }
 }

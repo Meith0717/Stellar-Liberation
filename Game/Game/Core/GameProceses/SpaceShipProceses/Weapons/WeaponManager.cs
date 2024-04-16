@@ -16,18 +16,11 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons
     public class WeaponManager
     {
         [JsonProperty] public readonly List<Weapon> Weapons;
-        [JsonProperty] private bool mFire;
         [JsonProperty] private Spacecraft mTarget;
 
         public WeaponManager(List<Weapon> weapons) => Weapons = weapons;
 
-        public void Fire() => mFire = true;
-
         public void AimTarget(Spacecraft target) => mTarget = target;
-
-        public void StopFire() => mFire = false;
-
-
 
         public void Update(GameTime gameTime, Spacecraft spaceCraft, PlanetsystemState planetsystemState)
         {
@@ -36,11 +29,13 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons
                 if (mTarget is null)
                     weapon.Update(gameTime, spaceCraft, spaceCraft.Rotation);
                 else
+                {
                     weapon.Update(gameTime, spaceCraft, Geometry.AngleBetweenVectors(weapon.Position, mTarget.Position));
-
-                if (!mFire) continue;
-                weapon.Fire(planetsystemState, spaceCraft, null);
+                    weapon.Fire(planetsystemState, spaceCraft, mTarget);
+                }
             }
+            if (mTarget is null) return;
+            mTarget = mTarget.IsDisposed ? null : mTarget;
         }
 
         public void Boost(float hullDamagePerc, float shieldDamagePerc, float rangePerc)

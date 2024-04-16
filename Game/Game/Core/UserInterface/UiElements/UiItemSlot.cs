@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             Item = item;
             AddChild(new UiSprite(item.UiTextureId) { FillScale = FillScale.Fit, Anchor = Anchor.Center });
             if (item.IsStakable)
-                AddChild(new UiText(FontRegistries.textFont, item.Amount.ToString()) { Anchor = Anchor.SE, HSpace = 5, VSpace = 5 });
+                AddChild(new UiText(FontRegistries.text, item.Amount.ToString(), .1f) { Anchor = Anchor.SE, HSpace = 5, VSpace = 5 });
         }
 
         public override void Update(InputState inputState, GameTime gameTime)

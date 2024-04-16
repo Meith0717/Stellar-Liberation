@@ -31,7 +31,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugging
 
         public void DrawInfo(Vector2 position)
         {
-            TextureManager.Instance.DrawString(FontRegistries.debugFont, position, mDescription, .75f, IsActive ? Color.LightGreen : Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debug, position, mDescription, .1f, IsActive ? Color.LightGreen : Color.White);
         }
     }
 }

@@ -2,7 +2,6 @@
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
-using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.Spacecrafts;
 
 namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
@@ -11,13 +10,8 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
     {
         private readonly Flagship mSpaceship;
         private bool mReposition;
-        private double mBias1;
 
-        public CombatBehavior(Flagship spaceShip)
-        {
-            mSpaceship = spaceShip;
-            mBias1 = .7f + ExtendetRandom.Random.NextSingle() * .2f;
-        }
+        public CombatBehavior(Flagship spaceShip) => mSpaceship = spaceShip;
 
         public override double GetScore()
         {
@@ -29,9 +23,6 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
         }
 
-        public override void Recet()
-        {
-            mBias1 = .4f + ExtendetRandom.Random.NextSingle() * .2f;
-        }
+        public override void Recet() {; }
     }
 }

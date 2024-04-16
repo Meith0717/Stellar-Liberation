@@ -19,25 +19,29 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
         {
             Battleship spaceship = shipID switch
             {
-                BattleshipID.BomberMKI => new(position, fraction, GameSpriteRegistries.bomber, 1),
-                BattleshipID.BomberMKII => new(position, fraction, GameSpriteRegistries.bomber, 1),
-                BattleshipID.InterceptorMKI => new(position, fraction, GameSpriteRegistries.destroyer, 5),
-                BattleshipID.InterceptorMKII => new(position, fraction, GameSpriteRegistries.destroyer, 5),
-                BattleshipID.FighterMKI => new(position, fraction, GameSpriteRegistries.fighter, 1),
-                BattleshipID.FighterMKII => new(position, fraction, GameSpriteRegistries.fighter, 1),
+                BattleshipID.BomberMKI => new(position, fraction, GameSpriteRegistries.bomber, .5f, new(-60, 0)),
+                BattleshipID.BomberMKII => new(position, fraction, GameSpriteRegistries.bomber, .5f, new(-60, 0)),
+                BattleshipID.InterceptorMKI => new(position, fraction, GameSpriteRegistries.destroyer, .5f, new(-60, 0)),
+                BattleshipID.InterceptorMKII => new(position, fraction, GameSpriteRegistries.destroyer, .5f, new(-60, 0)),
+                BattleshipID.FighterMKI => new(position, fraction, GameSpriteRegistries.fighter, .5f, new(-60, 0)),
+                BattleshipID.FighterMKII => new(position, fraction, GameSpriteRegistries.fighter, .5f, new(-60, 0)),
                 _ => throw new System.NotImplementedException()
             };
-            spaceship.Populate(200, 200, 0, 0, new(), 1);
+            var weapons = new List<Weapon>()
+            {
+                new(Vector2.Zero , GameSpriteRegistries.turette, GameSpriteRegistries.projectile, Color.Red, false, 10, 10, 10000, 50),
+            };
+            spaceship.Populate(500, 500, 0, 0, weapons, 1);
             return spaceship;
         }
 
         public static Flagship GetFlagship(Vector2 position, Fractions fraction)
         {
-            Flagship spaceship = new(position, fraction);
+            Flagship spaceship = new(position, fraction, new(-750, 0));
             var weapons = new List<Weapon>()
             {
-                new(new(-290, 610), GameSpriteRegistries.turette, GameSpriteRegistries.projectile, Color.MonoGameOrange, false, 10, 10, 50000, 200),
-                new(new(-290, -610), GameSpriteRegistries.turette, GameSpriteRegistries.projectile, Color.MonoGameOrange, false, 10, 10, 50000, 200),
+                new(new(-290, 610), GameSpriteRegistries.turette, GameSpriteRegistries.projectile, Color.LightBlue, false, 10, 10, 50000, 50),
+                new(new(-290, -610), GameSpriteRegistries.turette, GameSpriteRegistries.projectile, Color.LightBlue, false, 10, 10, 50000, 50),
             };
             spaceship.Populate(100, 100, 1, 0, weapons, 1, 1, 10);
             return spaceship;

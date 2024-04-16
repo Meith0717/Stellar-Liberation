@@ -37,19 +37,19 @@ namespace StellarLiberation.Game.Layers.MenueLayers
             mMainFrame = new() { FillScale = FillScale.Both, Alpha = 0 };
 
             UiFrame settingsFrame; mMainFrame.AddChild(settingsFrame = new() { Width = 1000, Height = 900, Anchor = Anchor.Center });
-            settingsFrame.AddChild(new UiText(FontRegistries.subTitleFont, "Settings") { Anchor = Anchor.NW, HSpace = 20, VSpace = 20 });
+            settingsFrame.AddChild(new UiText(FontRegistries.text, "Settings", .1f) { Anchor = Anchor.NW, HSpace = 20, VSpace = 20 });
             settingsFrame.AddChild(mSettingsGrid = new UiGrid(new List<double>() { 0.3, 0.7 }, Enumerable.Repeat(1d / 15, 15).ToList()) { RelHeight = .9f, RelWidth = .9f, Anchor = Anchor.S, VSpace = 10 });
 
-            mSettingsGrid.Set(0, 0, new UiText(FontRegistries.subTitleFont, "Audio") { Anchor = Anchor.Center });
-            mSettingsGrid.Set(0, 1, new UiText(FontRegistries.textFont, "Master") { Anchor = Anchor.E, HSpace = 20 });
-            mSettingsGrid.Set(0, 2, new UiText(FontRegistries.textFont, "Music") { Anchor = Anchor.E, HSpace = 20 });
-            mSettingsGrid.Set(0, 3, new UiText(FontRegistries.textFont, "SFX") { Anchor = Anchor.E, HSpace = 20 });
-            mSettingsGrid.Set(0, 4, new UiText(FontRegistries.subTitleFont, "Video") { Anchor = Anchor.Center });
-            mSettingsGrid.Set(0, 5, new UiText(FontRegistries.textFont, "Resolution") { Anchor = Anchor.E, HSpace = 20 });
-            mSettingsGrid.Set(0, 6, new UiText(FontRegistries.textFont, "Refresh Rate") { Anchor = Anchor.E, HSpace = 20 });
-            mSettingsGrid.Set(0, 7, new UiText(FontRegistries.textFont, "Vsync") { Anchor = Anchor.E, HSpace = 20 });
-            mSettingsGrid.Set(0, 9, new UiText(FontRegistries.subTitleFont, "Graphics") { Anchor = Anchor.Center });
-            mSettingsGrid.Set(0, 10, new UiText(FontRegistries.textFont, "Particle Multiplier") { Anchor = Anchor.E, HSpace = 20 });
+            mSettingsGrid.Set(0, 0, new UiText(FontRegistries.text, "Audio", .1f) { Anchor = Anchor.Center });
+            mSettingsGrid.Set(0, 1, new UiText(FontRegistries.text, "Master", .1f) { Anchor = Anchor.E, HSpace = 20 });
+            mSettingsGrid.Set(0, 2, new UiText(FontRegistries.text, "Music", .1f) { Anchor = Anchor.E, HSpace = 20 });
+            mSettingsGrid.Set(0, 3, new UiText(FontRegistries.text, "SFX", .1f) { Anchor = Anchor.E, HSpace = 20 });
+            mSettingsGrid.Set(0, 4, new UiText(FontRegistries.text, "Video", .1f) { Anchor = Anchor.Center });
+            mSettingsGrid.Set(0, 5, new UiText(FontRegistries.text, "Resolution", .1f) { Anchor = Anchor.E, HSpace = 20 });
+            mSettingsGrid.Set(0, 6, new UiText(FontRegistries.text, "Refresh Rate", .1f) { Anchor = Anchor.E, HSpace = 20 });
+            mSettingsGrid.Set(0, 7, new UiText(FontRegistries.text, "Vsync", .1f) { Anchor = Anchor.E, HSpace = 20 });
+            mSettingsGrid.Set(0, 9, new UiText(FontRegistries.text, "Graphics", .1f) { Anchor = Anchor.Center });
+            mSettingsGrid.Set(0, 10, new UiText(FontRegistries.text, "Particle Multiplier", .1f) { Anchor = Anchor.E, HSpace = 20 });
 
             settingsFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Back & Save") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = Exit });
             settingsFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Start Benchmark") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = () => LayerManager.AddLayer(new BenchmarkLayer(Game1)) });

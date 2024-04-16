@@ -28,8 +28,9 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
         [JsonIgnore] public readonly Sensors Sensors;
         [JsonProperty] public readonly Fractions Fraction;
         [JsonProperty] private readonly Color mAccentColor;
+        [JsonProperty] private readonly Vector2 mEngineTrailPosition;
 
-        public Spacecraft(Vector2 position, Fractions fraction, string textureID, float textureScale)
+        public Spacecraft(Vector2 position, Fractions fraction, string textureID, float textureScale, Vector2 engineTrailPosition)
             : base(position, textureID, textureScale, 10)
         {
             Sensors = new();
@@ -41,6 +42,7 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
                 Fractions.Neutral => throw new NotImplementedException(),
                 _ => throw new NotImplementedException()
             };
+            mEngineTrailPosition = engineTrailPosition;
         }
 
         protected void Populate(float shieldForce, float hullForce, float shieldReg, float hullReg, List<Weapon> weapons)
@@ -59,7 +61,7 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
             MovingDirection = Geometry.CalculateDirectionVector(Rotation);
             Physics.HandleCollision(gameTime, this, planetsystemState.SpatialHashing);
             GameObjectMover.Move(gameTime, this, planetsystemState.SpatialHashing);
-            TrailEffect.Show(Transformations.Rotation(Position, new(-800, 0), Rotation), MovingDirection, Velocity, gameTime, mAccentColor, planetsystemState.ParticleEmitors, gameState.GameSettings.ParticlesMultiplier, 3);
+            TrailEffect.Show(Transformations.Rotation(Position, mEngineTrailPosition, Rotation), MovingDirection, Velocity, gameTime, mAccentColor, planetsystemState.ParticleEmitors, gameState.GameSettings.ParticlesMultiplier, 2);
 
             if (Defense.HullPercentage <= 0) Explode(gameState, planetsystemState);
             base.Update(gameTime, gameState, planetsystemState);

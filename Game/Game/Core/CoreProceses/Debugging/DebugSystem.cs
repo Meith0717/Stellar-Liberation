@@ -103,7 +103,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugging
         public void DrawAiDebug(CircleF circle, string message, float camZoom)
         {
             if (!ShowAi) return;
-            TextureManager.Instance.DrawString(FontRegistries.subTitleFont, circle.ToRectangleF().TopRight, message, 0.3f / camZoom, Color.White);
+            TextureManager.Instance.DrawString(FontRegistries.debug, circle.ToRectangleF().TopRight, message, 0.1f / camZoom, Color.White);
         }
     }
 }

@@ -11,17 +11,18 @@ namespace StellarLiberation.Game.Core.UserInterface
 {
     public class UiText : UiElement
     {
-
         public string Text;
         public string FontID;
         public Color Color;
         private Vector2 mTextDim;
+        public float Scale;
 
-        public UiText(string fontID, string text)
+        public UiText(string fontID, string text, float scale)
         {
             Color = new(192, 192, 192);
             Text = text;
             FontID = fontID;
+            Scale = scale;  
         }
 
         private static Vector2 GetTextDimension(string fontID, string text)
@@ -29,7 +30,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Draw()
         {
-            TextureManager.Instance.DrawString(FontID, Canvas.Position, Text, mUiScale, Color);
+            TextureManager.Instance.DrawString(FontID, Canvas.Position, Text, mUiScale * Scale, Color);
             Canvas.Draw();
         }
 
@@ -41,10 +42,9 @@ namespace StellarLiberation.Game.Core.UserInterface
         public override void Update(InputState inputState, GameTime gameTime)
         {
             mTextDim = GetTextDimension(FontID, Text);
-            Height = (int)mTextDim.Y;
-            Width = (int)mTextDim.X;
+            Height = (int)(mTextDim.Y * Scale);
+            Width = (int)(mTextDim.X * Scale);
             Canvas.UpdateFrame(mRoot, mUiScale);
-            ;
         }
     }
 }

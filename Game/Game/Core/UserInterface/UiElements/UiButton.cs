@@ -24,7 +24,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
         public UiButton(string SpriteId, string text, TextAllign textAllign = TextAllign.Center)
             : base(SpriteId, 1)
         {
-            mText = new(FontRegistries.buttonFont, text)
+            mText = new(FontRegistries.text, text, .1f)
             {
                 Anchor = textAllign switch
                 {

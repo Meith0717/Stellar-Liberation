@@ -21,7 +21,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
             var mainFrame = new UiFrame() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
             mainFrame.AddChild(new UiSprite(MenueSpriteRegistries.menueBackground) { FillScale = FillScale.FillIn, Anchor = Anchor.Center });
 
-            mainFrame.AddChild(new UiText(FontRegistries.titleFont, "Stellar\nLiberation") { Anchor = Anchor.NW, HSpace = 50, VSpace = 50 });
+            mainFrame.AddChild(new UiText(FontRegistries.title, "Stellar\nLiberation", 1) { Anchor = Anchor.NW, HSpace = 50, VSpace = 50 });
 
             mainFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "New Game") { VSpace = 20, HSpace = 20, RelY = .5f, OnClickAction = () => LayerManager.AddLayer(new GameState(Game1)) });
 

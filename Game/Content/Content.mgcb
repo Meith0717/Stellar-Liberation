@@ -14,54 +14,26 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin fonts/buttonFont.spritefont
+#begin fonts/debug.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:fonts/buttonFont.spritefont
+/build:fonts/debug.spritefont
 
-#begin fonts/debugFont.spritefont
+#begin fonts/text.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:fonts/debugFont.spritefont
+/build:fonts/text.spritefont
 
-#begin fonts/descriptionFont.spritefont
+#begin fonts/title.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:fonts/descriptionFont.spritefont
-
-#begin fonts/hoverFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:fonts/hoverFont.spritefont
-
-#begin fonts/subTitleFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:fonts/subTitleFont.spritefont
-
-#begin fonts/textFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:fonts/textFont.spritefont
-
-#begin fonts/titleFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:fonts/titleFont.spritefont
+/build:fonts/title.spritefont
 
 #begin music/Sci-Fi 1.wav
 /importer:WavImporter

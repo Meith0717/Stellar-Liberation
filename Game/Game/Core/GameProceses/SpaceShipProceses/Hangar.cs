@@ -22,11 +22,14 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
 
         public Hangar(int capacity) => Capacity = capacity;
 
-        public void Boos(float CapacityPerc) => Capacity = (int)(CapacityPerc * Capacity);
+        public void Boost(float CapacityPerc) => Capacity = (int)(CapacityPerc * Capacity);
+
+        public bool HasFreeSlot() => Count < Capacity;
 
         public bool Add(Battleship battleship)
         {
             var shipID = battleship.BattleshipID;
+            battleship.IsDisposed = true;
             return Add(shipID, 1);
         }
 

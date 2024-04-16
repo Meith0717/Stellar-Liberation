@@ -39,7 +39,7 @@ public abstract class Layer
         ResolutionManager = game1.ResolutionManager;
         UpdateBelow = updateBelow;
         mUiElements = new();
-        mHoverText = new UiText(FontRegistries.hoverFont, "");
+        mHoverText = new UiText(FontRegistries.text, "", .1f);
     }
 
     public virtual void Initialize() {; }
