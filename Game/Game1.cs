@@ -80,7 +80,7 @@ namespace StellarLiberation
                 LayerManager.OnResolutionChanged();
             if (IAmActive)
             {
-                InputState inputState = mInputManager.Update();
+                InputState inputState = mInputManager.Update(gameTime);
                 inputState.DoAction(ActionType.ToggleFullscreen, () => ResolutionManager.ToggleFullscreen(Settings.Resolution));
                 LayerManager.Update(gameTime, inputState);
             }

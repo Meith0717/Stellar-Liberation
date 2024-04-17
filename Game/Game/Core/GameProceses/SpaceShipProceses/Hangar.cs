@@ -3,8 +3,10 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.Extensions;
+using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.Spacecrafts;
 using System;
 using System.Collections.Generic;
@@ -17,6 +19,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
     {
         [JsonProperty] public int Capacity { get; private set; }
         [JsonProperty] private readonly Dictionary<BattleshipID, int> mOnBoardShips = new();
+        [JsonProperty] private readonly List<BattleshipID> mOrderOutShips = new();
 
         [JsonIgnore] public int Count => mOnBoardShips.Sum((key) => key.Value);
 
@@ -25,6 +28,8 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
         public void Boost(float CapacityPerc) => Capacity = (int)(CapacityPerc * Capacity);
 
         public bool HasFreeSlot() => Count < Capacity;
+
+        public int FreeSpace => Capacity - Count;
 
         public bool Add(Battleship battleship)
         {
@@ -48,22 +53,33 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
             return 0;
         }
 
-        public bool Get(Vector2 position, out Battleship battleship)
+        public void Spawn(BattleshipID battleshipID) => mOrderOutShips.Add(battleshipID);
+
+        private bool Get(Vector2 position, BattleshipID battleshipID, out Battleship battleship)
         {
             battleship = null;
             if (Count <= 0) return false;
-            var shipId = mOnBoardShips.First().Key;
-            mOnBoardShips[shipId]--;
-            if (mOnBoardShips[shipId] <= 0) mOnBoardShips.Remove(shipId);
-            battleship = SpacecraftFactory.GetBattleship(position, shipId, Fractions.Allied);
-            return true;
+            if (!mOnBoardShips.TryGetValue(battleshipID, out var amount)) return false;
+            if (amount > 0)
+            {
+                battleship = SpacecraftFactory.GetBattleship(position, battleshipID, Fractions.Allied);                
+                mOnBoardShips[battleshipID]--;
+                return true;
+            } 
+            mOnBoardShips.Remove(battleshipID);
+            return false;
         }
 
-        public void Spawn(Vector2 position, PlanetsystemState planetsystemState)
+
+        public void Update(Spacecraft spacecraft, PlanetsystemState planetsystemState)
         {
-            Get(position, out var battleship);
-            if (battleship is null) return;
-            planetsystemState.AddGameObject(battleship);
+            var position = ExtendetRandom.NextVectorOnBorder(spacecraft.BoundedBox);
+            foreach (var shipID in mOrderOutShips)
+            {
+                if (!Get(position, shipID, out var ship)) continue;
+                planetsystemState.AddGameObject(ship);
+            }
+            mOrderOutShips.Clear();
         }
     }
 }

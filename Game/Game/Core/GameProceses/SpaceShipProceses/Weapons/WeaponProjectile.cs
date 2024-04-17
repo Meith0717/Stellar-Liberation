@@ -24,7 +24,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons
         [JsonProperty] private bool mFollowTarget;
 
         public WeaponProjectile(Vector2 startPosition, string textureId)
-            : base(startPosition, textureId, 1f, 15) {; }
+            : base(startPosition, textureId, .5f, 15) {; }
 
         public void Populate(Spacecraft shooter, Spacecraft target, float shootRotation, float shieldDamage, float hullDamage, float range, bool followTarget, Color color)
         {

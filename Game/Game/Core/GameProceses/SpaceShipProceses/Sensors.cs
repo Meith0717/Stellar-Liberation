@@ -19,16 +19,19 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
         public List<GameObject> LongRangeScan => mLongRangeScan;
         public List<Spacecraft> Opponents => mOpponents;
         public List<Spacecraft> Allies => mAllies;
+        public PlanetsystemState PlanetsystemState => mPlanetsystemState;
 
         private List<GameObject> mLongRangeScan = new();
         private List<Spacecraft> mOpponents = new();
         private List<Spacecraft> mAllies = new();
+        private PlanetsystemState mPlanetsystemState;
 
 
         public Sensors() => mCoolDown = ExtendetRandom.Random.Next(MaxCoolDown);
 
         public void Scan(GameTime gameTime, Spacecraft spacecraft, Fractions fraction, PlanetsystemState planetsystemState)
         {
+            mPlanetsystemState = planetsystemState;
             mCoolDown -= gameTime.ElapsedGameTime.Milliseconds;
             if (mCoolDown > 0) return;
             mCoolDown = MaxCoolDown;

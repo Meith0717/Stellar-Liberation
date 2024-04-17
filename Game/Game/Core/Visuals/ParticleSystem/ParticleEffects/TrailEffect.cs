@@ -10,7 +10,7 @@ namespace StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects
 {
     public class TrailEffect
     {
-        public static void Show(Vector2 position, Vector2 movingDir, float velocity, GameTime gameTime, Color color, Queue<ParticleEmitor> particleEmitors, float multiplier, int size)
+        public static void Show(Vector2 position, Vector2 movingDir, float velocity, GameTime gameTime, Color color, Queue<ParticleEmitor> particleEmitors, float multiplier, float size)
         {
             for (int i = 1; i < gameTime.ElapsedGameTime.TotalMilliseconds * velocity * multiplier; i += 5)
             {

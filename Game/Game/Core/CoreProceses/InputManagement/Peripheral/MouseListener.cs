@@ -10,51 +10,78 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement.Peripheral
 {
     internal class MouseListener
     {
+        private const double mClickHoldTeshholld = 60;
         private MouseState mCurrentState, mPreviousState;
-        private int mCurrentMouseWheelValue, mPreviousMouseWheelValue;
+        private double mLeftCounter, mRightCounter;
 
-        // Return true if mouse was constantly down.
-        private bool LeftMouseButtonDown => mCurrentState.LeftButton == ButtonState.Pressed && mPreviousState.LeftButton == ButtonState.Pressed;
-        private bool RightMouseButtonDown => mCurrentState.RightButton == ButtonState.Pressed && mPreviousState.RightButton == ButtonState.Pressed;
-        private bool LeftMouseButtonReleased => mCurrentState.LeftButton == ButtonState.Released && mPreviousState.LeftButton == ButtonState.Pressed;
-        private bool RightMouseButtonReleased => mCurrentState.RightButton == ButtonState.Released && mPreviousState.RightButton == ButtonState.Pressed;
+        private bool LeftMouseButtonPressed => mCurrentState.LeftButton == ButtonState.Pressed;
+        private bool RightMouseButtonPressed => mCurrentState.RightButton == ButtonState.Pressed;
 
-        private readonly Dictionary<ActionType, ActionType> mKeyBindingsMouse;
+        private bool LeftMouseButtonReleased => mCurrentState.LeftButton == ButtonState.Released;
+        private bool RightMouseButtonReleased => mCurrentState.RightButton == ButtonState.Released;
 
-        public MouseListener()
-        {
-            mKeyBindingsMouse = new()
+        private bool LeftMouseButtonJustReleased => mCurrentState.LeftButton == ButtonState.Released && mPreviousState.LeftButton == ButtonState.Pressed;
+        private bool RightMouseButtonJustReleased => mCurrentState.RightButton == ButtonState.Released && mPreviousState.RightButton == ButtonState.Pressed;
+
+
+        private readonly Dictionary<ActionType, ActionType> mKeyBindingsMouse = new()
             {
                 { ActionType.MouseWheelBackward, ActionType.CameraZoomOut },
                 { ActionType.MouseWheelForward, ActionType.CameraZoomIn },
                 { ActionType.LeftClickReleased, ActionType.Select },
             };
-        }
-        public void Listen(ref List<ActionType> actions, out Vector2 mousePosition)
+
+        public void Listen(GameTime gameTime, ref List<ActionType> actions, out Vector2 mousePosition)
         {
             mPreviousState = mCurrentState;
-
-            // Update current and previous MouseWheelValue
-            mPreviousMouseWheelValue = mCurrentMouseWheelValue;
-            mCurrentMouseWheelValue = mCurrentState.ScrollWheelValue;
-
             mCurrentState = Mouse.GetState();
             mousePosition = mCurrentState.Position.ToVector2();
 
-            if (mCurrentState.LeftButton == ButtonState.Pressed) actions.Add(!LeftMouseButtonDown ? ActionType.LeftClick : ActionType.LeftClickHold);
-            if (mCurrentState.RightButton == ButtonState.Pressed) actions.Add(!RightMouseButtonDown ? ActionType.RightClick : ActionType.RightClickHold);
-            if (LeftMouseButtonReleased) actions.Add(ActionType.LeftClickReleased);
-            if (RightMouseButtonReleased) actions.Add(ActionType.RightClickReleased);
+            // Track the time the Keys are Pressed
+            if (LeftMouseButtonPressed) 
+                mLeftCounter += gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            if (RightMouseButtonPressed)
+                mRightCounter += gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            // Check if Mouse Key was Hold or Clicked
+            if (mLeftCounter > mClickHoldTeshholld)
+                actions.Add(ActionType.LeftClickHold);
+            else
+                if (LeftMouseButtonJustReleased)
+                    actions.Add(ActionType.LeftClick);
+
+            if (mRightCounter > mClickHoldTeshholld)
+                actions.Add(ActionType.RightClickHold);
+            else
+                if (RightMouseButtonJustReleased)
+                    actions.Add(ActionType.RightClick);
+
+            // Check for Mouse Key Release
+            if (LeftMouseButtonJustReleased)
+                actions.Add(ActionType.LeftClickReleased);
+
+            if (RightMouseButtonJustReleased)
+                actions.Add(ActionType.RightClickReleased);
+
+            // Recet counters
+            if (LeftMouseButtonReleased)
+                mLeftCounter = 0;
+
+            if (RightMouseButtonReleased)
+                mRightCounter = 0;
 
             // Set Mouse Action to MouseWheel
-            if (mCurrentMouseWheelValue > mPreviousMouseWheelValue)
+            if (mCurrentState.ScrollWheelValue > mPreviousState.ScrollWheelValue)
                 actions.Add(ActionType.MouseWheelForward);
-            if (mCurrentMouseWheelValue < mPreviousMouseWheelValue)
+
+            if (mCurrentState.ScrollWheelValue < mPreviousState.ScrollWheelValue)
                 actions.Add(ActionType.MouseWheelBackward);
 
             foreach (var key in mKeyBindingsMouse.Keys)
             {
-                if (actions.Contains(key)) actions.Add(mKeyBindingsMouse[key]);
+                if (!actions.Contains(key)) continue;
+                actions.Add(mKeyBindingsMouse[key]);
             }
         }
     }

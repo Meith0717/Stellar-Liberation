@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 {
-    public class ChaseBehavior : Behavior
+    internal class ChaseBehavior : Behavior
     {
         private Spacecraft mPatrolTarget;
         private readonly Battleship mSpaceship;

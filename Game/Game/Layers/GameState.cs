@@ -12,6 +12,7 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.MapGeneration;
+using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.Spacecrafts;
 using StellarLiberation.Game.Layers.GameLayers;
 using StellarLiberation.Game.Layers.MenueLayers;
@@ -37,11 +38,12 @@ namespace StellarLiberation.Game.Layers
         {
             mMapConfig = new(3, 3, 0);
             PlanetSystemStates = MapFactory.Generate(mMapConfig);
-            PlanetSystemStates.First().GameObjects.Add(SpacecraftFactory.GetFlagship(Vector2.Zero, Fractions.Allied));
+            PlanetSystemStates.First().GameObjects.Add(SpacecraftFactory.GetFlagship(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 20000)), Fractions.Allied));
+            PlanetSystemStates.First().GameObjects.Add(SpacecraftFactory.GetFlagship(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 20000)), Fractions.Allied));
             for (int i = 0; i < 10; i++)
-                PlanetSystemStates.First().GameObjects.Add(SpacecraftFactory.GetBattleship(Vector2.One * 10000, BattleshipID.BomberMKI, Fractions.Allied));
+                PlanetSystemStates.First().GameObjects.Add(SpacecraftFactory.GetBattleship(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 20000)), BattleshipID.BomberMKI, Fractions.Enemys));
             for (int i = 0; i < 10; i++)
-                PlanetSystemStates.First().GameObjects.Add(SpacecraftFactory.GetBattleship(-Vector2.One * 20000, BattleshipID.BomberMKI, Fractions.Enemys));
+                PlanetSystemStates.First().GameObjects.Add(SpacecraftFactory.GetBattleship(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 20000)), BattleshipID.InterceptorMKI, Fractions.Enemys));
         }
 
         public override void Initialize()

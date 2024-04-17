@@ -18,7 +18,7 @@ namespace StellarLiberation.Game.Core.UserInterface
         private float mSliderValue;
 
 
-        private bool mWasPressed;
+        private bool mWasHovered;
 
         public float Value => mSliderValue;
 
@@ -29,11 +29,8 @@ namespace StellarLiberation.Game.Core.UserInterface
             mSliderLength = MathF.Abs(Canvas.Bounds.Left - Canvas.Bounds.Right);
 
             mSliderDotPosition = sliderPosition;
-            if (inputState.Actions.Contains(ActionType.LeftClickReleased)) mWasPressed = false;
-            if (Canvas.Contains(inputState.mMousePosition) &&
-                inputState.Actions.Contains(ActionType.LeftClick)) mWasPressed = true;
-
-            if (!mWasPressed) return;
+            if (!Canvas.Contains(inputState.mMousePosition)) return;
+            if (!inputState.HasAction(ActionType.LeftClickHold)) return;
             mSliderValue = GetValue(inputState.mMousePosition);
             mSliderDotPosition = sliderPosition;
         }
@@ -56,7 +53,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
             TextureManager.Instance.DrawLine(sliderPos, mSliderLength, Color.Black * 0.9f, 10 * mUiScale, 1);
             TextureManager.Instance.DrawLine(sliderPos, mSliderDotPosition, Color.MonoGameOrange, 10 * mUiScale, 0);
-            TextureManager.Instance.Draw(MenueSpriteRegistries.dot, mSliderDotPosition - (dotDim / 2), dotDim.X, dotDim.Y, mWasPressed ? Color.DarkGray : Color.White);
+            TextureManager.Instance.Draw(MenueSpriteRegistries.dot, mSliderDotPosition - (dotDim / 2), dotDim.X, dotDim.Y, mWasHovered ? Color.DarkGray : Color.White);
             Canvas.Draw();
         }
 

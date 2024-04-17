@@ -61,7 +61,7 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
             MovingDirection = Geometry.CalculateDirectionVector(Rotation);
             Physics.HandleCollision(gameTime, this, planetsystemState.SpatialHashing);
             GameObjectMover.Move(gameTime, this, planetsystemState.SpatialHashing);
-            TrailEffect.Show(Transformations.Rotation(Position, mEngineTrailPosition, Rotation), MovingDirection, Velocity, gameTime, mAccentColor, planetsystemState.ParticleEmitors, gameState.GameSettings.ParticlesMultiplier, 2);
+            TrailEffect.Show(Transformations.Rotation(Position, mEngineTrailPosition, Rotation), MovingDirection, Velocity, gameTime, mAccentColor, planetsystemState.ParticleEmitors, gameState.GameSettings.ParticlesMultiplier, TextureScale * 1.1f);
 
             if (Defense.HullPercentage <= 0) Explode(gameState, planetsystemState);
             base.Update(gameTime, gameState, planetsystemState);

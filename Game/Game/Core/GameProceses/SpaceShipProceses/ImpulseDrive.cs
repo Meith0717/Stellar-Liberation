@@ -109,6 +109,14 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
             mShipTarget = spaceShip;
             IsMoving = true;
         }
+
+        public void Stop()
+        {
+            mDirectionTarget = null;
+            mVectorTarget = null;
+            mShipTarget = null;
+            IsMoving = false;
+        }
         #endregion
 
     }

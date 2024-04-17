@@ -12,9 +12,8 @@ using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipProceses;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons;
 using StellarLiberation.Game.Layers;
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using System;
 
 namespace StellarLiberation.Game.GameObjects.Spacecrafts
 {
@@ -23,10 +22,18 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
     {
         [JsonProperty] public readonly BattleshipID BattleshipID;
         [JsonProperty] public ImpulseDrive ImpulseDrive { get; private set; }
+        [JsonProperty] public Flagship Flagship;
+        [JsonIgnore] private UtilityAi mUtilityAi = new(); 
 
-        public Battleship(Vector2 position, Fractions fraction, string textureID, float textureScale, Vector2 engineTrailPosition)
+        public Battleship(BattleshipID battleshipID, Vector2 position, Fractions fraction, string textureID, float textureScale, Vector2 engineTrailPosition)
             : base(position, fraction, textureID, textureScale, engineTrailPosition)
-        {; }
+        {
+            BattleshipID = battleshipID;
+            mUtilityAi.AddBehavior(new IDELBehavior(this));
+            mUtilityAi.AddBehavior(new ChaseBehavior(this));
+            mUtilityAi.AddBehavior(new CombatBehavior(this));
+            mUtilityAi.AddBehavior(new OrderBackBehavior(this));
+        }
 
         public void Populate(float shieldForcePerc, float hullForcePerc, float shieldRegPerc, float hullRegPerc, List<Weapon> weapons, float impulseVelocity)
         {
@@ -38,16 +45,7 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
         {
             ImpulseDrive.Move(gameTime, this, Defense.HullPercentage);
             base.Update(gameTime, gameState, planetsystemState);
-            AttakEnemy();
+            mUtilityAi.Update(gameTime);
         }
-
-        private void AttakEnemy()
-        {
-            var target = Sensors.Opponents.FirstOrDefault(defaultValue: null);
-            if (target is null) return;
-            Weapons.AimTarget(target);
-        }
-
-
     }
 }
