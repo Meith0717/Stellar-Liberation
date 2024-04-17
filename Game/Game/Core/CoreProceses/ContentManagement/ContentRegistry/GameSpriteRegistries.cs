@@ -6,6 +6,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegi
 {
     public class GameSpriteRegistries : Registries
     {
+        public readonly static Registry arrow = new(@"textures\gameSprites", "arrow");
 
         private readonly static string animations = @"textures\gameSprites\animations\";
         public readonly static Registry explosion = new(animations, "explosion");

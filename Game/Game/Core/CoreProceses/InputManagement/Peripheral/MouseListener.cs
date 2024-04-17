@@ -10,7 +10,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement.Peripheral
 {
     internal class MouseListener
     {
-        private const double mClickHoldTeshholld = 60;
+        private const double mClickHoldTeshholld = 75;
         private MouseState mCurrentState, mPreviousState;
         private double mLeftCounter, mRightCounter;
 

@@ -8,11 +8,13 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.Extensions;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
+using StellarLiberation.Game.Core.Visuals;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.Spacecrafts;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace StellarLiberation.Game.Core.GameProceses
 {
@@ -48,7 +50,7 @@ namespace StellarLiberation.Game.Core.GameProceses
             {
                 var startPosition = Start.MapPosition;
                 var endPosition = End.MapPosition;
-                TextureManager.Instance.DrawAdaptiveLine(startPosition, endPosition, Flagship.Fraction is Fractions.Enemys ? Color.Red : Color.LightGreen, 1, 0, cameraZoom);
+                ArrowPath.Draw(startPosition, endPosition, .5f);
                 TextureManager.Instance.Draw(GameSpriteRegistries.radar, Position - new Vector2(15), 30, 30, Flagship.Fraction is Fractions.Enemys ? Color.Red : Color.LightGreen);
             }
         }

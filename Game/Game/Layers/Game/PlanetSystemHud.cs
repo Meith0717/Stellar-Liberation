@@ -13,6 +13,7 @@ using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
+using StellarLiberation.Game.Core.Visuals;
 using StellarLiberation.Game.GameObjects.Spacecrafts;
 using StellarLiberation.Game.Layers.MenueLayers;
 using System.Linq;
@@ -57,17 +58,18 @@ namespace StellarLiberation.Game.Layers.GameLayers
             foreach (var spaceship in mPlanetSystemLayer.GameState.GameObjectsInteractor.SelectedFlagships)
             {
                 if (!mPlanetSystemLayer.PlanetsystemState.Contains(spaceship)) continue;
-                TextureManager.Instance.DrawAdaptiveCircle(spaceship.Position, spaceship.BoundedBox.Radius, Color.White, 2, 1, mPlanetSystemLayer.Camera2D.Zoom);
+                TextureManager.Instance.Draw(GameSpriteRegistries.selectCrosshait, spaceship.Position, 2.5f, 0, 1, Color.MonoGameOrange);
+                if (spaceship.ImpulseDrive.TargetPosition is null) continue;
+                ArrowPath.Draw(spaceship.Position, spaceship.ImpulseDrive.TargetPosition.Value, 20);
             }
-            foreach (var spaceship in mPlanetSystemLayer.GameState.GameObjectsInteractor.SelectedBattleships)
+            foreach (var spaceship in mPlanetSystemLayer.GameState.GameObjectsInteractor.SelectedBattleship)
             {
                 if (!mPlanetSystemLayer.PlanetsystemState.Contains(spaceship)) continue;
-                TextureManager.Instance.DrawAdaptiveCircle(spaceship.Position, spaceship.BoundedBox.Radius, Color.White, 2, 1, mPlanetSystemLayer.Camera2D.Zoom);
             }
             if (mPlanetSystemLayer.GameState.GameObjectsInteractor.HoveredGameObject is not null)
             {
                 var obi = mPlanetSystemLayer.GameState.GameObjectsInteractor.HoveredGameObject;
-                TextureManager.Instance.DrawAdaptiveCircle(obi.Position, obi.BoundedBox.Radius, Color.Yellow * .7f, 2, 1, mPlanetSystemLayer.Camera2D.Zoom);
+                // TextureManager.Instance.DrawAdaptiveCircle(obi.Position, obi.BoundedBox.Radius, Color.Yellow * .7f, 2, 1, mPlanetSystemLayer.Camera2D.Zoom);
             }
             foreach (var spaceship in mPlanetSystemLayer.PlanetsystemState.GameObjects.OfType<Spacecraft>())
             {

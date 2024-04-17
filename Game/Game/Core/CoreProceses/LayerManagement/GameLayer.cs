@@ -50,13 +50,12 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+            HUDLayer?.Draw(spriteBatch);
             spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: ViewTransformationMatrix, samplerState: SamplerState.PointClamp);
             Camera2D.Draw(GameState, this);
             mParticleManager.Draw(Camera2D);
             GameState.DebugSystem.DrawOnScene(this);
             spriteBatch.End();
-
-            HUDLayer?.Draw(spriteBatch);
         }
 
         public override void ApplyResolution()

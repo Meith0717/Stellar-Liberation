@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using StellarLiberation.Game.Core.Extensions;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
+using StellarLiberation.Game.Core.Visuals;
 using StellarLiberation.Game.GameObjects.Spacecrafts;
 using System;
 
@@ -17,6 +18,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
     {
         private const float Maneuverability = 0.001f;
 
+        [JsonIgnore] public Vector2? TargetPosition { get; private set; }
         [JsonProperty] public float MaxVelocity { get; private set; }
         [JsonProperty] private Vector2? mVectorTarget;
         [JsonProperty] private Spacecraft mShipTarget;
@@ -30,18 +32,18 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
 
         public void Move(GameTime gameTime, GameObject obj, double damage)
         {
-            var targetPosition = mVectorTarget ?? mShipTarget?.Position;
+            TargetPosition = mVectorTarget ?? mShipTarget?.Position;
 
             Vector2? direction;
-            switch (targetPosition)
+            switch (TargetPosition)
             {
                 case null:
                     direction = mDirectionTarget;
                     IsMoving = mDirectionTarget is not null;
                     break;
                 case not null:
-                    direction = obj.Position.DirectionToVector2((Vector2)targetPosition);
-                    IsMoving = IsMoving && !obj.BoundedBox.Contains((Vector2)targetPosition);
+                    direction = obj.Position.DirectionToVector2((Vector2)TargetPosition);
+                    IsMoving = IsMoving && !obj.BoundedBox.Contains((Vector2)TargetPosition);
                     break;
             }
 
@@ -64,6 +66,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
             if (!IsMoving)
             {
                 obj.Velocity = MovementController.GetVelocity(gameTime, obj.Velocity, 0, MaxVelocity / 100f);
+                TargetPosition = null;
                 return;
             }
 
@@ -118,6 +121,5 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
             IsMoving = false;
         }
         #endregion
-
     }
 }
