@@ -42,7 +42,10 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             if (IsHover && !IsDisabled && IsHover != mLastHoverState) SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.hover);
             mLastHoverState = IsHover;
             if (IsHover)
-                inputState.DoAction(ActionType.Select, () => { OnClickAction?.Invoke(); IsHover = false; });
+                inputState.DoAction(ActionType.LeftReleased, () => {
+                    OnClickAction?.Invoke(); 
+                    IsHover = false; 
+                });
             Color = IsDisabled ? Color.Transparent : IsHover ? Color.MonoGameOrange : new(128, 128, 128);
             mText.Update(inputState, gameTime);
             base.Update(inputState, gameTime);

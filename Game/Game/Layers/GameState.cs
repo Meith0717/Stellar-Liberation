@@ -27,7 +27,7 @@ namespace StellarLiberation.Game.Layers
     {
 
         [JsonIgnore] public readonly DebugSystem DebugSystem = new();
-        [JsonIgnore] private readonly LinkedList<GameLayer> mLayers = new();
+        [JsonIgnore] private readonly LinkedList<Layer> mLayers = new();
         [JsonIgnore] private readonly FrameCounter mFrameCounter = new(200);
         [JsonIgnore] public readonly GameObjectsInteractor GameObjectsInteractor = new();
         [JsonProperty] public readonly MapState MapState = new();
@@ -50,9 +50,10 @@ namespace StellarLiberation.Game.Layers
             AddLayer(new PlanetsystemLayer(this, PlanetSystemStates.First(), Game1));
         }
 
-        public void AddLayer(GameLayer layer)
+        public void AddLayer(Layer layer)
         {
             layer.ApplyResolution();
+            layer.Initialize();
             mLayers.AddLast(layer);
         }
 

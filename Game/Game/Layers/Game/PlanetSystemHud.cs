@@ -52,33 +52,33 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+
             if (Hide) return;
 
             spriteBatch.Begin(transformMatrix: mPlanetSystemLayer.ViewTransformationMatrix);
+
             foreach (var spaceship in mPlanetSystemLayer.GameState.GameObjectsInteractor.SelectedFlagships)
             {
                 if (!mPlanetSystemLayer.PlanetsystemState.Contains(spaceship)) continue;
                 TextureManager.Instance.Draw(GameSpriteRegistries.selectCrosshait, spaceship.Position, 2.5f, 0, 1, Color.MonoGameOrange);
-                if (spaceship.ImpulseDrive.TargetPosition is null) continue;
-                ArrowPath.Draw(spaceship.Position, spaceship.ImpulseDrive.TargetPosition.Value, 20);
             }
             foreach (var spaceship in mPlanetSystemLayer.GameState.GameObjectsInteractor.SelectedBattleship)
             {
                 if (!mPlanetSystemLayer.PlanetsystemState.Contains(spaceship)) continue;
             }
-            if (mPlanetSystemLayer.GameState.GameObjectsInteractor.HoveredGameObject is not null)
-            {
-                var obi = mPlanetSystemLayer.GameState.GameObjectsInteractor.HoveredGameObject;
-                // TextureManager.Instance.DrawAdaptiveCircle(obi.Position, obi.BoundedBox.Radius, Color.Yellow * .7f, 2, 1, mPlanetSystemLayer.Camera2D.Zoom);
-            }
             foreach (var spaceship in mPlanetSystemLayer.PlanetsystemState.GameObjects.OfType<Spacecraft>())
             {
                 TextureManager.Instance.Draw(GameSpriteRegistries.radar, spaceship.Position, .04f / mPlanetSystemLayer.Camera2D.Zoom, 0, spaceship.TextureDepth + 1, spaceship.Fraction == Fractions.Enemys ? Color.Red : Color.LightGreen);
+                if (spaceship is not Flagship || spaceship.Fraction != Fractions.Allied) continue;
+                var flagship = (Flagship)spaceship;
+                if (flagship.ImpulseDrive.TargetPosition is null) continue;
+                ArrowPath.Draw(spaceship.Position, flagship.ImpulseDrive.TargetPosition.Value, 20);
             }
             foreach (var planet in mPlanetSystemLayer.PlanetsystemState.Planets)
             {
                 TextureManager.Instance.DrawAdaptiveCircle(Vector2.Zero, planet.Position.Length(), Color.Gray * .1f, 1, planet.TextureDepth - 1, mPlanetSystemLayer.Camera2D.Zoom);
             }
+
             spriteBatch.End();
 
             spriteBatch.Begin();

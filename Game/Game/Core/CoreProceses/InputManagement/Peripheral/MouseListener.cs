@@ -28,7 +28,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement.Peripheral
             {
                 { ActionType.MouseWheelBackward, ActionType.CameraZoomOut },
                 { ActionType.MouseWheelForward, ActionType.CameraZoomIn },
-                { ActionType.LeftClickReleased, ActionType.Select },
             };
 
         public void Listen(GameTime gameTime, ref List<ActionType> actions, out Vector2 mousePosition)
@@ -45,24 +44,25 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement.Peripheral
                 mRightCounter += gameTime.ElapsedGameTime.TotalMilliseconds;
 
             // Check if Mouse Key was Hold or Clicked
-            if (mLeftCounter > mClickHoldTeshholld)
+            if (mLeftCounter > mClickHoldTeshholld && !LeftMouseButtonJustReleased)
                 actions.Add(ActionType.LeftClickHold);
-            else
-                if (LeftMouseButtonJustReleased)
-                    actions.Add(ActionType.LeftClick);
 
-            if (mRightCounter > mClickHoldTeshholld)
+            if (mRightCounter > mClickHoldTeshholld && !RightMouseButtonJustReleased)
                 actions.Add(ActionType.RightClickHold);
-            else
-                if (RightMouseButtonJustReleased)
-                    actions.Add(ActionType.RightClick);
+
+            // Check for Mouse Key Pressed
+            if (LeftMouseButtonJustReleased)
+                actions.Add(ActionType.LeftReleased);
+
+            if (RightMouseButtonJustReleased)
+                actions.Add(ActionType.RightReleased);
 
             // Check for Mouse Key Release
             if (LeftMouseButtonJustReleased)
-                actions.Add(ActionType.LeftClickReleased);
+                actions.Add(ActionType.LeftWasClicked);
 
             if (RightMouseButtonJustReleased)
-                actions.Add(ActionType.RightClickReleased);
+                actions.Add(ActionType.RightWasClicked);
 
             // Recet counters
             if (LeftMouseButtonReleased)

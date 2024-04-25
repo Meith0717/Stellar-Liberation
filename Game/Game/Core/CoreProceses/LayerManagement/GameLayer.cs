@@ -23,7 +23,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         public readonly Camera2D Camera2D;
         public readonly Camera2DShaker CameraShaker;
         public readonly GameState GameState;
-        protected Layer HUDLayer;
 
         protected readonly StereoSoundSystem mStereoSoundSystem = new();
         protected readonly ParticleManager mParticleManager = new();
@@ -40,7 +39,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         public override void Update(GameTime gameTime, InputState inputState)
         {
             base.Update(gameTime, inputState);
-            HUDLayer?.Update(gameTime, inputState);
             CameraShaker.Update(Camera2D, gameTime);
             Camera2D.ApplyResolution(ResolutionManager.Resolution, this);
             ViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera2D.Position, Camera2D.Zoom, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
@@ -50,7 +48,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            HUDLayer?.Draw(spriteBatch);
             spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: ViewTransformationMatrix, samplerState: SamplerState.PointClamp);
             Camera2D.Draw(GameState, this);
             mParticleManager.Draw(Camera2D);
@@ -61,7 +58,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         public override void ApplyResolution()
         {
             base.ApplyResolution();
-            HUDLayer?.ApplyResolution();
             Camera2D.ApplyResolution(ResolutionManager.Resolution, this);
         }
 

@@ -18,19 +18,20 @@ namespace StellarLiberation.Game.Layers.GameLayers
     {
         public readonly PlanetsystemState PlanetsystemState;
         private readonly ParallaxController mParallaxController;
+        private Layer mHudLayer;
 
         public PlanetsystemLayer(GameState gameState, PlanetsystemState planetsystemState, Game1 game1)
             : base(gameState, planetsystemState.SpatialHashing, game1)
         {
             PlanetsystemState = planetsystemState;
-            HUDLayer = new PlanetsystemHud(this, game1);
-            HUDLayer.ApplyResolution();
 
             var background = new UiSprite(GameSpriteRegistries.gameBackground)
             {
                 Anchor = Anchor.Center,
                 FillScale = FillScale.FillIn
             };
+
+            mHudLayer = new PlanetsystemHud(this, Game1);
 
             AddUiElement(background);
 
@@ -43,15 +44,19 @@ namespace StellarLiberation.Game.Layers.GameLayers
             ApplyResolution();
         }
 
-        public void OpenMap() { GameState.AddLayer(new MapLayer(GameState, GameState.MapState, PlanetsystemState.MapPosition, Game1)); }
+        public void OpenMap() 
+        {
+            GameState.AddLayer(new MapLayer(GameState, GameState.MapState, PlanetsystemState.MapPosition, Game1));
+        }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
+            mHudLayer.Update(gameTime, inputState);
             mParallaxController.Update();
             Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, .008f, 1);
             Camera2DMover.UpdateCameraByMouseDrag(inputState, Camera2D);
             Camera2DMover.MoveByKeys(gameTime, inputState, Camera2D);
-            GameState.GameObjectsInteractor.Update(inputState, PlanetsystemState, WorldMousePosition, HUDLayer);
+            GameState.GameObjectsInteractor.Update(inputState, PlanetsystemState, WorldMousePosition, mHudLayer);
             mParticleManager.Update(gameTime, PlanetsystemState.ParticleEmitors);
             mStereoSoundSystem.Update(Camera2D.Position, Camera2D.Zoom, PlanetsystemState.StereoSounds);
             base.Update(gameTime, inputState);
@@ -64,6 +69,8 @@ namespace StellarLiberation.Game.Layers.GameLayers
             spriteBatch.End();
 
             base.Draw(spriteBatch);
+
+            mHudLayer.Draw(spriteBatch);
 
             spriteBatch.Begin(transformMatrix: ViewTransformationMatrix);
             GameState.GameObjectsInteractor.Draw(Camera2D);

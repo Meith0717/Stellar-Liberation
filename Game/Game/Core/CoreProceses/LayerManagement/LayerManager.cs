@@ -25,9 +25,9 @@ public class LayerManager
     // add and remove layers from stack
     public void AddLayer(Layer layer)
     {
+        mLayerStack.AddLast(layer);
         layer.Initialize();
         layer.ApplyResolution();
-        mLayerStack.AddLast(layer);
     }
 
     public void PopLayer()

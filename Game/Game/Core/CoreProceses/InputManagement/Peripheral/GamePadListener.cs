@@ -20,7 +20,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement.Peripheral
             mActionOnPadPressed = new()
             {
                 { Buttons.Start, ActionType.ESC },
-                { Buttons.A, ActionType.Select },
                 { Buttons.LeftThumbstickUp, ActionType.MoveButtonUp },
                 { Buttons.LeftThumbstickDown, ActionType.MoveButtonDown }
             };

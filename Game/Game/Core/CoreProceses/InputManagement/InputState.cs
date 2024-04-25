@@ -31,7 +31,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement
         F1, F2, F3, F4, F5, F6, F7, F8, F9, F10,
         Accelerate,
         Break,
-        Select,
         CtrlLeft,
         Inventar,
         Trading,
@@ -46,12 +45,12 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement
         BenchmarkPause,
 
         // Mouse
-        LeftClick,
-        RightClick,
+        LeftReleased,
+        RightReleased,
         LeftClickHold,
         RightClickHold,
-        LeftClickReleased,
-        RightClickReleased,
+        LeftWasClicked,
+        RightWasClicked,
         MouseWheelForward,
         MouseWheelBackward,
         MoveButtonUp,
@@ -65,7 +64,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.InputManagement
         LeftThumbStickDown,
         RightThumbStickUp,
         RightThumbStickDown,
-        Select
     }
 
     public enum KeyEventType

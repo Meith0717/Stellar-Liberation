@@ -33,17 +33,6 @@ namespace StellarLiberation.Game.Popups
             HSpace = 20;
             mFlagship = flagship;
 
-            AddChild(new UiButton(MenueSpriteRegistries.xMark, "")
-            {
-                Anchor = Anchor.NE,
-                HSpace = 20,
-                VSpace = 20,
-                OnClickAction = () => {
-                    closeAction.Invoke();
-                    IsDisposed = true;
-                }
-            }) ;
-
             AddChild(new UiText(FontRegistries.text, "Flagship MKI", 0.2f) { Anchor = Anchor.NW, HSpace = 20, VSpace = 20 });
 
             AddChild(GetFlagshipInfoFrame(flagship));

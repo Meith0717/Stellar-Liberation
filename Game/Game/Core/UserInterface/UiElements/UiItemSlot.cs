@@ -38,7 +38,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             base.Update(inputState, gameTime);
             if (!AnyChild()) return;
             if (!Canvas.Contains(inputState.mMousePosition)) return;
-            if (!inputState.HasAction(ActionType.LeftClick)) return;
+            if (!inputState.HasAction(ActionType.LeftReleased)) return;
             mOnPressAction?.Invoke(Item);
         }
     }

@@ -52,7 +52,7 @@ namespace StellarLiberation
             base.Initialize();
             LayerManager = new(this);
             LayerManager.AddLayer(new LoadingLayer(this));
-            ResolutionManager.Apply(Settings.Resolution);
+            ResolutionManager.Apply("800x480");
 
             GraphicsManager.PreferMultiSampling = true;
             GraphicsManager.SynchronizeWithVerticalRetrace = Settings.Vsync;
@@ -96,7 +96,7 @@ namespace StellarLiberation
 
         public void ActivateMyGame(object sendet, EventArgs args) => IAmActive = true;
 
-        public void DeactivateMyGame(object sendet, EventArgs args) => IAmActive = true; //TODO
+        public void DeactivateMyGame(object sendet, EventArgs args) => IAmActive = false; //TODO
 
         public void SetCursorTexture(Registry registry) => Mouse.SetCursor(MouseCursor.FromTexture2D(Content.Load<Texture2D>(registry.FilePath), 0, 0));
     }

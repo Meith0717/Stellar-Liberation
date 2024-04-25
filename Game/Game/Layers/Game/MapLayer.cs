@@ -40,7 +40,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
         private void ManageInput(InputState inputState)
         {
-            if (!inputState.HasAction(ActionType.LeftClickReleased)) return;
+            if (!inputState.HasAction(ActionType.LeftReleased)) return;
             var objsByMouse = SpatialHashing.GetObjectsInRadius<Planetsystem>(WorldMousePosition, 200);
             if (objsByMouse.Count <= 0) return;
             var planetSystem = objsByMouse.First();
