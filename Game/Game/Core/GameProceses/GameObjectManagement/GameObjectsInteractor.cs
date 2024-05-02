@@ -127,7 +127,7 @@ namespace StellarLiberation.Game.Core.GameProceses
                         SelectedFlagships.Clear();
                         return;
                     }
-                    if (!inputState.HasAction(ActionType.CtrlLeft))
+                    if (!inputState.HasAction(ActionType.CtrlLeft) || SelectedFlagships.Count < 1)
                     {
                         SelectedFlagships.Clear();
                         hudLayer.AddUiElement(new FlagshipPopup((Flagship)spaceship, hudLayer.ClearUiElements));

@@ -38,6 +38,7 @@ namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection
 
         public static void HandleCollision(GameTime gameTime, GameObject gameObject2D, SpatialHashing spatialHashing)
         {
+            // TODO
             if (!TryGetGetMass(gameObject2D, out var m1)) return;
             var objts = spatialHashing.GetObjectsInRadius<GameObject>(gameObject2D.Position, gameObject2D.BoundedBox.Radius);
             objts.Remove(gameObject2D);

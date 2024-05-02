@@ -57,7 +57,7 @@ namespace StellarLiberation.Game.Core.GameProceses
 
         [JsonIgnore] public readonly List<Planetsystem> Planetsystems = new();
         [JsonIgnore] public readonly SpatialHashing SpatialHasing = new(500);
-        [JsonIgnore] private readonly List<HyperRoute> mHyperRoutes = new();
+        [JsonProperty] private readonly List<HyperRoute> mHyperRoutes = new();
 
         public void Initialize(List<PlanetsystemState> planetsystemStates)
         {

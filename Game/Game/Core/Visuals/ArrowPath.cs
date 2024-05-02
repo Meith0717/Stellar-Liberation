@@ -27,7 +27,7 @@ namespace StellarLiberation.Game.Core.Visuals
             var position = end;
             for (int _ = 0; _ < steps; _++)
             {
-                TextureManager.Instance.Draw(GameSpriteRegistries.arrow, position, scale, rotarion, 1, Color.MonoGameOrange);
+                TextureManager.Instance.Draw(GameSpriteRegistries.arrow, position, scale, rotarion, 1, Color.MonoGameOrange * .5f);
                 position -= dir * textureSize;
             }
         }
