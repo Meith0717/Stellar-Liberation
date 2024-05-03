@@ -76,7 +76,7 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
         public override void ApplyResolution(Rectangle root, Resolution resolution)
         {
             base.ApplyResolution(root, resolution);
-            Canvas.UpdateFrame(root, resolution.uiScaling);
+            Canvas.UpdateFrame(root, resolution.UiScaling);
             foreach (var child in mChildren)
                 child.ApplyResolution(Bounds, resolution);
         }

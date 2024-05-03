@@ -21,7 +21,7 @@ namespace StellarLiberation.Game.Core.UserInterface
         public Rectangle Bounds => Canvas.Bounds;
         public virtual void ApplyResolution(Rectangle root, Resolution resolution)
         {
-            mUiScale = resolution.uiScaling;
+            mUiScale = resolution.UiScaling;
             mRoot = root;
         }
 

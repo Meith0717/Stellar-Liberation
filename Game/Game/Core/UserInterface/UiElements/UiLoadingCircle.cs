@@ -32,7 +32,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
 
         public override void ApplyResolution(Rectangle root, Resolution resolution)
         {
-            Canvas.UpdateFrame(root, resolution.uiScaling);
+            Canvas.UpdateFrame(root, resolution.UiScaling);
             mCircle.ApplyResolution(Bounds, resolution);
         }
     }

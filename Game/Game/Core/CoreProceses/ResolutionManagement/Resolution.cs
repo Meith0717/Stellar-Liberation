@@ -10,14 +10,14 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
     {
         public readonly int Width;
         public readonly int Height;
-        public readonly float uiScaling;
+        public readonly float UiScaling;
         public readonly Rectangle Bounds;
 
         public Resolution(int width, int height, float uiScaling)
         {
             Width = width;
             Height = height;
-            this.uiScaling = uiScaling;
+            this.UiScaling = uiScaling;
             Bounds = new(0, 0, Width, Height);
         }
 

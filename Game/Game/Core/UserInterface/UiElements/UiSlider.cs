@@ -61,7 +61,7 @@ namespace StellarLiberation.Game.Core.UserInterface
         {
             base.ApplyResolution(root, resolution);
             Height = 25;
-            Canvas.UpdateFrame(root, resolution.uiScaling);
+            Canvas.UpdateFrame(root, resolution.UiScaling);
         }
 
         private Vector2 sliderPosition => new(Canvas.Bounds.Left + mSliderLength * mSliderValue, Canvas.Center.Y);

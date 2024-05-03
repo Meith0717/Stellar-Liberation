@@ -20,7 +20,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
 
             public override void ApplyResolution(Rectangle root, Resolution resolution)
             {
-                Canvas.UpdateFrame(root, resolution.uiScaling);
+                Canvas.UpdateFrame(root, resolution.UiScaling);
                 UiElement?.ApplyResolution(Bounds, resolution);
             }
 
@@ -91,7 +91,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
 
         public override void ApplyResolution(Rectangle root, Resolution resolution)
         {
-            Canvas.UpdateFrame(root, resolution.uiScaling);
+            Canvas.UpdateFrame(root, resolution.UiScaling);
             foreach (var child in mGrid.Values)
                 child.ApplyResolution(Bounds, resolution);
         }
