@@ -30,9 +30,8 @@ namespace StellarLiberation.Game.Core.Visuals.Rendering
             mRenderPipeline = new();
         }
 
-        public void ApplyResolution(Resolution resolution, GameLayer scene)
+        public void ApplyResolution(Resolution resolution, GameLayer scene, Matrix transformationMatrix)
         {
-            var transformationMatrix = Transformations.CreateViewTransformationMatrix(Position, Zoom, Rotation, resolution.Width, resolution.Height);
             Bounds = FrustumCuller.GetFrustum(resolution, transformationMatrix);
             mRenderPipeline.FilterObjs(Bounds, scene.SpatialHashing);
         }

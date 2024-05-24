@@ -15,8 +15,11 @@ using StellarLiberation.Game.Layers;
 
 namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
 {
+    /// <summary>
+    /// The GameLayer class serves as a foundational layer for managing game elements. It encapsulates functionality related to managing the game's visual representation, including camera handling, rendering, and resolution management. Additionally, it integrates with other systems such as audio and spatial hashing to provide a comprehensive game experience.
+    /// </summary>
     public abstract class GameLayer : Layer
-    {
+    {   
         public Vector2 WorldMousePosition { get; private set; }
         public Matrix ViewTransformationMatrix { get; private set; }
         public readonly SpatialHashing SpatialHashing;
@@ -40,8 +43,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         {
             base.Update(gameTime, inputState);
             CameraShaker.Update(Camera2D, gameTime);
-            Camera2D.ApplyResolution(ResolutionManager.Resolution, this);
             ViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera2D.Position, Camera2D.Zoom, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+            Camera2D.ApplyResolution(ResolutionManager.Resolution, this, ViewTransformationMatrix);
             WorldMousePosition = Transformations.ScreenToWorld(ViewTransformationMatrix, inputState.mMousePosition);
         }
 
@@ -58,7 +61,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
         public override void ApplyResolution()
         {
             base.ApplyResolution();
-            Camera2D.ApplyResolution(ResolutionManager.Resolution, this);
+            ViewTransformationMatrix = Transformations.CreateViewTransformationMatrix(Camera2D.Position, Camera2D.Zoom, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+            Camera2D.ApplyResolution(ResolutionManager.Resolution, this, ViewTransformationMatrix);
         }
 
         public override void Destroy()
@@ -66,6 +70,5 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
             base.Destroy();
             mParticleManager.Clear();
         }
-
     }
 }
