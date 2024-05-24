@@ -83,7 +83,8 @@ public abstract class Layer
 
     public virtual void ApplyResolution()
     {
-        foreach (UiElement uiElement in mUiElements) uiElement.ApplyResolution(GraphicsDevice.Viewport.Bounds, ResolutionManager.Resolution);
+        foreach (UiElement uiElement in mUiElements)
+            uiElement.ApplyResolution(GraphicsDevice.Viewport.Bounds, ResolutionManager.Resolution);
         mHoverText.ApplyResolution(GraphicsDevice.Viewport.Bounds, ResolutionManager.Resolution);
     }
 }

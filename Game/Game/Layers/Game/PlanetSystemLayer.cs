@@ -62,6 +62,12 @@ namespace StellarLiberation.Game.Layers.GameLayers
             base.Update(gameTime, inputState);
         }
 
+        public override void ApplyResolution()
+        {
+            base.ApplyResolution();
+            mHudLayer.ApplyResolution();
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();

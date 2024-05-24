@@ -5,6 +5,7 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
+using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
