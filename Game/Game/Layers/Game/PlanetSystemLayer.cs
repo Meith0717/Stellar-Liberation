@@ -18,7 +18,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
     {
         public readonly PlanetsystemState PlanetsystemState;
         private readonly ParallaxController mParallaxController;
-        private Layer mHudLayer;
+        private PlanetsystemHud mHudLayer;
 
         public PlanetsystemLayer(GameState gameState, PlanetsystemState planetsystemState, Game1 game1)
             : base(gameState, planetsystemState.SpatialHashing, game1)

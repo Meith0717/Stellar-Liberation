@@ -34,9 +34,9 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
             HyperDrive = new(hyperVelocity);
             ImpulseDrive = new(impulseVelocity);
             Hangar = new(30);
-            Hangar.Add(BattleshipID.InterceptorMKI, 10);
-            Hangar.Add(BattleshipID.FighterMKI, 10);
-            Hangar.Add(BattleshipID.BomberMKI, 10);
+            Hangar.AssignNewShip(BattleshipID.InterceptorMKI, 10);
+            Hangar.AssignNewShip(BattleshipID.FighterMKI, 10);
+            Hangar.AssignNewShip(BattleshipID.BomberMKI, 10);
         }
 
         public override void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState)

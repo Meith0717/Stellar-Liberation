@@ -57,15 +57,6 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
             spriteBatch.Begin(transformMatrix: mPlanetSystemLayer.ViewTransformationMatrix);
 
-            foreach (var spaceship in mPlanetSystemLayer.GameState.GameObjectsInteractor.SelectedFlagships)
-            {
-                if (!mPlanetSystemLayer.PlanetsystemState.Contains(spaceship)) continue;
-                TextureManager.Instance.Draw(GameSpriteRegistries.selectCrosshait, spaceship.Position, 2.5f, 0, 1, Color.MonoGameOrange);
-            }
-            foreach (var spaceship in mPlanetSystemLayer.GameState.GameObjectsInteractor.SelectedBattleship)
-            {
-                if (!mPlanetSystemLayer.PlanetsystemState.Contains(spaceship)) continue;
-            }
             foreach (var spaceship in mPlanetSystemLayer.PlanetsystemState.GameObjects.OfType<Spacecraft>())
             {
                 TextureManager.Instance.Draw(GameSpriteRegistries.radar, spaceship.Position, .04f / mPlanetSystemLayer.Camera2D.Zoom, 0, spaceship.TextureDepth + 1, spaceship.Fraction == Fractions.Enemys ? Color.Red : Color.LightGreen);
@@ -74,6 +65,15 @@ namespace StellarLiberation.Game.Layers.GameLayers
                 if (flagship.ImpulseDrive.TargetPosition is null) continue;
                 ArrowPath.Draw(spaceship.Position, flagship.ImpulseDrive.TargetPosition.Value, 20);
             }
+
+            foreach (var spaceship in mPlanetSystemLayer.GameState.GameObjectsInteractor.SelectedFlagships)
+            {
+                if (!mPlanetSystemLayer.PlanetsystemState.Contains(spaceship)) continue;
+                TextureManager.Instance.Draw(GameSpriteRegistries.selectCrosshait, spaceship.Position, 2.5f, 0, 1, Color.MonoGameOrange);
+                foreach (var hangarShips in spaceship.Hangar.InSpaceShips)
+                    TextureManager.Instance.Draw(GameSpriteRegistries.radar, hangarShips.Position, .04f / mPlanetSystemLayer.Camera2D.Zoom, 0, hangarShips.TextureDepth + 1, Color.MonoGameOrange);
+            }
+
             foreach (var planet in mPlanetSystemLayer.PlanetsystemState.Planets)
             {
                 TextureManager.Instance.DrawAdaptiveCircle(Vector2.Zero, planet.Position.Length(), Color.Gray * .1f, 1, planet.TextureDepth - 1, mPlanetSystemLayer.Camera2D.Zoom);

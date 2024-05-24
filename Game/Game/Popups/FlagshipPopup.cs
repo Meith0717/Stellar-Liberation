@@ -91,7 +91,7 @@ namespace StellarLiberation.Game.Popups
                 grid2.Set(3, y, new UiText(FontRegistries.text, "-", .1f) { Anchor = Anchor.Center });
             }
 
-            var grid3 = new UiGrid(new List<double>() { .5, .3, .2 }, Enumerable.Repeat(1d / 9, 9).ToList())
+            var grid3 = new UiGrid(new List<double>() { .4, .2, .2, .2 }, Enumerable.Repeat(1d / 9, 9).ToList())
             { Width = 360, Height = 225, Anchor = Anchor.Bottom };
             infoFrame.AddChild(grid3);
 
@@ -103,25 +103,26 @@ namespace StellarLiberation.Game.Popups
             {
                 var battleshipID = battleships[i];
                 grid3.Set(0, i + 3, new UiText(FontRegistries.text, $"{battleshipID}:", .1f) { Anchor = Anchor.Right });
-                grid3.Set(2, i + 3, new UiButton(MenueSpriteRegistries.arrowR, "") { OnClickAction = () => mFlagship.Hangar.Spawn(battleshipID), Anchor = Anchor.Center });
+                grid3.Set(1, i + 3, new UiButton(MenueSpriteRegistries.arrowL, "") { OnClickAction = () => mFlagship.Hangar.OrderBack(battleshipID), Anchor = Anchor.Center });
+                grid3.Set(3, i + 3, new UiButton(MenueSpriteRegistries.arrowR, "") { OnClickAction = () => mFlagship.Hangar.Spawn(battleshipID), Anchor = Anchor.Center });
             }
-            grid3.Set(1, 3, mText1 = new UiText(FontRegistries.text, "", .1f) { Anchor = Anchor.Center });
-            grid3.Set(1, 4, mText2 = new UiText(FontRegistries.text, "", .1f) { Anchor = Anchor.Center });
-            grid3.Set(1, 5, mText3 = new UiText(FontRegistries.text, "", .1f) { Anchor = Anchor.Center });
-            grid3.Set(1, 6, mText4 = new UiText(FontRegistries.text, "", .1f) { Anchor = Anchor.Center });
-            grid3.Set(1, 7, mText5 = new UiText(FontRegistries.text, "", .1f) { Anchor = Anchor.Center });
-            grid3.Set(1, 8, mText6 = new UiText(FontRegistries.text, "", .1f) { Anchor = Anchor.Center });
+            grid3.Set(2, 3, mText1 = new UiText(FontRegistries.text, "", .1f) { Anchor = Anchor.Center });
+            grid3.Set(2, 4, mText2 = new UiText(FontRegistries.text, "", .1f) { Anchor = Anchor.Center });
+            grid3.Set(2, 5, mText3 = new UiText(FontRegistries.text, "", .1f) { Anchor = Anchor.Center });
+            grid3.Set(2, 6, mText4 = new UiText(FontRegistries.text, "", .1f) { Anchor = Anchor.Center });
+            grid3.Set(2, 7, mText5 = new UiText(FontRegistries.text, "", .1f) { Anchor = Anchor.Center });
+            grid3.Set(2, 8, mText6 = new UiText(FontRegistries.text, "", .1f) { Anchor = Anchor.Center });
             return infoFrame;
         }
 
         public override void Update(InputState inputState, GameTime gameTime)
         {
-            mText1.Text = $"{mFlagship.Hangar.GetAmount(BattleshipID.BomberMKI)}";
-            mText2.Text = $"{mFlagship.Hangar.GetAmount(BattleshipID.InterceptorMKI)}";
-            mText3.Text = $"{mFlagship.Hangar.GetAmount(BattleshipID.FighterMKI)}";
-            mText4.Text = $"{mFlagship.Hangar.GetAmount(BattleshipID.BomberMKII)}";
-            mText5.Text = $"{mFlagship.Hangar.GetAmount(BattleshipID.InterceptorMKII)}";
-            mText6.Text = $"{mFlagship.Hangar.GetAmount(BattleshipID.FighterMKII)}";
+            mText1.Text = $"{mFlagship.Hangar.GetOnBoardAmount(BattleshipID.BomberMKI)}/{mFlagship.Hangar.GetAssignedAmount(BattleshipID.BomberMKI)}";
+            mText2.Text = $"{mFlagship.Hangar.GetOnBoardAmount(BattleshipID.InterceptorMKI)}/{mFlagship.Hangar.GetAssignedAmount(BattleshipID.InterceptorMKI)}";
+            mText3.Text = $"{mFlagship.Hangar.GetOnBoardAmount(BattleshipID.FighterMKI)}/{mFlagship.Hangar.GetAssignedAmount(BattleshipID.FighterMKI)}";
+            mText4.Text = $"{mFlagship.Hangar.GetOnBoardAmount(BattleshipID.BomberMKII)}/{mFlagship.Hangar.GetAssignedAmount(BattleshipID.BomberMKII)}";
+            mText5.Text = $"{mFlagship.Hangar.GetOnBoardAmount(BattleshipID.InterceptorMKII)}/{mFlagship.Hangar.GetAssignedAmount(BattleshipID.InterceptorMKII)}";
+            mText6.Text = $"{mFlagship.Hangar.GetOnBoardAmount(BattleshipID.FighterMKII)}/{mFlagship.Hangar.GetAssignedAmount(BattleshipID.FighterMKII)}";
             base.Update(inputState, gameTime);
         }
     }

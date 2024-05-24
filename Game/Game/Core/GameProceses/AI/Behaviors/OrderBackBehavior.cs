@@ -21,7 +21,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
             mBattleship.ImpulseDrive.FollowSpaceship(flagship);
             flagship.Hangar.HasFreeSlot();
             if (!flagship.BoundedBox.Intersects(mBattleship.BoundedBox)) return;
-            flagship.Hangar.Add(mBattleship);
+            flagship.Hangar.BoardAssignedShip(mBattleship);
         }
 
         public override void Recet()
