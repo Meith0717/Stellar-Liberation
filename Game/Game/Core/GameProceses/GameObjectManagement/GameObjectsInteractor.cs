@@ -39,11 +39,16 @@ namespace StellarLiberation.Game.Core.GameProceses
 
             // Check for Hovered Object
             HoveredGameObject = null;
-            var nearestObjectsByMouse = spatialHashing.GetObjectsInRadius<GameObject>(worldMousePosition, 5000).FirstOrDefault(defaultValue: null);
-            if (nearestObjectsByMouse != null)
+            var nearestObjectsByMouse = spatialHashing.GetObjectsInRadius<GameObject>(worldMousePosition, 5000).Where(obj => obj.BoundedBox.Contains(worldMousePosition)).ToList();
+            if (nearestObjectsByMouse.Count > 0)
             {
-                if (nearestObjectsByMouse.BoundedBox.Contains(worldMousePosition))
-                    HoveredGameObject = nearestObjectsByMouse;
+                nearestObjectsByMouse.Sort((obj1, obj2) =>
+                {
+                    var distance1 = Vector2.DistanceSquared(worldMousePosition, obj1.Position);
+                    var distance2 = Vector2.DistanceSquared(worldMousePosition, obj2.Position);
+                    return distance1.CompareTo(distance2);
+                });
+                HoveredGameObject = nearestObjectsByMouse.First();
             }
 
             // Left Click Interactions
@@ -78,11 +83,6 @@ namespace StellarLiberation.Game.Core.GameProceses
                             break;
                         }
                         break;
-                    case Star:
-                        var star = (Star)HoveredGameObject;
-                        hudLayer.ClearUiElements();
-                        //hudLayer.AddUiElement(new StarInfoPopup(star));
-                        break;
                     case null:
                         if (SelectedFlagships.Count > 0)
                             MoveSpaceShipsToPosition(worldMousePosition);
@@ -102,9 +102,6 @@ namespace StellarLiberation.Game.Core.GameProceses
                         break;
                     case Planet:
                         var planet = (Planet)HoveredGameObject;
-                        break;
-                    case Star:
-                        var star = (Star)HoveredGameObject;
                         break;
                     case null:
                         break;
