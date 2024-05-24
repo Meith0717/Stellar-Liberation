@@ -37,6 +37,10 @@ namespace StellarLiberation.Game.Core.UserInterface
         public override void ApplyResolution(Rectangle root, Resolution resolution)
         {
             base.ApplyResolution(root, resolution);
+            mTextDim = GetTextDimension(FontID, Text);
+            Height = (int)(mTextDim.Y * Scale);
+            Width = (int)(mTextDim.X * Scale);
+            Canvas.UpdateFrame(mRoot, mUiScale);
         }
 
         public override void Update(InputState inputState, GameTime gameTime)
