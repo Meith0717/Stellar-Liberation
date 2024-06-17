@@ -65,7 +65,7 @@ namespace StellarLiberation.Game.Core.GameProceses
                         break;
                     case null:
                         if (SelectedFlagships.Count > 0)
-                            MoveSpaceShipsToPosition(worldMousePosition);
+                            MoveSpaceShipsToPosition(worldMousePosition, planetsystemState);
                         break;
                 }
             }
@@ -126,10 +126,10 @@ namespace StellarLiberation.Game.Core.GameProceses
             inputState.Actions.Remove(ActionType.LeftReleased);
         }
 
-        public void MoveSpaceShipsToPosition(Vector2 position)
+        public void MoveSpaceShipsToPosition(Vector2 position, PlanetsystemState planetsystemState)
         {
             foreach (var obj in SelectedFlagships)
-                obj.ImpulseDrive.MoveToTarget(position);
+                obj.NavigationSystem.AddWayPoint(position, planetsystemState);
             if (SelectedFlagships.Count > 1) 
                 SelectedFlagships.Clear();
         }
@@ -138,10 +138,7 @@ namespace StellarLiberation.Game.Core.GameProceses
         {
             foreach (var obj in SelectedFlagships)
             {
-                obj.ImpulseDrive.MoveToTarget(planet.GetPositionInOrbit(obj.Position));
-                if (planetsystemState.GameObjects.Contains(obj))
-                    continue;
-                obj.HyperDrive.SetTarget(planetsystemState);
+                obj.NavigationSystem.AddWayPoint(planet.GetPositionInOrbit(obj.Position), planetsystemState);
             }
             if (SelectedFlagships.Count > 1)
                 SelectedFlagships.Clear();

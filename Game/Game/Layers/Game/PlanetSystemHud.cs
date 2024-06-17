@@ -62,8 +62,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
                 TextureManager.Instance.Draw(GameSpriteRegistries.radar, spaceship.Position, .04f / mPlanetSystemLayer.Camera2D.Zoom, 0, spaceship.TextureDepth + 1, spaceship.Fraction == Fractions.Enemys ? Color.Red : Color.LightGreen);
                 if (spaceship is not Flagship || spaceship.Fraction != Fractions.Allied) continue;
                 var flagship = (Flagship)spaceship;
-                if (flagship.ImpulseDrive.TargetPosition is null) continue;
-                ArrowPath.Draw(spaceship.Position, flagship.ImpulseDrive.TargetPosition.Value, 20);
+                flagship.NavigationSystem.DrawImpulseDriveWayPoints(flagship.Position, mPlanetSystemLayer.PlanetsystemState);
             }
 
             foreach (var spaceship in mPlanetSystemLayer.GameState.GameObjectsInteractor.SelectedFlagships)

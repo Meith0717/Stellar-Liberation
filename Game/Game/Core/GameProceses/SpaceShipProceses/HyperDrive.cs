@@ -20,6 +20,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
         [JsonProperty] public float MaxVelocity { get; private set; }
         [JsonProperty] private float mActualChargingTime;
         [JsonProperty] private PlanetsystemState TargetPlanetSystem;
+        [JsonIgnore] public bool IsActive { get; private set; }
 
         public HyperDrive(float velocity) { MaxVelocity = velocity; }
 
@@ -29,7 +30,9 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
 
         public void Update(GameTime gameTime, Flagship flagship, GameState gameState, PlanetsystemState planetsystemState)
         {
+            IsActive = false;
             if (TargetPlanetSystem is null) return;
+            IsActive = true;
             mActualChargingTime += gameTime.ElapsedGameTime.Milliseconds;
             HyperDriveEffect.Charge(flagship.Position, planetsystemState.ParticleEmitors);
             if (CoolDown >= mActualChargingTime) return;
