@@ -20,7 +20,6 @@ namespace StellarLiberation.Game.Core.GameProceses.CollisionDetection
 
     public class CollisionPredictor
     {
-
         public static MovementState GetMovementState(Vector2 position, Vector2 targetPosition, Vector2 targetMovingDirection)
         {
             var dirToTarget = position.DirectionToVector2(targetPosition);

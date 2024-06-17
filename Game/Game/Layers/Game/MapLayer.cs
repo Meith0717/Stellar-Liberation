@@ -57,7 +57,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
             base.Draw(spriteBatch);
 
             spriteBatch.Begin(transformMatrix: ViewTransformationMatrix);
-            mMapState.Draw(Camera2D.Zoom);
+            mMapState.Draw(Camera2D.Zoom, GameState);
             spriteBatch.End();
         }
     }

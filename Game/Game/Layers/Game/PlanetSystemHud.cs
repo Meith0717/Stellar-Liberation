@@ -58,17 +58,16 @@ namespace StellarLiberation.Game.Layers.GameLayers
             spriteBatch.Begin(transformMatrix: mPlanetSystemLayer.ViewTransformationMatrix);
 
             foreach (var spaceship in mPlanetSystemLayer.PlanetsystemState.GameObjects.OfType<Spacecraft>())
-            {
                 TextureManager.Instance.Draw(GameSpriteRegistries.radar, spaceship.Position, .04f / mPlanetSystemLayer.Camera2D.Zoom, 0, spaceship.TextureDepth + 1, spaceship.Fraction == Fractions.Enemys ? Color.Red : Color.LightGreen);
-                if (spaceship is not Flagship || spaceship.Fraction != Fractions.Allied) continue;
-                var flagship = (Flagship)spaceship;
-                flagship.NavigationSystem.DrawImpulseDriveWayPoints(flagship.Position, mPlanetSystemLayer.PlanetsystemState);
-            }
 
             foreach (var spaceship in mPlanetSystemLayer.GameState.GameObjectsInteractor.SelectedFlagships)
             {
+                if (spaceship.Fraction != Fractions.Allied) continue;
+                    spaceship.NavigationSystem.DrawImpulseDriveWayPoints(spaceship.Position, mPlanetSystemLayer.PlanetsystemState);
+
                 if (!mPlanetSystemLayer.PlanetsystemState.Contains(spaceship)) continue;
                 TextureManager.Instance.Draw(GameSpriteRegistries.selectCrosshait, spaceship.Position, 2.5f, 0, 1, Color.MonoGameOrange);
+
                 foreach (var hangarShips in spaceship.Hangar.InSpaceShips)
                     TextureManager.Instance.Draw(GameSpriteRegistries.radar, hangarShips.Position, .04f / mPlanetSystemLayer.Camera2D.Zoom, 0, hangarShips.TextureDepth + 1, Color.MonoGameOrange);
             }

@@ -126,10 +126,10 @@ namespace StellarLiberation.Game.Core.GameProceses
             inputState.Actions.Remove(ActionType.LeftReleased);
         }
 
-        public void MoveSpaceShipsToPosition(Vector2 position, PlanetsystemState planetsystemState)
+        public void MoveSpaceShipsToPosition(Vector2 targetPosition, PlanetsystemState planetsystemState)
         {
             foreach (var obj in SelectedFlagships)
-                obj.NavigationSystem.AddWayPoint(position, planetsystemState);
+                obj.NavigationSystem.AddWayPoint(obj.Position, targetPosition, planetsystemState);
             if (SelectedFlagships.Count > 1) 
                 SelectedFlagships.Clear();
         }
@@ -137,9 +137,7 @@ namespace StellarLiberation.Game.Core.GameProceses
         public void MoveSpaceShipsToPlanet(Planet planet, PlanetsystemState planetsystemState)
         {
             foreach (var obj in SelectedFlagships)
-            {
-                obj.NavigationSystem.AddWayPoint(planet.GetPositionInOrbit(obj.Position), planetsystemState);
-            }
+                obj.NavigationSystem.AddWayPoint(obj.Position, planet.GetPositionInOrbit(obj.Position), planetsystemState);
             if (SelectedFlagships.Count > 1)
                 SelectedFlagships.Clear();
         }

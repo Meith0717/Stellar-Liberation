@@ -69,7 +69,7 @@ namespace StellarLiberation.Game.Layers
             inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this, Game1)));
             mFrameCounter.Update(gameTime);
             DebugSystem.Update(inputState);
-            MapState. Update(gameTime);
+            MapState.Update(gameTime);
             foreach (var planetsystemState in PlanetSystemStates)
                 planetsystemState.Update(gameTime, this);
             mLayers.Last?.Value.Update(gameTime, inputState);

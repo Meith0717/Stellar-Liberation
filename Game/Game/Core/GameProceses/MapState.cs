@@ -12,6 +12,7 @@ using StellarLiberation.Game.Core.Visuals;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.Spacecrafts;
+using StellarLiberation.Game.Layers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -50,7 +51,6 @@ namespace StellarLiberation.Game.Core.GameProceses
             {
                 var startPosition = Start.MapPosition;
                 var endPosition = End.MapPosition;
-                ArrowPath.Draw(startPosition, endPosition, .5f);
                 TextureManager.Instance.Draw(GameSpriteRegistries.radar, Position - new Vector2(15), 30, 30, Flagship.Fraction is Fractions.Enemys ? Color.Red : Color.LightGreen);
             }
         }
@@ -83,8 +83,10 @@ namespace StellarLiberation.Game.Core.GameProceses
             }
         }
 
-        public void Draw(float cameraZoom)
+        public void Draw(float cameraZoom, GameState gameState)
         {
+            foreach (var spaceship in gameState.GameObjectsInteractor.SelectedFlagships)
+                spaceship.NavigationSystem.DrawHyperDriveWayPoints();
             foreach (var hyperRoute in mHyperRoutes)
                 hyperRoute.Draw(cameraZoom);
         }
