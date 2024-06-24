@@ -44,7 +44,7 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
 
         public override void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState)
         {
-            NavigationSystem.Update(this, ImpulseDrive, HyperDrive);
+            NavigationSystem.Update(this, ImpulseDrive, HyperDrive, planetsystemState);
             HyperDrive.Update(gameTime, this, gameState, planetsystemState);
             ImpulseDrive.Move(gameTime, this, Defense.HullPercentage);
             base.Update(gameTime, gameState, planetsystemState);

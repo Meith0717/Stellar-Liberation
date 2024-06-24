@@ -17,21 +17,26 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
     {
         [JsonProperty] public readonly List<WayPoint> WayPoints = new();
         [JsonProperty] private WayPoint? mActualWaypoint;
+        [JsonIgnore] private PlanetsystemState mCurrentPlanetsystem;
 
-        public void AddWayPoint(Vector2 currentPosition, Vector2 targetPosition, PlanetsystemState planetsystem)
+        public void NewWayPoint(Vector2 currentPosition, Vector2 targetPosition, PlanetsystemState targetPlanetsystem)
         {
-            if (WayPoints.Count > 0)
-            {
-                var lastWayPoint = WayPoints.Last();
-                if (lastWayPoint.TargetPlanetsystem != planetsystem)
-                    WayPoints.Add(new(lastWayPoint.TargetPosition, planetsystem));
-            }
-
-            WayPoints.Add(new(targetPosition, planetsystem));
+            
         }
 
-        public void Update(Spacecraft spacecraft, ImpulseDrive impulseDrive, HyperDrive hyperDrive)
+        public void AddWayPoint(Vector2 currentPosition, Vector2 targetPosition, PlanetsystemState targetPlanetsystem)
         {
+            var lastTargetPosition = currentPosition;
+            if (WayPoints.Count > 0) 
+                lastTargetPosition = WayPoints.Last().TargetPosition;
+            if (mCurrentPlanetsystem != targetPlanetsystem)
+                    WayPoints.Add(new(lastTargetPosition, targetPlanetsystem));
+            WayPoints.Add(new(targetPosition, targetPlanetsystem));
+        }
+
+        public void Update(Spacecraft spacecraft, ImpulseDrive impulseDrive, HyperDrive hyperDrive, PlanetsystemState currentPlanetsystem)
+        {
+            mCurrentPlanetsystem = currentPlanetsystem;
             if (impulseDrive.IsMoving || hyperDrive.IsActive) 
                 return;
             if (mActualWaypoint is not null)
@@ -47,27 +52,31 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
             hyperDrive.SetTarget(actualWayPoint.TargetPlanetsystem);
         }
 
-        public void DrawImpulseDriveWayPoints(Vector2 spacecraftPosition, PlanetsystemState currentPlanetsystem)
+        public void DrawImpulseDriveWayPoints(Vector2 spacecraftPosition, PlanetsystemState focusedPlanetsystem)
         {
             if (WayPoints.Count <= 0) return;
             var wayPoint = WayPoints.First();
-            if (wayPoint.TargetPlanetsystem == currentPlanetsystem)
+            if (wayPoint.TargetPlanetsystem == focusedPlanetsystem)
                 ArrowPath.Draw(spacecraftPosition, wayPoint.TargetPosition, 20);
             for (int i = 1;  i < WayPoints.Count; i++)
             {
-                wayPoint = WayPoints[i];
                 var previousWayPont = WayPoints[i-1];
-                if (wayPoint.TargetPlanetsystem == currentPlanetsystem)
+                wayPoint = WayPoints[i];
+                if (wayPoint.TargetPlanetsystem != focusedPlanetsystem) continue;
+                if (previousWayPont.TargetPlanetsystem == wayPoint.TargetPlanetsystem)
                     ArrowPath.Draw(previousWayPont.TargetPosition, wayPoint.TargetPosition, 20);
             }
         }
 
         public void DrawHyperDriveWayPoints()
         {
-            if (WayPoints.Count <= 1) return;
+            if (WayPoints.Count <= 0) return;
+            var wayPoint = WayPoints.First();
+            if (wayPoint.TargetPlanetsystem != mCurrentPlanetsystem)
+                ArrowPath.Draw(mCurrentPlanetsystem.MapPosition, wayPoint.TargetPlanetsystem.MapPosition, .5f);
             for (int i = 1; i < WayPoints.Count; i++)
             {
-                var wayPoint = WayPoints[i];
+                wayPoint = WayPoints[i];
                 var previousWayPont = WayPoints[i - 1];
                 if (wayPoint.TargetPlanetsystem != previousWayPont.TargetPlanetsystem)
                     ArrowPath.Draw(previousWayPont.TargetPlanetsystem.MapPosition, wayPoint.TargetPlanetsystem.MapPosition, .5f);

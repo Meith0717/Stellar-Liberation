@@ -15,7 +15,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
     [Serializable]
     public class HyperDrive
     {
-        private const int CoolDown = 10000;
+        private const int CoolDown = 1000;
 
         [JsonProperty] public float MaxVelocity { get; private set; }
         [JsonProperty] private float mActualChargingTime;
@@ -33,7 +33,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
             IsActive = false;
             if (TargetPlanetSystem is null) return;
             IsActive = true;
-            mActualChargingTime += gameTime.ElapsedGameTime.Milliseconds;
+            mActualChargingTime += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             HyperDriveEffect.Charge(flagship.Position, planetsystemState.ParticleEmitors);
             if (CoolDown >= mActualChargingTime) return;
             flagship.IsDisposed = true;
