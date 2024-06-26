@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -18,6 +19,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
         private readonly string[] mMainDirrectories;
 
         public string ProcessMessage { get; private set; } = "";
+        public double Process { get; private set; } = 0;
 
         internal ContentLoader(ContentManager content)
         {
@@ -29,34 +31,25 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 
         private string[] GetDirectorys(string contentPath) => Directory.GetDirectories(contentPath, "*.*", SearchOption.TopDirectoryOnly);
 
-        private string[] GetFilePathsWithoutRoot(string[] files)
+        private void LoadContent(string contentDirectory, Action<ContentManager, string, string> managerLoader)
         {
-            List<string> newFiles = new();
-            foreach (var filePath in files)
-            {
-                var fileName = Path.GetFileNameWithoutExtension(filePath);
+            var rootDirectory = Path.Combine(mContent.RootDirectory, contentDirectory);
+            var files = GetFiles(rootDirectory);
+            Process = 0;
 
+            for (int i = 0; i < files.Length; i++)
+            {
+                var filePath = files[i];
+                var fileName = Path.GetFileNameWithoutExtension(filePath);
                 var split = filePath.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar).ToList();
                 if (split.Count > 1) split.RemoveAt(0);
                 var directory = Path.GetDirectoryName(Path.Combine(split.ToArray()));
                 var pathWithoutExtension = Path.Combine(directory, fileName);
-                newFiles.Add(pathWithoutExtension);
-            }
-            return newFiles.ToArray();
-        }
 
-        private void LoadContent(string contentDirectory, Action<ContentManager, string, string> managerLoader)
-        {
-            var directory = Path.Combine(mContent.RootDirectory, contentDirectory);
-            var files = GetFiles(directory);
-            files = GetFilePathsWithoutRoot(files);
+                ProcessMessage = $"Loading: {filePath}";
+                Process += 1d / files.Length;
 
-            for (int i = 0; i < files.Length; i++)
-            {
-                var file = files[i];
-                ProcessMessage = $"Loading: {file}";
-                var fileID = Path.GetFileName(file);
-                managerLoader.Invoke(mContent, fileID, file);
+                managerLoader.Invoke(mContent, fileName, pathWithoutExtension);
             }
         }
 

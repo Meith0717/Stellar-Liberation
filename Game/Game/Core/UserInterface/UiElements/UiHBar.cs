@@ -37,11 +37,22 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
         public override void Update(InputState inputState, GameTime gameTime)
         {
             var ratio = 26 / 6f;
-
-            mTextureFrame = new(Canvas.Position.X, Canvas.Position.Y, Canvas.Bounds.Height, Canvas.Bounds.Height);
-
             var sideFrameWidth = (int)(Canvas.Bounds.Height / ratio);
             var sideFrameHeight = Canvas.Bounds.Height;
+            if (mTexture == "")
+            {
+                mLeftShadowFrame = new(Bounds.X, Bounds.Y, sideFrameWidth, sideFrameHeight);
+                mMidShadowFrame = new(mLeftShadowFrame.Right, Canvas.Position.Y, Canvas.Bounds.Width - sideFrameWidth * 2, Canvas.Bounds.Height);
+                mRightShadowFrame = new(mMidShadowFrame.Right, Canvas.Position.Y, sideFrameWidth, sideFrameHeight);
+
+                mLeftFrame = mLeftShadowFrame;
+                mMidFrame = new(mMidShadowFrame.X, mMidShadowFrame.Y, mMidShadowFrame.Width * (float)Percentage, mMidShadowFrame.Height); ;
+                mRightFrame = new(mMidFrame.Right, mMidFrame.Y, sideFrameWidth, sideFrameHeight);
+
+                return;
+            }
+
+            mTextureFrame = new(Canvas.Position.X, Canvas.Position.Y, Canvas.Bounds.Height, Canvas.Bounds.Height);
 
             mLeftShadowFrame = new(mTextureFrame.Right, mTextureFrame.Y, sideFrameWidth, sideFrameHeight);
             mMidShadowFrame = new(mLeftShadowFrame.Right, Canvas.Position.Y, Canvas.Bounds.Width - sideFrameWidth * 2 - mTextureFrame.Width, Canvas.Bounds.Height);
@@ -56,7 +67,8 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
 
         public override void Draw()
         {
-            TextureManager.Instance.Draw(mTexture, mTextureFrame.Position, mTextureFrame.Width, mTextureFrame.Height, mColor);
+            if (mTexture != "")
+                TextureManager.Instance.Draw(mTexture, mTextureFrame.Position, mTextureFrame.Width, mTextureFrame.Height, mColor);
 
             TextureManager.Instance.Draw("barHorizontalShadowLeft", mLeftShadowFrame.Position, mLeftShadowFrame.Width, mLeftShadowFrame.Height, mColor);
             TextureManager.Instance.Draw("barHorizontalShadowRight", mRightShadowFrame.Position, mRightShadowFrame.Width, mRightShadowFrame.Height, mColor);

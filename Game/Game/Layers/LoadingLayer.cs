@@ -17,19 +17,19 @@ namespace StellarLiberation.Game.Layers
     public class LoadingLayer : Layer
     {
         private readonly UiFrame mFrame;
-        private readonly UiLoadingCircle mLoadingCircle;
         private readonly UiText mLoadingMessage;
+        private readonly UiHBar mProcessBar;
         public readonly ContentLoader mContentLoader;
 
         public LoadingLayer(Game1 game1, ContentLoader contentLoader, bool hasBackground = true) : base(game1, false)
         {
             mContentLoader = contentLoader;
             mFrame = new() { FillScale = FillScale.Both, Alpha = 0 };
-            mLoadingCircle = new() { Width = 100, Height = 100, Anchor = Anchor.SE, HSpace = 10, VSpace = 10 };
-            mLoadingMessage = new("neuropolitical", "", .2f) { Anchor = Anchor.S, VSpace = 40 };
+            mLoadingMessage = new("neuropolitical", "", .2f) { Anchor = Anchor.S, VSpace = 70 };
+            mProcessBar = new(Color.White, "") { RelWidth = .7f, Height = 20, Anchor = Anchor.S, VSpace = 40 };
             if (hasBackground)
-                mFrame.AddChild(new UiText("brolink", "Stellar\nLieberation", 1) { Anchor = Anchor.Center, Color = Color.White });
-            mFrame.AddChild(mLoadingCircle);
+                mFrame.AddChild(new UiSprite("grandDutchInteractive") { FillScale = FillScale.FillIn, Anchor = Anchor.Center, Color = Color.White });
+            mFrame.AddChild(mProcessBar);
             mFrame.AddChild(mLoadingMessage);
         }
 
@@ -52,6 +52,7 @@ namespace StellarLiberation.Game.Layers
         {
             mFrame.Update(inputState, gameTime);
             if (mContentLoader == null) return;
+            mProcessBar.Percentage = mContentLoader.Process;
             mLoadingMessage.Text = mContentLoader.ProcessMessage;
         }
     }
