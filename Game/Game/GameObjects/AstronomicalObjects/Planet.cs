@@ -6,7 +6,6 @@ using MathNet.Numerics;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
@@ -46,7 +45,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         public override void Draw(GameState gameState, GameLayer scene)
         {
             base.Draw(gameState, scene);
-            TextureManager.Instance.Draw(GameSpriteRegistries.planetShadow, Position, TextureOffset, TextureScale * 1.03f, mShadowRotation, TextureDepth + 1, Color.White * 0.875f);
+            TextureManager.Instance.Draw("planetShadow", Position, TextureOffset, TextureScale * 1.03f, mShadowRotation, TextureDepth + 1, Color.White * 0.875f);
             TextureManager.Instance.DrawGameObject(this);
         }
 

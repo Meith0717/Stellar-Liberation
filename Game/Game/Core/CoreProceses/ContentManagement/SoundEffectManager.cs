@@ -5,7 +5,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,15 +21,12 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 
         public SoundEffectManager(int maxSoundEffectInstances = 20) => MaxSoundEffectInstances = maxSoundEffectInstances;
 
-        public void LoadRegistries(ContentManager content, List<Registry> registries)
+        public void LoadContent(ContentManager content, string iD, string path)
         {
-            foreach (Registry reg in registries)
-            {
-                var soundEffect = content.Load<SoundEffect>(reg.FilePath);
-                var sfxInstances = new List<SoundEffectInstance>();
-                for (var i = 0; i < MaxSoundEffectInstances; i++) sfxInstances.Add(soundEffect.CreateInstance());
-                SoundEffectInstances[reg.Name] = sfxInstances;
-            };
+            var soundEffect = content.Load<SoundEffect>(path);
+            var sfxInstances = new List<SoundEffectInstance>();
+            for (var i = 0; i < MaxSoundEffectInstances; i++) sfxInstances.Add(soundEffect.CreateInstance());
+            SoundEffectInstances[iD] = sfxInstances;
         }
 
         public void SetVolume(float master, float volume) => OverallVolume = MathHelper.Clamp(volume, 0f, 1f) * MathHelper.Clamp(master, 0f, 1f);

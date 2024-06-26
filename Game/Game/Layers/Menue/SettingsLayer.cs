@@ -5,7 +5,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
@@ -37,22 +36,22 @@ namespace StellarLiberation.Game.Layers.MenueLayers
             mMainFrame = new() { FillScale = FillScale.Both, Alpha = 0 };
 
             UiFrame settingsFrame; mMainFrame.AddChild(settingsFrame = new() { Width = 1000, Height = 900, Anchor = Anchor.Center });
-            settingsFrame.AddChild(new UiText(FontRegistries.text, "Settings", .1f) { Anchor = Anchor.NW, HSpace = 20, VSpace = 20 });
+            settingsFrame.AddChild(new UiText("neuropolitical", "Settings", .1f) { Anchor = Anchor.NW, HSpace = 20, VSpace = 20 });
             settingsFrame.AddChild(mSettingsGrid = new UiGrid(new List<double>() { 0.3, 0.7 }, Enumerable.Repeat(1d / 15, 15).ToList()) { RelHeight = .9f, RelWidth = .9f, Anchor = Anchor.S, VSpace = 10 });
 
-            mSettingsGrid.Set(0, 0, new UiText(FontRegistries.text, "Audio", .1f) { Anchor = Anchor.Center });
-            mSettingsGrid.Set(0, 1, new UiText(FontRegistries.text, "Master", .1f) { Anchor = Anchor.E, HSpace = 20 });
-            mSettingsGrid.Set(0, 2, new UiText(FontRegistries.text, "Music", .1f) { Anchor = Anchor.E, HSpace = 20 });
-            mSettingsGrid.Set(0, 3, new UiText(FontRegistries.text, "SFX", .1f) { Anchor = Anchor.E, HSpace = 20 });
-            mSettingsGrid.Set(0, 4, new UiText(FontRegistries.text, "Video", .1f) { Anchor = Anchor.Center });
-            mSettingsGrid.Set(0, 5, new UiText(FontRegistries.text, "Resolution", .1f) { Anchor = Anchor.E, HSpace = 20 });
-            mSettingsGrid.Set(0, 6, new UiText(FontRegistries.text, "Refresh Rate", .1f) { Anchor = Anchor.E, HSpace = 20 });
-            mSettingsGrid.Set(0, 7, new UiText(FontRegistries.text, "Vsync", .1f) { Anchor = Anchor.E, HSpace = 20 });
-            mSettingsGrid.Set(0, 9, new UiText(FontRegistries.text, "Graphics", .1f) { Anchor = Anchor.Center });
-            mSettingsGrid.Set(0, 10, new UiText(FontRegistries.text, "Particle Multiplier", .1f) { Anchor = Anchor.E, HSpace = 20 });
+            mSettingsGrid.Set(0, 0, new UiText("neuropolitical", "Audio", .1f) { Anchor = Anchor.Center });
+            mSettingsGrid.Set(0, 1, new UiText("neuropolitical", "Master", .1f) { Anchor = Anchor.E, HSpace = 20 });
+            mSettingsGrid.Set(0, 2, new UiText("neuropolitical", "Music", .1f) { Anchor = Anchor.E, HSpace = 20 });
+            mSettingsGrid.Set(0, 3, new UiText("neuropolitical", "SFX", .1f) { Anchor = Anchor.E, HSpace = 20 });
+            mSettingsGrid.Set(0, 4, new UiText("neuropolitical", "Video", .1f) { Anchor = Anchor.Center });
+            mSettingsGrid.Set(0, 5, new UiText("neuropolitical", "Resolution", .1f) { Anchor = Anchor.E, HSpace = 20 });
+            mSettingsGrid.Set(0, 6, new UiText("neuropolitical", "Refresh Rate", .1f) { Anchor = Anchor.E, HSpace = 20 });
+            mSettingsGrid.Set(0, 7, new UiText("neuropolitical", "Vsync", .1f) { Anchor = Anchor.E, HSpace = 20 });
+            mSettingsGrid.Set(0, 9, new UiText("neuropolitical", "Graphics", .1f) { Anchor = Anchor.Center });
+            mSettingsGrid.Set(0, 10, new UiText("neuropolitical", "Particle Multiplier", .1f) { Anchor = Anchor.E, HSpace = 20 });
 
-            settingsFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Back & Save") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = Exit });
-            settingsFrame.AddChild(new UiButton(MenueSpriteRegistries.button, "Start Benchmark") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = () => LayerManager.AddLayer(new BenchmarkLayer(Game1)) });
+            settingsFrame.AddChild(new UiButton("button", "Back & Save") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = Exit });
+            settingsFrame.AddChild(new UiButton("button", "Start Benchmark") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = () => LayerManager.AddLayer(new BenchmarkLayer(Game1)) });
             mMasterSlider = new(GameSettings.MasterVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
             mMusicSlider = new(GameSettings.MusicVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
             mSfxSlider = new(GameSettings.SoundEffectsVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
@@ -67,7 +66,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
             mSettingsGrid.Set(1, 5, mResolutionSelector);
             mSettingsGrid.Set(1, 6, mRefreshRate);
             mSettingsGrid.Set(1, 7, mVsync);
-            mSettingsGrid.Set(1, 8, new UiButton(MenueSpriteRegistries.button, "Apply Video") { Anchor = Anchor.Center, OnClickAction = ApplyVideo });
+            mSettingsGrid.Set(1, 8, new UiButton("button", "Apply Video") { Anchor = Anchor.Center, OnClickAction = ApplyVideo });
             mSettingsGrid.Set(1, 10, mParticleMultiplier);
         }
 

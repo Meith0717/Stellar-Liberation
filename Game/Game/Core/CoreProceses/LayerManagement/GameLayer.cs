@@ -19,7 +19,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
     /// The GameLayer class serves as a foundational layer for managing game elements. It encapsulates functionality related to managing the game's visual representation, including camera handling, rendering, and resolution management. Additionally, it integrates with other systems such as audio and spatial hashing to provide a comprehensive game experience.
     /// </summary>
     public abstract class GameLayer : Layer
-    {   
+    {
         public Vector2 WorldMousePosition { get; private set; }
         public Matrix ViewTransformationMatrix { get; private set; }
         public readonly SpatialHashing SpatialHashing;

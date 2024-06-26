@@ -3,7 +3,6 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using MonoGame.Extended;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.Extensions;
 using StellarLiberation.Game.Core.Utilitys;
@@ -24,16 +23,16 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
 
         [JsonIgnore] public int Count => mOnBoardShips.Sum((key) => key.Value);
 
-        public Hangar(int capacity) 
+        public Hangar(int capacity)
             => Capacity = capacity;
 
-        public void Boost(float CapacityPerc) 
+        public void Boost(float CapacityPerc)
             => Capacity = (int)(CapacityPerc * Capacity);
 
-        public bool HasFreeSlot() 
+        public bool HasFreeSlot()
             => Count < Capacity;
 
-        public int FreeSpace 
+        public int FreeSpace
             => Capacity - Count;
 
         public bool BoardAssignedShip(Battleship battleship)
@@ -41,7 +40,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
             if (!InSpaceShips.Contains(battleship))
                 throw new Exception("Try to board a not assigned ship to the hangar");
             var shipID = battleship.BattleshipID;
-            if (!mAssignedShips.TryGetValue(shipID, out var assignedAmount)) 
+            if (!mAssignedShips.TryGetValue(shipID, out var assignedAmount))
                 throw new Exception("Try to board a not assigned ship to the hangar");
             if (!mOnBoardShips.TryGetValue(shipID, out var onBoardAmount)) return false;
             if (onBoardAmount == assignedAmount)
@@ -82,11 +81,11 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
             if (!mOnBoardShips.TryGetValue(battleshipID, out var amount)) return false;
             if (amount > 0)
             {
-                battleship = SpacecraftFactory.GetBattleship(position, battleshipID, Fractions.Allied);                
+                battleship = SpacecraftFactory.GetBattleship(position, battleshipID, Fractions.Allied);
                 mOnBoardShips[battleshipID]--;
                 InSpaceShips.Add(battleship);
                 return true;
-            } 
+            }
             return false;
         }
 

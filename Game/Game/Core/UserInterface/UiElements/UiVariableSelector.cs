@@ -3,7 +3,6 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
@@ -26,9 +25,9 @@ namespace StellarLiberation.Game.Core.UserInterface
             mVariables = variables;
             mIndex = variables.IndexOf(initalValue);
             if (mIndex < 0) mIndex = 0;
-            mLeftArrow = new(MenueSpriteRegistries.arrowL, "", TextAllign.W) { Anchor = Anchor.W, OnClickAction = () => { DecrementIndex(); OnClickAction?.Invoke(); } };
-            mRightArrow = new(MenueSpriteRegistries.arrowR, "", TextAllign.W) { Anchor = Anchor.E, OnClickAction = () => { IncrementIndex(); OnClickAction?.Invoke(); } };
-            mVariable = new(FontRegistries.text, initalValue.ToString(), .1f) { Anchor = Anchor.Center };
+            mLeftArrow = new("arrowL", "", TextAllign.W) { Anchor = Anchor.W, OnClickAction = () => { DecrementIndex(); OnClickAction?.Invoke(); } };
+            mRightArrow = new("arrowR", "", TextAllign.W) { Anchor = Anchor.E, OnClickAction = () => { IncrementIndex(); OnClickAction?.Invoke(); } };
+            mVariable = new("neuropolitical", initalValue.ToString(), .1f) { Anchor = Anchor.Center };
         }
 
         public void Add(T variable) => mVariables.Add(variable);

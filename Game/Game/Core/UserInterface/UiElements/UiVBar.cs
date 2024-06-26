@@ -5,7 +5,6 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 
@@ -59,13 +58,13 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
         {
             TextureManager.Instance.Draw(mTexture, mTextureFrame.Position, mTextureFrame.Width, mTextureFrame.Height, mColor);
 
-            TextureManager.Instance.Draw(MenueSpriteRegistries.barVerticalShadowTop, mTopShadowFrame.Position, mTopShadowFrame.Width, mTopShadowFrame.Height, mColor);
-            TextureManager.Instance.Draw(MenueSpriteRegistries.barVerticalShadowBottom, mBottomShadowFrame.Position, mBottomShadowFrame.Width, mBottomShadowFrame.Height, mColor);
-            TextureManager.Instance.Draw(MenueSpriteRegistries.barVerticalShadowMid, mMidShadowFrame.Position, mMidShadowFrame.Width, mMidShadowFrame.Height, mColor);
+            TextureManager.Instance.Draw("barVerticalShadowTop", mTopShadowFrame.Position, mTopShadowFrame.Width, mTopShadowFrame.Height, mColor);
+            TextureManager.Instance.Draw("barVerticalShadowBottom", mBottomShadowFrame.Position, mBottomShadowFrame.Width, mBottomShadowFrame.Height, mColor);
+            TextureManager.Instance.Draw("barVerticalShadowMid", mMidShadowFrame.Position, mMidShadowFrame.Width, mMidShadowFrame.Height, mColor);
 
-            TextureManager.Instance.Draw(MenueSpriteRegistries.barVerticalTop, mTopFrame.Position, mTopFrame.Width, mTopFrame.Height, mColor);
-            TextureManager.Instance.Draw(MenueSpriteRegistries.barVerticalBottom, mBottomFrame.Position, mBottomFrame.Width, mBottomFrame.Height, mColor);
-            TextureManager.Instance.Draw(MenueSpriteRegistries.barVerticalMid, mMidFrame.Position, mMidFrame.Width, mMidFrame.Height, mColor);
+            TextureManager.Instance.Draw("barVerticalTop", mTopFrame.Position, mTopFrame.Width, mTopFrame.Height, mColor);
+            TextureManager.Instance.Draw("barVerticalBottom", mBottomFrame.Position, mBottomFrame.Width, mBottomFrame.Height, mColor);
+            TextureManager.Instance.Draw("barVerticalMid", mMidFrame.Position, mMidFrame.Width, mMidFrame.Height, mColor);
             Canvas.Draw();
         }
 

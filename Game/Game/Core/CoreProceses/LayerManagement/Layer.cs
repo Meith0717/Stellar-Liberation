@@ -5,7 +5,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
@@ -39,7 +38,7 @@ public abstract class Layer
         ResolutionManager = game1.ResolutionManager;
         UpdateBelow = updateBelow;
         mUiElements = new();
-        mHoverText = new UiText(FontRegistries.text, "", .1f);
+        mHoverText = new UiText("neuropolitical", "", .1f);
     }
 
     public virtual void Initialize() {; }

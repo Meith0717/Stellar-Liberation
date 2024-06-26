@@ -1,4 +1,4 @@
-﻿// Path.cs 
+﻿// ArrowPath.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
@@ -6,7 +6,6 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.Extensions;
 using StellarLiberation.Game.Core.Utilitys;
 using System;
@@ -27,7 +26,7 @@ namespace StellarLiberation.Game.Core.Visuals
             var position = end;
             for (int _ = 0; _ < steps; _++)
             {
-                TextureManager.Instance.Draw(GameSpriteRegistries.arrow, position, scale, rotarion, 1, Color.MonoGameOrange * .5f);
+                TextureManager.Instance.Draw("arrow", position, scale, rotarion, 1, Color.MonoGameOrange * .5f);
                 position -= dir * textureSize;
             }
         }

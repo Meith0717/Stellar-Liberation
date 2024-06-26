@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.Debugging;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
@@ -38,7 +37,7 @@ namespace StellarLiberation.Game.Layers
         {
             mMapConfig = new(3, 3, 0);
             PlanetSystemStates = MapFactory.Generate(mMapConfig);
-            for (var _ = 0; _ <  5; _++)
+            for (var _ = 0; _ < 5; _++)
                 PlanetSystemStates.First().GameObjects.Add(SpacecraftFactory.GetFlagship(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 20000)), Fractions.Allied));
         }
 
@@ -82,7 +81,7 @@ namespace StellarLiberation.Game.Layers
             mLayers.Last?.Value.Draw(spriteBatch);
             spriteBatch.Begin();
             DebugSystem.ShowInfo(new(10, 10));
-            TextureManager.Instance.DrawString(FontRegistries.debug, new Vector2(1, 1), $"{MathF.Round(mFrameCounter.CurrentFramesPerSecond)} fps", 0.1f, Color.White);
+            TextureManager.Instance.DrawString("consola", new Vector2(1, 1), $"{MathF.Round(mFrameCounter.CurrentFramesPerSecond)} fps", 0.1f, Color.White);
             spriteBatch.End();
         }
 

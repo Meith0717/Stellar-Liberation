@@ -1,11 +1,10 @@
-﻿// PlanetSystem.cs 
+﻿// Planetsystem.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
@@ -22,7 +21,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
         [JsonIgnore] private readonly Sector mSector;
 
         public Planetsystem(PlanetsystemState planetsystemState)
-            : base(planetsystemState.MapPosition, GameSpriteRegistries.star, .1f, 1)
+            : base(planetsystemState.MapPosition, "star", .1f, 1)
         {
             TextureColor = planetsystemState.Star.TextureColor;
             PlanetsystemState = planetsystemState;
@@ -40,7 +39,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects.Types
             var color = TextureColor;
 
             TextureManager.Instance.DrawGameObject(this);
-            TextureManager.Instance.Draw(GameSpriteRegistries.starLightAlpha, Position, TextureOffset, TextureScale * 2f, Rotation, 0, color);
+            TextureManager.Instance.Draw("starLightAlpha", Position, TextureOffset, TextureScale * 2f, Rotation, 0, color);
 
             mSector.Draw();
         }

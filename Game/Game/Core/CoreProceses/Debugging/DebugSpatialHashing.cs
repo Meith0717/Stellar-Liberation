@@ -5,7 +5,6 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
@@ -59,7 +58,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugging
             }
 
             var hash = scene.SpatialHashing.Hash((int)mousePosition.X, (int)mousePosition.Y);
-            TextureManager.Instance.DrawString(FontRegistries.debug, mousePosition + new Vector2(1, -5) * 5 / scene.Camera2D.Zoom, $"ID: {hash}", .7f / scene.Camera2D.Zoom, Color.White);
+            TextureManager.Instance.DrawString("consola", mousePosition + new Vector2(1, -5) * 5 / scene.Camera2D.Zoom, $"ID: {hash}", .7f / scene.Camera2D.Zoom, Color.White);
         }
     }
 }

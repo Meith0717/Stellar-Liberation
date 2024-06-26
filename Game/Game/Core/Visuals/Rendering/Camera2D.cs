@@ -7,7 +7,6 @@ using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
-using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Layers;
 
 namespace StellarLiberation.Game.Core.Visuals.Rendering

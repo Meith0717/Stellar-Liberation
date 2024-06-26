@@ -2,7 +2,6 @@
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
@@ -16,7 +15,7 @@ namespace StellarLiberation.Game.Frames
             Width = 1000;
             Height = 800;
             Anchor = Core.UserInterface.Anchor.Center;
-            AddChild(new UiButton(MenueSpriteRegistries.xMark, "")
+            AddChild(new UiButton("xMark", "")
             {
                 Anchor = Core.UserInterface.Anchor.NE,
                 HSpace = 20,

@@ -5,7 +5,6 @@
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons;
@@ -101,7 +100,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
                 ExplosionEffect.ShipHit((Vector2)position, Vector2.Zero, planetsystemState.ParticleEmitors, gameSettings.ParticlesMultiplier);
             }
             if (!hit) return;
-            planetsystemState.StereoSounds.Enqueue(new(spacecraft.Position, SoundEffectRegistries.torpedoHit));
+            planetsystemState.StereoSounds.Enqueue(new(spacecraft.Position, "torpedoHit"));
         }
     }
 }

@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
@@ -23,8 +22,8 @@ namespace StellarLiberation.Game.Layers
         {
             mFrame = new() { FillScale = FillScale.Both, Alpha = 0 };
             mLoadingCircle = new() { Width = 100, Height = 100, Anchor = Anchor.SE, HSpace = 10, VSpace = 10 };
-            if (hasBackground) 
-                mFrame.AddChild(new UiText(FontRegistries.title, "Stellar\nLieberation", 1) { Anchor = Anchor.Center, Color = Color.White });
+            if (hasBackground)
+                mFrame.AddChild(new UiText("brolink", "Stellar\nLieberation", 1) { Anchor = Anchor.Center, Color = Color.White });
             mFrame.AddChild(mLoadingCircle);
         }
 

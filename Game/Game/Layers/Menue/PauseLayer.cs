@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
@@ -21,16 +20,16 @@ namespace StellarLiberation.Game.Layers.MenueLayers
         {
             var mainFrame = new UiFrame(false) { RelHeight = 1, RelWidth = 1, Alpha = .5f };
 
-            var buttonFrame = new UiGrid(1, 6) 
-            { 
-                Anchor = Anchor.W, 
-                Height = 500, 
-                Width = 400, 
-                HSpace = 20 
+            var buttonFrame = new UiGrid(1, 6)
+            {
+                Anchor = Anchor.W,
+                Height = 500,
+                Width = 400,
+                HSpace = 20
             };
             mainFrame.AddChild(buttonFrame);
 
-            buttonFrame.Set(0, 0, new UiButton(MenueSpriteRegistries.button, "Resume")
+            buttonFrame.Set(0, 0, new UiButton("button", "Resume")
             {
                 OnClickAction = () =>
                 {
@@ -39,7 +38,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
                 Anchor = Anchor.Center,
                 FillScale = FillScale.Fit
             });
-            buttonFrame.Set(0, 1, new UiButton(MenueSpriteRegistries.button, "Save Game")
+            buttonFrame.Set(0, 1, new UiButton("button", "Save Game")
             {
                 OnClickAction = () =>
                 {
@@ -49,19 +48,19 @@ namespace StellarLiberation.Game.Layers.MenueLayers
                 Anchor = Anchor.Center,
                 FillScale = FillScale.Fit
             });
-            buttonFrame.Set(0, 2, new UiButton(MenueSpriteRegistries.button, "Settings")
+            buttonFrame.Set(0, 2, new UiButton("button", "Settings")
             {
                 OnClickAction = () => LayerManager.AddLayer(new SettingsLayer(Game1)),
                 Anchor = Anchor.Center,
                 FillScale = FillScale.Fit
             });
-            buttonFrame.Set(0, 3, new UiButton(MenueSpriteRegistries.button, "Exit to Desktop")
+            buttonFrame.Set(0, 3, new UiButton("button", "Exit to Desktop")
             {
                 OnClickAction = LayerManager.Exit,
                 Anchor = Anchor.Center,
                 FillScale = FillScale.Fit
             });
-            buttonFrame.Set(0, 5, new UiButton(MenueSpriteRegistries.button, "Exit to Menue")
+            buttonFrame.Set(0, 5, new UiButton("button", "Exit to Menue")
             {
                 OnClickAction = Menue,
                 Anchor = Anchor.Center,

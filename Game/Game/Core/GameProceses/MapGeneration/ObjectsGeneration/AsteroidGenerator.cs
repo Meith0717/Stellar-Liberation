@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
@@ -35,21 +34,21 @@ namespace StellarLiberation.Game.Core.GameProceses.MapGeneration.ObjectsGenerati
         {
             string textureID = ExtendetRandom.Random.Next(1, 15) switch
             {
-                1 => GameSpriteRegistries.asteroid1,
-                2 => GameSpriteRegistries.asteroid2,
-                3 => GameSpriteRegistries.asteroid3,
-                4 => GameSpriteRegistries.asteroid4,
-                5 => GameSpriteRegistries.asteroid5,
-                6 => GameSpriteRegistries.asteroid6,
-                7 => GameSpriteRegistries.asteroid7,
-                8 => GameSpriteRegistries.asteroid8,
-                9 => GameSpriteRegistries.asteroid9,
-                10 => GameSpriteRegistries.asteroid10,
-                11 => GameSpriteRegistries.asteroid11,
-                12 => GameSpriteRegistries.asteroid12,
-                13 => GameSpriteRegistries.asteroid13,
-                14 => GameSpriteRegistries.asteroid14,
-                15 => GameSpriteRegistries.asteroid15,
+                1 => "asteroid1",
+                2 => "asteroid2",
+                3 => "asteroid3",
+                4 => "asteroid4",
+                5 => "asteroid5",
+                6 => "asteroid6",
+                7 => "asteroid7",
+                8 => "asteroid8",
+                9 => "asteroid9",
+                10 => "asteroid10",
+                11 => "asteroid11",
+                12 => "asteroid12",
+                13 => "asteroid13",
+                14 => "asteroid14",
+                15 => "asteroid15",
                 _ => throw new NotImplementedException()
             };
 

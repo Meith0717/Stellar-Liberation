@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.CollisionDetection;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
@@ -13,7 +12,6 @@ using StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons;
 using StellarLiberation.Game.Layers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace StellarLiberation.Game.GameObjects.Spacecrafts
 {
@@ -26,7 +24,7 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
         [JsonProperty] public Hangar Hangar { get; private set; }
 
         public Flagship(Vector2 position, Fractions fraction, Vector2 engineTrailPosition)
-            : base(position, fraction, GameSpriteRegistries.destroyer, 5, engineTrailPosition)
+            : base(position, fraction, "destroyer", 5, engineTrailPosition)
         {
             NavigationSystem = new();
         }

@@ -5,7 +5,6 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.Utilitys;
@@ -103,7 +102,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugging
         public void DrawAiDebug(CircleF circle, string message, float camZoom)
         {
             if (!ShowAi) return;
-            TextureManager.Instance.DrawString(FontRegistries.debug, circle.ToRectangleF().TopRight, message, 0.1f / camZoom, Color.White);
+            TextureManager.Instance.DrawString("consola", circle.ToRectangleF().TopRight, message, 0.1f / camZoom, Color.White);
         }
     }
 }

@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using System;
@@ -24,7 +23,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
         public UiButton(string SpriteId, string text, TextAllign textAllign = TextAllign.Center)
             : base(SpriteId, 1)
         {
-            mText = new(FontRegistries.text, text, .1f)
+            mText = new("neuropolitical", text, .1f)
             {
                 Anchor = textAllign switch
                 {
@@ -39,12 +38,13 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
         public override void Update(InputState inputState, GameTime gameTime)
         {
             IsHover = Canvas.Contains(inputState.mMousePosition);
-            if (IsHover && !IsDisabled && IsHover != mLastHoverState) SoundEffectManager.Instance.PlaySound(SoundEffectRegistries.hover);
+            if (IsHover && !IsDisabled && IsHover != mLastHoverState) SoundEffectManager.Instance.PlaySound("hover");
             mLastHoverState = IsHover;
             if (IsHover)
-                inputState.DoAction(ActionType.LeftReleased, () => {
-                    OnClickAction?.Invoke(); 
-                    IsHover = false; 
+                inputState.DoAction(ActionType.LeftReleased, () =>
+                {
+                    OnClickAction?.Invoke();
+                    IsHover = false;
                 });
             Color = IsDisabled ? Color.Transparent : IsHover ? Color.MonoGameOrange : new(128, 128, 128);
             mText.Update(inputState, gameTime);

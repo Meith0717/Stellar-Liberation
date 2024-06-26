@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using System;
 
@@ -31,7 +30,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.Debugging
 
         public void DrawInfo(Vector2 position)
         {
-            TextureManager.Instance.DrawString(FontRegistries.debug, position, mDescription, .1f, IsActive ? Color.LightGreen : Color.White);
+            TextureManager.Instance.DrawString("consola", position, mDescription, .1f, IsActive ? Color.LightGreen : Color.White);
         }
     }
 }

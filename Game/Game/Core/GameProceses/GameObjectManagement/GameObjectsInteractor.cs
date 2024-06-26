@@ -95,7 +95,7 @@ namespace StellarLiberation.Game.Core.GameProceses
         {
             if (spaceship.Fraction == Fractions.Enemys) return;
             hudLayer.ClearUiElements();
-            if (SelectedFlagships.Contains((Flagship)spaceship) 
+            if (SelectedFlagships.Contains((Flagship)spaceship)
                 && SelectedFlagships.Count <= 1)
             {
                 SelectedFlagships.Clear();
@@ -130,7 +130,7 @@ namespace StellarLiberation.Game.Core.GameProceses
         {
             foreach (var obj in SelectedFlagships)
                 obj.NavigationSystem.AddWayPoint(obj.Position, targetPosition, planetsystemState);
-            if (SelectedFlagships.Count > 1) 
+            if (SelectedFlagships.Count > 1)
                 SelectedFlagships.Clear();
         }
 

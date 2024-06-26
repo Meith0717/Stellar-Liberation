@@ -5,7 +5,6 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.GameObjects.Spacecrafts;
 using System.Linq;
 

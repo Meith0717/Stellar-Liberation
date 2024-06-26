@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
@@ -25,7 +24,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
         {
             PlanetsystemState = planetsystemState;
 
-            var background = new UiSprite(GameSpriteRegistries.gameBackground)
+            var background = new UiSprite("gameBackground")
             {
                 Anchor = Anchor.Center,
                 FillScale = FillScale.FillIn
@@ -37,14 +36,14 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
             Camera2D.Zoom = 0.01f;
             mParallaxController = new(Camera2D);
-            mParallaxController.Add(new(GameSpriteRegistries.gameBackgroundParlax1, .01f));
-            mParallaxController.Add(new(GameSpriteRegistries.gameBackgroundParlax2, .04f));
-            mParallaxController.Add(new(GameSpriteRegistries.gameBackgroundParlax3, .08f));
-            mParallaxController.Add(new(GameSpriteRegistries.gameBackgroundParlax4, .12f));
+            mParallaxController.Add(new("gameBackgroundParlax1", .01f));
+            mParallaxController.Add(new("gameBackgroundParlax2", .04f));
+            mParallaxController.Add(new("gameBackgroundParlax3", .08f));
+            mParallaxController.Add(new("gameBackgroundParlax4", .12f));
             ApplyResolution();
         }
 
-        public void OpenMap() 
+        public void OpenMap()
         {
             GameState.AddLayer(new MapLayer(GameState, GameState.MapState, PlanetsystemState.MapPosition, Game1));
         }

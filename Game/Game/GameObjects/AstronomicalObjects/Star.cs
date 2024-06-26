@@ -5,7 +5,6 @@
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
@@ -21,7 +20,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         [JsonProperty] public float Mass => float.PositiveInfinity;
 
         public Star(float textureScale, int temperature, Color color)
-            : base(Vector2.Zero, GameSpriteRegistries.star, textureScale, 1)
+            : base(Vector2.Zero, "star", textureScale, 1)
         {
             Kelvin = temperature;
             TextureColor = color;
@@ -32,7 +31,7 @@ namespace StellarLiberation.Game.GameObjects.AstronomicalObjects
         public override void Draw(GameState gameState, GameLayer scene)
         {
             base.Draw(gameState, scene);
-            TextureManager.Instance.Draw(GameSpriteRegistries.starLightAlpha, Position, TextureOffset, TextureScale * 1.5f, Rotation, 0, TextureColor);
+            TextureManager.Instance.Draw("starLightAlpha", Position, TextureOffset, TextureScale * 1.5f, Rotation, 0, TextureColor);
             TextureManager.Instance.DrawGameObject(this);
         }
     }

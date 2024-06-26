@@ -17,7 +17,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
         {
             Width = width;
             Height = height;
-            this.UiScaling = uiScaling;
+            UiScaling = uiScaling;
             Bounds = new(0, 0, Width, Height);
         }
 

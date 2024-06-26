@@ -20,7 +20,7 @@ namespace StellarLiberation.Game.Core.Objects.UiElements
         public bool mBorder;
         private readonly LinkedList<UiElement> mChildren = new();
 
-        public UiFrame(bool border = true) => mBorder = border; 
+        public UiFrame(bool border = true) => mBorder = border;
 
         public void AddChild(UiElement child) => mChildren.AddLast(child);
 

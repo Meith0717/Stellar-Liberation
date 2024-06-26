@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using System;
@@ -53,7 +52,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
             TextureManager.Instance.DrawLine(sliderPos, mSliderLength, Color.Black * 0.9f, 10 * mUiScale, 1);
             TextureManager.Instance.DrawLine(sliderPos, mSliderDotPosition, Color.MonoGameOrange, 10 * mUiScale, 0);
-            TextureManager.Instance.Draw(MenueSpriteRegistries.dot, mSliderDotPosition - (dotDim / 2), dotDim.X, dotDim.Y, mWasHovered ? Color.DarkGray : Color.White);
+            TextureManager.Instance.Draw("dot", mSliderDotPosition - (dotDim / 2), dotDim.X, dotDim.Y, mWasHovered ? Color.DarkGray : Color.White);
             Canvas.Draw();
         }
 

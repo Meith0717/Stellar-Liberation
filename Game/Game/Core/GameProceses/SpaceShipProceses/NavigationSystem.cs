@@ -21,23 +21,23 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
 
         public void NewWayPoint(Vector2 currentPosition, Vector2 targetPosition, PlanetsystemState targetPlanetsystem)
         {
-            
+
         }
 
         public void AddWayPoint(Vector2 currentPosition, Vector2 targetPosition, PlanetsystemState targetPlanetsystem)
         {
             var lastTargetPosition = currentPosition;
-            if (WayPoints.Count > 0) 
+            if (WayPoints.Count > 0)
                 lastTargetPosition = WayPoints.Last().TargetPosition;
             if (mCurrentPlanetsystem != targetPlanetsystem)
-                    WayPoints.Add(new(lastTargetPosition, targetPlanetsystem));
+                WayPoints.Add(new(lastTargetPosition, targetPlanetsystem));
             WayPoints.Add(new(targetPosition, targetPlanetsystem));
         }
 
         public void Update(Spacecraft spacecraft, ImpulseDrive impulseDrive, HyperDrive hyperDrive, PlanetsystemState currentPlanetsystem)
         {
             mCurrentPlanetsystem = currentPlanetsystem;
-            if (impulseDrive.IsMoving || hyperDrive.IsActive) 
+            if (impulseDrive.IsMoving || hyperDrive.IsActive)
                 return;
             if (mActualWaypoint is not null)
                 WayPoints.Remove((WayPoint)mActualWaypoint);
@@ -58,9 +58,9 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
             var wayPoint = WayPoints.First();
             if (wayPoint.TargetPlanetsystem == focusedPlanetsystem)
                 ArrowPath.Draw(spacecraftPosition, wayPoint.TargetPosition, 20);
-            for (int i = 1;  i < WayPoints.Count; i++)
+            for (int i = 1; i < WayPoints.Count; i++)
             {
-                var previousWayPont = WayPoints[i-1];
+                var previousWayPont = WayPoints[i - 1];
                 wayPoint = WayPoints[i];
                 if (wayPoint.TargetPlanetsystem != focusedPlanetsystem) continue;
                 if (previousWayPont.TargetPlanetsystem == wayPoint.TargetPlanetsystem)

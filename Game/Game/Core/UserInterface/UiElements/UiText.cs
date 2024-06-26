@@ -22,7 +22,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             Color = new(192, 192, 192);
             Text = text;
             FontID = fontID;
-            Scale = scale;  
+            Scale = scale;
         }
 
         private static Vector2 GetTextDimension(string fontID, string text)

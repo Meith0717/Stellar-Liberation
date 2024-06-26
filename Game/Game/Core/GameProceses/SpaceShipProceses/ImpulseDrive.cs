@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 using StellarLiberation.Game.Core.Extensions;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.Utilitys;
-using StellarLiberation.Game.Core.Visuals;
 using StellarLiberation.Game.GameObjects.Spacecrafts;
 using System;
 

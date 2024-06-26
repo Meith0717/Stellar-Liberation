@@ -3,7 +3,6 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 
@@ -16,7 +15,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
 
         public UiLoadingCircle()
         {
-            mCircle = new(MenueSpriteRegistries.loading) { FillScale = FillScale.FillIn, Anchor = Anchor.Center };
+            mCircle = new("loading") { FillScale = FillScale.FillIn, Anchor = Anchor.Center };
         }
         public override void Update(InputState inputState, GameTime gameTime)
         {

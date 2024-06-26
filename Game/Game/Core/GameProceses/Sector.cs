@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 
 namespace StellarLiberation.Game.Core.GameProceses
 {
@@ -36,6 +35,6 @@ namespace StellarLiberation.Game.Core.GameProceses
             };
         }
 
-        public void Draw() { TextureManager.Instance.Draw(GameSpriteRegistries.particle, mBounds.Location.ToVector2(), mBounds.Width, mBounds.Height, mColor); }
+        public void Draw() { TextureManager.Instance.Draw("particle", mBounds.Location.ToVector2(), mBounds.Width, mBounds.Height, mColor); }
     }
 }

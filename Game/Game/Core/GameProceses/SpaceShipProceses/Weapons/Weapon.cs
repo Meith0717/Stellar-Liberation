@@ -17,7 +17,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons
         [JsonProperty] public float HullDamage { get; private set; }
         [JsonProperty] public float ShieldDamage { get; private set; }
         [JsonProperty] public float Range { get; private set; }
-        [JsonProperty] public Vector2 Position {get; private set;} 
+        [JsonProperty] public Vector2 Position { get; private set; }
         [JsonProperty] private Vector2 mOnShipPosition;
         [JsonProperty] private float mRotation;
         [JsonProperty] private readonly string mTextureID;

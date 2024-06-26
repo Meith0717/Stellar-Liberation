@@ -3,7 +3,6 @@
 // All rights reserved.
 
 using StellarLiberation.Game.GameObjects.Spacecrafts;
-using System;
 
 namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 {
@@ -13,7 +12,7 @@ namespace StellarLiberation.Game.Core.GameProceses.AI.Behaviors
 
         internal OrderBackBehavior(Battleship battleship) => mBattleship = battleship;
 
-        public override double GetScore() =>  mBattleship.Flagship is null ? 0 : double.PositiveInfinity;
+        public override double GetScore() => mBattleship.Flagship is null ? 0 : double.PositiveInfinity;
 
         public override void Execute()
         {

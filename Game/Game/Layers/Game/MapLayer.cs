@@ -4,7 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
@@ -22,7 +21,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
         public MapLayer(GameState gameState, MapState mapState, Vector2 camera2DPosition, Game1 game1)
             : base(gameState, mapState.SpatialHasing, game1)
         {
-            AddUiElement(new UiSprite(GameSpriteRegistries.gameBackground) { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
+            AddUiElement(new UiSprite("gameBackground") { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
             Camera2D.Position = camera2DPosition;
             mMapState = mapState;
         }

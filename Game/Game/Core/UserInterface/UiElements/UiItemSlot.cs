@@ -3,7 +3,6 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.GameObjects.Recources.Items;
@@ -30,7 +29,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             Item = item;
             AddChild(new UiSprite(item.UiTextureId) { FillScale = FillScale.Fit, Anchor = Anchor.Center });
             if (item.IsStakable)
-                AddChild(new UiText(FontRegistries.text, item.Amount.ToString(), .1f) { Anchor = Anchor.SE, HSpace = 5, VSpace = 5 });
+                AddChild(new UiText("neuropolitical", item.Amount.ToString(), .1f) { Anchor = Anchor.SE, HSpace = 5, VSpace = 5 });
         }
 
         public override void Update(InputState inputState, GameTime gameTime)

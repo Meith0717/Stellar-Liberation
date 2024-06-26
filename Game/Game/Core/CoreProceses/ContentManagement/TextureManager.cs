@@ -2,19 +2,11 @@
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
-/*
- *  TextureManager.cs
- *
- *  Copyright (c) 2023 Thierry Meiers
- *  All rights reserved.
- */
 
-using MathNet.Numerics.LinearAlgebra.Factorization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement.ContentRegistry;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using System;
 using System.Collections.Generic;
@@ -26,13 +18,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
         private static TextureManager mInstance;
 
         public static TextureManager Instance
-        {
-            get
-            {
-                if (mInstance == null) { mInstance = new TextureManager(); }
-                return mInstance;
-            }
-        }
+            => mInstance is null ? mInstance = new TextureManager() : mInstance;
 
         public readonly static int MaxLayerDepth = 10000;
 
@@ -46,45 +32,32 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
             SpriteBatch = spriteBatch;
         }
 
-        public void LoadTextureRegistries(ContentManager content, List<Registry> registries)
+        public void LoadTextureContent(ContentManager content, string id, string filePath)
         {
-            foreach (Registry reg in registries)
-            {
-                Texture2D texture = content.Load<Texture2D>(reg.FilePath);
-                mTextures.Add(reg.Name, texture);
-            }
+            Texture2D texture = content.Load<Texture2D>(filePath);
+            mTextures.Add(id, texture);
         }
 
-        public void LoadFontRegistries(ContentManager content, List<Registry> registries)
+        public void LoadFontContent(ContentManager content, string id, string filePath)
         {
-            foreach (Registry reg in registries) LoadFont(content, reg.Name, reg.FilePath);
-        }
-
-        private bool LoadFont(ContentManager content, string id, string fileName)
-        {
-            SpriteFont spriteFont = content.Load<SpriteFont>(fileName);
+            SpriteFont spriteFont = content.Load<SpriteFont>(filePath);
             mSpriteFonts.Add(id, spriteFont);
-            return true;
         }
 
         public Texture2D GetTexture(string id)
         {
-            if (id is null) return null;
-            Texture2D texture = mTextures[id];// TODO
-            if (texture == null)
-            {
-                throw new Exception($"Error, Texture {id} was not found in TextureManager");
-            }
-            return texture;
+            if (mTextures.TryGetValue(id, out var texture))
+                return texture;
+            if (mTextures.TryGetValue("missingContent", out texture))
+                return texture;
+            throw new Exception($"Texture {id} wasn't found.");
         }
+
         public SpriteFont GetFont(string id)
         {
             SpriteFont spriteFont = mSpriteFonts[id];
             if (spriteFont == null)
-            {
                 throw new Exception($"Error, Font {id} was not found in TextureManager");
-            }
-
             return spriteFont;
         }
 
