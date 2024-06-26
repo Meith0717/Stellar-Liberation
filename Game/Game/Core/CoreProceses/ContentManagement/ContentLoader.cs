@@ -12,10 +12,12 @@ using System.Threading;
 
 namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 {
-    internal class ContentLoader
+    public class ContentLoader
     {
         private readonly ContentManager mContent;
         private readonly string[] mMainDirrectories;
+
+        public string ProcessMessage { get; private set; } = "";
 
         internal ContentLoader(ContentManager content)
         {
@@ -52,6 +54,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
             for (int i = 0; i < files.Length; i++)
             {
                 var file = files[i];
+                ProcessMessage = $"Loading: {file}";
                 var fileID = Path.GetFileName(file);
                 managerLoader.Invoke(mContent, fileID, file);
             }
@@ -68,6 +71,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
             LoadContent("music", MusicManager.Instance.LoadContent);
             LoadContent("sfx", SoundEffectManager.Instance.LoadContent);
             LoadContent("textures", TextureManager.Instance.LoadTextureContent);
+            ProcessMessage = "Ready";
+            Thread.Sleep(2000);
         }
 
         public void LoadContentAsync(Action onLoadComplete, Action<Exception> onError)

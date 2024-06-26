@@ -114,7 +114,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
         private void Exit()
         {
             LayerManager.PopLayer();
-            LayerManager.AddLayer(new LoadingLayer(Game1));
+            LayerManager.AddLayer(new LoadingLayer(Game1, null));
             PersistanceManager.SaveAsync(PersistanceManager.SettingsSaveFilePath, GameSettings, () => LayerManager.PopLayer(), (e) => throw e);
         }
     }

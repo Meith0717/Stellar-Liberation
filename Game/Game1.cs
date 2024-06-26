@@ -33,7 +33,7 @@ namespace StellarLiberation
 
         public Game1()
         {
-            Content.RootDirectory = "newContent";
+            Content.RootDirectory = "Content";
             GraphicsManager = new(this);
             mInputManager = new();
             ResolutionManager = new(GraphicsManager);
@@ -54,8 +54,9 @@ namespace StellarLiberation
         {
             base.Initialize();
             LayerManager = new(this);
-            LayerManager.AddLayer(new LoadingLayer(this));
-            ResolutionManager.Apply("800x480");
+            LayerManager.AddLayer(new LoadingLayer(this, mContentLoader));
+            ResolutionManager.Apply(Settings.Resolution);
+            GraphicsManager.ToggleFullScreen();
         }
 
         protected override void LoadContent()
