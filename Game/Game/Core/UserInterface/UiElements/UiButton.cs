@@ -23,7 +23,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
         public UiButton(string SpriteId, string text, TextAllign textAllign = TextAllign.Center)
             : base(SpriteId, 1)
         {
-            mText = new("neuropolitical", text, .1f)
+            mText = new("neuropolitical", text, .2f)
             {
                 Anchor = textAllign switch
                 {
