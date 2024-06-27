@@ -19,7 +19,9 @@ namespace StellarLiberation.Game.Layers
         private readonly UiFrame mFrame;
         private readonly UiText mLoadingMessage;
         private readonly UiHBar mProcessBar;
-        public readonly ContentLoader mContentLoader;
+        private readonly ContentLoader mContentLoader;
+        private readonly UiSprite mStudioLogo;
+        private float mAlpha = -.3f;
 
         public LoadingLayer(Game1 game1, ContentLoader contentLoader, bool hasBackground = true) : base(game1, false)
         {
@@ -28,7 +30,7 @@ namespace StellarLiberation.Game.Layers
             mLoadingMessage = new("neuropolitical", "", .2f) { Anchor = Anchor.S, VSpace = 70 };
             mProcessBar = new(Color.White, "") { RelWidth = .7f, Height = 20, Anchor = Anchor.S, VSpace = 40 };
             if (hasBackground)
-                mFrame.AddChild(new UiSprite("grandDutchInteractive") { FillScale = FillScale.FillIn, Anchor = Anchor.Center, Color = Color.White });
+                mFrame.AddChild(mStudioLogo = new("grandDutchInteractive") { FillScale = FillScale.FillIn, Anchor = Anchor.Center, Color = Color.Transparent });
             mFrame.AddChild(mProcessBar);
             mFrame.AddChild(mLoadingMessage);
         }
@@ -51,6 +53,8 @@ namespace StellarLiberation.Game.Layers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             mFrame.Update(inputState, gameTime);
+            mAlpha += .01f;
+            mStudioLogo.Color = new(mAlpha, mAlpha, mAlpha, mAlpha);
             if (mContentLoader == null) return;
             mProcessBar.Percentage = mContentLoader.Process;
             mLoadingMessage.Text = mContentLoader.ProcessMessage;
