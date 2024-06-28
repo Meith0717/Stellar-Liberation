@@ -11,6 +11,7 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
 {
     public enum BattleshipID { BomberMKI, InterceptorMKI, FighterMKI, BomberMKII, InterceptorMKII, FighterMKII }
     public enum FlagshipID { }
+    public enum SpaceStationID { }
 
     public class SpacecraftFactory
     {
