@@ -31,7 +31,7 @@ namespace StellarLiberation.Game.Layers
         [JsonIgnore] public readonly GameObjectsInteractor GameObjectsInteractor = new();
         [JsonProperty] public readonly MapState MapState = new();
         [JsonProperty] private readonly MapConfig mMapConfig;
-        [JsonProperty] private readonly List<PlanetsystemState> PlanetSystemStates;
+        [JsonProperty] public readonly List<PlanetsystemState> PlanetSystemStates;
 
         public GameState(Game1 game1) : base(game1, false)
         {

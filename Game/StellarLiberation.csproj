@@ -54,9 +54,6 @@
     <PackageReference Include="MonoGame.Penumbra.DesktopGL" Version="3.0.0" />
     <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Debug\net6.0\Content\" />
-  </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />
     <Exec Command="dotnet tool restore" />

@@ -17,10 +17,12 @@ namespace StellarLiberation.Game.Layers.GameLayers
     internal class MapLayer : GameLayer
     {
         private readonly MapState mMapState;
+        private readonly MapHud mMapHud;
 
         public MapLayer(GameState gameState, MapState mapState, Vector2 camera2DPosition, Game1 game1)
             : base(gameState, mapState.SpatialHasing, game1)
         {
+            mMapHud = new(game1, gameState);
             AddUiElement(new UiSprite("gameBackground") { Anchor = Anchor.Center, FillScale = FillScale.FillIn });
             Camera2D.Position = camera2DPosition;
             mMapState = mapState;
@@ -32,6 +34,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
             Camera2DMover.UpdateCameraByMouseDrag(inputState, Camera2D);
             Camera2DMover.MoveByKeys(gameTime, inputState, Camera2D);
 
+            mMapHud.Update(gameTime, inputState);
             inputState.DoAction(ActionType.ToggleHyperMap, GameState.PopLayer);
             ManageInput(inputState);
             base.Update(gameTime, inputState);
@@ -49,15 +52,21 @@ namespace StellarLiberation.Game.Layers.GameLayers
             GameState.AddLayer(new PlanetsystemLayer(GameState, planetSystem.PlanetsystemState, Game1));
         }
 
-        public override void ApplyResolution() { base.ApplyResolution(); }
+        public override void ApplyResolution() 
+        {
+            mMapHud.ApplyResolution();
+            base.ApplyResolution(); 
+        }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+            mMapHud.Draw(spriteBatch);
 
             spriteBatch.Begin(transformMatrix: ViewTransformationMatrix);
             mMapState.Draw(Camera2D.Zoom, GameState);
             spriteBatch.End();
+
         }
     }
 }

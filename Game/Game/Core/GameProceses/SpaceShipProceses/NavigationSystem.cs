@@ -52,19 +52,19 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
             hyperDrive.SetTarget(actualWayPoint.TargetPlanetsystem);
         }
 
-        public void DrawImpulseDriveWayPoints(Vector2 spacecraftPosition, PlanetsystemState focusedPlanetsystem)
+        public void DrawImpulseDriveWayPoints(Spacecraft spacecraft, PlanetsystemState focusedPlanetsystem)
         {
             if (WayPoints.Count <= 0) return;
             var wayPoint = WayPoints.First();
             if (wayPoint.TargetPlanetsystem == focusedPlanetsystem)
-                ArrowPath.Draw(spacecraftPosition, wayPoint.TargetPosition, 20);
+                ArrowPath.Draw(spacecraft, wayPoint.TargetPosition, 10);
             for (int i = 1; i < WayPoints.Count; i++)
             {
                 var previousWayPont = WayPoints[i - 1];
                 wayPoint = WayPoints[i];
                 if (wayPoint.TargetPlanetsystem != focusedPlanetsystem) continue;
                 if (previousWayPont.TargetPlanetsystem == wayPoint.TargetPlanetsystem)
-                    ArrowPath.Draw(previousWayPont.TargetPosition, wayPoint.TargetPosition, 20);
+                    ArrowPath.Draw(previousWayPont.TargetPosition, wayPoint.TargetPosition, 10);
             }
         }
 
@@ -73,13 +73,13 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
             if (WayPoints.Count <= 0) return;
             var wayPoint = WayPoints.First();
             if (wayPoint.TargetPlanetsystem != mCurrentPlanetsystem)
-                ArrowPath.Draw(mCurrentPlanetsystem.MapPosition, wayPoint.TargetPlanetsystem.MapPosition, .5f);
+                ArrowPath.Draw(mCurrentPlanetsystem.MapPosition, wayPoint.TargetPlanetsystem.MapPosition, .2f);
             for (int i = 1; i < WayPoints.Count; i++)
             {
                 wayPoint = WayPoints[i];
                 var previousWayPont = WayPoints[i - 1];
                 if (wayPoint.TargetPlanetsystem != previousWayPont.TargetPlanetsystem)
-                    ArrowPath.Draw(previousWayPont.TargetPlanetsystem.MapPosition, wayPoint.TargetPlanetsystem.MapPosition, .5f);
+                    ArrowPath.Draw(previousWayPont.TargetPlanetsystem.MapPosition, wayPoint.TargetPlanetsystem.MapPosition, .2f);
             }
         }
     }

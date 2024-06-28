@@ -55,8 +55,9 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 
         public void LoadEssenzialContent()
         {
-            LoadContent("gui", TextureManager.Instance.LoadTextureContent);
+            TextureManager.Instance.LoadTextureContent(mContent, "missingContent", "missingContent");
             LoadContent("fonts", TextureManager.Instance.LoadFontContent);
+            LoadContent("gui", TextureManager.Instance.LoadTextureContent);
         }
 
         private void LoadContent()

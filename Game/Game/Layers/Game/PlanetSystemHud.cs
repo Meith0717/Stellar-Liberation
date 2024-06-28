@@ -28,8 +28,8 @@ namespace StellarLiberation.Game.Layers.GameLayers
         {
             mMainFrame = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
 
-            mMainFrame.AddChild(new UiButton("pause", "") { Anchor = Anchor.NE, HSpace = 20, VSpace = 20, OnClickAction = () => LayerManager.AddLayer(new PauseLayer(planetSystemLayer.GameState, Game1)) });
-            mMainFrame.AddChild(new UiButton("map", "") { Anchor = Anchor.SE, HSpace = 20, VSpace = 20, OnClickAction = planetSystemLayer.OpenMap });
+            mMainFrame.AddChild(new UiButton("pauseButton", "") { Anchor = Anchor.NE, HSpace = 20, VSpace = 20, OnClickAction = () => LayerManager.AddLayer(new PauseLayer(planetSystemLayer.GameState, Game1)) });
+            mMainFrame.AddChild(new UiButton("mapButton", "") { Anchor = Anchor.SE, HSpace = 20, VSpace = 20, OnClickAction = planetSystemLayer.OpenMap });
             mPlanetSystemLayer = planetSystemLayer;
         }
 
@@ -61,7 +61,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
             foreach (var spaceship in mPlanetSystemLayer.GameState.GameObjectsInteractor.SelectedFlagships)
             {
                 if (spaceship.Fraction != Fractions.Allied) continue;
-                spaceship.NavigationSystem.DrawImpulseDriveWayPoints(spaceship.Position, mPlanetSystemLayer.PlanetsystemState);
+                spaceship.NavigationSystem.DrawImpulseDriveWayPoints(spaceship, mPlanetSystemLayer.PlanetsystemState);
 
                 if (!mPlanetSystemLayer.PlanetsystemState.Contains(spaceship)) continue;
                 TextureManager.Instance.Draw("selectCrosshait", spaceship.Position, 2.5f, 0, 1, Color.MonoGameOrange);

@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.Extensions;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
+using StellarLiberation.Game.Core.Visuals;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem.ParticleEffects;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects.Types;
 using StellarLiberation.Game.GameObjects.Spacecrafts;
@@ -49,6 +50,7 @@ namespace StellarLiberation.Game.Core.GameProceses
                 var startPosition = Start.MapPosition;
                 var endPosition = End.MapPosition;
                 TextureManager.Instance.Draw("radar", Position - new Vector2(15), 30, 30, Flagship.Fraction is Fractions.Enemys ? Color.Red : Color.LightGreen);
+                ArrowPath.Draw(Start.MapPosition, End.MapPosition, .2f);
             }
         }
 
@@ -82,10 +84,10 @@ namespace StellarLiberation.Game.Core.GameProceses
 
         public void Draw(float cameraZoom, GameState gameState)
         {
-            foreach (var spaceship in gameState.GameObjectsInteractor.SelectedFlagships)
-                spaceship.NavigationSystem.DrawHyperDriveWayPoints();
             foreach (var hyperRoute in mHyperRoutes)
                 hyperRoute.Draw(cameraZoom);
+            foreach (var spaceship in gameState.GameObjectsInteractor.SelectedFlagships)
+                spaceship.NavigationSystem.DrawHyperDriveWayPoints();
         }
     }
 }
