@@ -52,10 +52,10 @@ namespace StellarLiberation.Game.Layers.GameLayers
             GameState.AddLayer(new PlanetsystemLayer(GameState, planetSystem.PlanetsystemState, Game1));
         }
 
-        public override void ApplyResolution() 
+        public override void ApplyResolution()
         {
             mMapHud.ApplyResolution();
-            base.ApplyResolution(); 
+            base.ApplyResolution();
         }
 
         public override void Draw(SpriteBatch spriteBatch)

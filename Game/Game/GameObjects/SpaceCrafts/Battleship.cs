@@ -20,15 +20,13 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
     [Serializable]
     public class Battleship : Spacecraft, IGameObject, ICollidable
     {
-        [JsonProperty] public readonly BattleshipID BattleshipID;
         [JsonProperty] public ImpulseDrive ImpulseDrive { get; private set; }
         [JsonProperty] public Flagship Flagship;
         [JsonIgnore] private UtilityAi mUtilityAi = new();
 
-        public Battleship(BattleshipID battleshipID, Vector2 position, Fractions fraction, string textureID, float textureScale, Vector2 engineTrailPosition)
-            : base(position, fraction, textureID, textureScale, engineTrailPosition)
+        public Battleship(string id, Vector2 position, Fraction fraction, string textureID, float textureScale, Vector2 engineTrailPosition)
+            : base(id, position, fraction, textureID, textureScale, engineTrailPosition)
         {
-            BattleshipID = battleshipID;
             mUtilityAi.AddBehavior(new IDELBehavior(this));
             mUtilityAi.AddBehavior(new ChaseBehavior(this));
             mUtilityAi.AddBehavior(new CombatBehavior(this));

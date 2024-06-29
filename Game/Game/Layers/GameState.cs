@@ -38,7 +38,7 @@ namespace StellarLiberation.Game.Layers
             mMapConfig = new(3, 3, 0);
             PlanetSystemStates = MapFactory.Generate(mMapConfig);
             for (var _ = 0; _ < 5; _++)
-                PlanetSystemStates.First().GameObjects.Add(SpacecraftFactory.GetFlagship(ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 20000)), Fractions.Allied));
+                PlanetSystemStates.First().GameObjects.Add(FlagshipFactory.Instance.GetFlagship("MKI", ExtendetRandom.NextVectorInCircle(new(Vector2.Zero, 20000)), Fraction.Allied));
         }
 
         public override void Initialize()

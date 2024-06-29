@@ -56,11 +56,11 @@ namespace StellarLiberation.Game.Layers.GameLayers
             spriteBatch.Begin(transformMatrix: mPlanetSystemLayer.ViewTransformationMatrix);
 
             foreach (var spaceship in mPlanetSystemLayer.PlanetsystemState.GameObjects.OfType<Spacecraft>())
-                TextureManager.Instance.Draw("radar", spaceship.Position, .04f / mPlanetSystemLayer.Camera2D.Zoom, 0, spaceship.TextureDepth + 1, spaceship.Fraction == Fractions.Enemys ? Color.Red : Color.LightGreen);
+                TextureManager.Instance.Draw("radar", spaceship.Position, .04f / mPlanetSystemLayer.Camera2D.Zoom, 0, spaceship.TextureDepth + 1, spaceship.Fraction == Fraction.Enemys ? Color.Red : Color.LightGreen);
 
             foreach (var spaceship in mPlanetSystemLayer.GameState.GameObjectsInteractor.SelectedFlagships)
             {
-                if (spaceship.Fraction != Fractions.Allied) continue;
+                if (spaceship.Fraction != Fraction.Allied) continue;
                 spaceship.NavigationSystem.DrawImpulseDriveWayPoints(spaceship, mPlanetSystemLayer.PlanetsystemState);
 
                 if (!mPlanetSystemLayer.PlanetsystemState.Contains(spaceship)) continue;

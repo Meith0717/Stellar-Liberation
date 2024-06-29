@@ -26,20 +26,22 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
         [JsonProperty] public Defense Defense { get; private set; }
         [JsonProperty] public WeaponManager Weapons { get; private set; }
         [JsonIgnore] public readonly Sensors Sensors;
-        [JsonProperty] public readonly Fractions Fraction;
+        [JsonProperty] public readonly Fraction Fraction;
         [JsonProperty] private readonly Color mAccentColor;
         [JsonProperty] private readonly Vector2 mEngineTrailPosition;
+        [JsonProperty] public readonly string ID;
 
-        public Spacecraft(Vector2 position, Fractions fraction, string textureID, float textureScale, Vector2 engineTrailPosition)
+        public Spacecraft(string id, Vector2 position, Fraction fraction, string textureID, float textureScale, Vector2 engineTrailPosition)
             : base(position, textureID, textureScale, 10)
         {
+            ID = id;
             Sensors = new();
             Fraction = fraction;
             mAccentColor = Fraction switch
             {
-                Fractions.Allied => Color.LightBlue,
-                Fractions.Enemys => Color.MonoGameOrange,
-                Fractions.Neutral => throw new NotImplementedException(),
+                Fraction.Allied => Color.LightBlue,
+                Fraction.Enemys => Color.MonoGameOrange,
+                Fraction.Neutral => throw new NotImplementedException(),
                 _ => throw new NotImplementedException()
             };
             mEngineTrailPosition = engineTrailPosition;

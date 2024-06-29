@@ -4,8 +4,6 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using MonoGame.Extended.Content;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
@@ -81,7 +79,7 @@ namespace StellarLiberation
                 TargetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / rate);
             GraphicsManager.ApplyChanges();
 
-            LayerManager.PopLayer(); 
+            LayerManager.PopLayer();
             LayerManager.AddLayer(new MainMenueLayer(this));
 
             IsSafeTotart = false;

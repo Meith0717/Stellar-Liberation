@@ -1,20 +1,16 @@
-﻿// PlanetsystemHud.cs 
+﻿// MapHud.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
-using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
-using StellarLiberation.Game.GameObjects.Spacecrafts;
 using StellarLiberation.Game.Layers.MenueLayers;
-using System.Linq;
 
 namespace StellarLiberation.Game.Layers.GameLayers
 {

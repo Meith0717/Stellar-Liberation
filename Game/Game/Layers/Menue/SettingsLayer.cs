@@ -12,7 +12,6 @@ using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.UserInterface.UiElements;
-using StellarLiberation.Game.Layers.Benchmark;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,7 +50,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
             mSettingsGrid.Set(0, 10, new UiText("neuropolitical", "Particle Multiplier", .1f) { Anchor = Anchor.E, HSpace = 20 });
 
             settingsFrame.AddChild(new UiButton("button", "Back & Save") { VSpace = 20, HSpace = 20, Anchor = Anchor.SW, OnClickAction = Exit });
-            settingsFrame.AddChild(new UiButton("button", "Start Benchmark") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE, OnClickAction = () => LayerManager.AddLayer(new BenchmarkLayer(Game1)) });
+            settingsFrame.AddChild(new UiButton("button", "Start Benchmark") { VSpace = 20, HSpace = 20, Anchor = Anchor.SE });
             mMasterSlider = new(GameSettings.MasterVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
             mMusicSlider = new(GameSettings.MusicVolume) { RelWidth = 1, Anchor = Anchor.CenterH };
             mSfxSlider = new(GameSettings.SoundEffectsVolume) { RelWidth = 1, Anchor = Anchor.CenterH };

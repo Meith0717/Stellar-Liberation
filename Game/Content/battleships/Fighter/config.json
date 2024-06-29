@@ -1,0 +1,11 @@
+{
+    "EngineTrailPosition" : {
+        "X" : 0,
+        "Y" : 0
+    },
+    "ShieldForce": 100,
+    "HullForce" : 100,
+    "ShieldRegeneration" : 100,
+    "HullRegeneration" : 0,
+    "ImpulseVelocity" : 1
+}

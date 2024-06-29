@@ -24,13 +24,13 @@ namespace StellarLiberation.Game.Core.GameProceses
             mBounds = new(position.ToPoint(), new(width, height));
         }
 
-        public void Update(Fractions occupier)
+        public void Update(Fraction occupier)
         {
             mColor = occupier switch
             {
-                Fractions.Neutral => mNeuteralColor,
-                Fractions.Allied => mAlliedColor,
-                Fractions.Enemys => mEnemyCollor,
+                Fraction.Neutral => mNeuteralColor,
+                Fraction.Allied => mAlliedColor,
+                Fraction.Enemys => mEnemyCollor,
                 _ => throw new System.NotImplementedException()
             };
         }

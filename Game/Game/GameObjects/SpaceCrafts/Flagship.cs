@@ -23,8 +23,8 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
         [JsonProperty] public ImpulseDrive ImpulseDrive { get; private set; }
         [JsonProperty] public Hangar Hangar { get; private set; }
 
-        public Flagship(Vector2 position, Fractions fraction, Vector2 engineTrailPosition)
-            : base(position, fraction, "destroyer", 5, engineTrailPosition)
+        public Flagship(string id, Vector2 position, Fraction fraction, Vector2 engineTrailPosition)
+            : base(id, position, fraction, "destroyer", 5, engineTrailPosition)
         {
             NavigationSystem = new();
         }
@@ -35,9 +35,6 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
             HyperDrive = new(hyperVelocity);
             ImpulseDrive = new(impulseVelocity);
             Hangar = new(hangarCapacity = 30);
-            Hangar.AssignNewShip(BattleshipID.InterceptorMKI, 10);
-            Hangar.AssignNewShip(BattleshipID.FighterMKI, 10);
-            Hangar.AssignNewShip(BattleshipID.BomberMKI, 10);
         }
 
         public override void Update(GameTime gameTime, GameState gameState, PlanetsystemState planetsystemState)

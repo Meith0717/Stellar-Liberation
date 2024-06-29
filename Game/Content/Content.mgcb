@@ -14,6 +14,30 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin battleships/Fighter/config.json
+/copy:battleships/Fighter/config.json
+
+#begin battleships/Fighter/main.png
+/copy:battleships/Fighter/main.png
+
+#begin battleships/Fighter/shield.png
+/copy:battleships/Fighter/shield.png
+
+#begin battleships/Fighter/weapons.json
+/copy:battleships/Fighter/weapons.json
+
+#begin flagships/MKI/config.json
+/copy:flagships/MKI/config.json
+
+#begin flagships/MKI/main.png
+/copy:flagships/MKI/main.png
+
+#begin flagships/MKI/shield.png
+/copy:flagships/MKI/shield.png
+
+#begin flagships/MKI/weapons.json
+/copy:flagships/MKI/weapons.json
+
 #begin fonts/brolink/brolink.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -1667,12 +1691,12 @@
 /processorParam:TextureFormat=Color
 /build:textures/starLightAlpha.png
 
-#begin weapons/Phaser I/config.json
-/copy:weapons/Phaser I/config.json
+#begin weapons/Phaser/config.json
+/copy:weapons/Phaser/config.json
 
-#begin weapons/Phaser I/obj.png
-/copy:weapons/Phaser I/obj.png
+#begin weapons/Phaser/obj.png
+/copy:weapons/Phaser/obj.png
 
-#begin weapons/Phaser I/proj.png
-/copy:weapons/Phaser I/proj.png
+#begin weapons/Phaser/proj.png
+/copy:weapons/Phaser/proj.png
 

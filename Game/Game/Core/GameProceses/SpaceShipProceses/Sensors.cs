@@ -29,7 +29,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses
 
         public Sensors() => mCoolDown = ExtendetRandom.Random.Next(MaxCoolDown);
 
-        public void Scan(GameTime gameTime, Spacecraft spacecraft, Fractions fraction, PlanetsystemState planetsystemState)
+        public void Scan(GameTime gameTime, Spacecraft spacecraft, Fraction fraction, PlanetsystemState planetsystemState)
         {
             mPlanetsystemState = planetsystemState;
             mCoolDown -= gameTime.ElapsedGameTime.Milliseconds;

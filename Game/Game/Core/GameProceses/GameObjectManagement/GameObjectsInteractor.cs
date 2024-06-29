@@ -11,9 +11,9 @@ using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.Visuals.Rendering;
+using StellarLiberation.Game.Frames;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.GameObjects.Spacecrafts;
-using StellarLiberation.Game.Popups;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -93,7 +93,7 @@ namespace StellarLiberation.Game.Core.GameProceses
 
         private void SelectOrUnselect(InputState inputState, Spacecraft spaceship, Layer hudLayer)
         {
-            if (spaceship.Fraction == Fractions.Enemys) return;
+            if (spaceship.Fraction == Fraction.Enemys) return;
             hudLayer.ClearUiElements();
             if (SelectedFlagships.Contains((Flagship)spaceship)
                 && SelectedFlagships.Count <= 1)

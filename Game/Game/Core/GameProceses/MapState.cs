@@ -49,7 +49,7 @@ namespace StellarLiberation.Game.Core.GameProceses
             {
                 var startPosition = Start.MapPosition;
                 var endPosition = End.MapPosition;
-                TextureManager.Instance.Draw("radar", Position - new Vector2(15), 30, 30, Flagship.Fraction is Fractions.Enemys ? Color.Red : Color.LightGreen);
+                TextureManager.Instance.Draw("radar", Position - new Vector2(15), 30, 30, Flagship.Fraction is Fraction.Enemys ? Color.Red : Color.LightGreen);
                 ArrowPath.Draw(Start.MapPosition, End.MapPosition, .2f);
             }
         }

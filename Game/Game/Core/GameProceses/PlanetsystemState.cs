@@ -23,7 +23,7 @@ namespace StellarLiberation.Game.Core.GameProceses
         [JsonIgnore] private double mPlanetUpdateCoolDown;
 
         [JsonProperty] public Vector2 MapPosition;
-        [JsonProperty] public Fractions Occupier = Fractions.Neutral;
+        [JsonProperty] public Fraction Occupier = Fraction.Neutral;
         [JsonProperty] private Star mStar;
         [JsonProperty] private List<Planet> mPlanets = new();
         [JsonProperty] private List<GameObject> mGameObjects = new();
