@@ -1,0 +1,11 @@
+{
+    "HullDamage" : 100,
+    "ShieldDamage" : 100,
+    "CoolDown" : 1000,
+    "Range" : 100,
+    "FollowTarget" : true,
+    "Color.R" : 255,
+    "Color.G" : 0,
+    "Color.B" : 0,
+    "Color.A" : 255
+}

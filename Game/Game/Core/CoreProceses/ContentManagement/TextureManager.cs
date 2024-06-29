@@ -53,7 +53,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
             mSpriteFonts.Add(id, spriteFont);
         }
 
-        private void LoadTextureContent(string id, string filePath)
+        public void LoadTextureContent(string id, string filePath)
         {
             using FileStream f = new(filePath, FileMode.Open);
             var texture = Texture2D.FromStream(GraphicsDevice, f);

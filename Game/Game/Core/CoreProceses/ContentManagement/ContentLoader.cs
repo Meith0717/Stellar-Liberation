@@ -5,7 +5,9 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -31,7 +33,36 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 
         private string[] GetDirectorys(string contentPath) => Directory.GetDirectories(contentPath, "*.*", SearchOption.TopDirectoryOnly);
 
-        public void LoadBuildContent(string contentDirectory, Action<ContentManager, string, string> managerLoader)
+        public void LoadEssenzialContent()
+        {
+            TextureManager.Instance.LoadBuildTextureContent(mContent, "missingContent", "missingContent");
+            LoadBuildContent("fonts", TextureManager.Instance.LoadBuildFontContent);
+            LoadBuildContent("gui", TextureManager.Instance.LoadBuildTextureContent);
+        }
+
+        public void LoadContentAsync(Action onLoadComplete, Action<Exception> onError)
+        {
+            Thread thread = new(() => {
+                try
+                {
+                    LoadBuildContent("music", MusicManager.Instance.LoadBuildContent);
+                    LoadBuildContent("sfx", SoundEffectManager.Instance.LoadBuildContent);
+                    LoadBuildContent("textures", TextureManager.Instance.LoadBuildTextureContent);
+                    LoadWeapons();
+                    ProcessMessage = "Ready";
+                    Thread.Sleep(2000);
+                }
+                catch (Exception ex)
+                {
+                    onError?.Invoke(ex);
+                }
+                onLoadComplete.Invoke();
+            });
+
+            thread.Start();
+        }
+
+        private void LoadBuildContent(string contentDirectory, Action<ContentManager, string, string> managerLoader)
         {
             var rootDirectory = Path.Combine(mContent.RootDirectory, contentDirectory);
             var files = GetFiles(rootDirectory);
@@ -51,55 +82,40 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
             }
         }
 
-        public void LoadRawContent(string contentDirectory, Action<ContentManager, string, string> managerLoader)
+        private Dictionary<string, JsonElement> LoadJsonDictionary(string filePath)
         {
-            var rootDirectory = Path.Combine(mContent.RootDirectory, contentDirectory);
-            var files = GetFiles(rootDirectory);
-            Process = 0;
+            using StreamReader reader = new StreamReader(filePath);
+            string jsonString = reader.ReadToEnd();
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(jsonString, options);
+        }
 
-            for (int i = 0; i < files.Length; i++)
+        private void LoadWeapons()
+        {
+            var rootDirectory = Path.Combine(mContent.RootDirectory, "weapons");
+            var weaponsDirectorys = GetDirectorys(rootDirectory);
+            foreach (var weaponDirectory in weaponsDirectorys)
             {
-                var filePath = files[i];
-                var fileName = Path.GetFileNameWithoutExtension(filePath);
-                var fileExtension = Path.GetExtension(filePath);
-                ProcessMessage = $"Loading: {filePath}";
-                Process += 1d / files.Length;
-                managerLoader.Invoke(mContent, fileName, filePath);
+                var weaponID = Path.GetFileName(weaponDirectory);
+                var weaponFiles = GetFiles(weaponDirectory);
+                foreach (string weaponFile in weaponFiles)
+                {
+                    var fileName = Path.GetFileName(weaponFile);
+                    switch (fileName.ToLower())
+                    {
+                        case "config.json":
+                            var jsonDict = LoadJsonDictionary(weaponFile);
+                            WeaponFactory.Instance.AddConfig(weaponID, jsonDict);
+                            break;
+                        case "obj.png":
+                            TextureManager.Instance.LoadTextureContent($"{weaponID}Obj", weaponFile);
+                            break;
+                        case "proj.png":
+                            TextureManager.Instance.LoadTextureContent($"{weaponID}Proj", weaponFile);
+                            break;
+                    }
+                }
             }
         }
-
-        public void LoadEssenzialContent()
-        {
-            TextureManager.Instance.LoadBuildTextureContent(mContent, "missingContent", "missingContent");
-            LoadBuildContent("fonts", TextureManager.Instance.LoadBuildFontContent);
-            LoadBuildContent("gui", TextureManager.Instance.LoadBuildTextureContent);
-        }
-
-        private void LoadContent()
-        {
-            LoadBuildContent("music", MusicManager.Instance.LoadBuildContent);
-            LoadBuildContent("sfx", SoundEffectManager.Instance.LoadBuildContent);
-            LoadBuildContent("textures", TextureManager.Instance.LoadBuildTextureContent);
-            ProcessMessage = "Ready";
-            Thread.Sleep(2000);
-        }
-
-        public void LoadContentAsync(Action onLoadComplete, Action<Exception> onError)
-        {
-            Thread thread = new(() => {
-                try
-                {
-                    LoadContent();
-                }
-                catch (Exception ex)
-                {
-                    onError?.Invoke(ex);
-                }
-                onLoadComplete.Invoke();
-            });
-
-            thread.Start();
-        }
-
     }
 }

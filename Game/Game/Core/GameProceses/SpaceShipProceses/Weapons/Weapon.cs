@@ -14,17 +14,20 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons
     [Serializable]
     public class Weapon
     {
+        // Config Stuff
         [JsonProperty] public float HullDamage { get; private set; }
         [JsonProperty] public float ShieldDamage { get; private set; }
         [JsonProperty] public float Range { get; private set; }
-        [JsonProperty] public Vector2 Position { get; private set; }
-        [JsonProperty] private Vector2 mOnShipPosition;
-        [JsonProperty] private float mRotation;
         [JsonProperty] private readonly string mTextureID;
         [JsonProperty] private readonly string mProjectileTextureID;
-        [JsonProperty] private readonly Color mProjectileColor;
-        [JsonProperty] private readonly bool mProjectileFollowTarget;
+        [JsonProperty] private readonly Color mColor;
+        [JsonProperty] private readonly bool mFollowTarget;
         [JsonProperty] private readonly double mCoolDown;
+
+        // Some Other stuff
+        [JsonProperty] public Vector2 Position { get; private set; }
+        [JsonProperty] private float mRotation;
+        [JsonProperty] private Vector2 mOnShipPosition;
         [JsonProperty] private double mActualCoolDown;
 
         public Weapon(Vector2 onShipPosition, string objectTextureID, string projectileTextureID, Color projectileColor, bool followTarget, float hullDamage, float shieldDamage, float range, double coolDown)
@@ -32,8 +35,8 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons
             mOnShipPosition = onShipPosition;
             mTextureID = objectTextureID;
             mProjectileTextureID = projectileTextureID;
-            mProjectileColor = projectileColor;
-            mProjectileFollowTarget = followTarget;
+            mColor = projectileColor;
+            mFollowTarget = followTarget;
             HullDamage = hullDamage;
             ShieldDamage = shieldDamage;
             Range = range;
@@ -52,7 +55,7 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons
             if (mActualCoolDown < mCoolDown) return;
             if (Vector2.Distance(target.Position, Position) > Range) return;
             var projectile = new WeaponProjectile(Position, mProjectileTextureID);
-            projectile.Populate(spacecraft, target, mRotation, HullDamage, ShieldDamage, Range, mProjectileFollowTarget, mProjectileColor);
+            projectile.Populate(spacecraft, target, mRotation, HullDamage, ShieldDamage, Range, mFollowTarget, mColor);
             planetsystemState.AddGameObject(projectile);
             mActualCoolDown = 0;
         }

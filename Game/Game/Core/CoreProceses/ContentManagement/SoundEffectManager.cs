@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 {
-    public class SoundEffectManager
+    public sealed class SoundEffectManager
     {
         private static SoundEffectManager mInstance;
         public static SoundEffectManager Instance { get { return mInstance ??= new(); } }

@@ -29,7 +29,7 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
             };
             var weapons = new List<Weapon>()
             {
-                new(Vector2.Zero , "turette", "projectile", GetWeaponColor(fraction), false, 10, 10, 10000, 500),
+                WeaponFactory.Instance.GetWeapon(Vector2.Zero, "Phaser I")
             };
             spaceship.Populate(500, 500, 0, 0, weapons, 1);
             return spaceship;
@@ -40,8 +40,8 @@ namespace StellarLiberation.Game.GameObjects.Spacecrafts
             Flagship spaceship = new(position, fraction, new(-750, 0));
             var weapons = new List<Weapon>()
             {
-                new(new(-290, 610), "turette", "projectile", GetWeaponColor(fraction), false, 10, 10, 50000, 50),
-                new(new(-290, -610), "turette", "projectile", GetWeaponColor(fraction), false, 10, 10, 50000, 50),
+                WeaponFactory.Instance.GetWeapon(new(-290, 610), "Phaser I"),
+                WeaponFactory.Instance.GetWeapon(new(-290, -610), "Phaser I")
             };
             spaceship.Populate(5000, 5000, 1, 0, weapons, 1, 1, 10);
             return spaceship;

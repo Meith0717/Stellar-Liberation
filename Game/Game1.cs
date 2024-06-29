@@ -113,6 +113,6 @@ namespace StellarLiberation
 
         public void ActivateMyGame(object sendet, EventArgs args) => IAmActive = true;
 
-        public void DeactivateMyGame(object sendet, EventArgs args) => IAmActive = false; //TODO
+        public void DeactivateMyGame(object sendet, EventArgs args) => IAmActive = false;
     }
 }
