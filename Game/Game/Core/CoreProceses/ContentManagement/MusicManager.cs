@@ -5,8 +5,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.Utilitys;
 using System.Collections.Generic;
+using System.IO;
 
 namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 {
@@ -21,13 +23,25 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
         private bool mLoadet;
         public float OverallVolume;
 
-        public void LoadContent(ContentManager content, string iD, string path)
+        public void LoadBuildContent(ContentManager content, string iD, string path)
         {
             var soundEffect = content.Load<SoundEffect>(path);
             soundEffect.Name = iD;
             mMusics.Add(soundEffect);
             mLoadet = true;
         }
+
+        private void LoadContent(string iD, string path)
+        {
+            using FileStream f = new(path, FileMode.Open);
+            var soundEffect = SoundEffect.FromStream(f);
+            soundEffect.Name = iD;
+            mMusics.Add(soundEffect);
+            mLoadet = true;
+        }
+
+        public void AddContent(SoundEffect soundEffect) => mMusics.Add(soundEffect);
+
 
         public void SetVolume(float master, float volume) => OverallVolume = MathHelper.Clamp(volume, 0f, 1f) * MathHelper.Clamp(master, 0f, 1f);
 

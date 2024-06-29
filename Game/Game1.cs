@@ -61,15 +61,16 @@ namespace StellarLiberation
 
         protected override void LoadContent()
         {
+            mSpriteBatch = new SpriteBatch(GraphicsDevice);
+            TextureManager.Instance.SetSpriteBatch(mSpriteBatch);
+            TextureManager.Instance.SetGraphicsDevice(GraphicsDevice);
+
             PersistanceManager.Load<GameSettings>(PersistanceManager.SettingsSaveFilePath, (s) => Settings = s, (_) => Settings = new());
             SoundEffectManager.Instance.SetVolume(Settings.MasterVolume, Settings.SoundEffectsVolume);
             MusicManager.Instance.SetVolume(Settings.MasterVolume, Settings.MusicVolume);
 
             mContentLoader.LoadEssenzialContent();
             mContentLoader.LoadContentAsync(() => IsSafeTotart = true, (ex) => throw ex);
-
-            mSpriteBatch = new SpriteBatch(GraphicsDevice);
-            TextureManager.Instance.SetSpriteBatch(mSpriteBatch);
         }
 
         private void StartMainMenue()

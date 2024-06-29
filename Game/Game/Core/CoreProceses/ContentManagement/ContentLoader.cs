@@ -2,13 +2,13 @@
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 
 namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
@@ -31,7 +31,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 
         private string[] GetDirectorys(string contentPath) => Directory.GetDirectories(contentPath, "*.*", SearchOption.TopDirectoryOnly);
 
-        private void LoadContent(string contentDirectory, Action<ContentManager, string, string> managerLoader)
+        public void LoadBuildContent(string contentDirectory, Action<ContentManager, string, string> managerLoader)
         {
             var rootDirectory = Path.Combine(mContent.RootDirectory, contentDirectory);
             var files = GetFiles(rootDirectory);
@@ -45,26 +45,41 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
                 if (split.Count > 1) split.RemoveAt(0);
                 var directory = Path.GetDirectoryName(Path.Combine(split.ToArray()));
                 var pathWithoutExtension = Path.Combine(directory, fileName);
-
                 ProcessMessage = $"Loading: {filePath}";
                 Process += 1d / files.Length;
-
                 managerLoader.Invoke(mContent, fileName, pathWithoutExtension);
+            }
+        }
+
+        public void LoadRawContent(string contentDirectory, Action<ContentManager, string, string> managerLoader)
+        {
+            var rootDirectory = Path.Combine(mContent.RootDirectory, contentDirectory);
+            var files = GetFiles(rootDirectory);
+            Process = 0;
+
+            for (int i = 0; i < files.Length; i++)
+            {
+                var filePath = files[i];
+                var fileName = Path.GetFileNameWithoutExtension(filePath);
+                var fileExtension = Path.GetExtension(filePath);
+                ProcessMessage = $"Loading: {filePath}";
+                Process += 1d / files.Length;
+                managerLoader.Invoke(mContent, fileName, filePath);
             }
         }
 
         public void LoadEssenzialContent()
         {
-            TextureManager.Instance.LoadTextureContent(mContent, "missingContent", "missingContent");
-            LoadContent("fonts", TextureManager.Instance.LoadFontContent);
-            LoadContent("gui", TextureManager.Instance.LoadTextureContent);
+            TextureManager.Instance.LoadBuildTextureContent(mContent, "missingContent", "missingContent");
+            LoadBuildContent("fonts", TextureManager.Instance.LoadBuildFontContent);
+            LoadBuildContent("gui", TextureManager.Instance.LoadBuildTextureContent);
         }
 
         private void LoadContent()
         {
-            LoadContent("music", MusicManager.Instance.LoadContent);
-            LoadContent("sfx", SoundEffectManager.Instance.LoadContent);
-            LoadContent("textures", TextureManager.Instance.LoadTextureContent);
+            LoadBuildContent("music", MusicManager.Instance.LoadBuildContent);
+            LoadBuildContent("sfx", SoundEffectManager.Instance.LoadBuildContent);
+            LoadBuildContent("textures", TextureManager.Instance.LoadBuildTextureContent);
             ProcessMessage = "Ready";
             Thread.Sleep(2000);
         }
@@ -85,5 +100,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 
             thread.Start();
         }
+
     }
 }

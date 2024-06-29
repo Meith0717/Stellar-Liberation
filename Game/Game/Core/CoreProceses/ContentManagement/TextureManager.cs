@@ -4,12 +4,14 @@
 
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 {
@@ -25,6 +27,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
         private readonly Dictionary<string, Texture2D> mTextures = new();
         private readonly Dictionary<string, SpriteFont> mSpriteFonts = new();
         public SpriteBatch SpriteBatch { get; private set; }
+        public GraphicsDevice GraphicsDevice { get; private set; }
 
         public void SetSpriteBatch(SpriteBatch spriteBatch)
         {
@@ -32,16 +35,29 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
             SpriteBatch = spriteBatch;
         }
 
-        public void LoadTextureContent(ContentManager content, string id, string filePath)
+        public void SetGraphicsDevice(GraphicsDevice graphicsDevice)
+        {
+            if (graphicsDevice is null) throw new Exception();
+            GraphicsDevice = graphicsDevice;
+        }
+
+        public void LoadBuildTextureContent(ContentManager content, string id, string filePath)
         {
             Texture2D texture = content.Load<Texture2D>(filePath);
             mTextures.Add(id, texture);
         }
 
-        public void LoadFontContent(ContentManager content, string id, string filePath)
+        public void LoadBuildFontContent(ContentManager content, string id, string filePath)
         {
             SpriteFont spriteFont = content.Load<SpriteFont>(filePath);
             mSpriteFonts.Add(id, spriteFont);
+        }
+
+        private void LoadTextureContent(string id, string filePath)
+        {
+            using FileStream f = new(filePath, FileMode.Open);
+            var texture = Texture2D.FromStream(GraphicsDevice, f);
+            mTextures.Add(id, texture);
         }
 
         public Texture2D GetTexture(string id)
@@ -68,12 +84,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
             return depth;
         }
 
+        #region Draw
         // render Textures ___________________________________________________________________________
-
-        public void Draw(string id, Vector2 position, float width, float height)
-        {
-            SpriteBatch.Draw(GetTexture(id), new RectangleF(position.X, position.Y, width, height).ToRectangle(), null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 1);
-        }
 
         public void Draw(string id, Vector2 position, float width, float height, Vector2 offset, float rotation)
         {
@@ -148,5 +160,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
         {
             SpriteBatch.DrawLine(start, end, color, thickness / zoom, GetDepth(depth));
         }
+        #endregion
     }
 }

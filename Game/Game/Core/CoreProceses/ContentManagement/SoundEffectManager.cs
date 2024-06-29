@@ -5,8 +5,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
@@ -21,9 +23,25 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 
         public SoundEffectManager(int maxSoundEffectInstances = 20) => MaxSoundEffectInstances = maxSoundEffectInstances;
 
-        public void LoadContent(ContentManager content, string iD, string path)
+        public void LoadBuildContent(ContentManager content, string iD, string path)
         {
             var soundEffect = content.Load<SoundEffect>(path);
+            var sfxInstances = new List<SoundEffectInstance>();
+            for (var i = 0; i < MaxSoundEffectInstances; i++) sfxInstances.Add(soundEffect.CreateInstance());
+            SoundEffectInstances[iD] = sfxInstances;
+        }
+
+        private void LoadContent(string iD, string path)
+        {
+            using FileStream f = new(path, FileMode.Open);
+            var soundEffect = SoundEffect.FromStream(f);
+            var sfxInstances = new List<SoundEffectInstance>();
+            for (var i = 0; i < MaxSoundEffectInstances; i++) sfxInstances.Add(soundEffect.CreateInstance());
+            SoundEffectInstances[iD] = sfxInstances;
+        }
+
+        public void AddTextureContent(SoundEffect soundEffect, string iD)
+        {
             var sfxInstances = new List<SoundEffectInstance>();
             for (var i = 0; i < MaxSoundEffectInstances; i++) sfxInstances.Add(soundEffect.CreateInstance());
             SoundEffectInstances[iD] = sfxInstances;
