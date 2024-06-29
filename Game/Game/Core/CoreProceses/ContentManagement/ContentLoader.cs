@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading;
+using static System.Net.WebRequestMethods;
 
 namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 {
@@ -94,13 +95,19 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
         {
             var rootDirectory = Path.Combine(mContent.RootDirectory, "weapons");
             var weaponsDirectorys = GetDirectorys(rootDirectory);
+            Process = 0;
             foreach (var weaponDirectory in weaponsDirectorys)
             {
                 var weaponID = Path.GetFileName(weaponDirectory);
                 var weaponFiles = GetFiles(weaponDirectory);
+
+                ProcessMessage = $"Loading: {weaponFiles}";
+                Process += 1d / weaponsDirectorys.Length;
+
                 foreach (string weaponFile in weaponFiles)
                 {
                     var fileName = Path.GetFileName(weaponFile);
+
                     switch (fileName.ToLower())
                     {
                         case "config.json":
