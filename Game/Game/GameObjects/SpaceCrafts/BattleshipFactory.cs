@@ -8,6 +8,7 @@ using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons;
 using StellarLiberation.Game.GameObjects.Spacecrafts;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 
 namespace StellarLiberation.Game.GameObjects.SpaceCrafts
@@ -19,6 +20,8 @@ namespace StellarLiberation.Game.GameObjects.SpaceCrafts
 
         private readonly Dictionary<string, Dictionary<string, JsonElement>> mBattleshipConfigs = new();
         private readonly Dictionary<string, Dictionary<string, JsonElement>> mWeaponConfigs = new();
+
+        public List<string> IDs => mWeaponConfigs.Keys.ToList();
 
         public void AddConfig(string id, Dictionary<string, JsonElement> config) => mBattleshipConfigs[id] = config;
         public void AddWeapons(string id, Dictionary<string, JsonElement> weapons) => mWeaponConfigs[id] = weapons;

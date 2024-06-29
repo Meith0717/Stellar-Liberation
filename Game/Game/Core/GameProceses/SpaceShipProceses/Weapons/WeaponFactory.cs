@@ -5,6 +5,7 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.Extensions;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 
 namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons
@@ -15,6 +16,8 @@ namespace StellarLiberation.Game.Core.GameProceses.SpaceShipProceses.Weapons
         public static WeaponFactory Instance { get { return mInstance ??= new(); } }
 
         private readonly Dictionary<string, Dictionary<string, JsonElement>> mWeaponConfigs = new();
+
+        public List<string> IDs => mWeaponConfigs.Keys.ToList();
 
         public void AddConfig(string name, Dictionary<string, JsonElement> config) => mWeaponConfigs[name] = config;
 
