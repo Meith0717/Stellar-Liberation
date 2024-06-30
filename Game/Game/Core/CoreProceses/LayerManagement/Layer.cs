@@ -93,11 +93,14 @@ public abstract class Layer
     public virtual void Destroy()
     {
         ClearUiElements();
+        mRenderTarget2D.Dispose();
+        mRenderTarget2D = null;
     }
 
     public virtual void ApplyResolution()
     {
         mRenderTarget2D.Dispose();
+        mRenderTarget2D = null;
         foreach (UiElement uiElement in mUiElements)
             uiElement.ApplyResolution(GraphicsDevice.Viewport.Bounds, ResolutionManager.Resolution);
         mHoverText.ApplyResolution(GraphicsDevice.Viewport.Bounds, ResolutionManager.Resolution);

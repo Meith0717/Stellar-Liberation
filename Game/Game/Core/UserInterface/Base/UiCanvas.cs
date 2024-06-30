@@ -27,6 +27,14 @@ namespace StellarLiberation.Game.Core.UserInterface
             mKeyValuePairs.Add("", child);
         }
 
+        public void Remove(object ID) => mChildren.Remove(GetChild(ID));
+
+        public void RemoveChild(object ID)
+        {
+            mChildren.Remove(GetChild(ID));
+            mKeyValuePairs.Remove(ID);
+        }
+
         public UiElement GetChild(object key) => mKeyValuePairs[key];
 
         public void ClearChilds() => mChildren.Clear();

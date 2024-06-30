@@ -22,10 +22,10 @@ namespace StellarLiberation.Game.Layers.MenueLayers
 
             var buttonFrame = new UiGrid(1, 6)
             {
-                Anchor = Anchor.Center,
+                Anchor = Anchor.E,
                 Height = 500,
                 Width = 400,
-                HSpace = 20
+                HSpace = 100,
             };
             mainFrame.AddChild(buttonFrame);
 
