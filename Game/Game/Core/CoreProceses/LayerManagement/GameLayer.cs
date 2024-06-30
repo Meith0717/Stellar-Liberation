@@ -12,7 +12,6 @@ using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.Layers;
-using StellarLiberation.Game.Layers.GameLayers;
 
 namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
 {

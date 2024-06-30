@@ -7,9 +7,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
-using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
-using StellarLiberation.Game.Core.UserInterface.UiElements;
 
 namespace StellarLiberation.Game.Layers.MenueLayers
 {
@@ -18,7 +16,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
         public PauseLayer(GameState gameState, Game1 game1)
             : base(game1, false)
         {
-            var mainFrame = new UiFrame(false) { RelHeight = 1, RelWidth = 1, Alpha = .5f };
+            var mainFrame = new UiCanvas() { RelHeight = 1, RelWidth = 1 };
 
             var buttonFrame = new UiGrid(1, 6)
             {

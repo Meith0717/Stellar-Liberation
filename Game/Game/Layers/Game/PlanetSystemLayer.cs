@@ -4,15 +4,12 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Visuals.ParallaxSystem;
 using StellarLiberation.Game.Core.Visuals.Rendering;
-using StellarLiberation.Game.GameObjects.Spacecrafts;
-using System.Linq;
 
 namespace StellarLiberation.Game.Layers.GameLayers
 {

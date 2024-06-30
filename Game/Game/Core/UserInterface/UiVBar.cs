@@ -8,7 +8,7 @@ using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 
-namespace StellarLiberation.Game.Core.UserInterface.UiElements
+namespace StellarLiberation.Game.Core.UserInterface
 {
     internal class UiVBar : UiElement
     {
@@ -38,14 +38,14 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
         {
             var ratio = 26 / 6f;
 
-            mTextureFrame = new(Canvas.Position.X, Canvas.Position.Y, Canvas.Bounds.Width, Canvas.Bounds.Width);
+            mTextureFrame = new(Position.X, Position.Y, Bounds.Width, Bounds.Width);
 
-            var sideFrameWidth = Canvas.Bounds.Width;
-            var sideFrameHeight = (int)(Canvas.Bounds.Width / ratio);
+            var sideFrameWidth = Bounds.Width;
+            var sideFrameHeight = (int)(Bounds.Width / ratio);
 
-            mTopShadowFrame = new(Canvas.Position.X, mTextureFrame.Bottom, sideFrameWidth, sideFrameHeight);
-            mMidShadowFrame = new(Canvas.Position.X, mTopShadowFrame.Bottom, Canvas.Bounds.Width, Canvas.Bounds.Height - sideFrameHeight * 2 - mTextureFrame.Height);
-            mBottomShadowFrame = new(Canvas.Position.X, mMidShadowFrame.Bottom, sideFrameWidth, sideFrameHeight);
+            mTopShadowFrame = new(Position.X, mTextureFrame.Bottom, sideFrameWidth, sideFrameHeight);
+            mMidShadowFrame = new(Position.X, mTopShadowFrame.Bottom, Bounds.Width, Bounds.Height - sideFrameHeight * 2 - mTextureFrame.Height);
+            mBottomShadowFrame = new(Position.X, mMidShadowFrame.Bottom, sideFrameWidth, sideFrameHeight);
 
             mBottomFrame = mBottomShadowFrame;
             mMidFrame = new(mMidShadowFrame.X, mBottomFrame.Top + 1f - mMidShadowFrame.Height * (float)Percentage, mMidShadowFrame.Width, mMidShadowFrame.Height * (float)Percentage);
@@ -65,12 +65,7 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
             TextureManager.Instance.Draw("barVerticalTop", mTopFrame.Position, mTopFrame.Width, mTopFrame.Height, mColor);
             TextureManager.Instance.Draw("barVerticalBottom", mBottomFrame.Position, mBottomFrame.Width, mBottomFrame.Height, mColor);
             TextureManager.Instance.Draw("barVerticalMid", mMidFrame.Position, mMidFrame.Width, mMidFrame.Height, mColor);
-            Canvas.Draw();
-        }
-
-        public override void ApplyResolution(Rectangle root, Resolution resolution)
-        {
-            Canvas.UpdateFrame(root, resolution.UiScaling);
+            DrawCanvas();
         }
     }
 }

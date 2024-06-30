@@ -1,4 +1,4 @@
-﻿// PlanetsystemHud.cs 
+﻿// PlanetSystemHudLayer.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
@@ -9,10 +9,7 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using StellarLiberation.Game.Core.GameProceses;
-using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
-using StellarLiberation.Game.Core.UserInterface.UiElements;
-using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.GameObjects.Spacecrafts;
 using StellarLiberation.Game.Layers.MenueLayers;
 using System.Linq;
@@ -21,7 +18,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
 {
     internal class PlanetSystemHudLayer : Layer
     {
-        private readonly UiFrame mMainFrame;
+        private readonly UiCanvas mMainFrame;
         private readonly PlanetsystemLayer mPlanetsystemLayer;
         private readonly GameState mGameState;
 
@@ -29,7 +26,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
         {
             mGameState = gameState;
             mPlanetsystemLayer = planetsystemLayer;
-            mMainFrame = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
+            mMainFrame = new() { RelWidth = 1, RelHeight = 1 };
             mMainFrame.AddChild(new UiButton("pauseButton", "") { Anchor = Anchor.NE, HSpace = 20, VSpace = 20, OnClickAction = () => LayerManager.AddLayer(new PauseLayer(gameState, Game1)) });
             mMainFrame.AddChild(new UiButton("mapButton", "") { Anchor = Anchor.SE, HSpace = 20, VSpace = 20, OnClickAction = gameState.OpenMap });
         }

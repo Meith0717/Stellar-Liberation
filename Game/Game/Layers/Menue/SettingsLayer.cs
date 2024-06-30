@@ -9,9 +9,7 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
-using StellarLiberation.Game.Core.Objects.UiElements;
 using StellarLiberation.Game.Core.UserInterface;
-using StellarLiberation.Game.Core.UserInterface.UiElements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,21 +18,21 @@ namespace StellarLiberation.Game.Layers.MenueLayers
 {
     public class SettingsLayer : Layer
     {
-        private readonly UiFrame mMainFrame;
+        private readonly UiCanvas mMainFrame;
         private readonly UiGrid mSettingsGrid;
-        private UiSlider mMasterSlider;
-        private UiSlider mMusicSlider;
-        private UiSlider mSfxSlider;
-        private UiVariableSelector<string> mResolutionSelector;
-        private UiVariableSelector<float> mParticleMultiplier;
-        private UiVariableSelector<string> mRefreshRate;
-        private UiCheckBox mVsync;
+        private readonly UiSlider mMasterSlider;
+        private readonly UiSlider mMusicSlider;
+        private readonly UiSlider mSfxSlider;
+        private readonly UiVariableSelector<string> mResolutionSelector;
+        private readonly UiVariableSelector<float> mParticleMultiplier;
+        private readonly UiVariableSelector<string> mRefreshRate;
+        private readonly UiCheckBox mVsync;
 
         public SettingsLayer(Game1 game1) : base(game1, false)
         {
-            mMainFrame = new() { FillScale = FillScale.Both, Alpha = 0 };
+            mMainFrame = new() { FillScale = FillScale.Both };
 
-            UiFrame settingsFrame; mMainFrame.AddChild(settingsFrame = new() { Width = 1000, Height = 900, Anchor = Anchor.Center });
+            UiCanvas settingsFrame; mMainFrame.AddChild(settingsFrame = new() { Width = 1000, Height = 900, Anchor = Anchor.Center });
             settingsFrame.AddChild(new UiText("neuropolitical", "Settings", .1f) { Anchor = Anchor.NW, HSpace = 20, VSpace = 20 });
             settingsFrame.AddChild(mSettingsGrid = new UiGrid(new List<double>() { 0.3, 0.7 }, Enumerable.Repeat(1d / 15, 15).ToList()) { RelHeight = .9f, RelWidth = .9f, Anchor = Anchor.S, VSpace = 10 });
 

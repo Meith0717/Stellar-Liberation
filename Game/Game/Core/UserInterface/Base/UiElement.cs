@@ -10,20 +10,26 @@ namespace StellarLiberation.Game.Core.UserInterface
 {
     public abstract class UiElement
     {
-        protected Canvas Canvas;
+        private readonly Canvas Canvas;
         protected float mUiScale;
         protected Rectangle mRoot;
 
         public bool IsDisposed { get; protected set; }
         public UiElement() => Canvas = new Canvas();
-        public abstract void Update(InputState inputState, GameTime gameTime);
-        public abstract void Draw();
-        public Rectangle Bounds => Canvas.Bounds;
+        public virtual void Update(InputState inputState, GameTime gameTime) 
+        {
+            Canvas.UpdateFrame(mRoot, mUiScale);
+        }
+
         public virtual void ApplyResolution(Rectangle root, Resolution resolution)
         {
             mUiScale = resolution.UiScaling;
             mRoot = root;
+            Canvas.UpdateFrame(mRoot, mUiScale);
         }
+
+        public abstract void Draw();
+        public void DrawCanvas() => Canvas.Draw();
 
         // Position propeties
         public float RelX { set => Canvas.RelativeX = value; }
@@ -42,5 +48,12 @@ namespace StellarLiberation.Game.Core.UserInterface
         public int VSpace { set => Canvas.VSpace = value; }
         public Anchor Anchor { set => Canvas.Anchor = value; }
         public FillScale FillScale { set => Canvas.FillScale = value; }
+
+        // Utilitys
+        public bool Contains(Vector2 position) => Bounds.Contains(position);
+        public Vector2 Offset => new(Bounds.Width / 2, Bounds.Height / 2);
+        public Vector2 Center => Bounds.Center.ToVector2();
+        public Vector2 Position => Bounds.Location.ToVector2();
+        public Rectangle Bounds => Canvas.Bounds;
     }
 }

@@ -4,7 +4,7 @@
 
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 
-namespace StellarLiberation.Game.Core.UserInterface.UiElements
+namespace StellarLiberation.Game.Core.UserInterface
 {
     public class UiCheckBox : UiButton
     {
@@ -22,8 +22,8 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
         public override void Draw()
         {
             var spriteId = mState ? "toggleOn" : "toggleOff";
-            TextureManager.Instance.Draw(spriteId, Canvas.Position, Canvas.Bounds.Width, Canvas.Bounds.Height, Color);
-            Canvas.Draw();
+            TextureManager.Instance.Draw(spriteId, Position, Bounds.Width, Bounds.Height, Color);
+            DrawCanvas();
         }
     }
 }

@@ -53,8 +53,8 @@ namespace StellarLiberation
             base.Initialize();
             LayerManager = new(this);
             LayerManager.AddLayer(new LoadingLayer(this, mContentLoader));
-            ResolutionManager.Apply(Settings.Resolution);
-            // GraphicsManager.ToggleFullScreen();
+            ResolutionManager.Apply("1280x720");
+            //GraphicsManager.ToggleFullScreen();
         }
 
         protected override void LoadContent()

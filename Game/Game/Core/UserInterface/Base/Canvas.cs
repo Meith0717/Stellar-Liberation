@@ -14,7 +14,7 @@ namespace StellarLiberation.Game.Core.UserInterface
     public class Canvas
     {
         // UiFrame
-        private Rectangle mCanvas;
+        public Rectangle Bounds;
 
         // Needet properties
         public int? X;
@@ -45,7 +45,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             ManageAnchor(root, ref x, ref y, ref width, ref height);
             ManageSpacing(root, ref x, ref y, ref width, ref height, HSpace.HasValue ? HSpace * uiScale : null, VSpace.HasValue ? VSpace * uiScale : null);
 
-            mCanvas = new(x, y, width, height);
+            Bounds = new(x, y, width, height);
         }
 
         #region Apply Resolution and Position
@@ -196,27 +196,18 @@ namespace StellarLiberation.Game.Core.UserInterface
         public void MouseDrag(InputState inputState)
         {
             Vector2 delta = inputState.mMousePosition - mLastMousePosition;
-            mCanvas.X += (int)delta.X;
-            mCanvas.Y += (int)delta.Y;
+            Bounds.X += (int)delta.X;
+            Bounds.Y += (int)delta.Y;
             mLastMousePosition = inputState.mMousePosition;
         }
 
         #endregion
 
-        public bool Contains(Vector2 position) => mCanvas.Contains(position);
-
-        public Vector2 Offset => new(mCanvas.Width / 2, mCanvas.Height / 2);
-
-        public Vector2 Center => mCanvas.Center.ToVector2();
-
-        public Vector2 Position => mCanvas.Location.ToVector2();
-
-        public Rectangle Bounds => mCanvas;
 
         public void Draw()
         {
             if (true) return;
-            TextureManager.Instance.DrawRectangleF(mCanvas, Color.Green, 1, 1);
+            TextureManager.Instance.DrawRectangleF(Bounds, Color.Green, 1, 1);
         }
     }
 }

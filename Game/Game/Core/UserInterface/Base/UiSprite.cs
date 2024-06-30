@@ -9,29 +9,23 @@ using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 
 namespace StellarLiberation.Game.Core.UserInterface
 {
-    public class UiSprite : UiElement
+    public class UiSprite(string SpriteId, float scale = 1) : UiElement
     {
-        protected string mSpriteId;
-        public float Rotation;
-        public float Scale;
+        protected string mSpriteId = SpriteId;
+        public float Rotation = 0;
+        public float Scale = scale;
         public Color Color = Color.White;
-
-        public UiSprite(string SpriteId, float scale = 1)
-        {
-            mSpriteId = SpriteId;
-            Scale = scale;
-        }
 
         public override void Draw()
         {
-            TextureManager.Instance.Draw(mSpriteId, Canvas.Position, Canvas.Bounds.Width, Canvas.Bounds.Height, Color);
-            Canvas.Draw();
+            TextureManager.Instance.Draw(mSpriteId, Position, Bounds.Width, Bounds.Height, Color);
+            DrawCanvas();
         }
 
         public void DrawWithRotation()
         {
-            TextureManager.Instance.Draw(mSpriteId, Canvas.Position, Canvas.Bounds.Width, Canvas.Bounds.Height, Canvas.Offset, Rotation);
-            Canvas.Draw();
+            TextureManager.Instance.Draw(mSpriteId, Position, Bounds.Width, Bounds.Height, Offset, Rotation);
+            DrawCanvas();
         }
 
         public override void ApplyResolution(Rectangle root, Resolution resolution)
@@ -39,10 +33,7 @@ namespace StellarLiberation.Game.Core.UserInterface
             var texture = TextureManager.Instance.GetTexture(mSpriteId);
             Width = (int)(texture.Width * Scale);
             Height = (int)(texture.Height * Scale);
-            Canvas.UpdateFrame(root, resolution.UiScaling);
+            base.ApplyResolution(root, resolution);
         }
-
-        public override void Update(InputState inputState, GameTime gameTime)
-        {; }
     }
 }

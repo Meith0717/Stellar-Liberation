@@ -5,7 +5,6 @@
 using Microsoft.Xna.Framework;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
-using StellarLiberation.Game.Core.UserInterface.UiElements;
 using System;
 using System.Collections.Generic;
 
@@ -51,13 +50,12 @@ namespace StellarLiberation.Game.Core.UserInterface
             mLeftArrow.Draw();
             mRightArrow.Draw();
             mVariable.Draw();
-            Canvas.Draw();
+            DrawCanvas();
         }
 
         public override void ApplyResolution(Rectangle root, Resolution resolution)
         {
             base.ApplyResolution(root, resolution);
-            Canvas.UpdateFrame(root, resolution.UiScaling);
             mVariable.ApplyResolution(Bounds, resolution);
 
             mLeftArrow.Width = mVariable.Bounds.Width;

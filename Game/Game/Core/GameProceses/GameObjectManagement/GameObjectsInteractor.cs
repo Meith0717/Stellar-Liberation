@@ -11,7 +11,6 @@ using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses.GameObjectManagement;
 using StellarLiberation.Game.Core.GameProceses.PositionManagement;
 using StellarLiberation.Game.Core.Visuals.Rendering;
-using StellarLiberation.Game.Frames;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.GameObjects.Spacecrafts;
 using StellarLiberation.Game.Layers;
@@ -105,7 +104,7 @@ namespace StellarLiberation.Game.Core.GameProceses
             if (!inputState.HasAction(ActionType.CtrlLeft) || SelectedFlagships.Count < 1)
             {
                 SelectedFlagships.Clear();
-                hudLayer.AddUiElement(new FlagshipPopup((Flagship)spaceship, hudLayer.ClearUiElements));
+                //hudLayer.AddUiElement(new FlagshipPopup((Flagship)spaceship, hudLayer.ClearUiElements));
             }
             SelectedFlagships.Add((Flagship)spaceship);
         }

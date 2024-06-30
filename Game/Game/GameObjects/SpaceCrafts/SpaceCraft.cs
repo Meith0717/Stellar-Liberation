@@ -20,7 +20,7 @@ using System.Collections.Generic;
 namespace StellarLiberation.Game.GameObjects.Spacecrafts
 {
     [Serializable]
-    public abstract class Spacecraft : GameObject, IGameObject, ICollidable
+    public class Spacecraft : GameObject, IGameObject, ICollidable
     {
         [JsonProperty] public float Mass => MathF.PI * 1.33f * BoundedBox.Radius;
         [JsonProperty] public Defense Defense { get; private set; }

@@ -7,7 +7,7 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using System.Collections.Generic;
 
-namespace StellarLiberation.Game.Core.UserInterface.UiElements
+namespace StellarLiberation.Game.Core.UserInterface
 {
 
     public class UiGrid : UiElement
@@ -16,11 +16,11 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
         {
             public UiElement UiElement;
 
-            public override void Draw() { UiElement?.Draw(); Canvas.Draw(); }
+            public override void Draw() { UiElement?.Draw(); DrawCanvas(); }
 
             public override void ApplyResolution(Rectangle root, Resolution resolution)
             {
-                Canvas.UpdateFrame(root, resolution.UiScaling);
+                base.ApplyResolution(root, resolution);
                 UiElement?.ApplyResolution(Bounds, resolution);
             }
 
@@ -86,12 +86,12 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
         public override void Draw()
         {
             foreach (var elem in mGrid.Values) elem.Draw();
-            Canvas.Draw();
+            DrawCanvas();
         }
 
         public override void ApplyResolution(Rectangle root, Resolution resolution)
         {
-            Canvas.UpdateFrame(root, resolution.UiScaling);
+            base.ApplyResolution(root, resolution);
             foreach (var child in mGrid.Values)
                 child.ApplyResolution(Bounds, resolution);
         }

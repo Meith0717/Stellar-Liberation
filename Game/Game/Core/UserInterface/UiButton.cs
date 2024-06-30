@@ -8,7 +8,7 @@ using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.ResolutionManagement;
 using System;
 
-namespace StellarLiberation.Game.Core.UserInterface.UiElements
+namespace StellarLiberation.Game.Core.UserInterface
 {
     public enum TextAllign { W, E, Center }
 
@@ -30,14 +30,14 @@ namespace StellarLiberation.Game.Core.UserInterface.UiElements
                     TextAllign.W => Anchor.W,
                     TextAllign.E => Anchor.E,
                     TextAllign.Center => Anchor.Center,
-                    _ => throw new System.NotImplementedException()
+                    _ => throw new NotImplementedException()
                 }
             };
         }
 
         public override void Update(InputState inputState, GameTime gameTime)
         {
-            IsHover = Canvas.Contains(inputState.mMousePosition);
+            IsHover = Contains(inputState.mMousePosition);
             if (IsHover && !IsDisabled && IsHover != mLastHoverState) SoundEffectManager.Instance.PlaySound("hover");
             mLastHoverState = IsHover;
             if (IsHover)

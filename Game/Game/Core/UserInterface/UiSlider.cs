@@ -25,18 +25,19 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Update(InputState inputState, GameTime gameTime)
         {
-            mSliderLength = MathF.Abs(Canvas.Bounds.Left - Canvas.Bounds.Right);
+            mSliderLength = MathF.Abs(Bounds.Left - Bounds.Right);
 
             mSliderDotPosition = sliderPosition;
-            if (!Canvas.Contains(inputState.mMousePosition)) return;
+            if (!Contains(inputState.mMousePosition)) return;
             if (!inputState.HasAction(ActionType.LeftClickHold)) return;
             mSliderValue = GetValue(inputState.mMousePosition);
             mSliderDotPosition = sliderPosition;
+            base.Update(inputState, gameTime);
         }
 
         private float GetValue(Vector2 mousePos)
         {
-            var relMouselength = mousePos.X - Canvas.Bounds.Left;
+            var relMouselength = mousePos.X - Bounds.Left;
             var tmp = relMouselength / mSliderLength;
             if (tmp > 1) return 1;
             if (tmp < 0) return 0;
@@ -47,22 +48,21 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Draw()
         {
-            var sliderPos = new Vector2(Canvas.Bounds.Left, Canvas.Center.Y);
-            var dotDim = new Vector2(Canvas.Bounds.Height, Canvas.Bounds.Height) * 1.2f;
+            var sliderPos = new Vector2(Bounds.Left, Bounds.Center.Y);
+            var dotDim = new Vector2(Bounds.Height, Bounds.Height) * 1.2f;
 
             TextureManager.Instance.DrawLine(sliderPos, mSliderLength, Color.Black * 0.9f, 10 * mUiScale, 1);
             TextureManager.Instance.DrawLine(sliderPos, mSliderDotPosition, Color.MonoGameOrange, 10 * mUiScale, 0);
             TextureManager.Instance.Draw("dot", mSliderDotPosition - (dotDim / 2), dotDim.X, dotDim.Y, mWasHovered ? Color.DarkGray : Color.White);
-            Canvas.Draw();
+            DrawCanvas();
         }
 
         public override void ApplyResolution(Rectangle root, Resolution resolution)
         {
-            base.ApplyResolution(root, resolution);
             Height = 25;
-            Canvas.UpdateFrame(root, resolution.UiScaling);
+            base.ApplyResolution(root, resolution);
         }
 
-        private Vector2 sliderPosition => new(Canvas.Bounds.Left + mSliderLength * mSliderValue, Canvas.Center.Y);
+        private Vector2 sliderPosition => new(Bounds.Left + mSliderLength * mSliderValue, Center.Y);
     }
 }
