@@ -2,6 +2,7 @@
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
+using MathNet.Numerics.Distributions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
@@ -19,6 +20,8 @@ namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 public abstract class Layer
 {
     [JsonIgnore] public readonly bool UpdateBelow;
+    [JsonIgnore] public readonly bool DrawBelow;
+    [JsonIgnore] public bool Blur;
     [JsonIgnore] public readonly LayerManager LayerManager;
     [JsonIgnore] public readonly GameSettings GameSettings;
     [JsonIgnore] protected readonly ResolutionManager ResolutionManager;
@@ -27,8 +30,9 @@ public abstract class Layer
     [JsonIgnore] protected readonly PersistanceManager PersistanceManager;
     [JsonIgnore] private readonly List<UiElement> mUiElements;
     [JsonIgnore] private readonly UiText mHoverText;
+    [JsonIgnore] private RenderTarget2D mRenderTarget2D;
 
-    protected Layer(Game1 game1, bool updateBelow)
+    protected Layer(Game1 game1, bool updateBelow, bool drawBelow = true)
     {
         Game1 = game1;
         LayerManager = game1.LayerManager;
@@ -39,6 +43,8 @@ public abstract class Layer
         UpdateBelow = updateBelow;
         mUiElements = new();
         mHoverText = new UiText("neuropolitical", "", .1f);
+        DrawBelow = drawBelow;
+        mRenderTarget2D = new(game1.GraphicsDevice, game1.GraphicsManager.PreferredBackBufferWidth, game1.GraphicsManager.PreferredBackBufferHeight);
     }
 
     public virtual void Initialize() {; }
@@ -75,6 +81,15 @@ public abstract class Layer
         mHoverText.Text = "";
     }
 
+    public RenderTarget2D GetRenderTarget(SpriteBatch spriteBatch)
+    {
+        GraphicsDevice.SetRenderTarget(mRenderTarget2D);
+        GraphicsDevice.Clear(Color.Transparent);
+        Draw(spriteBatch);
+        GraphicsDevice.SetRenderTarget(null);
+        return mRenderTarget2D;
+    }
+
     public virtual void Destroy()
     {
         ClearUiElements();
@@ -82,8 +97,10 @@ public abstract class Layer
 
     public virtual void ApplyResolution()
     {
+        mRenderTarget2D.Dispose();
         foreach (UiElement uiElement in mUiElements)
             uiElement.ApplyResolution(GraphicsDevice.Viewport.Bounds, ResolutionManager.Resolution);
         mHoverText.ApplyResolution(GraphicsDevice.Viewport.Bounds, ResolutionManager.Resolution);
+        mRenderTarget2D = new(Game1.GraphicsDevice, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
     }
 }

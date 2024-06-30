@@ -35,6 +35,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
 
         public void LoadEssenzialContent()
         {
+            EffectManager.Instance.LoadBuildContent(mContent, "Blur");
             TextureManager.Instance.LoadBuildTextureContent(mContent, "missingContent", "missingContent");
             LoadBuildContent("fonts", TextureManager.Instance.LoadBuildFontContent);
             LoadBuildContent("gui", TextureManager.Instance.LoadBuildTextureContent);
@@ -52,7 +53,6 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
                     LoadWeapons();
                     LoadBattleShips();
                     LoadFlagShips();
-                    EffectManager.Instance.LoadBuildContent(mContent, "Blur");
                     ProcessMessage = "Ready";
                     Thread.Sleep(2000);
                 }

@@ -17,8 +17,7 @@ namespace StellarLiberation.Game.Core.UserInterface
     {
         private readonly LinkedList<UiElement> mChildren = new();
         private readonly Dictionary<object, UiElement> mKeyValuePairs = new();
-        public float Alpha = .5f;
-        
+        public float Alpha = .8f;
 
         public void AddChild(UiElement child) => mChildren.AddLast(child);
 

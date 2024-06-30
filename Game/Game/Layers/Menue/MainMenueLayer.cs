@@ -17,6 +17,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
         {
             var mainFrame = new UiCanvas() { RelWidth = 1, RelHeight = 1};
             mainFrame.AddChild(new UiSprite("menueBackground") { FillScale = FillScale.FillIn, Anchor = Anchor.Center });
+
             mainFrame.AddChild(new UiText("brolink", "Stellar\nLiberation", 1) { Anchor = Anchor.NW, HSpace = 50, VSpace = 50 });
             mainFrame.AddChild(new UiButton("button", "New Game") { VSpace = 20, HSpace = 20, RelY = .5f, OnClickAction = () => LayerManager.AddLayer(new GameState(Game1)) });
 

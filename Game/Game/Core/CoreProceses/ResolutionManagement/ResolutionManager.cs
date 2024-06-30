@@ -15,7 +15,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
         private bool mIsFullScreen;
         private readonly GraphicsDeviceManager mGraphicsManager;
         public readonly Dictionary<string, Resolution> mResolutions = new();
-
+ 
         public ResolutionManager(GraphicsDeviceManager graphicsManager)
         {
             mGraphicsManager = graphicsManager;
@@ -27,7 +27,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ResolutionManagement
                 new(1280, 800, 1.25f),       // 8:5      WXGA
                 new(1366, 768, 1.1842f),     // 16:9     HD
                 new(1440, 900, 1.1667f),     // 16:10    WXGA+
-                new(1600, 900, 1.0625f),     // 16:9     HD+
+                new(1600, 900, 0.8f),     // 16:9     HD+
                 new(1600, 1200, 1.0f),       // 4:3      UXGA
                 new(1680, 1050, 0.9706f),    // 16:10    WSXGA+
                 new(1920, 1080, 1.0f),       // 16:9     Full HD

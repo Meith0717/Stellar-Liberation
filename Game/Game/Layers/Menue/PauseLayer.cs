@@ -16,7 +16,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
         public PauseLayer(GameState gameState, Game1 game1)
             : base(game1, false)
         {
-            var mainFrame = new UiCanvas() { RelHeight = 1, RelWidth = 1 };
+            var mainFrame = new UiCanvas() { RelHeight = 1, RelWidth = 1, Alpha = 0 };
 
             mainFrame.AddChild(new UiText("neuropolitical", "Pause", .8f) { Anchor = Anchor.N, VSpace = 50 });
 

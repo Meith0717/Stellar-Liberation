@@ -5,6 +5,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
+using StellarLiberation.Game.Core.CoreProceses.Debugging;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.CoreProceses.Persistance;
@@ -25,6 +26,7 @@ namespace StellarLiberation
 
         private readonly InputManager mInputManager;
         private readonly ContentLoader mContentLoader;
+        private readonly FrameCounter mFrameCounter;
         private SpriteBatch mSpriteBatch;
         private bool IAmActive;
         private bool IsSafeTotart;
@@ -37,6 +39,7 @@ namespace StellarLiberation
             ResolutionManager = new(GraphicsManager);
             PersistanceManager = new();
             mContentLoader = new(Content);
+            mFrameCounter = new(200);
 
             Activated += ActivateMyGame;
             Deactivated += DeactivateMyGame;
@@ -53,8 +56,8 @@ namespace StellarLiberation
             base.Initialize();
             LayerManager = new(this);
             LayerManager.AddLayer(new LoadingLayer(this, mContentLoader));
-            ResolutionManager.Apply(Settings.Resolution);
-            GraphicsManager.ToggleFullScreen();
+            ResolutionManager.Apply("1600x900");
+            // GraphicsManager.ToggleFullScreen();
         }
 
         protected override void LoadContent()
@@ -95,6 +98,7 @@ namespace StellarLiberation
                 LayerManager.OnResolutionChanged();
             if (IAmActive)
             {
+                mFrameCounter.Update(gameTime);
                 InputState inputState = mInputManager.Update(gameTime);
                 inputState.DoAction(ActionType.ToggleFullscreen, () => ResolutionManager.ToggleFullscreen(Settings.Resolution));
                 LayerManager.Update(gameTime, inputState);
@@ -104,8 +108,12 @@ namespace StellarLiberation
 
         protected override void Draw(GameTime gameTime)
         {
+            mFrameCounter.UpdateFrameCouning();
             GraphicsDevice.Clear(Color.Transparent);
             LayerManager.Draw(mSpriteBatch);
+            mSpriteBatch.Begin();
+            TextureManager.Instance.DrawString("consola", new Vector2(1, 1), $"{MathF.Round(mFrameCounter.CurrentFramesPerSecond)} fps", 0.1f, Color.White);
+            mSpriteBatch.End();
             base.Draw(gameTime);
         }
 

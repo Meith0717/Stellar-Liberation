@@ -36,11 +36,13 @@ namespace StellarLiberation.Game.Layers
             spriteBatch.Begin();
             mCanvas.Draw();
             spriteBatch.End();
+            
         }
 
         public override void ApplyResolution()
         {
             mCanvas.ApplyResolution(GraphicsDevice.Viewport.Bounds, ResolutionManager.Resolution);
+            base.ApplyResolution();
         }
 
         public override void Update(GameTime gameTime, InputState inputState)

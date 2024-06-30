@@ -28,7 +28,6 @@ namespace StellarLiberation.Game.Layers
 
         [JsonIgnore] public readonly DebugSystem DebugSystem = new();
         [JsonIgnore] private readonly LinkedList<GameLayer> mLayers = new();
-        [JsonIgnore] private readonly FrameCounter mFrameCounter = new(200);
         [JsonIgnore] public readonly GameObjectsInteractor GameObjectsInteractor = new();
          [JsonProperty] public readonly MapState MapState = new();
         [JsonProperty] private readonly MapConfig mMapConfig;
@@ -36,7 +35,7 @@ namespace StellarLiberation.Game.Layers
 
         [JsonIgnore] public PlanetsystemState ActualPlanetSystem { get; private set; }
 
-        public GameState(Game1 game1) : base(game1, false)
+        public GameState(Game1 game1) : base(game1, false, false)
         {
             mMapConfig = new(3, 3, 0);
             PlanetSystemStates = MapFactory.Generate(mMapConfig);
@@ -81,7 +80,6 @@ namespace StellarLiberation.Game.Layers
         public override void Update(GameTime gameTime, InputState inputState)
         {
             inputState.DoAction(ActionType.ESC, () => LayerManager.AddLayer(new PauseLayer(this, Game1)));
-            mFrameCounter.Update(gameTime);
             DebugSystem.Update(inputState);
             MapState.Update(gameTime);
             foreach (var planetsystemState in PlanetSystemStates)
@@ -91,12 +89,10 @@ namespace StellarLiberation.Game.Layers
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            mFrameCounter.UpdateFrameCouning();
             GraphicsDevice.Clear(Color.Black);
             mLayers.Last?.Value.Draw(spriteBatch);
             spriteBatch.Begin();
             DebugSystem.ShowInfo(new(10, 10));
-            TextureManager.Instance.DrawString("consola", new Vector2(1, 1), $"{MathF.Round(mFrameCounter.CurrentFramesPerSecond)} fps", 0.1f, Color.White);
             spriteBatch.End();
             base.Draw(spriteBatch);
         }
@@ -105,6 +101,7 @@ namespace StellarLiberation.Game.Layers
         {
             foreach (var layer in mLayers)
                 layer.ApplyResolution();
+            base.ApplyResolution();
         }
     }
 }

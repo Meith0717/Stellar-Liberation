@@ -30,7 +30,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
 
         public SettingsLayer(Game1 game1) : base(game1, false)
         {
-            mMainFrame = new() { FillScale = FillScale.Both };
+            mMainFrame = new() { FillScale = FillScale.Both, Alpha = 0 };
 
             UiCanvas settingsFrame; mMainFrame.AddChild(settingsFrame = new() { Width = 1000, Height = 900, Anchor = Anchor.Center });
             settingsFrame.AddChild(new UiText("neuropolitical", "Settings", .1f) { Anchor = Anchor.NW, HSpace = 20, VSpace = 20 });
@@ -79,6 +79,7 @@ namespace StellarLiberation.Game.Layers.MenueLayers
         public override void ApplyResolution()
         {
             mMainFrame.ApplyResolution(GraphicsDevice.Viewport.Bounds, ResolutionManager.Resolution);
+            base.ApplyResolution();
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
