@@ -12,12 +12,10 @@ using StellarLiberation.Game.Core.Utilitys;
 using StellarLiberation.Game.Core.Visuals.ParticleSystem;
 using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.Layers;
+using StellarLiberation.Game.Layers.GameLayers;
 
 namespace StellarLiberation.Game.Core.CoreProceses.LayerManagement
 {
-    /// <summary>
-    /// The GameLayer class serves as a foundational layer for managing game elements. It encapsulates functionality related to managing the game's visual representation, including camera handling, rendering, and resolution management. Additionally, it integrates with other systems such as audio and spatial hashing to provide a comprehensive game experience.
-    /// </summary>
     public abstract class GameLayer : Layer
     {
         public Vector2 WorldMousePosition { get; private set; }

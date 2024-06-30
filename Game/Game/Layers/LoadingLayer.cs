@@ -23,14 +23,13 @@ namespace StellarLiberation.Game.Layers
         private readonly UiSprite mStudioLogo;
         private float mAlpha = -.3f;
 
-        public LoadingLayer(Game1 game1, ContentLoader contentLoader, bool hasBackground = true) : base(game1, false)
+        public LoadingLayer(Game1 game1, ContentLoader contentLoader) : base(game1, false)
         {
             mContentLoader = contentLoader;
             mFrame = new() { FillScale = FillScale.Both, Alpha = 0 };
             mLoadingMessage = new("neuropolitical", "", .2f) { Anchor = Anchor.S, VSpace = 70 };
             mProcessBar = new(Color.White, "") { RelWidth = .7f, Height = 20, Anchor = Anchor.S, VSpace = 40 };
-            if (hasBackground)
-                mFrame.AddChild(mStudioLogo = new("grandDutchInteractive") { FillScale = FillScale.FillIn, Anchor = Anchor.Center, Color = Color.Transparent });
+            mFrame.AddChild(mStudioLogo = new("grandDutchInteractive") { FillScale = FillScale.FillIn, Anchor = Anchor.Center, Color = Color.Transparent });
             mFrame.AddChild(mProcessBar);
             mFrame.AddChild(mLoadingMessage);
         }

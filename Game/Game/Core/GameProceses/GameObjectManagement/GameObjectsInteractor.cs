@@ -14,6 +14,7 @@ using StellarLiberation.Game.Core.Visuals.Rendering;
 using StellarLiberation.Game.Frames;
 using StellarLiberation.Game.GameObjects.AstronomicalObjects;
 using StellarLiberation.Game.GameObjects.Spacecrafts;
+using StellarLiberation.Game.Layers;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,7 +27,7 @@ namespace StellarLiberation.Game.Core.GameProceses
         public readonly HashSet<Flagship> SelectedFlagships = new();
         private SelectionBox mSelectionBox;
 
-        public void Update(InputState inputState, PlanetsystemState planetsystemState, Vector2 worldMousePosition, Layer hudLayer)
+        public void Update(InputState inputState, PlanetsystemState planetsystemState, Vector2 worldMousePosition, GameState gameState)
         {
             var spatialHashing = planetsystemState.SpatialHashing;
             var leftClicked = inputState.HasAction(ActionType.LeftReleased);
@@ -53,7 +54,7 @@ namespace StellarLiberation.Game.Core.GameProceses
                 {
                     case Flagship:
                         var flagship = (Flagship)HoveredGameObject;
-                        SelectOrUnselect(inputState, flagship, hudLayer);
+                        SelectOrUnselect(inputState, flagship, gameState);
                         break;
                     case Planet:
                         var planet = (Planet)HoveredGameObject;

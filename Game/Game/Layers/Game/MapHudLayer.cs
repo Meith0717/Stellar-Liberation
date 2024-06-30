@@ -1,4 +1,4 @@
-﻿// MapHud.cs 
+﻿// PlanetsystemHud.cs 
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
@@ -14,24 +14,22 @@ using StellarLiberation.Game.Layers.MenueLayers;
 
 namespace StellarLiberation.Game.Layers.GameLayers
 {
-    internal class MapHud : Layer
+    internal class MapHudLayer : Layer
     {
         private readonly UiFrame mMainFrame;
-        private readonly GameState mGameState;
+        private readonly MapLayer mMapLayer;
 
-        public MapHud(Game1 game1, GameState gameState) : base(game1, true)
+        public MapHudLayer(GameState gameState, MapLayer mapLayer, Game1 game1) : base(game1, true)
         {
-            mGameState = gameState;
+            mMapLayer = mapLayer;
             mMainFrame = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
-
             mMainFrame.AddChild(new UiButton("pauseButton", "") { Anchor = Anchor.NE, HSpace = 20, VSpace = 20, OnClickAction = () => LayerManager.AddLayer(new PauseLayer(gameState, Game1)) });
-            mMainFrame.AddChild(new UiButton("planetSystemButton", "") { Anchor = Anchor.SE, HSpace = 20, VSpace = 20, OnClickAction = gameState.PopLayer });
+            mMainFrame.AddChild(new UiButton("planetSystemButton", "") { Anchor = Anchor.SE, HSpace = 20, VSpace = 20, OnClickAction = gameState.CloseMap });
         }
 
         public override void Update(GameTime gameTime, InputState inputState)
         {
             base.Update(gameTime, inputState);
-            inputState.DoAction(ActionType.ToggleHyperMap, mGameState.PopLayer);
             mMainFrame.Update(inputState, gameTime);
         }
 
@@ -45,6 +43,9 @@ namespace StellarLiberation.Game.Layers.GameLayers
         {
             spriteBatch.Begin();
             mMainFrame.Draw();
+            spriteBatch.End();
+
+            spriteBatch.Begin(transformMatrix: mMapLayer.ViewTransformationMatrix);
             spriteBatch.End();
 
             base.Draw(spriteBatch);

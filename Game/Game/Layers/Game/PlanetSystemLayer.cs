@@ -4,12 +4,15 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 using StellarLiberation.Game.Core.CoreProceses.LayerManagement;
 using StellarLiberation.Game.Core.GameProceses;
 using StellarLiberation.Game.Core.UserInterface;
 using StellarLiberation.Game.Core.Visuals.ParallaxSystem;
 using StellarLiberation.Game.Core.Visuals.Rendering;
+using StellarLiberation.Game.GameObjects.Spacecrafts;
+using System.Linq;
 
 namespace StellarLiberation.Game.Layers.GameLayers
 {
@@ -17,11 +20,12 @@ namespace StellarLiberation.Game.Layers.GameLayers
     {
         public readonly PlanetsystemState PlanetsystemState;
         private readonly ParallaxController mParallaxController;
-        private PlanetsystemHud mHudLayer;
+        private readonly PlanetSystemHudLayer mHud;
 
         public PlanetsystemLayer(GameState gameState, PlanetsystemState planetsystemState, Game1 game1)
             : base(gameState, planetsystemState.SpatialHashing, game1)
         {
+            mHud = new(gameState, this, game1);
             PlanetsystemState = planetsystemState;
 
             var background = new UiSprite("gameBackground")
@@ -29,8 +33,6 @@ namespace StellarLiberation.Game.Layers.GameLayers
                 Anchor = Anchor.Center,
                 FillScale = FillScale.FillIn
             };
-
-            mHudLayer = new PlanetsystemHud(this, Game1);
 
             AddUiElement(background);
 
@@ -43,19 +45,15 @@ namespace StellarLiberation.Game.Layers.GameLayers
             ApplyResolution();
         }
 
-        public void OpenMap()
-        {
-            GameState.AddLayer(new MapLayer(GameState, GameState.MapState, PlanetsystemState.MapPosition, Game1));
-        }
-
         public override void Update(GameTime gameTime, InputState inputState)
         {
-            mHudLayer.Update(gameTime, inputState);
+            inputState.DoAction(ActionType.ToggleHyperMap, GameState.OpenMap);
             mParallaxController.Update();
+            mHud.Update(gameTime, inputState);
             Camera2DMover.ControllZoom(gameTime, inputState, Camera2D, .008f, 1);
             Camera2DMover.UpdateCameraByMouseDrag(inputState, Camera2D);
             Camera2DMover.MoveByKeys(gameTime, inputState, Camera2D);
-            GameState.GameObjectsInteractor.Update(inputState, PlanetsystemState, WorldMousePosition, mHudLayer);
+            GameState.GameObjectsInteractor.Update(inputState, PlanetsystemState, WorldMousePosition, GameState);
             mParticleManager.Update(gameTime, PlanetsystemState.ParticleEmitors);
             mStereoSoundSystem.Update(Camera2D.Position, Camera2D.Zoom, PlanetsystemState.StereoSounds);
             base.Update(gameTime, inputState);
@@ -64,7 +62,7 @@ namespace StellarLiberation.Game.Layers.GameLayers
         public override void ApplyResolution()
         {
             base.ApplyResolution();
-            mHudLayer.ApplyResolution();
+            mHud.ApplyResolution();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -75,11 +73,11 @@ namespace StellarLiberation.Game.Layers.GameLayers
 
             base.Draw(spriteBatch);
 
-            mHudLayer.Draw(spriteBatch);
-
             spriteBatch.Begin(transformMatrix: ViewTransformationMatrix);
             GameState.GameObjectsInteractor.Draw(Camera2D);
             spriteBatch.End();
+
+            mHud.Draw(spriteBatch);
 
             PlanetsystemState.StereoSounds.Clear();
             PlanetsystemState.ParticleEmitors.Clear();

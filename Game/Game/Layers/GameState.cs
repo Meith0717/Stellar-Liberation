@@ -2,6 +2,7 @@
 // Copyright (c) 2023-2024 Thierry Meiers 
 // All rights reserved.
 
+using MathNet.Numerics.Distributions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
@@ -33,6 +34,8 @@ namespace StellarLiberation.Game.Layers
         [JsonProperty] private readonly MapConfig mMapConfig;
         [JsonProperty] public readonly List<PlanetsystemState> PlanetSystemStates;
 
+        [JsonIgnore] public PlanetsystemState ActualPlanetSystem { get; private set; }
+
         public GameState(Game1 game1) : base(game1, false)
         {
             mMapConfig = new(3, 3, 0);
@@ -46,17 +49,29 @@ namespace StellarLiberation.Game.Layers
             MapState.Initialize(PlanetSystemStates);
             foreach (var planetsystemState in PlanetSystemStates)
                 planetsystemState.Initialize();
-            AddLayer(new PlanetsystemLayer(this, PlanetSystemStates.First(), Game1));
+            ActualPlanetSystem = PlanetSystemStates.First();
+            AddLayer(new PlanetsystemLayer(this, ActualPlanetSystem, Game1));
         }
 
-        public void AddLayer(Layer layer)
+        public void OpenMap() => AddLayer(new MapLayer(this, MapState, ActualPlanetSystem.MapPosition, Game1));
+
+        public void CloseMap() => PopLayer();
+
+        public void OpenPlanetSystem(PlanetsystemState planetsystemState)
+        {
+            ActualPlanetSystem = planetsystemState;
+            PopLayer(); PopLayer();
+            AddLayer(new PlanetsystemLayer(this, planetsystemState, Game1));
+        }
+
+        private void AddLayer(Layer layer)
         {
             layer.ApplyResolution();
             layer.Initialize();
             mLayers.AddLast(layer);
         }
 
-        public void PopLayer()
+        private void PopLayer()
         {
             if (mLayers.Count == 0) return;
             mLayers.Last.Value.Destroy();
@@ -83,6 +98,7 @@ namespace StellarLiberation.Game.Layers
             DebugSystem.ShowInfo(new(10, 10));
             TextureManager.Instance.DrawString("consola", new Vector2(1, 1), $"{MathF.Round(mFrameCounter.CurrentFramesPerSecond)} fps", 0.1f, Color.White);
             spriteBatch.End();
+            base.Draw(spriteBatch);
         }
 
         public override void ApplyResolution()
