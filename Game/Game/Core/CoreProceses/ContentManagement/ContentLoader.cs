@@ -52,6 +52,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
                     LoadWeapons();
                     LoadBattleShips();
                     LoadFlagShips();
+                    EffectManager.Instance.LoadBuildContent(mContent, "Blur");
                     ProcessMessage = "Ready";
                     Thread.Sleep(2000);
                 }

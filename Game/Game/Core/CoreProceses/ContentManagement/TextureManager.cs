@@ -19,7 +19,7 @@ namespace StellarLiberation.Game.Core.CoreProceses.ContentManagement
         private static TextureManager mInstance;
 
         public static TextureManager Instance
-            => mInstance is null ? mInstance = new TextureManager() : mInstance;
+            => mInstance is null ? mInstance = new() : mInstance;
 
         public readonly static int MaxLayerDepth = 10000;
 

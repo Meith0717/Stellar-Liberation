@@ -31,9 +31,9 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public UiGrid(int i, int j)
         {
-            for (int y = 0; y < j; y++)
+            for (float y = 0; y < j; y++)
             {
-                for (int x = 0; x < i; x++)
+                for (float x = 0; x < i; x++)
                 {
                     var relX = 1f / i * x;
                     var relY = 1f / j * y;

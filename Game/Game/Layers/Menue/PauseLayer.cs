@@ -18,9 +18,11 @@ namespace StellarLiberation.Game.Layers.MenueLayers
         {
             var mainFrame = new UiCanvas() { RelHeight = 1, RelWidth = 1 };
 
+            mainFrame.AddChild(new UiText("neuropolitical", "Pause", .8f) { Anchor = Anchor.N, VSpace = 50 });
+
             var buttonFrame = new UiGrid(1, 6)
             {
-                Anchor = Anchor.W,
+                Anchor = Anchor.Center,
                 Height = 500,
                 Width = 400,
                 HSpace = 20

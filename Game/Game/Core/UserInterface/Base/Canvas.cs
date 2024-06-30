@@ -3,6 +3,7 @@
 // All rights reserved.
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
 
@@ -204,9 +205,9 @@ namespace StellarLiberation.Game.Core.UserInterface
         #endregion
 
 
-        public void Draw()
+        public void Draw(bool debug = true)
         {
-            if (true) return;
+            if (debug) return;
             TextureManager.Instance.DrawRectangleF(Bounds, Color.Green, 1, 1);
         }
     }

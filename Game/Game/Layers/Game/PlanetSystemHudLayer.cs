@@ -26,9 +26,11 @@ namespace StellarLiberation.Game.Layers.GameLayers
         {
             mGameState = gameState;
             mPlanetsystemLayer = planetsystemLayer;
-            mMainFrame = new() { RelWidth = 1, RelHeight = 1 };
-            mMainFrame.AddChild(new UiButton("pauseButton", "") { Anchor = Anchor.NE, HSpace = 20, VSpace = 20, OnClickAction = () => LayerManager.AddLayer(new PauseLayer(gameState, Game1)) });
-            mMainFrame.AddChild(new UiButton("mapButton", "") { Anchor = Anchor.SE, HSpace = 20, VSpace = 20, OnClickAction = gameState.OpenMap });
+            mMainFrame = new() { RelWidth = 1, RelHeight = 1, Alpha = 0 };
+            UiGrid grid;
+            mMainFrame.AddChild(grid = new(5, 1) { Anchor = Anchor.SE, Width = 300, Height = 40 });
+            grid.Set(3, 0, new UiButton("mapButton", "") { FillScale = FillScale.Fit, Anchor = Anchor.S, OnClickAction = gameState.OpenMap });
+            grid.Set(4, 0, new UiButton("pauseButton", "") { FillScale = FillScale.Fit, Anchor = Anchor.S, OnClickAction = () => LayerManager.AddLayer(new PauseLayer(gameState, Game1)) });
         }
 
         public override void Update(GameTime gameTime, InputState inputState)

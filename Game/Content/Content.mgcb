@@ -26,6 +26,12 @@
 #begin battleships/Fighter/weapons.json
 /copy:battleships/Fighter/weapons.json
 
+#begin Blur.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Blur.fx
+
 #begin flagships/MKI/config.json
 /copy:flagships/MKI/config.json
 

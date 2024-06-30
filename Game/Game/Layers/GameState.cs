@@ -5,6 +5,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
+using Penumbra;
 using StellarLiberation.Game.Core.CoreProceses.ContentManagement;
 using StellarLiberation.Game.Core.CoreProceses.Debugging;
 using StellarLiberation.Game.Core.CoreProceses.InputManagement;
@@ -26,10 +27,10 @@ namespace StellarLiberation.Game.Layers
     {
 
         [JsonIgnore] public readonly DebugSystem DebugSystem = new();
-        [JsonIgnore] private readonly LinkedList<Layer> mLayers = new();
+        [JsonIgnore] private readonly LinkedList<GameLayer> mLayers = new();
         [JsonIgnore] private readonly FrameCounter mFrameCounter = new(200);
         [JsonIgnore] public readonly GameObjectsInteractor GameObjectsInteractor = new();
-        [JsonProperty] public readonly MapState MapState = new();
+         [JsonProperty] public readonly MapState MapState = new();
         [JsonProperty] private readonly MapConfig mMapConfig;
         [JsonProperty] public readonly List<PlanetsystemState> PlanetSystemStates;
 
@@ -63,7 +64,7 @@ namespace StellarLiberation.Game.Layers
             AddLayer(new PlanetsystemLayer(this, planetsystemState, Game1));
         }
 
-        private void AddLayer(Layer layer)
+        private void AddLayer(GameLayer layer)
         {
             layer.ApplyResolution();
             layer.Initialize();

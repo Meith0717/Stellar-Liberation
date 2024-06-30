@@ -17,6 +17,8 @@ namespace StellarLiberation.Game.Core.UserInterface
     {
         private readonly LinkedList<UiElement> mChildren = new();
         private readonly Dictionary<object, UiElement> mKeyValuePairs = new();
+        public float Alpha = .5f;
+        
 
         public void AddChild(UiElement child) => mChildren.AddLast(child);
 
@@ -48,7 +50,7 @@ namespace StellarLiberation.Game.Core.UserInterface
 
         public override void Draw()
         {
-            TextureManager.Instance.SpriteBatch.FillRectangle(Bounds, Color.Transparent, 1);
+            TextureManager.Instance.SpriteBatch.FillRectangle(Bounds, Color.Black * Alpha, 1);
             foreach (var child in mChildren) child.Draw();
             DrawCanvas();
         }
